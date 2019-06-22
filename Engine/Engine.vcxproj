@@ -11,10 +11,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utils\Logger.cpp" />
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\Utils\StringUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Utils\Logger.h" />
     <ClInclude Include="src\Utils\StringUtil.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

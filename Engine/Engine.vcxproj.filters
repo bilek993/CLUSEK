@@ -27,9 +27,15 @@
     <ClCompile Include="src\Utils\StringUtil.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\Logger.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\StringUtil.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\Logger.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
