@@ -13,9 +13,10 @@ TODO: ADD IMAGES
 
 ## Requirements
 
-* TODO: ADD REQUIREMENTS
-* TODO: ADD REQUIREMENTS
-* TODO: ADD REQUIREMENTS
+* Windows 10
+* Directx 11 compatible device
+* Visual Studio 2017 (v141)
+* Windows SDK Version 10.0.17763.0
 
 
 
