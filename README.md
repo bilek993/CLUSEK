@@ -22,9 +22,7 @@ TODO: ADD IMAGES
 
 ## Dependencies
 
-* TODO: ADD DEPS HERE
-* TODO: ADD DEPS HERE
-* TODO: ADD DEPS HERE
+* [DirectX Tool Kit for DirectX 11](https://github.com/microsoft/DirectXTK/tree/94e4227a5289f6e5390bf52daf3a4d15ecdf6922)
 
 
 
