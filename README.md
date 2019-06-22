@@ -24,10 +24,10 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 |      Fields      | UpperCamelCase |
 |    Enumerators   | UpperCamelCase |
 |     Variables    | lowerCamelCase |
+|    Parameters    | lowerCamelCase |
 |  Other constants |    ALL_UPPER   |
 | Global constands |    ALL_UPPER   |
 |      Macros      |    ALL_UPPER   |
-|                  |                |
 
 
 ## Requirements
