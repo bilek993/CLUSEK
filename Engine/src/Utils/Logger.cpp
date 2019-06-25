@@ -34,5 +34,11 @@ void Logger::Error(const std::string& input)
 
 std::string Logger::GenerateDebugString(const std::string& input, const std::string& level)
 {
-	return level + " | " + input + "\n";
+	auto now = time(nullptr);
+	char timeBuffer[10];
+	std::tm bt{};
+	localtime_s(&bt, &now);
+	strftime(timeBuffer, 10, "%H:%M:%S", &bt);
+
+	return std::string(timeBuffer) + " | " + level + " | " + input + "\n";
 }

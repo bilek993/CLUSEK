@@ -9,9 +9,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
 	Logger::Initialize();
-	Logger::Debug("debug test");
-	Logger::Warning("Warning test");
-	Logger::Error("Error test");
+	Logger::Debug("Initialized logger system.");
 
 	while(true)
 	{
