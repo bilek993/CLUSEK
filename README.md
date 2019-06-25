@@ -45,6 +45,12 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 
 
 
+## Virus false positive
+
+Some antiviruses programs may detect this application as virus, when it is built in debug mode. There is no malicious code in this project. Virus might be detected due to some programming techniques used in this application, but it is false positive. This problem happen only in debug mode and has not been observed in release mode.
+
+
+
 ## Source code
 
 You can also download latest version of source code using git. To do that enter bellow commands in your terminal:
