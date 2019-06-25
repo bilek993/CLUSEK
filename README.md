@@ -30,6 +30,13 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 |      Macros      |    ALL_UPPER   |
 
 
+
+## Virus false positive
+
+Some antiviruses programs may detect this application as virus, when it is built in debug mode. There is no malicious code in this project. Virus might be detected due to some programming techniques used in this application, but it is false positive. This problem happen only in debug mode and has not been observed in release mode.
+
+
+
 ## Requirements
 
 * Windows 10
@@ -42,12 +49,6 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 ## Dependencies
 
 * [DirectX Tool Kit for DirectX 11](https://github.com/microsoft/DirectXTK/tree/94e4227a5289f6e5390bf52daf3a4d15ecdf6922)
-
-
-
-## Virus false positive
-
-Some antiviruses programs may detect this application as virus, when it is built in debug mode. There is no malicious code in this project. Virus might be detected due to some programming techniques used in this application, but it is false positive. This problem happen only in debug mode and has not been observed in release mode.
 
 
 
