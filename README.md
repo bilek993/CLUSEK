@@ -33,7 +33,7 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 
 ## Virus false positive
 
-Some antiviruses programs may detect this application as virus, when it is built in debug mode. There is no malicious code in this project. Virus might be detected due to some programming techniques used in this application, but it is false positive. This problem happen only in debug mode and has not been observed in release mode.
+Due to code structure used in a logger, some antivirus programs may detect this application as virus. This code is not dangereous at all and this is false positive. This only happen in debug mode, beceuse logging functionality is stripped from code in release mode.
 
 
 
