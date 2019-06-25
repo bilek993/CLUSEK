@@ -11,11 +11,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	Logger::Initialize();
 	Logger::Debug("Initialized logger system.");
 
-	while(true)
-	{
-		Sleep(500);
-	}
+	//  TODO: Add logic here
 
+	Logger::Debug("Preparing logger to free resources.");
 	Logger::Free();
 
 	return 0;
