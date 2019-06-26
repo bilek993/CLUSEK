@@ -1,5 +1,5 @@
 #include <Windows.h>
-#include <string>
+#include "Utils/SystemInfoUtil.h"
 #include "Utils/Logger.h"
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "DirectXTK.lib")
@@ -10,6 +10,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 {
 	Logger::Initialize();
 	Logger::Debug("Initialized logger system.");
+	SystemInfoUtil::LogInfo();
 
 	//  TODO: Add logic here
 

@@ -4,12 +4,16 @@
 class Logger final
 {
 public:
+	static const std::string SEPARATOR;
+
 	static void Initialize();
 	static void Free();
+
 	static void Debug(const std::string& input);
 	static void Warning(const std::string& input);
 	static void Error(const std::string& input);
 private:
-	static std::string GenerateDebugString(const std::string& input, const std::string& level);
 	static FILE* Fp;
+
+	static std::string GenerateDebugString(const std::string& input, const std::string& level);
 };
