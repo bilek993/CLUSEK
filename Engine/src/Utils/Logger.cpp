@@ -6,30 +6,40 @@ FILE* Logger::Fp = nullptr;
 
 void Logger::Initialize()
 {
+#ifdef _DEBUG
 	AllocConsole();
 	freopen_s(&Fp,"CONOUT$", "w", stdout);
+#endif
 }
 
 void Logger::Free()
 {
+#ifdef _DEBUG
 	fclose(Fp);
 	FreeConsole();
+#endif
 }
 
 void Logger::Debug(const std::string& input)
 {
+#ifdef _DEBUG
 	printf(GenerateDebugString(input, "DBG").c_str());
+#endif
 }
 
 void Logger::Warning(const std::string& input)
 {
+#ifdef _DEBUG
 	printf(GenerateDebugString(input, "WRN").c_str());
+#endif
 }
 
 void Logger::Error(const std::string& input)
 {
+#ifdef _DEBUG
 	printf(GenerateDebugString(input, "ERR").c_str());
-	MessageBox(nullptr, input.c_str(), "Critical error!", MB_ICONSTOP | MB_OK);
+#endif
+	MessageBox(nullptr, input.c_str(), "Fatal error", MB_ICONSTOP | MB_OK);
 }
 
 std::string Logger::GenerateDebugString(const std::string& input, const std::string& level)
