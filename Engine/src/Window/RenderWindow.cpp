@@ -5,7 +5,6 @@ bool RenderWindow::Initialize(const HINSTANCE hInstance, const std::string& wind
 	const std::string& windowClass, const int width, const int height)
 {
 	HInstance = hInstance;
-	WindowTitle = windowTitle;
 	WindowClass = windowClass;
 
 	RegisterWindowClass();
@@ -14,7 +13,7 @@ bool RenderWindow::Initialize(const HINSTANCE hInstance, const std::string& wind
 	Handle = CreateWindowEx(
 		0,
 		WindowClass.c_str(),
-		WindowTitle.c_str(),
+		windowTitle.c_str(),
 		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
 		0,
 		0,

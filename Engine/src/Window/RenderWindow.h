@@ -13,6 +13,5 @@ private:
 
 	HWND Handle = nullptr;
 	HINSTANCE HInstance = nullptr;
-	std::string WindowTitle = "";
 	std::string WindowClass = "";
 };
