@@ -2,8 +2,6 @@
 #include <Windows.h>
 #include <chrono>
 
-const std::string Logger::SEPARATOR = "-----------------------------------------------------------------------------------------------------";
-
 FILE* Logger::Fp = nullptr;
 
 void Logger::Initialize()

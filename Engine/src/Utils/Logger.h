@@ -4,8 +4,6 @@
 class Logger final
 {
 public:
-	static const std::string SEPARATOR;
-
 	static void Initialize();
 	static void Free();
 

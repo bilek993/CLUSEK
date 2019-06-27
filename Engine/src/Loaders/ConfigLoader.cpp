@@ -24,8 +24,6 @@ ConfigData& ConfigLoader::GetData()
 		ConfigData newData;
 
 		Logger::Debug("Reading configuration from file '" + FilePath + "'...");
-		Logger::Debug(Logger::SEPARATOR);
-		Logger::Debug("Loaded configuration:");
 
 		std::string line;
 
@@ -37,18 +35,16 @@ ConfigData& ConfigLoader::GetData()
 				continue;
 
 			const auto colonPosition = line.find(':');
-			const auto key = line.substr(0, colonPosition);
-			const auto value = line.substr(colonPosition + 1);
+			auto key = line.substr(0, colonPosition);
+			auto value = line.substr(colonPosition + 1);
 
 			if (key == "WindowWidth")
-				newData.WindowWidth = StringUtil::StringToInt(value);
+				newData.WindowWidth = std::stoi(value);
 			else if (key == "WindowHeight")
-				newData.WindowHeight = StringUtil::StringToInt(value);
+				newData.WindowHeight = std::stoi(value);
 
-			Logger::Debug("Value for '" + key + "' set to '" + value + "'.");
+			Logger::Debug(key + ": " + value);
 		}
-
-		Logger::Debug(Logger::SEPARATOR);
 
 		LoadedFromFile = true;
 		Data = newData;
