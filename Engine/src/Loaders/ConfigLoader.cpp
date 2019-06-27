@@ -6,7 +6,7 @@
 
 std::string ConfigLoader::FilePath = "Data/EngineSettings.cfg";
 
-ConfigData& ConfigLoader::GetData()
+ConfigData ConfigLoader::GetData()
 {
 	Logger::Debug("Preparing to open file '" + FilePath + "'...");
 	std::ifstream cfgFile(FilePath);
@@ -33,8 +33,10 @@ ConfigData& ConfigLoader::GetData()
 				data.WindowWidth = std::stoi(value);
 			else if (key == "WindowHeight")
 				data.WindowHeight = std::stoi(value);
+			else
+				continue;
 
-			Logger::Debug(key + ": " + value);
+			Logger::Debug("New value '" + value + "' for key '" + key + "' has been set from configuration file.");
 		}
 
 		Logger::Debug("Configuration has been successfully loaded!");

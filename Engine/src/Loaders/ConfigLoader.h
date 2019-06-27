@@ -4,7 +4,7 @@
 class ConfigLoader final
 {
 public:
-	static ConfigData& GetData();
+	static ConfigData GetData();
 private:
 	static std::string FilePath;
 };
