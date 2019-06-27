@@ -19,6 +19,12 @@
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{dbabf59f-7b0a-4b9e-86ad-9775a0cfacc7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Window">
+      <UniqueIdentifier>{9b975119-ea42-40ca-a2b1-b1a781990044}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Window">
+      <UniqueIdentifier>{b9272035-0ac1-4c21-aaa0-8f86a37fce07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -33,6 +39,9 @@
     <ClCompile Include="src\Utils\SystemInfoUtil.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="RenderWindow.cpp">
+      <Filter>Source Files\Window</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\StringUtil.h">
@@ -43,6 +52,9 @@
     </ClInclude>
     <ClInclude Include="src\Utils\SystemInfoUtil.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderWindow.h">
+      <Filter>Header Files\Window</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
