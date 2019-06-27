@@ -15,10 +15,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	Logger::Debug("Initialized logger system.");
 	SystemInfoUtil::LogInfo();
 
-	auto configuration = ConfigLoader::GetData();
+	auto config = ConfigLoader::GetData();
 
 	RenderWindow renderWindow;
-	renderWindow.Initialize(hInstance, "test", "test", 800, 600);
+	renderWindow.Initialize(hInstance, config.WindowTitle, config.WindowClassName, config.WindowWidth, config.WindowHeight);
 
 	while (renderWindow.ProcessMessages())
 	{

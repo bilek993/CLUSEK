@@ -29,7 +29,11 @@ ConfigData ConfigLoader::GetData()
 			auto key = line.substr(0, colonPosition);
 			auto value = line.substr(colonPosition + 1);
 
-			if (key == "WindowWidth")
+			if (key == "WindowClassName")
+				data.WindowClassName = value;
+			else if (key == "WindowTitle")
+				data.WindowTitle = value;
+			else if (key == "WindowWidth")
 				data.WindowWidth = std::stoi(value);
 			else if (key == "WindowHeight")
 				data.WindowHeight = std::stoi(value);
