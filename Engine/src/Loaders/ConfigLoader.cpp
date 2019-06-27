@@ -4,25 +4,16 @@
 #include "../Utils/Logger.h"
 #include "../Utils/StringUtil.h"
 
-ConfigData ConfigLoader::Data;
-bool ConfigLoader::LoadedFromFile = false;
 std::string ConfigLoader::FilePath = "Data/EngineSettings.cfg";
 
 ConfigData& ConfigLoader::GetData()
 {
-	if (LoadedFromFile)
-	{
-		Logger::Debug("Configuration already exist. Returning already allocated data.");
-		return Data;
-	}
-
 	Logger::Debug("Preparing to open file '" + FilePath + "'...");
 	std::ifstream cfgFile(FilePath);
+	ConfigData data;
 
 	if (cfgFile.is_open())
 	{
-		ConfigData newData;
-
 		Logger::Debug("Reading configuration from file '" + FilePath + "'...");
 
 		std::string line;
@@ -39,15 +30,13 @@ ConfigData& ConfigLoader::GetData()
 			auto value = line.substr(colonPosition + 1);
 
 			if (key == "WindowWidth")
-				newData.WindowWidth = std::stoi(value);
+				data.WindowWidth = std::stoi(value);
 			else if (key == "WindowHeight")
-				newData.WindowHeight = std::stoi(value);
+				data.WindowHeight = std::stoi(value);
 
 			Logger::Debug(key + ": " + value);
 		}
 
-		LoadedFromFile = true;
-		Data = newData;
 		Logger::Debug("Configuration has been successfully loaded!");
 	}
 	else
@@ -56,5 +45,5 @@ ConfigData& ConfigLoader::GetData()
 		Logger::Warning("Using default values for engine configuration!");
 	}
 
-	return Data;
+	return data;
 }
