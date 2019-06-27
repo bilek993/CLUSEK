@@ -49,11 +49,11 @@ bool RenderWindow::ProcessMessages()
 		DispatchMessage(&msg);
 	}
 
-	if (msg.message == WM_QUIT)
+	if (msg.message == WM_NULL)
 	{
-		Logger::Debug("Window message quit received.");
 		if (!IsWindow(Handle))
 		{
+			Logger::Debug("Closing window requested.");
 			Handle = nullptr;
 			UnregisterClass(WindowClass.c_str(), HInstance);
 			return false;
