@@ -31,12 +31,6 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 
 
 
-## Virus false positive
-
-Due to code structure used in a logger, some antivirus programs may detect this application as virus. This code is not dangereous at all and this is false positive. This only happen in debug mode, beceuse logging functionality is stripped from code in release mode.
-
-
-
 ## Requirements
 
 * Windows 10
