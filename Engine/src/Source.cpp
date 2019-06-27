@@ -2,6 +2,7 @@
 #include "Utils/SystemInfoUtil.h"
 #include "Utils/Logger.h"
 #include "Loaders/ConfigLoader.h"
+#include "Window/RenderWindow.h"
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "DirectXTK.lib")
 
@@ -15,6 +16,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	SystemInfoUtil::LogInfo();
 
 	auto configuration = ConfigLoader::GetData();
+
+	RenderWindow renderWindow;
+	renderWindow.Initialize(hInstance, "test", "test", 800, 600);
+
+	while (renderWindow.ProcessMessages())
+	{
+
+	}
 
 	Logger::Debug("Preparing logger to free resources.");
 	Logger::Free();
