@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Loaders\ConfigLoader.cpp" />
     <ClCompile Include="src\Window\RenderWindow.cpp" />
     <ClCompile Include="src\Utils\Logger.cpp" />
@@ -19,6 +20,7 @@
     <ClCompile Include="src\Utils\SystemInfoUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Loaders\ConfigData.h" />
     <ClInclude Include="src\Loaders\ConfigLoader.h" />
     <ClInclude Include="src\Window\RenderWindow.h" />

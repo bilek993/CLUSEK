@@ -1,8 +1,7 @@
 #include <Windows.h>
 #include "Utils/SystemInfoUtil.h"
 #include "Utils/Logger.h"
-#include "Loaders/ConfigLoader.h"
-#include "Window/RenderWindow.h"
+#include "Engine.h"
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "DirectXTK.lib")
 
@@ -15,14 +14,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	Logger::Debug("Initialized logger system.");
 	SystemInfoUtil::LogInfo();
 
-	auto config = ConfigLoader::GetData();
+	Engine engine;
+	engine.Initialize(hInstance);
 
-	RenderWindow renderWindow;
-	renderWindow.Initialize(hInstance, config.WindowTitle, config.WindowClassName, config.WindowWidth, config.WindowHeight);
-
-	while (renderWindow.ProcessMessages())
+	while (engine.CanUpdate())
 	{
-
+		engine.Update();
 	}
 
 	Logger::Debug("Preparing logger to free resources.");

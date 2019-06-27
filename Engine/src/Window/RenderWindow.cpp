@@ -53,7 +53,7 @@ bool RenderWindow::ProcessMessages()
 	{
 		if (!IsWindow(Handle))
 		{
-			Logger::Debug("Closing window requested.");
+			Logger::Debug("Closing window due to user request.");
 			Handle = nullptr;
 			UnregisterClass(WindowClass.c_str(), HInstance);
 			return false;
