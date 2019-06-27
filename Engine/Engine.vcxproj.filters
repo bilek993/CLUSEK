@@ -25,6 +25,12 @@
     <Filter Include="Source Files\Window">
       <UniqueIdentifier>{b9272035-0ac1-4c21-aaa0-8f86a37fce07}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Loaders">
+      <UniqueIdentifier>{48750f49-cf5a-4a58-aa0e-97fecc1045fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Loaders">
+      <UniqueIdentifier>{18d7eaf8-b2cb-4da4-a17f-199362ef9914}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -39,8 +45,11 @@
     <ClCompile Include="src\Utils\SystemInfoUtil.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="RenderWindow.cpp">
+    <ClCompile Include="src\Window\RenderWindow.cpp">
       <Filter>Source Files\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Loaders\ConfigLoader.cpp">
+      <Filter>Source Files\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -53,8 +62,14 @@
     <ClInclude Include="src\Utils\SystemInfoUtil.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="RenderWindow.h">
+    <ClInclude Include="src\Window\RenderWindow.h">
       <Filter>Header Files\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\ConfigData.h">
+      <Filter>Header Files\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\ConfigLoader.h">
+      <Filter>Header Files\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
