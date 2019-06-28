@@ -14,7 +14,7 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	if (adapters.empty())
 		Logger::Error("No adapters found!");
 
-	if (adapters.size() >= selectedAdapterId)
+	if (selectedAdapterId >= adapters.size())
 		Logger::Error("Adapter with id [" + std::to_string(selectedAdapterId) + "] not found!");
 
 	//D3D11CreateDeviceAndSwapChain()
