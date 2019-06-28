@@ -6,9 +6,9 @@
 class Renderer final
 {
 public:
-	bool Initialize(HWND hwnd, int width, int height);
+	bool Initialize(HWND hwnd, int width, int height, int selectedAdapterId);
 private:
-	bool InitializeDirectX(HWND hwnd, int width, int height);
+	bool InitializeDirectX(HWND hwnd, int width, int height, int selectedAdapterId);
 
 	Microsoft::WRL::ComPtr<ID3D11Device> Device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> DeviceContext;

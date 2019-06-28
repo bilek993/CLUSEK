@@ -1,15 +1,23 @@
 #include "Renderer.h"
 #include "../Utils/Logger.h"
 
-bool Renderer::Initialize(HWND hwnd, int width, int height)
+bool Renderer::Initialize(const HWND hwnd, const int width, const int height, const int selectedAdapterId)
 {
 	Logger::Debug("Renderer initialization...");
-	return InitializeDirectX(hwnd, width, height);
+	return InitializeDirectX(hwnd, width, height, selectedAdapterId);
 }
 
-bool Renderer::InitializeDirectX(HWND hwnd, int width, int height)
+bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int height, const int selectedAdapterId)
 {
 	auto adapters = AdapterReader::GetData();
+
+	if (adapters.empty())
+		Logger::Error("No adapters found!");
+
+	if (adapters.size() >= selectedAdapterId)
+		Logger::Error("Adapter with id [" + std::to_string(selectedAdapterId) + "] not found!");
+
+	//D3D11CreateDeviceAndSwapChain()
 
 	return true;
 }
