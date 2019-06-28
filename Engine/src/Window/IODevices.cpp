@@ -22,12 +22,14 @@ void IODevices::ChangeMouseToRelativeMode(const HWND hwnd) const
 {
 	Mouse->SetWindow(hwnd);
 	Mouse->SetMode(DirectX::Mouse::Mode::MODE_RELATIVE);
+	Logger::Debug("Switched mouse into relative mode.");
 }
 
 void IODevices::ChangeMouseToAbsoluteMode(const HWND hwnd) const
 {
 	Mouse->SetWindow(hwnd);
 	Mouse->SetMode(DirectX::Mouse::Mode::MODE_ABSOLUTE);
+	Logger::Debug("Switched mouse into absolute mode.");
 }
 
 IOData IODevices::Get() const
