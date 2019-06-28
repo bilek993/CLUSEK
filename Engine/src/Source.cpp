@@ -2,8 +2,10 @@
 #include "Utils/SystemInfoUtil.h"
 #include "Utils/Logger.h"
 #include "Engine.h"
+
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "DirectXTK.lib")
+#pragma comment(lib, "DXGI.lib")
 
 // Entry point for the Engine
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,

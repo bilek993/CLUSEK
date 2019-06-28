@@ -6,7 +6,14 @@ bool Engine::Initialize(HINSTANCE hInstance)
 {
 	Logger::Debug("Engine initialization...");
 	Config = ConfigLoader::GetData();
-	return Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight);
+
+	if (!Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight))
+		return false;
+
+	if (GraphicsRenderer.Initialize(Window.GetHandle(), Config.WindowWidth, Config.WindowHeight))
+		return false;
+
+	return true;
 }
 
 bool Engine::CanUpdate()

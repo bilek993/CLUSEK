@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\AdapterReader.cpp" />
+    <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Window\IODevices.cpp" />
     <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Loaders\ConfigLoader.cpp" />
@@ -21,6 +23,9 @@
     <ClCompile Include="src\Utils\SystemInfoUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\AdapterData.h" />
+    <ClInclude Include="src\Renderer\AdapterReader.h" />
+    <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Window\IOData.h" />
     <ClInclude Include="src\Window\IODevices.h" />
     <ClInclude Include="src\Engine.h" />

@@ -1,0 +1,36 @@
+#include "AdapterReader.h"
+#include <d3d11.h>
+#include <wrl/client.h>
+#include "../Utils/Logger.h"
+
+std::vector<AdapterData> AdapterReader::GetData()
+{
+	Logger::Debug("Getting adapters data...");
+
+	Microsoft::WRL::ComPtr<IDXGIFactory> factory;
+
+	const auto hrFactory = CreateDXGIFactory(__uuidof(IDXGIFactory), reinterpret_cast<void**>(factory.GetAddressOf()));
+	if (FAILED(hrFactory))
+	{
+		Logger::Error("Creating DXGI Factory failed.");
+		exit(-1);
+	}
+
+	std::vector<AdapterData> adapters;
+	IDXGIAdapter *adapter;
+	UINT index = 0;
+	while (SUCCEEDED(factory->EnumAdapters(index, &adapter)))
+	{
+		AdapterData data;
+		data.Adapter = adapter;
+		const auto hrAdapter = adapter->GetDesc(&data.Description);
+
+		if (FAILED(hrAdapter))
+			Logger::Error("Failed to get adapter description");
+
+		adapters.push_back(data);
+		index++;
+	}
+
+	return adapters;
+}

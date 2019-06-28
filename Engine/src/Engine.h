@@ -2,6 +2,7 @@
 #include "Window/RenderWindow.h"
 #include "Loaders/ConfigData.h"
 #include "Window/IODevices.h"
+#include "Renderer/Renderer.h"
 
 class Engine final
 {
@@ -15,6 +16,8 @@ private:
 
 	RenderWindow Window;
 	ConfigData Config;
+
+	Renderer GraphicsRenderer;
 
 	IODevices InputOutputDevices;
 	IOData DataFromIODevices = IOData();

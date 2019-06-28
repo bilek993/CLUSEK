@@ -2,7 +2,7 @@
 #include <Mouse.h>
 #include <Keyboard.h>
 
-struct IOData
+struct IOData final
 {
 	DirectX::Mouse::State MouseState;
 	DirectX::Keyboard::State KeyboardState;
