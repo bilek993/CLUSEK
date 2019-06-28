@@ -12,19 +12,18 @@ bool RenderWindow::Initialize(const HINSTANCE hInstance, const std::string& wind
 	RegisterWindowClass();
 
 	Logger::Debug("Creating window...");
-	Handle = CreateWindowEx(
-		0,
-		WindowClass.c_str(),
-		windowTitle.c_str(),
-		WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
-		0,
-		0,
-		width,
-		height,
-		nullptr,
-		nullptr,
-		HInstance,
-		nullptr);
+	Handle = CreateWindowEx(0,
+							WindowClass.c_str(),
+							windowTitle.c_str(),
+							WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
+							0,
+							0,
+							width,
+							height,
+							nullptr,
+							nullptr,
+							HInstance,
+							nullptr);
 
 	if (Handle == nullptr)
 	{
@@ -88,7 +87,7 @@ RenderWindow::~RenderWindow()
 	}
 }
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK WindowProc(const HWND hwnd, const UINT msg, const WPARAM wParam, const LPARAM lParam)
 {
 	switch (msg)
 	{
