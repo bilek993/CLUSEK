@@ -10,8 +10,19 @@ bool Engine::Initialize(HINSTANCE hInstance)
 	if (!Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight))
 		return false;
 
-	if (GraphicsRenderer.Initialize(Window.GetHandle(), Config.WindowWidth, Config.WindowHeight, Config.SelectedAdapterId))
+	if (GraphicsRenderer.Initialize(Window.GetHandle(),
+									Config.WindowWidth,
+									Config.WindowHeight,
+									Config.Fullscreen,
+									Config.SyncIntervals,
+									Config.SelectedAdapterId,
+									Config.RefreshRateNumerator,
+									Config.RefreshRateDenominator,
+									Config.MultisamplesCount,
+									Config.MultisamplesQuality))
+	{
 		return false;
+	}
 
 	return true;
 }

@@ -2,20 +2,31 @@
 #include "../Utils/Logger.h"
 #include "AdapterReader.h"
 
-bool Renderer::Initialize(const HWND hwnd, const int width, const int height, const int selectedAdapterId)
+bool Renderer::Initialize(const HWND hwnd, const int width, const int height, const int fullscreen, const int syncIntervals, const int selectedAdapterId,
+	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
 {
 	Logger::Debug("Renderer initialization...");
-	return InitializeDirectX(hwnd, width, height, selectedAdapterId);
+	SyncIntervals = syncIntervals;
+	return InitializeDirectX(	hwnd, 
+								width, 
+								height, 
+								fullscreen, 
+								selectedAdapterId, 
+								refreshRateNumerator, 
+								refreshRateDenominator,
+								multisamplesCount, 
+								multisamplesQuality);
 }
 
-void Renderer::RenderFrame()
+void Renderer::RenderFrame() const
 {
 	float bgColor[] = { 0.0f, 0.75f, 1.0f };
 	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), bgColor);
-	SwapChain->Present(TRUE, 0); // Add vsync later
+	SwapChain->Present(SyncIntervals, 0); // Add vsync later
 }
 
-bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int height, const int selectedAdapterId)
+bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int height, const int fullscreen, const int selectedAdapterId,
+	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
 {
 	auto adapters = AdapterReader::GetData();
 
@@ -35,19 +46,19 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 
 	scd.BufferDesc.Width = width;
 	scd.BufferDesc.Height = height;
-	scd.BufferDesc.RefreshRate.Numerator = 60;
-	scd.BufferDesc.RefreshRate.Denominator = 1;
+	scd.BufferDesc.RefreshRate.Numerator = refreshRateNumerator;
+	scd.BufferDesc.RefreshRate.Denominator = refreshRateDenominator;
 	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	scd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	scd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-	scd.SampleDesc.Count = 1;
-	scd.SampleDesc.Quality = 0;
+	scd.SampleDesc.Count = multisamplesCount;
+	scd.SampleDesc.Quality = multisamplesQuality;
 
 	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	scd.BufferCount = 1;
 	scd.OutputWindow = hwnd;
-	scd.Windowed = TRUE;
+	scd.Windowed = -fullscreen+1;
 	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 

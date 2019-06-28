@@ -37,8 +37,20 @@ ConfigData ConfigLoader::GetData()
 				data.WindowWidth = std::stoi(value);
 			else if (key == "WindowHeight")
 				data.WindowHeight = std::stoi(value);
+			else if (key == "Fullscreen")
+				data.Fullscreen = std::stoi(value);
+			else if (key == "SyncIntervals")
+				data.SyncIntervals = std::stoi(value);
 			else if (key == "SelectedAdapterId")
 				data.SelectedAdapterId = std::stoi(value);
+			else if (key == "RefreshRateNumerator")
+				data.RefreshRateNumerator = std::stoi(value);
+			else if (key == "RefreshRateDenominator")
+				data.RefreshRateDenominator = std::stoi(value);
+			else if (key == "MultisamplesCount")
+				data.MultisamplesCount = std::stoi(value);
+			else if (key == "MultisamplesQuality")
+				data.MultisamplesQuality = std::stoi(value);
 			else
 				continue;
 
