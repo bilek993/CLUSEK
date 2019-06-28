@@ -27,6 +27,11 @@ void Engine::Update()
 	HandleBasicInputOutput();
 }
 
+void Engine::Render()
+{
+	GraphicsRenderer.RenderFrame();
+}
+
 void Engine::UpdateInputOutputDevices()
 {
 	InputOutputDevices.Update();

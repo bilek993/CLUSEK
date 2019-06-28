@@ -10,6 +10,7 @@ public:
 	bool Initialize(HINSTANCE hInstance);
 	bool CanUpdate();
 	void Update();
+	void Render();
 private:
 	void UpdateInputOutputDevices();
 	void HandleBasicInputOutput();

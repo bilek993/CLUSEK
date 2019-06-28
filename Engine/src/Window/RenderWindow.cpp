@@ -44,7 +44,7 @@ bool RenderWindow::ProcessMessages()
 	MSG msg;
 	ZeroMemory(&msg, sizeof(MSG));
 
-	if (PeekMessage(&msg, Handle, 0, 0, PM_REMOVE))
+	while (PeekMessage(&msg, Handle, 0, 0, PM_REMOVE))
 	{
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);

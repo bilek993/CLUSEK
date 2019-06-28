@@ -1,12 +1,12 @@
 #pragma once
 #include <d3d11.h>
 #include <wrl/client.h>
-#include "AdapterReader.h"
 
 class Renderer final
 {
 public:
 	bool Initialize(HWND hwnd, int width, int height, int selectedAdapterId);
+	void RenderFrame();
 private:
 	bool InitializeDirectX(HWND hwnd, int width, int height, int selectedAdapterId);
 
