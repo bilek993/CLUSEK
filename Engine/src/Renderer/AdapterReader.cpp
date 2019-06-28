@@ -25,6 +25,8 @@ std::vector<AdapterData> AdapterReader::GetData()
 		data.Adapter = adapter;
 		const auto hrAdapter = adapter->GetDesc(&data.Description);
 
+		PrintAdapterData(data.Description, index);
+
 		if (FAILED(hrAdapter))
 			Logger::Error("Failed to get adapter description");
 
@@ -33,4 +35,14 @@ std::vector<AdapterData> AdapterReader::GetData()
 	}
 
 	return adapters;
+}
+
+void AdapterReader::PrintAdapterData(DXGI_ADAPTER_DESC description, int id)
+{
+	char charsDesc[128];
+	auto defChar = ' ';
+	WideCharToMultiByte(CP_ACP, 0, description.Description, -1, charsDesc, 128, &defChar, nullptr);
+	const std::string convertedDescription(charsDesc);
+
+	Logger::Debug("[" + std::to_string(id) + "] " + convertedDescription + " (" + std::to_string(description.DedicatedVideoMemory / 1000000) + "MB)");
 }
