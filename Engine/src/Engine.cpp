@@ -18,8 +18,6 @@ void Engine::Update()
 {
 	UpdateInputOutputDevices();
 	HandleBasicInputOutput();
-
-	Logger::Debug(std::to_string(DataFromIODevices.MouseState.x));
 }
 
 void Engine::UpdateInputOutputDevices()
@@ -37,5 +35,11 @@ void Engine::HandleBasicInputOutput()
 	else
 	{
 		InputOutputDevices.ChangeMouseToAbsoluteMode(Window.GetHandle());
+	}
+
+	if (DataFromIODevices.KeyboardState.Escape)
+	{
+		Logger::Debug("Escape key pressed. Sending quit message...");
+		Window.UserRequestedQuit();
 	}
 }

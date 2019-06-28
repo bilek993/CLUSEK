@@ -55,11 +55,14 @@ bool RenderWindow::ProcessMessages()
 	{
 		if (!IsWindow(Handle))
 		{
-			Logger::Debug("Closing window due to user request.");
-			Handle = nullptr;
-			UnregisterClass(WindowClass.c_str(), HInstance);
+			Destroy();
 			return false;
 		}
+	} 
+	else if (msg.message == WM_CLOSE)
+	{
+		Destroy();
+		return false;
 	}
 
 	return true;
@@ -68,6 +71,11 @@ bool RenderWindow::ProcessMessages()
 HWND RenderWindow::GetHandle() const
 {
 	return Handle;
+}
+
+void RenderWindow::UserRequestedQuit()
+{
+	SendMessage(Handle, WM_CLOSE, 0, 0);
 }
 
 RenderWindow::~RenderWindow()
@@ -133,4 +141,11 @@ void RenderWindow::RegisterWindowClass() const
 
 	Logger::Debug("Registering window class...");
 	RegisterClassEx(&wc);
+}
+
+void RenderWindow::Destroy()
+{
+	Logger::Debug("Closing window due to user request.");
+	Handle = nullptr;
+	UnregisterClass(WindowClass.c_str(), HInstance);
 }
