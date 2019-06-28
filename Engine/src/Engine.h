@@ -1,6 +1,7 @@
 #pragma once
 #include "Window/RenderWindow.h"
 #include "Loaders/ConfigData.h"
+#include "Window/IODevices.h"
 
 class Engine final
 {
@@ -11,4 +12,5 @@ public:
 private:
 	RenderWindow Window;
 	ConfigData Config;
+	IODevices InputOutputDevices;
 };

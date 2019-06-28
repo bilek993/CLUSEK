@@ -9,7 +9,7 @@ public:
 	bool ProcessMessages();
 	~RenderWindow();
 private:
-	void RegisterWindowClass();
+	void RegisterWindowClass() const;
 
 	HWND Handle = nullptr;
 	HINSTANCE HInstance = nullptr;

@@ -1,5 +1,7 @@
 #include "RenderWindow.h"
 #include "../Utils/Logger.h"
+#include <Keyboard.h>
+#include <Mouse.h>
 
 bool RenderWindow::Initialize(const HINSTANCE hInstance, const std::string& windowTitle, 
 	const std::string& windowClass, const int width, const int height)
@@ -73,11 +75,46 @@ RenderWindow::~RenderWindow()
 	}
 }
 
-void RenderWindow::RegisterWindowClass()
+LRESULT CALLBACK WindowProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+{
+	switch (msg)
+	{
+	case WM_ACTIVATEAPP:
+		DirectX::Mouse::ProcessMessage(msg, wParam, lParam);
+		DirectX::Keyboard::ProcessMessage(msg, wParam, lParam);
+		break;
+	case WM_INPUT:
+	case WM_MOUSEMOVE:
+	case WM_LBUTTONDOWN:
+	case WM_LBUTTONUP:
+	case WM_RBUTTONDOWN:
+	case WM_RBUTTONUP:
+	case WM_MBUTTONDOWN:
+	case WM_MBUTTONUP:
+	case WM_MOUSEWHEEL:
+	case WM_XBUTTONDOWN:
+	case WM_XBUTTONUP:
+	case WM_MOUSEHOVER:
+		DirectX::Mouse::ProcessMessage(msg, wParam, lParam);
+		break;
+	case WM_KEYDOWN:
+	case WM_SYSKEYDOWN:
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
+		DirectX::Keyboard::ProcessMessage(msg, wParam, lParam);
+		break;
+	default:
+		break;
+	}
+
+	return DefWindowProc(hwnd, msg, wParam, lParam);
+}
+
+void RenderWindow::RegisterWindowClass() const
 {
 	WNDCLASSEX wc;
 	wc.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
-	wc.lpfnWndProc = DefWindowProc;
+	wc.lpfnWndProc = WindowProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = HInstance;

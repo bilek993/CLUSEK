@@ -16,4 +16,6 @@ bool Engine::CanUpdate()
 
 void Engine::Update()
 {
+	InputOutputDevices.Update();
+	auto inputOutputData = InputOutputDevices.Get();
 }
