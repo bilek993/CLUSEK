@@ -18,6 +18,18 @@ void IODevices::Update()
 	KeyboardTracker.Update(KeyboardState);
 }
 
+void IODevices::ChangeMouseToRelativeMode(const HWND hwnd) const
+{
+	Mouse->SetWindow(hwnd);
+	Mouse->SetMode(DirectX::Mouse::Mode::MODE_RELATIVE);
+}
+
+void IODevices::ChangeMouseToAbsoluteMode(const HWND hwnd) const
+{
+	Mouse->SetWindow(hwnd);
+	Mouse->SetMode(DirectX::Mouse::Mode::MODE_ABSOLUTE);
+}
+
 IOData IODevices::Get() const
 {
 	return { MouseState, KeyboardState, MouseTracker, KeyboardTracker };

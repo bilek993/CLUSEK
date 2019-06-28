@@ -6,7 +6,12 @@ bool Engine::Initialize(HINSTANCE hInstance)
 {
 	Logger::Debug("Engine initialization...");
 	Config = ConfigLoader::GetData();
-	return Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight);
+
+	const auto windowInitSuccess = Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight);
+	if (windowInitSuccess)
+		InputOutputDevices.ChangeMouseToRelativeMode(Window.GetHandle());
+
+	return windowInitSuccess;
 }
 
 bool Engine::CanUpdate()
