@@ -9,11 +9,13 @@ class IODevices final
 public:
 	IODevices();
 	void Update();
-	void ChangeMouseToRelativeMode(HWND hwnd) const;
-	void ChangeMouseToAbsoluteMode(HWND hwnd) const;
+	void ChangeMouseToRelativeMode(HWND hwnd);
+	void ChangeMouseToAbsoluteMode(HWND hwnd);
 	IOData Get() const;
 
 private:
+	DirectX::Mouse::Mode CurrentMouseMode;
+
 	std::unique_ptr<DirectX::Mouse> Mouse;
 	std::unique_ptr<DirectX::Keyboard> Keyboard;
 

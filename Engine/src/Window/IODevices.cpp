@@ -16,19 +16,33 @@ void IODevices::Update()
 
 	MouseTracker.Update(MouseState);
 	KeyboardTracker.Update(KeyboardState);
+
+	if (CurrentMouseMode == DirectX::Mouse::Mode::MODE_ABSOLUTE)
+	{
+		MouseState.x = 0;
+		MouseState.y = 0;
+	}
 }
 
-void IODevices::ChangeMouseToRelativeMode(const HWND hwnd) const
+void IODevices::ChangeMouseToRelativeMode(const HWND hwnd)
 {
+	if (CurrentMouseMode == DirectX::Mouse::MODE_RELATIVE)
+		return;
+
 	Mouse->SetWindow(hwnd);
-	Mouse->SetMode(DirectX::Mouse::Mode::MODE_RELATIVE);
+	CurrentMouseMode = DirectX::Mouse::Mode::MODE_RELATIVE;
+	Mouse->SetMode(CurrentMouseMode);
 	Logger::Debug("Switched mouse into relative mode.");
 }
 
-void IODevices::ChangeMouseToAbsoluteMode(const HWND hwnd) const
+void IODevices::ChangeMouseToAbsoluteMode(const HWND hwnd) // Absolute mode is default mode
 {
+	if (CurrentMouseMode == DirectX::Mouse::MODE_ABSOLUTE)
+		return;
+
 	Mouse->SetWindow(hwnd);
-	Mouse->SetMode(DirectX::Mouse::Mode::MODE_ABSOLUTE);
+	CurrentMouseMode = DirectX::Mouse::Mode::MODE_ABSOLUTE;
+	Mouse->SetMode(CurrentMouseMode);
 	Logger::Debug("Switched mouse into absolute mode.");
 }
 

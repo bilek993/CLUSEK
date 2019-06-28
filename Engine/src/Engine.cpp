@@ -18,4 +18,15 @@ void Engine::Update()
 {
 	InputOutputDevices.Update();
 	auto ioDevicesData = InputOutputDevices.Get();
+
+	if (ioDevicesData.MouseState.leftButton && ioDevicesData.KeyboardState.LeftAlt)
+	{
+		InputOutputDevices.ChangeMouseToRelativeMode(Window.GetHandle());
+	}
+	else
+	{
+		InputOutputDevices.ChangeMouseToAbsoluteMode(Window.GetHandle());
+	}
+
+	Logger::Debug(std::to_string(ioDevicesData.MouseState.x));
 }
