@@ -37,6 +37,8 @@ ConfigData ConfigLoader::GetData()
 				data.WindowWidth = std::stoi(value);
 			else if (key == "WindowHeight")
 				data.WindowHeight = std::stoi(value);
+			else if (key == "SelectedAdapterId")
+				data.SelectedAdapterId = std::stoi(value);
 			else
 				continue;
 
