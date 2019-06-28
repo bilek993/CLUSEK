@@ -10,7 +10,12 @@ public:
 	bool CanUpdate();
 	void Update();
 private:
+	void UpdateInputOutputDevices();
+	void HandleBasicInputOutput();
+
 	RenderWindow Window;
 	ConfigData Config;
+
 	IODevices InputOutputDevices;
+	IOData DataFromIODevices = IOData();
 };

@@ -16,10 +16,21 @@ bool Engine::CanUpdate()
 
 void Engine::Update()
 {
-	InputOutputDevices.Update();
-	auto ioDevicesData = InputOutputDevices.Get();
+	UpdateInputOutputDevices();
+	HandleBasicInputOutput();
 
-	if (ioDevicesData.MouseState.leftButton && ioDevicesData.KeyboardState.LeftAlt)
+	Logger::Debug(std::to_string(DataFromIODevices.MouseState.x));
+}
+
+void Engine::UpdateInputOutputDevices()
+{
+	InputOutputDevices.Update();
+	DataFromIODevices = InputOutputDevices.Get();
+}
+
+void Engine::HandleBasicInputOutput()
+{
+	if (DataFromIODevices.MouseState.leftButton && DataFromIODevices.KeyboardState.LeftAlt)
 	{
 		InputOutputDevices.ChangeMouseToRelativeMode(Window.GetHandle());
 	}
@@ -27,6 +38,4 @@ void Engine::Update()
 	{
 		InputOutputDevices.ChangeMouseToAbsoluteMode(Window.GetHandle());
 	}
-
-	Logger::Debug(std::to_string(ioDevicesData.MouseState.x));
 }
