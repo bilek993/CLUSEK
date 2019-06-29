@@ -23,6 +23,9 @@ bool Renderer::Initialize(const HWND hwnd, const int width, const int height, co
 	if (!InitializeShaders())
 		return false;
 
+	if (!InitializeScene())
+		return false;
+
 	return true;
 }
 
@@ -143,5 +146,38 @@ bool Renderer::InitializeShaders()
 	}
 
 	Logger::Debug("All shaders successfully initialized.");
+	return true;
+}
+
+bool Renderer::InitializeScene()
+{
+	Logger::Debug("Preparing to initialize scene...");
+
+	Vertex v[] = 
+	{
+		Vertex(0.0f, 0.0f),
+	};
+
+	D3D11_BUFFER_DESC vertexBufferDesc;
+	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
+
+	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	vertexBufferDesc.ByteWidth = sizeof(VertexBuffer) * ARRAYSIZE(v);
+	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	vertexBufferDesc.CPUAccessFlags = 0;
+	vertexBufferDesc.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA vertexBufferData;
+	ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
+	vertexBufferData.pSysMem = v;
+
+	const auto hr = Device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, VertexBuffer.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Failed to create vertex buffer.");
+		return false;
+	}
+
+	Logger::Debug("Scene initialization succeeded...");
 	return true;
 }

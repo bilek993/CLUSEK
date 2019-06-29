@@ -3,6 +3,7 @@
 #include <wrl/client.h>
 #include "Shaders/VertexShader.h"
 #include "Shaders/PixelShader.h"
+#include "Vertex.h"
 
 class Renderer final
 {
@@ -14,6 +15,7 @@ private:
 	bool InitializeDirectX(HWND hwnd, int width, int height, int fullscreen, int selectedAdapterId,
 		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
 	bool InitializeShaders();
+	bool InitializeScene();
 
 	int SyncIntervals = 1;
 
@@ -24,4 +26,6 @@ private:
 
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
+
+	Microsoft::WRL::ComPtr<ID3D11Buffer> VertexBuffer;
 };
