@@ -105,6 +105,19 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	}
 
 	DeviceContext->OMSetRenderTargets(1, RenderTargetView.GetAddressOf(), nullptr);
+	Logger::Debug("Binding render target output merge successfully.");
+
+	D3D11_VIEWPORT viewport;
+	ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
+
+	viewport.TopLeftX = 0;
+	viewport.TopLeftY = 0;
+	viewport.Width = width;
+	viewport.Height = height;
+
+	DeviceContext->RSSetViewports(1, &viewport);
+	Logger::Debug("Viewport is now set successfully.");
+
 	Logger::Debug("DirectX initialized successfully.");
 
 	return true;
