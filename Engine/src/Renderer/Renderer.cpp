@@ -35,7 +35,7 @@ void Renderer::RenderFrame() const
 	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), bgColor);
 
 	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
-	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
+	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
 	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
@@ -44,7 +44,7 @@ void Renderer::RenderFrame() const
 	UINT offset = 0;
 	DeviceContext->IASetVertexBuffers(0, 1, VertexBuffer.GetAddressOf(), &stride, &offset);
 
-	DeviceContext->Draw(1, 0);
+	DeviceContext->Draw(3, 0);
 
 	SwapChain->Present(SyncIntervals, 0);
 }
@@ -168,7 +168,9 @@ bool Renderer::InitializeScene()
 
 	Vertex v[] = 
 	{
-		Vertex(0.0f, 0.0f),
+		Vertex(0.0f, 0.5f),
+		Vertex(0.5f, -0.5f),
+		Vertex(-0.5f, -0.5f),
 	};
 
 	D3D11_BUFFER_DESC vertexBufferDesc;
