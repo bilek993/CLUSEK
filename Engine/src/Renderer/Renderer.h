@@ -2,6 +2,7 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 #include "Shaders/VertexShader.h"
+#include "Shaders/PixelShader.h"
 
 class Renderer final
 {
@@ -22,4 +23,5 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> RenderTargetView;
 
 	VertexShader UberVertexShader;
+	PixelShader UberPixelShader;
 };

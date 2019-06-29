@@ -136,6 +136,12 @@ bool Renderer::InitializeShaders()
 		return false;
 	}
 
+	if (!UberPixelShader.Initialize(Device, L"uber_pixel_shader.cso"))
+	{
+		Logger::Error("UberPixelShader not initialized due to critical problem!");
+		return false;
+	}
+
 	Logger::Debug("All shaders successfully initialized.");
 	return true;
 }
