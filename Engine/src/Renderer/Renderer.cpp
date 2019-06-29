@@ -33,6 +33,19 @@ void Renderer::RenderFrame() const
 {
 	float bgColor[] = { 0.0f, 0.75f, 1.0f };
 	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), bgColor);
+
+	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
+	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_POINTLIST);
+
+	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
+	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
+
+	UINT stride = sizeof(Vertex);
+	UINT offset = 0;
+	DeviceContext->IASetVertexBuffers(0, 1, VertexBuffer.GetAddressOf(), &stride, &offset);
+
+	DeviceContext->Draw(1, 0);
+
 	SwapChain->Present(SyncIntervals, 0);
 }
 
