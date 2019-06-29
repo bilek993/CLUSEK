@@ -28,4 +28,6 @@ private:
 	PixelShader UberPixelShader;
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer> VertexBuffer;
+
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 };

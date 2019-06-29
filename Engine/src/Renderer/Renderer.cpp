@@ -36,6 +36,7 @@ void Renderer::RenderFrame() const
 
 	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	DeviceContext->RSSetState(RasterizerState.Get());
 
 	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
 	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
@@ -132,7 +133,21 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	viewport.Height = static_cast<float>(height);
 
 	DeviceContext->RSSetViewports(1, &viewport);
-	Logger::Debug("Viewport is now set successfully.");
+	Logger::Debug("Viewport is set successfully.");
+
+	D3D11_RASTERIZER_DESC rasterizerDesc;
+	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
+
+	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+	rasterizerDesc.CullMode = D3D11_CULL_BACK;
+
+	hr = Device->CreateRasterizerState(&rasterizerDesc, RasterizerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating rasterizer state!");
+		return false;
+	}
+	Logger::Debug("Rasterizer state is set successfully.");
 
 	Logger::Debug("DirectX initialized successfully.");
 
