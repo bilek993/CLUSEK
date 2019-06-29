@@ -21,7 +21,5 @@ private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain> SwapChain;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> RenderTargetView;
 
-	Microsoft::WRL::ComPtr<ID3D11InputLayout> InputLayout;
-
 	VertexShader UberVertexShader;
 };

@@ -112,22 +112,14 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 
 bool Renderer::InitializeShaders()
 {
-	if(!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso"))
-	{
-		Logger::Error("UberVertexShader not initialized due to critical problem!");
-		return false;
-	}
-
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
 
-	const auto hr = Device->CreateInputLayout(layout, ARRAYSIZE(layout), UberVertexShader.GetBuffer()->GetBufferPointer(), 
-		UberVertexShader.GetBuffer()->GetBufferSize(), InputLayout.GetAddressOf());
-	if (FAILED(hr))
+	if(!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", layout, ARRAYSIZE(layout)))
 	{
-		Logger::Error("Creating input layout failed!");
+		Logger::Error("UberVertexShader not initialized due to critical problem!");
 		return false;
 	}
 
