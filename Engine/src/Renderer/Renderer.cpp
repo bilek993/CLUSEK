@@ -128,8 +128,8 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
-	viewport.Width = width;
-	viewport.Height = height;
+	viewport.Width = static_cast<float>(width);
+	viewport.Height = static_cast<float>(height);
 
 	DeviceContext->RSSetViewports(1, &viewport);
 	Logger::Debug("Viewport is now set successfully.");
