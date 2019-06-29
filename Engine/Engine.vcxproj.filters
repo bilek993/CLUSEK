@@ -37,6 +37,15 @@
     <Filter Include="Source Files\Renderer">
       <UniqueIdentifier>{217bf713-3d07-4ef4-9eef-1f1902e35c9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders">
+      <UniqueIdentifier>{0eaf02bd-a306-4cee-8e3e-3ce54013e258}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Renderer\Shaders">
+      <UniqueIdentifier>{b10bb554-fa35-41db-837d-a5bb0222dd94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Shaders">
+      <UniqueIdentifier>{a59c386a-ef95-4d99-abc7-8ccd8d55ff29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -68,6 +77,9 @@
     </ClCompile>
     <ClCompile Include="src\Renderer\AdapterReader.cpp">
       <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Shaders\VertexShader.cpp">
+      <Filter>Source Files\Renderer\Shaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,5 +119,16 @@
     <ClInclude Include="src\Renderer\AdapterData.h">
       <Filter>Header Files\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\Vertex.h">
+      <Filter>Header Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Shaders\VertexShader.h">
+      <Filter>Header Files\Renderer\Shaders</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

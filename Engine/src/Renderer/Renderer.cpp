@@ -7,22 +7,30 @@ bool Renderer::Initialize(const HWND hwnd, const int width, const int height, co
 {
 	Logger::Debug("Renderer initialization...");
 	SyncIntervals = syncIntervals;
-	return InitializeDirectX(	hwnd, 
-								width, 
-								height, 
-								fullscreen, 
-								selectedAdapterId, 
-								refreshRateNumerator, 
-								refreshRateDenominator,
-								multisamplesCount, 
-								multisamplesQuality);
+	if (!InitializeDirectX(	hwnd, 
+							width, 
+							height, 
+							fullscreen, 
+							selectedAdapterId, 
+							refreshRateNumerator, 
+							refreshRateDenominator,
+							multisamplesCount, 
+							multisamplesQuality))
+	{
+		return false;
+	}
+
+	if (!InitializeShaders())
+		return false;
+
+	return true;
 }
 
 void Renderer::RenderFrame() const
 {
 	float bgColor[] = { 0.0f, 0.75f, 1.0f };
 	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), bgColor);
-	SwapChain->Present(SyncIntervals, 0); // Add vsync later
+	SwapChain->Present(SyncIntervals, 0);
 }
 
 bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int height, const int fullscreen, const int selectedAdapterId,
@@ -99,5 +107,30 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	DeviceContext->OMSetRenderTargets(1, RenderTargetView.GetAddressOf(), nullptr);
 	Logger::Debug("DirectX initialized successfully.");
 
+	return true;
+}
+
+bool Renderer::InitializeShaders()
+{
+	if(!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso"))
+	{
+		Logger::Error("UberVertexShader not initialized due to critical problem!");
+		return false;
+	}
+
+	D3D11_INPUT_ELEMENT_DESC layout[] =
+	{
+		{"POSITION", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0}
+	};
+
+	const auto hr = Device->CreateInputLayout(layout, ARRAYSIZE(layout), UberVertexShader.GetBuffer()->GetBufferPointer(), 
+		UberVertexShader.GetBuffer()->GetBufferSize(), InputLayout.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Creating input layout failed!");
+		return false;
+	}
+
+	Logger::Debug("All shaders successfully initialized.");
 	return true;
 }
