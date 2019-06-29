@@ -2,7 +2,7 @@
 #include "Loaders/ConfigLoader.h"
 #include "Utils/Logger.h"
 
-bool Engine::Initialize(HINSTANCE hInstance)
+bool Engine::Initialize(const HINSTANCE hInstance)
 {
 	Logger::Debug("Engine initialization...");
 	Config = ConfigLoader::GetData();
@@ -38,7 +38,7 @@ void Engine::Update()
 	HandleBasicInputOutput();
 }
 
-void Engine::Render()
+void Engine::Render() const
 {
 	GraphicsRenderer.RenderFrame();
 }
