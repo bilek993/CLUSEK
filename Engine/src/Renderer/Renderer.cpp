@@ -91,10 +91,16 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
+#ifdef _DEBUG
+	auto softwareLayers = D3D11_CREATE_DEVICE_DEBUG;
+#else
+	auto softwareLayers = 0;
+#endif
+
 	auto hr = D3D11CreateDeviceAndSwapChain(adapters[selectedAdapterId].Adapter,
 											D3D_DRIVER_TYPE_UNKNOWN,
 											nullptr,
-											0,
+											softwareLayers,
 											nullptr,
 											0,
 											D3D11_SDK_VERSION,
@@ -131,7 +137,7 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	depthStencilTextureDesc.MipLevels = 1;
 	depthStencilTextureDesc.ArraySize = 1;
 	depthStencilTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilTextureDesc.SampleDesc.Count = multisamplesCount;
+	depthStencilTextureDesc.SampleDesc.Count = 1;
 	depthStencilTextureDesc.SampleDesc.Quality = multisamplesQuality;
 	depthStencilTextureDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthStencilTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
