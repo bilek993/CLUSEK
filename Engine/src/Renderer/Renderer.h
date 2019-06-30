@@ -27,7 +27,12 @@ private:
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
 
-	Microsoft::WRL::ComPtr<ID3D11Buffer> VertexBuffer;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> VertexBuffer1;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> VertexBuffer2;
+
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilBuffer;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilState;
 
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 };
