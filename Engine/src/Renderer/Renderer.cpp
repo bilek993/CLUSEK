@@ -93,6 +93,7 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 
 #ifdef _DEBUG
 	auto softwareLayers = D3D11_CREATE_DEVICE_DEBUG;
+	Logger::Warning("D3D11_DEVICE in DEVICE_DEBUG mode! Rendering will be much slower!");
 #else
 	auto softwareLayers = 0;
 #endif
@@ -137,7 +138,7 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	depthStencilTextureDesc.MipLevels = 1;
 	depthStencilTextureDesc.ArraySize = 1;
 	depthStencilTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilTextureDesc.SampleDesc.Count = 1;
+	depthStencilTextureDesc.SampleDesc.Count = multisamplesCount;
 	depthStencilTextureDesc.SampleDesc.Quality = multisamplesQuality;
 	depthStencilTextureDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthStencilTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
