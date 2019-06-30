@@ -3,11 +3,6 @@
 #include "Utils/Logger.h"
 #include "Engine.h"
 
-#pragma comment(lib, "d3d11.lib")
-#pragma comment(lib, "DirectXTK.lib")
-#pragma comment(lib, "DXGI.lib")
-#pragma comment(lib, "D3DCompiler.lib")
-
 // Entry point for the Engine
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance, 
