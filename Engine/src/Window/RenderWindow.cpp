@@ -12,14 +12,24 @@ bool RenderWindow::Initialize(const HINSTANCE hInstance, const std::string& wind
 	RegisterWindowClass();
 
 	Logger::Debug("Creating window...");
+
+	RECT windowRect;
+	windowRect.left = (GetSystemMetrics(SM_CXSCREEN) / 2) - (width / 2);
+	windowRect.top = (GetSystemMetrics(SM_CYSCREEN) / 2) - (height / 2);
+	windowRect.right = windowRect.left + width;
+	windowRect.bottom = windowRect.top + height;
+
+	const auto windowStyle = WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU;
+	AdjustWindowRect(&windowRect, windowStyle, false);
+
 	Handle = CreateWindowEx(0,
 							WindowClass.c_str(),
 							windowTitle.c_str(),
-							WS_CAPTION | WS_MINIMIZEBOX | WS_SYSMENU,
-							0,
-							0,
-							width,
-							height,
+							windowStyle,
+							windowRect.left,
+							windowRect.top,
+							windowRect.right - windowRect.left,
+							windowRect.bottom - windowRect.top,
 							nullptr,
 							nullptr,
 							HInstance,
