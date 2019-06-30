@@ -43,6 +43,7 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 ## Dependencies
 
 * [DirectX Tool Kit for DirectX 11](https://github.com/microsoft/DirectXTK/tree/94e4227a5289f6e5390bf52daf3a4d15ecdf6922)
+* [EnTT](https://github.com/skypjack/entt/tree/85152bac3462c95e7be02cd4077bef8fc56de804)
 
 
 
