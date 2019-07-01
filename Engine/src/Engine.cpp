@@ -5,6 +5,14 @@
 bool Engine::Initialize(const HINSTANCE hInstance)
 {
 	Logger::Debug("Engine initialization...");
+
+	const auto hr = CoInitialize(nullptr);
+	if (FAILED(hr))
+	{
+		Logger::Error("Error when initializing COM libs.");
+		return false;
+	}
+
 	Config = ConfigLoader::GetData();
 
 	if (!Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight))

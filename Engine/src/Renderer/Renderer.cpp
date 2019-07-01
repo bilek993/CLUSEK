@@ -1,6 +1,7 @@
 #include "Renderer.h"
 #include "../Utils/Logger.h"
 #include "AdapterReader.h"
+#include <WICTextureLoader.h>
 
 bool Renderer::Initialize(const HWND hwnd, const int width, const int height, const int fullscreen, const int syncIntervals, const int selectedAdapterId,
 	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
@@ -39,17 +40,17 @@ void Renderer::RenderFrame() const
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	DeviceContext->RSSetState(RasterizerState.Get());
 	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
-
+	
+	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
 	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
 	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
 
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
-	DeviceContext->IASetVertexBuffers(0, 1, VertexBuffer2.GetAddressOf(), &stride, &offset);
-	DeviceContext->Draw(3, 0);
 
-	DeviceContext->IASetVertexBuffers(0, 1, VertexBuffer1.GetAddressOf(), &stride, &offset);
-	DeviceContext->Draw(3, 0);
+	DeviceContext->PSSetShaderResources(0, 1, ExampleTexture.GetAddressOf());
+	DeviceContext->IASetVertexBuffers(0, 1, VertexBuffer.GetAddressOf(), &stride, &offset);
+	DeviceContext->Draw(6, 0);
 
 	SwapChain->Present(SyncIntervals, 0);
 }
@@ -208,6 +209,24 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	}
 	Logger::Debug("Rasterizer state is set successfully.");
 
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	hr = Device->CreateSamplerState(&samplerDesc, SamplerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating sampler state!");
+		return false;
+	}
+	Logger::Debug("Sampler state is set successfully.");
+
 	Logger::Debug("DirectX initialized successfully.");
 	return true;
 }
@@ -217,8 +236,15 @@ bool Renderer::InitializeShaders()
 	D3D11_INPUT_ELEMENT_DESC layout[] =
 	{
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"COLOR", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
+		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
+
+	const auto hr = DirectX::CreateWICTextureFromFile(Device.Get(), L"Data/Textures/example_texture.png", nullptr, ExampleTexture.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Couldn't load example texture from file!");
+		return false;
+	}
 
 	if(!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", layout, ARRAYSIZE(layout)))
 	{
@@ -240,12 +266,15 @@ bool Renderer::InitializeScene()
 {
 	Logger::Debug("Preparing to initialize scene...");
 
-	// TRIANGLE 1
 	Vertex v[] = 
 	{
-		Vertex(0.0f, 0.5f, 0.9f, 1.0f, 0.0f, 0.0f),
-		Vertex(0.5f, -0.5f, 0.9f, 1.0f, 0.0f, 0.0f),
-		Vertex(-0.5f, -0.5f, 0.9f, 1.0f, 0.0f, 0.0f),
+		Vertex(-0.5f, -0.5f, 1.0f, 0.0f, 1.0f),
+		Vertex(-0.5f, 0.5f, 1.0f, 0.0f, 0.0f),
+		Vertex(0.5f, 0.5f, 1.0f, 1.0f, 0.0f),
+
+		Vertex(-0.5f, -0.5f, 1.0f, 0.0f, 1.0f),
+		Vertex(0.5f, 0.5f, 1.0f, 1.0f, 0.0f),
+		Vertex(0.5f, -0.5f, 1.0f, 1.0f, 1.0f),
 	};
 
 	D3D11_BUFFER_DESC vertexBufferDesc;
@@ -261,33 +290,7 @@ bool Renderer::InitializeScene()
 	ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
 	vertexBufferData.pSysMem = v;
 
-	auto hr = Device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, VertexBuffer1.GetAddressOf());
-	if (FAILED(hr))
-	{
-		Logger::Error("Failed to create vertex buffer.");
-		return false;
-	}
-
-	// TRIANGLE 2
-	Vertex v2[] =
-	{
-		Vertex(0.0f, 0.25f, 0.1f, 0.0f, 1.0f, 0.0f),
-		Vertex(0.25f, -0.25f, 0.1f, 0.0f, 1.0f, 0.0f),
-		Vertex(-0.25f, -0.25f, 0.1f, 0.0f, 1.0f, 0.0f),
-	};
-
-	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
-
-	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(Vertex) * ARRAYSIZE(v2);
-	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = 0;
-	vertexBufferDesc.MiscFlags = 0;
-
-	ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
-	vertexBufferData.pSysMem = v2;
-
-	hr = Device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, VertexBuffer2.GetAddressOf());
+	const auto hr = Device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, VertexBuffer.GetAddressOf());
 	if (FAILED(hr))
 	{
 		Logger::Error("Failed to create vertex buffer.");
