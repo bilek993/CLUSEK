@@ -45,11 +45,10 @@ void Renderer::RenderFrame() const
 	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
 	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
 
-	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
 
 	DeviceContext->PSSetShaderResources(0, 1, ExampleTexture.GetAddressOf());
-	DeviceContext->IASetVertexBuffers(0, 1, VertexBuffer.GetAddressOf(), &stride, &offset);
+	DeviceContext->IASetVertexBuffers(0, 1, TriangleVertexBuffer.GetAddressOf(), TriangleVertexBuffer.StridePtr(), &offset);
 	DeviceContext->IASetIndexBuffer(IndicesBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	
 	DeviceContext->DrawIndexed(6, 0, 0);
@@ -282,20 +281,8 @@ bool Renderer::InitializeScene()
 		0, 2, 3,
 	};
 
-	D3D11_BUFFER_DESC vertexBufferDesc;
-	ZeroMemory(&vertexBufferDesc, sizeof(vertexBufferDesc));
-
-	vertexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	vertexBufferDesc.ByteWidth = sizeof(Vertex) * ARRAYSIZE(v);
-	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	vertexBufferDesc.CPUAccessFlags = 0;
-	vertexBufferDesc.MiscFlags = 0;
-
-	D3D11_SUBRESOURCE_DATA vertexBufferData;
-	ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
-	vertexBufferData.pSysMem = v;
-
-	auto hr = Device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, VertexBuffer.GetAddressOf());
+	
+	auto hr = TriangleVertexBuffer.Initialize(Device.Get(), v, ARRAYSIZE(v));
 	if (FAILED(hr))
 	{
 		Logger::Error("Failed to create vertex buffer.");

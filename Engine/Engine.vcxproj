@@ -40,6 +40,7 @@
     <ClInclude Include="src\Utils\SystemInfoUtil.h" />
     <ClInclude Include="src\Renderer\Vertex.h" />
     <ClInclude Include="src\Renderer\Shaders\VertexShader.h" />
+    <ClInclude Include="src\Renderer\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">

@@ -4,6 +4,7 @@
 #include "Shaders/VertexShader.h"
 #include "Shaders/PixelShader.h"
 #include "Vertex.h"
+#include "VertexBuffer.h"
 
 class Renderer final
 {
@@ -27,7 +28,7 @@ private:
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
 
-	Microsoft::WRL::ComPtr<ID3D11Buffer> VertexBuffer;
+	VertexBuffer<Vertex> TriangleVertexBuffer;
 	Microsoft::WRL::ComPtr<ID3D11Buffer> IndicesBuffer;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ExampleTexture;
 
