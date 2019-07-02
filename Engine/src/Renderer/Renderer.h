@@ -5,6 +5,7 @@
 #include "Shaders/PixelShader.h"
 #include "Vertex.h"
 #include "VertexBuffer.h"
+#include "IndexBuffer.h"
 
 class Renderer final
 {
@@ -29,7 +30,7 @@ private:
 	PixelShader UberPixelShader;
 
 	VertexBuffer<Vertex> TriangleVertexBuffer;
-	Microsoft::WRL::ComPtr<ID3D11Buffer> IndicesBuffer;
+	IndexBuffer TriangleIndexBuffer;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ExampleTexture;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;

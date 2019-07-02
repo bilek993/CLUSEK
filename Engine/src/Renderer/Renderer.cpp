@@ -49,7 +49,7 @@ void Renderer::RenderFrame() const
 
 	DeviceContext->PSSetShaderResources(0, 1, ExampleTexture.GetAddressOf());
 	DeviceContext->IASetVertexBuffers(0, 1, TriangleVertexBuffer.GetAddressOf(), TriangleVertexBuffer.StridePtr(), &offset);
-	DeviceContext->IASetIndexBuffer(IndicesBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	DeviceContext->IASetIndexBuffer(TriangleIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	
 	DeviceContext->DrawIndexed(6, 0, 0);
 
@@ -280,7 +280,6 @@ bool Renderer::InitializeScene()
 		0, 1, 2,
 		0, 2, 3,
 	};
-
 	
 	auto hr = TriangleVertexBuffer.Initialize(Device.Get(), v, ARRAYSIZE(v));
 	if (FAILED(hr))
@@ -289,20 +288,7 @@ bool Renderer::InitializeScene()
 		return false;
 	}
 
-	D3D11_BUFFER_DESC indexBufferDesc;
-	ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
-
-	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexBufferDesc.ByteWidth = sizeof(DWORD) * ARRAYSIZE(indices);
-	indexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-	indexBufferDesc.CPUAccessFlags = 0;
-	indexBufferDesc.MiscFlags = 0;
-
-	D3D11_SUBRESOURCE_DATA indexBufferData;
-	ZeroMemory(&indexBufferData, sizeof(indexBufferData));
-	indexBufferData.pSysMem = indices;
-
-	hr = Device->CreateBuffer(&indexBufferDesc, &indexBufferData, IndicesBuffer.GetAddressOf());
+	hr = TriangleIndexBuffer.Initialize(Device.Get(), indices, ARRAYSIZE(indices));
 	if (FAILED(hr))
 	{
 		Logger::Error("Failed to create index buffer.");

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer\Shaders\PixelShader.cpp" />
     <ClCompile Include="src\Renderer\AdapterReader.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
@@ -25,6 +26,7 @@
     <ClCompile Include="src\Renderer\Shaders\VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\Renderer\Shaders\PixelShader.h" />
     <ClInclude Include="src\Renderer\AdapterData.h" />
     <ClInclude Include="src\Renderer\AdapterReader.h" />
