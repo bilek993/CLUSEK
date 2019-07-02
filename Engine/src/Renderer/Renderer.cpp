@@ -50,7 +50,9 @@ void Renderer::RenderFrame() const
 
 	DeviceContext->PSSetShaderResources(0, 1, ExampleTexture.GetAddressOf());
 	DeviceContext->IASetVertexBuffers(0, 1, VertexBuffer.GetAddressOf(), &stride, &offset);
-	DeviceContext->Draw(6, 0);
+	DeviceContext->IASetIndexBuffer(IndicesBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	
+	DeviceContext->DrawIndexed(6, 0, 0);
 
 	SwapChain->Present(SyncIntervals, 0);
 }
@@ -271,10 +273,13 @@ bool Renderer::InitializeScene()
 		Vertex(-0.5f, -0.5f, 1.0f, 0.0f, 1.0f),
 		Vertex(-0.5f, 0.5f, 1.0f, 0.0f, 0.0f),
 		Vertex(0.5f, 0.5f, 1.0f, 1.0f, 0.0f),
-
-		Vertex(-0.5f, -0.5f, 1.0f, 0.0f, 1.0f),
-		Vertex(0.5f, 0.5f, 1.0f, 1.0f, 0.0f),
 		Vertex(0.5f, -0.5f, 1.0f, 1.0f, 1.0f),
+	};
+
+	DWORD indices[] =
+	{
+		0, 1, 2,
+		0, 2, 3,
 	};
 
 	D3D11_BUFFER_DESC vertexBufferDesc;
@@ -290,10 +295,30 @@ bool Renderer::InitializeScene()
 	ZeroMemory(&vertexBufferData, sizeof(vertexBufferData));
 	vertexBufferData.pSysMem = v;
 
-	const auto hr = Device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, VertexBuffer.GetAddressOf());
+	auto hr = Device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, VertexBuffer.GetAddressOf());
 	if (FAILED(hr))
 	{
 		Logger::Error("Failed to create vertex buffer.");
+		return false;
+	}
+
+	D3D11_BUFFER_DESC indexBufferDesc;
+	ZeroMemory(&indexBufferDesc, sizeof(indexBufferDesc));
+
+	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	indexBufferDesc.ByteWidth = sizeof(DWORD) * ARRAYSIZE(indices);
+	indexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+	indexBufferDesc.CPUAccessFlags = 0;
+	indexBufferDesc.MiscFlags = 0;
+
+	D3D11_SUBRESOURCE_DATA indexBufferData;
+	ZeroMemory(&indexBufferData, sizeof(indexBufferData));
+	indexBufferData.pSysMem = indices;
+
+	hr = Device->CreateBuffer(&indexBufferDesc, &indexBufferData, IndicesBuffer.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Failed to create index buffer.");
 		return false;
 	}
 

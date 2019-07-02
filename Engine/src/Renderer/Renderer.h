@@ -28,6 +28,7 @@ private:
 	PixelShader UberPixelShader;
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer> VertexBuffer;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> IndicesBuffer;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ExampleTexture;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
