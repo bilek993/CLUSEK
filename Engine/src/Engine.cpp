@@ -45,7 +45,7 @@ void Engine::Update()
 	HandleBasicInputOutput();
 }
 
-void Engine::Render() const
+void Engine::Render()
 {
 	GraphicsRenderer.RenderFrame();
 }

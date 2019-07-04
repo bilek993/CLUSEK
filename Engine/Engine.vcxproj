@@ -26,6 +26,7 @@
     <ClCompile Include="src\Renderer\Shaders\VertexShader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\Renderer\Shaders\PixelShader.h" />

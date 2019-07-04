@@ -10,7 +10,7 @@ public:
 	bool Initialize(HINSTANCE hInstance, const ConfigData configData);
 	bool CanUpdate();
 	void Update();
-	void Render() const;
+	void Render();
 private:
 	void UpdateInputOutputDevices();
 	void HandleBasicInputOutput();

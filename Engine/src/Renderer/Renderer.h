@@ -6,13 +6,15 @@
 #include "Vertex.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "ConstantBufferTypes.h"
+#include "ConstantBuffer.h"
 
 class Renderer final
 {
 public:
 	bool Initialize(HWND hwnd, int width, int height, int fullscreen, int syncIntervals, int selectedAdapterId, 
 		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
-	void RenderFrame() const;
+	void RenderFrame();
 private:
 	bool InitializeDirectX(HWND hwnd, int width, int height, int fullscreen, int selectedAdapterId,
 		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
@@ -28,7 +30,7 @@ private:
 
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
-	Microsoft::WRL::ComPtr<ID3D11Buffer> ConstantBuffer;
+	ConstantBuffer<CB_VS_UberVertexShader> UberShaderConstantBuffer;
 
 	VertexBuffer<Vertex> TriangleVertexBuffer;
 	IndexBuffer TriangleIndexBuffer;
