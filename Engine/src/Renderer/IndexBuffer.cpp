@@ -1,4 +1,5 @@
 #include "IndexBuffer.h"
+#include "../Utils/Logger.h"
 
 ID3D11Buffer* IndexBuffer::Get() const
 {
@@ -17,6 +18,8 @@ UINT IndexBuffer::GetBufferSize() const
 
 HRESULT IndexBuffer::Initialize(ID3D11Device *device, const DWORD *data, const UINT numIndices)
 {
+	Logger::Debug("Index buffer initialization...");
+
 	BufferSize = numIndices;
 
 	D3D11_BUFFER_DESC indexBufferDesc;

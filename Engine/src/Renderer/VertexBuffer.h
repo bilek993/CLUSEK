@@ -40,6 +40,8 @@ public:
 
 	HRESULT Initialize(ID3D11Device *device, T *data, UINT numVertices)
 	{
+		Logger::Debug("Vertex buffer initialization...");
+
 		BufferSize = numVertices;
 		Stride = sizeof(T);
 
