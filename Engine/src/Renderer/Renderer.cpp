@@ -2,6 +2,7 @@
 #include "../Utils/Logger.h"
 #include "AdapterReader.h"
 #include <WICTextureLoader.h>
+#include "ConstantBufferTypes.h"
 
 bool Renderer::Initialize(const HWND hwnd, const int width, const int height, const int fullscreen, const int syncIntervals, const int selectedAdapterId,
 	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
@@ -46,6 +47,19 @@ void Renderer::RenderFrame() const
 	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
 
 	UINT offset = 0;
+
+	CB_VS_UberVertexShader data;
+	data.OffsetX = 0.0f;
+	data.OffsetY = 0.5f;
+	D3D11_MAPPED_SUBRESOURCE mappedSubresource;
+	const auto hr = DeviceContext->Map(ConstantBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedSubresource);
+
+	if (FAILED(hr))
+		Logger::Warning("Failed to map resources.");
+
+	CopyMemory(mappedSubresource.pData, &data, sizeof(CB_VS_UberVertexShader));
+	DeviceContext->Unmap(ConstantBuffer.Get(), 0);
+	DeviceContext->VSSetConstantBuffers(0, 1, ConstantBuffer.GetAddressOf());
 
 	DeviceContext->PSSetShaderResources(0, 1, ExampleTexture.GetAddressOf());
 	DeviceContext->IASetVertexBuffers(0, 1, TriangleVertexBuffer.GetAddressOf(), TriangleVertexBuffer.StridePtr(), &offset);
@@ -292,6 +306,24 @@ bool Renderer::InitializeScene()
 	if (FAILED(hr))
 	{
 		Logger::Error("Failed to create index buffer.");
+		return false;
+	}
+
+	Logger::Debug("Constant buffer initialization...");
+	D3D11_BUFFER_DESC constBufferDesc;
+	ZeroMemory(&constBufferDesc, sizeof(D3D11_BUFFER_DESC));
+
+	constBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	constBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	constBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	constBufferDesc.MiscFlags = 0;
+	constBufferDesc.ByteWidth = static_cast<UINT>(sizeof(CB_VS_UberVertexShader) + (16 - (sizeof(CB_VS_UberVertexShader) % 16)));
+	constBufferDesc.StructureByteStride = 0;
+
+	hr = Device->CreateBuffer(&constBufferDesc, nullptr, ConstantBuffer.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Failed to create constant buffer.");
 		return false;
 	}
 

@@ -28,6 +28,7 @@ private:
 
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> ConstantBuffer;
 
 	VertexBuffer<Vertex> TriangleVertexBuffer;
 	IndexBuffer TriangleIndexBuffer;
