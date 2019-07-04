@@ -7,7 +7,7 @@
 class Engine final
 {
 public:
-	bool Initialize(HINSTANCE hInstance);
+	bool Initialize(HINSTANCE hInstance, const ConfigData configData);
 	bool CanUpdate();
 	void Update();
 	void Render() const;

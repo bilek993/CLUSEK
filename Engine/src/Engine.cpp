@@ -1,8 +1,7 @@
 #include "Engine.h"
-#include "Loaders/ConfigLoader.h"
 #include "Utils/Logger.h"
 
-bool Engine::Initialize(const HINSTANCE hInstance)
+bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 {
 	Logger::Debug("Engine initialization...");
 
@@ -13,7 +12,7 @@ bool Engine::Initialize(const HINSTANCE hInstance)
 		return false;
 	}
 
-	Config = ConfigLoader::GetData();
+	Config = configData;
 
 	if (!Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight))
 		return false;

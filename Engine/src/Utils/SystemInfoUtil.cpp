@@ -4,7 +4,6 @@
 
 void SystemInfoUtil::LogInfo()
 {
-#ifdef _DEBUG
 	Logger::Debug("Getting system info...");
 	SYSTEM_INFO info;
 	GetSystemInfo(&info);
@@ -17,5 +16,4 @@ void SystemInfoUtil::LogInfo()
 	Logger::Debug("Processor revision: " + std::to_string(info.wProcessorRevision));
 	Logger::Debug("Active processor mask: " + std::to_string(info.dwActiveProcessorMask));
 	Logger::Debug("Allocation Granularity: " + std::to_string(info.dwAllocationGranularity));
-#endif
 }

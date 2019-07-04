@@ -29,7 +29,11 @@ ConfigData ConfigLoader::GetData()
 			auto key = line.substr(0, colonPosition);
 			auto value = line.substr(colonPosition + 1);
 
-			if (key == "WindowClassName")
+			if (key == "LoggerEnabled")
+				data.LoggerEnabled = std::stoi(value);
+			else if (key == "LoggerDestination")
+				data.LoggerDestination = value;
+			else if (key == "WindowClassName")
 				data.WindowClassName = value;
 			else if (key == "WindowTitle")
 				data.WindowTitle = value;

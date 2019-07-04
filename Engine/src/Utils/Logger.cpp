@@ -3,43 +3,54 @@
 #include <chrono>
 
 FILE* Logger::Fp = nullptr;
+bool Logger::IsEnabled = false;
+std::string Logger::Destination = "";
 
-void Logger::Initialize()
+void Logger::Initialize(const bool enabled, const std::string& destination)
 {
-#ifdef _DEBUG
-	AllocConsole();
-	freopen_s(&Fp,"CONOUT$", "w", stdout);
-#endif
+	IsEnabled = enabled;
+	Destination = destination;
+
+	if (!IsEnabled)
+		return;
+
+	if (Destination == "CONOUT$")
+		AllocConsole();
+
+	freopen_s(&Fp, Destination.c_str(), "w", stdout);
 }
 
 void Logger::Free()
 {
-#ifdef _DEBUG
+	if (!IsEnabled)
+		return;
+
 	fclose(Fp);
 	FreeConsole();
-#endif
 }
 
 void Logger::Debug(const std::string& input)
 {
-#ifdef _DEBUG
+	if (!IsEnabled)
+		return;
+
 	printf(GenerateDebugString(input, "DBG").c_str());
-#endif
 }
 
 void Logger::Warning(const std::string& input)
 {
-#ifdef _DEBUG
+	if (!IsEnabled)
+		return;
+
 	printf(GenerateDebugString(input, "WRN").c_str());
-#endif
 }
 
 void Logger::Error(const std::string& input)
 {
-#ifdef _DEBUG
-	printf(GenerateDebugString(input, "ERR").c_str());
-#endif
 	MessageBox(nullptr, input.c_str(), "Fatal error", MB_ICONSTOP | MB_OK);
+
+	if (IsEnabled)
+		printf(GenerateDebugString(input, "ERR").c_str());
 }
 
 std::string Logger::GenerateDebugString(const std::string& input, const std::string& level)

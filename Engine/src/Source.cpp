@@ -2,18 +2,21 @@
 #include "Utils/SystemInfoUtil.h"
 #include "Utils/Logger.h"
 #include "Engine.h"
+#include "Loaders/ConfigLoader.h"
 
 // Entry point for the Engine
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	_In_opt_ HINSTANCE hPrevInstance, 
 	_In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
-	Logger::Initialize();
+	const auto configData = ConfigLoader::GetData();
+
+	Logger::Initialize(configData.LoggerEnabled, configData.LoggerDestination);
 	Logger::Debug("Initialized logger system.");
 	SystemInfoUtil::LogInfo();
 
 	Engine engine;
-	engine.Initialize(hInstance);
+	engine.Initialize(hInstance, configData);
 
 	while (engine.CanUpdate())
 	{
