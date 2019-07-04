@@ -38,6 +38,7 @@ public:
 		constBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		constBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		constBufferDesc.MiscFlags = 0;
+		// For buffer alignment data must be packed into 4-byte boundaries (more info: https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-packing-rules).
 		constBufferDesc.ByteWidth = static_cast<UINT>(sizeof(CB_VS_UberVertexShader) + (16 - (sizeof(CB_VS_UberVertexShader) % 16)));
 		constBufferDesc.StructureByteStride = 0;
 
