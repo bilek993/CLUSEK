@@ -8,14 +8,20 @@ std::string Logger::Destination = "";
 
 void Logger::Initialize(const bool enabled, const std::string& destination)
 {
-	IsEnabled = enabled;
-	Destination = destination;
-
-	if (!IsEnabled)
+	if (!enabled)
 		return;
 
-	if (Destination == "CONOUT$")
+	if (IsEnabled)
+	{
+		Error("Logger already initialized! Cannot allocate two loggers at once.");
+		return;
+	}
+
+	if (destination == "CONOUT$")
 		AllocConsole();
+
+	IsEnabled = enabled;
+	Destination = destination;
 
 	freopen_s(&Fp, Destination.c_str(), "w", stdout);
 }
