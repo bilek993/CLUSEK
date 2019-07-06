@@ -47,8 +47,8 @@ void Renderer::RenderFrame()
 
 	UINT offset = 0;
 
-	UberShaderConstantBuffer.Data.OffsetX = 0.0f;
-	UberShaderConstantBuffer.Data.OffsetY = 0.5f;
+	UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, DirectX::XM_PIDIV4) * DirectX::XMMatrixTranslation(0.0f, -0.5f, 0.0f);
+	UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixTranspose(UberShaderConstantBuffer.Data.Mat);
 	if (!UberShaderConstantBuffer.ApplyChanges())
 		return;
 

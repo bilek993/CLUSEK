@@ -1,7 +1,6 @@
 cbuffer ConstBuffer : register(b0)
 {
-	float OffsetX;
-	float OffsetY;
+    float4x4 Mat;
 };
 
 struct VS_INPUT
@@ -19,9 +18,7 @@ struct VS_OUTPUT
 VS_OUTPUT main(VS_INPUT input)
 {
     VS_OUTPUT output;
-	input.Position.x += OffsetX;
-	input.Position.y += OffsetY;
-    output.Position = float4(input.Position, 1.0f);
+    output.Position = mul(float4(input.Position, 1.0f), Mat);
     output.TextureCoord = input.TextureCoord;
 
     return output;

@@ -3,6 +3,5 @@
 
 struct CB_VS_UberVertexShader
 {
-	float OffsetX = 0;
-	float OffsetY = 0;
+	DirectX::XMMATRIX Mat;
 };
