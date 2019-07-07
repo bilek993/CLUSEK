@@ -50,7 +50,11 @@ void Renderer::RenderFrame()
 	UINT offset = 0;
 
 	auto worldMatrix = DirectX::XMMatrixIdentity();
-	auto eyePosition = DirectX::XMVectorSet(0.0f, -4.0f, -2.0f, 0.0f);
+	static auto eyePosition = DirectX::XMVectorSet(0.0f, -4.0f, -2.0f, 0.0f);
+	DirectX::XMFLOAT3 eyePositionMutable;
+	DirectX::XMStoreFloat3(&eyePositionMutable, eyePosition);
+	eyePositionMutable.y += 0.025;
+	eyePosition = DirectX::XMLoadFloat3(&eyePositionMutable);
 	auto lookAtPosition = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
 	auto upVector = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	auto viewMatrix = DirectX::XMMatrixLookAtLH(eyePosition, lookAtPosition, upVector);
