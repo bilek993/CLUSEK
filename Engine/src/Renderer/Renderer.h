@@ -16,10 +16,13 @@ public:
 		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
 	void RenderFrame();
 private:
-	bool InitializeDirectX(HWND hwnd, int width, int height, int fullscreen, int selectedAdapterId,
+	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId,
 		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
 	bool InitializeShaders();
 	bool InitializeScene();
+
+	int WindowWidth = 0;
+	int WindowHeight = 0;
 
 	int SyncIntervals = 1;
 

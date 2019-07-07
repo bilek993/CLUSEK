@@ -7,10 +7,12 @@ bool Renderer::Initialize(const HWND hwnd, const int width, const int height, co
 	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
 {
 	Logger::Debug("Renderer initialization...");
+
 	SyncIntervals = syncIntervals;
-	if (!InitializeDirectX(	hwnd, 
-							width, 
-							height, 
+	WindowWidth = width;
+	WindowHeight = height;
+
+	if (!InitializeDirectX(	hwnd,
 							fullscreen, 
 							selectedAdapterId, 
 							refreshRateNumerator, 
@@ -47,7 +49,19 @@ void Renderer::RenderFrame()
 
 	UINT offset = 0;
 
-	UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixRotationRollPitchYaw(0.0f, 0.0f, DirectX::XM_PIDIV4) * DirectX::XMMatrixTranslation(0.0f, -0.5f, 0.0f);
+	auto worldMatrix = DirectX::XMMatrixIdentity();
+	auto eyePosition = DirectX::XMVectorSet(0.0f, -4.0f, -2.0f, 0.0f);
+	auto lookAtPosition = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+	auto upVector = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	auto viewMatrix = DirectX::XMMatrixLookAtLH(eyePosition, lookAtPosition, upVector);
+	auto fovDegrees = 90.0f;
+	auto fovRadians = (fovDegrees / 360.0f) * DirectX::XM_2PI;
+	auto aspectRatio = static_cast<float>(WindowWidth) / static_cast<float>(WindowHeight);
+	auto nearZ = 0.1f;
+	auto farZ = 1000.0f;
+	auto projectionMatrix = DirectX::XMMatrixPerspectiveFovLH(fovRadians, aspectRatio, nearZ, farZ);
+
+	UberShaderConstantBuffer.Data.Mat = worldMatrix * viewMatrix * projectionMatrix;
 	UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixTranspose(UberShaderConstantBuffer.Data.Mat);
 	if (!UberShaderConstantBuffer.ApplyChanges())
 		return;
@@ -62,7 +76,7 @@ void Renderer::RenderFrame()
 	SwapChain->Present(SyncIntervals, 0);
 }
 
-bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int height, const int fullscreen, const int selectedAdapterId,
+bool Renderer::InitializeDirectX(const HWND hwnd, const int fullscreen, const int selectedAdapterId,
 	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
 {
 	auto adapters = AdapterReader::GetData();
@@ -81,8 +95,8 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	DXGI_SWAP_CHAIN_DESC scd;
 	ZeroMemory(&scd, sizeof(DXGI_SAMPLE_DESC));
 
-	scd.BufferDesc.Width = width;
-	scd.BufferDesc.Height = height;
+	scd.BufferDesc.Width = WindowWidth;
+	scd.BufferDesc.Height = WindowHeight;
 	scd.BufferDesc.RefreshRate.Numerator = refreshRateNumerator;
 	scd.BufferDesc.RefreshRate.Denominator = refreshRateDenominator;
 	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -141,8 +155,8 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 	}
 
 	D3D11_TEXTURE2D_DESC depthStencilTextureDesc;
-	depthStencilTextureDesc.Width = width;
-	depthStencilTextureDesc.Height = height;
+	depthStencilTextureDesc.Width = WindowWidth;
+	depthStencilTextureDesc.Height = WindowHeight;
 	depthStencilTextureDesc.MipLevels = 1;
 	depthStencilTextureDesc.ArraySize = 1;
 	depthStencilTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
@@ -194,8 +208,8 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int width, const int hei
 
 	viewport.TopLeftX = 0;
 	viewport.TopLeftY = 0;
-	viewport.Width = static_cast<float>(width);
-	viewport.Height = static_cast<float>(height);
+	viewport.Width = static_cast<float>(WindowWidth);
+	viewport.Height = static_cast<float>(WindowHeight);
 	viewport.MinDepth = 0.0f;
 	viewport.MaxDepth = 1.0f;
 
@@ -275,10 +289,10 @@ bool Renderer::InitializeScene()
 
 	Vertex v[] = 
 	{
-		Vertex(-0.5f, -0.5f, 1.0f, 0.0f, 1.0f),
-		Vertex(-0.5f, 0.5f, 1.0f, 0.0f, 0.0f),
-		Vertex(0.5f, 0.5f, 1.0f, 1.0f, 0.0f),
-		Vertex(0.5f, -0.5f, 1.0f, 1.0f, 1.0f),
+		Vertex(-0.5f, -0.5f, 0.0f, 0.0f, 1.0f),
+		Vertex(-0.5f, 0.5f, 0.0f, 0.0f, 0.0f),
+		Vertex(0.5f, 0.5f, 0.0f, 1.0f, 0.0f),
+		Vertex(0.5f, -0.5f, 0.0f, 1.0f, 1.0f),
 	};
 
 	DWORD indices[] =
