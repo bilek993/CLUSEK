@@ -45,7 +45,40 @@ bool Engine::CanUpdate()
 void Engine::Update()
 {
 	UpdateInputOutputDevices();
-	HandleBasicInputOutput();
+	HandleClosingWithButton();
+
+	// START OF TMP CODE
+	// Remove this as fast as possible and replace with proper ECS handling
+	auto camera = GraphicsRenderer.GetPointerToCamera();
+
+	if (DataFromIODevices.MouseState.rightButton)
+	{
+		InputOutputDevices.ChangeMouseToRelativeMode(Window.GetHandle());
+		camera->AdjustRotation(static_cast<float>(DataFromIODevices.MouseState.y) * 0.01f, static_cast<float>(DataFromIODevices.MouseState.x) * 0.01f, 0.0f);
+	}
+	else
+	{
+		InputOutputDevices.ChangeMouseToAbsoluteMode(Window.GetHandle());
+	}
+
+	const auto cameraSpeed = 0.01f;
+	if (DataFromIODevices.KeyboardState.W)
+	{
+		camera->AdjustPosition(DirectX::XMVectorScale(camera->GetForwardVector(), cameraSpeed));
+	}
+	if (DataFromIODevices.KeyboardState.A)
+	{
+		camera->AdjustPosition(DirectX::XMVectorScale(camera->GetRightVector(), -cameraSpeed));
+	}
+	if (DataFromIODevices.KeyboardState.S)
+	{
+		camera->AdjustPosition(DirectX::XMVectorScale(camera->GetForwardVector(), -cameraSpeed));
+	}
+	if (DataFromIODevices.KeyboardState.D)
+	{
+		camera->AdjustPosition(DirectX::XMVectorScale(camera->GetRightVector(), cameraSpeed));
+	}
+	// END OF TMP CODE
 }
 
 void Engine::Render()
@@ -59,17 +92,8 @@ void Engine::UpdateInputOutputDevices()
 	DataFromIODevices = InputOutputDevices.Get();
 }
 
-void Engine::HandleBasicInputOutput()
+void Engine::HandleClosingWithButton()
 {
-	if (DataFromIODevices.MouseState.leftButton && DataFromIODevices.KeyboardState.LeftAlt)
-	{
-		InputOutputDevices.ChangeMouseToRelativeMode(Window.GetHandle());
-	}
-	else
-	{
-		InputOutputDevices.ChangeMouseToAbsoluteMode(Window.GetHandle());
-	}
-
 	if (DataFromIODevices.KeyboardState.Escape)
 	{
 		Logger::Debug("Escape key pressed. Sending quit message...");

@@ -13,6 +13,9 @@ public:
 	const DirectX::XMVECTOR &GetPositionVector() const;
 	const DirectX::XMVECTOR &GetRotationVector() const;
 
+	const DirectX::XMVECTOR &GetForwardVector() const;
+	const DirectX::XMVECTOR &GetRightVector() const;
+
 	DirectX::XMFLOAT3 GetPositionFloat3() const;
 	DirectX::XMFLOAT3 GetRotationFloat3() const;
 
@@ -36,6 +39,10 @@ private:
 	DirectX::XMVECTOR PositionVector;
 	DirectX::XMVECTOR RotationVector;
 
+	DirectX::XMVECTOR VectorForward;
+	DirectX::XMVECTOR VectorRight;
+
 	static const DirectX::XMVECTOR FORWARD_VECTOR;
 	static const DirectX::XMVECTOR UP_VECTOR;
+	static const DirectX::XMVECTOR RIGHT_VECTOR;
 };

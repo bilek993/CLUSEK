@@ -13,7 +13,7 @@ public:
 	void Render();
 private:
 	void UpdateInputOutputDevices();
-	void HandleBasicInputOutput();
+	void HandleClosingWithButton();
 
 	RenderWindow Window;
 	ConfigData Config;
