@@ -11,9 +11,10 @@ public:
 	const DirectX::XMMATRIX &GetProjectionMatrix() const;
 
 	const DirectX::XMVECTOR &GetPositionVector() const;
-	DirectX::XMFLOAT3 GetPositionFloat3() const;
 	const DirectX::XMVECTOR &GetRotationVector() const;
-	DirectX::XMFLOAT3 GetRotationFloat() const;
+
+	DirectX::XMFLOAT3 GetPositionFloat3() const;
+	DirectX::XMFLOAT3 GetRotationFloat3() const;
 
 	void SetPosition(const DirectX::XMVECTOR &pos);
 	void SetPosition(float x, float y, float z);
@@ -33,6 +34,6 @@ private:
 	DirectX::XMVECTOR PositionVector;
 	DirectX::XMVECTOR RotationVector;
 
-	const DirectX::XMVECTOR ForwardVector = DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
-	const DirectX::XMVECTOR UpVector = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+	static const DirectX::XMVECTOR FORWARD_VECTOR;
+	static const DirectX::XMVECTOR UP_VECTOR;
 };

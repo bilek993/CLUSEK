@@ -1,6 +1,9 @@
 #include "Camera.h"
 #include "../Utils/Logger.h"
 
+const DirectX::XMVECTOR Camera::FORWARD_VECTOR = DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
+const DirectX::XMVECTOR Camera::UP_VECTOR = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+
 Camera::Camera()
 {
 	Logger::Debug("Creating new instance of camera...");
@@ -31,6 +34,11 @@ const DirectX::XMVECTOR& Camera::GetPositionVector() const
 	return PositionVector;
 }
 
+const DirectX::XMVECTOR& Camera::GetRotationVector() const
+{
+	return RotationVector;
+}
+
 DirectX::XMFLOAT3 Camera::GetPositionFloat3() const
 {
 	DirectX::XMFLOAT3 returnedValue;
@@ -38,12 +46,7 @@ DirectX::XMFLOAT3 Camera::GetPositionFloat3() const
 	return returnedValue;
 }
 
-const DirectX::XMVECTOR& Camera::GetRotationVector() const
-{
-	return RotationVector;
-}
-
-DirectX::XMFLOAT3 Camera::GetRotationFloat() const
+DirectX::XMFLOAT3 Camera::GetRotationFloat3() const
 {
 	DirectX::XMFLOAT3 returnedValue;
 	XMStoreFloat3(&returnedValue, RotationVector);
@@ -113,8 +116,8 @@ void Camera::AdjustRotation(const float x, const float y, const float z)
 void Camera::UpdateViewMatrix()
 {
 	const auto cameraRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(RotationVector);
-	auto cameraTarget = XMVector3TransformCoord(ForwardVector, cameraRotationMatrix);
+	auto cameraTarget = XMVector3TransformCoord(FORWARD_VECTOR, cameraRotationMatrix);
 	cameraTarget = DirectX::XMVectorAdd(cameraTarget, PositionVector);
-	const auto upDirection = XMVector3TransformCoord(UpVector, cameraRotationMatrix);
+	const auto upDirection = XMVector3TransformCoord(UP_VECTOR, cameraRotationMatrix);
 	ViewMatrix = DirectX::XMMatrixLookAtLH(this->PositionVector, cameraTarget, upDirection);
 }
