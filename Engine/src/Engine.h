@@ -3,6 +3,7 @@
 #include "Loaders/ConfigData.h"
 #include "Window/IODevices.h"
 #include "Renderer/Renderer.h"
+#include "Timer.h"
 
 class Engine final
 {
@@ -19,6 +20,8 @@ private:
 	ConfigData Config;
 
 	Renderer GraphicsRenderer;
+
+	Timer Time;
 
 	IODevices InputOutputDevices;
 	IOData DataFromIODevices = IOData();

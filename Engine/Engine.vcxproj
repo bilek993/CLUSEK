@@ -25,6 +25,7 @@
     <ClCompile Include="src\Utils\StringUtil.cpp" />
     <ClCompile Include="src\Utils\SystemInfoUtil.cpp" />
     <ClCompile Include="src\Renderer\Shaders\VertexShader.cpp" />
+    <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\Camera.h" />
@@ -47,6 +48,7 @@
     <ClInclude Include="src\Renderer\Vertex.h" />
     <ClInclude Include="src\Renderer\Shaders\VertexShader.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
+    <ClInclude Include="src\Timer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">

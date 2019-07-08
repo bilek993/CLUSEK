@@ -44,6 +44,8 @@ bool Engine::CanUpdate()
 
 void Engine::Update()
 {
+	const auto deltaTime = Time.GetDeltaTimeAndRestart();
+
 	UpdateInputOutputDevices();
 	HandleClosingWithButton();
 
@@ -54,14 +56,15 @@ void Engine::Update()
 	if (DataFromIODevices.MouseState.rightButton)
 	{
 		InputOutputDevices.ChangeMouseToRelativeMode(Window.GetHandle());
-		camera->AdjustRotation(static_cast<float>(DataFromIODevices.MouseState.y) * 0.01f, static_cast<float>(DataFromIODevices.MouseState.x) * 0.01f, 0.0f);
+		camera->AdjustRotation(static_cast<float>(DataFromIODevices.MouseState.y) * 0.001f * deltaTime, 
+			static_cast<float>(DataFromIODevices.MouseState.x) * 0.001f * deltaTime, 0.0f);
 	}
 	else
 	{
 		InputOutputDevices.ChangeMouseToAbsoluteMode(Window.GetHandle());
 	}
 
-	auto cameraSpeed = 0.01f;
+	auto cameraSpeed = 0.0025f * deltaTime;
 	if (DataFromIODevices.KeyboardState.LeftShift || DataFromIODevices.KeyboardState.RightShift)
 		cameraSpeed *= 5;
 
