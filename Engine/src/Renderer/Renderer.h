@@ -8,6 +8,7 @@
 #include "IndexBuffer.h"
 #include "ConstantBufferTypes.h"
 #include "ConstantBuffer.h"
+#include "Camera.h"
 
 class Renderer final
 {
@@ -46,4 +47,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
+
+	Camera RenderCamera;
 };

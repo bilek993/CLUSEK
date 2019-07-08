@@ -49,23 +49,9 @@ void Renderer::RenderFrame()
 
 	UINT offset = 0;
 
-	auto worldMatrix = DirectX::XMMatrixIdentity();
-	static auto eyePosition = DirectX::XMVectorSet(0.0f, -4.0f, -2.0f, 0.0f);
-	DirectX::XMFLOAT3 eyePositionMutable;
-	DirectX::XMStoreFloat3(&eyePositionMutable, eyePosition);
-	eyePositionMutable.y += 0.025;
-	eyePosition = DirectX::XMLoadFloat3(&eyePositionMutable);
-	auto lookAtPosition = DirectX::XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
-	auto upVector = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-	auto viewMatrix = DirectX::XMMatrixLookAtLH(eyePosition, lookAtPosition, upVector);
-	auto fovDegrees = 90.0f;
-	auto fovRadians = (fovDegrees / 360.0f) * DirectX::XM_2PI;
-	auto aspectRatio = static_cast<float>(WindowWidth) / static_cast<float>(WindowHeight);
-	auto nearZ = 0.1f;
-	auto farZ = 1000.0f;
-	auto projectionMatrix = DirectX::XMMatrixPerspectiveFovLH(fovRadians, aspectRatio, nearZ, farZ);
+	const auto worldMatrix = DirectX::XMMatrixIdentity();
 
-	UberShaderConstantBuffer.Data.Mat = worldMatrix * viewMatrix * projectionMatrix;
+	UberShaderConstantBuffer.Data.Mat = worldMatrix * RenderCamera.GetViewMatrix() * RenderCamera.GetProjectionMatrix();
 	UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixTranspose(UberShaderConstantBuffer.Data.Mat);
 	if (!UberShaderConstantBuffer.ApplyChanges())
 		return;
@@ -325,6 +311,9 @@ bool Renderer::InitializeScene()
 		Logger::Error("Failed to create constant buffer.");
 		return false;
 	}
+
+	RenderCamera.SetCameraSettings(90.0f, static_cast<float>(WindowWidth) / static_cast<float>(WindowHeight), 0.1f, 1000.0f);
+	RenderCamera.SetPosition(0.0f, 0.0f, -2.0f);
 
 	Logger::Debug("Scene initialization succeeded...");
 	return true;
