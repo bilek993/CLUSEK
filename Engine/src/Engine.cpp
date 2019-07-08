@@ -61,7 +61,10 @@ void Engine::Update()
 		InputOutputDevices.ChangeMouseToAbsoluteMode(Window.GetHandle());
 	}
 
-	const auto cameraSpeed = 0.01f;
+	auto cameraSpeed = 0.01f;
+	if (DataFromIODevices.KeyboardState.LeftShift || DataFromIODevices.KeyboardState.RightShift)
+		cameraSpeed *= 5;
+
 	if (DataFromIODevices.KeyboardState.W)
 	{
 		camera->AdjustPosition(DirectX::XMVectorScale(camera->GetForwardVector(), cameraSpeed));
