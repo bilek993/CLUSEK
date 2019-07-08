@@ -19,6 +19,11 @@ public:
 	void SetPosition(float x, float y, float z);
 	void SetRotation(const DirectX::XMVECTOR &rot);
 	void SetRotation(float x, float y, float z);
+
+	void AdjustPosition(const DirectX::XMVECTOR &pos);
+	void AdjustPosition(float x, float y, float z);
+	void AdjustRotation(const DirectX::XMVECTOR &rot);
+	void AdjustRotation(float x, float y, float z);
 private:
 	void UpdateViewMatrix();
 

@@ -53,6 +53,7 @@ DirectX::XMFLOAT3 Camera::GetRotationFloat() const
 void Camera::SetPosition(const DirectX::XMVECTOR& pos)
 {
 	PositionVector = pos;
+	UpdateViewMatrix();
 }
 
 void Camera::SetPosition(const float x, const float y, const float z)
@@ -65,12 +66,47 @@ void Camera::SetPosition(const float x, const float y, const float z)
 void Camera::SetRotation(const DirectX::XMVECTOR& rot)
 {
 	RotationVector = rot;
+	UpdateViewMatrix();
 }
 
 void Camera::SetRotation(const float x, const float y, const float z)
 {
 	auto newRotation = DirectX::XMFLOAT3(x, y, z);
 	RotationVector = XMLoadFloat3(&newRotation);
+	UpdateViewMatrix();
+}
+
+void Camera::AdjustPosition(const DirectX::XMVECTOR& pos)
+{
+	PositionVector = DirectX::XMVectorAdd(PositionVector, pos);
+	UpdateViewMatrix();
+}
+
+void Camera::AdjustPosition(const float x, const float y, const float z)
+{
+	DirectX::XMFLOAT3 storedValue;
+	XMStoreFloat3(&storedValue, PositionVector);
+	storedValue.x += x;
+	storedValue.y += y;
+	storedValue.z += z;
+	PositionVector = XMLoadFloat3(&storedValue);
+	UpdateViewMatrix();
+}
+
+void Camera::AdjustRotation(const DirectX::XMVECTOR& rot)
+{
+	RotationVector = DirectX::XMVectorAdd(RotationVector, rot);;
+	UpdateViewMatrix();
+}
+
+void Camera::AdjustRotation(const float x, const float y, const float z)
+{
+	DirectX::XMFLOAT3 storedValue;
+	XMStoreFloat3(&storedValue, RotationVector);
+	storedValue.x += x;
+	storedValue.y += y;
+	storedValue.z += z;
+	RotationVector = XMLoadFloat3(&storedValue);
 	UpdateViewMatrix();
 }
 
