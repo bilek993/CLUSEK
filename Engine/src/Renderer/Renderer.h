@@ -50,5 +50,5 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
 
-	Camera MainCamera;
+	std::shared_ptr<Camera> MainCamera;
 };

@@ -54,10 +54,10 @@ void Renderer::RenderFrame()
 	UINT offset = 0;
 
 	const auto worldMatrix = DirectX::XMMatrixIdentity();
-	MainCamera.AdjustPosition(0.005f, 0.005f, 0.0f);
-	MainCamera.LookAt(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
+	MainCamera->AdjustPosition(0.005f, 0.005f, 0.0f);
+	MainCamera->LookAt(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
 
-	UberShaderConstantBuffer.Data.Mat = worldMatrix * MainCamera.GetViewMatrix() * MainCamera.GetProjectionMatrix();
+	UberShaderConstantBuffer.Data.Mat = worldMatrix * MainCamera->GetViewMatrix() * MainCamera->GetProjectionMatrix();
 	UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixTranspose(UberShaderConstantBuffer.Data.Mat);
 	if (!UberShaderConstantBuffer.ApplyChanges())
 		return;
@@ -245,7 +245,8 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int fullscreen, const in
 	}
 	Logger::Debug("Sampler state is set successfully.");
 
-	MainCamera.SetCameraSettings(mainCameraFov, static_cast<float>(WindowWidth) / static_cast<float>(WindowHeight), mainCameraNearZ, mainCameraFarZ);
+	MainCamera = std::make_shared<Camera>();
+	MainCamera->SetCameraSettings(mainCameraFov, static_cast<float>(WindowWidth) / static_cast<float>(WindowHeight), mainCameraNearZ, mainCameraFarZ);
 
 	Logger::Debug("DirectX initialized successfully.");
 	return true;
@@ -321,7 +322,7 @@ bool Renderer::InitializeScene()
 		return false;
 	}
 
-	MainCamera.SetPosition(0.0f, 0.0f, -2.0f);
+	MainCamera->SetPosition(0.0f, 0.0f, -2.0f);
 
 	Logger::Debug("Scene initialization succeeded...");
 	return true;
