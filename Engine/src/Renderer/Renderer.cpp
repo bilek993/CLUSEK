@@ -50,6 +50,8 @@ void Renderer::RenderFrame()
 	UINT offset = 0;
 
 	const auto worldMatrix = DirectX::XMMatrixIdentity();
+	RenderCamera.AdjustPosition(0.005f, 0.005f, 0.0f);
+	RenderCamera.LookAt(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
 
 	UberShaderConstantBuffer.Data.Mat = worldMatrix * RenderCamera.GetViewMatrix() * RenderCamera.GetProjectionMatrix();
 	UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixTranspose(UberShaderConstantBuffer.Data.Mat);

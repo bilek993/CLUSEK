@@ -113,6 +113,32 @@ void Camera::AdjustRotation(const float x, const float y, const float z)
 	UpdateViewMatrix();
 }
 
+void Camera::LookAt(DirectX::XMFLOAT3 targetPosition)
+{
+	DirectX::XMFLOAT3 currentCameraPosition;
+	XMStoreFloat3(&currentCameraPosition, PositionVector);
+
+	if (currentCameraPosition.x == targetPosition.x && currentCameraPosition.y == targetPosition.y && currentCameraPosition.z == targetPosition.z)
+	{
+		Logger::Warning("Camera position cannot be the save as target position!");
+		return;
+	}
+
+	targetPosition.x = currentCameraPosition.x - targetPosition.x;
+	targetPosition.y = currentCameraPosition.y - targetPosition.y;
+	targetPosition.z = currentCameraPosition.z - targetPosition.z;
+
+	const auto distance = sqrt((targetPosition.x * targetPosition.x) + (targetPosition.z * targetPosition.z));
+	const auto pitch = atan(targetPosition.y / distance);
+
+	auto yaw = atan(targetPosition.x / targetPosition.z);;
+
+	if (targetPosition.z > 0)
+		yaw += DirectX::XM_PI;
+
+	SetRotation(pitch, yaw, 0.0f);
+}
+
 void Camera::UpdateViewMatrix()
 {
 	const auto cameraRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(RotationVector);
