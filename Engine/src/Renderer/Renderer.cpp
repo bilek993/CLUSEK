@@ -4,7 +4,8 @@
 #include <WICTextureLoader.h>
 
 bool Renderer::Initialize(const HWND hwnd, const int width, const int height, const int fullscreen, const int syncIntervals, const int selectedAdapterId,
-	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
+	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality, const float mainCameraFov, 
+	const float mainCameraNearZ, const float mainCameraFarZ)
 {
 	Logger::Debug("Renderer initialization...");
 
@@ -18,7 +19,10 @@ bool Renderer::Initialize(const HWND hwnd, const int width, const int height, co
 							refreshRateNumerator, 
 							refreshRateDenominator,
 							multisamplesCount, 
-							multisamplesQuality))
+							multisamplesQuality,
+							mainCameraFov,
+							mainCameraNearZ,
+							mainCameraFarZ))
 	{
 		return false;
 	}
@@ -50,10 +54,10 @@ void Renderer::RenderFrame()
 	UINT offset = 0;
 
 	const auto worldMatrix = DirectX::XMMatrixIdentity();
-	RenderCamera.AdjustPosition(0.005f, 0.005f, 0.0f);
-	RenderCamera.LookAt(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
+	MainCamera.AdjustPosition(0.005f, 0.005f, 0.0f);
+	MainCamera.LookAt(DirectX::XMFLOAT3(0.0f, 0.0f, 0.0f));
 
-	UberShaderConstantBuffer.Data.Mat = worldMatrix * RenderCamera.GetViewMatrix() * RenderCamera.GetProjectionMatrix();
+	UberShaderConstantBuffer.Data.Mat = worldMatrix * MainCamera.GetViewMatrix() * MainCamera.GetProjectionMatrix();
 	UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixTranspose(UberShaderConstantBuffer.Data.Mat);
 	if (!UberShaderConstantBuffer.ApplyChanges())
 		return;
@@ -69,7 +73,8 @@ void Renderer::RenderFrame()
 }
 
 bool Renderer::InitializeDirectX(const HWND hwnd, const int fullscreen, const int selectedAdapterId,
-	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
+	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality, 
+	const float mainCameraFov, const float mainCameraNearZ, const float mainCameraFarZ)
 {
 	auto adapters = AdapterReader::GetData();
 
@@ -240,6 +245,8 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int fullscreen, const in
 	}
 	Logger::Debug("Sampler state is set successfully.");
 
+	MainCamera.SetCameraSettings(mainCameraFov, static_cast<float>(WindowWidth) / static_cast<float>(WindowHeight), mainCameraNearZ, mainCameraFarZ);
+
 	Logger::Debug("DirectX initialized successfully.");
 	return true;
 }
@@ -314,8 +321,7 @@ bool Renderer::InitializeScene()
 		return false;
 	}
 
-	RenderCamera.SetCameraSettings(90.0f, static_cast<float>(WindowWidth) / static_cast<float>(WindowHeight), 0.1f, 1000.0f);
-	RenderCamera.SetPosition(0.0f, 0.0f, -2.0f);
+	MainCamera.SetPosition(0.0f, 0.0f, -2.0f);
 
 	Logger::Debug("Scene initialization succeeded...");
 	return true;

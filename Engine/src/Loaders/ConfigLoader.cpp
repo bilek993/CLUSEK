@@ -55,6 +55,12 @@ ConfigData ConfigLoader::GetData()
 				data.MultisamplesCount = std::stoi(value);
 			else if (key == "MultisamplesQuality")
 				data.MultisamplesQuality = std::stoi(value);
+			else if (key == "MainCameraFov")
+				data.MainCameraFov = std::stof(value);
+			else if (key == "MainCameraNearZ")
+				data.MainCameraNearZ = std::stof(value);
+			else if (key == "MainCameraFarZ")
+				data.MainCameraFarZ = std::stof(value);
 			else
 				continue;
 

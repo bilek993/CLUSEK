@@ -14,11 +14,13 @@ class Renderer final
 {
 public:
 	bool Initialize(HWND hwnd, int width, int height, int fullscreen, int syncIntervals, int selectedAdapterId, 
-		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
+		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality,
+		float mainCameraFov, float mainCameraNearZ, float mainCameraFarZ);
 	void RenderFrame();
 private:
-	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId,
-		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
+	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator, 
+		int refreshRateDenominator, int multisamplesCount, int multisamplesQuality, float mainCameraFov, 
+		float mainCameraNearZ, float mainCameraFarZ);
 	bool InitializeShaders();
 	bool InitializeScene();
 
@@ -48,5 +50,5 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
 
-	Camera RenderCamera;
+	Camera MainCamera;
 };

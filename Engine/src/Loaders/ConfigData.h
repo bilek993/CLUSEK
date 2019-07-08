@@ -20,4 +20,9 @@ struct ConfigData final
 	int RefreshRateDenominator = 0;
 	int MultisamplesCount = 1;
 	int MultisamplesQuality = 0;
+
+	// Main camera settings
+	float MainCameraFov = 90.0f;
+	float MainCameraNearZ = 0.1f;
+	float MainCameraFarZ = 1000.0f;
 };
