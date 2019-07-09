@@ -88,6 +88,13 @@ std::shared_ptr<Camera> Renderer::GetPointerToCamera() const
 	return MainCamera;
 }
 
+Renderer::~Renderer()
+{
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+}
+
 bool Renderer::InitializeDirectX(const HWND hwnd, const int fullscreen, const int selectedAdapterId,
 	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality, 
 	const float mainCameraFov, const float mainCameraNearZ, const float mainCameraFarZ)

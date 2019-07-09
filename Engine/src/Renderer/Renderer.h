@@ -21,6 +21,7 @@ public:
 		float mainCameraFov, float mainCameraNearZ, float mainCameraFarZ);
 	void RenderFrame();
 	std::shared_ptr<Camera> GetPointerToCamera() const;
+	~Renderer();
 private:
 	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator, 
 		int refreshRateDenominator, int multisamplesCount, int multisamplesQuality, float mainCameraFov, 
