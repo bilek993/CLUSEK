@@ -306,6 +306,7 @@ void Renderer::InitializeImGui(const HWND hwnd) const
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	auto& io = ImGui::GetIO();
+	io.IniFilename = nullptr;
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(Device.Get(), DeviceContext.Get());
 	ImGui::StyleColorsDark();
