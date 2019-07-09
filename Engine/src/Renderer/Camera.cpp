@@ -158,9 +158,6 @@ void Camera::UpdateViewMatrix()
 	const auto upDirection = XMVector3TransformCoord(UP_VECTOR, cameraRotationMatrix);
 	ViewMatrix = DirectX::XMMatrixLookAtLH(this->PositionVector, cameraTarget, upDirection);
 
-	DirectX::XMFLOAT3 rotationFloat3;
-	XMStoreFloat3(&rotationFloat3, RotationVector);
-	const auto rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(rotationFloat3.x, rotationFloat3.y, 0.0f);
-	VectorForward = XMVector3TransformCoord(FORWARD_VECTOR, rotationMatrix);
-	VectorRight = XMVector3TransformCoord(RIGHT_VECTOR, rotationMatrix);
+	VectorForward = cameraDirection;
+	VectorRight = XMVector3TransformCoord(RIGHT_VECTOR, cameraRotationMatrix);
 }
