@@ -33,6 +33,8 @@ bool Renderer::Initialize(const HWND hwnd, const int width, const int height, co
 	if (!InitializeScene())
 		return false;
 
+	InitializeImGui(hwnd);
+
 	return true;
 }
 
@@ -66,6 +68,17 @@ void Renderer::RenderFrame()
 	DeviceContext->IASetIndexBuffer(TriangleIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	
 	DeviceContext->DrawIndexed(6, 0, 0);
+
+	// START OF TMP CODE
+	// Remove this as fast as possible after creating proper imgui system.
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	ImGui::Begin("Test");
+	ImGui::End();
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	// END OF TMP CODE
 
 	SwapChain->Present(SyncIntervals, 0);
 }
@@ -284,6 +297,18 @@ bool Renderer::InitializeShaders()
 
 	Logger::Debug("All shaders successfully initialized.");
 	return true;
+}
+
+void Renderer::InitializeImGui(const HWND hwnd) const
+{
+	Logger::Debug("Preparing to initialize ImGui...");
+
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	auto& io = ImGui::GetIO();
+	ImGui_ImplWin32_Init(hwnd);
+	ImGui_ImplDX11_Init(Device.Get(), DeviceContext.Get());
+	ImGui::StyleColorsDark();
 }
 
 bool Renderer::InitializeScene()

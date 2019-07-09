@@ -26,6 +26,7 @@ private:
 		int refreshRateDenominator, int multisamplesCount, int multisamplesQuality, float mainCameraFov, 
 		float mainCameraNearZ, float mainCameraFarZ);
 	bool InitializeShaders();
+	void InitializeImGui(HWND hwnd) const;
 	bool InitializeScene();
 
 	int WindowWidth = 0;
