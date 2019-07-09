@@ -9,6 +9,9 @@
 #include "ConstantBufferTypes.h"
 #include "ConstantBuffer.h"
 #include "Camera.h"
+#include "imgui.h"
+#include "imgui_impl_win32.h"
+#include "imgui_impl_dx11.h"
 
 class Renderer final
 {

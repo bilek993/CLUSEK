@@ -115,14 +115,14 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\DirectXTK\includes\;$(SolutionDir)Dependencies\EnTT\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\DirectXTK\includes\;$(SolutionDir)Dependencies\EnTT\includes\;$(SolutionDir)Dependencies\ImGui\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_ENABLE_EXTENDED_ALIGNED_STORAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>d3d11.lib;DirectXTK.lib;DXGI.lib;D3DCompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\DirectXTK\libs\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\DirectXTK\libs\debug;$(SolutionDir)Dependencies\ImGui\libs\debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -136,7 +136,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\DirectXTK\includes\;$(SolutionDir)Dependencies\EnTT\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\DirectXTK\includes\;$(SolutionDir)Dependencies\EnTT\includes\;$(SolutionDir)Dependencies\ImGui\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_ENABLE_EXTENDED_ALIGNED_STORAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -145,7 +145,7 @@
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
       <SubSystem>Windows</SubSystem>
       <AdditionalDependencies>d3d11.lib;DirectXTK.lib;DXGI.lib;D3DCompiler.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\DirectXTK\libs\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\DirectXTK\libs\release;$(SolutionDir)Dependencies\ImGui\libs\release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
