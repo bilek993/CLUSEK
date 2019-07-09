@@ -46,6 +46,24 @@
     <Filter Include="Source Files\Renderer\Shaders">
       <UniqueIdentifier>{a59c386a-ef95-4d99-abc7-8ccd8d55ff29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ECS">
+      <UniqueIdentifier>{e8ef34e5-e904-471b-8df2-b7d84fe9e759}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS">
+      <UniqueIdentifier>{afe464dd-f9da-412c-a3dc-7bcaca3deefa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Components">
+      <UniqueIdentifier>{17a82e81-6e57-435a-8fe1-abbd68698c81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ECS\Systems">
+      <UniqueIdentifier>{25d10634-1b9c-4068-91c3-63ca422db68c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Components">
+      <UniqueIdentifier>{32e59579-195c-4715-ac8f-3cadc9f737a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ECS\Systems">
+      <UniqueIdentifier>{df5df390-3f10-4aff-9db9-7b4ed9fa453a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -157,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="src\Timer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Systems\BaseSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
