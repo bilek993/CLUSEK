@@ -3,12 +3,7 @@
 #include <wrl/client.h>
 #include "Shaders/VertexShader.h"
 #include "Shaders/PixelShader.h"
-#include "Vertex.h"
-#include "VertexBuffer.h"
-#include "IndexBuffer.h"
-#include "ConstantBufferTypes.h"
-#include "ConstantBuffer.h"
-#include "Camera.h"
+#include "../Utils/Logger.h"
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"

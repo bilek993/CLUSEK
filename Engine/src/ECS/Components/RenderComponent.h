@@ -2,6 +2,7 @@
 #include <wrl/client.h>
 #include "../../Renderer/IndexBuffer.h"
 #include "../../Renderer/Vertex.h"
+#include "../../Renderer/ConstantBuffer.h"
 
 struct RenderComponent final
 {
