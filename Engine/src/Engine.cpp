@@ -54,11 +54,9 @@ void Engine::Update()
 {
 	const auto deltaTime = Time.GetDeltaTimeAndRestart();
 
-	GraphicsRenderer.RenderFrameBegin();
 	UpdateInputOutputDevices();
 	UpdateSystems(deltaTime);
 	HandleClosingWithButton();
-	GraphicsRenderer.RenderFrameEnd();
 }
 
 void Engine::InitializeScene()
@@ -90,7 +88,7 @@ void Engine::UpdateInputOutputDevices()
 	DataFromIODevices = InputOutputDevices.Get();
 }
 
-void Engine::UpdateSystems(float deltaTime)
+void Engine::UpdateSystems(const float deltaTime)
 {
 	for (auto& system : Systems)
 	{

@@ -56,6 +56,7 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 	auto &cameraComponent = view.raw()[0];
 
+	renderer.RenderFrameBegin();
 	registry.view<RenderComponent>().each([&renderer, &cameraComponent](RenderComponent &renderComponent)
 	{
 		renderComponent.UberShaderConstantBuffer.Data.Mat = cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix;
@@ -73,4 +74,5 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 		renderer.GetDeviceContext()->DrawIndexed(6, 0, 0);
 	});
+	renderer.RenderFrameEnd();
 }

@@ -45,8 +45,6 @@ void Renderer::RenderFrameBegin()
 	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
-	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	DeviceContext->RSSetState(RasterizerState.Get());
 	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
 	
 	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
@@ -240,6 +238,7 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int fullscreen, const in
 		Logger::Error("Error creating rasterizer state!");
 		return false;
 	}
+	DeviceContext->RSSetState(RasterizerState.Get());
 	Logger::Debug("Rasterizer state is set successfully.");
 
 	D3D11_SAMPLER_DESC samplerDesc;
@@ -259,6 +258,8 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int fullscreen, const in
 		return false;
 	}
 	Logger::Debug("Sampler state is set successfully.");
+
+	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	Logger::Debug("DirectX initialized successfully.");
 	return true;
