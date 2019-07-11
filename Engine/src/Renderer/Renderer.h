@@ -25,7 +25,6 @@ private:
 		float mainCameraNearZ, float mainCameraFarZ);
 	bool InitializeShaders();
 	void InitializeImGui(HWND hwnd) const;
-	bool InitializeScene();
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;

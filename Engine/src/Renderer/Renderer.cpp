@@ -30,9 +30,6 @@ bool Renderer::Initialize(const HWND hwnd, const int width, const int height, co
 	if (!InitializeShaders())
 		return false;
 
-	if (!InitializeScene())
-		return false;
-
 	InitializeImGui(hwnd);
 
 	return true;
@@ -300,12 +297,4 @@ void Renderer::InitializeImGui(const HWND hwnd) const
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(Device.Get(), DeviceContext.Get());
 	ImGui::StyleColorsDark();
-}
-
-bool Renderer::InitializeScene()
-{
-	Logger::Debug("Preparing to initialize scene...");
-
-	Logger::Debug("Scene initialization succeeded...");
-	return true;
 }
