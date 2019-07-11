@@ -52,9 +52,6 @@
     <Filter Include="Source Files\ECS">
       <UniqueIdentifier>{afe464dd-f9da-412c-a3dc-7bcaca3deefa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ECS\Components">
-      <UniqueIdentifier>{17a82e81-6e57-435a-8fe1-abbd68698c81}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\ECS\Systems">
       <UniqueIdentifier>{25d10634-1b9c-4068-91c3-63ca422db68c}</UniqueIdentifier>
     </Filter>
@@ -110,6 +107,12 @@
     </ClCompile>
     <ClCompile Include="src\Timer.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\Systems\CameraSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ECS\Systems\RenderSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,6 +181,18 @@
     </ClInclude>
     <ClInclude Include="src\ECS\Systems\BaseSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Components\CameraComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Systems\CameraSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Systems\RenderSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Components\RenderComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

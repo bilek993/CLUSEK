@@ -21,7 +21,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	while (engine.CanUpdate())
 	{
 		engine.Update();
-		engine.Render();
 	}
 
 	Logger::Debug("Preparing logger to free resources.");

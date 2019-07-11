@@ -38,7 +38,7 @@ bool Renderer::Initialize(const HWND hwnd, const int width, const int height, co
 	return true;
 }
 
-void Renderer::RenderFrame()
+void Renderer::RenderFrameBegin()
 {
 	float bgColor[] = { 0.0f, 0.75f, 1.0f };
 	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), bgColor);
@@ -52,23 +52,10 @@ void Renderer::RenderFrame()
 	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
 	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
 	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
+}
 
-	UINT offset = 0;
-
-	const auto worldMatrix = DirectX::XMMatrixIdentity();
-
-	UberShaderConstantBuffer.Data.Mat = worldMatrix * MainCamera->GetViewMatrix() * MainCamera->GetProjectionMatrix();
-	UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixTranspose(UberShaderConstantBuffer.Data.Mat);
-	if (!UberShaderConstantBuffer.ApplyChanges())
-		return;
-
-	DeviceContext->VSSetConstantBuffers(0, 1, UberShaderConstantBuffer.GetAddressOf());
-	DeviceContext->PSSetShaderResources(0, 1, ExampleTexture.GetAddressOf());
-	DeviceContext->IASetVertexBuffers(0, 1, TriangleVertexBuffer.GetAddressOf(), TriangleVertexBuffer.StridePtr(), &offset);
-	DeviceContext->IASetIndexBuffer(TriangleIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-	
-	DeviceContext->DrawIndexed(6, 0, 0);
-
+void Renderer::RenderFrameEnd() const
+{
 	// START OF TMP CODE
 	// Remove this as fast as possible after creating proper imgui system.
 	ImGui_ImplDX11_NewFrame();
@@ -83,9 +70,14 @@ void Renderer::RenderFrame()
 	SwapChain->Present(SyncIntervals, 0);
 }
 
-std::shared_ptr<Camera> Renderer::GetPointerToCamera() const
+Microsoft::WRL::ComPtr<ID3D11Device> Renderer::GetDevice() const
 {
-	return MainCamera;
+	return Device;
+}
+
+Microsoft::WRL::ComPtr<ID3D11DeviceContext> Renderer::GetDeviceContext() const
+{
+	return DeviceContext;
 }
 
 Renderer::~Renderer()
@@ -268,9 +260,6 @@ bool Renderer::InitializeDirectX(const HWND hwnd, const int fullscreen, const in
 	}
 	Logger::Debug("Sampler state is set successfully.");
 
-	MainCamera = std::make_shared<Camera>();
-	MainCamera->SetCameraSettings(mainCameraFov, static_cast<float>(WindowWidth) / static_cast<float>(WindowHeight), mainCameraNearZ, mainCameraFarZ);
-
 	Logger::Debug("DirectX initialized successfully.");
 	return true;
 }
@@ -282,13 +271,6 @@ bool Renderer::InitializeShaders()
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0}
 	};
-
-	const auto hr = DirectX::CreateWICTextureFromFile(Device.Get(), L"Data/Textures/example_texture.png", nullptr, ExampleTexture.GetAddressOf());
-	if (FAILED(hr))
-	{
-		Logger::Error("Couldn't load example texture from file!");
-		return false;
-	}
 
 	if(!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", layout, ARRAYSIZE(layout)))
 	{
@@ -322,43 +304,6 @@ void Renderer::InitializeImGui(const HWND hwnd) const
 bool Renderer::InitializeScene()
 {
 	Logger::Debug("Preparing to initialize scene...");
-
-	Vertex v[] = 
-	{
-		Vertex(-0.5f, -0.5f, 0.0f, 0.0f, 1.0f),
-		Vertex(-0.5f, 0.5f, 0.0f, 0.0f, 0.0f),
-		Vertex(0.5f, 0.5f, 0.0f, 1.0f, 0.0f),
-		Vertex(0.5f, -0.5f, 0.0f, 1.0f, 1.0f),
-	};
-
-	DWORD indices[] =
-	{
-		0, 1, 2,
-		0, 2, 3,
-	};
-	
-	auto hr = TriangleVertexBuffer.Initialize(Device.Get(), v, ARRAYSIZE(v));
-	if (FAILED(hr))
-	{
-		Logger::Error("Failed to create vertex buffer.");
-		return false;
-	}
-
-	hr = TriangleIndexBuffer.Initialize(Device.Get(), indices, ARRAYSIZE(indices));
-	if (FAILED(hr))
-	{
-		Logger::Error("Failed to create index buffer.");
-		return false;
-	}
-
-	hr = UberShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
-	if (FAILED(hr))
-	{
-		Logger::Error("Failed to create constant buffer.");
-		return false;
-	}
-
-	MainCamera->SetPosition(0.0f, 0.0f, -2.0f);
 
 	Logger::Debug("Scene initialization succeeded...");
 	return true;

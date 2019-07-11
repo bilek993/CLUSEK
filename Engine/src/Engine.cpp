@@ -1,5 +1,9 @@
 #include "Engine.h"
 #include "Utils/Logger.h"
+#include "ECS/Components/CameraComponent.h"
+#include "ECS/Systems/CameraSystem.h"
+#include "ECS/Systems/RenderSystem.h"
+#include "ECS/Components/RenderComponent.h"
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 {
@@ -17,7 +21,7 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 	if (!Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight))
 		return false;
 
-	if (GraphicsRenderer.Initialize(Window.GetHandle(),
+	if (!GraphicsRenderer.Initialize(Window.GetHandle(),
 									Config.WindowWidth,
 									Config.WindowHeight,
 									Config.Fullscreen,
@@ -34,6 +38,10 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 		return false;
 	}
 
+	InitializeScene();
+	CreateSystems();
+	InitializeSystems();
+
 	return true;
 }
 
@@ -46,56 +54,54 @@ void Engine::Update()
 {
 	const auto deltaTime = Time.GetDeltaTimeAndRestart();
 
+	GraphicsRenderer.RenderFrameBegin();
 	UpdateInputOutputDevices();
+	UpdateSystems(deltaTime);
 	HandleClosingWithButton();
-
-	// START OF TMP CODE
-	// Remove this as fast as possible and replace with proper ECS handling
-	auto camera = GraphicsRenderer.GetPointerToCamera();
-
-	if (DataFromIODevices.MouseState.rightButton)
-	{
-		InputOutputDevices.ChangeMouseToRelativeMode(Window.GetHandle());
-		camera->AdjustRotation(static_cast<float>(DataFromIODevices.MouseState.y) * 0.001f * deltaTime, 
-			static_cast<float>(DataFromIODevices.MouseState.x) * 0.001f * deltaTime, 0.0f);
-	}
-	else
-	{
-		InputOutputDevices.ChangeMouseToAbsoluteMode(Window.GetHandle());
-	}
-
-	auto cameraSpeed = 0.0025f * deltaTime;
-	if (DataFromIODevices.KeyboardState.LeftShift || DataFromIODevices.KeyboardState.RightShift)
-		cameraSpeed *= 5;
-
-	if (DataFromIODevices.KeyboardState.W)
-	{
-		camera->AdjustPosition(DirectX::XMVectorScale(camera->GetForwardVector(), cameraSpeed));
-	}
-	if (DataFromIODevices.KeyboardState.A)
-	{
-		camera->AdjustPosition(DirectX::XMVectorScale(camera->GetRightVector(), -cameraSpeed));
-	}
-	if (DataFromIODevices.KeyboardState.S)
-	{
-		camera->AdjustPosition(DirectX::XMVectorScale(camera->GetForwardVector(), -cameraSpeed));
-	}
-	if (DataFromIODevices.KeyboardState.D)
-	{
-		camera->AdjustPosition(DirectX::XMVectorScale(camera->GetRightVector(), cameraSpeed));
-	}
-	// END OF TMP CODE
+	GraphicsRenderer.RenderFrameEnd();
 }
 
-void Engine::Render()
+void Engine::InitializeScene()
 {
-	GraphicsRenderer.RenderFrame();
+	const auto cameraEntity = Registry.create();
+	Registry.assign<CameraComponent>(cameraEntity);
+
+	const auto sampleObjectEntity = Registry.create();
+	Registry.assign<RenderComponent>(sampleObjectEntity);
+}
+
+void Engine::CreateSystems()
+{
+	Systems.emplace_back(std::make_unique<CameraSystem>());
+	Systems.emplace_back(std::make_unique<RenderSystem>());
+}
+
+void Engine::InitializeSystems()
+{
+	for (auto& system : Systems)
+	{
+		system->Start(Registry, Config, GraphicsRenderer);
+	}
 }
 
 void Engine::UpdateInputOutputDevices()
 {
 	InputOutputDevices.Update();
 	DataFromIODevices = InputOutputDevices.Get();
+}
+
+void Engine::UpdateSystems(float deltaTime)
+{
+	for (auto& system : Systems)
+	{
+		system->Update(	deltaTime,
+						Registry,
+						DataFromIODevices,
+						InputOutputDevices,
+						GraphicsRenderer,
+						Window,
+						Config);
+	}
 }
 
 void Engine::HandleClosingWithButton()

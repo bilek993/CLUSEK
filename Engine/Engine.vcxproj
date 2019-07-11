@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ECS\Systems\RenderSystem.cpp" />
+    <ClCompile Include="src\ECS\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Renderer\Camera.cpp" />
     <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
     <ClCompile Include="src\Renderer\Shaders\PixelShader.cpp" />
@@ -28,6 +30,10 @@
     <ClCompile Include="src\Timer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ECS\Systems\RenderSystem.h" />
+    <ClInclude Include="src\ECS\Components\RenderComponent.h" />
+    <ClInclude Include="src\ECS\Systems\CameraSystem.h" />
+    <ClInclude Include="src\ECS\Components\CameraComponent.h" />
     <ClInclude Include="src\ECS\Systems\BaseSystem.h" />
     <ClInclude Include="src\Renderer\Camera.h" />
     <ClInclude Include="src\Renderer\ConstantBuffer.h" />

@@ -19,8 +19,10 @@ public:
 	bool Initialize(HWND hwnd, int width, int height, int fullscreen, int syncIntervals, int selectedAdapterId, 
 		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality,
 		float mainCameraFov, float mainCameraNearZ, float mainCameraFarZ);
-	void RenderFrame();
-	std::shared_ptr<Camera> GetPointerToCamera() const;
+	void RenderFrameBegin();
+	void RenderFrameEnd() const;
+	Microsoft::WRL::ComPtr<ID3D11Device> GetDevice() const;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> GetDeviceContext() const;
 	~Renderer();
 private:
 	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator, 
@@ -42,11 +44,6 @@ private:
 
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
-	ConstantBuffer<CB_VS_UberVertexShader> UberShaderConstantBuffer;
-
-	VertexBuffer<Vertex> TriangleVertexBuffer;
-	IndexBuffer TriangleIndexBuffer;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ExampleTexture;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilBuffer;
@@ -55,6 +52,4 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
-
-	std::shared_ptr<Camera> MainCamera;
 };
