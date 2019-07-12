@@ -6,7 +6,7 @@ class CameraSystem final : public BaseSystem
 {
 public:
 
-	void Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData, Renderer &renderer) override;
+	void Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData) override;
 	void Update(float deltaTime, entt::registry &registry, IOData& ioData, IODevices &ioDevices,
-		Renderer &renderer, RenderWindow &window, ConfigData &configData) override;
+		RenderWindow &window, ConfigData &configData) override;
 };

@@ -87,9 +87,6 @@
     <ClCompile Include="src\Window\IODevices.cpp">
       <Filter>Source Files\Window</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\Renderer.cpp">
-      <Filter>Source Files\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="src\Renderer\AdapterReader.cpp">
       <Filter>Source Files\Renderer</Filter>
     </ClCompile>
@@ -142,9 +139,6 @@
     </ClInclude>
     <ClInclude Include="src\Window\IOData.h">
       <Filter>Header Files\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\Renderer.h">
-      <Filter>Header Files\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\AdapterReader.h">
       <Filter>Header Files\Renderer</Filter>

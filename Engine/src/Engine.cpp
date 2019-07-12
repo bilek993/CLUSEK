@@ -21,20 +21,6 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 	if (!Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight))
 		return false;
 
-	if (!GraphicsRenderer.Initialize(Window.GetHandle(),
-									Config.WindowWidth,
-									Config.WindowHeight,
-									Config.Fullscreen,
-									Config.SyncIntervals,
-									Config.SelectedAdapterId,
-									Config.RefreshRateNumerator,
-									Config.RefreshRateDenominator,
-									Config.MultisamplesCount,
-									Config.MultisamplesQuality))
-	{
-		return false;
-	}
-
 	InitializeScene();
 	CreateSystems();
 	InitializeSystems();
@@ -75,7 +61,7 @@ void Engine::InitializeSystems()
 {
 	for (auto& system : Systems)
 	{
-		system->Start(Registry, Window.GetHandle(), Config, GraphicsRenderer);
+		system->Start(Registry, Window.GetHandle(), Config);
 	}
 }
 
@@ -93,7 +79,6 @@ void Engine::UpdateSystems(const float deltaTime)
 						Registry,
 						DataFromIODevices,
 						InputOutputDevices,
-						GraphicsRenderer,
 						Window,
 						Config);
 	}

@@ -1,8 +1,9 @@
 #include "CameraSystem.h"
 #include "../Components/CameraComponent.h"
 #include "../../Renderer/CameraLogic.h"
+#include "../../Utils/Logger.h"
 
-void CameraSystem::Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData, Renderer &renderer)
+void CameraSystem::Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData)
 {
 	auto view = registry.view<CameraComponent>();
 	if (view.size() != 1)
@@ -24,7 +25,7 @@ void CameraSystem::Start(entt::registry& registry, const HWND &hwnd, const Confi
 }
 
 void CameraSystem::Update(const float deltaTime, entt::registry &registry, IOData& ioData, IODevices &ioDevices,
-	Renderer &renderer, RenderWindow &window, ConfigData &configData)
+	RenderWindow &window, ConfigData &configData)
 {
 	auto view = registry.view<CameraComponent>();
 	if (view.size() != 1)

@@ -2,7 +2,6 @@
 #include "Window/RenderWindow.h"
 #include "Loaders/ConfigData.h"
 #include "Window/IODevices.h"
-#include "Renderer/Renderer.h"
 #include "Timer.h"
 #include <entt.hpp>
 #include "ECS/Systems/BaseSystem.h"
@@ -23,8 +22,6 @@ private:
 
 	RenderWindow Window;
 	ConfigData Config;
-
-	Renderer GraphicsRenderer;
 
 	Timer Time;
 
