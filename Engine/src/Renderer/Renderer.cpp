@@ -4,8 +4,7 @@
 #include <WICTextureLoader.h>
 
 bool Renderer::Initialize(const HWND hwnd, const int width, const int height, const int fullscreen, const int syncIntervals, const int selectedAdapterId,
-	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality, const float mainCameraFov, 
-	const float mainCameraNearZ, const float mainCameraFarZ)
+	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
 {
 	Logger::Debug("Renderer initialization...");
 
@@ -19,10 +18,7 @@ bool Renderer::Initialize(const HWND hwnd, const int width, const int height, co
 							refreshRateNumerator, 
 							refreshRateDenominator,
 							multisamplesCount, 
-							multisamplesQuality,
-							mainCameraFov,
-							mainCameraNearZ,
-							mainCameraFarZ))
+							multisamplesQuality))
 	{
 		return false;
 	}
@@ -83,8 +79,7 @@ Renderer::~Renderer()
 }
 
 bool Renderer::InitializeDirectX(const HWND hwnd, const int fullscreen, const int selectedAdapterId,
-	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality, 
-	const float mainCameraFov, const float mainCameraNearZ, const float mainCameraFarZ)
+	const int refreshRateNumerator, const int refreshRateDenominator, const int multisamplesCount, const int multisamplesQuality)
 {
 	auto adapters = AdapterReader::GetData();
 

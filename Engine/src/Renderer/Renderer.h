@@ -12,8 +12,7 @@ class Renderer final
 {
 public:
 	bool Initialize(HWND hwnd, int width, int height, int fullscreen, int syncIntervals, int selectedAdapterId, 
-		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality,
-		float mainCameraFov, float mainCameraNearZ, float mainCameraFarZ);
+		int refreshRateNumerator, int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
 	void RenderFrameBegin();
 	void RenderFrameEnd() const;
 	Microsoft::WRL::ComPtr<ID3D11Device> GetDevice() const;
@@ -21,8 +20,7 @@ public:
 	~Renderer();
 private:
 	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator, 
-		int refreshRateDenominator, int multisamplesCount, int multisamplesQuality, float mainCameraFov, 
-		float mainCameraNearZ, float mainCameraFarZ);
+		int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
 	bool InitializeShaders();
 	void InitializeImGui(HWND hwnd) const;
 

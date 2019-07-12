@@ -30,10 +30,7 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 									Config.RefreshRateNumerator,
 									Config.RefreshRateDenominator,
 									Config.MultisamplesCount,
-									Config.MultisamplesQuality,
-									Config.MainCameraFov,
-									Config.MainCameraNearZ,
-									Config.MainCameraFarZ))
+									Config.MultisamplesQuality))
 	{
 		return false;
 	}
