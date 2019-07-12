@@ -75,7 +75,7 @@ void Engine::InitializeSystems()
 {
 	for (auto& system : Systems)
 	{
-		system->Start(Registry, Config, GraphicsRenderer);
+		system->Start(Registry, Window.GetHandle(), Config, GraphicsRenderer);
 	}
 }
 

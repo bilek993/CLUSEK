@@ -3,7 +3,7 @@
 #include <WICTextureLoader.h>
 #include "../Components/CameraComponent.h"
 
-void RenderSystem::Start(entt::registry& registry, const ConfigData& configData, Renderer &renderer)
+void RenderSystem::Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData, Renderer &renderer)
 {
 	registry.view<RenderComponent>().each([&renderer](RenderComponent &renderComponent)
 	{
@@ -35,10 +35,7 @@ void RenderSystem::Start(entt::registry& registry, const ConfigData& configData,
 
 		hr = renderComponent.UberShaderConstantBuffer.Initialize(renderer.GetDevice().Get(), renderer.GetDeviceContext().Get());
 		if (FAILED(hr))
-		{
 			Logger::Error("Failed to create constant buffer.");
-			return false;
-		}
 	});
 }
 

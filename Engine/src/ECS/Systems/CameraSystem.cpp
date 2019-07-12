@@ -2,7 +2,7 @@
 #include "../Components/CameraComponent.h"
 #include "../../Renderer/CameraLogic.h"
 
-void CameraSystem::Start(entt::registry& registry, const ConfigData& configData, Renderer &renderer)
+void CameraSystem::Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData, Renderer &renderer)
 {
 	auto view = registry.view<CameraComponent>();
 	if (view.size() != 1)
