@@ -8,5 +8,5 @@ class ModelViewLogic final
 {
 public:
 	static void UpdateViewMatrix(CameraComponent &cameraComponent, TransformComponent& transformComponent);
-	static void UpdateWorldMatrix(RenderComponent& renderComponent, TransformComponent& transformComponent);
+	static void UpdateModelMatrix(RenderComponent& renderComponent, TransformComponent& transformComponent);
 };

@@ -12,7 +12,7 @@ void ModelViewLogic::UpdateViewMatrix(CameraComponent& cameraComponent, Transfor
 	transformComponent.VectorRight = XMVector3TransformCoord(TransformComponent::RIGHT_VECTOR, cameraRotationMatrix);
 }
 
-void ModelViewLogic::UpdateWorldMatrix(RenderComponent& renderComponent, TransformComponent& transformComponent)
+void ModelViewLogic::UpdateModelMatrix(RenderComponent& renderComponent, TransformComponent& transformComponent)
 {
 	const auto vecRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(transformComponent.RotationVector);
 	const auto vecTranslationMatrix = DirectX::XMMatrixTranslationFromVector(transformComponent.PositionVector);

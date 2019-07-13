@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ECS\Systems\RotationSystem.cpp" />
     <ClCompile Include="src\Renderer\ModelViewLogic.cpp" />
     <ClCompile Include="src\ECS\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\ECS\Systems\CameraSystem.cpp" />
@@ -30,6 +31,7 @@
     <ClCompile Include="src\Renderer\TransformLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ECS\Systems\RotationSystem.h" />
     <ClInclude Include="src\Renderer\TransformLogic.h" />
     <ClInclude Include="src\Renderer\ModelViewLogic.h" />
     <ClInclude Include="src\ECS\Systems\RenderSystem.h" />

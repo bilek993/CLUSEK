@@ -5,6 +5,7 @@
 #include "ECS/Systems/RenderSystem.h"
 #include "ECS/Components/RenderComponent.h"
 #include "ECS/Components/TransformComponent.h"
+#include "ECS/Systems/RotationSystem.h"
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 {
@@ -51,11 +52,13 @@ void Engine::InitializeScene()
 
 	const auto sampleObjectEntity = Registry.create();
 	Registry.assign<RenderComponent>(sampleObjectEntity);
+	Registry.assign<TransformComponent>(sampleObjectEntity);
 }
 
 void Engine::CreateSystems()
 {
 	Systems.emplace_back(std::make_unique<CameraSystem>());
+	Systems.emplace_back(std::make_unique<RotationSystem>());
 	Systems.emplace_back(std::make_unique<RenderSystem>());
 }
 
