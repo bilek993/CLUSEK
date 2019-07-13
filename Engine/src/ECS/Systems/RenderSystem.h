@@ -11,6 +11,7 @@ public:
 	void Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData) override;
 	void Update(float deltaTime, entt::registry& registry, IOData& ioData, IODevices& ioDevices,
 		RenderWindow& window, ConfigData& configData) override;
+	~RenderSystem() override;
 private:
 	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator,
 		int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);

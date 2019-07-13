@@ -97,6 +97,13 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 	RenderFrameEnd();
 }
 
+RenderSystem::~RenderSystem()
+{
+	ImGui_ImplDX11_Shutdown();
+	ImGui_ImplWin32_Shutdown();
+	ImGui::DestroyContext();
+}
+
 bool RenderSystem::InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator,
 	int refreshRateDenominator, int multisamplesCount, int multisamplesQuality)
 {
