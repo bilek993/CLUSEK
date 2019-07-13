@@ -4,6 +4,7 @@
 #include "ECS/Systems/CameraSystem.h"
 #include "ECS/Systems/RenderSystem.h"
 #include "ECS/Components/RenderComponent.h"
+#include "ECS/Components/TransformComponent.h"
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 {
@@ -46,6 +47,7 @@ void Engine::InitializeScene()
 {
 	const auto cameraEntity = Registry.create();
 	Registry.assign<CameraComponent>(cameraEntity);
+	Registry.assign<TransformComponent>(cameraEntity);
 
 	const auto sampleObjectEntity = Registry.create();
 	Registry.assign<RenderComponent>(sampleObjectEntity);

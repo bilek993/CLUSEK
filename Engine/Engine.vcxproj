@@ -54,6 +54,7 @@
     <ClInclude Include="src\Renderer\Shaders\VertexShader.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\ECS\Components\TransformComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">

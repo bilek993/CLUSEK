@@ -1,70 +1,70 @@
 #include "CameraLogic.h"
 #include "../Utils/Logger.h"
 
-void CameraLogic::SetPosition(const DirectX::XMVECTOR& pos, CameraComponent& cameraComponent)
+void CameraLogic::SetPosition(const DirectX::XMVECTOR& pos, CameraComponent &cameraComponent, TransformComponent& transformComponent)
 {
-	cameraComponent.PositionVector = pos;
-	UpdateViewMatrix(cameraComponent);
+	transformComponent.PositionVector = pos;
+	UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
-void CameraLogic::SetPosition(const float x, const float y, const float z, CameraComponent& cameraComponent)
+void CameraLogic::SetPosition(const float x, const float y, const float z, CameraComponent &cameraComponent, TransformComponent& transformComponent)
 {
 	auto newPosition = DirectX::XMFLOAT3(x, y, z);
-	cameraComponent.PositionVector = XMLoadFloat3(&newPosition);
-	UpdateViewMatrix(cameraComponent);
+	transformComponent.PositionVector = XMLoadFloat3(&newPosition);
+	UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
-void CameraLogic::SetRotation(const DirectX::XMVECTOR& rot, CameraComponent& cameraComponent)
+void CameraLogic::SetRotation(const DirectX::XMVECTOR& rot, CameraComponent &cameraComponent, TransformComponent& transformComponent)
 {
-	cameraComponent.RotationVector = rot;
-	UpdateViewMatrix(cameraComponent);
+	transformComponent.RotationVector = rot;
+	UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
-void CameraLogic::SetRotation(const float x, const float y, const float z, CameraComponent& cameraComponent)
+void CameraLogic::SetRotation(const float x, const float y, const float z, CameraComponent &cameraComponent, TransformComponent& transformComponent)
 {
 	auto newRotation = DirectX::XMFLOAT3(x, y, z);
-	cameraComponent.RotationVector = XMLoadFloat3(&newRotation);
-	UpdateViewMatrix(cameraComponent);
+	transformComponent.RotationVector = XMLoadFloat3(&newRotation);
+	UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
-void CameraLogic::AdjustPosition(const DirectX::XMVECTOR& pos, CameraComponent& cameraComponent)
+void CameraLogic::AdjustPosition(const DirectX::XMVECTOR& pos, CameraComponent &cameraComponent, TransformComponent& transformComponent)
 {
-	cameraComponent.PositionVector = DirectX::XMVectorAdd(cameraComponent.PositionVector, pos);
-	UpdateViewMatrix(cameraComponent);
+	transformComponent.PositionVector = DirectX::XMVectorAdd(transformComponent.PositionVector, pos);
+	UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
-void CameraLogic::AdjustPosition(const float x, const float y, const float z, CameraComponent& cameraComponent)
+void CameraLogic::AdjustPosition(const float x, const float y, const float z, CameraComponent &cameraComponent, TransformComponent& transformComponent)
 {
 	DirectX::XMFLOAT3 storedValue;
-	XMStoreFloat3(&storedValue, cameraComponent.PositionVector);
+	XMStoreFloat3(&storedValue, transformComponent.PositionVector);
 	storedValue.x += x;
 	storedValue.y += y;
 	storedValue.z += z;
-	cameraComponent.PositionVector = XMLoadFloat3(&storedValue);
-	UpdateViewMatrix(cameraComponent);
+	transformComponent.PositionVector = XMLoadFloat3(&storedValue);
+	UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
-void CameraLogic::AdjustRotation(const DirectX::XMVECTOR& rot, CameraComponent& cameraComponent)
+void CameraLogic::AdjustRotation(const DirectX::XMVECTOR& rot, CameraComponent &cameraComponent, TransformComponent& transformComponent)
 {
-	cameraComponent.RotationVector = DirectX::XMVectorAdd(cameraComponent.RotationVector, rot);;
-	UpdateViewMatrix(cameraComponent);
+	transformComponent.RotationVector = DirectX::XMVectorAdd(transformComponent.RotationVector, rot);;
+	UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
-void CameraLogic::AdjustRotation(const float x, const float y, const float z, CameraComponent& cameraComponent)
+void CameraLogic::AdjustRotation(const float x, const float y, const float z, CameraComponent &cameraComponent, TransformComponent& transformComponent)
 {
 	DirectX::XMFLOAT3 storedValue;
-	XMStoreFloat3(&storedValue, cameraComponent.RotationVector);
+	XMStoreFloat3(&storedValue, transformComponent.RotationVector);
 	storedValue.x += x;
 	storedValue.y += y;
 	storedValue.z += z;
-	cameraComponent.RotationVector = XMLoadFloat3(&storedValue);
-	UpdateViewMatrix(cameraComponent);
+	transformComponent.RotationVector = XMLoadFloat3(&storedValue);
+	UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
-void CameraLogic::LookAt(DirectX::XMFLOAT3 targetPosition, CameraComponent& cameraComponent)
+void CameraLogic::LookAt(DirectX::XMFLOAT3 targetPosition, CameraComponent &cameraComponent, TransformComponent& transformComponent)
 {
 	DirectX::XMFLOAT3 currentCameraPosition;
-	XMStoreFloat3(&currentCameraPosition, cameraComponent.PositionVector);
+	XMStoreFloat3(&currentCameraPosition, transformComponent.PositionVector);
 
 	if (currentCameraPosition.x == targetPosition.x && currentCameraPosition.y == targetPosition.y && currentCameraPosition.z == targetPosition.z)
 	{
@@ -84,17 +84,17 @@ void CameraLogic::LookAt(DirectX::XMFLOAT3 targetPosition, CameraComponent& came
 	if (targetPosition.z > 0)
 		yaw += DirectX::XM_PI;
 
-	SetRotation(pitch, yaw, 0.0f, cameraComponent);
+	SetRotation(pitch, yaw, 0.0f, cameraComponent, transformComponent);
 }
 
-void CameraLogic::UpdateViewMatrix(CameraComponent& cameraComponent)
+void CameraLogic::UpdateViewMatrix(CameraComponent& cameraComponent, TransformComponent& transformComponent)
 {
-	const auto cameraRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(cameraComponent.RotationVector);
-	const auto cameraDirection = XMVector3TransformCoord(CameraComponent::FORWARD_VECTOR, cameraRotationMatrix);
-	const auto cameraTarget = DirectX::XMVectorAdd(cameraDirection, cameraComponent.PositionVector);
-	const auto upDirection = XMVector3TransformCoord(CameraComponent::UP_VECTOR, cameraRotationMatrix);
-	cameraComponent.ViewMatrix = DirectX::XMMatrixLookAtLH(cameraComponent.PositionVector, cameraTarget, upDirection);
+	const auto cameraRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(transformComponent.RotationVector);
+	const auto cameraDirection = XMVector3TransformCoord(TransformComponent::FORWARD_VECTOR, cameraRotationMatrix);
+	const auto cameraTarget = DirectX::XMVectorAdd(cameraDirection, transformComponent.PositionVector);
+	const auto upDirection = XMVector3TransformCoord(TransformComponent::UP_VECTOR, cameraRotationMatrix);
+	cameraComponent.ViewMatrix = DirectX::XMMatrixLookAtLH(transformComponent.PositionVector, cameraTarget, upDirection);
 
-	cameraComponent.VectorForward = cameraDirection;
-	cameraComponent.VectorRight = XMVector3TransformCoord(CameraComponent::RIGHT_VECTOR, cameraRotationMatrix);
+	transformComponent.VectorForward = cameraDirection;
+	transformComponent.VectorRight = XMVector3TransformCoord(TransformComponent::RIGHT_VECTOR, cameraRotationMatrix);
 }
