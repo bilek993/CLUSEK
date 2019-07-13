@@ -2,7 +2,6 @@
 #include <algorithm>
 #include "ConfigLoader.h"
 #include "../Utils/Logger.h"
-#include "../Utils/StringUtil.h"
 
 std::string ConfigLoader::FilePath = "Data/EngineSettings.cfg";
 
