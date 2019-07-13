@@ -81,8 +81,7 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 	{
 		renderComponent.UberShaderConstantBuffer.Data.Mat = cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix;
 		renderComponent.UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixTranspose(renderComponent.UberShaderConstantBuffer.Data.Mat);
-		if (!renderComponent.UberShaderConstantBuffer.ApplyChanges())
-			return;
+		renderComponent.UberShaderConstantBuffer.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, renderComponent.UberShaderConstantBuffer.GetAddressOf());
 
@@ -92,7 +91,7 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 		DeviceContext->IASetVertexBuffers(0, 1, renderComponent.RenderVertexBuffer.GetAddressOf(), renderComponent.RenderVertexBuffer.StridePtr(), &offset);
 		DeviceContext->IASetIndexBuffer(renderComponent.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 
-		DeviceContext->DrawIndexed(6, 0, 0);
+		DeviceContext->DrawIndexed(renderComponent.RenderIndexBuffer.GetBufferSize(), 0, 0);
 	});
 	RenderFrameEnd();
 }
