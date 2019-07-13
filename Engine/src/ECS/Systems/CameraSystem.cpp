@@ -6,6 +6,8 @@
 
 void CameraSystem::Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData)
 {
+	Logger::Debug("Staring camera system...");
+
 	auto view = registry.view<CameraComponent, TransformComponent>();
 	if (view.size() != 1)
 	{

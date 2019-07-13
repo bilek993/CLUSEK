@@ -6,6 +6,7 @@
 
 void RotationSystem::Start(entt::registry& registry, const HWND& hwnd, const ConfigData& configData)
 {
+	Logger::Debug("Staring rotation system...");
 	registry.view<TransformComponent, RenderComponent>().each([](TransformComponent &transformComponent, RenderComponent &renderComponent)
 	{
 		TransformLogic::SetPosition(0.0f, 0.0f, 0.0f, transformComponent);

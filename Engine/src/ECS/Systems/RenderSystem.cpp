@@ -9,6 +9,8 @@
 
 void RenderSystem::Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData)
 {
+	Logger::Debug("Staring render system...");
+
 	SyncIntervals = configData.SyncIntervals;
 	WindowWidth = configData.WindowWidth;
 	WindowHeight = configData.WindowHeight;
