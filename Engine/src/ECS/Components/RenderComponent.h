@@ -6,6 +6,7 @@
 
 struct RenderComponent final
 {
+	DirectX::XMMATRIX ModelMatrix;
 	VertexBuffer<Vertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> TextureResourceView;

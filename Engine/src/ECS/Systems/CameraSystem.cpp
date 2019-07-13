@@ -1,6 +1,6 @@
 #include "CameraSystem.h"
 #include "../Components/CameraComponent.h"
-#include "../../Renderer/CameraLogic.h"
+#include "../../Renderer/ModelViewLogic.h"
 #include "../../Utils/Logger.h"
 #include "../../Renderer/TransformLogic.h"
 
@@ -24,7 +24,7 @@ void CameraSystem::Start(entt::registry& registry, const HWND &hwnd, const Confi
 		configData.MainCameraNearZ, configData.MainCameraFarZ);
 
 	TransformLogic::SetPosition(0.0f, 0.0f, -3.0f, transformComponent);
-	CameraLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+	ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
 void CameraSystem::Update(const float deltaTime, entt::registry &registry, IOData& ioData, IODevices &ioDevices,
@@ -47,7 +47,7 @@ void CameraSystem::Update(const float deltaTime, entt::registry &registry, IODat
 		ioDevices.ChangeMouseToRelativeMode(window.GetHandle());
 		TransformLogic::AdjustRotation(static_cast<float>(ioData.MouseState.y) * 0.001f * deltaTime,
 			static_cast<float>(ioData.MouseState.x) * 0.001f * deltaTime, 0.0f, transformComponent);
-		CameraLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 	else
 	{
@@ -61,21 +61,21 @@ void CameraSystem::Update(const float deltaTime, entt::registry &registry, IODat
 	if (ioData.KeyboardState.W)
 	{
 		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, cameraSpeed), transformComponent);
-		CameraLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 	if (ioData.KeyboardState.A)
 	{
 		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, -cameraSpeed), transformComponent);
-		CameraLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 	if (ioData.KeyboardState.S)
 	{
 		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, -cameraSpeed), transformComponent);
-		CameraLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 	if (ioData.KeyboardState.D)
 	{
 		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, cameraSpeed), transformComponent);
-		CameraLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 }

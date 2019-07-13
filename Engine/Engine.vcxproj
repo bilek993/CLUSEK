@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Renderer\CameraLogic.cpp" />
+    <ClCompile Include="src\Renderer\ModelViewLogic.cpp" />
     <ClCompile Include="src\ECS\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\ECS\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
@@ -31,7 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\TransformLogic.h" />
-    <ClInclude Include="src\Renderer\CameraLogic.h" />
+    <ClInclude Include="src\Renderer\ModelViewLogic.h" />
     <ClInclude Include="src\ECS\Systems\RenderSystem.h" />
     <ClInclude Include="src\ECS\Components\RenderComponent.h" />
     <ClInclude Include="src\ECS\Systems\CameraSystem.h" />
