@@ -1,6 +1,7 @@
 #pragma once
 #include <d3d11.h>
 #include <wrl/client.h>
+#include "../Utils/Logger.h"
 
 template<class T>
 class VertexBuffer final
@@ -33,7 +34,7 @@ public:
 		return Stride;
 	}
 
-	const UINT * StridePtr() const
+	const UINT *StridePtr() const
 	{
 		return &Stride;
 	}
@@ -41,6 +42,12 @@ public:
 	HRESULT Initialize(ID3D11Device *device, T *data, UINT numVertices)
 	{
 		Logger::Debug("Vertex buffer initialization...");
+
+		if (Buffer.Get() != nullptr)
+		{
+			Buffer.Reset();
+			Logger::Debug("Cleaning up memory for vertex buffer finished with success.");
+		}
 
 		BufferSize = numVertices;
 		Stride = sizeof(T);

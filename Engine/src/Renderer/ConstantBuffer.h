@@ -29,7 +29,14 @@ public:
 	{
 		Logger::Debug("Constant buffer initialization...");
 
+		if (Buffer.Get() != nullptr)
+		{
+			Buffer.Reset();
+			Logger::Debug("Cleaning up memory for constant buffer finished with success.");
+		}
+
 		DeviceContext = deviceContext;
+
 
 		D3D11_BUFFER_DESC constBufferDesc;
 		ZeroMemory(&constBufferDesc, sizeof(D3D11_BUFFER_DESC));

@@ -20,6 +20,12 @@ HRESULT IndexBuffer::Initialize(ID3D11Device *device, const DWORD *data, const U
 {
 	Logger::Debug("Index buffer initialization...");
 
+	if (Buffer.Get() != nullptr)
+	{
+		Buffer.Reset();
+		Logger::Debug("Cleaning up memory for index buffer finished with success.");
+	}
+
 	BufferSize = numIndices;
 
 	D3D11_BUFFER_DESC indexBufferDesc;
