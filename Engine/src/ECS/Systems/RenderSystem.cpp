@@ -33,16 +33,30 @@ void RenderSystem::Start(entt::registry& registry, const HWND &hwnd, const Confi
 	{
 		Vertex v[] =
 		{
-			Vertex(-0.5f, -0.5f, 0.0f, 0.0f, 1.0f),
-			Vertex(-0.5f, 0.5f, 0.0f, 0.0f, 0.0f),
-			Vertex(0.5f, 0.5f, 0.0f, 1.0f, 0.0f),
-			Vertex(0.5f, -0.5f, 0.0f, 1.0f, 1.0f),
+			Vertex(-0.5f,  -0.5f, -0.5f, 0.0f, 1.0f),
+			Vertex(-0.5f,   0.5f, -0.5f, 0.0f, 0.0f),
+			Vertex(0.5f,   0.5f, -0.5f, 1.0f, 0.0f),
+			Vertex(0.5f,  -0.5f, -0.5f, 1.0f, 1.0f),
+			Vertex(-0.5f,  -0.5f, 0.5f, 0.0f, 1.0f),
+			Vertex(-0.5f,   0.5f, 0.5f, 0.0f, 0.0f),
+			Vertex(0.5f,   0.5f, 0.5f, 1.0f, 0.0f),
+			Vertex(0.5f,  -0.5f, 0.5f, 1.0f, 1.0f),
 		};
 
 		DWORD indices[] =
 		{
 			0, 1, 2,
 			0, 2, 3,
+			4, 7, 6,
+			4, 6, 5,
+			3, 2, 6,
+			3, 6, 7,
+			4, 5, 1,
+			4, 1, 0,
+			1, 5, 6,
+			1, 6, 2,
+			0, 3, 7,
+			0, 7, 4,
 		};
 
 		auto hr = renderComponent.RenderVertexBuffer.Initialize(Device.Get(), v, ARRAYSIZE(v));
