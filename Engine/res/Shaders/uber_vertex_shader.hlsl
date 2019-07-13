@@ -1,6 +1,6 @@
 cbuffer ConstBuffer : register(b0)
 {
-    float4x4 Mat;
+    float4x4 MatModelViewProjection;
 };
 
 struct VS_INPUT
@@ -18,7 +18,7 @@ struct VS_OUTPUT
 VS_OUTPUT main(VS_INPUT input)
 {
     VS_OUTPUT output;
-    output.Position = mul(float4(input.Position, 1.0f), Mat);
+    output.Position = mul(float4(input.Position, 1.0f), MatModelViewProjection);
     output.TextureCoord = input.TextureCoord;
 
     return output;

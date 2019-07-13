@@ -93,8 +93,8 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 	RenderFrameBegin();
 	registry.view<RenderComponent>().each([this, &cameraComponent](RenderComponent &renderComponent)
 	{
-		renderComponent.UberShaderConstantBuffer.Data.Mat = renderComponent.ModelMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix);
-		renderComponent.UberShaderConstantBuffer.Data.Mat = DirectX::XMMatrixTranspose(renderComponent.UberShaderConstantBuffer.Data.Mat);
+		renderComponent.UberShaderConstantBuffer.Data.MatModelViewProjection = renderComponent.ModelMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix);
+		renderComponent.UberShaderConstantBuffer.Data.MatModelViewProjection = DirectX::XMMatrixTranspose(renderComponent.UberShaderConstantBuffer.Data.MatModelViewProjection);
 		renderComponent.UberShaderConstantBuffer.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, renderComponent.UberShaderConstantBuffer.GetAddressOf());

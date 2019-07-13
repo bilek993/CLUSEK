@@ -3,5 +3,5 @@
 
 struct CB_VS_UberVertexShader
 {
-	DirectX::XMMATRIX Mat;
+	DirectX::XMMATRIX MatModelViewProjection;
 };
