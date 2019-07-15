@@ -6,6 +6,7 @@
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
+#include "../../Loaders/ModelLoader.h"
 
 void RenderSystem::Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData)
 {
@@ -33,43 +34,10 @@ void RenderSystem::Start(entt::registry& registry, const HWND &hwnd, const Confi
 
 	registry.view<RenderComponent>().each([this](RenderComponent &renderComponent)
 	{
-		Vertex v[] =
-		{
-			Vertex(-0.5f,  -0.5f, -0.5f, 0.0f, 1.0f),
-			Vertex(-0.5f,   0.5f, -0.5f, 0.0f, 0.0f),
-			Vertex(0.5f,   0.5f, -0.5f, 1.0f, 0.0f),
-			Vertex(0.5f,  -0.5f, -0.5f, 1.0f, 1.0f),
-			Vertex(-0.5f,  -0.5f, 0.5f, 0.0f, 1.0f),
-			Vertex(-0.5f,   0.5f, 0.5f, 0.0f, 0.0f),
-			Vertex(0.5f,   0.5f, 0.5f, 1.0f, 0.0f),
-			Vertex(0.5f,  -0.5f, 0.5f, 1.0f, 1.0f),
-		};
+		const auto meshes = ModelLoader::LoadMeshes("Data/Models/Nanosuit/nanosuit.fbx", Device.Get());
+		renderComponent.Meshes = meshes;
 
-		DWORD indices[] =
-		{
-			0, 1, 2,
-			0, 2, 3,
-			4, 7, 6,
-			4, 6, 5,
-			3, 2, 6,
-			3, 6, 7,
-			4, 5, 1,
-			4, 1, 0,
-			1, 5, 6,
-			1, 6, 2,
-			0, 3, 7,
-			0, 7, 4,
-		};
-
-		auto hr = renderComponent.RenderVertexBuffer.Initialize(Device.Get(), v, ARRAYSIZE(v));
-		if (FAILED(hr))
-			Logger::Error("Failed to create vertex buffer.");
-
-		hr = renderComponent.RenderIndexBuffer.Initialize(Device.Get(), indices, ARRAYSIZE(indices));
-		if (FAILED(hr))
-			Logger::Error("Failed to create index buffer.");
-
-		hr = DirectX::CreateWICTextureFromFile(Device.Get(), L"Data/Textures/example_texture.png", nullptr, renderComponent.TextureResourceView.GetAddressOf());
+		auto hr = DirectX::CreateWICTextureFromFile(Device.Get(), L"Data/Textures/example_texture.png", nullptr, renderComponent.TextureResourceView.GetAddressOf());
 		if (FAILED(hr))
 			Logger::Error("Couldn't load example texture from file!");
 
@@ -100,14 +68,16 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 		renderComponent.UberShaderConstantBuffer.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, renderComponent.UberShaderConstantBuffer.GetAddressOf());
+		DeviceContext->PSSetShaderResources(0, 1, renderComponent.TextureResourceView.GetAddressOf());
 
 		UINT offset = 0;
 
-		DeviceContext->PSSetShaderResources(0, 1, renderComponent.TextureResourceView.GetAddressOf());
-		DeviceContext->IASetVertexBuffers(0, 1, renderComponent.RenderVertexBuffer.GetAddressOf(), renderComponent.RenderVertexBuffer.StridePtr(), &offset);
-		DeviceContext->IASetIndexBuffer(renderComponent.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-
-		DeviceContext->DrawIndexed(renderComponent.RenderIndexBuffer.GetBufferSize(), 0, 0);
+		for (const auto& mesh : renderComponent.Meshes) 
+		{
+			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
+			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetBufferSize(), 0, 0);
+		}
 	});
 	RenderFrameEnd();
 }
