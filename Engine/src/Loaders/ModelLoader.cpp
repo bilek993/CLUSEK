@@ -5,12 +5,15 @@
 
 std::vector<Mesh> ModelLoader::LoadMeshes(const std::string& path, ID3D11Device *device)
 {
-	std::vector<Mesh> returnedValue;
+	Logger::Debug("Preparing to load mesh from: '" + path + "'...");
+
+	std::vector<Mesh> returnedMeshes;
 	Assimp::Importer importer;
 
+	Logger::Debug("Reading data from file...");
 	const auto scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
 	if (scene == nullptr)
-		return returnedValue;
+		return returnedMeshes;
 
 	const auto meshes = scene->mMeshes;
 	for (auto i = 0; i < scene->mNumMeshes; i++)
@@ -46,16 +49,18 @@ std::vector<Mesh> ModelLoader::LoadMeshes(const std::string& path, ID3D11Device 
 			}
 		}
 
-		Mesh meshForAdd;
-		meshForAdd.Name = mesh->mName.C_Str();
-		auto hr = meshForAdd.RenderIndexBuffer.Initialize(device, indices.data(), indices.size());
+		Mesh newMesh;
+		newMesh.Name = mesh->mName.C_Str();
+		auto hr = newMesh.RenderIndexBuffer.Initialize(device, indices.data(), indices.size());
 		if (FAILED(hr))
 			continue;
-		hr = meshForAdd.RenderVertexBuffer.Initialize(device, vertices.data(), vertices.size());
+		hr = newMesh.RenderVertexBuffer.Initialize(device, vertices.data(), vertices.size());
 		if (FAILED(hr))
 			continue;
-		returnedValue.emplace_back(meshForAdd);
+		returnedMeshes.emplace_back(newMesh);
+
+		Logger::Debug("Mesh '" + newMesh.Name + "' added into the model!");
 	}
 
-	return returnedValue;
+	return returnedMeshes;
 }
