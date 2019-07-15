@@ -53,7 +53,7 @@ void CameraSystem::Update(const float deltaTime, entt::registry &registry, IODat
 
 		auto currentRotationX = 0.0f;
 		auto currentRotationY = 0.0f;
-		TransformLogic::GetRotationXyz(&currentRotationX, &currentRotationY, nullptr, transformComponent);
+		TransformLogic::GetRotation(&currentRotationX, &currentRotationY, nullptr, transformComponent);
 
 		const auto rotationMouseX = static_cast<float>(ioData.MouseState.y) * 0.001f * deltaTime;
 		const auto rotationMouseY = static_cast<float>(ioData.MouseState.x) * 0.001f * deltaTime;

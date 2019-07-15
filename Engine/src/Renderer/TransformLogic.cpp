@@ -23,7 +23,7 @@ void TransformLogic::SetRotation(const float x, const float y, const float z, Tr
 	transformComponent.RotationVector = XMLoadFloat3(&newRotation);
 }
 
-void TransformLogic::GetPositionXyz(float* x, float* y, float* z, const TransformComponent& transformComponent)
+void TransformLogic::GetPosition(float* x, float* y, float* z, const TransformComponent& transformComponent)
 {
 	DirectX::XMFLOAT3 storedValue;
 	XMStoreFloat3(&storedValue, transformComponent.PositionVector);
@@ -66,7 +66,7 @@ void TransformLogic::AdjustRotation(const float x, const float y, const float z,
 	transformComponent.RotationVector = XMLoadFloat3(&storedValue);
 }
 
-void TransformLogic::GetRotationXyz(float* x, float* y, float* z, const TransformComponent& transformComponent)
+void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformComponent& transformComponent)
 {
 	DirectX::XMFLOAT3 storedValue;
 	XMStoreFloat3(&storedValue, transformComponent.RotationVector);
