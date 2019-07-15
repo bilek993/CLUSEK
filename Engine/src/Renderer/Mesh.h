@@ -5,6 +5,7 @@
 
 struct Mesh final
 {
+	std::string Name;
 	VertexBuffer<Vertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
 };

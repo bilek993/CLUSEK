@@ -47,6 +47,7 @@ std::vector<Mesh> ModelLoader::LoadMeshes(const std::string& path, ID3D11Device 
 		}
 
 		Mesh meshForAdd;
+		meshForAdd.Name = mesh->mName.C_Str();
 		auto hr = meshForAdd.RenderIndexBuffer.Initialize(device, indices.data(), indices.size());
 		if (FAILED(hr))
 			continue;
