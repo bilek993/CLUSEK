@@ -20,6 +20,9 @@ void CameraSystem::Start(entt::registry& registry, const HWND &hwnd, const Confi
 	auto &cameraComponent = view.raw<CameraComponent>()[0];
 	auto &transformComponent = view.raw<TransformComponent>()[0];
 
+	cameraComponent.MaxRotationY = DirectX::XMConvertToRadians(configData.MaxRotationX);
+	cameraComponent.MinRotationY = DirectX::XMConvertToRadians(configData.MinRotationX);
+
 	const auto fovRadians = (configData.MainCameraFov / 360.0f) * DirectX::XM_2PI;
 	cameraComponent.ProjectionMatrix = DirectX::XMMatrixPerspectiveFovLH(fovRadians,
 		static_cast<float>(configData.WindowWidth) / static_cast<float>(configData.WindowHeight),
@@ -55,7 +58,7 @@ void CameraSystem::Update(const float deltaTime, entt::registry &registry, IODat
 		const auto rotationMouseX = static_cast<float>(ioData.MouseState.y) * 0.001f * deltaTime;
 		const auto rotationMouseY = static_cast<float>(ioData.MouseState.x) * 0.001f * deltaTime;
 
-		if (currentRotationX + rotationMouseX < 1.57f && currentRotationX + rotationMouseX > -1.57f)
+		if (currentRotationX + rotationMouseX < cameraComponent.MaxRotationY && currentRotationX + rotationMouseX > cameraComponent.MinRotationY)
 			currentRotationX += rotationMouseX;
 
 		TransformLogic::SetRotation(currentRotationX, currentRotationY + rotationMouseY, 0.0f, transformComponent);

@@ -56,6 +56,10 @@ ConfigData ConfigLoader::GetData()
 				data.MultisamplesQuality = std::stoi(value);
 			else if (key == "MainCameraFov")
 				data.MainCameraFov = std::stof(value);
+			else if (key == "MaxRotationX")
+				data.MaxRotationX = std::stof(value);
+			else if (key == "MinRotationX")
+				data.MinRotationX = std::stof(value);
 			else if (key == "MainCameraNearZ")
 				data.MainCameraNearZ = std::stof(value);
 			else if (key == "MainCameraFarZ")

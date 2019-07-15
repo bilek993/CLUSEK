@@ -23,6 +23,8 @@ struct ConfigData final
 
 	// Main camera settings
 	float MainCameraFov = 90.0f;
+	float MaxRotationX = 90.0f;
+	float MinRotationX = -90.0f;
 	float MainCameraNearZ = 0.1f;
 	float MainCameraFarZ = 1000.0f;
 };
