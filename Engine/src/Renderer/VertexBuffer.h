@@ -14,6 +14,21 @@ private:
 public:
 	VertexBuffer() {}
 
+	VertexBuffer(const VertexBuffer<T>& ref)
+	{
+		Buffer = ref.Buffer;
+		Stride = ref.Stride;
+		BufferSize = ref.BufferSize;
+	}
+
+	VertexBuffer<T>& operator=(const VertexBuffer<T>& ref)
+	{
+		Buffer = ref.Buffer;
+		Stride = ref.Stride;
+		BufferSize = ref.BufferSize;
+		return *this;
+	}
+
 	ID3D11Buffer* Get() const
 	{
 		return Buffer.Get();
