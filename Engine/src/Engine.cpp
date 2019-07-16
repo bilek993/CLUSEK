@@ -66,7 +66,7 @@ void Engine::InitializeSystems()
 {
 	for (auto& system : Systems)
 	{
-		system->Start(Registry, Window.GetHandle(), Config);
+		system->Start(Registry, Window, Config);
 	}
 }
 

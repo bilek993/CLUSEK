@@ -8,7 +8,7 @@
 #include "imgui_impl_dx11.h"
 #include "../../Loaders/ModelLoader.h"
 
-void RenderSystem::Start(entt::registry& registry, const HWND &hwnd, const ConfigData& configData)
+void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData)
 {
 	Logger::Debug("Staring render system...");
 
@@ -16,7 +16,7 @@ void RenderSystem::Start(entt::registry& registry, const HWND &hwnd, const Confi
 	WindowWidth = configData.WindowWidth;
 	WindowHeight = configData.WindowHeight;
 
-	if (!InitializeDirectX(hwnd,
+	if (!InitializeDirectX(window.GetHandle(),
 		configData.Fullscreen,
 		configData.SelectedAdapterId,
 		configData.RefreshRateNumerator,
@@ -30,7 +30,7 @@ void RenderSystem::Start(entt::registry& registry, const HWND &hwnd, const Confi
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed");
 
-	InitializeImGui(hwnd);
+	InitializeImGui(window.GetHandle());
 
 	registry.view<RenderComponent>().each([this](RenderComponent &renderComponent)
 	{
