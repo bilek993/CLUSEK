@@ -65,17 +65,17 @@ void Engine::CreateSystems()
 	std::unique_ptr<BaseSystem> systemBasePtr;
 
 	systemBasePtr = std::make_unique<CameraSystem>();
-	Systems.emplace_back(SystemHolder("CameraSystem", systemBasePtr, true));
+	Systems.emplace_back(SystemHolder("Camera System", systemBasePtr, true));
 
 	systemBasePtr = std::make_unique<RotationSystem>();
-	Systems.emplace_back(SystemHolder("RotationSystem", systemBasePtr, true));
+	Systems.emplace_back(SystemHolder("Rotation System", systemBasePtr, true));
 
 	systemBasePtr = std::make_unique<RenderSystem>();
-	Systems.emplace_back(SystemHolder("RenderSystem", systemBasePtr, true));
+	Systems.emplace_back(SystemHolder("Render System", systemBasePtr, true));
 
 	for (auto i = 0; i < Systems.size(); i++)
 	{
-		if (Systems[i].Name == "RenderSystem")
+		if (Systems[i].Name == "Render System")
 		{
 			RenderSystemId = i;
 			return;
@@ -117,7 +117,7 @@ void Engine::UpdateSystems(const float deltaTime)
 
 void Engine::UpdateGuiForSystemsManager()
 {
-	ImGui::Begin("Systems manager");
+	ImGui::Begin("Systems browser");
 	for (auto& system : Systems)
 	{
 		ImGui::Checkbox(system.Name.c_str(), &system.Enabled);
