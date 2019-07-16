@@ -5,6 +5,7 @@
 #include "Timer.h"
 #include <entt.hpp>
 #include "ECS/Systems/BaseSystem.h"
+#include "Utils/SystemHolder.h"
 
 class Engine final
 {
@@ -18,6 +19,7 @@ private:
 	void InitializeSystems();
 	void UpdateInputOutputDevices();
 	void UpdateSystems(float deltaTime);
+	void UpdateGuiForSystemsManager();
 	void HandleClosingWithButton();
 
 	RenderWindow Window;
@@ -26,7 +28,7 @@ private:
 	Timer Time;
 
 	entt::registry Registry;
-	std::vector<std::pair<std::string, std::unique_ptr<BaseSystem>>> Systems;
+	std::vector<SystemHolder> Systems;
 	int RenderSystemId = 0;
 
 	IODevices InputOutputDevices;

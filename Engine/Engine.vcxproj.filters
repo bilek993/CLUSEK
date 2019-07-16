@@ -206,6 +206,9 @@
     <ClInclude Include="src\Loaders\ModelLoader.h">
       <Filter>Header Files\Loaders</Filter>
     </ClInclude>
+    <ClInclude Include="src\Utils\SystemHolder.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">

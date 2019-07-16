@@ -6,6 +6,7 @@
 #include "ECS/Components/RenderComponent.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Systems/RotationSystem.h"
+#include <imgui.h>
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 {
@@ -38,11 +39,12 @@ bool Engine::CanUpdate()
 void Engine::Update()
 {
 	const auto deltaTime = Time.GetDeltaTimeAndRestart();
-	const auto renderSystem = dynamic_cast<RenderSystem*>(Systems[RenderSystemId].second.get());
+	const auto renderSystem = dynamic_cast<RenderSystem*>(Systems[RenderSystemId].System.get());
 
 	UpdateInputOutputDevices();
 	renderSystem->RenderFrameBegin();
 	UpdateSystems(deltaTime);
+	UpdateGuiForSystemsManager();
 	renderSystem->RenderFrameEnd();
 	HandleClosingWithButton();
 }
@@ -60,13 +62,20 @@ void Engine::InitializeScene()
 
 void Engine::CreateSystems()
 {
-	Systems.emplace_back(std::make_pair("CameraSystem", std::make_unique<CameraSystem>()));
-	Systems.emplace_back(std::make_pair("RotationSystem", std::make_unique<RotationSystem>()));
-	Systems.emplace_back(std::make_pair("RenderSystem", std::make_unique<RenderSystem>()));
+	std::unique_ptr<BaseSystem> systemBasePtr;
+
+	systemBasePtr = std::make_unique<CameraSystem>();
+	Systems.emplace_back(SystemHolder("CameraSystem", systemBasePtr, true));
+
+	systemBasePtr = std::make_unique<RotationSystem>();
+	Systems.emplace_back(SystemHolder("RotationSystem", systemBasePtr, true));
+
+	systemBasePtr = std::make_unique<RenderSystem>();
+	Systems.emplace_back(SystemHolder("RenderSystem", systemBasePtr, true));
 
 	for (auto i = 0; i < Systems.size(); i++)
 	{
-		if (Systems[i].first == "RenderSystem")
+		if (Systems[i].Name == "RenderSystem")
 		{
 			RenderSystemId = i;
 			return;
@@ -80,7 +89,7 @@ void Engine::InitializeSystems()
 {
 	for (auto& system : Systems)
 	{
-		system.second->Start(Registry, Window, Config);
+		system.System->Start(Registry, Window, Config);
 	}
 }
 
@@ -94,13 +103,26 @@ void Engine::UpdateSystems(const float deltaTime)
 {
 	for (auto& system : Systems)
 	{
-		system.second->Update(	deltaTime,
+		if (!system.Enabled)
+			continue;
+
+		system.System->Update(	deltaTime,
 								Registry,
 								DataFromIODevices,
 								InputOutputDevices,
 								Window,
 								Config);
 	}
+}
+
+void Engine::UpdateGuiForSystemsManager()
+{
+	ImGui::Begin("Systems manager");
+	for (auto& system : Systems)
+	{
+		ImGui::Checkbox(system.Name.c_str(), &system.Enabled);
+	}
+	ImGui::End();
 }
 
 void Engine::HandleClosingWithButton()
