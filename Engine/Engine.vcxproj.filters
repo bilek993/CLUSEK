@@ -61,6 +61,12 @@
     <Filter Include="Header Files\ECS\Systems">
       <UniqueIdentifier>{df5df390-3f10-4aff-9db9-7b4ed9fa453a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GUI">
+      <UniqueIdentifier>{734741cc-5f64-4631-9e59-10997b6a6c22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI">
+      <UniqueIdentifier>{677c0a57-aa13-4bea-be08-0064ffacaac0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -116,6 +122,9 @@
     </ClCompile>
     <ClCompile Include="src\Loaders\ModelLoader.cpp">
       <Filter>Source Files\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\DebugUserInterface.cpp">
+      <Filter>Source Files\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -208,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="src\Utils\SystemHolder.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\DebugUserInterface.h">
+      <Filter>Header Files\GUI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

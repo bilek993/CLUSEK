@@ -6,6 +6,7 @@
 #include <entt.hpp>
 #include "ECS/Systems/BaseSystem.h"
 #include "Utils/SystemHolder.h"
+#include "GUI/DebugUserInterface.h"
 
 class Engine final
 {
@@ -19,7 +20,6 @@ private:
 	void InitializeSystems();
 	void UpdateInputOutputDevices();
 	void UpdateSystems(float deltaTime);
-	void UpdateGuiForSystemsManager();
 	void HandleClosingWithButton();
 
 	RenderWindow Window;
@@ -30,6 +30,8 @@ private:
 	entt::registry Registry;
 	std::vector<SystemHolder> Systems;
 	int RenderSystemId = 0;
+
+	DebugUserInterface DebugUI;
 
 	IODevices InputOutputDevices;
 	IOData DataFromIODevices = IOData();

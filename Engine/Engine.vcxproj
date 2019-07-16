@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\DebugUserInterface.cpp" />
     <ClCompile Include="src\Loaders\ModelLoader.cpp" />
     <ClCompile Include="src\ECS\Systems\RotationSystem.cpp" />
     <ClCompile Include="src\Renderer\ModelViewLogic.cpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="src\Renderer\TransformLogic.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\DebugUserInterface.h" />
     <ClInclude Include="src\Loaders\ModelLoader.h" />
     <ClInclude Include="src\Renderer\Mesh.h" />
     <ClInclude Include="src\ECS\Systems\RotationSystem.h" />

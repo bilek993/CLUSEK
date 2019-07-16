@@ -6,7 +6,6 @@
 #include "ECS/Components/RenderComponent.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Systems/RotationSystem.h"
-#include <imgui.h>
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 {
@@ -44,7 +43,7 @@ void Engine::Update()
 	UpdateInputOutputDevices();
 	renderSystem->RenderFrameBegin();
 	UpdateSystems(deltaTime);
-	UpdateGuiForSystemsManager();
+	DebugUI.Update(Systems);
 	renderSystem->RenderFrameEnd();
 	HandleClosingWithButton();
 }
@@ -113,16 +112,6 @@ void Engine::UpdateSystems(const float deltaTime)
 								Window,
 								Config);
 	}
-}
-
-void Engine::UpdateGuiForSystemsManager()
-{
-	ImGui::Begin("Systems browser");
-	for (auto& system : Systems)
-	{
-		ImGui::Checkbox(system.Name.c_str(), &system.Enabled);
-	}
-	ImGui::End();
 }
 
 void Engine::HandleClosingWithButton()
