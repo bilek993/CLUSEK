@@ -60,7 +60,6 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 	auto &cameraComponent = view.raw()[0];
 
-	RenderFrameBegin();
 	registry.view<RenderComponent>().each([this, &cameraComponent](RenderComponent &renderComponent)
 	{
 		renderComponent.UberShaderConstantBuffer.Data.MatModelViewProjection = renderComponent.ModelMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix);
@@ -79,8 +78,38 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetBufferSize(), 0, 0);
 		}
 	});
-	RenderFrameEnd();
 }
+
+void RenderSystem::RenderFrameBegin()
+{
+	float bgColor[] = { 0.0f, 0.75f, 1.0f };
+	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), bgColor);
+	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
+	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
+
+	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
+	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
+	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
+}
+
+void RenderSystem::RenderFrameEnd()
+{
+	// START OF TMP CODE
+	// Remove this as fast as possible after creating proper imgui system.
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+	ImGui::Begin("Test");
+	ImGui::End();
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	// END OF TMP CODE
+
+	SwapChain->Present(SyncIntervals, 0);
+}
+
 
 RenderSystem::~RenderSystem()
 {
@@ -303,34 +332,4 @@ void RenderSystem::InitializeImGui(HWND hwnd) const
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(Device.Get(), DeviceContext.Get());
 	ImGui::StyleColorsDark();
-}
-
-void RenderSystem::RenderFrameBegin()
-{
-	float bgColor[] = { 0.0f, 0.75f, 1.0f };
-	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), bgColor);
-	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-
-	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
-	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
-
-	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
-	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
-	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
-}
-
-void RenderSystem::RenderFrameEnd()
-{
-	// START OF TMP CODE
-	// Remove this as fast as possible after creating proper imgui system.
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-	ImGui::Begin("Test");
-	ImGui::End();
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-	// END OF TMP CODE
-
-	SwapChain->Present(SyncIntervals, 0);
 }

@@ -38,9 +38,12 @@ bool Engine::CanUpdate()
 void Engine::Update()
 {
 	const auto deltaTime = Time.GetDeltaTimeAndRestart();
+	const auto renderSystem = dynamic_cast<RenderSystem*>(Systems[RenderSystemId].second.get());
 
 	UpdateInputOutputDevices();
+	renderSystem->RenderFrameBegin();
 	UpdateSystems(deltaTime);
+	renderSystem->RenderFrameEnd();
 	HandleClosingWithButton();
 }
 
@@ -60,6 +63,17 @@ void Engine::CreateSystems()
 	Systems.emplace_back(std::make_pair("CameraSystem", std::make_unique<CameraSystem>()));
 	Systems.emplace_back(std::make_pair("RotationSystem", std::make_unique<RotationSystem>()));
 	Systems.emplace_back(std::make_pair("RenderSystem", std::make_unique<RenderSystem>()));
+
+	for (auto i = 0; i < Systems.size(); i++)
+	{
+		if (Systems[i].first == "RenderSystem")
+		{
+			RenderSystemId = i;
+			return;
+		}
+	}
+
+	Logger::Error("Render system not registered as system!");
 }
 
 void Engine::InitializeSystems()

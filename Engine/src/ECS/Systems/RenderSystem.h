@@ -11,14 +11,14 @@ public:
 	void Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData) override;
 	void Update(float deltaTime, entt::registry& registry, IOData& ioData, IODevices& ioDevices,
 		RenderWindow& window, ConfigData& configData) override;
+	void RenderFrameBegin();
+	void RenderFrameEnd();
 	~RenderSystem() override;
 private:
 	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator,
 		int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
 	bool InitializeShaders();
 	void InitializeImGui(HWND hwnd) const;
-	void RenderFrameBegin();
-	void RenderFrameEnd();
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;

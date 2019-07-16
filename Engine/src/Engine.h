@@ -27,6 +27,7 @@ private:
 
 	entt::registry Registry;
 	std::vector<std::pair<std::string, std::unique_ptr<BaseSystem>>> Systems;
+	int RenderSystemId = 0;
 
 	IODevices InputOutputDevices;
 	IOData DataFromIODevices = IOData();
