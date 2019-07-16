@@ -1,7 +1,7 @@
 #include "DebugUserInterface.h"
 #include <imgui.h>
 
-void DebugUserInterface::Update(std::vector<SystemHolder>& systems)
+void DebugUserInterface::Update(std::vector<SystemHolder>& systems) const
 {
 	DrawSystemBrowser(systems);
 }

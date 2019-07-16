@@ -5,7 +5,7 @@
 class DebugUserInterface final
 {
 public:
-	void Update(std::vector<SystemHolder>& systems);
+	void Update(std::vector<SystemHolder>& systems) const;
 private:
 	void DrawSystemBrowser(std::vector<SystemHolder>& systems) const;
 };
