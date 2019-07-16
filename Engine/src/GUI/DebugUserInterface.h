@@ -5,7 +5,11 @@
 class DebugUserInterface final
 {
 public:
-	void Update(std::vector<SystemHolder>& systems) const;
+	void Update(const IOData& ioData, std::vector<SystemHolder>& systems);
 private:
+	void HandleKeyboardEvents(const IOData& ioData);
+
 	void DrawSystemBrowser(std::vector<SystemHolder>& systems) const;
+
+	bool IsEnabled = false;
 };
