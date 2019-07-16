@@ -92,20 +92,16 @@ void RenderSystem::RenderFrameBegin()
 	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
 	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
 	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
+
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
 }
 
 void RenderSystem::RenderFrameEnd()
 {
-	// START OF TMP CODE
-	// Remove this as fast as possible after creating proper imgui system.
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-	ImGui::Begin("Test");
-	ImGui::End();
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-	// END OF TMP CODE
 
 	SwapChain->Present(SyncIntervals, 0);
 }
