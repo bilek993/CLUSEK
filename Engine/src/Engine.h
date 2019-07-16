@@ -26,7 +26,7 @@ private:
 	Timer Time;
 
 	entt::registry Registry;
-	std::vector<std::unique_ptr<BaseSystem>> Systems;
+	std::vector<std::pair<std::string, std::unique_ptr<BaseSystem>>> Systems;
 
 	IODevices InputOutputDevices;
 	IOData DataFromIODevices = IOData();

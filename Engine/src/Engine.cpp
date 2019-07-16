@@ -57,16 +57,16 @@ void Engine::InitializeScene()
 
 void Engine::CreateSystems()
 {
-	Systems.emplace_back(std::make_unique<CameraSystem>());
-	Systems.emplace_back(std::make_unique<RotationSystem>());
-	Systems.emplace_back(std::make_unique<RenderSystem>());
+	Systems.emplace_back(std::make_pair("CameraSystem", std::make_unique<CameraSystem>()));
+	Systems.emplace_back(std::make_pair("RotationSystem", std::make_unique<RotationSystem>()));
+	Systems.emplace_back(std::make_pair("RenderSystem", std::make_unique<RenderSystem>()));
 }
 
 void Engine::InitializeSystems()
 {
 	for (auto& system : Systems)
 	{
-		system->Start(Registry, Window, Config);
+		system.second->Start(Registry, Window, Config);
 	}
 }
 
@@ -80,12 +80,12 @@ void Engine::UpdateSystems(const float deltaTime)
 {
 	for (auto& system : Systems)
 	{
-		system->Update(	deltaTime,
-						Registry,
-						DataFromIODevices,
-						InputOutputDevices,
-						Window,
-						Config);
+		system.second->Update(	deltaTime,
+								Registry,
+								DataFromIODevices,
+								InputOutputDevices,
+								Window,
+								Config);
 	}
 }
 
