@@ -11,12 +11,12 @@ ID3D11Buffer* const* IndexBuffer::GetAddressOf()
 	return Buffer.GetAddressOf();
 }
 
-UINT IndexBuffer::GetBufferSize() const
+UINT IndexBuffer::GetIndexCount() const
 {
-	return BufferSize;
+	return IndexCount;
 }
 
-HRESULT IndexBuffer::Initialize(ID3D11Device *device, const DWORD *data, const UINT numIndices)
+HRESULT IndexBuffer::Initialize(ID3D11Device *device, const DWORD *data, const UINT indexCount)
 {
 	Logger::Debug("Index buffer initialization...");
 
@@ -26,13 +26,13 @@ HRESULT IndexBuffer::Initialize(ID3D11Device *device, const DWORD *data, const U
 		Logger::Debug("Cleaning up memory for index buffer finished with success.");
 	}
 
-	BufferSize = numIndices;
+	IndexCount = indexCount;
 
 	D3D11_BUFFER_DESC indexBufferDesc;
 	ZeroMemory(&indexBufferDesc, sizeof(D3D11_BUFFER_DESC));
 
 	indexBufferDesc.Usage = D3D11_USAGE_DEFAULT;
-	indexBufferDesc.ByteWidth = sizeof(DWORD)*numIndices;
+	indexBufferDesc.ByteWidth = sizeof(DWORD) * IndexCount;
 	indexBufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 	indexBufferDesc.CPUAccessFlags = 0;
 	indexBufferDesc.MiscFlags = 0;

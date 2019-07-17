@@ -75,7 +75,7 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 		{
 			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
 			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetBufferSize(), 0, 0);
+			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetIndexCount(), 0, 0);
 		}
 	});
 }
