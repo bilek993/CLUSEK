@@ -129,7 +129,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\DirectXTK\includes\;$(SolutionDir)Dependencies\EnTT\includes\;$(SolutionDir)Dependencies\ImGui\includes\;$(SolutionDir)Dependencies\Assimp\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\DirectXTK\includes\;$(SolutionDir)Dependencies\EnTT\includes\;$(SolutionDir)Dependencies\ImGui\includes\;$(SolutionDir)Dependencies\Assimp\includes\;$(SolutionDir)Dependencies\Nlohmann-JSON\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_ENABLE_EXTENDED_ALIGNED_STORAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -150,7 +150,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\DirectXTK\includes\;$(SolutionDir)Dependencies\EnTT\includes\;$(SolutionDir)Dependencies\ImGui\includes\;$(SolutionDir)Dependencies\Assimp\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\DirectXTK\includes\;$(SolutionDir)Dependencies\EnTT\includes\;$(SolutionDir)Dependencies\ImGui\includes\;$(SolutionDir)Dependencies\Assimp\includes\;$(SolutionDir)Dependencies\Nlohmann-JSON\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_ENABLE_EXTENDED_ALIGNED_STORAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
