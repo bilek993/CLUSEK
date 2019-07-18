@@ -31,6 +31,7 @@
     <ClCompile Include="src\Renderer\Shaders\VertexShader.cpp" />
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Renderer\TransformLogic.cpp" />
+    <ClCompile Include="src\Utils\StringUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Loaders\MaterialLoader.h" />
@@ -66,6 +67,7 @@
     <ClInclude Include="src\Timer.h" />
     <ClInclude Include="src\ECS\Components\TransformComponent.h" />
     <ClInclude Include="src\Utils\SystemHolder.h" />
+    <ClInclude Include="src\Utils\StringUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">

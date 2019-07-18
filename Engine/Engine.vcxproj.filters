@@ -132,6 +132,9 @@
     <ClCompile Include="src\Loaders\MaterialLoader.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\StringUtil.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="src\Loaders\MaterialLoader.h">
       <Filter>Header Files\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\StringUtil.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
