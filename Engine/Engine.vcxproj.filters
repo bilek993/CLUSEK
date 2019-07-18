@@ -67,6 +67,9 @@
     <Filter Include="Source Files\GUI">
       <UniqueIdentifier>{677c0a57-aa13-4bea-be08-0064ffacaac0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Renderer\Materials">
+      <UniqueIdentifier>{73e87765-411f-40a9-9c8f-088c8c9920a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="src\GUI\DebugUserInterface.cpp">
       <Filter>Source Files\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Loaders\MaterialLoader.cpp">
+      <Filter>Source Files\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="src\GUI\DebugUserInterface.h">
       <Filter>Header Files\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Materials\UberShaderMaterial.h">
+      <Filter>Header Files\Renderer\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\MaterialLoader.h">
+      <Filter>Header Files\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

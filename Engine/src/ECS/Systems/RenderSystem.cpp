@@ -1,12 +1,12 @@
 #include "RenderSystem.h"
 #include "../Components/RenderComponent.h"
-#include <WICTextureLoader.h>
 #include "../Components/CameraComponent.h"
 #include "../../Renderer/AdapterReader.h"
 #include "imgui.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 #include "../../Loaders/ModelLoader.h"
+#include "../../Loaders/MaterialLoader.h"
 
 void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData)
 {
@@ -34,8 +34,8 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 
 	registry.view<RenderComponent>().each([this](RenderComponent &renderComponent)
 	{
-		const auto meshes = ModelLoader::LoadMeshes("Data/Models/Nanosuit/nanosuit.fbx", Device.Get());
-		renderComponent.Meshes = meshes;
+		renderComponent.Meshes = ModelLoader::LoadMeshes("Data/Models/Nanosuit/nanosuit.fbx", Device.Get());
+		MaterialLoader::LoadMaterialForMeshGroup(Device.Get(), renderComponent.Meshes);
 
 		const auto hr = renderComponent.UberShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
 		if (FAILED(hr))
@@ -68,6 +68,7 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 		for (const auto& mesh : renderComponent.Meshes) 
 		{
+			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.MainTexture.GetAddressOf());
 			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
 			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetIndexCount(), 0, 0);

@@ -1,6 +1,4 @@
 #pragma once
-#include <wrl/client.h>
-#include "../../Renderer/Vertex.h"
 #include "../../Renderer/ConstantBuffer.h"
 #include "../../Renderer/Mesh.h"
 #include "vector"
