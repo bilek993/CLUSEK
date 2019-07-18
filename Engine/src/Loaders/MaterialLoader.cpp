@@ -7,7 +7,12 @@ void MaterialLoader::LoadMaterialForMesh(ID3D11Device* device, Mesh& mesh, const
 {
 	const auto hr = DirectX::CreateWICTextureFromFile(device, pathToMainTexture.data(), nullptr, mesh.Material.MainTexture.GetAddressOf());
 	if (FAILED(hr))
+	{
 		Logger::Error("Couldn't load example texture from file!");
+		return;
+	}
+
+	Logger::Debug("All textures loaded for mesh '" + mesh.Name + "'!");
 }
 
 void MaterialLoader::LoadMaterialForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
@@ -22,6 +27,7 @@ void MaterialLoader::LoadMaterialForMeshGroup(ID3D11Device* device, std::vector<
 
 		if (!currentMaterialJsonInfo.is_null())
 		{
+			Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
 			LoadMaterialForMesh(device, mesh, StringUtil::StringToWide(currentMaterialJsonInfo.get<std::string>()));
 		}
 		else
