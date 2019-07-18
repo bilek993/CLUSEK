@@ -8,7 +8,6 @@
 struct RenderComponent final
 {
 	std::vector<Mesh> Meshes;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> TextureResourceView;
 	DirectX::XMMATRIX ModelMatrix;
 	ConstantBuffer<CB_VS_UberVertexShader> UberShaderConstantBuffer;
 };

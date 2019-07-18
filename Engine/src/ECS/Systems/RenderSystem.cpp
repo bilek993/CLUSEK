@@ -37,11 +37,7 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 		const auto meshes = ModelLoader::LoadMeshes("Data/Models/Nanosuit/nanosuit.fbx", Device.Get());
 		renderComponent.Meshes = meshes;
 
-		auto hr = DirectX::CreateWICTextureFromFile(Device.Get(), L"Data/Textures/example_texture.png", nullptr, renderComponent.TextureResourceView.GetAddressOf());
-		if (FAILED(hr))
-			Logger::Error("Couldn't load example texture from file!");
-
-		hr = renderComponent.UberShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
+		const auto hr = renderComponent.UberShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
 		if (FAILED(hr))
 			Logger::Error("Failed to create constant buffer.");
 	});
@@ -67,7 +63,6 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 		renderComponent.UberShaderConstantBuffer.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, renderComponent.UberShaderConstantBuffer.GetAddressOf());
-		DeviceContext->PSSetShaderResources(0, 1, renderComponent.TextureResourceView.GetAddressOf());
 
 		UINT offset = 0;
 
