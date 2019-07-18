@@ -1,5 +1,4 @@
 #pragma once
-#include <WICTextureLoader.h>
 #include <wrl/client.h>
 
 struct UberShaderMaterial final
