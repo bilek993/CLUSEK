@@ -1,4 +1,6 @@
 #include "MaterialLoader.h"
+#include <WICTextureLoader.h>
+#include <DDSTextureLoader.h>
 #include <fstream>
 #include <json.hpp>
 #include "../Utils/StringUtil.h"
@@ -26,6 +28,7 @@ void MaterialLoader::LoadMaterialForMeshGroup(ID3D11Device* device, std::vector<
 		else
 		{
 			Logger::Warning("Material data for mesh '" + mesh.Name + "' doesn't exist in.");
+			SetPinkTexture(device, mesh.Material.MainTexture);
 			Logger::Warning("Using default material!");
 		}
 	}
@@ -45,4 +48,22 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 		if (FAILED(hr))
 			Logger::Error("Couldn't load example texture from file!");
 	}
+}
+
+void MaterialLoader::SetPinkTexture(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource)
+{
+	CD3D11_TEXTURE2D_DESC textureDesc(DXGI_FORMAT_R8G8B8A8_UNORM, 1, 1);
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> p2DTexture = nullptr;
+	D3D11_SUBRESOURCE_DATA initialData { &PINK_COLOR, sizeof(unsigned int), 0 };
+
+	auto hr = device->CreateTexture2D(&textureDesc, &initialData, &p2DTexture);
+	if (FAILED(hr))
+		Logger::Error("Creating error texture failed!");
+
+	const auto texture = static_cast<ID3D11Texture2D*>(p2DTexture.Get());
+	CD3D11_SHADER_RESOURCE_VIEW_DESC srvDesc(D3D11_SRV_DIMENSION_TEXTURE2D, textureDesc.Format);
+
+	hr = device->CreateShaderResourceView(texture, &srvDesc, textureResource.GetAddressOf());
+	if (FAILED(hr))
+		Logger::Error("Creating error texture failed!");
 }

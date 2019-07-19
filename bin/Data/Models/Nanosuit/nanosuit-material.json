@@ -13,8 +13,6 @@
   },
   "Body": {
     "MainTexture": "Data/Textures/Nanosuit/body_dif.png"
-  },
-  "Arms": {
-    "MainTexture": "Data/Textures/Nanosuit/arm_dif.png"
   }
+
 }
