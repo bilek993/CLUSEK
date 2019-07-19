@@ -7,7 +7,10 @@
 
 void MaterialLoader::LoadMaterialForMesh(ID3D11Device* device, Mesh& mesh, const std::string& pathToMainTexture)
 {
-	LoadTextureToMaterial(device, mesh.Material.MainTexture, pathToMainTexture);
+	if (pathToMainTexture.empty())
+		SetPinkTexture(device, mesh.Material.MainTexture);
+	else
+		LoadTextureToMaterial(device, mesh.Material.MainTexture, pathToMainTexture);
 }
 
 void MaterialLoader::LoadMaterialForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
@@ -18,19 +21,12 @@ void MaterialLoader::LoadMaterialForMeshGroup(ID3D11Device* device, std::vector<
 
 	for (auto& mesh : meshes)
 	{
+		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
 		auto currentMaterialJsonInfo = jsonObject[mesh.Name]["MainTexture"];
 
-		if (!currentMaterialJsonInfo.is_null())
-		{
-			Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
-			LoadMaterialForMesh(device, mesh, currentMaterialJsonInfo.get<std::string>());
-		}
-		else
-		{
-			Logger::Warning("Material data for mesh '" + mesh.Name + "' doesn't exist in.");
-			SetPinkTexture(device, mesh.Material.MainTexture);
-			Logger::Warning("Using default material!");
-		}
+		LoadMaterialForMesh(device,
+							mesh,
+							currentMaterialJsonInfo.is_null() ? "" : currentMaterialJsonInfo.get<std::string>());
 	}
 }
 
@@ -40,18 +36,20 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 	{
 		const auto hr = DirectX::CreateDDSTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, textureResource.GetAddressOf());
 		if (FAILED(hr))
-			Logger::Error("Couldn't load example texture from file!");
+			Logger::Error("Couldn't load texture from file!");
 	}
 	else
 	{
 		const auto hr = DirectX::CreateWICTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, textureResource.GetAddressOf());
 		if (FAILED(hr))
-			Logger::Error("Couldn't load example texture from file!");
+			Logger::Error("Couldn't load texture from file!");
 	}
 }
 
 void MaterialLoader::SetPinkTexture(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource)
 {
+	Logger::Warning("Texture not found! Pink texture will be used instead.");
+
 	CD3D11_TEXTURE2D_DESC textureDesc(DXGI_FORMAT_R8G8B8A8_UNORM, 1, 1);
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> p2DTexture = nullptr;
 	D3D11_SUBRESOURCE_DATA initialData { &PINK_COLOR, sizeof(unsigned int), 0 };
