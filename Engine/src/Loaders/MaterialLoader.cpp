@@ -5,16 +5,16 @@
 #include <json.hpp>
 #include "../Utils/StringUtil.h"
 
-std::unordered_map<std::string, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::TextureResources;
+std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
 
 void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path, const std::string& resourceId)
 {
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> resource;
+	const auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
 
 	if (path.empty())
-		SetPinkTexture(device, resource);
+		SetPinkTexture(device, *resource);
 	else
-		LoadTextureToMaterial(device, resource, path);
+		LoadTextureToMaterial(device, *resource, path);
 
 	TextureResources[resourceId] = resource;
 }
@@ -26,12 +26,14 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 	if (mainTextureId.empty())
 	{
 		Logger::Warning("Incorrect resource id.");
-		SetPinkTexture(device, mesh.Material.MainTexture);
+		mesh.Material.MainTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+		SetPinkTexture(device, *mesh.Material.MainTexture);
 	}
 	else if (texturePointer == TextureResources.end())
 	{
 		Logger::Warning("Resource with id '" + mainTextureId + "' not found!");
-		SetPinkTexture(device, mesh.Material.MainTexture);
+		mesh.Material.MainTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+		SetPinkTexture(device, *mesh.Material.MainTexture);
 	}
 	else
 	{

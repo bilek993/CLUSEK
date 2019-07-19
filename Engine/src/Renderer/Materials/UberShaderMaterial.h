@@ -3,5 +3,5 @@
 
 struct UberShaderMaterial final
 {
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> MainTexture;
+	std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MainTexture;
 };
