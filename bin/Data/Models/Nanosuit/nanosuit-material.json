@@ -1,20 +1,20 @@
 {
   "Visor": {
-    "MainTexture": "Data/Textures/Nanosuit/glass_dif.png"
+    "MainTexture": "NanosuitGlassDif"
   },
   "Legs": {
-    "MainTexture": "Data/Textures/Nanosuit/leg_dif.png"
+    "MainTexture": "NanosuitLegDif"
   },
   "hands": {
-    "MainTexture": "Data/Textures/Nanosuit/hand_dif.png"
+    "MainTexture": "NanosuitHandDif"
   },
   "Helmet": {
-    "MainTexture": "Data/Textures/Nanosuit/helmet_diff.png"
+    "MainTexture": "NanosuitHelmetDiff"
   },
   "Body": {
-    "MainTexture": "Data/Textures/Nanosuit/body_dif.png"
+    "MainTexture": "NanosuitBodyDif"
   },
   "Arms": {
-    "MainTexture": "Data/Textures/Nanosuit/hand_dif.png"
+    "MainTexture": "NanosuitArmDif"
   }
 }

@@ -5,15 +5,41 @@
 #include <json.hpp>
 #include "../Utils/StringUtil.h"
 
-void MaterialLoader::LoadMaterialForMesh(ID3D11Device* device, Mesh& mesh, const std::string& pathToMainTexture)
+std::unordered_map<std::string, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::TextureResources;
+
+void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path, const std::string& resourceId)
 {
-	if (pathToMainTexture.empty())
-		SetPinkTexture(device, mesh.Material.MainTexture);
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> resource;
+
+	if (path.empty())
+		SetPinkTexture(device, resource);
 	else
-		LoadTextureToMaterial(device, mesh.Material.MainTexture, pathToMainTexture);
+		LoadTextureToMaterial(device, resource, path);
+
+	TextureResources[resourceId] = resource;
 }
 
-void MaterialLoader::LoadMaterialForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
+void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& mainTextureId)
+{
+	const auto texturePointer = TextureResources.find(mainTextureId);
+
+	if (mainTextureId.empty())
+	{
+		Logger::Warning("Incorrect resource id.");
+		SetPinkTexture(device, mesh.Material.MainTexture);
+	}
+	else if (texturePointer == TextureResources.end())
+	{
+		Logger::Warning("Resource with id '" + mainTextureId + "' not found!");
+		SetPinkTexture(device, mesh.Material.MainTexture);
+	}
+	else
+	{
+		mesh.Material.MainTexture = texturePointer->second;
+	}
+}
+
+void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
 {
 	nlohmann::json jsonObject;
 	std::ifstream inputFile(pathToMaterial);
@@ -24,7 +50,7 @@ void MaterialLoader::LoadMaterialForMeshGroup(ID3D11Device* device, std::vector<
 		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
 		auto currentMaterialJsonInfo = jsonObject[mesh.Name]["MainTexture"];
 
-		LoadMaterialForMesh(device,
+		SetResourceForMesh(	device,
 							mesh,
 							currentMaterialJsonInfo.is_null() ? "" : currentMaterialJsonInfo.get<std::string>());
 	}
@@ -48,8 +74,6 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 
 void MaterialLoader::SetPinkTexture(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource)
 {
-	Logger::Warning("Texture not found! Pink texture will be used instead.");
-
 	CD3D11_TEXTURE2D_DESC textureDesc(DXGI_FORMAT_R8G8B8A8_UNORM, 1, 1);
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> p2DTexture = nullptr;
 	D3D11_SUBRESOURCE_DATA initialData { &PINK_COLOR, sizeof(unsigned int), 0 };
