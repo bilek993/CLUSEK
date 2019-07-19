@@ -5,7 +5,7 @@
 
 struct RenderComponent final
 {
-	std::vector<Mesh> Meshes;
+	std::shared_ptr<std::vector<Mesh>> Meshes;
 	DirectX::XMMATRIX ModelMatrix;
 	ConstantBuffer<CB_VS_UberVertexShader> UberShaderConstantBuffer;
 };

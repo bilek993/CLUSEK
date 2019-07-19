@@ -3,17 +3,19 @@
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
 
-std::vector<Mesh> ModelLoader::LoadMeshes(const std::string& path, ID3D11Device *device)
+std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> ModelLoader::MeshesResources;
+
+void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, const std::string& resourceId)
 {
 	Logger::Debug("Preparing to load mesh from: '" + path + "'...");
 
-	std::vector<Mesh> returnedMeshes;
+	auto loadedMeshes = std::make_shared<std::vector<Mesh>>();
 	Assimp::Importer importer;
 
 	Logger::Debug("Reading data from file...");
 	const auto scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
 	if (scene == nullptr)
-		return returnedMeshes;
+		return;
 
 	const auto meshes = scene->mMeshes;
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
@@ -57,10 +59,19 @@ std::vector<Mesh> ModelLoader::LoadMeshes(const std::string& path, ID3D11Device 
 		hr = newMesh.RenderVertexBuffer.Initialize(device, vertices.data(), vertices.size());
 		if (FAILED(hr))
 			continue;
-		returnedMeshes.emplace_back(newMesh);
+		loadedMeshes->emplace_back(newMesh);
 
 		Logger::Debug("Mesh '" + newMesh.Name + "' added into the model!");
 	}
 
-	return returnedMeshes;
+	MeshesResources[resourceId] = loadedMeshes;
+}
+
+std::shared_ptr<std::vector<Mesh>> ModelLoader::GetResource(const std::string& resourceId)
+{
+	const auto meshPointer = MeshesResources.find(resourceId);
+	if (meshPointer == MeshesResources.end())
+		Logger::Error("Resource with id '" + resourceId + "' not found!");
+
+	return meshPointer->second;
 }

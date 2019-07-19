@@ -1,9 +1,13 @@
 #pragma once
 #include <vector>
 #include "../Renderer/Mesh.h"
+#include <unordered_map>
 
 class ModelLoader final
 {
 public:
-	static std::vector<Mesh> LoadMeshes(const std::string& path, ID3D11Device *device);
+	static void LoadResource(ID3D11Device *device, const std::string& path, const std::string& resourceId);
+	static std::shared_ptr<std::vector<Mesh>> GetResource(const std::string& resourceId);
+private:
+	static std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> MeshesResources;
 };

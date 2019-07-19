@@ -32,10 +32,14 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 
 	InitializeImGui(window.GetHandle());
 
+	// TODO REMOVE THIS
+	ModelLoader::LoadResource(Device.Get(), "Data/Models/Nanosuit/nanosuit.fbx", "Nanosuit");
+	// TODO END OF REMOVE THIS
+
 	registry.view<RenderComponent>().each([this](RenderComponent &renderComponent)
 	{
-		renderComponent.Meshes = ModelLoader::LoadMeshes("Data/Models/Nanosuit/nanosuit.fbx", Device.Get());
-		MaterialLoader::LoadMaterialForMeshGroup(Device.Get(), renderComponent.Meshes, "Data/Models/Nanosuit/nanosuit-material.json");
+		renderComponent.Meshes = ModelLoader::GetResource("Nanosuit");
+		MaterialLoader::LoadMaterialForMeshGroup(Device.Get(), *renderComponent.Meshes, "Data/Models/Nanosuit/nanosuit-material.json");
 
 		const auto hr = renderComponent.UberShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
 		if (FAILED(hr))
@@ -66,7 +70,7 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 		UINT offset = 0;
 
-		for (const auto& mesh : renderComponent.Meshes) 
+		for (const auto& mesh : *renderComponent.Meshes) 
 		{
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.MainTexture.GetAddressOf());
 			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
