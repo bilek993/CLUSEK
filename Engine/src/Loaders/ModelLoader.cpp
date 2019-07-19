@@ -16,13 +16,13 @@ std::vector<Mesh> ModelLoader::LoadMeshes(const std::string& path, ID3D11Device 
 		return returnedMeshes;
 
 	const auto meshes = scene->mMeshes;
-	for (auto i = 0; i < scene->mNumMeshes; i++)
+	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 	{
 		auto mesh = meshes[i];
 		std::vector<Vertex> vertices;
 		std::vector<DWORD> indices;
 
-		for (auto j = 0; j < mesh->mNumVertices; j++)
+		for (unsigned int j = 0; j < mesh->mNumVertices; j++)
 		{
 			Vertex vertex;
 
@@ -39,11 +39,11 @@ std::vector<Mesh> ModelLoader::LoadMeshes(const std::string& path, ID3D11Device 
 			vertices.emplace_back(vertex);
 		}
 
-		for (auto j = 0; j < mesh->mNumFaces; j++)
+		for (unsigned int j = 0; j < mesh->mNumFaces; j++)
 		{
 			const auto face = mesh->mFaces[j];
 
-			for (auto k = 0; k < face.mNumIndices; k++)
+			for (unsigned int k = 0; k < face.mNumIndices; k++)
 			{
 				indices.emplace_back(face.mIndices[k]);
 			}
