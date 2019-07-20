@@ -81,11 +81,21 @@ void DebugUserInterface::HandleKeyboardEvents(const IOData& ioData)
 		IsEnabled = !IsEnabled;
 }
 
-void DebugUserInterface::HandleMainDockingArea()
+void DebugUserInterface::HandleMainDockingArea() const
 {
 	auto dockingEnabled = true;
-	const auto windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground;
-	const auto dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoDockingInCentralNode;
+	const auto windowFlags =	ImGuiWindowFlags_MenuBar | 
+								ImGuiWindowFlags_NoDocking | 
+								ImGuiWindowFlags_NoTitleBar | 
+								ImGuiWindowFlags_NoCollapse | 
+								ImGuiWindowFlags_NoResize | 
+								ImGuiWindowFlags_NoMove | 
+								ImGuiWindowFlags_NoBringToFrontOnFocus | 
+								ImGuiWindowFlags_NoNavFocus |
+								ImGuiWindowFlags_NoBackground;
+
+	const auto dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode | 
+								ImGuiDockNodeFlags_NoDockingInCentralNode;
 
 	const auto viewport = ImGui::GetMainViewport();
 	ImGui::SetNextWindowPos(viewport->Pos);
@@ -95,12 +105,12 @@ void DebugUserInterface::HandleMainDockingArea()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("DockSpace Demo", &dockingEnabled, windowFlags);
+	ImGui::Begin("Main Dockspace Area", &dockingEnabled, windowFlags);
 	ImGui::PopStyleVar(3);
 
 	DrawMenuBar();
 
-	auto dockspaceId = ImGui::GetID("MainDockSpaceArea");
+	auto dockspaceId = ImGui::GetID("MainDockspaceArea");
 	ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
 
 	ImGui::End();

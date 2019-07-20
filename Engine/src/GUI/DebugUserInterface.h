@@ -15,7 +15,7 @@ public:
 	~DebugUserInterface();
 private:
 	void HandleKeyboardEvents(const IOData& ioData);
-	void HandleMainDockingArea();
+	void HandleMainDockingArea() const;
 
 	void BeforeUpdate() const;
 	void AfterUpdate() const;
