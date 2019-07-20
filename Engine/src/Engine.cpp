@@ -56,7 +56,7 @@ void Engine::InitializeScene()
 	Registry.assign<TransformComponent>(cameraEntity);
 
 	const auto sampleObjectEntity = Registry.create();
-	Registry.assign<RenderComponent>(sampleObjectEntity);
+	Registry.assign<RenderComponent>(sampleObjectEntity, "Nanosuit", "Data/Models/Nanosuit/nanosuit-material.json");
 	Registry.assign<TransformComponent>(sampleObjectEntity);
 }
 

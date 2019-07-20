@@ -32,8 +32,8 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 
 	registry.view<RenderComponent>().each([this](RenderComponent &renderComponent)
 	{
-		renderComponent.Meshes = ModelLoader::GetResource("Nanosuit");
-		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *renderComponent.Meshes, "Data/Models/Nanosuit/nanosuit-material.json");
+		renderComponent.Meshes = ModelLoader::GetResource(renderComponent.ModelId);
+		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *renderComponent.Meshes, renderComponent.MaterialId);
 
 		const auto hr = renderComponent.UberShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
 		if (FAILED(hr))
