@@ -17,13 +17,13 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 	WindowWidth = configData.WindowWidth;
 	WindowHeight = configData.WindowHeight;
 
-	if (!InitializeDirectX(window.GetHandle(),
-		configData.Fullscreen,
-		configData.SelectedAdapterId,
-		configData.RefreshRateNumerator,
-		configData.RefreshRateDenominator,
-		configData.MultisamplesCount,
-		configData.MultisamplesQuality))
+	if (!InitializeDirectX(	window.GetHandle(),
+							configData.Fullscreen,
+							configData.SelectedAdapterId,
+							configData.RefreshRateNumerator,
+							configData.RefreshRateDenominator,
+							configData.MultisamplesCount,
+							configData.MultisamplesQuality))
 	{
 		Logger::Error("DirectX initialization failed");
 	}
