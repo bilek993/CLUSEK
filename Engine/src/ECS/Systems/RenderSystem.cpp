@@ -33,7 +33,7 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 
 	InitializeImGui(window.GetHandle());
 
-	ResourcesLoader::Load(Device.Get(), "Data/Resources.json");
+	ResourcesLoader::Load(Device.Get(), configData.PathToResources);
 
 	registry.view<RenderComponent>().each([this](RenderComponent &renderComponent)
 	{

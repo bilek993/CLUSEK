@@ -64,6 +64,8 @@ ConfigData ConfigLoader::GetData()
 				data.MainCameraNearZ = std::stof(value);
 			else if (key == "MainCameraFarZ")
 				data.MainCameraFarZ = std::stof(value);
+			else if (key == "PathToResources")
+				data.PathToResources = value;
 			else
 				continue;
 
