@@ -24,6 +24,8 @@ void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& jso
 		const auto value = it.value().get<std::string>();
 		ModelLoader::LoadResource(device, value, key);
 	}
+
+	Logger::Debug("Loaded " + std::to_string(json.size()) + " model files.");
 }
 
 void ResourcesLoader::LoadMaterials(ID3D11Device* device, const nlohmann::json& json)
@@ -34,5 +36,7 @@ void ResourcesLoader::LoadMaterials(ID3D11Device* device, const nlohmann::json& 
 		const auto value = it.value().get<std::string>();
 		MaterialLoader::LoadResource(device, value, key);
 	}
+
+	Logger::Debug("Loaded " + std::to_string(json.size()) + " texture files.");
 }
 

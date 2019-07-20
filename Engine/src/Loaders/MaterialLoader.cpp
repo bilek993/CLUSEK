@@ -9,6 +9,7 @@ std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11Sha
 
 void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path, const std::string& resourceId)
 {
+	Logger::Debug("Preparing to load resource '" + resourceId + "' from path '" + path + "'...");
 	const auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
 
 	if (path.empty())
@@ -16,6 +17,7 @@ void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path,
 	else
 		LoadTextureToMaterial(device, *resource, path);
 
+	Logger::Debug("Adding resource '" + resourceId + "' into memory...");
 	TextureResources[resourceId] = resource;
 }
 
