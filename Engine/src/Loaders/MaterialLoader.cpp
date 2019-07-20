@@ -43,6 +43,12 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 
 void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
 {
+	if (pathToMaterial.empty())
+	{
+		Logger::Error("Incorrect path to material passed! Path cannot to material file cannot be empty.");
+		return;
+	}
+
 	nlohmann::json jsonObject;
 	std::ifstream inputFile(pathToMaterial);
 	inputFile >> jsonObject;
