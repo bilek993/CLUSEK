@@ -19,6 +19,7 @@ private:
 	void BeforeUpdate() const;
 	void AfterUpdate() const;
 
+	void DrawMenuBar() const;
 	void DrawSystemBrowser(std::vector<SystemHolder>& systems) const;
 
 	bool IsEnabled = false;

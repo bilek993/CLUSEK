@@ -33,6 +33,7 @@ void DebugUserInterface::Update(const IOData& ioData, std::vector<SystemHolder>&
 		return;
 	}
 
+	DrawMenuBar();
 	DrawSystemBrowser(systems);
 
 	AfterUpdate();
@@ -42,6 +43,27 @@ void DebugUserInterface::AfterUpdate() const
 {
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+}
+
+void DebugUserInterface::DrawMenuBar() const
+{
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem("Restart"))
+			{
+				// TODO: Implement logic
+			}
+			if (ImGui::MenuItem("Exit"))
+			{
+				// TODO: Implement logic
+			}
+			ImGui::EndMenu();
+		}
+
+		ImGui::EndMainMenuBar();
+	}
 }
 
 DebugUserInterface::~DebugUserInterface()
