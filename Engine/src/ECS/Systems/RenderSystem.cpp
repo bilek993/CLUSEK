@@ -7,6 +7,7 @@
 #include "imgui_impl_dx11.h"
 #include "../../Loaders/ModelLoader.h"
 #include "../../Loaders/MaterialLoader.h"
+#include "../../Loaders/ResourcesLoader.h"
 
 void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData)
 {
@@ -32,15 +33,7 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 
 	InitializeImGui(window.GetHandle());
 
-	// TODO REMOVE THIS
-	ModelLoader::LoadResource(Device.Get(), "Data/Models/Nanosuit/nanosuit.fbx", "Nanosuit");
-	MaterialLoader::LoadResource(Device.Get(), "Data/Textures/Nanosuit/glass_dif.png", "NanosuitGlassDif");
-	MaterialLoader::LoadResource(Device.Get(), "Data/Textures/Nanosuit/leg_dif.png", "NanosuitLegDif");
-	MaterialLoader::LoadResource(Device.Get(), "Data/Textures/Nanosuit/hand_dif.png", "NanosuitHandDif");
-	MaterialLoader::LoadResource(Device.Get(), "Data/Textures/Nanosuit/helmet_diff.png", "NanosuitHelmetDiff");
-	MaterialLoader::LoadResource(Device.Get(), "Data/Textures/Nanosuit/body_dif.png", "NanosuitBodyDif");
-	MaterialLoader::LoadResource(Device.Get(), "Data/Textures/Nanosuit/arm_dif.png", "NanosuitArmDif");
-	// TODO END OF REMOVE THIS
+	ResourcesLoader::Load(Device.Get(), "Data/Resources.json");
 
 	registry.view<RenderComponent>().each([this](RenderComponent &renderComponent)
 	{

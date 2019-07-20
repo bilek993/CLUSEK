@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Loaders\ResourcesLoader.cpp" />
     <ClCompile Include="src\Loaders\MaterialLoader.cpp" />
     <ClCompile Include="src\GUI\DebugUserInterface.cpp" />
     <ClCompile Include="src\Loaders\ModelLoader.cpp" />
@@ -34,6 +35,7 @@
     <ClCompile Include="src\Utils\StringUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Loaders\ResourcesLoader.h" />
     <ClInclude Include="src\Loaders\MaterialLoader.h" />
     <ClInclude Include="src\Renderer\Materials\UberShaderMaterial.h" />
     <ClInclude Include="src\GUI\DebugUserInterface.h" />

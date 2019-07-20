@@ -13,6 +13,8 @@ public:
 		RenderWindow& window, ConfigData& configData) override;
 	void RenderFrameBegin();
 	void RenderFrameEnd();
+
+	ID3D11Device* GetPointerToDevice() const;
 	~RenderSystem() override;
 private:
 	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator,
