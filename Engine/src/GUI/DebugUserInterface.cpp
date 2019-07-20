@@ -10,6 +10,7 @@ void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D1
 	ImGui::CreateContext();
 	auto& io = ImGui::GetIO();
 	io.IniFilename = nullptr;
+	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(device, deviceContext);
 	ImGui::StyleColorsDark();
@@ -33,7 +34,8 @@ void DebugUserInterface::Update(const IOData& ioData, std::vector<SystemHolder>&
 		return;
 	}
 
-	DrawMenuBar();
+	HandleMainDockingArea();
+
 	DrawSystemBrowser(systems);
 
 	AfterUpdate();
@@ -77,6 +79,31 @@ void DebugUserInterface::HandleKeyboardEvents(const IOData& ioData)
 {
 	if (ioData.KeyboardTracker.released.OemTilde)
 		IsEnabled = !IsEnabled;
+}
+
+void DebugUserInterface::HandleMainDockingArea()
+{
+	auto dockingEnabled = true;
+	const auto windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_NoBackground;
+	const auto dockspaceFlags = ImGuiDockNodeFlags_PassthruCentralNode | ImGuiDockNodeFlags_NoDockingInCentralNode;
+
+	const auto viewport = ImGui::GetMainViewport();
+	ImGui::SetNextWindowPos(viewport->Pos);
+	ImGui::SetNextWindowSize(viewport->Size);
+	ImGui::SetNextWindowViewport(viewport->ID);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
+	ImGui::Begin("DockSpace Demo", &dockingEnabled, windowFlags);
+	ImGui::PopStyleVar(3);
+
+	DrawMenuBar();
+
+	auto dockspaceId = ImGui::GetID("MainDockSpaceArea");
+	ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
+
+	ImGui::End();
 }
 
 void DebugUserInterface::DrawSystemBrowser(std::vector<SystemHolder>& systems) const
