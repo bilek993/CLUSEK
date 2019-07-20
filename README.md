@@ -44,7 +44,7 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 
 * [DirectX Tool Kit for DirectX 11](https://github.com/microsoft/DirectXTK/tree/94e4227a5289f6e5390bf52daf3a4d15ecdf6922)
 * [EnTT](https://github.com/skypjack/entt/tree/85152bac3462c95e7be02cd4077bef8fc56de804)
-* [Dear ImGui](https://github.com/ocornut/imgui/tree/54c49b5fb1371626f92853a2658cfe2d51d2e41d)
+* [Dear ImGui](https://github.com/ocornut/imgui/tree/9f35ba8546b075dfb5d148be4e468ef8c0f5a41c)
 * [Assimp](https://github.com/assimp/assimp/tree/80799bdbf90ce626475635815ee18537718a05b1)
 * [Nlohmann JSON](https://github.com/nlohmann/json/tree/ffe0e3d70f110bb1ca16f34d7d07a2f0e0974ea6)
 
