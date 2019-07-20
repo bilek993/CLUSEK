@@ -2,16 +2,37 @@
 #include "../Utils/Logger.h"
 #include "MaterialLoader.h"
 #include "ModelLoader.h"
+#include <fstream>
 
 void ResourcesLoader::Load(ID3D11Device* device, const std::string& pathToResourceFile)
 {
 	Logger::Debug("Preparing to load resource...");
 
-	ModelLoader::LoadResource(device, "Data/Models/Nanosuit/nanosuit.fbx", "Nanosuit");
-	MaterialLoader::LoadResource(device, "Data/Textures/Nanosuit/glass_dif.png", "NanosuitGlassDif");
-	MaterialLoader::LoadResource(device, "Data/Textures/Nanosuit/leg_dif.png", "NanosuitLegDif");
-	MaterialLoader::LoadResource(device, "Data/Textures/Nanosuit/hand_dif.png", "NanosuitHandDif");
-	MaterialLoader::LoadResource(device, "Data/Textures/Nanosuit/helmet_diff.png", "NanosuitHelmetDiff");
-	MaterialLoader::LoadResource(device, "Data/Textures/Nanosuit/body_dif.png", "NanosuitBodyDif");
-	MaterialLoader::LoadResource(device, "Data/Textures/Nanosuit/arm_dif.png", "NanosuitArmDif");
+	nlohmann::json jsonObject;
+	std::ifstream inputFile(pathToResourceFile);
+	inputFile >> jsonObject;
+
+	LoadModels(device, jsonObject["Models"]);
+	LoadMaterials(device, jsonObject["Materials"]);
 }
+
+void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& json)
+{
+	for (auto it = json.begin(); it != json.end(); ++it)
+	{
+		const auto key = static_cast<std::string>(it.key());
+		const auto value = it.value().get<std::string>();
+		ModelLoader::LoadResource(device, value, key);
+	}
+}
+
+void ResourcesLoader::LoadMaterials(ID3D11Device* device, const nlohmann::json& json)
+{
+	for (auto it = json.begin(); it != json.end(); ++it)
+	{
+		const auto key = static_cast<std::string>(it.key());
+		const auto value = it.value().get<std::string>();
+		MaterialLoader::LoadResource(device, value, key);
+	}
+}
+

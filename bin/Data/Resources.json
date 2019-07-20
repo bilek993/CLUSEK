@@ -1,8 +1,8 @@
 {
-  "Meshes": {
+  "Models": {
     "Nanosuit": "Data/Models/Nanosuit/nanosuit.fbx"
   },
-  "Textures": {
+  "Materials": {
     "NanosuitGlassDif": "Data/Textures/Nanosuit/glass_dif.png",
 	"NanosuitLegDif": "Data/Textures/Nanosuit/leg_dif.png",
 	"NanosuitHandDif": "Data/Textures/Nanosuit/hand_dif.png",
