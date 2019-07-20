@@ -28,6 +28,7 @@ struct ConfigData final
 	float MainCameraNearZ = 0.1f;
 	float MainCameraFarZ = 1000.0f;
 
-	// Resources loader settings
-	std::string PathToResources;
+	// Files responsible for world description
+	std::string PathToResources = "";
+	std::string PathToMap = "";
 };

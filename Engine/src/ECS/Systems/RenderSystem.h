@@ -12,7 +12,7 @@ public:
 	void Update(float deltaTime, entt::registry& registry, IOData& ioData, IODevices& ioDevices,
 		RenderWindow& window, ConfigData& configData) override;
 	void RenderFrameBegin();
-	void RenderFrameEnd();
+	void RenderFrameEnd() const;
 
 	ID3D11Device* GetPointerToDevice() const;
 	~RenderSystem() override;

@@ -97,7 +97,7 @@ void RenderSystem::RenderFrameBegin()
 	ImGui::NewFrame();
 }
 
-void RenderSystem::RenderFrameEnd()
+void RenderSystem::RenderFrameEnd() const
 {
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
