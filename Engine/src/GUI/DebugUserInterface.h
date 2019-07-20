@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "imgui.h"
+#include "imgui_internal.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 #include "../Utils/SystemHolder.h"
@@ -15,7 +16,7 @@ public:
 	~DebugUserInterface();
 private:
 	void HandleKeyboardEvents(const IOData& ioData);
-	void HandleMainDockingArea() const;
+	void HandleMainDockingArea();
 
 	void BeforeUpdate() const;
 	void AfterUpdate() const;
@@ -24,4 +25,8 @@ private:
 	void DrawSystemBrowser(std::vector<SystemHolder>& systems) const;
 
 	bool IsEnabled = false;
+	bool IsDockingEnabled = false;
+
+	ImGuiID MainDockspaceId = 0;
+	ImGuiID MainDockspaceRightPanelId = 0;
 };

@@ -1,5 +1,4 @@
 #include "DebugUserInterface.h"
-
 #include "../Utils/Logger.h"
 
 void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext) const
@@ -81,7 +80,7 @@ void DebugUserInterface::HandleKeyboardEvents(const IOData& ioData)
 		IsEnabled = !IsEnabled;
 }
 
-void DebugUserInterface::HandleMainDockingArea() const
+void DebugUserInterface::HandleMainDockingArea()
 {
 	auto dockingEnabled = true;
 	const auto windowFlags =	ImGuiWindowFlags_MenuBar | 
@@ -105,19 +104,21 @@ void DebugUserInterface::HandleMainDockingArea() const
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("Main Dockspace Area", &dockingEnabled, windowFlags);
+	ImGui::Begin("Main Dockspace Area", &IsDockingEnabled, windowFlags);
 	ImGui::PopStyleVar(3);
 
 	DrawMenuBar();
 
-	auto dockspaceId = ImGui::GetID("MainDockspaceArea");
-	ImGui::DockSpace(dockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
+	MainDockspaceId = ImGui::GetID("MainDockspaceArea");
+	ImGui::DockSpace(MainDockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
+	MainDockspaceRightPanelId = ImGui::DockBuilderSplitNode(MainDockspaceId, ImGuiDir_Right, 0.25f, nullptr, &MainDockspaceId);
 
 	ImGui::End();
 }
 
 void DebugUserInterface::DrawSystemBrowser(std::vector<SystemHolder>& systems) const
 {
+	ImGui::SetNextWindowDockID(MainDockspaceRightPanelId, ImGuiCond_Once);
 	ImGui::Begin("Systems browser");
 	for (auto& system : systems)
 	{
