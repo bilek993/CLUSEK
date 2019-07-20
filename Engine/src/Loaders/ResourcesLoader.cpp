@@ -13,7 +13,7 @@ void ResourcesLoader::Load(ID3D11Device* device, const std::string& pathToResour
 	inputFile >> jsonObject;
 
 	LoadModels(device, jsonObject["Models"]);
-	LoadMaterials(device, jsonObject["Materials"]);
+	LoadTextures(device, jsonObject["Textures"]);
 }
 
 void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& json)
@@ -28,7 +28,7 @@ void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& jso
 	Logger::Debug("Loaded " + std::to_string(json.size()) + " model files.");
 }
 
-void ResourcesLoader::LoadMaterials(ID3D11Device* device, const nlohmann::json& json)
+void ResourcesLoader::LoadTextures(ID3D11Device* device, const nlohmann::json& json)
 {
 	for (auto it = json.begin(); it != json.end(); ++it)
 	{

@@ -2,7 +2,7 @@
   "Models": {
     "Nanosuit": "Data/Models/Nanosuit/nanosuit.fbx"
   },
-  "Materials": {
+  "Textures": {
     "NanosuitGlassDif": "Data/Textures/Nanosuit/glass_dif.png",
 	"NanosuitLegDif": "Data/Textures/Nanosuit/leg_dif.png",
 	"NanosuitHandDif": "Data/Textures/Nanosuit/hand_dif.png",
