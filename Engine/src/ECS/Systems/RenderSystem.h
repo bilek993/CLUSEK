@@ -15,12 +15,11 @@ public:
 	void RenderFrameEnd() const;
 
 	ID3D11Device* GetPointerToDevice() const;
-	~RenderSystem() override;
+	ID3D11DeviceContext* GetPointerToDeviceContext() const;
 private:
 	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator,
 		int refreshRateDenominator, int multisamplesCount, int multisamplesQuality);
 	bool InitializeShaders();
-	void InitializeImGui(HWND hwnd) const;
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;

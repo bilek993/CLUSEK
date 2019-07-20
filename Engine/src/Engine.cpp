@@ -26,6 +26,7 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
 	InitializeScene();
 	CreateSystems();
 	InitializeSystems();
+	InitializeUserInterface();
 
 	return true;
 }
@@ -90,6 +91,12 @@ void Engine::InitializeSystems()
 	{
 		system.System->Start(Registry, Window, Config);
 	}
+}
+
+void Engine::InitializeUserInterface()
+{
+	const auto renderSystem = dynamic_cast<RenderSystem*>(Systems[RenderSystemId].System.get());
+	DebugUI.Initialize(Window.GetHandle(), renderSystem->GetPointerToDevice(), renderSystem->GetPointerToDeviceContext());
 }
 
 void Engine::UpdateInputOutputDevices()

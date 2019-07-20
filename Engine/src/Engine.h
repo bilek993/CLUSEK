@@ -18,6 +18,7 @@ private:
 	void InitializeScene();
 	void CreateSystems();
 	void InitializeSystems();
+	void InitializeUserInterface();
 	void UpdateInputOutputDevices();
 	void UpdateSystems(float deltaTime);
 	void HandleClosingWithButton();

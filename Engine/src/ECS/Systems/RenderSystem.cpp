@@ -2,9 +2,6 @@
 #include "../Components/RenderComponent.h"
 #include "../Components/CameraComponent.h"
 #include "../../Renderer/AdapterReader.h"
-#include "imgui.h"
-#include "imgui_impl_win32.h"
-#include "imgui_impl_dx11.h"
 #include "../../Loaders/ModelLoader.h"
 #include "../../Loaders/MaterialLoader.h"
 #include "../../Loaders/ResourcesLoader.h"
@@ -30,8 +27,6 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed");
-
-	InitializeImGui(window.GetHandle());
 
 	ResourcesLoader::Load(Device.Get(), configData.PathToResources);
 
@@ -91,26 +86,21 @@ void RenderSystem::RenderFrameBegin()
 	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
 	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
 	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
-
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
 }
 
 void RenderSystem::RenderFrameEnd() const
 {
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
 	SwapChain->Present(SyncIntervals, 0);
 }
 
-
-RenderSystem::~RenderSystem()
+ID3D11Device* RenderSystem::GetPointerToDevice() const
 {
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
+	return Device.Get();
+}
+
+ID3D11DeviceContext* RenderSystem::GetPointerToDeviceContext() const
+{
+	return DeviceContext.Get();
 }
 
 bool RenderSystem::InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator,
@@ -314,17 +304,4 @@ bool RenderSystem::InitializeShaders()
 
 	Logger::Debug("All shaders successfully initialized.");
 	return true;
-}
-
-void RenderSystem::InitializeImGui(HWND hwnd) const
-{
-	Logger::Debug("Preparing to initialize ImGui...");
-
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	auto& io = ImGui::GetIO();
-	io.IniFilename = nullptr;
-	ImGui_ImplWin32_Init(hwnd);
-	ImGui_ImplDX11_Init(Device.Get(), DeviceContext.Get());
-	ImGui::StyleColorsDark();
 }
