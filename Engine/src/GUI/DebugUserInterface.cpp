@@ -54,10 +54,6 @@ void DebugUserInterface::DrawMenuBar() const
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Restart"))
-			{
-				// TODO: Implement logic
-			}
 			if (ImGui::MenuItem("Exit"))
 			{
 				FunctionCloseEngine();
