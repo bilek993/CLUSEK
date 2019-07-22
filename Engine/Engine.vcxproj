@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Windows\FpsTimerWindow.cpp" />
     <ClCompile Include="src\Loaders\ResourcesLoader.cpp" />
     <ClCompile Include="src\Loaders\MaterialLoader.cpp" />
     <ClCompile Include="src\GUI\DebugUserInterface.cpp" />
@@ -36,7 +37,7 @@
     <ClCompile Include="src\GUI\Windows\SystemsManagerWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GUI\Windows\BaseDebugWindow.h" />
+    <ClInclude Include="src\GUI\Windows\FpsTimerWindow.h" />
     <ClInclude Include="src\Loaders\ResourcesLoader.h" />
     <ClInclude Include="src\Loaders\MaterialLoader.h" />
     <ClInclude Include="src\Renderer\Materials\UberShaderMaterial.h" />

@@ -1,6 +1,7 @@
 #include "DebugUserInterface.h"
 #include "../Utils/Logger.h"
 #include "Windows/SystemsManagerWindow.h"
+#include "Windows/FpsTimerWindow.h"
 
 void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::function<void()> functionCloseEngine)
 {
@@ -25,7 +26,7 @@ void DebugUserInterface::BeforeUpdate() const
 	ImGui::NewFrame();
 }
 
-void DebugUserInterface::Update(const IOData& ioData, std::vector<SystemHolder>& systems)
+void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std::vector<SystemHolder>& systems)
 {
 	BeforeUpdate();
 
@@ -40,6 +41,8 @@ void DebugUserInterface::Update(const IOData& ioData, std::vector<SystemHolder>&
 
 	if (SystemsManagerWindow::IsEnabled)
 		SystemsManagerWindow::Draw(systems);
+	if (FpsTimerWindow::IsEnabled)
+		FpsTimerWindow::Draw(deltaTime);
 
 	AfterUpdate();
 }
@@ -67,6 +70,14 @@ void DebugUserInterface::DrawMenuBar() const
 			if (ImGui::MenuItem("Systems manager", nullptr, SystemsManagerWindow::IsEnabled))
 			{
 				SystemsManagerWindow::IsEnabled = !SystemsManagerWindow::IsEnabled;
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Performance"))
+		{
+			if (ImGui::MenuItem("FPS Timer", nullptr, FpsTimerWindow::IsEnabled))
+			{
+				FpsTimerWindow::IsEnabled = !FpsTimerWindow::IsEnabled;
 			}
 			ImGui::EndMenu();
 		}

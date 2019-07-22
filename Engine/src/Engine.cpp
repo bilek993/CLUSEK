@@ -44,7 +44,7 @@ void Engine::Update()
 	UpdateInputOutputDevices();
 	renderSystem->RenderFrameBegin();
 	UpdateSystems(deltaTime);
-	DebugUI.Update(DataFromIODevices, Systems);
+	DebugUI.Update(deltaTime, DataFromIODevices, Systems);
 	renderSystem->RenderFrameEnd();
 	HandleClosingWithButton();
 }
