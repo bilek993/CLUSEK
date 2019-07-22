@@ -257,7 +257,7 @@
     <ClInclude Include="src\GUI\Windows\SystemsManagerWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="BaseDebugWindow.h">
+    <ClInclude Include="src\GUI\Windows\BaseDebugWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include "../../Utils/SystemHolder.h"
-#include "../../../BaseDebugWindow.h"
+#include "BaseDebugWindow.h"
 
 struct SystemsManagerWindow final : public BaseDebugWindow
 {
