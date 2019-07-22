@@ -26,6 +26,4 @@ private:
 
 	bool IsEnabled = false;
 	bool IsDockingEnabled = false;
-
-	ImGuiID MainDockspaceId = 0;
 };

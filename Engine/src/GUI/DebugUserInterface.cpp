@@ -109,8 +109,8 @@ void DebugUserInterface::HandleMainDockingArea()
 
 	DrawMenuBar();
 
-	MainDockspaceId = ImGui::GetID("MainDockspaceArea");
-	ImGui::DockSpace(MainDockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
+	const auto mainDockspaceId = ImGui::GetID("MainDockspaceArea");
+	ImGui::DockSpace(mainDockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
 
 	ImGui::End();
 }
