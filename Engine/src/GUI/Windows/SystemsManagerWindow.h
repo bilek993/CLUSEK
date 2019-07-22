@@ -1,9 +1,9 @@
 #pragma once
 #include <vector>
 #include "../../Utils/SystemHolder.h"
+#include "../../../BaseDebugWindow.h"
 
-struct SystemsManagerWindow final
+struct SystemsManagerWindow final : public BaseDebugWindow
 {
-	static bool IsEnabled;
 	static void Draw(std::vector<SystemHolder>& systems);
 };

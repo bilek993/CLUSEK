@@ -36,6 +36,7 @@
     <ClCompile Include="src\GUI\Windows\SystemsManagerWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BaseDebugWindow.h" />
     <ClInclude Include="src\Loaders\ResourcesLoader.h" />
     <ClInclude Include="src\Loaders\MaterialLoader.h" />
     <ClInclude Include="src\Renderer\Materials\UberShaderMaterial.h" />

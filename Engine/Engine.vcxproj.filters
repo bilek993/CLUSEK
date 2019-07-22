@@ -257,6 +257,9 @@
     <ClInclude Include="src\GUI\Windows\SystemsManagerWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="BaseDebugWindow.h">
+      <Filter>Header Files\GUI\Windows</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">
