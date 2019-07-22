@@ -3,7 +3,8 @@
 #include "../../Utils/SystemHolder.h"
 #include "BaseDebugWindow.h"
 
-struct SystemsManagerWindow final : public BaseDebugWindow
+class SystemsManagerWindow final : public BaseDebugWindow
 {
+public:
 	static void Draw(std::vector<SystemHolder>& systems);
 };

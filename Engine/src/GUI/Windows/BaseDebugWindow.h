@@ -1,6 +1,7 @@
 #pragma once
 
-struct BaseDebugWindow
+class BaseDebugWindow
 {
+public:
 	inline static bool IsEnabled = false;
 };
