@@ -33,6 +33,7 @@
     <ClCompile Include="src\Timer.cpp" />
     <ClCompile Include="src\Renderer\TransformLogic.cpp" />
     <ClCompile Include="src\Utils\StringUtil.cpp" />
+    <ClCompile Include="src\GUI\Windows\SystemsManagerWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Loaders\ResourcesLoader.h" />
@@ -70,6 +71,7 @@
     <ClInclude Include="src\ECS\Components\TransformComponent.h" />
     <ClInclude Include="src\Utils\SystemHolder.h" />
     <ClInclude Include="src\Utils\StringUtil.h" />
+    <ClInclude Include="src\GUI\Windows\SystemsManagerWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">

@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 #include "imgui.h"
-#include "imgui_internal.h"
 #include "imgui_impl_win32.h"
 #include "imgui_impl_dx11.h"
 #include "../Utils/SystemHolder.h"
@@ -22,7 +21,6 @@ private:
 	void AfterUpdate() const;
 
 	void DrawMenuBar() const;
-	void DrawSystemBrowser(std::vector<SystemHolder>& systems) const;
 
 	bool IsEnabled = false;
 	bool IsDockingEnabled = false;

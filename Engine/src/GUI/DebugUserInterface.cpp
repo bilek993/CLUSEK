@@ -1,7 +1,8 @@
 #include "DebugUserInterface.h"
 #include "../Utils/Logger.h"
+#include "Windows/SystemsManagerWindow.h"
 
-void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, std::function<void()> functionCloseEngine)
+void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::function<void()> functionCloseEngine)
 {
 	Logger::Debug("Preparing to initialize ImGui...");
 
@@ -37,7 +38,8 @@ void DebugUserInterface::Update(const IOData& ioData, std::vector<SystemHolder>&
 
 	HandleMainDockingArea();
 
-	DrawSystemBrowser(systems);
+	if (SystemsManagerWindow::IsEnabled)
+		SystemsManagerWindow::Draw(systems);
 
 	AfterUpdate();
 }
@@ -57,6 +59,14 @@ void DebugUserInterface::DrawMenuBar() const
 			if (ImGui::MenuItem("Exit"))
 			{
 				FunctionCloseEngine();
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Managers"))
+		{
+			if (ImGui::MenuItem("Systems manager", nullptr, SystemsManagerWindow::IsEnabled))
+			{
+				SystemsManagerWindow::IsEnabled = !SystemsManagerWindow::IsEnabled;
 			}
 			ImGui::EndMenu();
 		}
@@ -110,15 +120,5 @@ void DebugUserInterface::HandleMainDockingArea()
 	const auto mainDockspaceId = ImGui::GetID("MainDockspaceArea");
 	ImGui::DockSpace(mainDockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
 
-	ImGui::End();
-}
-
-void DebugUserInterface::DrawSystemBrowser(std::vector<SystemHolder>& systems) const
-{
-	ImGui::Begin("Systems browser");
-	for (auto& system : systems)
-	{
-		ImGui::Checkbox(system.Name.c_str(), &system.Enabled);
-	}
 	ImGui::End();
 }
