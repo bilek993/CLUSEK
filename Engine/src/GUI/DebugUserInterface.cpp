@@ -104,21 +104,19 @@ void DebugUserInterface::HandleMainDockingArea()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("Main Dockspace Area", &IsDockingEnabled, windowFlags);
+	ImGui::Begin("MainDockspaceArea", &IsDockingEnabled, windowFlags);
 	ImGui::PopStyleVar(3);
 
 	DrawMenuBar();
 
 	MainDockspaceId = ImGui::GetID("MainDockspaceArea");
 	ImGui::DockSpace(MainDockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
-	MainDockspaceRightPanelId = ImGui::DockBuilderSplitNode(MainDockspaceId, ImGuiDir_Right, 0.25f, nullptr, &MainDockspaceId);
 
 	ImGui::End();
 }
 
 void DebugUserInterface::DrawSystemBrowser(std::vector<SystemHolder>& systems) const
 {
-	ImGui::SetNextWindowDockID(MainDockspaceRightPanelId, ImGuiCond_Once);
 	ImGui::Begin("Systems browser");
 	for (auto& system : systems)
 	{

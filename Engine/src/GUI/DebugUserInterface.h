@@ -28,5 +28,4 @@ private:
 	bool IsDockingEnabled = false;
 
 	ImGuiID MainDockspaceId = 0;
-	ImGuiID MainDockspaceRightPanelId = 0;
 };
