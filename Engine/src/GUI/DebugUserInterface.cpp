@@ -1,7 +1,7 @@
 #include "DebugUserInterface.h"
 #include "../Utils/Logger.h"
 
-void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext) const
+void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, std::function<void()> functionCloseEngine)
 {
 	Logger::Debug("Preparing to initialize ImGui...");
 
@@ -13,6 +13,8 @@ void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D1
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(device, deviceContext);
 	ImGui::StyleColorsDark();
+
+	FunctionCloseEngine = functionCloseEngine;
 }
 
 void DebugUserInterface::BeforeUpdate() const
@@ -58,7 +60,7 @@ void DebugUserInterface::DrawMenuBar() const
 			}
 			if (ImGui::MenuItem("Exit"))
 			{
-				// TODO: Implement logic
+				FunctionCloseEngine();
 			}
 			ImGui::EndMenu();
 		}
