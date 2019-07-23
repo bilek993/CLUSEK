@@ -5,7 +5,7 @@ void FpsTimerWindow::Draw(const float deltaTime)
 	Calculate(deltaTime);
 
 	ImGui::Begin("FPS Timer", &IsEnabled);
-	ImGui::Text("Frames per second: %i", ShowedFps);
+	ImGui::Text("Current: %i fps (%.2f m/s)", ShowedFps, 1000.0f / static_cast<float>(ShowedFps));
 	ImGui::End();
 }
 
