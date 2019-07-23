@@ -11,9 +11,9 @@ public:
 	static void Warning(const std::string& input);
 	static void Error(const std::string& input);
 private:
-	static FILE* Fp;
-	static bool IsEnabled;
-	static std::string Destination;
+	inline static FILE* Fp = nullptr;
+	inline static bool IsEnabled = false;
+	inline static std::string Destination;
 
 	static std::string GenerateDebugString(const std::string& input, const std::string& level);
 };

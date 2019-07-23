@@ -9,5 +9,5 @@ public:
 	static void LoadResource(ID3D11Device *device, const std::string& path, const std::string& resourceId);
 	static std::shared_ptr<std::vector<Mesh>> GetResource(const std::string& resourceId);
 private:
-	static std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> MeshesResources;
+	inline static std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> MeshesResources;
 };

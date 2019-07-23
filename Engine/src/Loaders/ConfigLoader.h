@@ -6,5 +6,5 @@ class ConfigLoader final
 public:
 	static ConfigData GetData();
 private:
-	static std::string FilePath;
+	inline static std::string FilePath = "Data/EngineSettings.cfg";
 };

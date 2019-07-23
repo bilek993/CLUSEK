@@ -3,8 +3,6 @@
 #include "ConfigLoader.h"
 #include "../Utils/Logger.h"
 
-std::string ConfigLoader::FilePath = "Data/EngineSettings.cfg";
-
 ConfigData ConfigLoader::GetData()
 {
 	Logger::Debug("Preparing to open file '" + FilePath + "'...");

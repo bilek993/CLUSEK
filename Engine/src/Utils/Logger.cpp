@@ -2,10 +2,6 @@
 #include <Windows.h>
 #include <chrono>
 
-FILE* Logger::Fp = nullptr;
-bool Logger::IsEnabled = false;
-std::string Logger::Destination = "";
-
 void Logger::Initialize(const bool enabled, const std::string& destination)
 {
 	if (!enabled)
