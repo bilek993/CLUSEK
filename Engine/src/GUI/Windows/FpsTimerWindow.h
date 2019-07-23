@@ -3,11 +3,14 @@
 class FpsTimerWindow final
 {
 public:
-	inline static bool IsEnabled = false;
 	static void Draw(float deltaTime);
-	static void Calculate(float deltaTime);
+
+	inline static bool IsEnabled = false;
 private:
+	static void Calculate(float deltaTime);
+	static void AddNewFps(int fps);
+
 	inline static int FramesCounter = 0;
 	inline static float TimeCounter = 0.0f;
-	inline static int ShowedFps;
+	inline static float HistoricalFps[50];
 };
