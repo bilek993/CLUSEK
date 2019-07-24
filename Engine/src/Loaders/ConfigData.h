@@ -20,6 +20,8 @@ struct ConfigData final
 	int RefreshRateDenominator = 0;
 	int MultisamplesCount = 1;
 	int MultisamplesQuality = 0;
+	int WireframeMode = 0;
+	std::string CullMode = "BACK";
 
 	// Main camera settings
 	float MainCameraFov = 90.0f;

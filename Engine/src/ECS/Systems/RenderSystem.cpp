@@ -20,7 +20,9 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 							configData.RefreshRateNumerator,
 							configData.RefreshRateDenominator,
 							configData.MultisamplesCount,
-							configData.MultisamplesQuality))
+							configData.MultisamplesQuality,
+							configData.WireframeMode,
+							configData.CullMode))
 	{
 		Logger::Error("DirectX initialization failed");
 	}
@@ -104,7 +106,7 @@ ID3D11DeviceContext* RenderSystem::GetPointerToDeviceContext() const
 }
 
 bool RenderSystem::InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator,
-	int refreshRateDenominator, int multisamplesCount, int multisamplesQuality)
+	int refreshRateDenominator, int multisamplesCount, int multisamplesQuality, int wireframeMode, const std::string& cullMode)
 {
 	auto adapters = AdapterReader::GetData();
 
@@ -246,8 +248,17 @@ bool RenderSystem::InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdap
 	D3D11_RASTERIZER_DESC rasterizerDesc;
 	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
 
-	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
-	rasterizerDesc.CullMode = D3D11_CULL_BACK;
+	if (wireframeMode == 1)
+		rasterizerDesc.FillMode = D3D11_FILL_WIREFRAME;
+	else
+		rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+
+	if (cullMode == "BACK")
+		rasterizerDesc.CullMode = D3D11_CULL_BACK;
+	else if (cullMode == "FRONT")
+		rasterizerDesc.CullMode = D3D11_CULL_FRONT;
+	else if (cullMode == "NONE")
+		rasterizerDesc.CullMode = D3D11_CULL_NONE;
 
 	hr = Device->CreateRasterizerState(&rasterizerDesc, RasterizerState.GetAddressOf());
 	if (FAILED(hr))
