@@ -9,5 +9,4 @@ struct RenderComponent final
 	std::string MaterialId;
 	std::shared_ptr<std::vector<Mesh>> Meshes;
 	DirectX::XMMATRIX ModelMatrix;
-	ConstantBuffer<CB_VS_UberVertexShader> UberShaderConstantBuffer;
 };

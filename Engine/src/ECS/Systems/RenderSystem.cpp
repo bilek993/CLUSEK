@@ -30,16 +30,20 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed");
 
+	auto hr = UberShaderVertexShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create constant buffer.");
+
+	hr = UberShaderPixelShaderLightConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create constant buffer.");
+
 	ResourcesLoader::Load(Device.Get(), configData.PathToResources);
 
 	registry.view<RenderComponent>().each([this](RenderComponent &renderComponent)
 	{
 		renderComponent.Meshes = ModelLoader::GetResource(renderComponent.ModelId);
 		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *renderComponent.Meshes, renderComponent.MaterialId);
-
-		const auto hr = renderComponent.UberShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
-		if (FAILED(hr))
-			Logger::Error("Failed to create constant buffer.");
 	});
 }
 
@@ -58,11 +62,17 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 	registry.view<RenderComponent>().each([this, &cameraComponent](RenderComponent &renderComponent)
 	{
-		renderComponent.UberShaderConstantBuffer.Data.MatModelViewProjection = renderComponent.ModelMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix);
-		renderComponent.UberShaderConstantBuffer.Data.MatModelViewProjection = DirectX::XMMatrixTranspose(renderComponent.UberShaderConstantBuffer.Data.MatModelViewProjection);
-		renderComponent.UberShaderConstantBuffer.ApplyChanges();
+		UberShaderVertexShaderConstantBuffer.Data.MatModelViewProjection = renderComponent.ModelMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix);
+		UberShaderVertexShaderConstantBuffer.Data.MatModelViewProjection = DirectX::XMMatrixTranspose(UberShaderVertexShaderConstantBuffer.Data.MatModelViewProjection);
+		UberShaderVertexShaderConstantBuffer.ApplyChanges();
 
-		DeviceContext->VSSetConstantBuffers(0, 1, renderComponent.UberShaderConstantBuffer.GetAddressOf());
+		DeviceContext->VSSetConstantBuffers(0, 1, UberShaderVertexShaderConstantBuffer.GetAddressOf());
+
+		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightColor = DirectX::XMFLOAT3(0.333f, 0.333f, 0.333f);
+		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightStrength = 1.0f;
+		UberShaderPixelShaderLightConstantBuffer.ApplyChanges();
+
+		DeviceContext->PSSetConstantBuffers(0, 1, UberShaderPixelShaderLightConstantBuffer.GetAddressOf());
 
 		UINT offset = 0;
 

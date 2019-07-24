@@ -4,6 +4,8 @@
 #include <d3d11.h>
 #include "../../Renderer/Shaders/VertexShader.h"
 #include "../../Renderer/Shaders/PixelShader.h"
+#include "../../Renderer/ConstantBufferTypes.h"
+#include "../../Renderer/ConstantBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -34,6 +36,9 @@ private:
 
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
+
+	ConstantBuffer<CB_VS_UberVertexShader> UberShaderVertexShaderConstantBuffer;
+	ConstantBuffer<CB_PS_Light_UberVertexShader> UberShaderPixelShaderLightConstantBuffer;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilBuffer;
