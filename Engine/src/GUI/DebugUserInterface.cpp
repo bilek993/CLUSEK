@@ -2,8 +2,10 @@
 #include "../Utils/Logger.h"
 #include "Windows/SystemsManagerWindow.h"
 #include "Windows/FpsTimerWindow.h"
+#include "Windows/LightingWindow.h"
 
-void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const std::function<void()> functionCloseEngine)
+void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
+	const std::function<void()> &functionCloseEngine)
 {
 	Logger::Debug("Preparing to initialize ImGui...");
 
@@ -26,7 +28,7 @@ void DebugUserInterface::BeforeUpdate() const
 	ImGui::NewFrame();
 }
 
-void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std::vector<SystemHolder>& systems)
+void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std::vector<SystemHolder>& systems, LightSettings& lightSettings)
 {
 	BeforeUpdate();
 
@@ -43,6 +45,8 @@ void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std
 		SystemsManagerWindow::Draw(systems);
 	if (FpsTimerWindow::IsEnabled)
 		FpsTimerWindow::Draw(deltaTime);
+	if (LightingWindow::IsEnabled)
+		LightingWindow::Draw(lightSettings);
 
 	AfterUpdate();
 }
@@ -70,6 +74,14 @@ void DebugUserInterface::DrawMenuBar() const
 			if (ImGui::MenuItem("Systems manager", nullptr, SystemsManagerWindow::IsEnabled))
 			{
 				SystemsManagerWindow::IsEnabled = !SystemsManagerWindow::IsEnabled;
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Renderer"))
+		{
+			if (ImGui::MenuItem("Lighting settings", nullptr, LightingWindow::IsEnabled))
+			{
+				LightingWindow::IsEnabled = !LightingWindow::IsEnabled;
 			}
 			ImGui::EndMenu();
 		}

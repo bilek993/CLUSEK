@@ -33,7 +33,7 @@ void CameraSystem::Start(entt::registry& registry, const RenderWindow &window, c
 }
 
 void CameraSystem::Update(const float deltaTime, entt::registry &registry, IOData& ioData, IODevices &ioDevices,
-	RenderWindow &window, ConfigData &configData)
+	RenderWindow &window, ConfigData &configData, LightSettings &lightSettings)
 {
 	auto view = registry.view<CameraComponent, TransformComponent>();
 	if (view.size() != 1)

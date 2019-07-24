@@ -44,7 +44,7 @@ void Engine::Update()
 	UpdateInputOutputDevices();
 	renderSystem->RenderFrameBegin();
 	UpdateSystems(deltaTime);
-	DebugUI.Update(deltaTime, DataFromIODevices, Systems);
+	DebugUI.Update(deltaTime, DataFromIODevices, Systems, CurrentLightSettings);
 	renderSystem->RenderFrameEnd();
 	HandleClosingWithButton();
 }
@@ -120,7 +120,8 @@ void Engine::UpdateSystems(const float deltaTime)
 								DataFromIODevices,
 								InputOutputDevices,
 								Window,
-								Config);
+								Config,
+								CurrentLightSettings);
 	}
 }
 

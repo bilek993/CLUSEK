@@ -47,7 +47,8 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 	});
 }
 
-void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioData, IODevices& ioDevices, RenderWindow& window, ConfigData& configData)
+void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioData, IODevices& ioDevices, 
+	RenderWindow& window, ConfigData& configData, LightSettings &lightSettings)
 {
 	auto view = registry.view<CameraComponent>();
 	if (view.size() != 1)
@@ -60,7 +61,7 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 	auto &cameraComponent = view.raw()[0];
 
-	registry.view<RenderComponent>().each([this, &cameraComponent](RenderComponent &renderComponent)
+	registry.view<RenderComponent>().each([this, &cameraComponent, &lightSettings](RenderComponent &renderComponent)
 	{
 		UberShaderVertexShaderConstantBuffer.Data.MatModelViewProjection = renderComponent.ModelMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix);
 		UberShaderVertexShaderConstantBuffer.Data.MatModelViewProjection = DirectX::XMMatrixTranspose(UberShaderVertexShaderConstantBuffer.Data.MatModelViewProjection);
@@ -68,8 +69,8 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 		DeviceContext->VSSetConstantBuffers(0, 1, UberShaderVertexShaderConstantBuffer.GetAddressOf());
 
-		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightColor = DirectX::XMFLOAT3(0.333f, 0.333f, 0.333f);
-		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightStrength = 1.0f;
+		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightColor = lightSettings.AmbientLightColor;
+		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightStrength = lightSettings.AmbientLightStrength;
 		UberShaderPixelShaderLightConstantBuffer.ApplyChanges();
 
 		DeviceContext->PSSetConstantBuffers(0, 1, UberShaderPixelShaderLightConstantBuffer.GetAddressOf());

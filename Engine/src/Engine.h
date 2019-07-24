@@ -32,6 +32,8 @@ private:
 	std::vector<SystemHolder> Systems;
 	int RenderSystemId = 0;
 
+	LightSettings CurrentLightSettings;
+
 	DebugUserInterface DebugUI;
 
 	IODevices InputOutputDevices;

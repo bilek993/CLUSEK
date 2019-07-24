@@ -15,7 +15,7 @@ void RotationSystem::Start(entt::registry& registry, const RenderWindow &window,
 }
 
 void RotationSystem::Update(float deltaTime, entt::registry& registry, IOData& ioData, IODevices& ioDevices,
-	RenderWindow& window, ConfigData& configData)
+	RenderWindow& window, ConfigData& configData, LightSettings &lightSettings)
 {
 	registry.view<TransformComponent, RenderComponent>().each([&deltaTime](TransformComponent &transformComponent, RenderComponent &renderComponent)
 	{
