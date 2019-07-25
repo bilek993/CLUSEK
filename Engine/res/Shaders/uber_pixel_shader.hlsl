@@ -20,10 +20,12 @@ SamplerState Sampler : SAMPLER : register(s0);
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 samplerColor = MainTexture.Sample(Sampler, input.TextureCoord);
+
     float3 ambientLight = AmbientLightColor * AmbientLightStrength;
+    float3 directionalLight = saturate(dot(DirectionalLightDirection, input.Normal) * (DirectionalLightColor * DirectionalLightStrength) * samplerColor);
 
     float3 finalColor = ambientLight * samplerColor;
-    finalColor += saturate(dot(DirectionalLightDirection, input.Normal) * DirectionalLightColor * samplerColor);
+    finalColor += directionalLight;
 
     return float4(finalColor, 1.0f);
 }
