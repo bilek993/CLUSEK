@@ -16,8 +16,7 @@ SamplerState Sampler : SAMPLER : register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    //float3 samplerColor = MainTexture.Sample(Sampler, input.TextureCoord);
-    float3 samplerColor = input.Normal;
+    float3 samplerColor = MainTexture.Sample(Sampler, input.TextureCoord);
     float3 ambientLight = AmbientLightColor * AmbientLightStrength;
     float3 finalColor = ambientLight * samplerColor;
     return float4(finalColor, 1.0f);
