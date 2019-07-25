@@ -72,6 +72,9 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightColor = lightSettings.AmbientLightColor;
 		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightStrength = lightSettings.AmbientLightStrength;
+		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightColor = DirectX::XMFLOAT3(1.0f, 1.0f, 1.0f);
+		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightStrength = 1.0f;
+		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightDirection = DirectX::XMFLOAT3(0.25f, 0.5f, -1.0f);
 		UberShaderPixelShaderLightConstantBuffer.ApplyChanges();
 
 		DeviceContext->PSSetConstantBuffers(0, 1, UberShaderPixelShaderLightConstantBuffer.GetAddressOf());
