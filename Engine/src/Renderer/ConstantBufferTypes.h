@@ -1,9 +1,10 @@
 #pragma once
 #include <DirectXMath.h>
 
-struct CB_VS_UberVertexShader
+struct CB_VS_PerObjectBuffer_UberVertexShader
 {
-	DirectX::XMMATRIX MatModelViewProjection;
+	DirectX::XMMATRIX WorldViewProjectionMat;
+	DirectX::XMMATRIX WorldMatrix;
 };
 
 struct CB_PS_Light_UberVertexShader

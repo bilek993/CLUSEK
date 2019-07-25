@@ -32,6 +32,10 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, co
 			vertex.Position.y = mesh->mVertices[j].y;
 			vertex.Position.z = mesh->mVertices[j].z;
 
+			vertex.Normal.x = mesh->mNormals[j].x;
+			vertex.Normal.y = mesh->mNormals[j].y;
+			vertex.Normal.z = mesh->mNormals[j].z;
+
 			if (mesh->mTextureCoords[0])
 			{
 				vertex.TextureCoord.x = static_cast<float>(mesh->mTextureCoords[0][j].x);

@@ -2,7 +2,6 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 #include "../Utils/Logger.h"
-#include "ConstantBufferTypes.h"
 
 template<class T>
 class ConstantBuffer final
@@ -46,7 +45,7 @@ public:
 		constBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		constBufferDesc.MiscFlags = 0;
 		// For buffer alignment data must be packed into 4-byte boundaries (more info: https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-packing-rules).
-		constBufferDesc.ByteWidth = static_cast<UINT>(sizeof(CB_VS_UberVertexShader) + (16 - (sizeof(CB_VS_UberVertexShader) % 16)));
+		constBufferDesc.ByteWidth = static_cast<UINT>(sizeof(T) + (16 - (sizeof(T) % 16)));
 		constBufferDesc.StructureByteStride = 0;
 
 		return device->CreateBuffer(&constBufferDesc, nullptr, Buffer.GetAddressOf());
@@ -62,7 +61,7 @@ public:
 			return false;
 		}
 
-		CopyMemory(mappedSubresource.pData, &Data, sizeof(CB_VS_UberVertexShader));
+		CopyMemory(mappedSubresource.pData, &Data, sizeof(T));
 		DeviceContext->Unmap(Buffer.Get(), 0);
 		return true;
 	}

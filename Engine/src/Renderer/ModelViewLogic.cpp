@@ -16,7 +16,7 @@ void ModelViewLogic::UpdateModelMatrix(RenderComponent& renderComponent, Transfo
 {
 	const auto vecRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(transformComponent.RotationVector);
 	const auto vecTranslationMatrix = DirectX::XMMatrixTranslationFromVector(transformComponent.PositionVector);
-	renderComponent.ModelMatrix = XMMatrixMultiply(vecRotationMatrix, vecTranslationMatrix);
+	renderComponent.WorldMatrix = XMMatrixMultiply(vecRotationMatrix, vecTranslationMatrix);
 
 	transformComponent.VectorForward = XMVector3TransformCoord(TransformComponent::FORWARD_VECTOR, vecRotationMatrix);
 	transformComponent.VectorRight = XMVector3TransformCoord(TransformComponent::RIGHT_VECTOR, vecRotationMatrix);

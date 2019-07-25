@@ -37,7 +37,7 @@ private:
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
 
-	ConstantBuffer<CB_VS_UberVertexShader> UberShaderVertexShaderConstantBuffer;
+	ConstantBuffer<CB_VS_PerObjectBuffer_UberVertexShader> UberShaderVertexShaderConstantBuffer;
 	ConstantBuffer<CB_PS_Light_UberVertexShader> UberShaderPixelShaderLightConstantBuffer;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
