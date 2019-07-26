@@ -26,76 +26,44 @@ ConfigData ConfigLoader::GetData()
 			auto key = line.substr(0, colonPosition);
 			auto value = line.substr(colonPosition + 1);
 
-			if (key == "LoggerEnabled")
-				data.LoggerEnabled = std::stoi(value);
-			else if (key == "LoggerDestination")
-				data.LoggerDestination = value;
-			else if (key == "WindowClassName")
-				data.WindowClassName = value;
-			else if (key == "WindowTitle")
-				data.WindowTitle = value;
-			else if (key == "WindowWidth")
-				data.WindowWidth = std::stoi(value);
-			else if (key == "WindowHeight")
-				data.WindowHeight = std::stoi(value);
-			else if (key == "Fullscreen")
-				data.Fullscreen = std::stoi(value);
-			else if (key == "SyncIntervals")
-				data.SyncIntervals = std::stoi(value);
-			else if (key == "SelectedAdapterId")
-				data.SelectedAdapterId = std::stoi(value);
-			else if (key == "RefreshRateNumerator")
-				data.RefreshRateNumerator = std::stoi(value);
-			else if (key == "RefreshRateDenominator")
-				data.RefreshRateDenominator = std::stoi(value);
-			else if (key == "MultisamplesCount")
-				data.MultisamplesCount = std::stoi(value);
-			else if (key == "MultisamplesQuality")
-				data.MultisamplesQuality = std::stoi(value);
-			else if (key == "WireframeMode")
-				data.WireframeMode = std::stoi(value);
-			else if (key == "CullMode")
-				data.CullMode = value;
-			else if (key == "MainCameraFov")
-				data.MainCameraFov = std::stof(value);
-			else if (key == "MaxRotationX")
-				data.MaxRotationX = std::stof(value);
-			else if (key == "MinRotationX")
-				data.MinRotationX = std::stof(value);
-			else if (key == "MainCameraNearZ")
-				data.MainCameraNearZ = std::stof(value);
-			else if (key == "MainCameraFarZ")
-				data.MainCameraFarZ = std::stof(value);
-			else if (key == "AmbientLightColorRed")
-				data.AmbientLightColorRed = std::stof(value);
-			else if (key == "AmbientLightColorGreen")
-				data.AmbientLightColorGreen = std::stof(value);
-			else if (key == "AmbientLightColorBlue")
-				data.AmbientLightColorBlue = std::stof(value);
-			else if (key == "AmbientLightStrength")
-				data.AmbientLightStrength = std::stof(value);
-			else if (key == "DirectionalLightColorRed")
-				data.DirectionalLightColorRed = std::stof(value);
-			else if (key == "DirectionalLightColorGreen")
-				data.DirectionalLightColorGreen = std::stof(value);
-			else if (key == "DirectionalLightColorBlue")
-				data.DirectionalLightColorBlue = std::stof(value);
-			else if (key == "DirectionalLightStrength")
-				data.DirectionalLightStrength = std::stof(value);
-			else if (key == "DirectionalLightDirectionX")
-				data.DirectionalLightDirectionX = std::stof(value);
-			else if (key == "DirectionalLightDirectionY")
-				data.DirectionalLightDirectionY = std::stof(value);
-			else if (key == "DirectionalLightDirectionZ")
-				data.DirectionalLightDirectionZ = std::stof(value);
-			else if (key == "PathToResources")
-				data.PathToResources = value;
-			else if (key == "PathToMap")
-				data.PathToMap = value;
-			else
-				continue;
+			MAP_CONFIG_FIELD(key, LoggerEnabled, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, LoggerDestination, data, value);
 
-			Logger::Debug("New value '" + value + "' for key '" + key + "' has been set from configuration file.");
+			MAP_CONFIG_FIELD(key, WindowClassName, data, value);
+			MAP_CONFIG_FIELD(key, WindowTitle, data, value);
+			MAP_CONFIG_FIELD(key, WindowWidth, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, WindowHeight, data, std::stoi(value));
+
+			MAP_CONFIG_FIELD(key, Fullscreen, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, SyncIntervals, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, SelectedAdapterId, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, RefreshRateNumerator, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, RefreshRateDenominator, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, MultisamplesCount, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, MultisamplesQuality, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, WireframeMode, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, CullMode, data, value);
+
+			MAP_CONFIG_FIELD(key, MainCameraFov, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MaxRotationX, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MinRotationX, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MainCameraNearZ, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MainCameraFarZ, data, std::stof(value));
+
+			MAP_CONFIG_FIELD(key, AmbientLightColorRed, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, AmbientLightColorGreen, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, AmbientLightColorBlue, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, AmbientLightStrength, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DirectionalLightColorRed, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DirectionalLightColorGreen, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DirectionalLightColorBlue, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DirectionalLightStrength, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DirectionalLightDirectionX, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DirectionalLightDirectionY, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DirectionalLightDirectionZ, data, std::stof(value));
+
+			MAP_CONFIG_FIELD(key, PathToResources, data, value);
+			MAP_CONFIG_FIELD(key, PathToMap, data, value);
 		}
 
 		Logger::Debug("Configuration has been successfully loaded!");
