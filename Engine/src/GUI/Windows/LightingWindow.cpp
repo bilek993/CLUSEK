@@ -3,7 +3,7 @@
 
 void LightingWindow::Draw(LightSettings& lightSettings)
 {
-	ImGui::Begin("Lighting settings");
+	ImGui::Begin("Lighting settings", &IsEnabled);
 	ImGui::Text("Ambient light settings:");
 	ImGui::ColorPicker3("Color##Ambient", 
 						&lightSettings.AmbientLightColor.x,
