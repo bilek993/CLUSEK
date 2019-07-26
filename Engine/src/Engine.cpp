@@ -89,7 +89,7 @@ void Engine::InitializeSystems()
 {
 	for (auto& system : Systems)
 	{
-		system.System->Start(Registry, Window, Config);
+		system.System->Start(Registry, Window, Config, CurrentLightSettings);
 	}
 }
 

@@ -4,7 +4,8 @@
 #include "../../Renderer/TransformLogic.h"
 #include "../../Renderer/ModelViewLogic.h"
 
-void RotationSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData)
+void RotationSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData,
+	LightSettings &lightSettings)
 {
 	Logger::Debug("Staring rotation system...");
 	registry.view<TransformComponent, RenderComponent>().each([](TransformComponent &transformComponent, RenderComponent &renderComponent)

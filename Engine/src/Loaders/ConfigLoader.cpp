@@ -66,6 +66,28 @@ ConfigData ConfigLoader::GetData()
 				data.MainCameraNearZ = std::stof(value);
 			else if (key == "MainCameraFarZ")
 				data.MainCameraFarZ = std::stof(value);
+			else if (key == "AmbientLightColorRed")
+				data.AmbientLightColorRed = std::stof(value);
+			else if (key == "AmbientLightColorGreen")
+				data.AmbientLightColorGreen = std::stof(value);
+			else if (key == "AmbientLightColorBlue")
+				data.AmbientLightColorBlue = std::stof(value);
+			else if (key == "AmbientLightStrength")
+				data.AmbientLightStrength = std::stof(value);
+			else if (key == "DirectionalLightColorRed")
+				data.DirectionalLightColorRed = std::stof(value);
+			else if (key == "DirectionalLightColorGreen")
+				data.DirectionalLightColorGreen = std::stof(value);
+			else if (key == "DirectionalLightColorBlue")
+				data.DirectionalLightColorBlue = std::stof(value);
+			else if (key == "DirectionalLightStrength")
+				data.DirectionalLightStrength = std::stof(value);
+			else if (key == "DirectionalLightDirectionX")
+				data.DirectionalLightDirectionX = std::stof(value);
+			else if (key == "DirectionalLightDirectionY")
+				data.DirectionalLightDirectionY = std::stof(value);
+			else if (key == "DirectionalLightDirectionZ")
+				data.DirectionalLightDirectionZ = std::stof(value);
 			else if (key == "PathToResources")
 				data.PathToResources = value;
 			else if (key == "PathToMap")

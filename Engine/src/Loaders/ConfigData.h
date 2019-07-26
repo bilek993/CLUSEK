@@ -30,6 +30,19 @@ struct ConfigData final
 	float MainCameraNearZ = 0.1f;
 	float MainCameraFarZ = 1000.0f;
 
+	// Lighting settings
+	float AmbientLightColorRed = 1.0f;
+	float AmbientLightColorGreen = 1.0f;
+	float AmbientLightColorBlue = 1.0f;
+	float AmbientLightStrength = 0.5f;
+	float DirectionalLightColorRed = 1.0f;
+	float DirectionalLightColorGreen = 1.0f;
+	float DirectionalLightColorBlue = 1.0f;
+	float DirectionalLightStrength = 0.75f;
+	float DirectionalLightDirectionX = 0.25f;
+	float DirectionalLightDirectionY = 0.5f;
+	float DirectionalLightDirectionZ = -1.0f;
+
 	// Files responsible for world description
 	std::string PathToResources = "";
 	std::string PathToMap = "";

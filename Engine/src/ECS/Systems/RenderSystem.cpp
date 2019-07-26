@@ -6,13 +6,16 @@
 #include "../../Loaders/MaterialLoader.h"
 #include "../../Loaders/ResourcesLoader.h"
 
-void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData)
+void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData,
+	LightSettings &lightSettings)
 {
 	Logger::Debug("Staring render system...");
 
 	SyncIntervals = configData.SyncIntervals;
 	WindowWidth = configData.WindowWidth;
 	WindowHeight = configData.WindowHeight;
+
+	InitializeLightSettings(configData, lightSettings);
 
 	if (!InitializeDirectX(	window.GetHandle(),
 							configData.Fullscreen,
@@ -332,4 +335,17 @@ bool RenderSystem::InitializeShaders()
 
 	Logger::Debug("All shaders successfully initialized.");
 	return true;
+}
+
+void RenderSystem::InitializeLightSettings(const ConfigData& configData, LightSettings& lightSettings)
+{
+	lightSettings.AmbientLightColor = 
+		DirectX::XMFLOAT3(configData.AmbientLightColorRed, configData.AmbientLightColorGreen, configData.AmbientLightColorBlue);
+	lightSettings.AmbientLightStrength = configData.AmbientLightStrength;
+
+	lightSettings.DirectionalLightColor = 
+		DirectX::XMFLOAT3(configData.DirectionalLightColorRed, configData.DirectionalLightColorGreen, configData.DirectionalLightColorBlue);
+	lightSettings.DirectionalLightStrength = configData.DirectionalLightStrength;
+	lightSettings.DirectionalLightDirection =
+		DirectX::XMFLOAT3(configData.DirectionalLightDirectionX, configData.DirectionalLightDirectionY, configData.DirectionalLightDirectionZ);
 }

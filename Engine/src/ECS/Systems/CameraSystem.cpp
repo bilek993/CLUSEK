@@ -4,7 +4,8 @@
 #include "../../Utils/Logger.h"
 #include "../../Renderer/TransformLogic.h"
 
-void CameraSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData)
+void CameraSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData,
+	LightSettings &lightSettings)
 {
 	Logger::Debug("Staring camera system...");
 
