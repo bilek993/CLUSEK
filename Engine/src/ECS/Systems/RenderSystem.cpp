@@ -41,7 +41,7 @@ void RenderSystem::Start()
 	});
 }
 
-void RenderSystem::Update(float deltaTime)
+void RenderSystem::Update(const float deltaTime)
 {
 	auto view = Registry->view<CameraComponent>();
 	if (view.size() != 1)

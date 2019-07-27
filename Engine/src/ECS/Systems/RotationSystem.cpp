@@ -14,7 +14,7 @@ void RotationSystem::Start()
 	});
 }
 
-void RotationSystem::Update(float deltaTime)
+void RotationSystem::Update(const float deltaTime)
 {
 	Registry->view<TransformComponent, RenderComponent>().each([&deltaTime](TransformComponent &transformComponent, RenderComponent &renderComponent)
 	{
