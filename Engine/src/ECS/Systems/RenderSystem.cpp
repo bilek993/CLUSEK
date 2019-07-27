@@ -15,6 +15,7 @@ void RenderSystem::Start()
 	WindowHeight = ConfigurationData->WindowHeight;
 
 	InitializeLightSettings();
+	InitializeClearColorSettings();
 
 	if (!InitializeDirectX())
 	{
@@ -336,4 +337,11 @@ void RenderSystem::InitializeLightSettings() const
 	CurrentRenderSettings->DirectionalLightStrength = ConfigurationData->DirectionalLightStrength;
 	CurrentRenderSettings->DirectionalLightDirection =
 		DirectX::XMFLOAT3(ConfigurationData->DirectionalLightDirectionX, ConfigurationData->DirectionalLightDirectionY, ConfigurationData->DirectionalLightDirectionZ);
+}
+
+void RenderSystem::InitializeClearColorSettings() const
+{
+	CurrentRenderSettings->ClearColor[0] = ConfigurationData->ClearColorRed;
+	CurrentRenderSettings->ClearColor[1] = ConfigurationData->ClearColorGreen;
+	CurrentRenderSettings->ClearColor[2] = ConfigurationData->ClearColorBlue;
 }

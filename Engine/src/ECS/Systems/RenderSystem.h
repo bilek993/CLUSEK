@@ -21,6 +21,7 @@ private:
 	bool InitializeDirectX();
 	bool InitializeShaders();
 	void InitializeLightSettings() const;
+	void InitializeClearColorSettings() const;
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;

@@ -22,6 +22,9 @@ struct ConfigData final
 	int MultisamplesQuality = 0;
 	int WireframeMode = 0;
 	std::string CullMode = "BACK";
+	float ClearColorRed = 1.0f;
+	float ClearColorGreen = 1.0f;
+	float ClearColorBlue = 1.0f;
 
 	// Main camera settings
 	float MainCameraFov = 90.0f;
