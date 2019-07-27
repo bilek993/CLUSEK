@@ -86,8 +86,7 @@ void RenderSystem::Update(const float deltaTime)
 
 void RenderSystem::RenderFrameBegin()
 {
-	float bgColor[] = { 0.0f, 0.75f, 1.0f };
-	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), bgColor);
+	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), CurrentRenderSettings->ClearColor);
 	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
 	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
