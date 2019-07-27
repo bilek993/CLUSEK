@@ -63,11 +63,11 @@ void RenderSystem::Update(const float deltaTime)
 
 		DeviceContext->VSSetConstantBuffers(0, 1, UberShaderVertexShaderConstantBuffer.GetAddressOf());
 
-		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightColor = LightingSettings->AmbientLightColor;
-		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightStrength = LightingSettings->AmbientLightStrength;
-		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightColor = LightingSettings->DirectionalLightColor;
-		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightStrength = LightingSettings->DirectionalLightStrength;
-		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightDirection = LightingSettings->DirectionalLightDirection;
+		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightColor = CurrentRenderSettings->AmbientLightColor;
+		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightStrength = CurrentRenderSettings->AmbientLightStrength;
+		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
+		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
+		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
 		UberShaderPixelShaderLightConstantBuffer.ApplyChanges();
 
 		DeviceContext->PSSetConstantBuffers(0, 1, UberShaderPixelShaderLightConstantBuffer.GetAddressOf());
@@ -326,15 +326,15 @@ bool RenderSystem::InitializeShaders()
 	return true;
 }
 
-void RenderSystem::InitializeLightSettings()
+void RenderSystem::InitializeLightSettings() const
 {
-	LightingSettings->AmbientLightColor = 
+	CurrentRenderSettings->AmbientLightColor =
 		DirectX::XMFLOAT3(ConfigurationData->AmbientLightColorRed, ConfigurationData->AmbientLightColorGreen, ConfigurationData->AmbientLightColorBlue);
-	LightingSettings->AmbientLightStrength = ConfigurationData->AmbientLightStrength;
+	CurrentRenderSettings->AmbientLightStrength = ConfigurationData->AmbientLightStrength;
 
-	LightingSettings->DirectionalLightColor =
+	CurrentRenderSettings->DirectionalLightColor =
 		DirectX::XMFLOAT3(ConfigurationData->DirectionalLightColorRed, ConfigurationData->DirectionalLightColorGreen, ConfigurationData->DirectionalLightColorBlue);
-	LightingSettings->DirectionalLightStrength = ConfigurationData->DirectionalLightStrength;
-	LightingSettings->DirectionalLightDirection =
+	CurrentRenderSettings->DirectionalLightStrength = ConfigurationData->DirectionalLightStrength;
+	CurrentRenderSettings->DirectionalLightDirection =
 		DirectX::XMFLOAT3(ConfigurationData->DirectionalLightDirectionX, ConfigurationData->DirectionalLightDirectionY, ConfigurationData->DirectionalLightDirectionZ);
 }

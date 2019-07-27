@@ -269,11 +269,11 @@
     <ClInclude Include="src\GUI\Windows\FpsTimerWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\LightSettings.h">
-      <Filter>Header Files\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\GUI\Windows\LightingWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\DynamicRenderSettings.h">
+      <Filter>Header Files\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

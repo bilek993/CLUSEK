@@ -20,7 +20,7 @@ public:
 private:
 	bool InitializeDirectX();
 	bool InitializeShaders();
-	void InitializeLightSettings();
+	void InitializeLightSettings() const;
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;

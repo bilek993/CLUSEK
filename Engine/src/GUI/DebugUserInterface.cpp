@@ -28,7 +28,8 @@ void DebugUserInterface::BeforeUpdate() const
 	ImGui::NewFrame();
 }
 
-void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std::vector<SystemHolder>& systems, LightSettings& lightSettings)
+void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std::vector<SystemHolder>& systems, 
+	DynamicRenderSettings& dynamicRenderSettings)
 {
 	BeforeUpdate();
 
@@ -46,7 +47,7 @@ void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std
 	if (FpsTimerWindow::IsEnabled)
 		FpsTimerWindow::Draw(deltaTime);
 	if (LightingWindow::IsEnabled)
-		LightingWindow::Draw(lightSettings);
+		LightingWindow::Draw(dynamicRenderSettings);
 
 	AfterUpdate();
 }

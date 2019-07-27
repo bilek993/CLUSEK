@@ -1,9 +1,9 @@
 #pragma once
-#include "../../Renderer/LightSettings.h"
+#include "../../Renderer/DynamicRenderSettings.h"
 
 class LightingWindow final
 {
 public:
 	inline static bool IsEnabled = false;
-	static void Draw(LightSettings& lightSettings);
+	static void Draw(DynamicRenderSettings& renderSettings);
 };

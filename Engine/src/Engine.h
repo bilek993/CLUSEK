@@ -32,7 +32,7 @@ private:
 	std::vector<SystemHolder> Systems;
 	int RenderSystemId = 0;
 
-	LightSettings CurrentLightSettings;
+	DynamicRenderSettings CurrentRenderSettings;
 
 	DebugUserInterface DebugUI;
 

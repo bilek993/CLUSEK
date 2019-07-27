@@ -1,7 +1,7 @@
 #pragma once
 #include <DirectXMath.h>
 
-struct LightSettings final
+struct DynamicRenderSettings final
 {
 	DirectX::XMFLOAT3 AmbientLightColor;
 	float AmbientLightStrength;

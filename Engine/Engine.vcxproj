@@ -40,7 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GUI\Windows\LightingWindow.h" />
-    <ClInclude Include="src\Renderer\LightSettings.h" />
+    <ClInclude Include="src\Renderer\DynamicRenderSettings.h" />
     <ClInclude Include="src\GUI\Windows\FpsTimerWindow.h" />
     <ClInclude Include="src\Loaders\ResourcesLoader.h" />
     <ClInclude Include="src\Loaders\MaterialLoader.h" />
