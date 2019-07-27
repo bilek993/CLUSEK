@@ -3,6 +3,7 @@
 #include "Windows/SystemsManagerWindow.h"
 #include "Windows/FpsTimerWindow.h"
 #include "Windows/LightingWindow.h"
+#include "Windows/BackBufferWindow.h"
 
 void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
 	const std::function<void()> &functionCloseEngine)
@@ -48,6 +49,8 @@ void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std
 		FpsTimerWindow::Draw(deltaTime);
 	if (LightingWindow::IsEnabled)
 		LightingWindow::Draw(dynamicRenderSettings);
+	if (BackBufferWindow::IsEnabled)
+		BackBufferWindow::Draw(dynamicRenderSettings);
 
 	AfterUpdate();
 }
@@ -83,6 +86,10 @@ void DebugUserInterface::DrawMenuBar() const
 			if (ImGui::MenuItem("Lighting settings", nullptr, LightingWindow::IsEnabled))
 			{
 				LightingWindow::IsEnabled = !LightingWindow::IsEnabled;
+			}
+			if (ImGui::MenuItem("Back Buffer settings", nullptr, BackBufferWindow::IsEnabled))
+			{
+				BackBufferWindow::IsEnabled = !BackBufferWindow::IsEnabled;
 			}
 			ImGui::EndMenu();
 		}

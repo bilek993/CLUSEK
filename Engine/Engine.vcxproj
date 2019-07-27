@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Windows\BackBufferWindow.cpp" />
     <ClCompile Include="src\ECS\Systems\BaseSystem.cpp" />
     <ClCompile Include="src\GUI\Windows\LightingWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\FpsTimerWindow.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="src\GUI\Windows\SystemsManagerWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Windows\BackBufferWindow.h" />
     <ClInclude Include="src\GUI\Windows\LightingWindow.h" />
     <ClInclude Include="src\Renderer\DynamicRenderSettings.h" />
     <ClInclude Include="src\GUI\Windows\FpsTimerWindow.h" />
