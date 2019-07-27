@@ -89,7 +89,8 @@ void Engine::InitializeSystems()
 {
 	for (auto& system : Systems)
 	{
-		system.System->Start(Registry, Window, Config, CurrentLightSettings);
+		system.System->Initialize(&Registry, &Window, &Config, &CurrentLightSettings, &DataFromIODevices, &InputOutputDevices);
+		system.System->Start();
 	}
 }
 
@@ -115,13 +116,7 @@ void Engine::UpdateSystems(const float deltaTime)
 		if (!system.Enabled)
 			continue;
 
-		system.System->Update(	deltaTime,
-								Registry,
-								DataFromIODevices,
-								InputOutputDevices,
-								Window,
-								Config,
-								CurrentLightSettings);
+		system.System->Update(deltaTime);
 	}
 }
 

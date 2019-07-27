@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ECS\Systems\BaseSystem.cpp" />
     <ClCompile Include="src\GUI\Windows\LightingWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\FpsTimerWindow.cpp" />
     <ClCompile Include="src\Loaders\ResourcesLoader.cpp" />

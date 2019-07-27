@@ -8,9 +8,18 @@
 class BaseSystem
 {
 public:
-	virtual ~BaseSystem() = default;
-	virtual void Start(entt::registry &registry, const RenderWindow &window, const ConfigData &configData,
-		LightSettings &lightSettings) = 0;
-	virtual void Update(float deltaTime, entt::registry &registry, IOData& ioData, IODevices &ioDevices, 
-		RenderWindow &window, ConfigData &configData, LightSettings &lightSettings) = 0;
+	virtual ~BaseSystem();
+
+	void Initialize(entt::registry *registry, RenderWindow *window, ConfigData *configData,
+		LightSettings *lightSettings, IOData *ioData, IODevices *ioDevices);
+
+	virtual void Start() = 0;
+	virtual void Update(float deltaTime) = 0;
+protected:
+	entt::registry *Registry = nullptr;
+	RenderWindow *Window = nullptr;
+	ConfigData *ConfigurationData = nullptr;
+	LightSettings *LightingSettings = nullptr;
+	IOData *InputOutputData = nullptr;
+	IODevices *InputOutputDevices = nullptr;
 };

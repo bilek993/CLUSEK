@@ -6,26 +6,25 @@
 #include "../../Loaders/MaterialLoader.h"
 #include "../../Loaders/ResourcesLoader.h"
 
-void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, const ConfigData& configData,
-	LightSettings &lightSettings)
+void RenderSystem::Start()
 {
 	Logger::Debug("Staring render system...");
 
-	SyncIntervals = configData.SyncIntervals;
-	WindowWidth = configData.WindowWidth;
-	WindowHeight = configData.WindowHeight;
+	SyncIntervals = ConfigurationData->SyncIntervals;
+	WindowWidth = ConfigurationData->WindowWidth;
+	WindowHeight = ConfigurationData->WindowHeight;
 
-	InitializeLightSettings(configData, lightSettings);
+	InitializeLightSettings();
 
-	if (!InitializeDirectX(	window.GetHandle(),
-							configData.Fullscreen,
-							configData.SelectedAdapterId,
-							configData.RefreshRateNumerator,
-							configData.RefreshRateDenominator,
-							configData.MultisamplesCount,
-							configData.MultisamplesQuality,
-							configData.WireframeMode,
-							configData.CullMode))
+	if (!InitializeDirectX(	Window->GetHandle(),
+							ConfigurationData->Fullscreen,
+							ConfigurationData->SelectedAdapterId,
+							ConfigurationData->RefreshRateNumerator,
+							ConfigurationData->RefreshRateDenominator,
+							ConfigurationData->MultisamplesCount,
+							ConfigurationData->MultisamplesQuality,
+							ConfigurationData->WireframeMode,
+							ConfigurationData->CullMode))
 	{
 		Logger::Error("DirectX initialization failed");
 	}
@@ -41,19 +40,18 @@ void RenderSystem::Start(entt::registry& registry, const RenderWindow &window, c
 	if (FAILED(hr))
 		Logger::Error("Failed to create constant buffer.");
 
-	ResourcesLoader::Load(Device.Get(), configData.PathToResources);
+	ResourcesLoader::Load(Device.Get(), ConfigurationData->PathToResources);
 
-	registry.view<RenderComponent>().each([this](RenderComponent &renderComponent)
+	Registry->view<RenderComponent>().each([this](RenderComponent &renderComponent)
 	{
 		renderComponent.Meshes = ModelLoader::GetResource(renderComponent.ModelId);
 		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *renderComponent.Meshes, renderComponent.MaterialId);
 	});
 }
 
-void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioData, IODevices& ioDevices, 
-	RenderWindow& window, ConfigData& configData, LightSettings &lightSettings)
+void RenderSystem::Update(float deltaTime)
 {
-	auto view = registry.view<CameraComponent>();
+	auto view = Registry->view<CameraComponent>();
 	if (view.size() != 1)
 	{
 		if (view.size() > 1)
@@ -64,7 +62,7 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 	auto &cameraComponent = view.raw()[0];
 
-	registry.view<RenderComponent>().each([this, &cameraComponent, &lightSettings](RenderComponent &renderComponent)
+	Registry->view<RenderComponent>().each([this, &cameraComponent](RenderComponent &renderComponent)
 	{
 		UberShaderVertexShaderConstantBuffer.Data.WorldViewProjectionMat = 
 			XMMatrixTranspose(renderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
@@ -73,11 +71,11 @@ void RenderSystem::Update(float deltaTime, entt::registry& registry, IOData& ioD
 
 		DeviceContext->VSSetConstantBuffers(0, 1, UberShaderVertexShaderConstantBuffer.GetAddressOf());
 
-		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightColor = lightSettings.AmbientLightColor;
-		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightStrength = lightSettings.AmbientLightStrength;
-		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightColor = lightSettings.DirectionalLightColor;
-		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightStrength = lightSettings.DirectionalLightStrength;
-		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightDirection = lightSettings.DirectionalLightDirection;
+		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightColor = LightingSettings->AmbientLightColor;
+		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightStrength = LightingSettings->AmbientLightStrength;
+		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightColor = LightingSettings->DirectionalLightColor;
+		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightStrength = LightingSettings->DirectionalLightStrength;
+		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightDirection = LightingSettings->DirectionalLightDirection;
 		UberShaderPixelShaderLightConstantBuffer.ApplyChanges();
 
 		DeviceContext->PSSetConstantBuffers(0, 1, UberShaderPixelShaderLightConstantBuffer.GetAddressOf());
@@ -337,15 +335,15 @@ bool RenderSystem::InitializeShaders()
 	return true;
 }
 
-void RenderSystem::InitializeLightSettings(const ConfigData& configData, LightSettings& lightSettings)
+void RenderSystem::InitializeLightSettings()
 {
-	lightSettings.AmbientLightColor = 
-		DirectX::XMFLOAT3(configData.AmbientLightColorRed, configData.AmbientLightColorGreen, configData.AmbientLightColorBlue);
-	lightSettings.AmbientLightStrength = configData.AmbientLightStrength;
+	LightingSettings->AmbientLightColor = 
+		DirectX::XMFLOAT3(ConfigurationData->AmbientLightColorRed, ConfigurationData->AmbientLightColorGreen, ConfigurationData->AmbientLightColorBlue);
+	LightingSettings->AmbientLightStrength = ConfigurationData->AmbientLightStrength;
 
-	lightSettings.DirectionalLightColor = 
-		DirectX::XMFLOAT3(configData.DirectionalLightColorRed, configData.DirectionalLightColorGreen, configData.DirectionalLightColorBlue);
-	lightSettings.DirectionalLightStrength = configData.DirectionalLightStrength;
-	lightSettings.DirectionalLightDirection =
-		DirectX::XMFLOAT3(configData.DirectionalLightDirectionX, configData.DirectionalLightDirectionY, configData.DirectionalLightDirectionZ);
+	LightingSettings->DirectionalLightColor =
+		DirectX::XMFLOAT3(ConfigurationData->DirectionalLightColorRed, ConfigurationData->DirectionalLightColorGreen, ConfigurationData->DirectionalLightColorBlue);
+	LightingSettings->DirectionalLightStrength = ConfigurationData->DirectionalLightStrength;
+	LightingSettings->DirectionalLightDirection =
+		DirectX::XMFLOAT3(ConfigurationData->DirectionalLightDirectionX, ConfigurationData->DirectionalLightDirectionY, ConfigurationData->DirectionalLightDirectionZ);
 }
