@@ -8,7 +8,7 @@
 class BaseSystem
 {
 public:
-	virtual ~BaseSystem();
+	virtual ~BaseSystem() = default;
 
 	void Initialize(entt::registry *registry, RenderWindow *window, ConfigData *configData,
 		LightSettings *lightSettings, IOData *ioData, IODevices *ioDevices);

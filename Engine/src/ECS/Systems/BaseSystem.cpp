@@ -1,7 +1,5 @@
 #include "BaseSystem.h"
 
-BaseSystem::~BaseSystem() = default;
-
 void BaseSystem::Initialize(entt::registry* registry, RenderWindow* window, ConfigData* configData,
 	LightSettings* lightSettings, IOData* ioData, IODevices* ioDevices)
 {

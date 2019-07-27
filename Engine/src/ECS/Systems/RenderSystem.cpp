@@ -16,15 +16,7 @@ void RenderSystem::Start()
 
 	InitializeLightSettings();
 
-	if (!InitializeDirectX(	Window->GetHandle(),
-							ConfigurationData->Fullscreen,
-							ConfigurationData->SelectedAdapterId,
-							ConfigurationData->RefreshRateNumerator,
-							ConfigurationData->RefreshRateDenominator,
-							ConfigurationData->MultisamplesCount,
-							ConfigurationData->MultisamplesQuality,
-							ConfigurationData->WireframeMode,
-							ConfigurationData->CullMode))
+	if (!InitializeDirectX())
 	{
 		Logger::Error("DirectX initialization failed");
 	}
@@ -121,40 +113,39 @@ ID3D11DeviceContext* RenderSystem::GetPointerToDeviceContext() const
 	return DeviceContext.Get();
 }
 
-bool RenderSystem::InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator,
-	int refreshRateDenominator, int multisamplesCount, int multisamplesQuality, int wireframeMode, const std::string& cullMode)
+bool RenderSystem::InitializeDirectX()
 {
 	auto adapters = AdapterReader::GetData();
 
 	if (adapters.empty())
 		Logger::Error("No adapters found!");
 
-	if (selectedAdapterId != 0)
+	if (ConfigurationData->SelectedAdapterId != 0)
 		Logger::Warning("Selected adapter with not [0] id. This might not be optimal choice.");
 
-	if (selectedAdapterId >= adapters.size())
-		Logger::Error("Adapter with id [" + std::to_string(selectedAdapterId) + "] not found!");
+	if (ConfigurationData->SelectedAdapterId >= adapters.size())
+		Logger::Error("Adapter with id [" + std::to_string(ConfigurationData->SelectedAdapterId) + "] not found!");
 
-	Logger::Debug("Selected adapter [" + std::to_string(selectedAdapterId) + "].");
+	Logger::Debug("Selected adapter [" + std::to_string(ConfigurationData->SelectedAdapterId) + "].");
 
 	DXGI_SWAP_CHAIN_DESC scd;
 	ZeroMemory(&scd, sizeof(DXGI_SAMPLE_DESC));
 
 	scd.BufferDesc.Width = WindowWidth;
 	scd.BufferDesc.Height = WindowHeight;
-	scd.BufferDesc.RefreshRate.Numerator = refreshRateNumerator;
-	scd.BufferDesc.RefreshRate.Denominator = refreshRateDenominator;
+	scd.BufferDesc.RefreshRate.Numerator = ConfigurationData->RefreshRateNumerator;
+	scd.BufferDesc.RefreshRate.Denominator = ConfigurationData->RefreshRateDenominator;
 	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	scd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	scd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
-	scd.SampleDesc.Count = multisamplesCount;
-	scd.SampleDesc.Quality = multisamplesQuality;
+	scd.SampleDesc.Count = ConfigurationData->MultisamplesCount;
+	scd.SampleDesc.Quality = ConfigurationData->MultisamplesQuality;
 
 	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	scd.BufferCount = 1;
-	scd.OutputWindow = hwnd;
-	scd.Windowed = -fullscreen + 1;
+	scd.OutputWindow = Window->GetHandle();
+	scd.Windowed = -ConfigurationData->Fullscreen + 1;
 	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
@@ -165,7 +156,7 @@ bool RenderSystem::InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdap
 	auto softwareLayers = 0;
 #endif
 
-	auto hr = D3D11CreateDeviceAndSwapChain(adapters[selectedAdapterId].Adapter,
+	auto hr = D3D11CreateDeviceAndSwapChain(adapters[ConfigurationData->SelectedAdapterId].Adapter,
 		D3D_DRIVER_TYPE_UNKNOWN,
 		nullptr,
 		softwareLayers,
@@ -205,8 +196,8 @@ bool RenderSystem::InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdap
 	depthStencilTextureDesc.MipLevels = 1;
 	depthStencilTextureDesc.ArraySize = 1;
 	depthStencilTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilTextureDesc.SampleDesc.Count = multisamplesCount;
-	depthStencilTextureDesc.SampleDesc.Quality = multisamplesQuality;
+	depthStencilTextureDesc.SampleDesc.Count = ConfigurationData->MultisamplesCount;
+	depthStencilTextureDesc.SampleDesc.Quality = ConfigurationData->MultisamplesQuality;
 	depthStencilTextureDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthStencilTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	depthStencilTextureDesc.CPUAccessFlags = 0;
@@ -264,16 +255,16 @@ bool RenderSystem::InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdap
 	D3D11_RASTERIZER_DESC rasterizerDesc;
 	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
 
-	if (wireframeMode == 1)
+	if (ConfigurationData->WireframeMode == 1)
 		rasterizerDesc.FillMode = D3D11_FILL_WIREFRAME;
 	else
 		rasterizerDesc.FillMode = D3D11_FILL_SOLID;
 
-	if (cullMode == "BACK")
+	if (ConfigurationData->CullMode == "BACK")
 		rasterizerDesc.CullMode = D3D11_CULL_BACK;
-	else if (cullMode == "FRONT")
+	else if (ConfigurationData->CullMode == "FRONT")
 		rasterizerDesc.CullMode = D3D11_CULL_FRONT;
-	else if (cullMode == "NONE")
+	else if (ConfigurationData->CullMode == "NONE")
 		rasterizerDesc.CullMode = D3D11_CULL_NONE;
 
 	hr = Device->CreateRasterizerState(&rasterizerDesc, RasterizerState.GetAddressOf());

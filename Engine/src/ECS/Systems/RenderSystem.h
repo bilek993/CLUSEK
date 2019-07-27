@@ -18,9 +18,7 @@ public:
 	ID3D11Device* GetPointerToDevice() const;
 	ID3D11DeviceContext* GetPointerToDeviceContext() const;
 private:
-	bool InitializeDirectX(HWND hwnd, int fullscreen, int selectedAdapterId, int refreshRateNumerator,
-		int refreshRateDenominator, int multisamplesCount, int multisamplesQuality, int wireframeMode, 
-		const std::string& cullMode);
+	bool InitializeDirectX();
 	bool InitializeShaders();
 	void InitializeLightSettings();
 
