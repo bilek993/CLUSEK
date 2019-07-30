@@ -1,16 +1,15 @@
 #pragma once
+#include "BaseWindow.h"
 
-class FpsTimerWindow final
+class FpsTimerWindow final : public BaseWindow
 {
-public:
-	static void Draw(float deltaTime);
-
-	inline static bool IsEnabled = false;
+protected:
+	void Draw() override;
 private:
-	static void Calculate(float deltaTime);
-	static void AddNewFps(int fps);
+	void Calculate();
+	void AddNewFps(int fps);
 
-	inline static int FramesCounter = 0;
-	inline static float TimeCounter = 0.0f;
-	inline static float HistoricalFps[50];
+	int FramesCounter = 0;
+	float TimeCounter = 0.0f;
+	float HistoricalFps[50];
 };

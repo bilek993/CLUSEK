@@ -1,11 +1,11 @@
 #include "BackBufferWindow.h"
 #include <imgui.h>
 
-void BackBufferWindow::Draw(DynamicRenderSettings& renderSettings)
+void BackBufferWindow::Draw()
 {
 	ImGui::Begin("Back Buffer settings", &IsEnabled);
 	ImGui::ColorPicker3("Clear color",
-		renderSettings.ClearColor,
+		RenderSettings->ClearColor,
 		ImGuiColorEditFlags_NoAlpha |
 		ImGuiColorEditFlags_PickerHueBar |
 		ImGuiColorEditFlags_NoInputs);

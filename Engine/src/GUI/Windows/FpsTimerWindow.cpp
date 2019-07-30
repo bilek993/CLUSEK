@@ -2,9 +2,9 @@
 #include <imgui.h>
 #include <algorithm>
 
-void FpsTimerWindow::Draw(const float deltaTime)
+void FpsTimerWindow::Draw()
 {
-	Calculate(deltaTime);
+	Calculate();
 
 	const auto currentFps = HistoricalFps[IM_ARRAYSIZE(HistoricalFps) - 1];
 	const auto maxFps = std::max_element(std::begin(HistoricalFps), std::end(HistoricalFps));
@@ -19,10 +19,10 @@ void FpsTimerWindow::Draw(const float deltaTime)
 	ImGui::End();
 }
 
-void FpsTimerWindow::Calculate(const float deltaTime)
+void FpsTimerWindow::Calculate()
 {
 	FramesCounter += 1;
-	TimeCounter += deltaTime;
+	TimeCounter += DeltaTime;
 
 	if (TimeCounter > 1000.0f)
 	{

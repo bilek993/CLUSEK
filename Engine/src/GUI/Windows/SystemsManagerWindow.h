@@ -1,10 +1,8 @@
 #pragma once
-#include <vector>
-#include "../../Utils/SystemHolder.h"
+#include "BaseWindow.h"
 
-class SystemsManagerWindow final
+class SystemsManagerWindow final : public BaseWindow
 {
-public:
-	inline static bool IsEnabled = false;
-	static void Draw(std::vector<SystemHolder>& systems);
+protected:
+	void Draw() override;
 };

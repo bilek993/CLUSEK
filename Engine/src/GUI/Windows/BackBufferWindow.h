@@ -1,9 +1,8 @@
 #pragma once
-#include "../../Renderer/DynamicRenderSettings.h"
+#include "BaseWindow.h"
 
-class BackBufferWindow final
+class BackBufferWindow final : public BaseWindow
 {
-public:
-	static void Draw(DynamicRenderSettings& renderSettings);
-	inline static bool IsEnabled = false;
+protected:
+	void Draw() override;
 };

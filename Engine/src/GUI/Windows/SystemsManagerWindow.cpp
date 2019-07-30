@@ -1,10 +1,10 @@
 #include "SystemsManagerWindow.h"
 #include <imgui.h>
 
-void SystemsManagerWindow::Draw(std::vector<SystemHolder>& systems)
+void SystemsManagerWindow::Draw()
 {
 	ImGui::Begin("Systems manager", &IsEnabled);
-	for (auto& system : systems)
+	for (auto& system : *Systems)
 	{
 		ImGui::Checkbox(system.Name.c_str(), &system.Enabled);
 	}

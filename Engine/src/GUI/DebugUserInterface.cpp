@@ -29,8 +29,8 @@ void DebugUserInterface::BeforeUpdate() const
 	ImGui::NewFrame();
 }
 
-void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std::vector<SystemHolder>& systems, 
-	DynamicRenderSettings& dynamicRenderSettings)
+void DebugUserInterface::Update(const float deltaTime, const IOData *ioData, std::vector<SystemHolder> *systems, 
+	DynamicRenderSettings *dynamicRenderSettings)
 {
 	BeforeUpdate();
 
@@ -43,14 +43,10 @@ void DebugUserInterface::Update(const float deltaTime, const IOData& ioData, std
 
 	HandleMainDockingArea();
 
-	if (SystemsManagerWindow::IsEnabled)
-		SystemsManagerWindow::Draw(systems);
-	if (FpsTimerWindow::IsEnabled)
-		FpsTimerWindow::Draw(deltaTime);
-	if (LightingWindow::IsEnabled)
-		LightingWindow::Draw(dynamicRenderSettings);
-	if (BackBufferWindow::IsEnabled)
-		BackBufferWindow::Draw(dynamicRenderSettings);
+	SystemsManagerWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
+	FpsTimerWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
+	LightingWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
+	BackBufferWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
 
 	AfterUpdate();
 }
@@ -61,7 +57,7 @@ void DebugUserInterface::AfterUpdate() const
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }
 
-void DebugUserInterface::DrawMenuBar() const
+void DebugUserInterface::DrawMenuBar()
 {
 	if (ImGui::BeginMainMenuBar())
 	{
@@ -75,29 +71,29 @@ void DebugUserInterface::DrawMenuBar() const
 		}
 		if (ImGui::BeginMenu("Managers"))
 		{
-			if (ImGui::MenuItem("Systems manager", nullptr, SystemsManagerWindow::IsEnabled))
+			if (ImGui::MenuItem("Systems manager", nullptr, SystemsManagerWindowInstance.GetIsEnabled()))
 			{
-				SystemsManagerWindow::IsEnabled = !SystemsManagerWindow::IsEnabled;
+				SystemsManagerWindowInstance.GetIsEnabled() = !SystemsManagerWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Renderer"))
 		{
-			if (ImGui::MenuItem("Lighting settings", nullptr, LightingWindow::IsEnabled))
+			if (ImGui::MenuItem("Lighting settings", nullptr, LightingWindowInstance.GetIsEnabled()))
 			{
-				LightingWindow::IsEnabled = !LightingWindow::IsEnabled;
+				LightingWindowInstance.GetIsEnabled() = !LightingWindowInstance.GetIsEnabled();
 			}
-			if (ImGui::MenuItem("Back Buffer settings", nullptr, BackBufferWindow::IsEnabled))
+			if (ImGui::MenuItem("Back Buffer settings", nullptr, BackBufferWindowInstance.GetIsEnabled()))
 			{
-				BackBufferWindow::IsEnabled = !BackBufferWindow::IsEnabled;
+				BackBufferWindowInstance.GetIsEnabled() = !BackBufferWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Performance"))
 		{
-			if (ImGui::MenuItem("FPS Timer", nullptr, FpsTimerWindow::IsEnabled))
+			if (ImGui::MenuItem("FPS Timer", nullptr, FpsTimerWindowInstance.GetIsEnabled()))
 			{
-				FpsTimerWindow::IsEnabled = !FpsTimerWindow::IsEnabled;
+				FpsTimerWindowInstance.GetIsEnabled() = !FpsTimerWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}
@@ -113,9 +109,9 @@ DebugUserInterface::~DebugUserInterface()
 	ImGui::DestroyContext();
 }
 
-void DebugUserInterface::HandleKeyboardEvents(const IOData& ioData)
+void DebugUserInterface::HandleKeyboardEvents(const IOData *ioData)
 {
-	if (ioData.KeyboardTracker.released.OemTilde)
+	if (ioData->KeyboardTracker.released.OemTilde)
 		IsEnabled = !IsEnabled;
 }
 

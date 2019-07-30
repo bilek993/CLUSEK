@@ -1,9 +1,8 @@
 #pragma once
-#include "../../Renderer/DynamicRenderSettings.h"
+#include "BaseWindow.h"
 
-class LightingWindow final
+class LightingWindow final : public BaseWindow
 {
-public:
-	inline static bool IsEnabled = false;
-	static void Draw(DynamicRenderSettings& renderSettings);
+protected:
+	void Draw() override;
 };
