@@ -7,7 +7,7 @@
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Systems/RotationSystem.h"
 
-bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData configData)
+bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 {
 	Logger::Debug("Engine initialization...");
 

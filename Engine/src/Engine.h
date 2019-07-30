@@ -11,7 +11,7 @@
 class Engine final
 {
 public:
-	bool Initialize(HINSTANCE hInstance, const ConfigData configData);
+	bool Initialize(HINSTANCE hInstance, const ConfigData& configData);
 	bool CanUpdate();
 	void Update();
 private:
