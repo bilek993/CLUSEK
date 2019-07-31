@@ -15,7 +15,25 @@
   {
     "Tags": [],
 	"Components": {
-	  "TransformComponent": {},
+	  "TransformComponent": {
+	  "PositionX": 0.0,
+	  "PositionY": 0.0,
+	  "PositionZ": 0.0
+	  },
+	  "RenderComponent": {
+	    "ModelId": "Nanosuit",
+		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	  "PositionX": 0.0,
+	  "PositionY": 0.0,
+	  "PositionZ": 10.0
+	  },
 	  "RenderComponent": {
 	    "ModelId": "Nanosuit",
 		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"

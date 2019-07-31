@@ -9,7 +9,6 @@ void RotationSystem::Start()
 	Logger::Debug("Staring rotation system...");
 	Registry->view<TransformComponent, RenderComponent>().each([](TransformComponent &transformComponent, RenderComponent &renderComponent)
 	{
-		TransformLogic::SetPosition(0.0f, 0.0f, 0.0f, transformComponent);
 		ModelViewLogic::UpdateModelMatrix(renderComponent, transformComponent);
 	});
 }
