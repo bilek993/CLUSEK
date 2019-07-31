@@ -38,11 +38,8 @@ void MapLoader::AddComponents(const nlohmann::json& json, entt::registry& regist
 {
 	for (auto it = json.begin(); it != json.end(); ++it)
 	{
-		if (it.key() == "CameraComponent")
-			CameraComponentLoaderInstance.Add(it.value(), registry, entity);
-		else if (it.key() == "TransformComponent")
-			TransformComponentLoaderInstance.Add(it.value(), registry, entity);
-		else if (it.key() == "RenderComponent")
-			RenderComponentLoaderInstance.Add(it.value(), registry, entity);
+		MAP_COMPONENT_LOADERS(it, CameraComponent, registry, entity);
+		MAP_COMPONENT_LOADERS(it, TransformComponent, registry, entity);
+		MAP_COMPONENT_LOADERS(it, RenderComponent, registry, entity);
 	}
 }
