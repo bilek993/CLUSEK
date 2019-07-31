@@ -5,7 +5,11 @@
 	],
     "Components": {
       "CameraComponent": {},
-	  "TransformComponent": {}
+	  "TransformComponent": {
+	    "PositionX": 0.0,
+		"PositionY": 0.0,
+		"PositionZ": -3.0
+	  }
 	}
   },
   {

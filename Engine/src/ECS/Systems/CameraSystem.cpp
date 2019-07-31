@@ -28,7 +28,6 @@ void CameraSystem::Start()
 		static_cast<float>(ConfigurationData->WindowWidth) / static_cast<float>(ConfigurationData->WindowHeight),
 		ConfigurationData->MainCameraNearZ, ConfigurationData->MainCameraFarZ);
 
-	TransformLogic::SetPosition(0.0f, 0.0f, -3.0f, transformComponent);
 	ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 }
 

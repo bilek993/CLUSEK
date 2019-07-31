@@ -8,5 +8,5 @@ class BaseComponentsLoader
 {
 public:
 	virtual ~BaseComponentsLoader() = default;
-	void virtual Add(const nlohmann::json& json, entt::registry& registry, const entt::registry::entity_type &entity) = 0;
+	void virtual Add(nlohmann::json& json, entt::registry& registry, const entt::registry::entity_type &entity) = 0;
 };

@@ -14,9 +14,9 @@ class MapLoader final
 public:
 	static void CreateEntitiesFromMapFile(const std::string& path, entt::registry& registry);
 private:
-	static void ParseEntity(const nlohmann::json& json, entt::registry& registry);
-	static void AddTags(const nlohmann::json& json, entt::registry& registry, const entt::registry::entity_type &entity);
-	static void AddComponents(const nlohmann::json& json, entt::registry& registry, const entt::registry::entity_type &entity);
+	static void ParseEntity(nlohmann::json& json, entt::registry& registry);
+	static void AddTags(nlohmann::json& json, entt::registry& registry, const entt::registry::entity_type &entity);
+	static void AddComponents(nlohmann::json& json, entt::registry& registry, const entt::registry::entity_type &entity);
 
 	inline static CameraComponentLoader CameraComponentLoaderInstance;
 	inline static TransformComponentLoader TransformComponentLoaderInstance;

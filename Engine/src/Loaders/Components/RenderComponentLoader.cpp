@@ -1,7 +1,7 @@
 #include "RenderComponentLoader.h"
 #include "../../ECS/Components/RenderComponent.h"
 
-void RenderComponentLoader::Add(const nlohmann::json& json, entt::registry& registry,
+void RenderComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	const entt::registry::entity_type& entity)
 {
 	auto &component = registry.assign<RenderComponent>(entity);
