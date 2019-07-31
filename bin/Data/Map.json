@@ -1,0 +1,21 @@
+[
+  {
+    "Tags": [
+	  "Main Camera"
+	],
+    "Components": {
+      "CameraComponent": {},
+	  "TransformComponent": {}
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {},
+	  "RenderComponent": {
+	    "ModelId": "Nanosuit",
+		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"
+	  }
+	}
+  }
+]

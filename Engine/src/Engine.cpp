@@ -6,6 +6,7 @@
 #include "ECS/Components/RenderComponent.h"
 #include "ECS/Components/TransformComponent.h"
 #include "ECS/Systems/RotationSystem.h"
+#include "Loaders/MapLoader.h"
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 {
@@ -51,13 +52,7 @@ void Engine::Update()
 
 void Engine::InitializeScene()
 {
-	const auto cameraEntity = Registry.create();
-	Registry.assign<CameraComponent>(cameraEntity);
-	Registry.assign<TransformComponent>(cameraEntity);
-
-	const auto sampleObjectEntity = Registry.create();
-	Registry.assign<RenderComponent>(sampleObjectEntity, "Nanosuit", "Data/Models/Nanosuit/nanosuit-material.json");
-	Registry.assign<TransformComponent>(sampleObjectEntity);
+	MapLoader::CreateEntitiesFromMapFile(Config.PathToMap, Registry);
 }
 
 void Engine::CreateSystems()

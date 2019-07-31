@@ -11,6 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Loaders\Components\RenderComponentLoader.cpp" />
+    <ClCompile Include="src\Loaders\Components\CameraComponentLoader.cpp" />
+    <ClCompile Include="src\Loaders\MapLoader.cpp" />
     <ClCompile Include="src\GUI\Windows\BaseWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\BackBufferWindow.cpp" />
     <ClCompile Include="src\ECS\Systems\BaseSystem.cpp" />
@@ -39,8 +42,13 @@
     <ClCompile Include="src\Renderer\TransformLogic.cpp" />
     <ClCompile Include="src\Utils\StringUtil.cpp" />
     <ClCompile Include="src\GUI\Windows\SystemsManagerWindow.cpp" />
+    <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Loaders\Components\RenderComponentLoader.h" />
+    <ClInclude Include="src\Loaders\Components\CameraComponentLoader.h" />
+    <ClInclude Include="src\Loaders\Components\BaseComponentsLoader.h" />
+    <ClInclude Include="src\Loaders\MapLoader.h" />
     <ClInclude Include="src\GUI\Windows\BaseWindow.h" />
     <ClInclude Include="src\GUI\Windows\BackBufferWindow.h" />
     <ClInclude Include="src\GUI\Windows\LightingWindow.h" />
@@ -82,6 +90,7 @@
     <ClInclude Include="src\Utils\SystemHolder.h" />
     <ClInclude Include="src\Utils\StringUtil.h" />
     <ClInclude Include="src\GUI\Windows\SystemsManagerWindow.h" />
+    <ClInclude Include="src\Loaders\Components\TransformComponentLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">
