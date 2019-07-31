@@ -7,8 +7,8 @@
       "CameraComponent": {},
 	  "TransformComponent": {
 	    "PositionX": 0.0,
-		"PositionY": 0.0,
-		"PositionZ": -3.0
+		"PositionY": 12.0,
+		"PositionZ": -8.0
 	  }
 	}
   },
