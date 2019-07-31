@@ -6,7 +6,7 @@
 #include "Components/RenderComponentLoader.h"
 #include "Components/TransformComponentLoader.h"
 
-#define MAP_TAGS(INPUT_TAG, EXPECTED_TAG, REGISTRY, ENTITY) if (INPUT_TAG == EXPECTED_TAG) REGISTRY.assign<entt::tag<EXPECTED_TAG##_hs>>(entity);
+#define MAP_LOADER_TAGS(INPUT_TAG, EXPECTED_TAG, REGISTRY, ENTITY) if (INPUT_TAG == EXPECTED_TAG) REGISTRY.assign<entt::tag<EXPECTED_TAG##_hs>>(entity);
 #define MAP_COMPONENT_LOADERS(JSON, COMPONENT_ID, REGISTRY, ENTITY) if (JSON.key() == #COMPONENT_ID) COMPONENT_ID##LoaderInstance.Add(JSON.value(), REGISTRY, ENTITY);
 
 class MapLoader final

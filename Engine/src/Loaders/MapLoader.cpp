@@ -1,7 +1,6 @@
 #include "MapLoader.h"
 #include "../Utils/Logger.h"
 #include <fstream>
-#include "../ECS/Components/TransformComponent.h"
 
 void MapLoader::CreateEntitiesFromMapFile(const std::string& path, entt::registry& registry)
 {
