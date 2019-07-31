@@ -29,7 +29,7 @@ void MapLoader::AddTags(const nlohmann::json& json, entt::registry& registry, co
 	{
 		const auto tag = it.value().get<std::string>().c_str();
 
-		MAP_TAGS(tag, "Main Camera", registry, entity);
+		MAP_LOADER_TAGS(tag, "Main Camera", registry, entity);
 	}
 }
 
