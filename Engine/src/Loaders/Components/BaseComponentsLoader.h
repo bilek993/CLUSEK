@@ -2,6 +2,8 @@
 #include <entt.hpp>
 #include <json.hpp>
 
+#define MAP_LOADER_BASIC_FIELD(FIELD, JSON, COMPONENT, TYPE) if (!JSON[#FIELD].is_null()) COMPONENT.FIELD = JSON[#FIELD].get<TYPE>();
+
 class BaseComponentsLoader
 {
 public:

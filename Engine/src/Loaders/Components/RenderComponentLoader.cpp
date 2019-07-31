@@ -6,8 +6,6 @@ void RenderComponentLoader::Add(const nlohmann::json& json, entt::registry& regi
 {
 	auto &component = registry.assign<RenderComponent>(entity);
 
-	if (!json["ModelId"].is_null())
-		component.ModelId = json["ModelId"].get<std::string>();
-	if (!json["MaterialId"].is_null())
-		component.MaterialId = json["MaterialId"].get<std::string>();
+	MAP_LOADER_BASIC_FIELD(ModelId, json, component, std::string);
+	MAP_LOADER_BASIC_FIELD(MaterialId, json, component, std::string);
 }
