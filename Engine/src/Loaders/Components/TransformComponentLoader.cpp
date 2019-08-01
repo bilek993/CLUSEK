@@ -7,6 +7,14 @@ void TransformComponentLoader::Add(nlohmann::json& json, entt::registry& registr
 {
 	auto &component = registry.assign<TransformComponent>(entity);
 
+	if (!json["RotationX"].is_null() && !json["RotationY"].is_null() && !json["RotationZ"].is_null())
+	{
+		const auto x = json["RotationX"].get<float>();
+		const auto y = json["RotationY"].get<float>();
+		const auto z = json["RotationZ"].get<float>();
+		TransformLogic::SetRotation(x, y, z, component);
+	}
+
 	if (!json["PositionX"].is_null() && !json["PositionY"].is_null() && !json["PositionZ"].is_null())
 	{
 		const auto x = json["PositionX"].get<float>();

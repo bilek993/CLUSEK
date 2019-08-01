@@ -16,10 +16,34 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
-	  "PositionX": 0.0,
-	  "PositionY": 0.0,
-	  "PositionZ": 0.0
+	  "RotationX": 1.57,
+	  "RotationY": 0.0,
+	  "RotationZ": 0.0
 	  },
+	  "RenderComponent": {
+	    "ModelId": "Nanosuit",
+		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	  "RotationX": 0.0,
+	  "RotationY": 0.0,
+	  "RotationZ": 1.57
+	  },
+	  "RenderComponent": {
+	    "ModelId": "Nanosuit",
+		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {},
 	  "RenderComponent": {
 	    "ModelId": "Nanosuit",
 		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"
