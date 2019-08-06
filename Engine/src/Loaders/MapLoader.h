@@ -3,7 +3,7 @@
 #include <entt.hpp>
 #include <json.hpp>
 #include "Components/CameraComponentLoader.h"
-#include "Components/RenderComponentLoader.h"
+#include "Components/ModelRenderComponentLoader.h"
 #include "Components/TransformComponentLoader.h"
 
 #define MAP_LOADER_TAGS(INPUT_TAG, EXPECTED_TAG, REGISTRY, ENTITY) if (INPUT_TAG == EXPECTED_TAG) REGISTRY.assign<entt::tag<EXPECTED_TAG##_hs>>(ENTITY);
@@ -20,5 +20,5 @@ private:
 
 	inline static CameraComponentLoader CameraComponentLoaderInstance;
 	inline static TransformComponentLoader TransformComponentLoaderInstance;
-	inline static RenderComponentLoader RenderComponentLoaderInstance;
+	inline static ModelRenderComponentLoader ModelRenderComponentLoaderInstance;
 };

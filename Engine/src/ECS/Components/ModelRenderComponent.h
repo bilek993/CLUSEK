@@ -1,9 +1,8 @@
 #pragma once
-#include "../../Renderer/ConstantBuffer.h"
 #include "../../Renderer/Mesh.h"
 #include "vector"
 
-struct RenderComponent final
+struct ModelRenderComponent final
 {
 	std::string ModelId;
 	std::string MaterialId;

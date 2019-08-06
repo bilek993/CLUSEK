@@ -1,10 +1,8 @@
 #include "Engine.h"
 #include "Utils/Logger.h"
-#include "ECS/Components/CameraComponent.h"
 #include "ECS/Systems/CameraSystem.h"
 #include "ECS/Systems/RenderSystem.h"
-#include "ECS/Components/RenderComponent.h"
-#include "ECS/Components/TransformComponent.h"
+#include "ECS/Components/ModelRenderComponent.h"
 #include "ECS/Systems/RotationSystem.h"
 #include "Loaders/MapLoader.h"
 

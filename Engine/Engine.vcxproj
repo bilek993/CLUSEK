@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Loaders\Components\RenderComponentLoader.cpp" />
+    <ClCompile Include="src\Loaders\Components\ModelRenderComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\CameraComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\MapLoader.cpp" />
     <ClCompile Include="src\GUI\Windows\BaseWindow.cpp" />
@@ -45,7 +45,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Loaders\Components\RenderComponentLoader.h" />
+    <ClInclude Include="src\Loaders\Components\ModelRenderComponentLoader.h" />
     <ClInclude Include="src\Loaders\Components\CameraComponentLoader.h" />
     <ClInclude Include="src\Loaders\Components\BaseComponentsLoader.h" />
     <ClInclude Include="src\Loaders\MapLoader.h" />
@@ -64,7 +64,7 @@
     <ClInclude Include="src\Renderer\TransformLogic.h" />
     <ClInclude Include="src\Renderer\ModelViewLogic.h" />
     <ClInclude Include="src\ECS\Systems\RenderSystem.h" />
-    <ClInclude Include="src\ECS\Components\RenderComponent.h" />
+    <ClInclude Include="src\ECS\Components\ModelRenderComponent.h" />
     <ClInclude Include="src\ECS\Systems\CameraSystem.h" />
     <ClInclude Include="src\ECS\Components\CameraComponent.h" />
     <ClInclude Include="src\ECS\Systems\BaseSystem.h" />

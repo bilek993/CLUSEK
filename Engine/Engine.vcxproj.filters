@@ -174,10 +174,10 @@
     <ClCompile Include="src\Loaders\Components\CameraComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Loaders\Components\RenderComponentLoader.cpp">
+    <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp">
+    <ClCompile Include="src\Loaders\Components\ModelRenderComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -248,9 +248,6 @@
     <ClInclude Include="src\ECS\Systems\RenderSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\Components\RenderComponent.h">
-      <Filter>Header Files\ECS\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\ECS\Components\TransformComponent.h">
       <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
@@ -314,10 +311,13 @@
     <ClInclude Include="src\Loaders\Components\CameraComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Loaders\Components\RenderComponentLoader.h">
+    <ClInclude Include="src\Loaders\Components\TransformComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Loaders\Components\TransformComponentLoader.h">
+    <ClInclude Include="src\ECS\Components\ModelRenderComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\Components\ModelRenderComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
   </ItemGroup>

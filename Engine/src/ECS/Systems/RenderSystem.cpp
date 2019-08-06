@@ -1,5 +1,5 @@
 #include "RenderSystem.h"
-#include "../Components/RenderComponent.h"
+#include "../Components/ModelRenderComponent.h"
 #include "../Components/CameraComponent.h"
 #include "../../Renderer/AdapterReader.h"
 #include "../../Loaders/ModelLoader.h"
@@ -35,10 +35,10 @@ void RenderSystem::Start()
 
 	ResourcesLoader::Load(Device.Get(), ConfigurationData->PathToResources);
 
-	Registry->view<RenderComponent>().each([this](RenderComponent &renderComponent)
+	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
 	{
-		renderComponent.Meshes = ModelLoader::GetResource(renderComponent.ModelId);
-		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *renderComponent.Meshes, renderComponent.MaterialId);
+		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
+		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
 	});
 }
 
@@ -55,11 +55,11 @@ void RenderSystem::Update(const float deltaTime)
 
 	auto &cameraComponent = view.raw()[0];
 
-	Registry->view<RenderComponent>().each([this, &cameraComponent](RenderComponent &renderComponent)
+	Registry->view<ModelRenderComponent>().each([this, &cameraComponent](ModelRenderComponent &modelRenderComponent)
 	{
 		UberShaderVertexShaderConstantBuffer.Data.WorldViewProjectionMat = 
-			XMMatrixTranspose(renderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
-		UberShaderVertexShaderConstantBuffer.Data.WorldMatrix = XMMatrixTranspose(renderComponent.WorldMatrix);
+			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
+		UberShaderVertexShaderConstantBuffer.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
 		UberShaderVertexShaderConstantBuffer.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, UberShaderVertexShaderConstantBuffer.GetAddressOf());
@@ -75,7 +75,7 @@ void RenderSystem::Update(const float deltaTime)
 
 		UINT offset = 0;
 
-		for (const auto& mesh : *renderComponent.Meshes) 
+		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.MainTexture->GetAddressOf());
 			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
