@@ -12,11 +12,11 @@ void ModelViewLogic::UpdateViewMatrix(CameraComponent& cameraComponent, Transfor
 	transformComponent.VectorRight = XMVector3TransformCoord(TransformComponent::RIGHT_VECTOR, cameraRotationMatrix);
 }
 
-void ModelViewLogic::UpdateModelMatrix(ModelRenderComponent& modelRenderComponent, TransformComponent& transformComponent)
+void ModelViewLogic::UpdateModelMatrix(DirectX::XMMATRIX& worldMatrix, TransformComponent& transformComponent)
 {
 	const auto vecRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(transformComponent.RotationVector);
 	const auto vecTranslationMatrix = DirectX::XMMatrixTranslationFromVector(transformComponent.PositionVector);
-	modelRenderComponent.WorldMatrix = XMMatrixMultiply(vecRotationMatrix, vecTranslationMatrix);
+	worldMatrix = XMMatrixMultiply(vecRotationMatrix, vecTranslationMatrix);
 
 	transformComponent.VectorForward = XMVector3TransformCoord(TransformComponent::FORWARD_VECTOR, vecRotationMatrix);
 	transformComponent.VectorRight = XMVector3TransformCoord(TransformComponent::RIGHT_VECTOR, vecRotationMatrix);
