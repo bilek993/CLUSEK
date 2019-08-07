@@ -5,6 +5,7 @@
 #include "../../Loaders/ModelLoader.h"
 #include "../../Loaders/MaterialLoader.h"
 #include "../../Loaders/ResourcesLoader.h"
+#include "../Components/SkyboxComponent.h"
 
 void RenderSystem::Start()
 {
@@ -25,11 +26,15 @@ void RenderSystem::Start()
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed");
 
-	auto hr = UberShaderVertexShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
+	auto hr = UberVertexShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create constant buffer.");
 
-	hr = UberShaderPixelShaderLightConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
+	hr = UberPixelShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create constant buffer.");
+
+	hr = SkyVertexShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create constant buffer.");
 
@@ -40,10 +45,21 @@ void RenderSystem::Start()
 		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
 		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
 	});
+
+	Registry->view<SkyboxComponent>().each([this](SkyboxComponent &skyboxComponent)
+	{
+		skyboxComponent.Meshes = ModelLoader::GetResource(skyboxComponent.ModelId);
+		for (auto& mesh : *skyboxComponent.Meshes)
+		{
+			MaterialLoader::SetResourceForMesh(Device.Get(), mesh, skyboxComponent.SkyboxTextureId);
+		}
+	});
 }
 
 void RenderSystem::Update(const float deltaTime)
 {
+	UINT offset = 0;
+
 	auto view = Registry->view<CameraComponent>();
 	if (view.size() != 1)
 	{
@@ -55,25 +71,28 @@ void RenderSystem::Update(const float deltaTime)
 
 	auto &cameraComponent = view.raw()[0];
 
-	Registry->view<ModelRenderComponent>().each([this, &cameraComponent](ModelRenderComponent &modelRenderComponent)
+	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
+
+	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
+	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
+
+	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset](ModelRenderComponent &modelRenderComponent)
 	{
-		UberShaderVertexShaderConstantBuffer.Data.WorldViewProjectionMat = 
+		UberVertexShaderConstantBuffer.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
-		UberShaderVertexShaderConstantBuffer.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
-		UberShaderVertexShaderConstantBuffer.ApplyChanges();
+		UberVertexShaderConstantBuffer.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
+		UberVertexShaderConstantBuffer.ApplyChanges();
 
-		DeviceContext->VSSetConstantBuffers(0, 1, UberShaderVertexShaderConstantBuffer.GetAddressOf());
+		DeviceContext->VSSetConstantBuffers(0, 1, UberVertexShaderConstantBuffer.GetAddressOf());
 
-		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightColor = CurrentRenderSettings->AmbientLightColor;
-		UberShaderPixelShaderLightConstantBuffer.Data.AmbientLightStrength = CurrentRenderSettings->AmbientLightStrength;
-		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
-		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
-		UberShaderPixelShaderLightConstantBuffer.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
-		UberShaderPixelShaderLightConstantBuffer.ApplyChanges();
+		UberPixelShaderConstantBuffer.Data.AmbientLightColor = CurrentRenderSettings->AmbientLightColor;
+		UberPixelShaderConstantBuffer.Data.AmbientLightStrength = CurrentRenderSettings->AmbientLightStrength;
+		UberPixelShaderConstantBuffer.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
+		UberPixelShaderConstantBuffer.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
+		UberPixelShaderConstantBuffer.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
+		UberPixelShaderConstantBuffer.ApplyChanges();
 
-		DeviceContext->PSSetConstantBuffers(0, 1, UberShaderPixelShaderLightConstantBuffer.GetAddressOf());
-
-		UINT offset = 0;
+		DeviceContext->PSSetConstantBuffers(0, 1, UberPixelShaderConstantBuffer.GetAddressOf());
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
@@ -83,19 +102,37 @@ void RenderSystem::Update(const float deltaTime)
 			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetIndexCount(), 0, 0);
 		}
 	});
+
+	DeviceContext->IASetInputLayout(SkyVertexShader.GetInputLayout());
+
+	DeviceContext->VSSetShader(SkyVertexShader.GetShader(), nullptr, 0);
+	DeviceContext->PSSetShader(SkyPixelShader.GetShader(), nullptr, 0);
+
+	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
+	{
+		SkyVertexShaderConstantBuffer.Data.WorldViewProjectionMat = 
+			XMMatrixTranspose(cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix);
+		SkyVertexShaderConstantBuffer.ApplyChanges();
+
+		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
+
+		for (const auto& mesh : *skyboxComponent.Meshes)
+		{
+			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.MainTexture->GetAddressOf());
+			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
+			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetIndexCount(), 0, 0);
+		}
+	});
 }
 
-void RenderSystem::RenderFrameBegin()
+void RenderSystem::RenderFrameBegin() const
 {
 	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), CurrentRenderSettings->ClearColor);
 	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
 	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
-
 	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
-	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
-	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
 }
 
 void RenderSystem::RenderFrameEnd() const
@@ -302,7 +339,7 @@ bool RenderSystem::InitializeDirectX()
 
 bool RenderSystem::InitializeShaders()
 {
-	D3D11_INPUT_ELEMENT_DESC layout[] =
+	D3D11_INPUT_ELEMENT_DESC layoutUber[] =
 	{
 		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
 		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
@@ -310,7 +347,7 @@ bool RenderSystem::InitializeShaders()
 
 	};
 
-	if (!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", layout, ARRAYSIZE(layout)))
+	if (!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", layoutUber, ARRAYSIZE(layoutUber)))
 	{
 		Logger::Error("UberVertexShader not initialized due to critical problem!");
 		return false;
@@ -319,6 +356,25 @@ bool RenderSystem::InitializeShaders()
 	if (!UberPixelShader.Initialize(Device, L"uber_pixel_shader.cso"))
 	{
 		Logger::Error("UberPixelShader not initialized due to critical problem!");
+		return false;
+	}
+
+	D3D11_INPUT_ELEMENT_DESC layoutSky[] =
+	{
+		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+
+	};
+
+	if (!SkyVertexShader.Initialize(Device, L"sky_vertex_shader.cso", layoutSky, ARRAYSIZE(layoutSky)))
+	{
+		Logger::Error("SkyVertexShader not initialized due to critical problem!");
+		return false;
+	}
+
+	if (!SkyPixelShader.Initialize(Device, L"sky_pixel_shader.cso"))
+	{
+		Logger::Error("SkyPixelShader not initialized due to critical problem!");
 		return false;
 	}
 

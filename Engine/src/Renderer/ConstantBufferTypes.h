@@ -1,17 +1,22 @@
 #pragma once
 #include <DirectXMath.h>
 
-struct CB_VS_PerObjectBuffer_UberVertexShader
+struct CB_UberVertexShader
 {
 	DirectX::XMMATRIX WorldViewProjectionMat;
 	DirectX::XMMATRIX WorldMatrix;
 };
 
-struct CB_PS_Light_UberVertexShader
+struct CB_UberPixelShader
 {
 	DirectX::XMFLOAT3 AmbientLightColor;
 	float AmbientLightStrength;
 	DirectX::XMFLOAT3 DirectionalLightColor;
 	float DirectionalLightStrength;
 	DirectX::XMFLOAT3 DirectionalLightDirection;
+};
+
+struct CB_SkyVertexShader
+{
+	DirectX::XMMATRIX WorldViewProjectionMat;
 };

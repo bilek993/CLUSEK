@@ -12,7 +12,7 @@ class RenderSystem final : public BaseSystem
 public:
 	void Start() override;
 	void Update(float deltaTime) override;
-	void RenderFrameBegin();
+	void RenderFrameBegin() const;
 	void RenderFrameEnd() const;
 
 	ID3D11Device* GetPointerToDevice() const;
@@ -36,8 +36,13 @@ private:
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
 
-	ConstantBuffer<CB_VS_PerObjectBuffer_UberVertexShader> UberShaderVertexShaderConstantBuffer;
-	ConstantBuffer<CB_PS_Light_UberVertexShader> UberShaderPixelShaderLightConstantBuffer;
+	VertexShader SkyVertexShader;
+	PixelShader SkyPixelShader;
+
+	ConstantBuffer<CB_UberVertexShader> UberVertexShaderConstantBuffer;
+	ConstantBuffer<CB_UberPixelShader> UberPixelShaderConstantBuffer;
+
+	ConstantBuffer<CB_SkyVertexShader> SkyVertexShaderConstantBuffer;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilBuffer;

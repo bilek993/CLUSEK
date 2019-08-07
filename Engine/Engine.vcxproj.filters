@@ -180,6 +180,9 @@
     <ClCompile Include="src\Loaders\Components\ModelRenderComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Loaders\Components\SkyboxComponentLoader.cpp">
+      <Filter>Source Files\Loaders\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -320,12 +323,27 @@
     <ClInclude Include="src\Loaders\Components\ModelRenderComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\Materials\SkyShaderMaterial.h">
+      <Filter>Header Files\Renderer\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Components\SkyboxComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\Components\SkyboxComponentLoader.h">
+      <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">
       <Filter>Resource Files\Shaders</Filter>
     </FxCompile>
     <FxCompile Include="res\Shaders\uber_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\sky_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\sky_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders</Filter>
     </FxCompile>
   </ItemGroup>

@@ -1,6 +1,8 @@
 {
   "Models": {
-    "Nanosuit": "Data/Models/Nanosuit/nanosuit.fbx"
+    "Nanosuit": "Data/Models/Nanosuit/nanosuit.fbx",
+	
+	"Skybox": "Data/Models/Environment/skybox.fbx"
   },
   "Textures": {
     "NanosuitGlassDif": "Data/Textures/Nanosuit/glass_dif.png",
@@ -8,6 +10,8 @@
 	"NanosuitHandDif": "Data/Textures/Nanosuit/hand_dif.png",
 	"NanosuitHelmetDiff": "Data/Textures/Nanosuit/helmet_diff.png",
 	"NanosuitBodyDif": "Data/Textures/Nanosuit/body_dif.png",
-	"NanosuitArmDif": "Data/Textures/Nanosuit/arm_dif.png"
+	"NanosuitArmDif": "Data/Textures/Nanosuit/arm_dif.png",
+	
+	"Skybox": "Data/Textures/Environment/Skybox.dds"
   }
 }
