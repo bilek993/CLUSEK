@@ -29,7 +29,7 @@ void DebugUserInterface::BeforeUpdate() const
 	ImGui::NewFrame();
 }
 
-void DebugUserInterface::Update(const float deltaTime, const IOData *ioData, std::vector<SystemHolder> *systems, 
+void DebugUserInterface::Update(const float deltaTime, IOData *ioData, std::vector<SystemHolder> *systems, 
 	DynamicRenderSettings *dynamicRenderSettings)
 {
 	BeforeUpdate();
