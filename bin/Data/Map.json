@@ -1,14 +1,5 @@
 [
   {
-    "Tags": [],
-    "Components": {
-	  "SkyboxComponent": {
-	    "ModelId": "Skybox",
-		"SkyboxTextureId": "Skybox"
-	  }
-	}
-  },
-  {
     "Tags": [
 	  "Main Camera"
 	],
@@ -19,6 +10,16 @@
 		"PositionY": 12.0,
 		"PositionZ": -8.0
 	  }
+	}
+  },
+  {
+    "Tags": [],
+    "Components": {
+	  "SkyboxComponent": {
+	    "ModelId": "Skybox",
+		"SkyboxTextureId": "Skybox"
+	  },
+	  "TransformComponent": {}
 	}
   },
   {

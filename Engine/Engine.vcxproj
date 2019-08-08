@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ECS\Systems\SkyboxSystem.cpp" />
     <ClCompile Include="src\Loaders\Components\SkyboxComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\ModelRenderComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\CameraComponentLoader.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ECS\Systems\SkyboxSystem.h" />
     <ClInclude Include="src\ECS\Components\SkyboxComponent.h" />
     <ClInclude Include="src\Loaders\Components\SkyboxComponentLoader.h" />
     <ClInclude Include="src\Renderer\Materials\SkyShaderMaterial.h" />

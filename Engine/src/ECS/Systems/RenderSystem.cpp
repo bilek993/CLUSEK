@@ -111,7 +111,7 @@ void RenderSystem::Update(const float deltaTime)
 	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
 	{
 		SkyVertexShaderConstantBuffer.Data.WorldViewProjectionMat = 
-			XMMatrixTranspose(cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix);
+			XMMatrixTranspose(skyboxComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
 		SkyVertexShaderConstantBuffer.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
