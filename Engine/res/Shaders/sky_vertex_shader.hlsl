@@ -6,7 +6,6 @@ cbuffer PerObjectBuffer : register(b0)
 struct VS_INPUT
 {
     float3 Position : POSITION;
-    float3 TextureCoord : TEXCOORD;
 };
 
 struct VS_OUTPUT
@@ -19,7 +18,7 @@ VS_OUTPUT main(VS_INPUT input)
 {
     VS_OUTPUT output;
     output.Position = mul(float4(input.Position, 1.0f), WorldViewProjectionMat);
-    output.TextureCoord = input.TextureCoord;
+    output.TextureCoord = input.Position;
 
     return output;
 }
