@@ -6,7 +6,7 @@ class BaseWindow
 {
 public:
 	virtual ~BaseWindow() = default;
-	void Update(float deltaTime, DynamicRenderSettings *renderSettings, std::vector<SystemHolder> *systems);
+	void Update(float deltaTime, DynamicRenderSettings *renderSettings, std::vector<SystemHolder> *systems, IOData *ioData);
 	bool& GetIsEnabled();
 
 protected:
@@ -17,4 +17,5 @@ protected:
 	float DeltaTime = 0;
 	DynamicRenderSettings *RenderSettings = nullptr;
 	std::vector<SystemHolder> *Systems = nullptr;
+	IOData *IoData = nullptr;
 };

@@ -43,12 +43,12 @@ void DebugUserInterface::Update(const float deltaTime, const IOData *ioData, std
 
 	HandleMainDockingArea();
 
-	SystemsManagerWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
-	FpsTimerWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
-	LightingWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
-	BackBufferWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
-	MouseInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
-	KeyboardInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
+	SystemsManagerWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
+	FpsTimerWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
+	LightingWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
+	BackBufferWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
+	MouseInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
+	KeyboardInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
 
 	AfterUpdate();
 }

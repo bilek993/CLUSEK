@@ -1,6 +1,6 @@
 #include "BaseWindow.h"
 
-void BaseWindow::Update(const float deltaTime, DynamicRenderSettings *renderSettings, std::vector<SystemHolder> *systems)
+void BaseWindow::Update(const float deltaTime, DynamicRenderSettings *renderSettings, std::vector<SystemHolder> *systems, IOData *ioData)
 {
 	if (!IsEnabled)
 		return;
@@ -8,6 +8,7 @@ void BaseWindow::Update(const float deltaTime, DynamicRenderSettings *renderSett
 	DeltaTime = deltaTime;
 	RenderSettings = renderSettings;
 	Systems = systems;
+	IoData = ioData;
 
 	Draw();
 }
