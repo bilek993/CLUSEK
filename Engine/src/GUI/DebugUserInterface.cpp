@@ -47,6 +47,8 @@ void DebugUserInterface::Update(const float deltaTime, const IOData *ioData, std
 	FpsTimerWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
 	LightingWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
 	BackBufferWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
+	MouseInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
+	KeyboardInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems);
 
 	AfterUpdate();
 }
@@ -86,6 +88,18 @@ void DebugUserInterface::DrawMenuBar()
 			if (ImGui::MenuItem("Back Buffer settings", nullptr, BackBufferWindowInstance.GetIsEnabled()))
 			{
 				BackBufferWindowInstance.GetIsEnabled() = !BackBufferWindowInstance.GetIsEnabled();
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("I/O Devices"))
+		{
+			if (ImGui::MenuItem("Mouse input", nullptr, MouseInputWindowInstance.GetIsEnabled()))
+			{
+				MouseInputWindowInstance.GetIsEnabled() = !MouseInputWindowInstance.GetIsEnabled();
+			}
+			if (ImGui::MenuItem("Keyboard input", nullptr, KeyboardInputWindowInstance.GetIsEnabled()))
+			{
+				KeyboardInputWindowInstance.GetIsEnabled() = !KeyboardInputWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}

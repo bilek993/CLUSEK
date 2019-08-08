@@ -10,6 +10,8 @@
 #include "Windows/FpsTimerWindow.h"
 #include "Windows/LightingWindow.h"
 #include "Windows/BackBufferWindow.h"
+#include "Windows/KeyboardInputWindow.h"
+#include "Windows/MouseInputWindow.h"
 
 class DebugUserInterface final
 {
@@ -38,4 +40,6 @@ private:
 	FpsTimerWindow FpsTimerWindowInstance;
 	LightingWindow LightingWindowInstance;
 	BackBufferWindow BackBufferWindowInstance;
+	MouseInputWindow MouseInputWindowInstance;
+	KeyboardInputWindow KeyboardInputWindowInstance;
 };

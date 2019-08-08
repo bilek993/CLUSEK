@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Windows\KeyboardInputWindow.cpp" />
+    <ClCompile Include="src\GUI\Windows\MouseInputWindow.cpp" />
     <ClCompile Include="src\ECS\Systems\SkyboxSystem.cpp" />
     <ClCompile Include="src\Loaders\Components\SkyboxComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\ModelRenderComponentLoader.cpp" />
@@ -47,6 +49,8 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Windows\KeyboardInputWindow.h" />
+    <ClInclude Include="src\GUI\Windows\MouseInputWindow.h" />
     <ClInclude Include="src\ECS\Systems\SkyboxSystem.h" />
     <ClInclude Include="src\ECS\Components\SkyboxComponent.h" />
     <ClInclude Include="src\Loaders\Components\SkyboxComponentLoader.h" />
