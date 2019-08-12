@@ -6,6 +6,7 @@
 #include "../../Loaders/MaterialLoader.h"
 #include "../../Loaders/ResourcesLoader.h"
 #include "../Components/SkyboxComponent.h"
+#include "../../Renderer/Vertex/PositionVertex.h"
 
 void RenderSystem::Start()
 {
@@ -355,7 +356,7 @@ bool RenderSystem::InitializeShaders()
 
 	// Sky shader
 	
-	if (!SkyVertexShader.Initialize(Device, L"sky_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
+	if (!SkyVertexShader.Initialize(Device, L"sky_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
 	{
 		Logger::Error("SkyVertexShader not initialized due to critical problem!");
 		return false;

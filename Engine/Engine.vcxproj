@@ -49,6 +49,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Vertex\PositionVertex.h" />
     <ClInclude Include="src\GUI\Windows\KeyboardInputWindow.h" />
     <ClInclude Include="src\GUI\Windows\MouseInputWindow.h" />
     <ClInclude Include="src\ECS\Systems\SkyboxSystem.h" />
