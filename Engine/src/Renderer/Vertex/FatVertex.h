@@ -2,7 +2,7 @@
 #include <DirectXMath.h>
 #include <d3d11.h>
 
-struct DefaultVertex final
+struct FatVertex final
 {
 	DirectX::XMFLOAT3 Position;
 	DirectX::XMFLOAT2 TextureCoord;
@@ -17,7 +17,7 @@ struct DefaultVertex final
 
 	inline static int LayoutSize = ARRAYSIZE(Layout);
 
-	DefaultVertex() {}
-	DefaultVertex(const float x, const float y, const float z, const float u, const float v, const float nx, const float ny,
+	FatVertex() {}
+	FatVertex(const float x, const float y, const float z, const float u, const float v, const float nx, const float ny,
 	       const float nz) : Position(x, y, z), TextureCoord(u, v), Normal(nx, ny, nz) {}
 };

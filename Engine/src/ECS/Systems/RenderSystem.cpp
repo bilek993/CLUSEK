@@ -341,7 +341,7 @@ bool RenderSystem::InitializeShaders()
 {
 	// Uber shader
 
-	if (!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", DefaultVertex::Layout, DefaultVertex::LayoutSize))
+	if (!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
 	{
 		Logger::Error("UberVertexShader not initialized due to critical problem!");
 		return false;
@@ -355,7 +355,7 @@ bool RenderSystem::InitializeShaders()
 
 	// Sky shader
 	
-	if (!SkyVertexShader.Initialize(Device, L"sky_vertex_shader.cso", DefaultVertex::Layout, DefaultVertex::LayoutSize))
+	if (!SkyVertexShader.Initialize(Device, L"sky_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
 	{
 		Logger::Error("SkyVertexShader not initialized due to critical problem!");
 		return false;

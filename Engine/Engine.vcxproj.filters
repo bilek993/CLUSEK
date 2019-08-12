@@ -82,6 +82,9 @@
     <Filter Include="Header Files\Loaders\Components">
       <UniqueIdentifier>{82218812-ad8d-437b-aa8b-2016d9f80261}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Renderer\Vertex">
+      <UniqueIdentifier>{762fd0ee-5e32-4ca2-b7c4-30a3ba1dab9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -347,8 +350,8 @@
     <ClInclude Include="src\GUI\Windows\MouseInputWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\DefaultVertex.h">
-      <Filter>Header Files\Renderer</Filter>
+    <ClInclude Include="src\Renderer\Vertex\FatVertex.h">
+      <Filter>Header Files\Renderer\Vertex</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
