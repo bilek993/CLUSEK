@@ -339,15 +339,9 @@ bool RenderSystem::InitializeDirectX()
 
 bool RenderSystem::InitializeShaders()
 {
-	D3D11_INPUT_ELEMENT_DESC layoutUber[] =
-	{
-		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-		{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+	// Uber shader
 
-	};
-
-	if (!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", layoutUber, ARRAYSIZE(layoutUber)))
+	if (!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", DefaultVertex::Layout, DefaultVertex::LayoutSize))
 	{
 		Logger::Error("UberVertexShader not initialized due to critical problem!");
 		return false;
@@ -359,12 +353,9 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
-	D3D11_INPUT_ELEMENT_DESC layoutSky[] =
-	{
-		{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
-	};
-
-	if (!SkyVertexShader.Initialize(Device, L"sky_vertex_shader.cso", layoutSky, ARRAYSIZE(layoutSky)))
+	// Sky shader
+	
+	if (!SkyVertexShader.Initialize(Device, L"sky_vertex_shader.cso", DefaultVertex::Layout, DefaultVertex::LayoutSize))
 	{
 		Logger::Error("SkyVertexShader not initialized due to critical problem!");
 		return false;
@@ -375,6 +366,8 @@ bool RenderSystem::InitializeShaders()
 		Logger::Error("SkyPixelShader not initialized due to critical problem!");
 		return false;
 	}
+
+	// Generic code
 
 	Logger::Debug("All shaders successfully initialized.");
 	return true;

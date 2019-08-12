@@ -21,12 +21,12 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, co
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 	{
 		auto mesh = meshes[i];
-		std::vector<Vertex> vertices;
+		std::vector<DefaultVertex> vertices;
 		std::vector<DWORD> indices;
 
 		for (unsigned int j = 0; j < mesh->mNumVertices; j++)
 		{
-			Vertex vertex;
+			DefaultVertex vertex;
 
 			vertex.Position.x = mesh->mVertices[j].x;
 			vertex.Position.y = mesh->mVertices[j].y;

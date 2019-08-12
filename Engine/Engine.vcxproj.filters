@@ -224,9 +224,6 @@
     <ClInclude Include="src\Renderer\AdapterData.h">
       <Filter>Header Files\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\Vertex.h">
-      <Filter>Header Files\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Renderer\Shaders\VertexShader.h">
       <Filter>Header Files\Renderer\Shaders</Filter>
     </ClInclude>
@@ -349,6 +346,9 @@
     </ClInclude>
     <ClInclude Include="src\GUI\Windows\MouseInputWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\DefaultVertex.h">
+      <Filter>Header Files\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

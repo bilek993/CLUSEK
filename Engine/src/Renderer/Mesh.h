@@ -1,13 +1,13 @@
 #pragma once
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
-#include "Vertex.h"
+#include "DefaultVertex.h"
 #include "Materials/UberShaderMaterial.h"
 
 struct Mesh final
 {
 	std::string Name;
-	VertexBuffer<Vertex> RenderVertexBuffer;
+	VertexBuffer<DefaultVertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
 	UberShaderMaterial Material;
 };

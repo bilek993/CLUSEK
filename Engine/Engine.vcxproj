@@ -92,7 +92,7 @@
     <ClInclude Include="src\Window\RenderWindow.h" />
     <ClInclude Include="src\Utils\Logger.h" />
     <ClInclude Include="src\Utils\SystemInfoUtil.h" />
-    <ClInclude Include="src\Renderer\Vertex.h" />
+    <ClInclude Include="src\Renderer\DefaultVertex.h" />
     <ClInclude Include="src\Renderer\Shaders\VertexShader.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
     <ClInclude Include="src\Timer.h" />
