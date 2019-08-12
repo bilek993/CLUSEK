@@ -43,6 +43,29 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 	}
 }
 
+void MaterialLoader::SetResourceForManually(ID3D11Device* device, SkyShaderMaterial& material,
+	const std::string& mainTextureId)
+{
+	const auto texturePointer = TextureResources.find(mainTextureId);
+
+	if (mainTextureId.empty())
+	{
+		Logger::Warning("Incorrect resource id.");
+		material.SkyMap = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+		SetPinkTexture(device, *material.SkyMap);
+	}
+	else if (texturePointer == TextureResources.end())
+	{
+		Logger::Warning("Resource with id '" + mainTextureId + "' not found!");
+		material.SkyMap = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+		SetPinkTexture(device, *material.SkyMap);
+	}
+	else
+	{
+		material.SkyMap = texturePointer->second;
+	}
+}
+
 void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
 {
 	if (pathToMaterial.empty())

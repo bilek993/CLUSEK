@@ -16,7 +16,6 @@
     "Tags": [],
     "Components": {
 	  "SkyboxComponent": {
-	    "ModelId": "Skybox",
 		"SkyboxTextureId": "Skybox"
 	  },
 	  "TransformComponent": {}

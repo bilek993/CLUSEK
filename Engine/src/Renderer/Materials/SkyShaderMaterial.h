@@ -1,6 +1,5 @@
 #pragma once
 #include <wrl/client.h>
-#include "src/Loaders/ResourcesLoader.h"
 
 struct SkyShaderMaterial final
 {

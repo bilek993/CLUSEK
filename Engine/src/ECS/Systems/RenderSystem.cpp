@@ -7,6 +7,7 @@
 #include "../../Loaders/ResourcesLoader.h"
 #include "../Components/SkyboxComponent.h"
 #include "../../Renderer/Vertex/PositionVertex.h"
+#include "../../Renderer/Generators/CubeGenerator.h"
 
 void RenderSystem::Start()
 {
@@ -49,11 +50,8 @@ void RenderSystem::Start()
 
 	Registry->view<SkyboxComponent>().each([this](SkyboxComponent &skyboxComponent)
 	{
-		skyboxComponent.Meshes = ModelLoader::GetResource(skyboxComponent.ModelId);
-		for (auto& mesh : *skyboxComponent.Meshes)
-		{
-			MaterialLoader::SetResourceForMesh(Device.Get(), mesh, skyboxComponent.SkyboxTextureId);
-		}
+		CubeGenerator::Generate(Device.Get(), skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer);
+		MaterialLoader::SetResourceForManually(Device.Get(), skyboxComponent.Material, skyboxComponent.SkyboxTextureId);
 	});
 }
 
@@ -117,13 +115,10 @@ void RenderSystem::Update(const float deltaTime)
 
 		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
 
-		for (const auto& mesh : *skyboxComponent.Meshes)
-		{
-			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.MainTexture->GetAddressOf());
-			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
-			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetIndexCount(), 0, 0);
-		}
+		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
+		DeviceContext->IASetVertexBuffers(0, 1, skyboxComponent.RenderVertexBuffer.GetAddressOf(), skyboxComponent.RenderVertexBuffer.StridePtr(), &offset);
+		DeviceContext->IASetIndexBuffer(skyboxComponent.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+		DeviceContext->DrawIndexed(skyboxComponent.RenderIndexBuffer.GetIndexCount(), 0, 0);
 	});
 }
 

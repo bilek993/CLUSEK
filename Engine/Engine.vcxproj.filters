@@ -85,6 +85,12 @@
     <Filter Include="Header Files\Renderer\Vertex">
       <UniqueIdentifier>{762fd0ee-5e32-4ca2-b7c4-30a3ba1dab9a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Renderer\Generators">
+      <UniqueIdentifier>{76e969e5-0967-4727-9521-d40764fad342}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Renderer\Generators">
+      <UniqueIdentifier>{785c7892-9c4d-4b82-bde4-12ea3b6fc7b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -194,6 +200,9 @@
     </ClCompile>
     <ClCompile Include="src\GUI\Windows\MouseInputWindow.cpp">
       <Filter>Source Files\GUI\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Generators\CubeGenerator.cpp">
+      <Filter>Source Files\Renderer\Generators</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -355,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\Vertex\PositionVertex.h">
       <Filter>Header Files\Renderer\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Generators\CubeGenerator.h">
+      <Filter>Header Files\Renderer\Generators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

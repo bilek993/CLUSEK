@@ -1,8 +1,6 @@
 {
   "Models": {
-    "Nanosuit": "Data/Models/Nanosuit/nanosuit.fbx",
-	
-	"Skybox": "Data/Models/Environment/skybox.fbx"
+    "Nanosuit": "Data/Models/Nanosuit/nanosuit.fbx"
   },
   "Textures": {
     "NanosuitGlassDif": "Data/Textures/Nanosuit/glass_dif.png",

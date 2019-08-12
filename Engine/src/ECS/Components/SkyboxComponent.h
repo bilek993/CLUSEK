@@ -1,11 +1,13 @@
 #pragma once
 #include "../../Renderer/Mesh.h"
-#include "vector"
+#include "../../Renderer/Vertex/PositionVertex.h"
+#include "../../Renderer/Materials/SkyShaderMaterial.h"
 
 struct SkyboxComponent final
 {
-	std::string ModelId;
 	std::string SkyboxTextureId;
-	std::shared_ptr<std::vector<Mesh>> Meshes;
+	VertexBuffer<PositionVertex> RenderVertexBuffer;
+	IndexBuffer RenderIndexBuffer;
+	SkyShaderMaterial Material;
 	DirectX::XMMATRIX WorldMatrix;
 };

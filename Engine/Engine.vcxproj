@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\Generators\CubeGenerator.cpp" />
     <ClCompile Include="src\GUI\Windows\KeyboardInputWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\MouseInputWindow.cpp" />
     <ClCompile Include="src\ECS\Systems\SkyboxSystem.cpp" />
@@ -49,6 +50,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Generators\CubeGenerator.h" />
     <ClInclude Include="src\Renderer\Vertex\PositionVertex.h" />
     <ClInclude Include="src\GUI\Windows\KeyboardInputWindow.h" />
     <ClInclude Include="src\GUI\Windows\MouseInputWindow.h" />
