@@ -366,14 +366,18 @@ void RenderSystem::InitializeClearColorSettings() const
 	CurrentRenderSettings->ClearColor[2] = ConfigurationData->ClearColorBlue;
 }
 
-void RenderSystem::RenderModelRenderComponents(CameraComponent& cameraComponent)
+void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const
+{
+	DeviceContext->IASetInputLayout(vertexShader.GetInputLayout());
+	DeviceContext->VSSetShader(vertexShader.GetShader(), nullptr, 0);
+	DeviceContext->PSSetShader(pixelShader.GetShader(), nullptr, 0);
+}
+
+void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent)
 {
 	UINT offset = 0;
 
-	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
-
-	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
-	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
+	ChangeShader(UberVertexShader, UberPixelShader);
 
 	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset](ModelRenderComponent &modelRenderComponent)
 	{
@@ -396,21 +400,16 @@ void RenderSystem::RenderModelRenderComponents(CameraComponent& cameraComponent)
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.MainTexture->GetAddressOf());
-			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
-			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetIndexCount(), 0, 0);
+			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
 	});
 }
 
-void RenderSystem::RenderSkyBoxComponents(CameraComponent& cameraComponent)
+void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)
 {
 	UINT offset = 0;
 
-	DeviceContext->IASetInputLayout(SkyVertexShader.GetInputLayout());
-
-	DeviceContext->VSSetShader(SkyVertexShader.GetShader(), nullptr, 0);
-	DeviceContext->PSSetShader(SkyPixelShader.GetShader(), nullptr, 0);
+	ChangeShader(SkyVertexShader, SkyPixelShader);
 
 	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
 	{
@@ -421,8 +420,7 @@ void RenderSystem::RenderSkyBoxComponents(CameraComponent& cameraComponent)
 		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
 
 		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
-		DeviceContext->IASetVertexBuffers(0, 1, skyboxComponent.RenderVertexBuffer.GetAddressOf(), skyboxComponent.RenderVertexBuffer.StridePtr(), &offset);
-		DeviceContext->IASetIndexBuffer(skyboxComponent.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-		DeviceContext->DrawIndexed(skyboxComponent.RenderIndexBuffer.GetIndexCount(), 0, 0);
+
+		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
 	});
 }
