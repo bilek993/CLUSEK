@@ -21,9 +21,7 @@ void RenderSystem::Start()
 	InitializeClearColorSettings();
 
 	if (!InitializeDirectX())
-	{
 		Logger::Error("DirectX initialization failed");
-	}
 
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed");
@@ -61,19 +59,10 @@ void RenderSystem::Start()
 
 void RenderSystem::Update(const float deltaTime)
 {
-	auto view = Registry->view<CameraComponent>();
-	if (view.size() != 1)
-	{
-		if (view.size() > 1)
-			Logger::Error("More than one main render camera found!");
-		else
-			Logger::Error("Main render camera not found!");
-	}
+	auto& mainCameraComponent = GetMainCamera();
 
-	auto &cameraComponent = view.raw()[0];
-
-	RenderModelRenderComponents(cameraComponent);
-	RenderSkyBoxComponents(cameraComponent);
+	RenderModelRenderComponents(mainCameraComponent);
+	RenderSkyBoxComponents(mainCameraComponent);
 }
 
 void RenderSystem::RenderFrameBegin() const
@@ -112,7 +101,7 @@ bool RenderSystem::InitializeDirectX()
 	if (ConfigurationData->SelectedAdapterId != 0)
 		Logger::Warning("Selected adapter with not [0] id. This might not be optimal choice.");
 
-	if (ConfigurationData->SelectedAdapterId >= adapters.size())
+	if (ConfigurationData->SelectedAdapterId >= static_cast<int>(adapters.size()))
 		Logger::Error("Adapter with id [" + std::to_string(ConfigurationData->SelectedAdapterId) + "] not found!");
 
 	Logger::Debug("Selected adapter [" + std::to_string(ConfigurationData->SelectedAdapterId) + "].");
@@ -373,10 +362,23 @@ void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelSha
 	DeviceContext->PSSetShader(pixelShader.GetShader(), nullptr, 0);
 }
 
+CameraComponent& RenderSystem::GetMainCamera() const
+{
+	auto view = Registry->view<CameraComponent>();
+	if (view.size() != 1)
+	{
+		if (view.size() > 1)
+			Logger::Error("More than one main render camera found!");
+		else
+			Logger::Error("Main render camera not found!");
+	}
+
+	return view.raw()[0];
+}
+
 void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent)
 {
 	UINT offset = 0;
-
 	ChangeShader(UberVertexShader, UberPixelShader);
 
 	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset](ModelRenderComponent &modelRenderComponent)
@@ -408,7 +410,6 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)
 {
 	UINT offset = 0;
-
 	ChangeShader(SkyVertexShader, SkyPixelShader);
 
 	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
@@ -418,7 +419,6 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 		SkyVertexShaderConstantBuffer.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
-
 		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
 
 		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);

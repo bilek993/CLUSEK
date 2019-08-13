@@ -31,6 +31,7 @@ private:
 	template <class T>
 	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer indexBuffer, UINT& offset) const;
 
+	CameraComponent& GetMainCamera() const;
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 
