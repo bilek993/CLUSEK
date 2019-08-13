@@ -61,8 +61,6 @@ void RenderSystem::Start()
 
 void RenderSystem::Update(const float deltaTime)
 {
-	UINT offset = 0;
-
 	auto view = Registry->view<CameraComponent>();
 	if (view.size() != 1)
 	{
@@ -74,56 +72,8 @@ void RenderSystem::Update(const float deltaTime)
 
 	auto &cameraComponent = view.raw()[0];
 
-	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
-
-	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
-	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
-
-	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset](ModelRenderComponent &modelRenderComponent)
-	{
-		UberVertexShaderConstantBuffer.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
-		UberVertexShaderConstantBuffer.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
-		UberVertexShaderConstantBuffer.ApplyChanges();
-
-		DeviceContext->VSSetConstantBuffers(0, 1, UberVertexShaderConstantBuffer.GetAddressOf());
-
-		UberPixelShaderConstantBuffer.Data.AmbientLightColor = CurrentRenderSettings->AmbientLightColor;
-		UberPixelShaderConstantBuffer.Data.AmbientLightStrength = CurrentRenderSettings->AmbientLightStrength;
-		UberPixelShaderConstantBuffer.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
-		UberPixelShaderConstantBuffer.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
-		UberPixelShaderConstantBuffer.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
-		UberPixelShaderConstantBuffer.ApplyChanges();
-
-		DeviceContext->PSSetConstantBuffers(0, 1, UberPixelShaderConstantBuffer.GetAddressOf());
-
-		for (const auto& mesh : *modelRenderComponent.Meshes)
-		{
-			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.MainTexture->GetAddressOf());
-			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
-			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetIndexCount(), 0, 0);
-		}
-	});
-
-	DeviceContext->IASetInputLayout(SkyVertexShader.GetInputLayout());
-
-	DeviceContext->VSSetShader(SkyVertexShader.GetShader(), nullptr, 0);
-	DeviceContext->PSSetShader(SkyPixelShader.GetShader(), nullptr, 0);
-
-	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
-	{
-		SkyVertexShaderConstantBuffer.Data.WorldViewProjectionMat = 
-			XMMatrixTranspose(skyboxComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
-		SkyVertexShaderConstantBuffer.ApplyChanges();
-
-		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
-
-		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
-		DeviceContext->IASetVertexBuffers(0, 1, skyboxComponent.RenderVertexBuffer.GetAddressOf(), skyboxComponent.RenderVertexBuffer.StridePtr(), &offset);
-		DeviceContext->IASetIndexBuffer(skyboxComponent.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
-		DeviceContext->DrawIndexed(skyboxComponent.RenderIndexBuffer.GetIndexCount(), 0, 0);
-	});
+	RenderModelRenderComponents(cameraComponent);
+	RenderSkyBoxComponents(cameraComponent);
 }
 
 void RenderSystem::RenderFrameBegin() const
@@ -414,4 +364,65 @@ void RenderSystem::InitializeClearColorSettings() const
 	CurrentRenderSettings->ClearColor[0] = ConfigurationData->ClearColorRed;
 	CurrentRenderSettings->ClearColor[1] = ConfigurationData->ClearColorGreen;
 	CurrentRenderSettings->ClearColor[2] = ConfigurationData->ClearColorBlue;
+}
+
+void RenderSystem::RenderModelRenderComponents(CameraComponent& cameraComponent)
+{
+	UINT offset = 0;
+
+	DeviceContext->IASetInputLayout(UberVertexShader.GetInputLayout());
+
+	DeviceContext->VSSetShader(UberVertexShader.GetShader(), nullptr, 0);
+	DeviceContext->PSSetShader(UberPixelShader.GetShader(), nullptr, 0);
+
+	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset](ModelRenderComponent &modelRenderComponent)
+	{
+		UberVertexShaderConstantBuffer.Data.WorldViewProjectionMat =
+			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
+		UberVertexShaderConstantBuffer.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
+		UberVertexShaderConstantBuffer.ApplyChanges();
+
+		DeviceContext->VSSetConstantBuffers(0, 1, UberVertexShaderConstantBuffer.GetAddressOf());
+
+		UberPixelShaderConstantBuffer.Data.AmbientLightColor = CurrentRenderSettings->AmbientLightColor;
+		UberPixelShaderConstantBuffer.Data.AmbientLightStrength = CurrentRenderSettings->AmbientLightStrength;
+		UberPixelShaderConstantBuffer.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
+		UberPixelShaderConstantBuffer.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
+		UberPixelShaderConstantBuffer.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
+		UberPixelShaderConstantBuffer.ApplyChanges();
+
+		DeviceContext->PSSetConstantBuffers(0, 1, UberPixelShaderConstantBuffer.GetAddressOf());
+
+		for (const auto& mesh : *modelRenderComponent.Meshes)
+		{
+			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.MainTexture->GetAddressOf());
+			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
+			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+			DeviceContext->DrawIndexed(mesh.RenderIndexBuffer.GetIndexCount(), 0, 0);
+		}
+	});
+}
+
+void RenderSystem::RenderSkyBoxComponents(CameraComponent& cameraComponent)
+{
+	UINT offset = 0;
+
+	DeviceContext->IASetInputLayout(SkyVertexShader.GetInputLayout());
+
+	DeviceContext->VSSetShader(SkyVertexShader.GetShader(), nullptr, 0);
+	DeviceContext->PSSetShader(SkyPixelShader.GetShader(), nullptr, 0);
+
+	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
+	{
+		SkyVertexShaderConstantBuffer.Data.WorldViewProjectionMat =
+			XMMatrixTranspose(skyboxComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
+		SkyVertexShaderConstantBuffer.ApplyChanges();
+
+		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
+
+		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
+		DeviceContext->IASetVertexBuffers(0, 1, skyboxComponent.RenderVertexBuffer.GetAddressOf(), skyboxComponent.RenderVertexBuffer.StridePtr(), &offset);
+		DeviceContext->IASetIndexBuffer(skyboxComponent.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+		DeviceContext->DrawIndexed(skyboxComponent.RenderIndexBuffer.GetIndexCount(), 0, 0);
+	});
 }

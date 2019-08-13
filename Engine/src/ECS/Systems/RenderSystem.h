@@ -6,6 +6,7 @@
 #include "../../Renderer/Shaders/PixelShader.h"
 #include "../../Renderer/ConstantBufferTypes.h"
 #include "../../Renderer/ConstantBuffer.h"
+#include "../Components/CameraComponent.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -22,6 +23,9 @@ private:
 	bool InitializeShaders();
 	void InitializeLightSettings() const;
 	void InitializeClearColorSettings() const;
+
+	void RenderModelRenderComponents(CameraComponent &cameraComponent);
+	void RenderSkyBoxComponents(CameraComponent &cameraComponent);
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;
