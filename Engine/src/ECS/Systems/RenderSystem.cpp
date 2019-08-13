@@ -42,11 +42,15 @@ void RenderSystem::Start()
 
 	ResourcesLoader::Load(Device.Get(), ConfigurationData->PathToResources);
 
+	// Model Render Component
+
 	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
 	{
 		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
 		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
 	});
+
+	// Skybox Component
 
 	Registry->view<SkyboxComponent>().each([this](SkyboxComponent &skyboxComponent)
 	{
@@ -148,6 +152,8 @@ ID3D11DeviceContext* RenderSystem::GetPointerToDeviceContext() const
 
 bool RenderSystem::InitializeDirectX()
 {
+	// Adapters selection and initialization
+
 	auto adapters = AdapterReader::GetData();
 
 	if (adapters.empty())
@@ -160,6 +166,8 @@ bool RenderSystem::InitializeDirectX()
 		Logger::Error("Adapter with id [" + std::to_string(ConfigurationData->SelectedAdapterId) + "] not found!");
 
 	Logger::Debug("Selected adapter [" + std::to_string(ConfigurationData->SelectedAdapterId) + "].");
+
+	// Swap chain initializtion
 
 	DXGI_SWAP_CHAIN_DESC scd;
 	ZeroMemory(&scd, sizeof(DXGI_SAMPLE_DESC));
@@ -182,12 +190,16 @@ bool RenderSystem::InitializeDirectX()
 	scd.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 	scd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 
+	// Setting device mode
+
 #ifdef _DEBUG
 	auto softwareLayers = D3D11_CREATE_DEVICE_DEBUG;
 	Logger::Warning("D3D11_DEVICE in DEVICE_DEBUG mode! Rendering will be much slower!");
 #else
 	auto softwareLayers = 0;
 #endif
+
+	// Creating device and swap chain
 
 	auto hr = D3D11CreateDeviceAndSwapChain(adapters[ConfigurationData->SelectedAdapterId].Adapter,
 		D3D_DRIVER_TYPE_UNKNOWN,
@@ -208,6 +220,8 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
+	// Back buffer initialization
+
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;
 	hr = SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), reinterpret_cast<void**>(backBuffer.GetAddressOf()));
 	if (FAILED(hr))
@@ -216,12 +230,16 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
+	// Render target initialization
+
 	hr = Device->CreateRenderTargetView(backBuffer.Get(), nullptr, RenderTargetView.GetAddressOf());
 	if (FAILED(hr))
 	{
 		Logger::Error("Error creating render target view!");
 		return false;
 	}
+
+	// Depth stencil initialization
 
 	D3D11_TEXTURE2D_DESC depthStencilTextureDesc;
 	depthStencilTextureDesc.Width = WindowWidth;
@@ -252,9 +270,6 @@ bool RenderSystem::InitializeDirectX()
 
 	Logger::Debug("Successfully created depth stencil buffer and view.");
 
-	DeviceContext->OMSetRenderTargets(1, RenderTargetView.GetAddressOf(), DepthStencilView.Get());
-	Logger::Debug("Binding render target output merge successfully.");
-
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 	ZeroMemory(&depthStencilDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
 
@@ -269,8 +284,14 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
-
 	Logger::Debug("Successfully created depth stencil state.");
+
+	// Setting render targets
+
+	DeviceContext->OMSetRenderTargets(1, RenderTargetView.GetAddressOf(), DepthStencilView.Get());
+	Logger::Debug("Binding render target output merge successfully.");
+
+	// Viewport initialization
 
 	D3D11_VIEWPORT viewport;
 	ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
@@ -284,6 +305,8 @@ bool RenderSystem::InitializeDirectX()
 
 	DeviceContext->RSSetViewports(1, &viewport);
 	Logger::Debug("Viewport is set successfully.");
+
+	// Rasterization initialization
 
 	D3D11_RASTERIZER_DESC rasterizerDesc;
 	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
@@ -309,6 +332,8 @@ bool RenderSystem::InitializeDirectX()
 	DeviceContext->RSSetState(RasterizerState.Get());
 	Logger::Debug("Rasterizer state is set successfully.");
 
+	// Sampler state initialization
+
 	D3D11_SAMPLER_DESC samplerDesc;
 	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -326,6 +351,8 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 	Logger::Debug("Sampler state is set successfully.");
+
+	// Topology initialization
 
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
