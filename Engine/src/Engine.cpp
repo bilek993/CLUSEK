@@ -124,4 +124,9 @@ void Engine::HandleClosingWithButton()
 		Logger::Debug("Escape key pressed. Sending quit message...");
 		Window.UserRequestedQuit();
 	}
+	if (DataFromIODevices.GamePadState.IsConnected() && DataFromIODevices.GamePadState.IsBackPressed())
+	{
+		Logger::Debug("Back button pressed. Sending quit message...");
+		Window.UserRequestedQuit();
+	}
 }
