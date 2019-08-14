@@ -45,28 +45,45 @@ void CameraSystem::Update(const float deltaTime)
 	auto &cameraComponent = view.raw<CameraComponent>()[0];
 	auto &transformComponent = view.raw<TransformComponent>()[0];
 
-	if (InputOutputData->MouseState.rightButton)
+	
+	if (InputOutputData->GamePadState.IsConnected())
 	{
-		InputOutputDevices->ChangeMouseToRelativeMode(Window->GetHandle());
-
-		auto currentRotationX = 0.0f;
-		auto currentRotationY = 0.0f;
-		TransformLogic::GetRotation(&currentRotationX, &currentRotationY, nullptr, transformComponent);
-
-		const auto rotationMouseX = static_cast<float>(InputOutputData->MouseState.y) * 0.001f * deltaTime;
-		const auto rotationMouseY = static_cast<float>(InputOutputData->MouseState.x) * 0.001f * deltaTime;
-
-		if (currentRotationX + rotationMouseX < cameraComponent.MaxRotationY && currentRotationX + rotationMouseX > cameraComponent.MinRotationY)
-			currentRotationX += rotationMouseX;
-
-		TransformLogic::SetRotation(currentRotationX, currentRotationY + rotationMouseY, 0.0f, transformComponent);
-		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+		GamepadMovement(deltaTime, cameraComponent, transformComponent);
 	}
 	else
 	{
-		InputOutputDevices->ChangeMouseToAbsoluteMode(Window->GetHandle());
+		KeyboardMovement(deltaTime, cameraComponent, transformComponent);
+		MouseMovement(deltaTime, cameraComponent, transformComponent);
 	}
+}
 
+void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& cameraComponent,
+	TransformComponent& transformComponent) const
+{
+	const auto positionGamePadX = InputOutputData->GamePadState.thumbSticks.leftX * 0.0125 * deltaTime;
+	const auto positionGamePadY = InputOutputData->GamePadState.thumbSticks.leftY * 0.0125 * deltaTime;
+
+	TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, positionGamePadX), transformComponent);
+	TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, positionGamePadY), transformComponent);
+
+	auto currentRotationX = 0.0f;
+	auto currentRotationY = 0.0f;
+	TransformLogic::GetRotation(&currentRotationX, &currentRotationY, nullptr, transformComponent);
+
+	const auto rotationGamePadX = static_cast<float>(-InputOutputData->GamePadState.thumbSticks.rightY) * 0.002f * deltaTime;
+	const auto rotationGamePadY = static_cast<float>(InputOutputData->GamePadState.thumbSticks.rightX) * 0.002f * deltaTime;
+
+	if (currentRotationX + rotationGamePadX < cameraComponent.MaxRotationY && currentRotationX + rotationGamePadX > cameraComponent.MinRotationY)
+		currentRotationX += rotationGamePadX;
+
+	TransformLogic::SetRotation(currentRotationX, currentRotationY + rotationGamePadY, 0.0f, transformComponent);
+
+	ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+}
+
+void CameraSystem::KeyboardMovement(const float deltaTime, CameraComponent& cameraComponent,
+	TransformComponent& transformComponent) const
+{
 	auto cameraSpeed = 0.0025f * deltaTime;
 	if (InputOutputData->KeyboardState.LeftShift || InputOutputData->KeyboardState.RightShift)
 		cameraSpeed *= 5;
@@ -90,5 +107,31 @@ void CameraSystem::Update(const float deltaTime)
 	{
 		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, cameraSpeed), transformComponent);
 		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+	}
+}
+
+void CameraSystem::MouseMovement(const float deltaTime, CameraComponent& cameraComponent,
+	TransformComponent& transformComponent) const
+{
+	if (InputOutputData->MouseState.rightButton)
+	{
+		InputOutputDevices->ChangeMouseToRelativeMode(Window->GetHandle());
+
+		auto currentRotationX = 0.0f;
+		auto currentRotationY = 0.0f;
+		TransformLogic::GetRotation(&currentRotationX, &currentRotationY, nullptr, transformComponent);
+
+		const auto rotationMouseX = static_cast<float>(InputOutputData->MouseState.y) * 0.001f * deltaTime;
+		const auto rotationMouseY = static_cast<float>(InputOutputData->MouseState.x) * 0.001f * deltaTime;
+
+		if (currentRotationX + rotationMouseX < cameraComponent.MaxRotationY && currentRotationX + rotationMouseX > cameraComponent.MinRotationY)
+			currentRotationX += rotationMouseX;
+
+		TransformLogic::SetRotation(currentRotationX, currentRotationY + rotationMouseY, 0.0f, transformComponent);
+		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+	}
+	else
+	{
+		InputOutputDevices->ChangeMouseToAbsoluteMode(Window->GetHandle());
 	}
 }
