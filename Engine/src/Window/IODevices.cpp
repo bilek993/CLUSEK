@@ -7,15 +7,20 @@ IODevices::IODevices()
 
 	Mouse = std::make_unique<DirectX::Mouse>();
 	Keyboard = std::make_unique<DirectX::Keyboard>();
+	GamePad = std::make_unique<DirectX::GamePad>();
 }
 
 void IODevices::Update()
 {
 	MouseState = Mouse->GetState();
 	KeyboardState = Keyboard->GetState();
+	GamePadState = GamePad->GetState(0);
 
 	MouseTracker.Update(MouseState);
 	KeyboardTracker.Update(KeyboardState);
+	if (GamePadState.IsConnected()) {
+		GamePadTracker.Update(GamePadState);
+	}
 
 	if (CurrentMouseMode == DirectX::Mouse::Mode::MODE_ABSOLUTE)
 	{
@@ -48,6 +53,6 @@ void IODevices::ChangeMouseToAbsoluteMode(const HWND hwnd) // Absolute mode is d
 
 IOData IODevices::Get() const
 {
-	return { MouseState, KeyboardState, MouseTracker, KeyboardTracker };
+	return { MouseState, KeyboardState, GamePadState, MouseTracker, KeyboardTracker, GamePadTracker };
 }
 
