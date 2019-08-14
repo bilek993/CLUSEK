@@ -49,6 +49,7 @@ void DebugUserInterface::Update(const float deltaTime, IOData *ioData, std::vect
 	BackBufferWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
 	MouseInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
 	KeyboardInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
+	GamePadInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
 
 	AfterUpdate();
 }
@@ -100,6 +101,10 @@ void DebugUserInterface::DrawMenuBar()
 			if (ImGui::MenuItem("Keyboard input", nullptr, KeyboardInputWindowInstance.GetIsEnabled()))
 			{
 				KeyboardInputWindowInstance.GetIsEnabled() = !KeyboardInputWindowInstance.GetIsEnabled();
+			}
+			if (ImGui::MenuItem("GamePad input", nullptr, GamePadInputWindowInstance.GetIsEnabled()))
+			{
+				GamePadInputWindowInstance.GetIsEnabled() = !GamePadInputWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}

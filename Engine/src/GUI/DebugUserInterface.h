@@ -12,6 +12,7 @@
 #include "Windows/BackBufferWindow.h"
 #include "Windows/KeyboardInputWindow.h"
 #include "Windows/MouseInputWindow.h"
+#include "Windows/GamePadWindow.h"
 
 class DebugUserInterface final
 {
@@ -42,4 +43,5 @@ private:
 	BackBufferWindow BackBufferWindowInstance;
 	MouseInputWindow MouseInputWindowInstance;
 	KeyboardInputWindow KeyboardInputWindowInstance;
+	GamePadInputWindow GamePadInputWindowInstance;
 };
