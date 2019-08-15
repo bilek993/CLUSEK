@@ -62,7 +62,7 @@ void Engine::CreateSystems()
 	Systems.emplace_back(SystemHolder("Camera System", systemBasePtr, true));
 
 	systemBasePtr = std::make_unique<RotationSystem>();
-	Systems.emplace_back(SystemHolder("Rotation System", systemBasePtr, true));
+	Systems.emplace_back(SystemHolder("Rotation System", systemBasePtr, false));
 
 	systemBasePtr = std::make_unique<SkyboxSystem>();
 	Systems.emplace_back(SystemHolder("Skybox System", systemBasePtr, true));
