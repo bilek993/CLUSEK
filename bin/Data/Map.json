@@ -24,28 +24,10 @@
   {
     "Tags": [],
 	"Components": {
-	  "TransformComponent": {
-	  "RotationX": 1.57,
-	  "RotationY": 0.0,
-	  "RotationZ": 0.0
-	  },
+	  "TransformComponent": {},
 	  "ModelRenderComponent": {
-	    "ModelId": "Nanosuit",
-		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	  "RotationX": 0.0,
-	  "RotationY": 0.0,
-	  "RotationZ": 1.57
-	  },
-	  "ModelRenderComponent": {
-	    "ModelId": "Nanosuit",
-		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"
+	    "ModelId": "CivilianVehicle",
+		"MaterialId": "Data/Models/CivilianVehicle/material.json"
 	  }
 	}
   },
@@ -54,22 +36,8 @@
 	"Components": {
 	  "TransformComponent": {},
 	  "ModelRenderComponent": {
-	    "ModelId": "Nanosuit",
-		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	  "PositionX": 0.0,
-	  "PositionY": 0.0,
-	  "PositionZ": 10.0
-	  },
-	  "ModelRenderComponent": {
-	    "ModelId": "Nanosuit",
-		"MaterialId": "Data/Models/Nanosuit/nanosuit-material.json"
+	    "ModelId": "Wheel",
+		"MaterialId": "Data/Models/CivilianVehicle/material.json"
 	  }
 	}
   }

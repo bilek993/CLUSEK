@@ -1,15 +1,15 @@
 {
   "Models": {
-    "Nanosuit": "Data/Models/Nanosuit/nanosuit.fbx"
+	"CivilianVehicle": "Data/Models/CivilianVehicle/CivilianVehicle.fbx",
+	"Wheel": "Data/Models/CivilianVehicle/Wheel.fbx"
   },
   "Textures": {
-    "NanosuitGlassDif": "Data/Textures/Nanosuit/glass_dif.png",
-	"NanosuitLegDif": "Data/Textures/Nanosuit/leg_dif.png",
-	"NanosuitHandDif": "Data/Textures/Nanosuit/hand_dif.png",
-	"NanosuitHelmetDiff": "Data/Textures/Nanosuit/helmet_diff.png",
-	"NanosuitBodyDif": "Data/Textures/Nanosuit/body_dif.png",
-	"NanosuitArmDif": "Data/Textures/Nanosuit/arm_dif.png",
-	
+    "CivilianVehicle_MiscAlbedo": "Data/Textures/CivilianVehicle/MiscAlbedo.png",
+    "CivilianVehicle_InteriorAlbedo": "Data/Textures/CivilianVehicle/InteriorAlbedo.png",
+	"CivilianVehicle_BodyAlbedo": "Data/Textures/CivilianVehicle/BodyAlbedo.png",
+	"CivilianVehicle_SilverPaintAlbedo": "Data/Textures/CivilianVehicle/SilverPaintAlbedo.png",
+	"CivilianVehicle_WheelAlbedo": "Data/Textures/CivilianVehicle/WheelAlbedo.png",
+  
 	"Skybox": "Data/Textures/Environment/Skybox.dds"
   }
 }
