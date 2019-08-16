@@ -40,14 +40,6 @@ void RenderSystem::Start()
 
 	ResourcesLoader::Load(Device.Get(), ConfigurationData->PathToResources);
 
-	// Model Render Component
-
-	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
-	{
-		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
-		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
-	});
-
 	// Skybox Component
 
 	Registry->view<SkyboxComponent>().each([this](SkyboxComponent &skyboxComponent)
@@ -55,14 +47,22 @@ void RenderSystem::Start()
 		CubeGenerator::Generate(Device.Get(), skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer);
 		MaterialLoader::SetResourceForManually(Device.Get(), skyboxComponent.Material, skyboxComponent.SkyboxTextureId);
 	});
+
+	// Model Render Component
+
+	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
+	{
+		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
+		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
+	});
 }
 
 void RenderSystem::Update(const float deltaTime)
 {
 	auto& mainCameraComponent = GetMainCamera();
 
-	RenderModelRenderComponents(mainCameraComponent);
 	RenderSkyBoxComponents(mainCameraComponent);
+	RenderModelRenderComponents(mainCameraComponent);
 }
 
 void RenderSystem::RenderFrameBegin() const
@@ -404,6 +404,25 @@ CameraComponent& RenderSystem::GetMainCamera() const
 	return view.raw()[0];
 }
 
+
+void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)
+{
+	UINT offset = 0;
+	ChangeShader(SkyVertexShader, SkyPixelShader);
+
+	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
+	{
+		SkyVertexShaderConstantBuffer.Data.WorldViewProjectionMat =
+			XMMatrixTranspose(skyboxComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
+		SkyVertexShaderConstantBuffer.ApplyChanges();
+
+		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
+		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
+
+		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
+	});
+}
+
 void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent)
 {
 	UINT offset = 0;
@@ -453,23 +472,5 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 		}
 
 		DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
-	});
-}
-
-void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)
-{
-	UINT offset = 0;
-	ChangeShader(SkyVertexShader, SkyPixelShader);
-
-	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
-	{
-		SkyVertexShaderConstantBuffer.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(skyboxComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
-		SkyVertexShaderConstantBuffer.ApplyChanges();
-
-		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
-		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
-
-		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
 	});
 }

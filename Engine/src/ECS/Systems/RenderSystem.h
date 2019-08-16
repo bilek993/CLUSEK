@@ -32,8 +32,8 @@ private:
 	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer indexBuffer, UINT& offset) const;
 
 	CameraComponent& GetMainCamera() const;
-	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
+	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;

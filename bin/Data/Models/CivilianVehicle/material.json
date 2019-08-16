@@ -15,11 +15,11 @@
     "AlbedoTexture": "CivilianVehicle_LightAlbedo"
   },
   "LightGlass": {
-    "Alpha": 0.2,
+    "Alpha": 0.35,
     "AlbedoTexture": "CivilianVehicle_SilverPaintAlbedo"
   },
   "MainGlass": {
-    "Alpha": 0.7,
+    "Alpha": 0.76,
     "AlbedoTexture": "CivilianVehicle_SilverPaintAlbedo"
   },
   "VehicleDetails": {
