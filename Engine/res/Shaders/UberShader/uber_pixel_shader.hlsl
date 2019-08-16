@@ -14,12 +14,12 @@ struct PS_INPUT
     float3 Normal : NORMAL;
 };
 
-Texture2D MainTexture : TEXTURE : register(t0);
+Texture2D AlbedoTexture : TEXTURE : register(t0);
 SamplerState Sampler : SAMPLER : register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    float3 samplerColor = MainTexture.Sample(Sampler, input.TextureCoord);
+    float3 samplerColor = AlbedoTexture.Sample(Sampler, input.TextureCoord);
 
     float3 ambientLight = AmbientLightColor * AmbientLightStrength;
     float3 directionalLight = saturate(dot(DirectionalLightDirection, input.Normal) * (DirectionalLightColor * DirectionalLightStrength) * samplerColor);

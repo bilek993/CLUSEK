@@ -21,34 +21,34 @@ void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path,
 	TextureResources[resourceId] = resource;
 }
 
-void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& mainTextureId)
+void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId)
 {
-	const auto texturePointer = TextureResources.find(mainTextureId);
+	const auto texturePointer = TextureResources.find(albedoTextureId);
 
-	if (mainTextureId.empty())
+	if (albedoTextureId.empty())
 	{
 		Logger::Warning("Incorrect resource id.");
-		mesh.Material.MainTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
-		SetPinkTexture(device, *mesh.Material.MainTexture);
+		mesh.Material.AlbedoTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+		SetPinkTexture(device, *mesh.Material.AlbedoTexture);
 	}
 	else if (texturePointer == TextureResources.end())
 	{
-		Logger::Warning("Resource with id '" + mainTextureId + "' not found!");
-		mesh.Material.MainTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
-		SetPinkTexture(device, *mesh.Material.MainTexture);
+		Logger::Warning("Resource with id '" + albedoTextureId + "' not found!");
+		mesh.Material.AlbedoTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+		SetPinkTexture(device, *mesh.Material.AlbedoTexture);
 	}
 	else
 	{
-		mesh.Material.MainTexture = texturePointer->second;
+		mesh.Material.AlbedoTexture = texturePointer->second;
 	}
 }
 
 void MaterialLoader::SetResourceForManually(ID3D11Device* device, SkyShaderMaterial& material,
-	const std::string& mainTextureId)
+	const std::string& albedoTextureId)
 {
-	const auto texturePointer = TextureResources.find(mainTextureId);
+	const auto texturePointer = TextureResources.find(albedoTextureId);
 
-	if (mainTextureId.empty())
+	if (albedoTextureId.empty())
 	{
 		Logger::Warning("Incorrect resource id.");
 		material.SkyMap = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
@@ -56,7 +56,7 @@ void MaterialLoader::SetResourceForManually(ID3D11Device* device, SkyShaderMater
 	}
 	else if (texturePointer == TextureResources.end())
 	{
-		Logger::Warning("Resource with id '" + mainTextureId + "' not found!");
+		Logger::Warning("Resource with id '" + albedoTextureId + "' not found!");
 		material.SkyMap = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
 		SetPinkTexture(device, *material.SkyMap);
 	}
@@ -81,7 +81,7 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 	for (auto& mesh : meshes)
 	{
 		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
-		auto currentMaterialJsonInfo = jsonObject[mesh.Name]["MainTexture"];
+		auto currentMaterialJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
 
 		SetResourceForMesh(	device,
 							mesh,

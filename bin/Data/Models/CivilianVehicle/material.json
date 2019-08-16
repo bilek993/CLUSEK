@@ -1,20 +1,20 @@
 {
   "Mesh.002": {
-    "MainTexture": "CivilianVehicle_SilverPaintAlbedo"
+    "AlbedoTexture": "CivilianVehicle_SilverPaintAlbedo"
   },
   "Mesh.016": {
-    "MainTexture": "CivilianVehicle_BodyAlbedo"
+    "AlbedoTexture": "CivilianVehicle_BodyAlbedo"
   },
   "Mesh.021": {
-    "MainTexture": "CivilianVehicle_MiscAlbedo"
+    "AlbedoTexture": "CivilianVehicle_MiscAlbedo"
   },
   "Mesh.023": {
-    "MainTexture": "CivilianVehicle_InteriorAlbedo"
+    "AlbedoTexture": "CivilianVehicle_InteriorAlbedo"
   },
   "Mesh.024": {
-    "MainTexture": "CivilianVehicle_MiscAlbedo"
+    "AlbedoTexture": "CivilianVehicle_MiscAlbedo"
   },
   "Mesh.025": {
-    "MainTexture": "CivilianVehicle_WheelAlbedo"
+    "AlbedoTexture": "CivilianVehicle_WheelAlbedo"
   }
 }

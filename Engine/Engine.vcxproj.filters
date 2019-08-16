@@ -91,6 +91,12 @@
     <Filter Include="Source Files\Renderer\Generators">
       <UniqueIdentifier>{785c7892-9c4d-4b82-bde4-12ea3b6fc7b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\SkyShader">
+      <UniqueIdentifier>{1531225d-7db3-43b7-978c-3dc0669fa373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\UberShader">
+      <UniqueIdentifier>{e3808e4a-1c17-447f-940a-2f5b571ce466}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -376,17 +382,17 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="res\Shaders\uber_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+    <FxCompile Include="res\Shaders\UberShader\uber_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\UberShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\uber_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+    <FxCompile Include="res\Shaders\UberShader\uber_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\UberShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\sky_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+    <FxCompile Include="res\Shaders\SkyShader\sky_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\SkyShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\sky_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders</Filter>
+    <FxCompile Include="res\Shaders\SkyShader\sky_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\SkyShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>
