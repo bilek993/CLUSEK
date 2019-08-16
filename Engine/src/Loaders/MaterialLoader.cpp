@@ -45,7 +45,7 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 	mesh.Material.Alpha = alpha;
 }
 
-void MaterialLoader::SetResourceForManually(ID3D11Device* device, SkyShaderMaterial& material,
+void MaterialLoader::SetResourceForManuallyForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material,
 	const std::string& albedoTextureId)
 {
 	const auto texturePointer = TextureResources.find(albedoTextureId);
@@ -93,7 +93,8 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 	}
 }
 
-void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, const std::string& path)
+void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
+	const std::string& path)
 {
 	if (StringUtil::FindExtension(path) == "DDS")
 	{

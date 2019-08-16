@@ -45,7 +45,7 @@ void RenderSystem::Start()
 	Registry->view<SkyboxComponent>().each([this](SkyboxComponent &skyboxComponent)
 	{
 		CubeGenerator::Generate(Device.Get(), skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer);
-		MaterialLoader::SetResourceForManually(Device.Get(), skyboxComponent.Material, skyboxComponent.SkyboxTextureId);
+		MaterialLoader::SetResourceForManuallyForSkyMaterial(Device.Get(), skyboxComponent.Material, skyboxComponent.SkyboxTextureId);
 	});
 
 	// Model Render Component
