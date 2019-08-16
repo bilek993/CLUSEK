@@ -1,20 +1,32 @@
 {
-  "Mesh.002": {
+  "BodyPaint": {
     "AlbedoTexture": "CivilianVehicle_SilverPaintAlbedo"
   },
-  "Mesh.016": {
-    "AlbedoTexture": "CivilianVehicle_BodyAlbedo"
-  },
-  "Mesh.021": {
+  "Bottom": {
     "AlbedoTexture": "CivilianVehicle_MiscAlbedo"
   },
-  "Mesh.023": {
+  "GlassDetails": {
+    "AlbedoTexture": "CivilianVehicle_BlackGlassAlbedo"
+  },
+  "Interior": {
     "AlbedoTexture": "CivilianVehicle_InteriorAlbedo"
   },
-  "Mesh.024": {
+  "LightDetails": {
+    "AlbedoTexture": "CivilianVehicle_LightAlbedo"
+  },
+  "LightGlass": {
+    "AlbedoTexture": "CivilianVehicle_SilverPaintAlbedo"
+  },
+  "MainGlass": {
+    "AlbedoTexture": "CivilianVehicle_SilverPaintAlbedo"
+  },
+  "VehicleDetails": {
+    "AlbedoTexture": "CivilianVehicle_BodyAlbedo"
+  },
+  "WheelTire": {
     "AlbedoTexture": "CivilianVehicle_MiscAlbedo"
   },
-  "Mesh.025": {
+  "WheelRim": {
     "AlbedoTexture": "CivilianVehicle_WheelAlbedo"
   }
 }

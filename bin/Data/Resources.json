@@ -4,10 +4,12 @@
 	"Wheel": "Data/Models/CivilianVehicle/Wheel.fbx"
   },
   "Textures": {
+    "CivilianVehicle_LightAlbedo": "Data/Textures/CivilianVehicle/LightAlbedo.png",
     "CivilianVehicle_MiscAlbedo": "Data/Textures/CivilianVehicle/MiscAlbedo.png",
     "CivilianVehicle_InteriorAlbedo": "Data/Textures/CivilianVehicle/InteriorAlbedo.png",
 	"CivilianVehicle_BodyAlbedo": "Data/Textures/CivilianVehicle/BodyAlbedo.png",
 	"CivilianVehicle_SilverPaintAlbedo": "Data/Textures/CivilianVehicle/SilverPaintAlbedo.png",
+	"CivilianVehicle_BlackGlassAlbedo": "Data/Textures/CivilianVehicle/BlackGlassAlbedo.png",
 	"CivilianVehicle_WheelAlbedo": "Data/Textures/CivilianVehicle/WheelAlbedo.png",
   
 	"Skybox": "Data/Textures/Environment/Skybox.dds"
