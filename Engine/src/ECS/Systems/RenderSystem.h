@@ -61,6 +61,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilState;
 
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
+	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
 };

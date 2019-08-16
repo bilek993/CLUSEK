@@ -14,6 +14,7 @@ struct CB_UberPixelShader
 	DirectX::XMFLOAT3 DirectionalLightColor;
 	float DirectionalLightStrength;
 	DirectX::XMFLOAT3 DirectionalLightDirection;
+	float Alpha;
 };
 
 struct CB_SkyVertexShader

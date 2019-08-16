@@ -271,6 +271,34 @@ bool RenderSystem::InitializeDirectX()
 	DeviceContext->RSSetState(RasterizerState.Get());
 	Logger::Debug("Rasterizer state is set successfully.");
 
+	// Blend state initialization
+
+	D3D11_BLEND_DESC blendDesc;
+	ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
+
+	D3D11_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc;
+	ZeroMemory(&renderTargetBlendDesc, sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
+
+	renderTargetBlendDesc.BlendEnable = true;
+	renderTargetBlendDesc.SrcBlend = D3D11_BLEND_SRC_ALPHA;
+	renderTargetBlendDesc.DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+	renderTargetBlendDesc.BlendOp = D3D11_BLEND_OP_ADD;
+	renderTargetBlendDesc.SrcBlendAlpha = D3D11_BLEND_ONE;
+	renderTargetBlendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
+	renderTargetBlendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
+	renderTargetBlendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	blendDesc.RenderTarget[0] = renderTargetBlendDesc;
+
+	hr = Device->CreateBlendState(&blendDesc, BlendState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating blend state!");
+		return false;
+	}
+
+	Logger::Debug("Blend state is set successfully.");
+
 	// Sampler state initialization
 
 	D3D11_SAMPLER_DESC samplerDesc;
@@ -395,15 +423,36 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 		UberPixelShaderConstantBuffer.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
 		UberPixelShaderConstantBuffer.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
 		UberPixelShaderConstantBuffer.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
+		UberPixelShaderConstantBuffer.Data.Alpha = 1.0f;
 		UberPixelShaderConstantBuffer.ApplyChanges();
 
 		DeviceContext->PSSetConstantBuffers(0, 1, UberPixelShaderConstantBuffer.GetAddressOf());
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
+			if (mesh.Material.Alpha < 1.0f)
+				continue;
+
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
+
+		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
+
+		for (const auto& mesh : *modelRenderComponent.Meshes)
+		{
+			if (mesh.Material.Alpha >= 1.0f)
+				continue;
+
+			UberPixelShaderConstantBuffer.Data.Alpha = mesh.Material.Alpha;
+			UberPixelShaderConstantBuffer.ApplyChanges();
+			DeviceContext->PSSetConstantBuffers(0, 1, UberPixelShaderConstantBuffer.GetAddressOf());
+
+			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
+			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
+		}
+
+		DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 	});
 }
 

@@ -21,7 +21,7 @@ void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path,
 	TextureResources[resourceId] = resource;
 }
 
-void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId)
+void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId, const float alpha)
 {
 	const auto texturePointer = TextureResources.find(albedoTextureId);
 
@@ -41,6 +41,8 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 	{
 		mesh.Material.AlbedoTexture = texturePointer->second;
 	}
+
+	mesh.Material.Alpha = alpha;
 }
 
 void MaterialLoader::SetResourceForManually(ID3D11Device* device, SkyShaderMaterial& material,
@@ -81,11 +83,13 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 	for (auto& mesh : meshes)
 	{
 		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
-		auto currentMaterialJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
+		auto alphaJsonInfo = jsonObject[mesh.Name]["Alpha"];
+		auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
 
 		SetResourceForMesh(	device,
 							mesh,
-							currentMaterialJsonInfo.is_null() ? "" : currentMaterialJsonInfo.get<std::string>());
+							albedoTextureJsonInfo.is_null() ? "" : albedoTextureJsonInfo.get<std::string>(),
+							alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>());
 	}
 }
 

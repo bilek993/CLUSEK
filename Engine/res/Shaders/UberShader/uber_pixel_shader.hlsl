@@ -5,6 +5,7 @@ cbuffer LightBuffer : register(b0)
     float3 DirectionalLightColor;
     float DirectionalLightStrength;
     float3 DirectionalLightDirection;
+    float Alpha;
 }
 
 struct PS_INPUT
@@ -27,5 +28,5 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 finalColor = ambientLight * samplerColor;
     finalColor += directionalLight;
 
-    return float4(finalColor, 1.0f);
+    return float4(finalColor, Alpha);
 }
