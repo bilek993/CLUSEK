@@ -167,12 +167,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\$(Configuration)</IntDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)-Debug-$(Platform)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)bin\</OutDir>
-    <IntDir>$(SolutionDir)bin-int\$(Configuration)</IntDir>
+    <IntDir>$(SolutionDir)bin-int\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName)-$(Platform)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
