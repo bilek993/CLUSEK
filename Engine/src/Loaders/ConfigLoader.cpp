@@ -28,6 +28,7 @@ ConfigData ConfigLoader::GetData()
 
 			MAP_CONFIG_FIELD(key, LoggerEnabled, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, LoggerDestination, data, value);
+			MAP_CONFIG_FIELD(key, LoggerLevel, data, std::stoi(value));
 
 			MAP_CONFIG_FIELD(key, WindowClassName, data, value);
 			MAP_CONFIG_FIELD(key, WindowTitle, data, value);

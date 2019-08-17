@@ -20,6 +20,8 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 
 	Config = configData;
 
+	Logger::SetLevel(configData.LoggerLevel);
+
 	if (!Window.Initialize(hInstance, Config.WindowTitle, Config.WindowClassName, Config.WindowWidth, Config.WindowHeight))
 		return false;
 

@@ -5,6 +5,7 @@ struct ConfigData final
 	// Logger settings
 	int LoggerEnabled = 0;
 	std::string LoggerDestination = "logs.txt";
+	int LoggerLevel = 0;
 
 	// Window settings
 	std::string WindowClassName = "EngineClassName";

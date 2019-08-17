@@ -31,9 +31,36 @@ void Logger::Free()
 	FreeConsole();
 }
 
+void Logger::SetLevel(const int level)
+{
+	if (Level == level)
+		return;
+
+	switch (level)
+	{
+	case 0:
+		printf("==================> LOGGING LEVEL SET TO DEBUG <==================\n");
+		break;
+	case 1:
+		printf("==================> LOGGING LEVEL SET TO WARNING <==================\n");
+		break;
+	case 2:
+		printf("==================> LOGGING LEVEL SET TO ERROR <==================\n");
+		break;
+	case 3:
+		printf("==================> LOGGING LEVEL SET TO NONE <==================\n");
+		break;
+	default:
+		Error("Loggers level cannot be outside range 0-3!");
+		return;
+	}
+
+	Level = level;
+}
+
 void Logger::Debug(const std::string& input)
 {
-	if (!IsEnabled)
+	if (!IsEnabled || Level > 0)
 		return;
 
 	printf(GenerateDebugString(input, "DBG").c_str());
@@ -41,7 +68,7 @@ void Logger::Debug(const std::string& input)
 
 void Logger::Warning(const std::string& input)
 {
-	if (!IsEnabled)
+	if (!IsEnabled || Level > 1)
 		return;
 
 	printf(GenerateDebugString(input, "WRN").c_str());
@@ -51,7 +78,7 @@ void Logger::Error(const std::string& input)
 {
 	MessageBox(nullptr, input.c_str(), "Fatal error", MB_ICONSTOP | MB_OK);
 
-	if (IsEnabled)
+	if (IsEnabled && Level <= 2)
 		printf(GenerateDebugString(input, "ERR").c_str());
 }
 
