@@ -1,7 +1,7 @@
 CLUSEK
 ==================================
 
-**CLUSEK** (C++ Language Unroad Simulator Engine Kit) is an advanced game engine written in C++ and designed for offroad game. This kit was desinged with latest technnology and architecture patterns for game development. Engine is based on ECS architecture, which follows composition over inheritance pattern. This principle allows greater flexibilty and performance. This engine also utilizes lastes techniques to achive best possible in-game experience.
+**CLUSEK** (C++ Language Unroad Simulator Engine Kit) is an advanced game engine written in C++ and designed for off-road game. This kit has been designed with latest technology and architecture patterns for game development. Engine is based on ECS architecture, which follows composition over inheritance pattern. This principle gives developers greater flexibility and performance. This engine also utilizes latest techniques to achieve best possible in-game experience.
 
 
 
@@ -12,7 +12,7 @@ TODO: ADD IMAGES
 
 
 ## Coding standards
-This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2B17), so the code should uses latest features designed for this standard. Also it is highly recomended to install and configure [ReSharper C++](https://www.jetbrains.com/resharper-cpp/) for overall better code quality. For consistent code it is required to use Microsoft naming conventions. This naming standard can be set from Resharper tool, but can be also followed manually. This naming standard requires to:
+This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2B17), so the code should use latest features designed for this standard. Also it is highly recommended to install and configure [ReSharper C++](https://www.jetbrains.com/resharper-cpp/) for overall better code quality. For consistent code it is required to use Microsoft naming conventions. This naming standard can be set from Resharper tool, but can be also followed manually. This naming standard requires to:
 
 |   Entity kinds   |     Example    |
 |:----------------:|:--------------:|
@@ -52,7 +52,7 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 
 ## Source code
 
-You can also download latest version of source code using git. To do that enter bellow commands in your terminal:
+You can download latest version of source code using git. To do that enter below commands in your terminal:
 > git clone https://github.com/bilek993/CLUSEK.git
 
 or
