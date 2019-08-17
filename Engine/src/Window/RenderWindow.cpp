@@ -82,7 +82,7 @@ HWND RenderWindow::GetHandle() const
 	return Handle;
 }
 
-void RenderWindow::UserRequestedQuit()
+void RenderWindow::UserRequestedQuit() const
 {
 	SendMessage(Handle, WM_CLOSE, 0, 0);
 }

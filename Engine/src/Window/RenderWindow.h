@@ -8,7 +8,7 @@ public:
 	bool Initialize(HINSTANCE hInstance, const std::string& windowTitle, const std::string& windowClass, int width, int height);
 	bool ProcessMessages();
 	HWND GetHandle() const;
-	void UserRequestedQuit();
+	void UserRequestedQuit() const;
 	~RenderWindow();
 private:
 	void RegisterWindowClass() const;
