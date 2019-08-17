@@ -34,7 +34,62 @@
   {
     "Tags": [],
 	"Components": {
-	  "TransformComponent": {},
+	  "TransformComponent": {
+	    "PositionX": -2.1,
+		"PositionY": 2.0,
+		"PositionZ": -3.0
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "Wheel",
+		"MaterialId": "Data/Models/CivilianVehicle/material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": -2.1,
+		"PositionY": 2.0,
+		"PositionZ": 7.6,
+		"RotationX": 0.0,
+		"RotationY": 0.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "Wheel",
+		"MaterialId": "Data/Models/CivilianVehicle/material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 2.1,
+		"PositionY": 2.0,
+		"PositionZ": -3.0,
+		"RotationX": 0.0,
+		"RotationY": 3.14,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "Wheel",
+		"MaterialId": "Data/Models/CivilianVehicle/material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 2.1,
+		"PositionY": 2.0,
+		"PositionZ": 7.6,
+		"RotationX": 0.0,
+		"RotationY": 3.14,
+		"RotationZ": 0.0
+	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
 		"MaterialId": "Data/Models/CivilianVehicle/material.json"
