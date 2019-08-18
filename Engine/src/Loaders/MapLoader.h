@@ -7,7 +7,7 @@
 #include "Components/TransformComponentLoader.h"
 #include "Components/SkyboxComponentLoader.h"
 
-#define MAP_LOADER_TAGS(INPUT_TAG, EXPECTED_TAG, REGISTRY, ENTITY) if (strcmp(INPUT_TAG, EXPECTED_TAG) == 0) REGISTRY.assign<entt::tag<EXPECTED_TAG##_hs>>(ENTITY);
+#define MAP_LOADER_TAGS(INPUT_TAG, EXPECTED_TAG, HASHED_TAG, REGISTRY, ENTITY) if (strcmp(INPUT_TAG, EXPECTED_TAG) == 0) REGISTRY.assign<entt::tag<HASHED_TAG>>(ENTITY);
 #define MAP_COMPONENT_LOADERS(JSON, COMPONENT_ID, REGISTRY, ENTITY) if (JSON.key() == #COMPONENT_ID) COMPONENT_ID##LoaderInstance.Add(JSON.value(), REGISTRY, ENTITY);
 
 class MapLoader final

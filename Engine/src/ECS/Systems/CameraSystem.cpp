@@ -3,12 +3,13 @@
 #include "../../Renderer/ModelViewLogic.h"
 #include "../../Utils/Logger.h"
 #include "../../Renderer/TransformLogic.h"
+#include "../../Tags.h"
 
 void CameraSystem::Start()
 {
 	Logger::Debug("Staring camera system...");
 
-	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<"Main Camera"_hs>>();
+	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
 	if (view.size() != 1)
 	{
 		if (view.size() > 1)
@@ -33,7 +34,7 @@ void CameraSystem::Start()
 
 void CameraSystem::Update(const float deltaTime)
 {
-	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<"Main Camera"_hs>>();
+	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
 	if (view.size() != 1)
 	{
 		if (view.size() > 1)

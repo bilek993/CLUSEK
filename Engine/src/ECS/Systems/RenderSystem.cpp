@@ -8,6 +8,7 @@
 #include "../Components/SkyboxComponent.h"
 #include "../../Renderer/Vertex/PositionVertex.h"
 #include "../../Renderer/Generators/CubeGenerator.h"
+#include "../../Tags.h"
 
 void RenderSystem::Start()
 {
@@ -392,7 +393,7 @@ void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelSha
 
 CameraComponent& RenderSystem::GetMainCamera() const
 {
-	auto view = Registry->view<CameraComponent, entt::tag<"Main Camera"_hs>>();
+	auto view = Registry->view<CameraComponent, entt::tag<Tags::MAIN_CAMERA>>();
 	if (view.size() != 1)
 	{
 		if (view.size() > 1)

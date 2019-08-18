@@ -1,6 +1,7 @@
 #include "MapLoader.h"
 #include "../Utils/Logger.h"
 #include <fstream>
+#include "../Tags.h"
 
 void MapLoader::CreateEntitiesFromMapFile(const std::string& path, entt::registry& registry)
 {
@@ -29,7 +30,7 @@ void MapLoader::AddTags(nlohmann::json& json, entt::registry& registry, const en
 
 	for (auto& tag : tags)
 	{
-		MAP_LOADER_TAGS(tag.c_str(), "Main Camera", registry, entity);
+		MAP_LOADER_TAGS(tag.c_str(), "Main Camera", Tags::MAIN_CAMERA, registry, entity);
 	}
 }
 

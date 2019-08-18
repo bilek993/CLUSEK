@@ -380,6 +380,9 @@
     <ClInclude Include="src\GUI\Windows\GamePadWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="src\Tags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\UberShader\uber_pixel_shader.hlsl">

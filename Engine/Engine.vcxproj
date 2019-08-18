@@ -106,6 +106,7 @@
     <ClInclude Include="src\Utils\StringUtil.h" />
     <ClInclude Include="src\GUI\Windows\SystemsManagerWindow.h" />
     <ClInclude Include="src\Loaders\Components\TransformComponentLoader.h" />
+    <ClInclude Include="src\Tags.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\UberShader\uber_vertex_shader.hlsl">
