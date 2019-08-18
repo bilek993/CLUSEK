@@ -43,6 +43,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 
 	HandleMainDockingArea();
 
+	CameraSpeedWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
 	SystemsManagerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
 	FpsTimerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
 	LightingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
@@ -69,6 +70,14 @@ void DebugUserInterface::DrawMenuBar()
 			if (ImGui::MenuItem("Exit"))
 			{
 				FunctionCloseEngine();
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Camera"))
+		{
+			if (ImGui::MenuItem("Camera speed", nullptr, CameraSpeedWindowInstance.GetIsEnabled()))
+			{
+				CameraSpeedWindowInstance.GetIsEnabled() = !CameraSpeedWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}

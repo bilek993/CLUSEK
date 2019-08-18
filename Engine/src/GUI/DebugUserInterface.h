@@ -13,6 +13,7 @@
 #include "Windows/KeyboardInputWindow.h"
 #include "Windows/MouseInputWindow.h"
 #include "Windows/GamePadWindow.h"
+#include "Windows/CameraSpeedWindow.h"
 
 class DebugUserInterface final
 {
@@ -39,6 +40,7 @@ private:
 
 	std::function<void()> FunctionCloseEngine;
 
+	CameraSpeedWindow CameraSpeedWindowInstance;
 	SystemsManagerWindow SystemsManagerWindowInstance;
 	FpsTimerWindow FpsTimerWindowInstance;
 	LightingWindow LightingWindowInstance;
