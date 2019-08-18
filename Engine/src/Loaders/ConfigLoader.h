@@ -9,4 +9,7 @@ public:
 	static ConfigData GetData();
 private:
 	inline static std::string FilePath = "Data/EngineSettings.cfg";
+
+	inline static const char COMMENT_SIGN = '#';
+	inline static const char SEPARATOR_SIGN = ':';
 };

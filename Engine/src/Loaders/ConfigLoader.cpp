@@ -19,10 +19,10 @@ ConfigData ConfigLoader::GetData()
 		{
 			line.erase(std::remove_if(line.begin(), line.end(), isspace), line.end());
 
-			if (line[0] == '#' || line.empty())
+			if (line[0] == COMMENT_SIGN || line.empty())
 				continue;
 
-			const auto colonPosition = line.find(':');
+			const auto colonPosition = line.find(SEPARATOR_SIGN);
 			auto key = line.substr(0, colonPosition);
 			auto value = line.substr(colonPosition + 1);
 

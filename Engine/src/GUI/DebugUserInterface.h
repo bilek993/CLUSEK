@@ -32,6 +32,8 @@ private:
 
 	void DrawMenuBar();
 
+	inline const static std::string DOCKSPACE_AREA_NAME = "MainDockspaceArea";
+
 	bool IsEnabled = false;
 	bool IsDockingEnabled = false;
 

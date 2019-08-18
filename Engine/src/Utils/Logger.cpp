@@ -13,13 +13,13 @@ void Logger::Initialize(const bool enabled, const std::string& destination)
 		return;
 	}
 
-	if (destination == "CONOUT$")
+	if (destination == CONSOLE_OUTPUT)
 		AllocConsole();
 
 	IsEnabled = enabled;
 	Destination = destination;
 
-	freopen_s(&Fp, Destination.c_str(), "w", stdout);
+	freopen_s(&Fp, Destination.c_str(), FILE_MODE.c_str(), stdout);
 }
 
 void Logger::Free()

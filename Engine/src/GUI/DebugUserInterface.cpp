@@ -158,12 +158,12 @@ void DebugUserInterface::HandleMainDockingArea()
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
 
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
-	ImGui::Begin("MainDockspaceArea", &IsDockingEnabled, windowFlags);
+	ImGui::Begin(DOCKSPACE_AREA_NAME.c_str(), &IsDockingEnabled, windowFlags);
 	ImGui::PopStyleVar(3);
 
 	DrawMenuBar();
 
-	const auto mainDockspaceId = ImGui::GetID("MainDockspaceArea");
+	const auto mainDockspaceId = ImGui::GetID(DOCKSPACE_AREA_NAME.c_str());
 	ImGui::DockSpace(mainDockspaceId, ImVec2(0.0f, 0.0f), dockspaceFlags);
 
 	ImGui::End();
