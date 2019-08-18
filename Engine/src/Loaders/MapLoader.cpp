@@ -25,11 +25,11 @@ void MapLoader::ParseEntity(nlohmann::json& json, entt::registry& registry)
 
 void MapLoader::AddTags(nlohmann::json& json, entt::registry& registry, const entt::registry::entity_type &entity)
 {
-	for (auto it = json.begin(); it != json.end(); ++it)
-	{
-		const auto tag = it.value().get<std::string>().c_str();
+	const auto tags = json.get<std::vector<std::string>>();
 
-		MAP_LOADER_TAGS(tag, "Main Camera", registry, entity);
+	for (auto& tag : tags)
+	{
+		MAP_LOADER_TAGS(tag.c_str(), "Main Camera", registry, entity);
 	}
 }
 
