@@ -19,8 +19,8 @@ class DebugUserInterface final
 public:
 	void Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
 		const std::function<void()> &functionCloseEngine);
-	void Update(float deltaTime, IOData *ioData, std::vector<SystemHolder> *systems, 
-		DynamicRenderSettings *dynamicRenderSettings);
+	void Update(float deltaTime, ConfigData *configData, IOData *ioData, 
+		std::vector<SystemHolder> *systems, DynamicRenderSettings *dynamicRenderSettings);
 
 	~DebugUserInterface();
 private:

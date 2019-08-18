@@ -29,8 +29,8 @@ void DebugUserInterface::BeforeUpdate() const
 	ImGui::NewFrame();
 }
 
-void DebugUserInterface::Update(const float deltaTime, IOData *ioData, std::vector<SystemHolder> *systems, 
-	DynamicRenderSettings *dynamicRenderSettings)
+void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, IOData *ioData, 
+	std::vector<SystemHolder> *systems,	DynamicRenderSettings *dynamicRenderSettings)
 {
 	BeforeUpdate();
 
@@ -43,13 +43,13 @@ void DebugUserInterface::Update(const float deltaTime, IOData *ioData, std::vect
 
 	HandleMainDockingArea();
 
-	SystemsManagerWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
-	FpsTimerWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
-	LightingWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
-	BackBufferWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
-	MouseInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
-	KeyboardInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
-	GamePadInputWindowInstance.Update(deltaTime, dynamicRenderSettings, systems, ioData);
+	SystemsManagerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
+	FpsTimerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
+	LightingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
+	BackBufferWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
+	MouseInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
+	KeyboardInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
+	GamePadInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
 
 	AfterUpdate();
 }
