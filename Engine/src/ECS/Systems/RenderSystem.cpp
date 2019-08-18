@@ -392,7 +392,7 @@ void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelSha
 
 CameraComponent& RenderSystem::GetMainCamera() const
 {
-	auto view = Registry->view<CameraComponent>();
+	auto view = Registry->view<CameraComponent, entt::tag<"Main Camera"_hs>>();
 	if (view.size() != 1)
 	{
 		if (view.size() > 1)
@@ -401,7 +401,7 @@ CameraComponent& RenderSystem::GetMainCamera() const
 			Logger::Error("Main render camera not found!");
 	}
 
-	return view.raw()[0];
+	return view.raw<CameraComponent>()[0];
 }
 
 

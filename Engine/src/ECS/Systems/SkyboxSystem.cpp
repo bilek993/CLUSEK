@@ -10,7 +10,7 @@ void SkyboxSystem::Start()
 
 void SkyboxSystem::Update(float deltaTime)
 {
-	auto view = Registry->view<CameraComponent, TransformComponent>();
+	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<"Main Camera"_hs>>();
 	if (view.size() != 1)
 	{
 		if (view.size() > 1)

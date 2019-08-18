@@ -8,7 +8,7 @@ void CameraSystem::Start()
 {
 	Logger::Debug("Staring camera system...");
 
-	auto view = Registry->view<CameraComponent, TransformComponent>();
+	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<"Main Camera"_hs>>();
 	if (view.size() != 1)
 	{
 		if (view.size() > 1)
@@ -33,7 +33,7 @@ void CameraSystem::Start()
 
 void CameraSystem::Update(const float deltaTime)
 {
-	auto view = Registry->view<CameraComponent, TransformComponent>();
+	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<"Main Camera"_hs>>();
 	if (view.size() != 1)
 	{
 		if (view.size() > 1)
