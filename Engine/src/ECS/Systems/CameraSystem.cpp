@@ -61,8 +61,8 @@ void CameraSystem::Update(const float deltaTime)
 void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& cameraComponent,
 	TransformComponent& transformComponent) const
 {
-	const auto positionGamePadX = InputOutputData->GamePadState.thumbSticks.leftX * 0.0125 * deltaTime;
-	const auto positionGamePadY = InputOutputData->GamePadState.thumbSticks.leftY * 0.0125 * deltaTime;
+	const auto positionGamePadX = InputOutputData->GamePadState.thumbSticks.leftX * ConfigurationData->MaxCameraSpeed * deltaTime;
+	const auto positionGamePadY = InputOutputData->GamePadState.thumbSticks.leftY * ConfigurationData->MaxCameraSpeed * deltaTime;
 
 	TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, positionGamePadX), transformComponent);
 	TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, positionGamePadY), transformComponent);
@@ -85,7 +85,7 @@ void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& camer
 void CameraSystem::KeyboardMovement(const float deltaTime, CameraComponent& cameraComponent,
 	TransformComponent& transformComponent) const
 {
-	auto cameraSpeed = 0.0025f * deltaTime;
+	auto cameraSpeed = ConfigurationData->MaxCameraSpeed / 5 * deltaTime;
 	if (InputOutputData->KeyboardState.LeftShift || InputOutputData->KeyboardState.RightShift)
 		cameraSpeed *= 5;
 

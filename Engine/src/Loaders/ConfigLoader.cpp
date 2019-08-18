@@ -53,6 +53,7 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, MinRotationX, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, MainCameraNearZ, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, MainCameraFarZ, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MaxCameraSpeed, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, AmbientLightColorRed, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, AmbientLightColorGreen, data, std::stof(value));
