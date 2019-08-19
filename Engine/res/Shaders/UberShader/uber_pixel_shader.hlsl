@@ -1,4 +1,4 @@
-cbuffer LightBuffer : register(b0)
+cbuffer LightAndAlphaBuffer : register(b0)
 {
     float3 AmbientLightColor;
     float AmbientLightStrength;

@@ -97,6 +97,9 @@
     <Filter Include="Resource Files\Shaders\UberShader">
       <UniqueIdentifier>{e3808e4a-1c17-447f-940a-2f5b571ce466}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Renderer\ConstantBufferTypes">
+      <UniqueIdentifier>{9eab11f0-8874-4e6b-a208-a65620d9f8b7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -260,9 +263,6 @@
     <ClInclude Include="src\Renderer\IndexBuffer.h">
       <Filter>Header Files\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\ConstantBufferTypes.h">
-      <Filter>Header Files\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Renderer\ConstantBuffer.h">
       <Filter>Header Files\Renderer</Filter>
     </ClInclude>
@@ -388,6 +388,15 @@
     </ClInclude>
     <ClInclude Include="src\GUI\Windows\CameraSpeedWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\FatPerObjectBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\SimplePerObjectBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\LightAndAlphaBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

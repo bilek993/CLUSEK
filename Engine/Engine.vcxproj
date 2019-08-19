@@ -52,6 +52,9 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\FatPerObjectBuffer.h" />
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\LightAndAlphaBuffer.h" />
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\SimplePerObjectBuffer.h" />
     <ClInclude Include="src\GUI\Windows\CameraSpeedWindow.h" />
     <ClInclude Include="src\GUI\Windows\GamePadWindow.h" />
     <ClInclude Include="src\Renderer\Generators\CubeGenerator.h" />
@@ -86,7 +89,6 @@
     <ClInclude Include="src\ECS\Components\CameraComponent.h" />
     <ClInclude Include="src\ECS\Systems\BaseSystem.h" />
     <ClInclude Include="src\Renderer\ConstantBuffer.h" />
-    <ClInclude Include="src\Renderer\ConstantBufferTypes.h" />
     <ClInclude Include="src\Renderer\IndexBuffer.h" />
     <ClInclude Include="src\Renderer\Shaders\PixelShader.h" />
     <ClInclude Include="src\Renderer\AdapterData.h" />

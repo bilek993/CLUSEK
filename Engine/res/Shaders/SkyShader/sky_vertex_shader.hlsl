@@ -1,4 +1,4 @@
-cbuffer PerObjectBuffer : register(b0)
+cbuffer SimplePerObjectBuffer : register(b0)
 {
     float4x4 WorldViewProjectionMat;
 };

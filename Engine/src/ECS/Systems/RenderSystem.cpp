@@ -27,17 +27,17 @@ void RenderSystem::Start()
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed");
 
-	auto hr = UberVertexShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
+	auto hr = FatPerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
-		Logger::Error("Failed to create constant buffer.");
+		Logger::Error("Failed to create 'FatPerObjectBufferInstance' constant buffer.");
 
-	hr = UberPixelShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
+	hr = LightAndAlphaBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
-		Logger::Error("Failed to create constant buffer.");
+		Logger::Error("Failed to create 'LightAndAlphaBufferInstance' constant buffer.");
 
-	hr = SkyVertexShaderConstantBuffer.Initialize(Device.Get(), DeviceContext.Get());
+	hr = SimplePerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
-		Logger::Error("Failed to create constant buffer.");
+		Logger::Error("Failed to create 'SimplePerObjectBufferInstance' constant buffer.");
 
 	ResourcesLoader::Load(Device.Get(), ConfigurationData->PathToResources);
 
@@ -413,11 +413,11 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 
 	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
 	{
-		SkyVertexShaderConstantBuffer.Data.WorldViewProjectionMat =
+		SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(skyboxComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
-		SkyVertexShaderConstantBuffer.ApplyChanges();
+		SimplePerObjectBufferInstance.ApplyChanges();
 
-		DeviceContext->VSSetConstantBuffers(0, 1, SkyVertexShaderConstantBuffer.GetAddressOf());
+		DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
 		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
 
 		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
@@ -431,22 +431,22 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset](ModelRenderComponent &modelRenderComponent)
 	{
-		UberVertexShaderConstantBuffer.Data.WorldViewProjectionMat =
+		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
-		UberVertexShaderConstantBuffer.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
-		UberVertexShaderConstantBuffer.ApplyChanges();
+		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
+		FatPerObjectBufferInstance.ApplyChanges();
 
-		DeviceContext->VSSetConstantBuffers(0, 1, UberVertexShaderConstantBuffer.GetAddressOf());
+		DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 
-		UberPixelShaderConstantBuffer.Data.AmbientLightColor = CurrentRenderSettings->AmbientLightColor;
-		UberPixelShaderConstantBuffer.Data.AmbientLightStrength = CurrentRenderSettings->AmbientLightStrength;
-		UberPixelShaderConstantBuffer.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
-		UberPixelShaderConstantBuffer.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
-		UberPixelShaderConstantBuffer.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
-		UberPixelShaderConstantBuffer.Data.Alpha = 1.0f;
-		UberPixelShaderConstantBuffer.ApplyChanges();
+		LightAndAlphaBufferInstance.Data.AmbientLightColor = CurrentRenderSettings->AmbientLightColor;
+		LightAndAlphaBufferInstance.Data.AmbientLightStrength = CurrentRenderSettings->AmbientLightStrength;
+		LightAndAlphaBufferInstance.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
+		LightAndAlphaBufferInstance.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
+		LightAndAlphaBufferInstance.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
+		LightAndAlphaBufferInstance.Data.Alpha = 1.0f;
+		LightAndAlphaBufferInstance.ApplyChanges();
 
-		DeviceContext->PSSetConstantBuffers(0, 1, UberPixelShaderConstantBuffer.GetAddressOf());
+		DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
@@ -464,9 +464,9 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 			if (mesh.Material.Alpha >= 1.0f)
 				continue;
 
-			UberPixelShaderConstantBuffer.Data.Alpha = mesh.Material.Alpha;
-			UberPixelShaderConstantBuffer.ApplyChanges();
-			DeviceContext->PSSetConstantBuffers(0, 1, UberPixelShaderConstantBuffer.GetAddressOf());
+			LightAndAlphaBufferInstance.Data.Alpha = mesh.Material.Alpha;
+			LightAndAlphaBufferInstance.ApplyChanges();
+			DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
 
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);

@@ -4,11 +4,13 @@
 #include <d3d11.h>
 #include "../../Renderer/Shaders/VertexShader.h"
 #include "../../Renderer/Shaders/PixelShader.h"
-#include "../../Renderer/ConstantBufferTypes.h"
 #include "../../Renderer/ConstantBuffer.h"
 #include "../Components/CameraComponent.h"
 #include "../../Renderer/VertexBuffer.h"
 #include "../../Renderer/IndexBuffer.h"
+#include "../../Renderer/ConstantBufferTypes/SimplePerObjectBuffer.h"
+#include "../../Renderer/ConstantBufferTypes/FatPerObjectBuffer.h"
+#include "../../Renderer/ConstantBufferTypes/LightAndAlphaBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -51,10 +53,9 @@ private:
 	VertexShader SkyVertexShader;
 	PixelShader SkyPixelShader;
 
-	ConstantBuffer<CB_UberVertexShader> UberVertexShaderConstantBuffer;
-	ConstantBuffer<CB_UberPixelShader> UberPixelShaderConstantBuffer;
-
-	ConstantBuffer<CB_SkyVertexShader> SkyVertexShaderConstantBuffer;
+	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
+	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;
+	ConstantBuffer<SimplePerObjectBuffer> SimplePerObjectBufferInstance;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilBuffer;
