@@ -27,17 +27,7 @@ void RenderSystem::Start()
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed");
 
-	auto hr = FatPerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
-	if (FAILED(hr))
-		Logger::Error("Failed to create 'FatPerObjectBufferInstance' constant buffer.");
-
-	hr = LightAndAlphaBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
-	if (FAILED(hr))
-		Logger::Error("Failed to create 'LightAndAlphaBufferInstance' constant buffer.");
-
-	hr = SimplePerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
-	if (FAILED(hr))
-		Logger::Error("Failed to create 'SimplePerObjectBufferInstance' constant buffer.");
+	InitializeConstantBuffers();
 
 	ResourcesLoader::Load(Device.Get(), ConfigurationData->PathToResources);
 
@@ -382,6 +372,23 @@ void RenderSystem::InitializeClearColorSettings() const
 	CurrentRenderSettings->ClearColor[0] = ConfigurationData->ClearColorRed;
 	CurrentRenderSettings->ClearColor[1] = ConfigurationData->ClearColorGreen;
 	CurrentRenderSettings->ClearColor[2] = ConfigurationData->ClearColorBlue;
+}
+
+void RenderSystem::InitializeConstantBuffers()
+{
+	Logger::Debug("Preparing to initialize constant buffers...");
+
+	auto hr = FatPerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'FatPerObjectBufferInstance' constant buffer.");
+
+	hr = LightAndAlphaBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'LightAndAlphaBufferInstance' constant buffer.");
+
+	hr = SimplePerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'SimplePerObjectBufferInstance' constant buffer.");
 }
 
 void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const

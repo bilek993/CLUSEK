@@ -27,6 +27,7 @@ private:
 	bool InitializeShaders();
 	void InitializeLightSettings() const;
 	void InitializeClearColorSettings() const;
+	void InitializeConstantBuffers();
 
 	void ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
 
