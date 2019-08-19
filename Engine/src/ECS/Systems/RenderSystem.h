@@ -31,7 +31,7 @@ private:
 	void ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
 
 	template <class T>
-	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer indexBuffer, UINT& offset) const;
+	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const;
 
 	CameraComponent& GetMainCamera() const;
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
@@ -68,7 +68,7 @@ private:
 };
 
 template <class T>
-void RenderSystem::Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer indexBuffer, UINT& offset) const
+void RenderSystem::Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const
 {
 	DeviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), vertexBuffer.StridePtr(), &offset);
 	DeviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
