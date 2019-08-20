@@ -21,6 +21,7 @@ SamplerState Sampler : SAMPLER : register(s0);
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 samplerColor = AlbedoTexture.Sample(Sampler, input.TextureCoord);
+    samplerColor = pow(samplerColor, 2.2f);
 
     float3 ambientLight = AmbientLightColor * AmbientLightStrength;
     float3 directionalLight = saturate(dot(DirectionalLightDirection, input.Normal) * (DirectionalLightColor * DirectionalLightStrength) * samplerColor);
