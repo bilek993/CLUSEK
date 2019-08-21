@@ -58,10 +58,12 @@ void RenderSystem::Update(const float deltaTime)
 
 void RenderSystem::RenderFrameBegin() const
 {
-	DeviceContext->ClearRenderTargetView(RenderTargetView.Get(), CurrentRenderSettings->ClearColor);
-	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTargetView.GetAddressOf(), DepthStencilView.Get());
+	DeviceContext->ClearRenderTargetView(IntermediateRenderTargetView.Get(), CurrentRenderSettings->ClearColor);
 
+	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
+
 	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
 }
 
@@ -160,12 +162,63 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
-	// Render target initialization
+	// Back buffer render target initialization
 
-	hr = Device->CreateRenderTargetView(backBuffer.Get(), nullptr, RenderTargetView.GetAddressOf());
+	hr = Device->CreateRenderTargetView(backBuffer.Get(), nullptr, BackBufferRenderTargetView.GetAddressOf());
 	if (FAILED(hr))
 	{
 		Logger::Error("Error creating render target view!");
+		return false;
+	}
+
+	// Intermediate texture map initialization
+
+	D3D11_TEXTURE2D_DESC textureDesc;
+	textureDesc.Width = WindowWidth;
+	textureDesc.Height = WindowHeight;
+	textureDesc.MipLevels = 1;
+	textureDesc.ArraySize = 1;
+	textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	textureDesc.SampleDesc.Count = 1;
+	textureDesc.SampleDesc.Quality = 0;
+	textureDesc.Usage = D3D11_USAGE_DEFAULT;
+	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+	textureDesc.CPUAccessFlags = 0;
+	textureDesc.MiscFlags = 0;
+
+	hr = Device->CreateTexture2D(&textureDesc, nullptr, IntermediateRenderTexture.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating intermediate texture map!");
+		return false;
+	}
+
+	// Intermediate render target view initialization
+
+	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
+	renderTargetViewDesc.Format = textureDesc.Format;
+	renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+	renderTargetViewDesc.Texture2D.MipSlice = 0;
+
+	hr = Device->CreateRenderTargetView(IntermediateRenderTexture.Get(), &renderTargetViewDesc, IntermediateRenderTargetView.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating intermediate render target view!");
+		return false;
+	}
+
+	// Intermediate shader resource view initialization
+
+	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+	shaderResourceViewDesc.Format = textureDesc.Format;
+	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
+	shaderResourceViewDesc.Texture2D.MipLevels = 1;
+
+	hr = Device->CreateShaderResourceView(IntermediateRenderTexture.Get(), &shaderResourceViewDesc, IntermediateShaderResourceView.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating intermediate shader resource view!");
 		return false;
 	}
 
@@ -215,11 +268,6 @@ bool RenderSystem::InitializeDirectX()
 	}
 
 	Logger::Debug("Successfully created depth stencil state.");
-
-	// Setting render targets
-
-	DeviceContext->OMSetRenderTargets(1, RenderTargetView.GetAddressOf(), DepthStencilView.Get());
-	Logger::Debug("Binding render target output merge successfully.");
 
 	// Viewport initialization
 

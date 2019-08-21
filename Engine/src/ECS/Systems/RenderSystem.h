@@ -46,7 +46,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Device> Device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> DeviceContext;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> SwapChain;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> RenderTargetView;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> BackBufferRenderTargetView;
+
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> IntermediateRenderTexture;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> IntermediateRenderTargetView;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> IntermediateShaderResourceView;
 
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;
