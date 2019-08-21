@@ -9,5 +9,5 @@ SamplerState Sampler : SAMPLER : register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    return pow(SkyMap.Sample(Sampler, input.TextureCoord), 2.2f);
+    return SkyMap.Sample(Sampler, input.TextureCoord);
 }

@@ -106,7 +106,7 @@ bool RenderSystem::InitializeDirectX()
 	scd.BufferDesc.Height = WindowHeight;
 	scd.BufferDesc.RefreshRate.Numerator = ConfigurationData->RefreshRateNumerator;
 	scd.BufferDesc.RefreshRate.Denominator = ConfigurationData->RefreshRateDenominator;
-	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	scd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	scd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
 
