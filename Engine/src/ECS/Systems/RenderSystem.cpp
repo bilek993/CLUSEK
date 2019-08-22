@@ -9,6 +9,7 @@
 #include "../../Renderer/Vertex/PositionVertex.h"
 #include "../../Renderer/Generators/CubeGenerator.h"
 #include "../../Tags.h"
+#include "../../Renderer/Generators/QuadGenerator.h"
 
 void RenderSystem::Start()
 {
@@ -556,7 +557,7 @@ void RenderSystem::PerformPostProcessing()
 
 	VertexBuffer<PositionVertex> vertexBuffer;
 	IndexBuffer indexBuffer;
-	CubeGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer);
+	QuadGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer);
 
 	Draw(vertexBuffer, indexBuffer, offset);
 }

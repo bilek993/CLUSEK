@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\Generators\QuadGenerator.cpp" />
     <ClCompile Include="src\GUI\Windows\CameraSpeedWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\GamePadWindow.cpp" />
     <ClCompile Include="src\Renderer\Generators\CubeGenerator.cpp" />
@@ -52,6 +53,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Generators\QuadGenerator.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\FatPerObjectBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\LightAndAlphaBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\SimplePerObjectBuffer.h" />
