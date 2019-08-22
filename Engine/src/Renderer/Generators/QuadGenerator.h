@@ -6,5 +6,6 @@
 class QuadGenerator final
 {
 public:
-	static void Generate(ID3D11Device* device, VertexBuffer<PositionVertex>& vertexBufferOut, IndexBuffer& indexBufferOut);
+	static void Generate(ID3D11Device* device, VertexBuffer<PositionVertex>& vertexBufferOut,
+		IndexBuffer& indexBufferOut, float minX, float minY, float maxX, float maxY);
 };

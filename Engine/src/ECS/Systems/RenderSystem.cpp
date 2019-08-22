@@ -557,7 +557,7 @@ void RenderSystem::PerformPostProcessing()
 
 	VertexBuffer<PositionVertex> vertexBuffer;
 	IndexBuffer indexBuffer;
-	QuadGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer);
+	QuadGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer, -1.0f, -1.0f, 1.0f, 1.0f);
 
 	Draw(vertexBuffer, indexBuffer, offset);
 }
