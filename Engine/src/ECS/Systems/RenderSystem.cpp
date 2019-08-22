@@ -69,6 +69,7 @@ void RenderSystem::RenderFrameBegin() const
 
 void RenderSystem::RenderFrameEnd()
 {
+	PerformPostProcessing();
 	SwapChain->Present(SyncIntervals, 0);
 }
 
@@ -394,6 +395,20 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
+	// Copy shader
+
+	if (!CopyVertexShader.Initialize(Device, L"copy_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
+	{
+		Logger::Error("CopyVertexShader not initialized due to critical problem!");
+		return false;
+	}
+
+	if (!CopyPixelShader.Initialize(Device, L"copy_pixel_shader.cso"))
+	{
+		Logger::Error("CopyPixelShader not initialized due to critical problem!");
+		return false;
+	}
+
 	// Generic code
 
 	Logger::Debug("All shaders successfully initialized.");
@@ -531,4 +546,14 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 void RenderSystem::PerformPostProcessing()
 {
+	UINT offset = 0;
+
+	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetView.GetAddressOf(), DepthStencilView.Get());
+	ChangeShader(CopyVertexShader, CopyPixelShader);
+
+	VertexBuffer<PositionVertex> vertexBuffer;
+	IndexBuffer indexBuffer;
+	CubeGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer);
+
+	Draw(vertexBuffer, indexBuffer, offset);
 }

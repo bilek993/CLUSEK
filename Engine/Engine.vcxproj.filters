@@ -100,6 +100,9 @@
     <Filter Include="Header Files\Renderer\ConstantBufferTypes">
       <UniqueIdentifier>{9eab11f0-8874-4e6b-a208-a65620d9f8b7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\CopyShader">
+      <UniqueIdentifier>{90fb61f8-2d0c-4135-9b2e-9d5f7057fbf4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -411,6 +414,12 @@
     </FxCompile>
     <FxCompile Include="res\Shaders\SkyShader\sky_vertex_shader.hlsl">
       <Filter>Resource Files\Shaders\SkyShader</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\CopyShader\copy_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\CopyShader</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\CopyShader\copy_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\CopyShader</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

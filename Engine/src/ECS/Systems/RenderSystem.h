@@ -60,6 +60,9 @@ private:
 	VertexShader SkyVertexShader;
 	PixelShader SkyPixelShader;
 
+	VertexShader CopyVertexShader;
+	PixelShader CopyPixelShader;
+
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;
 	ConstantBuffer<SimplePerObjectBuffer> SimplePerObjectBufferInstance;
