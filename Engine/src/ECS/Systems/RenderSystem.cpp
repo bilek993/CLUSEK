@@ -10,6 +10,7 @@
 #include "../../Renderer/Generators/CubeGenerator.h"
 #include "../../Tags.h"
 #include "../../Renderer/Generators/QuadGenerator.h"
+#include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
 
 void RenderSystem::Start()
 {
@@ -29,6 +30,7 @@ void RenderSystem::Start()
 		Logger::Error("Shaders initialization failed");
 
 	InitializeConstantBuffers();
+	InitializePostProcessing();
 
 	ResourcesLoader::Load(Device.Get(), ConfigurationData->PathToResources);
 
@@ -373,13 +375,13 @@ bool RenderSystem::InitializeShaders()
 {
 	// Uber shader
 
-	if (!UberVertexShader.Initialize(Device, L"uber_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
+	if (!UberVertexShader.Initialize(Device.Get(), L"uber_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
 	{
 		Logger::Error("UberVertexShader not initialized due to critical problem!");
 		return false;
 	}
 
-	if (!UberPixelShader.Initialize(Device, L"uber_pixel_shader.cso"))
+	if (!UberPixelShader.Initialize(Device.Get(), L"uber_pixel_shader.cso"))
 	{
 		Logger::Error("UberPixelShader not initialized due to critical problem!");
 		return false;
@@ -387,29 +389,15 @@ bool RenderSystem::InitializeShaders()
 
 	// Sky shader
 	
-	if (!SkyVertexShader.Initialize(Device, L"sky_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
+	if (!SkyVertexShader.Initialize(Device.Get(), L"sky_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
 	{
 		Logger::Error("SkyVertexShader not initialized due to critical problem!");
 		return false;
 	}
 
-	if (!SkyPixelShader.Initialize(Device, L"sky_pixel_shader.cso"))
+	if (!SkyPixelShader.Initialize(Device.Get(), L"sky_pixel_shader.cso"))
 	{
 		Logger::Error("SkyPixelShader not initialized due to critical problem!");
-		return false;
-	}
-
-	// Copy shader
-
-	if (!CopyVertexShader.Initialize(Device, L"copy_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
-	{
-		Logger::Error("CopyVertexShader not initialized due to critical problem!");
-		return false;
-	}
-
-	if (!CopyPixelShader.Initialize(Device, L"copy_pixel_shader.cso"))
-	{
-		Logger::Error("CopyPixelShader not initialized due to critical problem!");
 		return false;
 	}
 
@@ -454,6 +442,12 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = SimplePerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'SimplePerObjectBufferInstance' constant buffer.");
+}
+
+void RenderSystem::InitializePostProcessing()
+{
+	CopyToBackBufferPostProcessingInstance = std::make_unique<CopyToBackBufferPostProcessing>(DeviceContext.Get(), 
+		Device.Get(), BackBufferRenderTargetView.GetAddressOf(), DepthStencilView.Get());
 }
 
 void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const
@@ -548,16 +542,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 	});
 }
 
-void RenderSystem::PerformPostProcessing()
+void RenderSystem::PerformPostProcessing() const
 {
-	UINT offset = 0;
-	ChangeShader(CopyVertexShader, CopyPixelShader);
-
-	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetView.GetAddressOf(), DepthStencilView.Get());
-
-	VertexBuffer<PositionVertex> vertexBuffer;
-	IndexBuffer indexBuffer;
-	QuadGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer, -1.0f, -1.0f, 1.0f, 1.0f);
-
-	Draw(vertexBuffer, indexBuffer, offset);
+	CopyToBackBufferPostProcessingInstance->Process();
 }

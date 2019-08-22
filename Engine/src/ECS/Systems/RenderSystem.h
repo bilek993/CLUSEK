@@ -11,6 +11,7 @@
 #include "../../Renderer/ConstantBufferTypes/SimplePerObjectBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/FatPerObjectBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/LightAndAlphaBuffer.h"
+#include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -28,6 +29,7 @@ private:
 	void InitializeLightSettings() const;
 	void InitializeClearColorSettings() const;
 	void InitializeConstantBuffers();
+	void InitializePostProcessing();
 
 	void ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
 
@@ -38,12 +40,14 @@ private:
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
 
-	void PerformPostProcessing();
+	void PerformPostProcessing() const;
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;
 
 	int SyncIntervals = 1;
+
+	std::unique_ptr<CopyToBackBufferPostProcessing> CopyToBackBufferPostProcessingInstance;
 
 	Microsoft::WRL::ComPtr<ID3D11Device> Device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> DeviceContext;
@@ -59,9 +63,6 @@ private:
 
 	VertexShader SkyVertexShader;
 	PixelShader SkyPixelShader;
-
-	VertexShader CopyVertexShader;
-	PixelShader CopyPixelShader;
 
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;

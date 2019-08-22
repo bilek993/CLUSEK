@@ -1,7 +1,7 @@
 #include "PixelShader.h"
 #include "../../Utils/Logger.h"
 
-bool PixelShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, const std::wstring& shaderPath)
+bool PixelShader::Initialize(ID3D11Device* device, const std::wstring& shaderPath)
 {
 	Logger::Debug("Preparing to initialize pixel shader...");
 

@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\PostProcessing\BasePostProcessing.cpp" />
+    <ClCompile Include="src\Renderer\PostProcessing\CopyToBackBufferPostProcessing.cpp" />
     <ClCompile Include="src\Renderer\Generators\QuadGenerator.cpp" />
     <ClCompile Include="src\GUI\Windows\CameraSpeedWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\GamePadWindow.cpp" />
@@ -53,6 +55,8 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\PostProcessing\BasePostProcessing.h" />
+    <ClInclude Include="src\Renderer\PostProcessing\CopyToBackBufferPostProcessing.h" />
     <ClInclude Include="src\Renderer\Generators\QuadGenerator.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\FatPerObjectBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\LightAndAlphaBuffer.h" />

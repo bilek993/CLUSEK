@@ -1,7 +1,7 @@
 #include "VertexShader.h"
 #include "../../Utils/Logger.h"
 
-bool VertexShader::Initialize(Microsoft::WRL::ComPtr<ID3D11Device>& device, const std::wstring& shaderPath,
+bool VertexShader::Initialize(ID3D11Device* device, const std::wstring& shaderPath,
 	D3D11_INPUT_ELEMENT_DESC *layoutDescription, const UINT numberOfElements)
 {
 	Logger::Debug("Preparing to initialize vertex shader...");
