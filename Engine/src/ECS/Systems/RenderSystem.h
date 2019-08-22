@@ -18,7 +18,7 @@ public:
 	void Start() override;
 	void Update(float deltaTime) override;
 	void RenderFrameBegin() const;
-	void RenderFrameEnd() const;
+	void RenderFrameEnd();
 
 	ID3D11Device* GetPointerToDevice() const;
 	ID3D11DeviceContext* GetPointerToDeviceContext() const;
@@ -37,6 +37,8 @@ private:
 	CameraComponent& GetMainCamera() const;
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
+
+	void PerformPostProcessing();
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;

@@ -67,7 +67,7 @@ void RenderSystem::RenderFrameBegin() const
 	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
 }
 
-void RenderSystem::RenderFrameEnd() const
+void RenderSystem::RenderFrameEnd()
 {
 	SwapChain->Present(SyncIntervals, 0);
 }
@@ -111,10 +111,8 @@ bool RenderSystem::InitializeDirectX()
 	scd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	scd.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
 	scd.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-
-	scd.SampleDesc.Count = ConfigurationData->MultisamplesCount;
-	scd.SampleDesc.Quality = ConfigurationData->MultisamplesQuality;
-
+	scd.SampleDesc.Count = 1;
+	scd.SampleDesc.Quality = 0;
 	scd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 	scd.BufferCount = 1;
 	scd.OutputWindow = Window->GetHandle();
@@ -230,8 +228,8 @@ bool RenderSystem::InitializeDirectX()
 	depthStencilTextureDesc.MipLevels = 1;
 	depthStencilTextureDesc.ArraySize = 1;
 	depthStencilTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilTextureDesc.SampleDesc.Count = ConfigurationData->MultisamplesCount;
-	depthStencilTextureDesc.SampleDesc.Quality = ConfigurationData->MultisamplesQuality;
+	depthStencilTextureDesc.SampleDesc.Count = 1;
+	depthStencilTextureDesc.SampleDesc.Quality = 0;
 	depthStencilTextureDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthStencilTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	depthStencilTextureDesc.CPUAccessFlags = 0;
@@ -529,4 +527,8 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 		DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 	});
+}
+
+void RenderSystem::PerformPostProcessing()
+{
 }
