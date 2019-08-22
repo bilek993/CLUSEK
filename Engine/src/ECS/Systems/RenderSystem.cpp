@@ -54,12 +54,16 @@ void RenderSystem::Update(const float deltaTime)
 
 	RenderSkyBoxComponents(mainCameraComponent);
 	RenderModelRenderComponents(mainCameraComponent);
+
+	PerformPostProcessing();
 }
 
 void RenderSystem::RenderFrameBegin() const
 {
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTargetView.GetAddressOf(), DepthStencilView.Get());
+
 	DeviceContext->ClearRenderTargetView(IntermediateRenderTargetView.Get(), CurrentRenderSettings->ClearColor);
+	DeviceContext->ClearRenderTargetView(BackBufferRenderTargetView.Get(), CurrentRenderSettings->ClearColor);
 
 	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
@@ -67,9 +71,8 @@ void RenderSystem::RenderFrameBegin() const
 	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
 }
 
-void RenderSystem::RenderFrameEnd()
+void RenderSystem::RenderFrameEnd() const
 {
-	PerformPostProcessing();
 	SwapChain->Present(SyncIntervals, 0);
 }
 
@@ -547,9 +550,9 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 void RenderSystem::PerformPostProcessing()
 {
 	UINT offset = 0;
+	ChangeShader(CopyVertexShader, CopyPixelShader);
 
 	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetView.GetAddressOf(), DepthStencilView.Get());
-	ChangeShader(CopyVertexShader, CopyPixelShader);
 
 	VertexBuffer<PositionVertex> vertexBuffer;
 	IndexBuffer indexBuffer;

@@ -18,7 +18,7 @@ public:
 	void Start() override;
 	void Update(float deltaTime) override;
 	void RenderFrameBegin() const;
-	void RenderFrameEnd();
+	void RenderFrameEnd() const;
 
 	ID3D11Device* GetPointerToDevice() const;
 	ID3D11DeviceContext* GetPointerToDeviceContext() const;
