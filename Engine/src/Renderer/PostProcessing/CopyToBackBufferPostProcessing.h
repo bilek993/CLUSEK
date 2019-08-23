@@ -1,8 +1,5 @@
 #pragma once
 #include <d3d11.h>
-#include "../VertexBuffer.h"
-#include "../Vertex/PositionVertex.h"
-#include "../IndexBuffer.h"
 #include "BasePostProcessing.h"
 #include "../Shaders/PixelShader.h"
 #include "../Shaders/VertexShader.h"
