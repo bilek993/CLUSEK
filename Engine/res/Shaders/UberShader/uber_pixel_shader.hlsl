@@ -1,3 +1,5 @@
+#include "../Includes/gamma_correction_utils.hlsli"
+
 cbuffer LightAndAlphaBuffer : register(b0)
 {
     float3 AmbientLightColor;
@@ -21,14 +23,14 @@ SamplerState Sampler : SAMPLER : register(s0);
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 samplerColor = AlbedoTexture.Sample(Sampler, input.TextureCoord);
-    samplerColor = pow(samplerColor, 2.2f);
+    samplerColor = gammaCorrectTexture(samplerColor);
 
     float3 ambientLight = AmbientLightColor * AmbientLightStrength;
     float3 directionalLight = saturate(dot(DirectionalLightDirection, input.Normal) * (DirectionalLightColor * DirectionalLightStrength) * samplerColor);
 
     float3 finalColor = ambientLight * samplerColor;
     finalColor += directionalLight;
-    finalColor = pow(finalColor, 1.0f / 2.2f);
+    finalColor = gammaCorrectFinal(finalColor);
 
     return float4(finalColor, Alpha);
 }

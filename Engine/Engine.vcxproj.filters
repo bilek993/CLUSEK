@@ -109,6 +109,9 @@
     <Filter Include="Source Files\Renderer\PostProcessing">
       <UniqueIdentifier>{9056a7fb-d302-4019-b501-01364a8d34b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\Includes">
+      <UniqueIdentifier>{0b29f826-e696-40f8-a955-2fd9026b261a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -445,5 +448,10 @@
     <FxCompile Include="res\Shaders\CopyShader\copy_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\CopyShader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\Shaders\Includes\gamma_correction_utils.hlsli">
+      <Filter>Resource Files\Shaders\Includes</Filter>
+    </None>
   </ItemGroup>
 </Project>
