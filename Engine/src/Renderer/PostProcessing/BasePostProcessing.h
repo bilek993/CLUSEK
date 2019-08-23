@@ -29,4 +29,8 @@ void BasePostProcessing::Draw(const VertexBuffer<T>& vertexBuffer, const IndexBu
 	DeviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), vertexBuffer.StridePtr(), &offset);
 	DeviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	DeviceContext->DrawIndexed(indexBuffer.GetIndexCount(), 0, 0);
+
+	// Fix for hazard problems
+	ID3D11ShaderResourceView* null[] = { nullptr, nullptr, nullptr };
+	DeviceContext->PSSetShaderResources(0, 3, null);
 }
