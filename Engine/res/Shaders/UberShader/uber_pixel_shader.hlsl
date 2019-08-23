@@ -30,7 +30,6 @@ float4 main(PS_INPUT input) : SV_TARGET
 
     float3 finalColor = ambientLight * samplerColor;
     finalColor += directionalLight;
-    finalColor = gammaCorrectFinal(finalColor);
 
     return float4(finalColor, Alpha);
 }
