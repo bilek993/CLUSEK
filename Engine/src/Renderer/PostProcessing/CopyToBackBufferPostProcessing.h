@@ -14,9 +14,6 @@ public:
 		ID3D11RenderTargetView *const *backBufferRenderTargetViews, ID3D11DepthStencilView *depthStencilView);
 	void Process() const;
 private:
-	VertexBuffer<PositionVertex> VertexBufferInstance;
-	IndexBuffer IndexBufferInstance;
-
 	VertexShader CopyVertexShader;
 	PixelShader CopyPixelShader;
 

@@ -1,9 +1,10 @@
 #include "CopyToBackBufferPostProcessing.h"
-#include "../Generators/QuadGenerator.h"
 
 CopyToBackBufferPostProcessing::CopyToBackBufferPostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device,
 	ID3D11RenderTargetView *const *backBufferRenderTargetViews, ID3D11DepthStencilView *depthStencilView)
 {
+	Logger::Debug("Preparing 'CopyToBackBuffer' post processing effect...");
+
 	DeviceContext = deviceContext;
 	Device = device;
 
@@ -15,6 +16,8 @@ CopyToBackBufferPostProcessing::CopyToBackBufferPostProcessing(ID3D11DeviceConte
 
 	if (!CopyPixelShader.Initialize(Device, L"copy_pixel_shader.cso"))
 		Logger::Error("CopyPixelShader not initialized due to critical problem!");
+
+	GenerateQuad();
 }
 
 void CopyToBackBufferPostProcessing::Process() const
@@ -24,9 +27,5 @@ void CopyToBackBufferPostProcessing::Process() const
 
 	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetViews, DepthStencilView);
 
-	VertexBuffer<PositionVertex> vertexBuffer;
-	IndexBuffer indexBuffer;
-	QuadGenerator::Generate(Device, vertexBuffer, indexBuffer, -1.0f, -1.0f, 1.0f, 1.0f);
-
-	Draw(vertexBuffer, indexBuffer, offset);
+	Draw(VertexBufferInstance, IndexBufferInstance, offset);
 }
