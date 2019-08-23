@@ -455,7 +455,7 @@ void RenderSystem::InitializeConstantBuffers()
 void RenderSystem::InitializePostProcessing()
 {
 	CopyToBackBufferPostProcessingInstance = std::make_unique<CopyToBackBufferPostProcessing>(DeviceContext.Get(), 
-		Device.Get(), BackBufferRenderTargetView.GetAddressOf(), DepthStencilView.Get());
+		Device.Get(), BackBufferRenderTargetView.GetAddressOf(), DepthStencilView.Get(), IntermediateShaderResourceView.GetAddressOf());
 }
 
 void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const
