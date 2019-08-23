@@ -30,7 +30,7 @@ void BasePostProcessing::Draw(const VertexBuffer<T>& vertexBuffer, const IndexBu
 	DeviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	DeviceContext->DrawIndexed(indexBuffer.GetIndexCount(), 0, 0);
 
-	// Fix for hazard problems
+	// Fix for hazard problems (https://gamedev.stackexchange.com/questions/95591/directx-rendertargettexture-bound-to-both-rtv-and-srv)
 	ID3D11ShaderResourceView* null[] = { nullptr, nullptr, nullptr };
 	DeviceContext->PSSetShaderResources(0, 3, null);
 }
