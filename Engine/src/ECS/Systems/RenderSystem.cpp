@@ -9,7 +9,6 @@
 #include "../../Renderer/Vertex/PositionVertex.h"
 #include "../../Renderer/Generators/CubeGenerator.h"
 #include "../../Tags.h"
-#include "../../Renderer/Generators/QuadGenerator.h"
 #include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
 
 void RenderSystem::Start()
@@ -179,6 +178,8 @@ bool RenderSystem::InitializeDirectX()
 	// Intermediate texture map initialization
 
 	D3D11_TEXTURE2D_DESC textureDesc;
+	ZeroMemory(&textureDesc, sizeof(D3D11_TEXTURE2D_DESC));
+
 	textureDesc.Width = WindowWidth;
 	textureDesc.Height = WindowHeight;
 	textureDesc.MipLevels = 1;
@@ -201,6 +202,8 @@ bool RenderSystem::InitializeDirectX()
 	// Intermediate render target view initialization
 
 	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
+	ZeroMemory(&renderTargetViewDesc, sizeof(D3D11_RENDER_TARGET_VIEW_DESC));
+
 	renderTargetViewDesc.Format = textureDesc.Format;
 	renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
 	renderTargetViewDesc.Texture2D.MipSlice = 0;
@@ -215,6 +218,8 @@ bool RenderSystem::InitializeDirectX()
 	// Intermediate shader resource view initialization
 
 	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
+	ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
+
 	shaderResourceViewDesc.Format = textureDesc.Format;
 	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
@@ -230,6 +235,8 @@ bool RenderSystem::InitializeDirectX()
 	// Depth stencil initialization
 
 	D3D11_TEXTURE2D_DESC depthStencilTextureDesc;
+	ZeroMemory(&depthStencilTextureDesc, sizeof(D3D11_TEXTURE2D_DESC));
+
 	depthStencilTextureDesc.Width = WindowWidth;
 	depthStencilTextureDesc.Height = WindowHeight;
 	depthStencilTextureDesc.MipLevels = 1;
@@ -317,9 +324,6 @@ bool RenderSystem::InitializeDirectX()
 
 	// Blend state initialization
 
-	D3D11_BLEND_DESC blendDesc;
-	ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
-
 	D3D11_RENDER_TARGET_BLEND_DESC renderTargetBlendDesc;
 	ZeroMemory(&renderTargetBlendDesc, sizeof(D3D11_RENDER_TARGET_BLEND_DESC));
 
@@ -331,6 +335,9 @@ bool RenderSystem::InitializeDirectX()
 	renderTargetBlendDesc.DestBlendAlpha = D3D11_BLEND_ZERO;
 	renderTargetBlendDesc.BlendOpAlpha = D3D11_BLEND_OP_ADD;
 	renderTargetBlendDesc.RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+	D3D11_BLEND_DESC blendDesc;
+	ZeroMemory(&blendDesc, sizeof(D3D11_BLEND_DESC));
 
 	blendDesc.RenderTarget[0] = renderTargetBlendDesc;
 
@@ -347,6 +354,7 @@ bool RenderSystem::InitializeDirectX()
 
 	D3D11_SAMPLER_DESC samplerDesc;
 	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+
 	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
 	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
