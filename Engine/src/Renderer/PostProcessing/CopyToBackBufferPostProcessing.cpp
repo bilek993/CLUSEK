@@ -1,12 +1,10 @@
 #include "CopyToBackBufferPostProcessing.h"
 
 CopyToBackBufferPostProcessing::CopyToBackBufferPostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device,
-	ID3D11RenderTargetView *const *backBufferRenderTargetViews, ID3D11DepthStencilView *depthStencilView)
+	ID3D11RenderTargetView* const * backBufferRenderTargetViews,
+	ID3D11DepthStencilView* depthStencilView) : BasePostProcessing(deviceContext, device)
 {
 	Logger::Debug("Preparing 'CopyToBackBuffer' post processing effect...");
-
-	DeviceContext = deviceContext;
-	Device = device;
 
 	BackBufferRenderTargetViews = backBufferRenderTargetViews;
 	DepthStencilView = depthStencilView;
@@ -16,8 +14,6 @@ CopyToBackBufferPostProcessing::CopyToBackBufferPostProcessing(ID3D11DeviceConte
 
 	if (!CopyPixelShader.Initialize(Device, L"copy_pixel_shader.cso"))
 		Logger::Error("CopyPixelShader not initialized due to critical problem!");
-
-	GenerateQuad();
 }
 
 void CopyToBackBufferPostProcessing::Process() const

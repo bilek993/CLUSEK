@@ -9,6 +9,7 @@ class CopyToBackBufferPostProcessing final : public BasePostProcessing
 public:
 	explicit CopyToBackBufferPostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device,
 		ID3D11RenderTargetView *const *backBufferRenderTargetViews, ID3D11DepthStencilView *depthStencilView);
+
 	void Process() const;
 private:
 	VertexShader CopyVertexShader;

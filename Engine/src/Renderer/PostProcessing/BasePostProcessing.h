@@ -9,12 +9,12 @@ class IndexBuffer;
 
 class BasePostProcessing
 {
+public:
+	BasePostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device);
 protected:
 	template <class T>
 	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const;
 	void ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
-
-	void GenerateQuad();
 
 	ID3D11DeviceContext* DeviceContext = nullptr;
 	ID3D11Device* Device = nullptr;
