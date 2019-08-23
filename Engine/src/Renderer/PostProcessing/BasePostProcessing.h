@@ -13,7 +13,7 @@ public:
 	BasePostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device);
 protected:
 	template <class T>
-	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const;
+	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset, int usedShaderResourceViews) const;
 	void ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
 
 	ID3D11DeviceContext* DeviceContext = nullptr;
@@ -21,16 +21,17 @@ protected:
 
 	VertexBuffer<PositionVertex> VertexBufferInstance;
 	IndexBuffer IndexBufferInstance;
+private:
+	// Fix for hazard problems (https://gamedev.stackexchange.com/questions/95591/directx-rendertargettexture-bound-to-both-rtv-and-srv)
+	void UnbindShaderResourceViews(int usedShaderResourceViews) const;
 };
 
 template <class T>
-void BasePostProcessing::Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const
+void BasePostProcessing::Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset, const int usedShaderResourceViews) const
 {
 	DeviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), vertexBuffer.StridePtr(), &offset);
 	DeviceContext->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	DeviceContext->DrawIndexed(indexBuffer.GetIndexCount(), 0, 0);
 
-	// Fix for hazard problems (https://gamedev.stackexchange.com/questions/95591/directx-rendertargettexture-bound-to-both-rtv-and-srv)
-	ID3D11ShaderResourceView* null[] = { nullptr, nullptr, nullptr };
-	DeviceContext->PSSetShaderResources(0, 3, null);
+	UnbindShaderResourceViews(usedShaderResourceViews);
 }

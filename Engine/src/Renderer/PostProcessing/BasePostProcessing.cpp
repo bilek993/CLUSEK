@@ -14,3 +14,10 @@ void BasePostProcessing::ChangeShader(const VertexShader& vertexShader, const Pi
 	DeviceContext->VSSetShader(vertexShader.GetShader(), nullptr, 0);
 	DeviceContext->PSSetShader(pixelShader.GetShader(), nullptr, 0);
 }
+
+void BasePostProcessing::UnbindShaderResourceViews(const int usedShaderResourceViews) const
+{
+	ID3D11ShaderResourceView* null = nullptr;
+	for (auto i = 0; i < usedShaderResourceViews; i++)
+		DeviceContext->PSSetShaderResources(i, 1, &null);
+}

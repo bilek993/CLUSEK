@@ -26,5 +26,5 @@ void CopyToBackBufferPostProcessing::Process() const
 	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetViews, DepthStencilView);
 	DeviceContext->PSSetShaderResources(0, 1, InputResource);
 
-	Draw(VertexBufferInstance, IndexBufferInstance, offset);
+	Draw(VertexBufferInstance, IndexBufferInstance, offset, 1);
 }
