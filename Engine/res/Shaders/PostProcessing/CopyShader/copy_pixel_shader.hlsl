@@ -1,4 +1,4 @@
-#include "../Includes/gamma_correction_utils.hlsli"
+#include "../../Includes/gamma_correction_utils.hlsli"
 
 struct PS_INPUT
 {

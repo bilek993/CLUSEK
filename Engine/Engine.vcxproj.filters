@@ -91,17 +91,8 @@
     <Filter Include="Source Files\Renderer\Generators">
       <UniqueIdentifier>{785c7892-9c4d-4b82-bde4-12ea3b6fc7b5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\SkyShader">
-      <UniqueIdentifier>{1531225d-7db3-43b7-978c-3dc0669fa373}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Shaders\UberShader">
-      <UniqueIdentifier>{e3808e4a-1c17-447f-940a-2f5b571ce466}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Renderer\ConstantBufferTypes">
       <UniqueIdentifier>{9eab11f0-8874-4e6b-a208-a65620d9f8b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Shaders\CopyShader">
-      <UniqueIdentifier>{90fb61f8-2d0c-4135-9b2e-9d5f7057fbf4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Renderer\PostProcessing">
       <UniqueIdentifier>{5821d974-54c0-4f2f-adec-75643e15854d}</UniqueIdentifier>
@@ -111,6 +102,21 @@
     </Filter>
     <Filter Include="Resource Files\Shaders\Includes">
       <UniqueIdentifier>{0b29f826-e696-40f8-a955-2fd9026b261a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\PostProcessing">
+      <UniqueIdentifier>{67cb8f17-e2bc-464a-a6eb-670298c19dd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Surface">
+      <UniqueIdentifier>{fd635449-31c0-40fb-83f0-c2d07adf0a86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\PostProcessing\CopyShader">
+      <UniqueIdentifier>{90fb61f8-2d0c-4135-9b2e-9d5f7057fbf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Surface\SkyShader">
+      <UniqueIdentifier>{1531225d-7db3-43b7-978c-3dc0669fa373}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Shaders\Surface\UberShader">
+      <UniqueIdentifier>{e3808e4a-1c17-447f-940a-2f5b571ce466}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -430,23 +436,23 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="res\Shaders\UberShader\uber_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\UberShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\CopyShader\copy_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing\CopyShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\UberShader\uber_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\UberShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\CopyShader\copy_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing\CopyShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\SkyShader\sky_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\SkyShader</Filter>
+    <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\UberShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\SkyShader\sky_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\SkyShader</Filter>
+    <FxCompile Include="res\Shaders\Surface\UberShader\uber_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\UberShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\CopyShader\copy_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\CopyShader</Filter>
+    <FxCompile Include="res\Shaders\Surface\SkyShader\sky_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\SkyShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\CopyShader\copy_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\CopyShader</Filter>
+    <FxCompile Include="res\Shaders\Surface\SkyShader\sky_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\SkyShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
