@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\PostProcessing\HDRPostProcessing.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\BasePostProcessing.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\CopyToBackBufferPostProcessing.cpp" />
@@ -56,6 +57,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\PostProcessing\HDRPostProcessing.h" />
     <ClInclude Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.h" />
     <ClInclude Include="src\Renderer\PostProcessing\BasePostProcessing.h" />
     <ClInclude Include="src\Renderer\PostProcessing\CopyToBackBufferPostProcessing.h" />
@@ -121,6 +123,18 @@
     <ClInclude Include="src\Tags.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="res\Shaders\PostProcessing\HDRShader\hdr_pixel_shader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\PostProcessing\HDRShader\hdr_vertex_shader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="res\Shaders\PostProcessing\GammaCorrection\gamma_correction_pixel_shader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
