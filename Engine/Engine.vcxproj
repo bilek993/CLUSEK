@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Windows\PostProcessingWindow.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\ToneMapperPostProcessing.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\BasePostProcessing.cpp" />
@@ -57,6 +58,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Windows\PostProcessingWindow.h" />
     <ClInclude Include="src\Renderer\PostProcessing\ToneMapperPostProcessing.h" />
     <ClInclude Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.h" />
     <ClInclude Include="src\Renderer\PostProcessing\BasePostProcessing.h" />

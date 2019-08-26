@@ -51,6 +51,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	MouseInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
 	KeyboardInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
 	GamePadInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
+	PostProcessingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
 
 	AfterUpdate();
 }
@@ -98,6 +99,10 @@ void DebugUserInterface::DrawMenuBar()
 			if (ImGui::MenuItem("Back Buffer settings", nullptr, BackBufferWindowInstance.GetIsEnabled()))
 			{
 				BackBufferWindowInstance.GetIsEnabled() = !BackBufferWindowInstance.GetIsEnabled();
+			}
+			if (ImGui::MenuItem("Post Processing settings", nullptr, PostProcessingWindowInstance.GetIsEnabled()))
+			{
+				PostProcessingWindowInstance.GetIsEnabled() = !PostProcessingWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}

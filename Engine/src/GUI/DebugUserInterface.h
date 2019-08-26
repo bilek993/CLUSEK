@@ -14,6 +14,7 @@
 #include "Windows/MouseInputWindow.h"
 #include "Windows/GamePadWindow.h"
 #include "Windows/CameraSpeedWindow.h"
+#include "Windows/PostProcessingWindow.h"
 
 class DebugUserInterface final
 {
@@ -48,4 +49,5 @@ private:
 	MouseInputWindow MouseInputWindowInstance;
 	KeyboardInputWindow KeyboardInputWindowInstance;
 	GamePadInputWindow GamePadInputWindowInstance;
+	PostProcessingWindow PostProcessingWindowInstance;
 };
