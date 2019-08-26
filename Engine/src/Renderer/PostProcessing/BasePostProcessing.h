@@ -16,6 +16,10 @@ protected:
 	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset, int usedShaderResourceViews) const;
 	void ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
 
+	void InitializeOutputTextureMap(int windowWidth, int windowHeight, ID3D11Texture2D** renderTexture) const;
+	void InitializeOutputRenderTargetView(DXGI_FORMAT renderTargetFormat, ID3D11Texture2D* renderTexture, ID3D11RenderTargetView** renderTargetView) const;
+	void InitializeShaderResourceView(DXGI_FORMAT renderTargetFormat, ID3D11Texture2D* renderTexture, ID3D11ShaderResourceView** shaderResourceView) const;
+
 	ID3D11DeviceContext* DeviceContext = nullptr;
 	ID3D11Device* Device = nullptr;
 

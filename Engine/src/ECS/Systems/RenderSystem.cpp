@@ -455,7 +455,10 @@ void RenderSystem::InitializeConstantBuffers()
 void RenderSystem::InitializePostProcessing()
 {
 	CopyToBackBufferPostProcessingInstance = std::make_unique<CopyToBackBufferPostProcessing>(DeviceContext.Get(), 
-		Device.Get(), BackBufferRenderTargetView.GetAddressOf(), DepthStencilView.Get());
+		Device.Get(), BackBufferRenderTargetView.GetAddressOf());
+
+	GammaCorrectionPostProcessingInstance = std::make_unique<GammaCorrectionPostProcessing>(DeviceContext.Get(), 
+		Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT);
 }
 
 void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const
@@ -554,5 +557,6 @@ void RenderSystem::PerformPostProcessing() const
 {
 	auto currentInput = IntermediateShaderResourceView;
 
+	currentInput = GammaCorrectionPostProcessingInstance->Process(currentInput.GetAddressOf());
 	CopyToBackBufferPostProcessingInstance->Process(currentInput.GetAddressOf());
 }
