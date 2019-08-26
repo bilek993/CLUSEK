@@ -10,5 +10,6 @@ SamplerState Sampler : SAMPLER : register(s0);
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 output = InputTexture.Sample(Sampler, input.TextureCoord);
+    output = output / (output + float3(1.0f, 1.0f, 1.0f));
     return float4(output, 1.0f);
 }
