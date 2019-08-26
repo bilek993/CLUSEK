@@ -2,10 +2,8 @@
 #include "../VertexBuffer.h"
 #include "../IndexBuffer.h"
 #include "../Vertex/PositionVertex.h"
-
-class VertexShader;
-class PixelShader;
-class IndexBuffer;
+#include "../Shaders/VertexShader.h"
+#include "../Shaders/PixelShader.h"
 
 class BasePostProcessing
 {
