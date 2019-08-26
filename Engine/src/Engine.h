@@ -21,7 +21,7 @@ private:
 	void InitializeUserInterface();
 	void UpdateInputOutputDevices();
 	void UpdateSystems(float deltaTime);
-	void HandleClosingWithButton();
+	void HandleClosingWithButton() const;
 
 	RenderWindow Window;
 	ConfigData Config;

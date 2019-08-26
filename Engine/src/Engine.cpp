@@ -119,7 +119,7 @@ void Engine::UpdateSystems(const float deltaTime)
 	}
 }
 
-void Engine::HandleClosingWithButton()
+void Engine::HandleClosingWithButton() const
 {
 	if (DataFromIODevices.KeyboardState.Escape)
 	{
