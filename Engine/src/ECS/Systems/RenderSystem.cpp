@@ -454,7 +454,7 @@ void RenderSystem::InitializeConstantBuffers()
 
 void RenderSystem::InitializePostProcessing()
 {
-	HDRPostProcessingInstance = std::make_unique<HDRPostProcessing>(DeviceContext.Get(),
+	ToneMapperPostProcessingInstance = std::make_unique<ToneMapperPostProcessing>(DeviceContext.Get(),
 		Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT);
 
 	GammaCorrectionPostProcessingInstance = std::make_unique<GammaCorrectionPostProcessing>(DeviceContext.Get(),
@@ -560,7 +560,7 @@ void RenderSystem::PerformPostProcessing() const
 {
 	auto currentInput = IntermediateShaderResourceView;
 
-	currentInput = HDRPostProcessingInstance->Process(currentInput.GetAddressOf());
+	currentInput = ToneMapperPostProcessingInstance->Process(currentInput.GetAddressOf());
 	currentInput = GammaCorrectionPostProcessingInstance->Process(currentInput.GetAddressOf());
 	CopyToBackBufferPostProcessingInstance->Process(currentInput.GetAddressOf());
 }

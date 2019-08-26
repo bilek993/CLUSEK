@@ -121,7 +121,7 @@
     <Filter Include="Resource Files\Shaders\PostProcessing\GammaCorrectionShader">
       <UniqueIdentifier>{e6b33acb-7ac0-420a-a8aa-fe45e24b4450}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\PostProcessing\HDRShader">
+    <Filter Include="Resource Files\Shaders\PostProcessing\ToneMapperShader">
       <UniqueIdentifier>{aa4a0b73-8aec-42df-a10e-45ae72b91613}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -255,7 +255,7 @@
     <ClCompile Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.cpp">
       <Filter>Source Files\Renderer\PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\PostProcessing\HDRPostProcessing.cpp">
+    <ClCompile Include="src\Renderer\PostProcessing\ToneMapperPostProcessing.cpp">
       <Filter>Source Files\Renderer\PostProcessing</Filter>
     </ClCompile>
   </ItemGroup>
@@ -449,7 +449,7 @@
     <ClInclude Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.h">
       <Filter>Header Files\Renderer\PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\PostProcessing\HDRPostProcessing.h">
+    <ClInclude Include="src\Renderer\PostProcessing\ToneMapperPostProcessing.h">
       <Filter>Header Files\Renderer\PostProcessing</Filter>
     </ClInclude>
   </ItemGroup>
@@ -478,11 +478,11 @@
     <FxCompile Include="res\Shaders\PostProcessing\GammaCorrection\gamma_correction_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing\GammaCorrectionShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\HDRShader\hdr_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\HDRShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\ToneMapper\tone_mapper_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing\ToneMapperShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\HDRShader\hdr_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\HDRShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\ToneMapper\tone_mapper_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing\ToneMapperShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

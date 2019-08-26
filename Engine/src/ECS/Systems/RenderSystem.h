@@ -13,7 +13,7 @@
 #include "../../Renderer/ConstantBufferTypes/LightAndAlphaBuffer.h"
 #include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
 #include "../../Renderer/PostProcessing/GammaCorrectionPostProcessing.h"
-#include "../../Renderer/PostProcessing/HDRPostProcessing.h"
+#include "../../Renderer/PostProcessing/ToneMapperPostProcessing.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -49,7 +49,7 @@ private:
 
 	int SyncIntervals = 1;
 
-	std::unique_ptr<HDRPostProcessing> HDRPostProcessingInstance;
+	std::unique_ptr<ToneMapperPostProcessing> ToneMapperPostProcessingInstance;
 	std::unique_ptr<GammaCorrectionPostProcessing> GammaCorrectionPostProcessingInstance;
 	std::unique_ptr<CopyToBackBufferPostProcessing> CopyToBackBufferPostProcessingInstance;
 
