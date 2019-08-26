@@ -560,7 +560,11 @@ void RenderSystem::PerformPostProcessing() const
 {
 	auto currentInput = IntermediateShaderResourceView;
 
-	currentInput = ToneMapperPostProcessingInstance->Process(currentInput.GetAddressOf());
-	currentInput = GammaCorrectionPostProcessingInstance->Process(currentInput.GetAddressOf());
+	if (CurrentPostProcessingSettings->ToneMapperEnabled)
+		currentInput = ToneMapperPostProcessingInstance->Process(currentInput.GetAddressOf());
+
+	if (CurrentPostProcessingSettings->GammaCorrectionEnabled)
+		currentInput = GammaCorrectionPostProcessingInstance->Process(currentInput.GetAddressOf());
+
 	CopyToBackBufferPostProcessingInstance->Process(currentInput.GetAddressOf());
 }
