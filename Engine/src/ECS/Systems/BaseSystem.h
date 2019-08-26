@@ -4,6 +4,7 @@
 #include "../../Loaders/ConfigData.h"
 #include "../../Window/RenderWindow.h"
 #include "../../Renderer/DynamicRenderSettings.h"
+#include "../../Renderer/PostProcessingSettings.h"
 
 class BaseSystem
 {
@@ -11,7 +12,7 @@ public:
 	virtual ~BaseSystem() = default;
 
 	void Initialize(entt::registry *registry, RenderWindow *window, ConfigData *configData,
-		DynamicRenderSettings *renderSettings, IOData *ioData, IODevices *ioDevices);
+		DynamicRenderSettings *renderSettings, IOData *ioData, IODevices *ioDevices, PostProcessingSettings *postProcessingSettings);
 
 	virtual void Start() = 0;
 	virtual void Update(float deltaTime) = 0;
@@ -22,4 +23,5 @@ protected:
 	DynamicRenderSettings *CurrentRenderSettings = nullptr;
 	IOData *InputOutputData = nullptr;
 	IODevices *InputOutputDevices = nullptr;
+	PostProcessingSettings *CurrentPostProcessingSettings = nullptr;
 };

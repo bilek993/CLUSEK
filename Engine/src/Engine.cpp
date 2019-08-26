@@ -46,7 +46,7 @@ void Engine::Update()
 	UpdateInputOutputDevices();
 	renderSystem->RenderFrameBegin();
 	UpdateSystems(deltaTime);
-	DebugUI.Update(deltaTime, &Config, &DataFromIODevices, &Systems, &CurrentRenderSettings);
+	DebugUI.Update(deltaTime, &Config, &DataFromIODevices, &Systems, &CurrentRenderSettings, &CurrentPostProcessingSettings);
 	renderSystem->RenderFrameEnd();
 	HandleClosingWithButton();
 }
@@ -88,7 +88,8 @@ void Engine::InitializeSystems()
 {
 	for (auto& system : Systems)
 	{
-		system.System->Initialize(&Registry, &Window, &Config, &CurrentRenderSettings, &DataFromIODevices, &InputOutputDevices);
+		system.System->Initialize(&Registry, &Window, &Config, &CurrentRenderSettings, 
+			&DataFromIODevices, &InputOutputDevices, &CurrentPostProcessingSettings);
 		system.System->Start();
 	}
 }

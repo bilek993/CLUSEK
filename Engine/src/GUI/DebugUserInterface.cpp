@@ -4,6 +4,7 @@
 #include "Windows/FpsTimerWindow.h"
 #include "Windows/LightingWindow.h"
 #include "Windows/BackBufferWindow.h"
+#include "../Renderer/PostProcessingSettings.h"
 
 void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
 	const std::function<void()> &functionCloseEngine)
@@ -30,7 +31,7 @@ void DebugUserInterface::BeforeUpdate() const
 }
 
 void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, IOData *ioData, 
-	std::vector<SystemHolder> *systems,	DynamicRenderSettings *dynamicRenderSettings)
+	std::vector<SystemHolder> *systems,	DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings)
 {
 	BeforeUpdate();
 
@@ -43,15 +44,15 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 
 	HandleMainDockingArea();
 
-	CameraSpeedWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
-	SystemsManagerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
-	FpsTimerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
-	LightingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
-	BackBufferWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
-	MouseInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
-	KeyboardInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
-	GamePadInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
-	PostProcessingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData);
+	CameraSpeedWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
+	SystemsManagerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
+	FpsTimerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
+	LightingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
+	BackBufferWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
+	MouseInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
+	KeyboardInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
+	GamePadInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
+	PostProcessingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
 
 	AfterUpdate();
 }
@@ -92,6 +93,10 @@ void DebugUserInterface::DrawMenuBar()
 		}
 		if (ImGui::BeginMenu("Renderer"))
 		{
+			if (ImGui::MenuItem("Post Processing settings", nullptr, PostProcessingWindowInstance.GetIsEnabled()))
+			{
+				PostProcessingWindowInstance.GetIsEnabled() = !PostProcessingWindowInstance.GetIsEnabled();
+			}
 			if (ImGui::MenuItem("Lighting settings", nullptr, LightingWindowInstance.GetIsEnabled()))
 			{
 				LightingWindowInstance.GetIsEnabled() = !LightingWindowInstance.GetIsEnabled();
@@ -99,10 +104,6 @@ void DebugUserInterface::DrawMenuBar()
 			if (ImGui::MenuItem("Back Buffer settings", nullptr, BackBufferWindowInstance.GetIsEnabled()))
 			{
 				BackBufferWindowInstance.GetIsEnabled() = !BackBufferWindowInstance.GetIsEnabled();
-			}
-			if (ImGui::MenuItem("Post Processing settings", nullptr, PostProcessingWindowInstance.GetIsEnabled()))
-			{
-				PostProcessingWindowInstance.GetIsEnabled() = !PostProcessingWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}

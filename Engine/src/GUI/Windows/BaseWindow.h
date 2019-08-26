@@ -2,11 +2,14 @@
 #include "../../Renderer/DynamicRenderSettings.h"
 #include "../../Utils/SystemHolder.h"
 
+struct PostProcessingSettings;
+
 class BaseWindow
 {
 public:
 	virtual ~BaseWindow() = default;
-	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings, std::vector<SystemHolder> *systems, IOData *ioData);
+	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings, 
+		std::vector<SystemHolder> *systems, IOData *ioData, PostProcessingSettings *postProcessingSettings);
 	bool& GetIsEnabled();
 
 protected:
@@ -19,4 +22,5 @@ protected:
 	DynamicRenderSettings *RenderSettings = nullptr;
 	std::vector<SystemHolder> *Systems = nullptr;
 	IOData *IoData = nullptr;
+	PostProcessingSettings *CurrentPostProcessingSettings = nullptr;
 };

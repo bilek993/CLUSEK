@@ -58,6 +58,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\PostProcessingSettings.h" />
     <ClInclude Include="src\GUI\Windows\PostProcessingWindow.h" />
     <ClInclude Include="src\Renderer\PostProcessing\ToneMapperPostProcessing.h" />
     <ClInclude Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.h" />

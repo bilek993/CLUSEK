@@ -7,6 +7,7 @@
 #include "ECS/Systems/BaseSystem.h"
 #include "Utils/SystemHolder.h"
 #include "GUI/DebugUserInterface.h"
+#include "Renderer/PostProcessingSettings.h"
 
 class Engine final
 {
@@ -32,6 +33,7 @@ private:
 	std::vector<SystemHolder> Systems;
 	int RenderSystemId = 0;
 
+	PostProcessingSettings CurrentPostProcessingSettings;
 	DynamicRenderSettings CurrentRenderSettings;
 
 	DebugUserInterface DebugUI;
