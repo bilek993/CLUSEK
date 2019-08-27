@@ -12,6 +12,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 	const auto configData = ConfigLoader::GetData();
 
 	Logger::Initialize(configData.LoggerEnabled, configData.LoggerDestination);
+	Logger::SetLevel(configData.LoggerLevel);
 	Logger::Debug("Initialized logger system.");
 	SystemInfoUtil::LogInfo();
 
