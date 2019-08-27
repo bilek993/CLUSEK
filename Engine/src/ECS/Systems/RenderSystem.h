@@ -14,6 +14,7 @@
 #include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
 #include "../../Renderer/PostProcessing/GammaCorrectionPostProcessing.h"
 #include "../../Renderer/PostProcessing/ToneMapperPostProcessing.h"
+#include "../../Renderer/RenderTexture.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -58,9 +59,7 @@ private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain> SwapChain;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> BackBufferRenderTargetView;
 
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> IntermediateRenderTexture;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> IntermediateRenderTargetView;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> IntermediateShaderResourceView;
+	RenderTexture IntermediateRenderTexture;
 
 	VertexShader UberVertexShader;
 	PixelShader UberPixelShader;

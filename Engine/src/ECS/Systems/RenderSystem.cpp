@@ -62,9 +62,9 @@ void RenderSystem::Update(const float deltaTime)
 
 void RenderSystem::RenderFrameBegin() const
 {
-	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTargetView.GetAddressOf(), DepthStencilView.Get());
+	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), DepthStencilView.Get());
 
-	DeviceContext->ClearRenderTargetView(IntermediateRenderTargetView.Get(), CurrentRenderSettings->ClearColor);
+	DeviceContext->ClearRenderTargetView(IntermediateRenderTexture.GetRenderTargetViewPointer(), CurrentRenderSettings->ClearColor);
 	DeviceContext->ClearRenderTargetView(BackBufferRenderTargetView.Get(), CurrentRenderSettings->ClearColor);
 
 	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
@@ -175,60 +175,11 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
-	// Intermediate texture map initialization
+	// Intermediate render texture initialization
 
-	D3D11_TEXTURE2D_DESC textureDesc;
-	ZeroMemory(&textureDesc, sizeof(D3D11_TEXTURE2D_DESC));
-
-	textureDesc.Width = WindowWidth;
-	textureDesc.Height = WindowHeight;
-	textureDesc.MipLevels = 1;
-	textureDesc.ArraySize = 1;
-	textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	textureDesc.SampleDesc.Count = 1;
-	textureDesc.SampleDesc.Quality = 0;
-	textureDesc.Usage = D3D11_USAGE_DEFAULT;
-	textureDesc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
-	textureDesc.CPUAccessFlags = 0;
-	textureDesc.MiscFlags = 0;
-
-	hr = Device->CreateTexture2D(&textureDesc, nullptr, IntermediateRenderTexture.GetAddressOf());
-	if (FAILED(hr))
+	if (!IntermediateRenderTexture.Initialize(Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT))
 	{
-		Logger::Error("Error creating intermediate texture map!");
-		return false;
-	}
-
-	// Intermediate render target view initialization
-
-	D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc;
-	ZeroMemory(&renderTargetViewDesc, sizeof(D3D11_RENDER_TARGET_VIEW_DESC));
-
-	renderTargetViewDesc.Format = textureDesc.Format;
-	renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-	renderTargetViewDesc.Texture2D.MipSlice = 0;
-
-	hr = Device->CreateRenderTargetView(IntermediateRenderTexture.Get(), &renderTargetViewDesc, IntermediateRenderTargetView.GetAddressOf());
-	if (FAILED(hr))
-	{
-		Logger::Error("Error creating intermediate render target view!");
-		return false;
-	}
-
-	// Intermediate shader resource view initialization
-
-	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
-	ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
-
-	shaderResourceViewDesc.Format = textureDesc.Format;
-	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
-	shaderResourceViewDesc.Texture2D.MipLevels = 1;
-
-	hr = Device->CreateShaderResourceView(IntermediateRenderTexture.Get(), &shaderResourceViewDesc, IntermediateShaderResourceView.GetAddressOf());
-	if (FAILED(hr))
-	{
-		Logger::Error("Error creating intermediate shader resource view!");
+		Logger::Error("Error creating Intermediate render texture!");
 		return false;
 	}
 
@@ -558,7 +509,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 void RenderSystem::PerformPostProcessing() const
 {
-	auto currentInput = IntermediateShaderResourceView;
+	auto currentInput = IntermediateRenderTexture.GetShaderResourceView();
 
 	if (CurrentPostProcessingSettings->ToneMapperEnabled)
 		currentInput = ToneMapperPostProcessingInstance->Process(currentInput.GetAddressOf());
