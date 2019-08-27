@@ -3,6 +3,7 @@
 #include "BasePostProcessing.h"
 #include "../Shaders/PixelShader.h"
 #include "../Shaders/VertexShader.h"
+#include "../RenderTexture.h"
 
 class GammaCorrectionPostProcessing final : public BasePostProcessing
 {
@@ -15,7 +16,5 @@ private:
 	VertexShader GammaCorrectionVertexShader;
 	PixelShader GammaCorrectionPixelShader;
 
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> OutputRenderTexture;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> OutputRenderTargetView;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> OutputShaderResourceView;
+	RenderTexture OutputRenderTexture;
 };

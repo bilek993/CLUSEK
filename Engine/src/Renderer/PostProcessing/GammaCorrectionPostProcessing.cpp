@@ -11,9 +11,8 @@ GammaCorrectionPostProcessing::GammaCorrectionPostProcessing(ID3D11DeviceContext
 	if (!GammaCorrectionPixelShader.Initialize(Device, L"gamma_correction_pixel_shader.cso"))
 		Logger::Error("GammaCorrectionPixelShader not initialized due to critical problem!");
 
-	InitializeOutputTextureMap(windowWidth, windowHeight, OutputRenderTexture.GetAddressOf());
-	InitializeOutputRenderTargetView(renderTargetFormat, OutputRenderTexture.Get(), OutputRenderTargetView.GetAddressOf());
-	InitializeShaderResourceView(renderTargetFormat, OutputRenderTexture.Get(), OutputShaderResourceView.GetAddressOf());
+	if (!OutputRenderTexture.Initialize(device, windowWidth, windowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT))
+		Logger::Error("OutputRenderTexture not initialized due to critical problem!");
 }
 
 Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GammaCorrectionPostProcessing::Process(ID3D11ShaderResourceView* const* inputResource) const
@@ -21,10 +20,10 @@ Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> GammaCorrectionPostProcessing::
 	UINT offset = 0;
 	ChangeShader(GammaCorrectionVertexShader, GammaCorrectionPixelShader);
 
-	DeviceContext->OMSetRenderTargets(1, OutputRenderTargetView.GetAddressOf(), nullptr);
+	DeviceContext->OMSetRenderTargets(1, OutputRenderTexture.GetAddressOfRenderTargetView(), nullptr);
 	DeviceContext->PSSetShaderResources(0, 1, inputResource);
 
 	Draw(VertexBufferInstance, IndexBufferInstance, offset, 1);
 
-	return OutputShaderResourceView;
+	return OutputRenderTexture.GetShaderResourceView();
 }
