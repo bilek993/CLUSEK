@@ -9,7 +9,7 @@ bool RenderTexture::Initialize(ID3D11Device* device, const int width, const int 
 	if (!InitializeRenderTargetView(device, renderTargetFormat))
 		return false;
 
-	if (InitializeShaderResourceView(device, renderTargetFormat))
+	if (!InitializeShaderResourceView(device, renderTargetFormat))
 		return false;
 
 	return true;
@@ -79,4 +79,19 @@ bool RenderTexture::InitializeShaderResourceView(ID3D11Device* device, const DXG
 	}
 
 	return true;
+}
+
+ID3D11RenderTargetView* const* RenderTexture::GetAddressOfRenderTargetView() const
+{
+	return RenderTargetView.GetAddressOf();
+}
+
+ID3D11RenderTargetView* RenderTexture::GetRenderTargetViewPointer() const
+{
+	return RenderTargetView.Get();
+}
+
+Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> RenderTexture::GetShaderResourceView() const
+{
+	return ShaderResourceView;
 }
