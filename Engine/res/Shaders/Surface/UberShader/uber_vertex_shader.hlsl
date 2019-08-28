@@ -23,7 +23,7 @@ VS_OUTPUT main(VS_INPUT input)
     VS_OUTPUT output;
     output.Position = mul(float4(input.Position, 1.0f), WorldViewProjectionMat);
     output.TextureCoord = input.TextureCoord;
-    output.Normal = normalize(mul(float4(input.Normal, 0.0f), WorldMatrix));
+    output.Normal = normalize(mul(float4(input.Normal, 0.0f), WorldMatrix)).xyz;
 
     return output;
 }
