@@ -12,9 +12,8 @@
 #include "../../Renderer/ConstantBufferTypes/FatPerObjectBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/LightAndAlphaBuffer.h"
 #include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
-#include "../../Renderer/PostProcessing/GammaCorrectionPostProcessing.h"
-#include "../../Renderer/PostProcessing/ToneMapperPostProcessing.h"
 #include "../../Renderer/RenderTexture.h"
+#include "../../Renderer/PostProcessing/ReusablePostProcessing.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -50,8 +49,8 @@ private:
 
 	int SyncIntervals = 1;
 
-	std::unique_ptr<ToneMapperPostProcessing> ToneMapperPostProcessingInstance;
-	std::unique_ptr<GammaCorrectionPostProcessing> GammaCorrectionPostProcessingInstance;
+	std::unique_ptr<ReusablePostProcessing> ToneMapperPostProcessingInstance;
+	std::unique_ptr<ReusablePostProcessing> GammaCorrectionPostProcessingInstance;
 	std::unique_ptr<CopyToBackBufferPostProcessing> CopyToBackBufferPostProcessingInstance;
 
 	Microsoft::WRL::ComPtr<ID3D11Device> Device;

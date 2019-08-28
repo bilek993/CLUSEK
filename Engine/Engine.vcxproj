@@ -11,10 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\PostProcessing\ReusablePostProcessing.cpp" />
     <ClCompile Include="src\Renderer\RenderTexture.cpp" />
     <ClCompile Include="src\GUI\Windows\PostProcessingWindow.cpp" />
-    <ClCompile Include="src\Renderer\PostProcessing\ToneMapperPostProcessing.cpp" />
-    <ClCompile Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\BasePostProcessing.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\CopyToBackBufferPostProcessing.cpp" />
     <ClCompile Include="src\Renderer\Generators\QuadGenerator.cpp" />
@@ -59,11 +58,10 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\PostProcessing\ReusablePostProcessing.h" />
     <ClInclude Include="src\Renderer\RenderTexture.h" />
     <ClInclude Include="src\Renderer\PostProcessingSettings.h" />
     <ClInclude Include="src\GUI\Windows\PostProcessingWindow.h" />
-    <ClInclude Include="src\Renderer\PostProcessing\ToneMapperPostProcessing.h" />
-    <ClInclude Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.h" />
     <ClInclude Include="src\Renderer\PostProcessing\BasePostProcessing.h" />
     <ClInclude Include="src\Renderer\PostProcessing\CopyToBackBufferPostProcessing.h" />
     <ClInclude Include="src\Renderer\Generators\QuadGenerator.h" />

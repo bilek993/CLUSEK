@@ -405,11 +405,11 @@ void RenderSystem::InitializeConstantBuffers()
 
 void RenderSystem::InitializePostProcessing()
 {
-	ToneMapperPostProcessingInstance = std::make_unique<ToneMapperPostProcessing>(DeviceContext.Get(),
-		Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT);
+	ToneMapperPostProcessingInstance = std::make_unique<ReusablePostProcessing>(DeviceContext.Get(),
+		Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT, "tone_mapper_pixel_shader.cso", "tone_mapper_vertex_shader.cso");
 
-	GammaCorrectionPostProcessingInstance = std::make_unique<GammaCorrectionPostProcessing>(DeviceContext.Get(),
-		Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT);
+	GammaCorrectionPostProcessingInstance = std::make_unique<ReusablePostProcessing>(DeviceContext.Get(),
+		Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT, "gamma_correction_pixel_shader.cso", "gamma_correction_vertex_shader.cso");
 
 	CopyToBackBufferPostProcessingInstance = std::make_unique<CopyToBackBufferPostProcessing>(DeviceContext.Get(), 
 		Device.Get(), BackBufferRenderTargetView.GetAddressOf());

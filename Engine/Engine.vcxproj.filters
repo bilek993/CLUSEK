@@ -252,17 +252,14 @@
     <ClCompile Include="src\Renderer\PostProcessing\BasePostProcessing.cpp">
       <Filter>Source Files\Renderer\PostProcessing</Filter>
     </ClCompile>
-    <ClCompile Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.cpp">
-      <Filter>Source Files\Renderer\PostProcessing</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer\PostProcessing\ToneMapperPostProcessing.cpp">
-      <Filter>Source Files\Renderer\PostProcessing</Filter>
-    </ClCompile>
     <ClCompile Include="src\GUI\Windows\PostProcessingWindow.cpp">
       <Filter>Source Files\GUI\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Renderer\RenderTexture.cpp">
       <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\PostProcessing\ReusablePostProcessing.cpp">
+      <Filter>Source Files\Renderer\PostProcessing</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -452,12 +449,6 @@
     <ClInclude Include="src\Renderer\PostProcessing\BasePostProcessing.h">
       <Filter>Header Files\Renderer\PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="src\Renderer\PostProcessing\GammaCorrectionPostProcessing.h">
-      <Filter>Header Files\Renderer\PostProcessing</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer\PostProcessing\ToneMapperPostProcessing.h">
-      <Filter>Header Files\Renderer\PostProcessing</Filter>
-    </ClInclude>
     <ClInclude Include="src\GUI\Windows\PostProcessingWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
@@ -466,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\RenderTexture.h">
       <Filter>Header Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\PostProcessing\ReusablePostProcessing.h">
+      <Filter>Header Files\Renderer\PostProcessing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
