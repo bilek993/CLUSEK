@@ -33,12 +33,19 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 
 ## Requirements
 
+### Runtime requirements:
+
 * Windows 10
 * Directx 11 compatible device
+
+### Build requirements:
+
 * Visual Studio 2017 (v141)
 * Windows SDK Version 10.0.17763.0
 
+### Packaging requirements:
 
+* PowerShell 5.0
 
 ## Dependencies
 
@@ -58,6 +65,17 @@ You can download latest version of source code using git. To do that enter below
 or
 
 > git clone git@github.com:bilek993/CLUSEK.git
+
+
+
+## Redistribution
+
+For easier, consistent and bug-free application redistribution for end-user, the special power shell script can be used. To execute this script you enter below command in your PowerShell terminal:
+
+> Set-ExecutionPolicy Unrestricted -force </br>
+> .\Redistribute.ps1
+
+This process is very time consuming and on slower machines can take several dozen minutes. This PowerShell script will generate a .zip file with all the required files. This .zip file can be sent to anyone that wants to use this engine without the need of full source code building.
 
 
 
