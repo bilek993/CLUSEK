@@ -2,10 +2,12 @@
 #include "../../Utils/StringUtil.h"
 
 ReusablePostProcessing::ReusablePostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device,
-	const int windowWidth, const int windowHeight, DXGI_FORMAT renderTargetFormat,
+	const int windowWidth, const int windowHeight, DXGI_FORMAT renderTargetFormat, const std::string& name,
 	const std::string& pixelShaderFilename, const std::string& vertexShaderFilename) : BasePostProcessing(deviceContext, device)
 {
 	Logger::Debug("Preparing new post processing effect...");
+
+	Name = name;
 
 	if (!VertexShaderInstance.Initialize(Device, StringUtil::StringToWide(vertexShaderFilename), PositionVertex::Layout, PositionVertex::LayoutSize))
 		Logger::Error("'" + vertexShaderFilename +"' not initialized due to critical problem!");
@@ -29,4 +31,9 @@ Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ReusablePostProcessing::Process
 	Draw(VertexBufferInstance, IndexBufferInstance, offset, 1);
 
 	return OutputRenderTexture.GetShaderResourceView();
+}
+
+std::string& ReusablePostProcessing::GetName()
+{
+	return Name;
 }

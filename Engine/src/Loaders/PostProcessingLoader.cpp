@@ -29,8 +29,8 @@ void PostProcessingLoader::MapPostProcessingEffects(const std::string& effectInp
 {
 	if (mappedEffectName == effectInputName)
 	{
-		Logger::Debug("Adding '" + mappedEffectName + "' post processing to stack...");
+		Logger::Debug("Adding '" + effectInputName + "' post processing to stack...");
 		postProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(deviceContext, device,
-			windowWidth, windowHeight, format, pixelShaderFilename, vertexShaderFilename));
+			windowWidth, windowHeight, format, effectInputName, pixelShaderFilename, vertexShaderFilename));
 	}
 }
