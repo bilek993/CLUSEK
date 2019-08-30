@@ -15,8 +15,6 @@ void PostProcessingLoader::Load(const std::string& path, const DXGI_FORMAT forma
 
 	for (auto it = jsonObject.begin(); it != jsonObject.end(); ++it)
 	{
-		Logger::Debug("Adding new post processing...");
-
 		auto postProcessingEffectName = it.value().get<std::string>();
 
 		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "ToneMapper", "tone_mapper_pixel_shader.cso", "tone_mapper_vertex_shader.cso");
@@ -31,6 +29,7 @@ void PostProcessingLoader::MapPostProcessingEffects(const std::string& effectInp
 {
 	if (mappedEffectName == effectInputName)
 	{
+		Logger::Debug("Adding '" + mappedEffectName + "' post processing to stack...");
 		postProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(deviceContext, device,
 			windowWidth, windowHeight, format, pixelShaderFilename, vertexShaderFilename));
 	}
