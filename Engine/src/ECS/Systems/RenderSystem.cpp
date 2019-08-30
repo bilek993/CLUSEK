@@ -10,6 +10,7 @@
 #include "../../Renderer/Generators/CubeGenerator.h"
 #include "../../Tags.h"
 #include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
+#include "../../Loaders/PostProcessingLoader.h"
 
 void RenderSystem::Start()
 {
@@ -405,11 +406,8 @@ void RenderSystem::InitializeConstantBuffers()
 
 void RenderSystem::InitializePostProcessing()
 {
-	ToneMapperPostProcessingInstance = std::make_unique<ReusablePostProcessing>(DeviceContext.Get(),
-		Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT, "tone_mapper_pixel_shader.cso", "tone_mapper_vertex_shader.cso");
-
-	GammaCorrectionPostProcessingInstance = std::make_unique<ReusablePostProcessing>(DeviceContext.Get(),
-		Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT, "gamma_correction_pixel_shader.cso", "gamma_correction_vertex_shader.cso");
+	PostProcessingLoader::Load(ConfigurationData->PathToPostProcessing, DXGI_FORMAT_R32G32B32A32_FLOAT, 
+		CurrentPostProcessingSettings, DeviceContext.Get(), Device.Get(), WindowWidth, WindowHeight);
 
 	CopyToBackBufferPostProcessingInstance = std::make_unique<CopyToBackBufferPostProcessing>(DeviceContext.Get(), 
 		Device.Get(), BackBufferRenderTargetView.GetAddressOf());
@@ -511,11 +509,8 @@ void RenderSystem::PerformPostProcessing() const
 {
 	auto currentInput = IntermediateRenderTexture.GetShaderResourceView();
 
-	if (CurrentPostProcessingSettings->ToneMapperEnabled)
-		currentInput = ToneMapperPostProcessingInstance->Process(currentInput.GetAddressOf());
-
-	if (CurrentPostProcessingSettings->GammaCorrectionEnabled)
-		currentInput = GammaCorrectionPostProcessingInstance->Process(currentInput.GetAddressOf());
+	for (auto& postProcessingEffect : CurrentPostProcessingSettings->List)
+		currentInput = postProcessingEffect->Process(currentInput.GetAddressOf());
 
 	CopyToBackBufferPostProcessingInstance->Process(currentInput.GetAddressOf());
 }

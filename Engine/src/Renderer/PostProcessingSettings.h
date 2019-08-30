@@ -1,7 +1,8 @@
 #pragma once
+#include "PostProcessing/ReusablePostProcessing.h"
+#include "vector"
 
 struct PostProcessingSettings final
 {
-	bool ToneMapperEnabled = true;
-	bool GammaCorrectionEnabled = true;
+	std::vector<std::unique_ptr<ReusablePostProcessing>> List;
 };
