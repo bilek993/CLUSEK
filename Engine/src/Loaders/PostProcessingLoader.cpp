@@ -3,9 +3,8 @@
 #include <json.hpp>
 #include <fstream>
 
-void PostProcessingLoader::Load(const std::string& path, const DXGI_FORMAT format, 
-	PostProcessingSettings* postProcessingSettings, ID3D11DeviceContext* deviceContext, ID3D11Device* device,
-	const int windowWidth, const int windowHeight)
+void PostProcessingLoader::Load(const std::string& path, PostProcessingSettings* postProcessingSettings, 
+	ID3D11DeviceContext* deviceContext, ID3D11Device* device, const int windowWidth, const int windowHeight)
 {
 	Logger::Debug("Preparing to load map from path '" + path + "'...");
 

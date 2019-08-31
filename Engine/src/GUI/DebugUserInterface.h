@@ -22,7 +22,7 @@ public:
 	void Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
 		const std::function<void()> &functionCloseEngine);
 	void Update(float deltaTime, ConfigData *configData, IOData *ioData, 
-		std::vector<SystemHolder> *systems, DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings);
+		std::vector<SystemHolder> *systems, int renderSystemId, DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings);
 
 	~DebugUserInterface();
 private:

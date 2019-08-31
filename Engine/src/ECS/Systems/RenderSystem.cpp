@@ -406,8 +406,9 @@ void RenderSystem::InitializeConstantBuffers()
 
 void RenderSystem::InitializePostProcessing()
 {
-	PostProcessingLoader::Load(ConfigurationData->PathToPostProcessing, DXGI_FORMAT_R32G32B32A32_FLOAT, 
-		CurrentPostProcessingSettings, DeviceContext.Get(), Device.Get(), WindowWidth, WindowHeight);
+	CurrentPostProcessingSettings->Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	PostProcessingLoader::Load(ConfigurationData->PathToPostProcessing, CurrentPostProcessingSettings,
+		DeviceContext.Get(), Device.Get(), WindowWidth, WindowHeight);
 
 	CopyToBackBufferPostProcessingInstance = std::make_unique<CopyToBackBufferPostProcessing>(DeviceContext.Get(), 
 		Device.Get(), BackBufferRenderTargetView.GetAddressOf());

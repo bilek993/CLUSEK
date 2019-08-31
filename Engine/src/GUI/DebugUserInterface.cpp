@@ -31,7 +31,7 @@ void DebugUserInterface::BeforeUpdate() const
 }
 
 void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, IOData *ioData, 
-	std::vector<SystemHolder> *systems,	DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings)
+	std::vector<SystemHolder> *systems, int renderSystemId, DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings)
 {
 	BeforeUpdate();
 
@@ -44,15 +44,15 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 
 	HandleMainDockingArea();
 
-	CameraSpeedWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
-	SystemsManagerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
-	FpsTimerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
-	LightingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
-	BackBufferWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
-	MouseInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
-	KeyboardInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
-	GamePadInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
-	PostProcessingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, ioData, postProcessingSettings);
+	CameraSpeedWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
+	SystemsManagerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
+	FpsTimerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
+	LightingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
+	BackBufferWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
+	MouseInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
+	KeyboardInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
+	GamePadInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
+	PostProcessingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
 
 	AfterUpdate();
 }
