@@ -40,6 +40,10 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, co
 			vertex.Tangent.y = mesh->mTangents[j].y;
 			vertex.Tangent.z = mesh->mTangents[j].z;
 
+			vertex.Bitangent.x = mesh->mBitangents[j].x;
+			vertex.Bitangent.y = mesh->mBitangents[j].y;
+			vertex.Bitangent.z = mesh->mBitangents[j].z;
+
 			if (mesh->mTextureCoords[0])
 			{
 				vertex.TextureCoord.x = static_cast<float>(mesh->mTextureCoords[0][j].x);

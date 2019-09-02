@@ -16,6 +16,7 @@ struct PS_INPUT
     float2 TextureCoord : TEXCOORD;
     float3 Normal : NORMAL;
     float3 Tangent : TANGENT;
+    float3 Bitangent : BITANGENT;
 };
 
 Texture2D AlbedoTexture : TEXTURE : register(t0);
