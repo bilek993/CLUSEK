@@ -1,18 +1,22 @@
 {
   "BodyPaint": {
-    "AlbedoTexture": "CivilianVehicle_SilverPaintAlbedo"
+    "AlbedoTexture": "CivilianVehicle_SilverPaintAlbedo",
+	"NormalTexture": "CivilianVehicle_BodyNormal"
   },
   "Bottom": {
-    "AlbedoTexture": "CivilianVehicle_MiscAlbedo"
+    "AlbedoTexture": "CivilianVehicle_MiscAlbedo",
+	"NormalTexture": "CivilianVehicle_MiscNormal"
   },
   "GlassDetails": {
     "AlbedoTexture": "CivilianVehicle_BlackGlassAlbedo"
   },
   "Interior": {
-    "AlbedoTexture": "CivilianVehicle_InteriorAlbedo"
+    "AlbedoTexture": "CivilianVehicle_InteriorAlbedo",
+	"NormalTexture": "CivilianVehicle_InteriorNormal"
   },
   "LightDetails": {
-    "AlbedoTexture": "CivilianVehicle_LightAlbedo"
+    "AlbedoTexture": "CivilianVehicle_LightAlbedo",
+	"NormalTexture": "CivilianVehicle_LightNormal"
   },
   "LightGlass": {
     "Alpha": 0.4,
@@ -23,12 +27,15 @@
     "AlbedoTexture": "CivilianVehicle_BlackGlassAlbedo"
   },
   "VehicleDetails": {
-    "AlbedoTexture": "CivilianVehicle_BodyAlbedo"
+    "AlbedoTexture": "CivilianVehicle_BodyAlbedo",
+	"NormalTexture": "CivilianVehicle_BodyNormal"
   },
   "WheelTire": {
-    "AlbedoTexture": "CivilianVehicle_MiscAlbedo"
+    "AlbedoTexture": "CivilianVehicle_MiscAlbedo",
+	"NormalTexture": "CivilianVehicle_MiscNormal"
   },
   "WheelRim": {
-    "AlbedoTexture": "CivilianVehicle_WheelAlbedo"
+    "AlbedoTexture": "CivilianVehicle_WheelAlbedo",
+	"NormalTexture": "CivilianVehicle_WheelNormal"
   }
 }
