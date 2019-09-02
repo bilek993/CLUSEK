@@ -34,7 +34,7 @@ void PostProcessingWindow::DrawStack() const
 		if (ImGui::BeginDragDropSource(ImGuiDragDropFlags_SourceAllowNullID))
 		{
 			ImGui::SetDragDropPayload(PAYLOAD_CELL_NAME.c_str(), &i, sizeof(int));
-			ImGui::Text("Swap %s", CurrentPostProcessingSettings->List[i]->GetName().c_str());
+			ImGui::Text("Swap this with %s", CurrentPostProcessingSettings->List[i]->GetName().c_str());
 			ImGui::EndDragDropSource();
 		}
 		if (ImGui::BeginDragDropTarget())
