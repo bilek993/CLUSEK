@@ -16,12 +16,24 @@ struct PS_INPUT
     float2 TextureCoord : TEXCOORD;
     float3 Normal : NORMAL;
     float3 Tangent : TANGENT;
-    float3 Bitangent : BITANGENT;
 };
 
 Texture2D AlbedoTexture : TEXTURE : register(t0);
 Texture2D NormalTexture : TEXTURE : register(t1);
 SamplerState Sampler : SAMPLER : register(s0);
+
+float3 calculateNormal(PS_INPUT input)
+{
+    float3 normalMap = NormalTexture.Sample(Sampler, input.TextureCoord).rgb;
+    normalMap = (2.0f * normalMap) - 1.0f;
+
+    float3 tangent = normalize(input.Tangent - dot(input.Tangent, input.Normal) * input.Normal);
+    float3 biTangent = cross(input.Normal, tangent);
+
+    float3x3 texSpace = float3x3(tangent, biTangent, input.Normal);
+
+    return normalize(mul(normalMap, texSpace));
+}
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
@@ -29,7 +41,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     samplerColor = gammaCorrectTexture(samplerColor);
 
     float3 ambientLight = AmbientLightColor * AmbientLightStrength;
-    float3 directionalLight = saturate(dot(DirectionalLightDirection, input.Normal) * (DirectionalLightColor * DirectionalLightStrength) * samplerColor);
+    float3 directionalLight = saturate(dot(DirectionalLightDirection, calculateNormal(input)) * (DirectionalLightColor * DirectionalLightStrength) * samplerColor);
 
     float3 finalColor = ambientLight * samplerColor;
     finalColor += directionalLight;
