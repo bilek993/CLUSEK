@@ -15,7 +15,7 @@
 	"CivilianVehicle_SilverPaintAlbedo": "Data/Textures/CivilianVehicle/SilverPaintAlbedo.png",
 	"CivilianVehicle_BlackGlassAlbedo": "Data/Textures/CivilianVehicle/BlackGlassAlbedo.png",
 	"CivilianVehicle_WheelAlbedo": "Data/Textures/CivilianVehicle/WheelAlbedo.png",
-	"CivilianVehicle_WheelNormal": "Data/Textures/CivilianVehicle/WheelAlbedo.png",
+	"CivilianVehicle_WheelNormal": "Data/Textures/CivilianVehicle/WheelNormal.png",
   
 	"Skybox": "Data/Textures/Environment/Skybox.dds"
   }
