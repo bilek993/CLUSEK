@@ -13,7 +13,7 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, co
 	Assimp::Importer importer;
 
 	Logger::Debug("Reading data from file...");
-	const auto scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
+	const auto scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_CalcTangentSpace);
 	if (scene == nullptr)
 		return;
 
@@ -35,6 +35,10 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, co
 			vertex.Normal.x = mesh->mNormals[j].x;
 			vertex.Normal.y = mesh->mNormals[j].y;
 			vertex.Normal.z = mesh->mNormals[j].z;
+
+			vertex.Tangent.x = mesh->mTangents[j].x;
+			vertex.Tangent.y = mesh->mTangents[j].y;
+			vertex.Tangent.z = mesh->mTangents[j].z;
 
 			if (mesh->mTextureCoords[0])
 			{
