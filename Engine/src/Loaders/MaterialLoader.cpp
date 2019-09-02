@@ -5,6 +5,7 @@
 #include <json.hpp>
 #include "../Utils/StringUtil.h"
 
+// This variable cannot be inline due to stupid compiler error in VS 2017
 std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
 
 void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path, const std::string& resourceId)
@@ -21,26 +22,11 @@ void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path,
 	TextureResources[resourceId] = resource;
 }
 
-void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId, const float alpha)
+void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId,
+	const std::string& normalTextureId, const float alpha)
 {
-	const auto texturePointer = TextureResources.find(albedoTextureId);
-
-	if (albedoTextureId.empty())
-	{
-		Logger::Warning("Incorrect resource id.");
-		mesh.Material.AlbedoTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
-		SetPinkTexture(device, *mesh.Material.AlbedoTexture);
-	}
-	else if (texturePointer == TextureResources.end())
-	{
-		Logger::Warning("Resource with id '" + albedoTextureId + "' not found!");
-		mesh.Material.AlbedoTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
-		SetPinkTexture(device, *mesh.Material.AlbedoTexture);
-	}
-	else
-	{
-		mesh.Material.AlbedoTexture = texturePointer->second;
-	}
+	mesh.Material.AlbedoTexture = GetTextureById(device, albedoTextureId);
+	mesh.Material.NormalTexture = GetTextureById(device, normalTextureId);
 
 	mesh.Material.Alpha = alpha;
 }
@@ -85,12 +71,39 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
 		auto alphaJsonInfo = jsonObject[mesh.Name]["Alpha"];
 		auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
+		auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
 
 		SetResourceForMesh(	device,
 							mesh,
 							albedoTextureJsonInfo.is_null() ? "" : albedoTextureJsonInfo.get<std::string>(),
+							normalTextureJsonInfo.is_null() ? "" : normalTextureJsonInfo.get<std::string>(),
 							alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>());
 	}
+}
+
+std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::GetTextureById(ID3D11Device* device, const std::string& id)
+{
+	const auto texturePointer = TextureResources.find(id);
+	std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> outputTexture;
+
+	if (id.empty())
+	{
+		Logger::Warning("Incorrect resource id.");
+		outputTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+		SetPinkTexture(device, *outputTexture);
+	}
+	else if (texturePointer == TextureResources.end())
+	{
+		Logger::Warning("Resource with id '" + id + "' not found!");
+		outputTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+		SetPinkTexture(device, *outputTexture);
+	}
+	else
+	{
+		outputTexture = texturePointer->second;
+	}
+
+	return outputTexture;
 }
 
 void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
