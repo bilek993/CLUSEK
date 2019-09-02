@@ -25,6 +25,7 @@ SamplerState Sampler : SAMPLER : register(s0);
 float3 calculateNormal(PS_INPUT input)
 {
     float3 normalMap = NormalTexture.Sample(Sampler, input.TextureCoord).rgb;
+    normalMap.g = 1.0f - normalMap.g;
     normalMap = (2.0f * normalMap) - 1.0f;
 
     float3 tangent = normalize(input.Tangent - dot(input.Tangent, input.Normal) * input.Normal);
