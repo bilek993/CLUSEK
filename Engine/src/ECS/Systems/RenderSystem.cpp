@@ -501,6 +501,8 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 			DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
 
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
+			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
+
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
 
