@@ -31,6 +31,16 @@ This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2
 
 
 
+## Normal maps
+
+Normal mapping is a technique used in realtime computer graphics to fake bump on materials. It helps reduce polygons and keep most of the details at the same time. Unfortunately, there is no one standard for normal mapping. Different engines are using different mappings for RGB colors to XYZ coordinates. This game engine is using the same mapping as a Unity game engine, which is mapped like this:
+
+| Red | Green | Blue |
+|-----|-------|------|
+| X+  | Y+    | Z+   |
+
+
+
 ## Requirements
 
 ### Runtime requirements:
