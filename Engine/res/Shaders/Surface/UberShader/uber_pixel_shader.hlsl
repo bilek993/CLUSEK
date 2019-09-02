@@ -29,9 +29,9 @@ float3 calculateNormal(PS_INPUT input)
     normalMap = (2.0f * normalMap) - 1.0f;
 
     float3 tangent = normalize(input.Tangent - dot(input.Tangent, input.Normal) * input.Normal);
-    float3 biTangent = cross(input.Normal, tangent);
+    float3 bitangent = cross(input.Normal, tangent);
 
-    float3x3 texSpace = float3x3(tangent, biTangent, input.Normal);
+    float3x3 texSpace = float3x3(tangent, bitangent, input.Normal);
 
     return normalize(mul(normalMap, texSpace));
 }
