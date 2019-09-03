@@ -16,17 +16,23 @@ struct VS_OUTPUT
 {
     float4 Position : SV_POSITION;
     float2 TextureCoord : TEXCOORD;
-    float3 Normal : NORMAL;
-    float3 Tangent : TANGENT;
+    float3x3 TBN : TBN;
 };
+
+float3x3 calculateTbnMatrix(VS_INPUT input)
+{
+    float3 tangent = normalize(input.Tangent - dot(input.Tangent, input.Normal) * input.Normal);
+    float3 bitangent = cross(input.Normal, tangent);
+
+    return float3x3(tangent, bitangent, input.Normal);
+}
 
 VS_OUTPUT main(VS_INPUT input)
 {
     VS_OUTPUT output;
     output.Position = mul(float4(input.Position, 1.0f), WorldViewProjectionMat);
     output.TextureCoord = input.TextureCoord;
-    output.Normal = normalize(mul(float4(input.Normal, 0.0f), WorldMatrix)).xyz;
-    output.Tangent = mul(float4(input.Tangent, 0.0f), WorldMatrix).xyz;
+    output.TBN = calculateTbnMatrix(input);
 
     return output;
 }
