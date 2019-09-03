@@ -190,6 +190,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Shaders\Includes\normal_utils.hlsli" />
     <None Include="res\Shaders\Includes\gamma_correction_utils.hlsli" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,4 +1,5 @@
 #include "../../Includes/gamma_correction_utils.hlsli"
+#include "../../Includes/normal_utils.hlsli"
 
 cbuffer LightAndAlphaBuffer : register(b0)
 {
@@ -21,22 +22,15 @@ Texture2D AlbedoTexture : TEXTURE : register(t0);
 Texture2D NormalTexture : TEXTURE : register(t1);
 SamplerState Sampler : SAMPLER : register(s0);
 
-float3 calculateNormal(PS_INPUT input)
-{
-    float3 normalMap = NormalTexture.Sample(Sampler, input.TextureCoord).rgb;
-    normalMap = (2.0f * normalMap) - 1.0f;
-    normalMap.g *= -1.0f;
-
-    return normalize(mul(normalMap, input.TBN));
-}
-
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 samplerColor = AlbedoTexture.Sample(Sampler, input.TextureCoord).rgb;
     samplerColor = gammaCorrectTexture(samplerColor);
 
+    float3 normalMap = NormalTexture.Sample(Sampler, input.TextureCoord).rgb;
+
     float3 ambientLight = AmbientLightColor * AmbientLightStrength;
-    float3 directionalLight = saturate(dot(DirectionalLightDirection, calculateNormal(input)) * (DirectionalLightColor * DirectionalLightStrength) * samplerColor);
+    float3 directionalLight = saturate(dot(DirectionalLightDirection, calculateNormal(normalMap, input.TBN)) * (DirectionalLightColor * DirectionalLightStrength) * samplerColor);
 
     float3 finalColor = ambientLight * samplerColor;
     finalColor += directionalLight;

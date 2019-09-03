@@ -1,3 +1,5 @@
+#include "../../Includes/normal_utils.hlsli"
+
 cbuffer FatPerObjectBuffer : register(b0)
 {
     float4x4 WorldViewProjectionMat;
@@ -19,20 +21,12 @@ struct VS_OUTPUT
     float3x3 TBN : TBN;
 };
 
-float3x3 calculateTbnMatrix(VS_INPUT input)
-{
-    float3 tangent = normalize(input.Tangent - dot(input.Tangent, input.Normal) * input.Normal);
-    float3 bitangent = cross(input.Normal, tangent);
-
-    return float3x3(tangent, bitangent, input.Normal);
-}
-
 VS_OUTPUT main(VS_INPUT input)
 {
     VS_OUTPUT output;
     output.Position = mul(float4(input.Position, 1.0f), WorldViewProjectionMat);
     output.TextureCoord = input.TextureCoord;
-    output.TBN = calculateTbnMatrix(input);
+    output.TBN = calculateTBN(input.Normal, input.Tangent);
 
     return output;
 }

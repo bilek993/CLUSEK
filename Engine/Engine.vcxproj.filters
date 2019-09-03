@@ -504,5 +504,8 @@
     <None Include="res\Shaders\Includes\gamma_correction_utils.hlsli">
       <Filter>Resource Files\Shaders\Includes</Filter>
     </None>
+    <None Include="res\Shaders\Includes\normal_utils.hlsli">
+      <Filter>Resource Files\Shaders\Includes</Filter>
+    </None>
   </ItemGroup>
 </Project>
