@@ -3,7 +3,7 @@
 #include "Windows/SystemsManagerWindow.h"
 #include "../Renderer/PostProcessingSettings.h"
 
-void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
+void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const ConfigData *configData,
 	const std::function<void()> &functionCloseEngine)
 {
 	Logger::Debug("Preparing to initialize ImGui...");
@@ -16,7 +16,7 @@ void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D1
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(device, deviceContext);
 
-	SetupStyle();
+	SetupStyle(configData);
 
 	FunctionCloseEngine = functionCloseEngine;
 }
@@ -29,7 +29,7 @@ void DebugUserInterface::BeforeUpdate() const
 }
 
 void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, IOData *ioData, 
-	std::vector<SystemHolder> *systems, int renderSystemId, DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings)
+	std::vector<SystemHolder> *systems, const int renderSystemId, DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings)
 {
 	BeforeUpdate();
 
@@ -141,12 +141,17 @@ DebugUserInterface::~DebugUserInterface()
 	ImGui::DestroyContext();
 }
 
-void DebugUserInterface::SetupStyle() const
+void DebugUserInterface::SetupStyle(const ConfigData *configData) const
 {
+	Logger::Warning("Preparing to change ImGui style...");
+
 	ImGui::StyleColorsDark();
 
 	auto& io = ImGui::GetIO();
-	io.Fonts->AddFontFromFileTTF("Data\\Fonts\\Montserrat-Medium.ttf", 14.0f);
+	if (!configData->PathToImGuiFont.empty())
+		io.Fonts->AddFontFromFileTTF(configData->PathToImGuiFont.c_str(), 14.0f);
+
+	Logger::Warning("ImGui style changed!");
 }
 
 void DebugUserInterface::HandleKeyboardEvents(const IOData *ioData)

@@ -13,6 +13,9 @@ struct ConfigData final
 	int WindowWidth = 640;
 	int WindowHeight = 480;
 
+	// ImGui
+	std::string PathToImGuiFont = "";
+
 	// DirectX settings
 	int Fullscreen = 0;
 	int SyncIntervals = 1;

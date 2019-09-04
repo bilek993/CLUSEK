@@ -35,6 +35,8 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, WindowWidth, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, WindowHeight, data, std::stoi(value));
 
+			MAP_CONFIG_FIELD(key, PathToImGuiFont, data, value);
+
 			MAP_CONFIG_FIELD(key, Fullscreen, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, SyncIntervals, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, SelectedAdapterId, data, std::stoi(value));

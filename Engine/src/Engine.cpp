@@ -95,7 +95,7 @@ void Engine::InitializeSystems()
 void Engine::InitializeUserInterface()
 {
 	const auto renderSystem = dynamic_cast<RenderSystem*>(Systems[RenderSystemId].System.get());
-	DebugUI.Initialize(Window.GetHandle(), renderSystem->GetPointerToDevice(), renderSystem->GetPointerToDeviceContext(), [this]()
+	DebugUI.Initialize(Window.GetHandle(), renderSystem->GetPointerToDevice(), renderSystem->GetPointerToDeviceContext(), &Config, [this]()
 	{
 		Window.UserRequestedQuit();
 	});

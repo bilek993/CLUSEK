@@ -19,14 +19,14 @@
 class DebugUserInterface final
 {
 public:
-	void Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
+	void Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const ConfigData *configData,
 		const std::function<void()> &functionCloseEngine);
 	void Update(float deltaTime, ConfigData *configData, IOData *ioData, 
 		std::vector<SystemHolder> *systems, int renderSystemId, DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings);
 
 	~DebugUserInterface();
 private:
-	void SetupStyle() const;
+	void SetupStyle(const ConfigData *configData) const;
 
 	void HandleKeyboardEvents(const IOData *ioData);
 	void HandleMainDockingArea();
