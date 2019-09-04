@@ -144,6 +144,9 @@ DebugUserInterface::~DebugUserInterface()
 void DebugUserInterface::SetupStyle() const
 {
 	ImGui::StyleColorsDark();
+
+	auto& io = ImGui::GetIO();
+	io.Fonts->AddFontFromFileTTF("Data\\Fonts\\Montserrat-Medium.ttf", 14.0f);
 }
 
 void DebugUserInterface::HandleKeyboardEvents(const IOData *ioData)
