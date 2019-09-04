@@ -10,7 +10,7 @@ void LightingWindow::Draw()
 		ImGuiColorEditFlags_NoAlpha |
 		ImGuiColorEditFlags_PickerHueBar |
 		ImGuiColorEditFlags_NoInputs);
-	ImGui::DragFloat("Strength##Ambient", &RenderSettings->AmbientLightStrength, 0.001f, 0.0f, 1.0f);
+	ImGui::DragFloat("Strength##Ambient", &RenderSettings->AmbientLightStrength, 0.005f, 0.0f, 100.0f);
 	ImGui::Separator();
 	ImGui::Text("Directional light settings:");
 	ImGui::ColorPicker3("Color##Directional",
@@ -18,7 +18,7 @@ void LightingWindow::Draw()
 		ImGuiColorEditFlags_NoAlpha |
 		ImGuiColorEditFlags_PickerHueBar |
 		ImGuiColorEditFlags_NoInputs);
-	ImGui::DragFloat("Strength##Directional", &RenderSettings->DirectionalLightStrength, 0.001f, 0.0f, 1.0f);
+	ImGui::DragFloat("Strength##Directional", &RenderSettings->DirectionalLightStrength, 0.005f, 0.0f, 100.0f);
 	ImGui::DragFloat3("Direction##Directional", &RenderSettings->DirectionalLightDirection.x, 0.001f, -1.0f, 1.0f);
 	ImGui::End();
 }
