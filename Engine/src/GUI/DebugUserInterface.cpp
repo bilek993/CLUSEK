@@ -1,9 +1,6 @@
 #include "DebugUserInterface.h"
 #include "../Utils/Logger.h"
 #include "Windows/SystemsManagerWindow.h"
-#include "Windows/FpsTimerWindow.h"
-#include "Windows/LightingWindow.h"
-#include "Windows/BackBufferWindow.h"
 #include "../Renderer/PostProcessingSettings.h"
 
 void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, 
@@ -18,7 +15,8 @@ void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D1
 	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
 	ImGui_ImplWin32_Init(hwnd);
 	ImGui_ImplDX11_Init(device, deviceContext);
-	ImGui::StyleColorsDark();
+
+	SetupStyle();
 
 	FunctionCloseEngine = functionCloseEngine;
 }
@@ -141,6 +139,11 @@ DebugUserInterface::~DebugUserInterface()
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();
 	ImGui::DestroyContext();
+}
+
+void DebugUserInterface::SetupStyle() const
+{
+	ImGui::StyleColorsDark();
 }
 
 void DebugUserInterface::HandleKeyboardEvents(const IOData *ioData)

@@ -26,6 +26,8 @@ public:
 
 	~DebugUserInterface();
 private:
+	void SetupStyle() const;
+
 	void HandleKeyboardEvents(const IOData *ioData);
 	void HandleMainDockingArea();
 
