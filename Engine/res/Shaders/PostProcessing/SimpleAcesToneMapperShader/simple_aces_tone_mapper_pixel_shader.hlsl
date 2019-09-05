@@ -7,9 +7,18 @@ struct PS_INPUT
 Texture2D InputTexture : TEXTURE : register(t0);
 SamplerState Sampler : SAMPLER : register(s0);
 
+float3 aces(float3 x)
+{
+    float a = 2.51f;
+    float b = 0.03f;
+    float c = 2.43f;
+    float d = 0.59f;
+    float e = 0.14f;
+    return saturate((x * (a * x + b)) / (x * (c * x + d) + e));
+}
+
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 output = InputTexture.Sample(Sampler, input.TextureCoord).rgb;
-    // TODO: Add code here
-    return float4(output, 1.0f);
+    return float4(aces(output), 1.0f);
 }
