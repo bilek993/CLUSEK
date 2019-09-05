@@ -1,6 +1,9 @@
 #pragma once
 #include "BaseWindow.h"
 
+// This function is designed for easier mapping creation of new post processing effect from gui
+#define MAP_POST_PROCESSING_EFFECT(NAME, VERTEX_FILENAME, PIXEL_FILENAME) CurrentPostProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(renderSystem->GetPointerToDeviceContext(), renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, NAME, PIXEL_FILENAME, VERTEX_FILENAME));
+
 class PostProcessingWindow final : public BaseWindow
 {
 protected:

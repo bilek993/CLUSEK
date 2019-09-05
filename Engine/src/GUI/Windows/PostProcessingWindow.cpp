@@ -69,19 +69,13 @@ void PostProcessingWindow::AddNewPostProcessingEffect() const
 	switch (SelectedItemForCreation)
 	{
 	case 0:
-		CurrentPostProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(renderSystem->GetPointerToDeviceContext(),
-			renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, "Gamma Correction",
-			"gamma_correction_pixel_shader.cso", "gamma_correction_vertex_shader.cso"));
+		MAP_POST_PROCESSING_EFFECT("Gamma Correction", "gamma_correction_vertex_shader.cso", "gamma_correction_pixel_shader.cso");
 		break;
 	case 1:
-		CurrentPostProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(renderSystem->GetPointerToDeviceContext(),
-			renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, "Reinhard Tone Mapper",
-			"reinhard_tone_mapper_pixel_shader.cso", "reinhard_tone_mapper_vertex_shader.cso"));
+		MAP_POST_PROCESSING_EFFECT("Reinhard Tone Mapper", "reinhard_tone_mapper_vertex_shader.cso", "reinhard_tone_mapper_pixel_shader.cso");
 		break;
 	case 2:
-		CurrentPostProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(renderSystem->GetPointerToDeviceContext(),
-			renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, "Simple ACES Tone Mapper",
-			"simple_aces_tone_mapper_pixel_shader.cso", "simple_aces_tone_mapper_vertex_shader.cso"));
+		MAP_POST_PROCESSING_EFFECT("Simple ACES Tone Mapper", "simple_aces_tone_mapper_vertex_shader.cso", "simple_aces_tone_mapper_pixel_shader.cso");
 		break;
 	default:
 		Logger::Warning("Selected item is incorrect.");
