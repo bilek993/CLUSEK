@@ -121,7 +121,7 @@
     <Filter Include="Resource Files\Shaders\PostProcessing\GammaCorrectionShader">
       <UniqueIdentifier>{e6b33acb-7ac0-420a-a8aa-fe45e24b4450}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\PostProcessing\ToneMapperShader">
+    <Filter Include="Resource Files\Shaders\PostProcessing\ReinhardToneMapperShader">
       <UniqueIdentifier>{aa4a0b73-8aec-42df-a10e-45ae72b91613}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -493,11 +493,11 @@
     <FxCompile Include="res\Shaders\PostProcessing\GammaCorrection\gamma_correction_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing\GammaCorrectionShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\ToneMapper\tone_mapper_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\ToneMapperShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\ReinhardToneMapper\reinhard_tone_mapper_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing\ReinhardToneMapperShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\ToneMapper\tone_mapper_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\ToneMapperShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\ReinhardToneMapper\reinhard_tone_mapper_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing\ReinhardToneMapperShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
@@ -505,6 +505,9 @@
       <Filter>Resource Files\Shaders\Includes</Filter>
     </None>
     <None Include="res\Shaders\Includes\normal_utils.hlsli">
+      <Filter>Resource Files\Shaders\Includes</Filter>
+    </None>
+    <None Include="res\Shaders\Includes\pbr.hlsli">
       <Filter>Resource Files\Shaders\Includes</Filter>
     </None>
   </ItemGroup>

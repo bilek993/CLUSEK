@@ -16,8 +16,8 @@ void PostProcessingLoader::Load(const std::string& path, PostProcessingSettings*
 	{
 		auto postProcessingEffectName = it.value().get<std::string>();
 
-		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "ToneMapper", "tone_mapper_pixel_shader.cso", "tone_mapper_vertex_shader.cso");
-		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "GammaCorrection", "gamma_correction_pixel_shader.cso", "gamma_correction_vertex_shader.cso");
+		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Reinhard Tone Mapper", "reinhard_tone_mapper_pixel_shader.cso", "reinhard_tone_mapper_vertex_shader.cso");
+		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Gamma Correction", "gamma_correction_pixel_shader.cso", "gamma_correction_vertex_shader.cso");
 	}
 }
 

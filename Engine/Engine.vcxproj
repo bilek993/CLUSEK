@@ -128,13 +128,13 @@
     <ClInclude Include="src\Tags.h" />
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="res\Shaders\PostProcessing\ToneMapper\tone_mapper_pixel_shader.hlsl">
+    <FxCompile Include="res\Shaders\PostProcessing\ReinhardToneMapper\reinhard_tone_mapper_pixel_shader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\ToneMapper\tone_mapper_vertex_shader.hlsl">
+    <FxCompile Include="res\Shaders\PostProcessing\ReinhardToneMapper\reinhard_tone_mapper_vertex_shader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
@@ -190,6 +190,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Shaders\Includes\pbr.hlsli" />
     <None Include="res\Shaders\Includes\normal_utils.hlsli" />
     <None Include="res\Shaders\Includes\gamma_correction_utils.hlsli" />
   </ItemGroup>

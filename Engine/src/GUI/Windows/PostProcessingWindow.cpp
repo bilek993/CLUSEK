@@ -70,13 +70,13 @@ void PostProcessingWindow::AddNewPostProcessingEffect() const
 	{
 	case 0:
 		CurrentPostProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(renderSystem->GetPointerToDeviceContext(),
-			renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, "GammaCorrection",
+			renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, "Gamma Correction",
 			"gamma_correction_pixel_shader.cso", "gamma_correction_vertex_shader.cso"));
 		break;
 	case 1:
 		CurrentPostProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(renderSystem->GetPointerToDeviceContext(),
-			renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, "ToneMapper",
-			"tone_mapper_pixel_shader.cso", "tone_mapper_vertex_shader.cso"));
+			renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, "Reinhard Tone Mapper",
+			"reinhard_tone_mapper_pixel_shader.cso", "reinhard_tone_mapper_vertex_shader.cso"));
 		break;
 	default:
 		Logger::Warning("Selected item is incorrect.");
