@@ -78,6 +78,11 @@ void PostProcessingWindow::AddNewPostProcessingEffect() const
 			renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, "Reinhard Tone Mapper",
 			"reinhard_tone_mapper_pixel_shader.cso", "reinhard_tone_mapper_vertex_shader.cso"));
 		break;
+	case 2:
+		CurrentPostProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(renderSystem->GetPointerToDeviceContext(),
+			renderSystem->GetPointerToDevice(), windowWidth, windowHeight, CurrentPostProcessingSettings->Format, "Simple ACES Tone Mapper",
+			"simple_aces_tone_mapper_pixel_shader.cso", "simple_aces_tone_mapper_vertex_shader.cso"));
+		break;
 	default:
 		Logger::Warning("Selected item is incorrect.");
 	}

@@ -17,6 +17,7 @@ private:
 	inline static const char* const AVAILABLE_POST_PROCESSING_EFFECTS[] = 
 	{ 
 		"Gamma Correction", 
-		"Reinhard Tone Mapper", 
+		"Reinhard Tone Mapper",
+		"Simple ACES Tone Mapper",
 	};
 };
