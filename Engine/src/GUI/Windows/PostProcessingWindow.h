@@ -22,5 +22,6 @@ private:
 		"Gamma Correction", 
 		"Reinhard Tone Mapper",
 		"Simple ACES Tone Mapper",
+		"Complex ACES Tone Mapper",
 	};
 };
