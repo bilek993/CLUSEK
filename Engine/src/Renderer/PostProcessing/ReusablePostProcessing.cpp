@@ -3,14 +3,14 @@
 
 ReusablePostProcessing::ReusablePostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device,
 	const int windowWidth, const int windowHeight, DXGI_FORMAT renderTargetFormat, const std::string& name,
-	const std::string& pixelShaderFilename, const std::string& vertexShaderFilename) : BasePostProcessing(deviceContext, device)
+	const std::string& pixelShaderFilename) : BasePostProcessing(deviceContext, device)
 {
 	Logger::Debug("Preparing new post processing effect...");
 
 	Name = name;
 
-	if (!VertexShaderInstance.Initialize(Device, StringUtil::StringToWide(vertexShaderFilename), PositionVertex::Layout, PositionVertex::LayoutSize))
-		Logger::Error("'" + vertexShaderFilename +"' not initialized due to critical problem!");
+	if (!VertexShaderInstance.Initialize(Device, StringUtil::StringToWide("post_processing_vertex_shader.cso"), PositionVertex::Layout, PositionVertex::LayoutSize))
+		Logger::Error("'post_processing_vertex_shader.cso' not initialized due to critical problem!");
 
 	if (!PixelShaderInstance.Initialize(Device, StringUtil::StringToWide(pixelShaderFilename)))
 		Logger::Error("'" + pixelShaderFilename + "' not initialized due to critical problem!");

@@ -69,16 +69,16 @@ void PostProcessingWindow::AddNewPostProcessingEffect() const
 	switch (SelectedItemForCreation)
 	{
 	case 0:
-		MAP_POST_PROCESSING_EFFECT("Gamma Correction", "gamma_correction_vertex_shader.cso", "gamma_correction_pixel_shader.cso");
+		MAP_POST_PROCESSING_EFFECT("Gamma Correction", "gamma_correction_pixel_shader.cso");
 		break;
 	case 1:
-		MAP_POST_PROCESSING_EFFECT("Reinhard Tone Mapper", "reinhard_tone_mapper_vertex_shader.cso", "reinhard_tone_mapper_pixel_shader.cso");
+		MAP_POST_PROCESSING_EFFECT("Reinhard Tone Mapper", "reinhard_tone_mapper_pixel_shader.cso");
 		break;
 	case 2:
-		MAP_POST_PROCESSING_EFFECT("Simple ACES Tone Mapper", "simple_aces_tone_mapper_vertex_shader.cso", "simple_aces_tone_mapper_pixel_shader.cso");
+		MAP_POST_PROCESSING_EFFECT("Simple ACES Tone Mapper", "simple_aces_tone_mapper_pixel_shader.cso");
 		break;
 	case 3:
-		MAP_POST_PROCESSING_EFFECT("Complex ACES Tone Mapper", "complex_aces_tone_mapper_vertex_shader.cso", "complex_aces_tone_mapper_pixel_shader.cso");
+		MAP_POST_PROCESSING_EFFECT("Complex ACES Tone Mapper", "complex_aces_tone_mapper_pixel_shader.cso");
 		break;
 	default:
 		Logger::Warning("Selected item is incorrect.");

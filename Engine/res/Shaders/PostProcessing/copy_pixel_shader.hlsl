@@ -1,5 +1,3 @@
-#include "../../Includes/gamma_correction_utils.hlsli"
-
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
@@ -11,7 +9,5 @@ SamplerState Sampler : SAMPLER : register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    float3 output = InputTexture.Sample(Sampler, input.TextureCoord).rgb;
-    output = gammaCorrectFinal(output);
-    return float4(output, 1.0f);
+    return InputTexture.Sample(Sampler, input.TextureCoord);
 }

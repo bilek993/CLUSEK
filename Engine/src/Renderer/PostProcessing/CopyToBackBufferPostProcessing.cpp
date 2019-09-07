@@ -7,7 +7,7 @@ CopyToBackBufferPostProcessing::CopyToBackBufferPostProcessing(ID3D11DeviceConte
 
 	BackBufferRenderTargetViews = backBufferRenderTargetViews;
 
-	if (!CopyVertexShader.Initialize(Device, L"copy_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
+	if (!CopyVertexShader.Initialize(Device, L"post_processing_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
 		Logger::Error("CopyVertexShader not initialized due to critical problem!");
 
 	if (!CopyPixelShader.Initialize(Device, L"copy_pixel_shader.cso"))

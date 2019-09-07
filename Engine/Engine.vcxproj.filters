@@ -109,26 +109,11 @@
     <Filter Include="Resource Files\Shaders\Surface">
       <UniqueIdentifier>{fd635449-31c0-40fb-83f0-c2d07adf0a86}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\PostProcessing\CopyShader">
-      <UniqueIdentifier>{90fb61f8-2d0c-4135-9b2e-9d5f7057fbf4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Resource Files\Shaders\Surface\SkyShader">
       <UniqueIdentifier>{1531225d-7db3-43b7-978c-3dc0669fa373}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files\Shaders\Surface\UberShader">
       <UniqueIdentifier>{e3808e4a-1c17-447f-940a-2f5b571ce466}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Shaders\PostProcessing\GammaCorrectionShader">
-      <UniqueIdentifier>{e6b33acb-7ac0-420a-a8aa-fe45e24b4450}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Shaders\PostProcessing\ReinhardToneMapperShader">
-      <UniqueIdentifier>{aa4a0b73-8aec-42df-a10e-45ae72b91613}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Shaders\PostProcessing\SimpleAcesToneMapperShader">
-      <UniqueIdentifier>{98171934-cdfa-4460-a6a2-5143fb97df87}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Shaders\PostProcessing\ComplexAcesToneMapperShader">
-      <UniqueIdentifier>{b9f1d2fc-a685-4535-b088-a4740ba3bfca}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -475,12 +460,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="res\Shaders\PostProcessing\CopyShader\copy_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\CopyShader</Filter>
-    </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\CopyShader\copy_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\CopyShader</Filter>
-    </FxCompile>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\Surface\UberShader</Filter>
     </FxCompile>
@@ -493,29 +472,23 @@
     <FxCompile Include="res\Shaders\Surface\SkyShader\sky_vertex_shader.hlsl">
       <Filter>Resource Files\Shaders\Surface\SkyShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\GammaCorrection\gamma_correction_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\GammaCorrectionShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\complex_aces_tone_mapper_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\GammaCorrection\gamma_correction_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\GammaCorrectionShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\copy_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\ReinhardToneMapper\reinhard_tone_mapper_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\ReinhardToneMapperShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\gamma_correction_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\ReinhardToneMapper\reinhard_tone_mapper_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\ReinhardToneMapperShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\reinhard_tone_mapper_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\SimpleAcesToneMapperShader\simple_aces_tone_mapper_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\SimpleAcesToneMapperShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\simple_aces_tone_mapper_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\SimpleAcesToneMapperShader\simple_aces_tone_mapper_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\SimpleAcesToneMapperShader</Filter>
-    </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\ComplexAcesToneMapperShader\complex_aces_tone_mapper_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\ComplexAcesToneMapperShader</Filter>
-    </FxCompile>
-    <FxCompile Include="res\Shaders\PostProcessing\ComplexAcesToneMapperShader\complex_aces_tone_mapper_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\PostProcessing\ComplexAcesToneMapperShader</Filter>
+    <FxCompile Include="res\Shaders\PostProcessing\post_processing_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,22 +16,21 @@ void PostProcessingLoader::Load(const std::string& path, PostProcessingSettings*
 	{
 		auto postProcessingEffectName = it.value().get<std::string>();
 
-		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Gamma Correction", "gamma_correction_pixel_shader.cso", "gamma_correction_vertex_shader.cso");
-		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Reinhard Tone Mapper", "reinhard_tone_mapper_pixel_shader.cso", "reinhard_tone_mapper_vertex_shader.cso");
-		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Simple ACES Tone Mapper", "simple_aces_tone_mapper_pixel_shader.cso", "simple_aces_tone_mapper_vertex_shader.cso");
-		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Complex ACES Tone Mapper", "complex_aces_tone_mapper_pixel_shader.cso", "complex_aces_tone_mapper_vertex_shader.cso");
+		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Gamma Correction", "gamma_correction_pixel_shader.cso");
+		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Reinhard Tone Mapper", "reinhard_tone_mapper_pixel_shader.cso");
+		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Simple ACES Tone Mapper", "simple_aces_tone_mapper_pixel_shader.cso");
+		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Complex ACES Tone Mapper", "complex_aces_tone_mapper_pixel_shader.cso");
 	}
 }
 
 void PostProcessingLoader::MapPostProcessingEffects(const std::string& effectInputName, const std::string& mappedEffectName,
-	const std::string& pixelShaderFilename, const std::string& vertexShaderFilename, DXGI_FORMAT format,
-	PostProcessingSettings* postProcessingSettings, ID3D11DeviceContext* deviceContext, ID3D11Device* device,
-	int windowWidth, int windowHeight)
+	const std::string& pixelShaderFilename, DXGI_FORMAT format,	PostProcessingSettings* postProcessingSettings, 
+	ID3D11DeviceContext* deviceContext, ID3D11Device* device, int windowWidth, int windowHeight)
 {
 	if (mappedEffectName == effectInputName)
 	{
 		Logger::Debug("Adding '" + effectInputName + "' post processing to stack...");
 		postProcessingSettings->List.emplace_back(std::make_unique<ReusablePostProcessing>(deviceContext, device,
-			windowWidth, windowHeight, format, effectInputName, pixelShaderFilename, vertexShaderFilename));
+			windowWidth, windowHeight, format, effectInputName, pixelShaderFilename));
 	}
 }
