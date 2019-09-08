@@ -13,7 +13,7 @@ TODO: ADD IMAGES
 
 ## Binary download
 
-The latest official version of this game engine can always be found [here](https://github.com/bilek993/CLUSEK/releases/latest). You can also download any release version you like. All release versions can be found [here](https://github.com/bilek993/CLUSEK/releases).
+The latest official version of this game engine can always be found [here](https://github.com/bilek993/CLUSEK/releases/latest/). You can also download any release version you like. All release versions can be found [here](https://github.com/bilek993/CLUSEK/releases/).
 
 
 
