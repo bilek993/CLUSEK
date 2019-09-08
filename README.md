@@ -11,6 +11,12 @@ TODO: ADD IMAGES
 
 
 
+## Binary download
+
+The latest official version of this game engine can always be found [here](https://github.com/bilek993/CLUSEK/releases/latest). You can also download any release version you like. All release versions can be found [here](https://github.com/bilek993/CLUSEK/releases).
+
+
+
 ## Coding standards
 This project is using [ISO C++ 17 Standard](https://en.wikipedia.org/wiki/C%2B%2B17), so the code should use latest features designed for this standard. Also it is highly recommended to install and configure [ReSharper C++](https://www.jetbrains.com/resharper-cpp/) for overall better code quality. For consistent code it is required to use Microsoft naming conventions. This naming standard can be set from Resharper tool, but can be also followed manually. This naming standard requires to:
 
