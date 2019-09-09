@@ -90,6 +90,16 @@ Normal mapping is a technique used in realtime computer graphics to fake bump on
 
 
 
+## Metalic-Smoothness maps
+
+Physical Based Rendering (or PBR) helps reconstruct the real world like appearance of objects. There are two workflows for PBR: specular and metalness. This game engine uses metalness approach, which utilizes only two color channels, red and alpha. The green and blue channels are ignored by the game engine. Usually, they are filled with the same value as the red channel, because it is usually easier to visualizer metalness value of a texture. Mapping for this texture looks like this:
+
+| Red       | Alpha      |
+|-----------|------------|
+| Metalness | Smoothness |
+
+
+
 ## Requirements
 
 ### Runtime requirements:
