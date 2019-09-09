@@ -143,7 +143,7 @@ DebugUserInterface::~DebugUserInterface()
 
 void DebugUserInterface::SetupStyle(const ConfigData *configData) const
 {
-	Logger::Warning("Preparing to change ImGui style...");
+	Logger::Debug("Preparing to change ImGui style...");
 
 	ImGui::StyleColorsDark();
 	auto& style = ImGui::GetStyle();
@@ -206,7 +206,7 @@ void DebugUserInterface::SetupStyle(const ConfigData *configData) const
 	if (!configData->PathToImGuiFont.empty())
 		io.Fonts->AddFontFromFileTTF(configData->PathToImGuiFont.c_str(), 14.0f);
 
-	Logger::Warning("ImGui style changed!");
+	Logger::Debug("ImGui style changed!");
 }
 
 void DebugUserInterface::HandleKeyboardEvents(const IOData *ioData)
