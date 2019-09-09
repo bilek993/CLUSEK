@@ -82,7 +82,7 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 
 	if (id.empty())
 	{
-		Logger::Warning("Incorrect resource id.");
+		Logger::Debug("Resource not provided. Using fallback color texture.");
 		outputTexture = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
 		SetDefaultTexture(device, *outputTexture, fallbackColor);
 	}
