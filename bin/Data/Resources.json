@@ -6,16 +6,28 @@
   "Textures": {
     "CivilianVehicle_LightAlbedo": "Data/Textures/CivilianVehicle/LightAlbedo.png",
 	"CivilianVehicle_LightNormal": "Data/Textures/CivilianVehicle/LightNormal.png",
+	"CivilianVehicle_LightMetalness": "Data/Textures/CivilianVehicle/LightMetalness.png",
+	"CivilianVehicle_LightLightAo": "Data/Textures/CivilianVehicle/LightAo.png",
     "CivilianVehicle_MiscAlbedo": "Data/Textures/CivilianVehicle/MiscAlbedo.png",
 	"CivilianVehicle_MiscNormal": "Data/Textures/CivilianVehicle/MiscNormal.png",
+	"CivilianVehicle_MiscMetalness": "Data/Textures/CivilianVehicle/MiscMetalness.png",
+	"CivilianVehicle_MiscAO": "Data/Textures/CivilianVehicle/MiscAO.png",
     "CivilianVehicle_InteriorAlbedo": "Data/Textures/CivilianVehicle/InteriorAlbedo.png",
 	"CivilianVehicle_InteriorNormal": "Data/Textures/CivilianVehicle/InteriorNormal.png",
+	"CivilianVehicle_InteriorMetalness": "Data/Textures/CivilianVehicle/InteriorMetalness.png",
+	"CivilianVehicle_InteriorAo": "Data/Textures/CivilianVehicle/InteriorAo.png",
 	"CivilianVehicle_BodyAlbedo": "Data/Textures/CivilianVehicle/BodyAlbedo.png",
 	"CivilianVehicle_BodyNormal": "Data/Textures/CivilianVehicle/BodyNormal.png",
+	"CivilianVehicle_BodyMetalness": "Data/Textures/CivilianVehicle/BodyMetalness.png",
+	"CivilianVehicle_BodyAo": "Data/Textures/CivilianVehicle/BodyAo.png",
 	"CivilianVehicle_SilverPaintAlbedo": "Data/Textures/CivilianVehicle/SilverPaintAlbedo.png",
+	"CivilianVehicle_SilverPaintMetalness": "Data/Textures/CivilianVehicle/SilverPaintMetalness.png",
 	"CivilianVehicle_BlackGlassAlbedo": "Data/Textures/CivilianVehicle/BlackGlassAlbedo.png",
+	"CivilianVehicle_GlassMetalness": "Data/Textures/CivilianVehicle/GlassMetalness.png",
 	"CivilianVehicle_WheelAlbedo": "Data/Textures/CivilianVehicle/WheelAlbedo.png",
 	"CivilianVehicle_WheelNormal": "Data/Textures/CivilianVehicle/WheelNormal.png",
+	"CivilianVehicle_WheelMetalness": "Data/Textures/CivilianVehicle/WheelMetalness.png",
+	"CivilianVehicle_WheelAo": "Data/Textures/CivilianVehicle/WheelAo.png",
   
 	"Skybox": "Data/Textures/Environment/Skybox.dds"
   }
