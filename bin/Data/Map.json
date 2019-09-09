@@ -27,7 +27,7 @@
 	  "TransformComponent": {},
 	  "ModelRenderComponent": {
 	    "ModelId": "CivilianVehicle",
-		"MaterialId": "Data/Models/CivilianVehicle/material.json"
+		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  }
 	}
   },
@@ -41,7 +41,7 @@
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
-		"MaterialId": "Data/Models/CivilianVehicle/material.json"
+		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  }
 	}
   },
@@ -58,7 +58,7 @@
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
-		"MaterialId": "Data/Models/CivilianVehicle/material.json"
+		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  }
 	}
   },
@@ -75,7 +75,7 @@
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
-		"MaterialId": "Data/Models/CivilianVehicle/material.json"
+		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  }
 	}
   },
@@ -92,7 +92,7 @@
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
-		"MaterialId": "Data/Models/CivilianVehicle/material.json"
+		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  }
 	}
   }
