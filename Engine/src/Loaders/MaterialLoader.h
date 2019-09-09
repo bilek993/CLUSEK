@@ -9,7 +9,8 @@ class MaterialLoader final
 public:
 	static void LoadResource(ID3D11Device* device, const std::string& path, const std::string& resourceId);
 	static void SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId, 
-		const std::string& normalTextureId, float alpha);
+		const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId, 
+		const std::string& occlusionTextureId, float alpha);
 	static void SetResourceForManuallyForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material, const std::string& albedoTextureId);
 	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
 private:
@@ -17,6 +18,8 @@ private:
 	{
 		DefaultAlbedo = 0xff9314ff, // Alpha = ff, Blue = 93, Green = 14, Red = ff
 		DefaultNormal = 0xffff8080, // Alpha = ff, Blue = ff, Green = 80, Red = 80
+		DefaultMetalicSmoothness = 0x80000000, // Alpha = 80, Blue = 0, Green = 0, Red = 0
+		DefaultOcclusion = 0xffffffff, // Alpha = ff, Blue = ff, Green = ff, Red = ff
 	};
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> GetTextureById(ID3D11Device* device, const std::string& id, 
