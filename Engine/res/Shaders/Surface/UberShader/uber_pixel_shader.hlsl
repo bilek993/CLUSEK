@@ -20,6 +20,8 @@ struct PS_INPUT
 
 Texture2D AlbedoTexture : TEXTURE : register(t0);
 Texture2D NormalTexture : TEXTURE : register(t1);
+Texture2D MetalicSmoothnessTexture : TEXTURE : register(t2);
+Texture2D OcclusionTexture : TEXTURE : register(t3);
 SamplerState Sampler : SAMPLER : register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET

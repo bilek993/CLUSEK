@@ -34,21 +34,8 @@ void RenderSystem::Start()
 
 	ResourcesLoader::Load(Device.Get(), ConfigurationData->PathToResources);
 
-	// Skybox Component
-
-	Registry->view<SkyboxComponent>().each([this](SkyboxComponent &skyboxComponent)
-	{
-		CubeGenerator::Generate(Device.Get(), skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer);
-		MaterialLoader::SetResourceForManuallyForSkyMaterial(Device.Get(), skyboxComponent.Material, skyboxComponent.SkyboxTextureId);
-	});
-
-	// Model Render Component
-
-	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
-	{
-		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
-		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
-	});
+	InitializeSkyboxComponent();
+	InitializeModelRenderComponent();
 }
 
 void RenderSystem::Update(const float deltaTime)
@@ -414,6 +401,24 @@ void RenderSystem::InitializePostProcessing()
 		Device.Get(), BackBufferRenderTargetView.GetAddressOf());
 }
 
+void RenderSystem::InitializeSkyboxComponent()
+{
+	Registry->view<SkyboxComponent>().each([this](SkyboxComponent &skyboxComponent)
+	{
+		CubeGenerator::Generate(Device.Get(), skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer);
+		MaterialLoader::SetResourceForManuallyForSkyMaterial(Device.Get(), skyboxComponent.Material, skyboxComponent.SkyboxTextureId);
+	});
+}
+
+void RenderSystem::InitializeModelRenderComponent()
+{
+	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
+	{
+		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
+		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
+	});
+}
+
 void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const
 {
 	DeviceContext->IASetInputLayout(vertexShader.GetInputLayout());
@@ -485,6 +490,8 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
+			DeviceContext->PSSetShaderResources(2, 1, mesh.Material.MetalicSmoothnessTexture->GetAddressOf());
+			DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
 
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
@@ -502,6 +509,8 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
+			DeviceContext->PSSetShaderResources(2, 1, mesh.Material.MetalicSmoothnessTexture->GetAddressOf());
+			DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
 
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}

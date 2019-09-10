@@ -32,6 +32,8 @@ private:
 	void InitializeClearColorSettings() const;
 	void InitializeConstantBuffers();
 	void InitializePostProcessing();
+	void InitializeSkyboxComponent();
+	void InitializeModelRenderComponent();
 
 	void ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
 
