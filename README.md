@@ -100,6 +100,16 @@ Physical Based Rendering (or PBR) helps reconstruct the real world like appearan
 
 
 
+## Occlusion maps
+
+Occlusion maps helps recreate indirect lighting without time-consuming, real-time computations. This map provides information about indirect lighting, which comes from ambient lighting and reflections. A lot of free and paid tools can bake occlusion maps and export to textures, like [Blender](https://www.blender.org/) or [xNormal](https://xnormal.net/). This game engine supports multi-channel textures or one channel (greyscale) textures. When used with multi-channel texture, it will use only red channel and other channels will be ignored. Anyway, if used with multi-channel textures, it is usually a good idea to set values for green and blue channels to the same value as red, because it is much easier to visualize indirect lighting. This table describes channels for multi-channel occlusion texture:
+
+| Red      |
+|----------|
+| Lighting |
+
+
+
 ## Requirements
 
 ### Runtime requirements:
