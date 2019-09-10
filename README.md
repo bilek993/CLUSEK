@@ -139,11 +139,11 @@ Occlusion maps helps recreate indirect lighting without time-consuming, real-tim
 ## Source code
 
 You can download latest version of source code using git. To do that enter below commands in your terminal:
-> git clone https://github.com/bilek993/CLUSEK.git
+> git lfs clone https://github.com/bilek993/CLUSEK.git
 
 or
 
-> git clone git@github.com:bilek993/CLUSEK.git
+> git lfs clone git@github.com:bilek993/CLUSEK.git
 
 
 
