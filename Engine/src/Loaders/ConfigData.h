@@ -39,10 +39,6 @@ struct ConfigData final
 	float MaxCameraSpeed = 0.0125f;
 
 	// Lighting settings
-	float AmbientLightColorRed = 1.0f;
-	float AmbientLightColorGreen = 1.0f;
-	float AmbientLightColorBlue = 1.0f;
-	float AmbientLightStrength = 0.5f;
 	float DirectionalLightColorRed = 1.0f;
 	float DirectionalLightColorGreen = 1.0f;
 	float DirectionalLightColorBlue = 1.0f;

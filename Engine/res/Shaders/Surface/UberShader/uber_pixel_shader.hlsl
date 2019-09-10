@@ -3,8 +3,6 @@
 
 cbuffer LightAndAlphaBuffer : register(b0)
 {
-    float3 AmbientLightColor;
-    float AmbientLightStrength;
     float3 DirectionalLightColor;
     float DirectionalLightStrength;
     float3 DirectionalLightDirection;
@@ -31,11 +29,9 @@ float4 main(PS_INPUT input) : SV_TARGET
 
     float3 normalMap = NormalTexture.Sample(Sampler, input.TextureCoord).rgb;
 
-    float3 ambientLight = AmbientLightColor * AmbientLightStrength;
     float3 directionalLight = saturate(dot(DirectionalLightDirection, calculateNormal(normalMap, input.TBN)) * (DirectionalLightColor * DirectionalLightStrength) * samplerColor);
 
-    float3 finalColor = ambientLight * samplerColor;
-    finalColor += directionalLight;
+    float3 finalColor = samplerColor + directionalLight;
 
     return float4(finalColor, Alpha);
 }

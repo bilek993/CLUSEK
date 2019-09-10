@@ -4,14 +4,6 @@
 void LightingWindow::Draw()
 {
 	ImGui::Begin("Lighting settings", &IsEnabled);
-	ImGui::Text("Ambient light settings:");
-	ImGui::ColorPicker3("Color##Ambient",
-		&RenderSettings->AmbientLightColor.x,
-		ImGuiColorEditFlags_NoAlpha |
-		ImGuiColorEditFlags_PickerHueBar |
-		ImGuiColorEditFlags_NoInputs);
-	ImGui::DragFloat("Strength##Ambient", &RenderSettings->AmbientLightStrength, 0.005f, 0.0f, 100.0f);
-	ImGui::Separator();
 	ImGui::Text("Directional light settings:");
 	ImGui::ColorPicker3("Color##Directional",
 		&RenderSettings->DirectionalLightColor.x,

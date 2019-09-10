@@ -356,10 +356,6 @@ bool RenderSystem::InitializeShaders()
 
 void RenderSystem::InitializeLightSettings() const
 {
-	CurrentRenderSettings->AmbientLightColor =
-		DirectX::XMFLOAT3(ConfigurationData->AmbientLightColorRed, ConfigurationData->AmbientLightColorGreen, ConfigurationData->AmbientLightColorBlue);
-	CurrentRenderSettings->AmbientLightStrength = ConfigurationData->AmbientLightStrength;
-
 	CurrentRenderSettings->DirectionalLightColor =
 		DirectX::XMFLOAT3(ConfigurationData->DirectionalLightColorRed, ConfigurationData->DirectionalLightColorGreen, ConfigurationData->DirectionalLightColorBlue);
 	CurrentRenderSettings->DirectionalLightStrength = ConfigurationData->DirectionalLightStrength;
@@ -473,8 +469,6 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 		DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 
-		LightAndAlphaBufferInstance.Data.AmbientLightColor = CurrentRenderSettings->AmbientLightColor;
-		LightAndAlphaBufferInstance.Data.AmbientLightStrength = CurrentRenderSettings->AmbientLightStrength;
 		LightAndAlphaBufferInstance.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
 		LightAndAlphaBufferInstance.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
 		LightAndAlphaBufferInstance.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
