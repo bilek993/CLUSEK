@@ -1,5 +1,6 @@
 #include "../../Includes/gamma_correction_utils.hlsli"
 #include "../../Includes/normal_utils.hlsli"
+#include "../../Includes/pbr.hlsli"
 
 cbuffer LightAndAlphaBuffer : register(b0)
 {
@@ -12,6 +13,7 @@ cbuffer LightAndAlphaBuffer : register(b0)
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
+    float3 WorldPosition : WORLD_POSITION;
     float2 TextureCoord : TEXCOORD;
     float3x3 TBN : TBN;
 };
@@ -32,9 +34,13 @@ float4 main(PS_INPUT input) : SV_TARGET
 
     albedoColor = gammaCorrectTexture(albedoColor);
 
-    float3 directionalLight = saturate(dot(DirectionalLightDirection, calculateNormal(normalColor, input.TBN)) * (DirectionalLightColor * DirectionalLightStrength) * albedoColor);
+    float3 normal = calculateNormal(normalColor, input.TBN);
 
-    float3 finalColor = albedoColor + directionalLight;
+    float3 directionalLight = saturate(dot(DirectionalLightDirection, normal) * (DirectionalLightColor * DirectionalLightStrength) * albedoColor);
+
+    float3 specular = pow(max(dot(normal, calculateHalfwayVector(DirectionalLightDirection, float3(0, 8, -2), input.WorldPosition)), 0.0), 64.0); // TODO: Add camera position
+
+    float3 finalColor = albedoColor + directionalLight + specular;
 
     return float4(finalColor, Alpha);
 }

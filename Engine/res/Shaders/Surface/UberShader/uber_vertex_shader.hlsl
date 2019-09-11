@@ -17,6 +17,7 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 Position : SV_POSITION;
+    float3 WorldPosition : WORLD_POSITION;
     float2 TextureCoord : TEXCOORD;
     float3x3 TBN : TBN;
 };
@@ -25,6 +26,7 @@ VS_OUTPUT main(VS_INPUT input)
 {
     VS_OUTPUT output;
     output.Position = mul(float4(input.Position, 1.0f), WorldViewProjectionMat);
+    output.WorldPosition = mul(float4(input.Position, 1.0f), WorldMatrix).xyz;
     output.TextureCoord = input.TextureCoord;
     output.TBN = calculateTBN(input.Normal, input.Tangent);
 
