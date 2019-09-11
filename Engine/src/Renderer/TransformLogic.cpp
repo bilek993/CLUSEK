@@ -36,6 +36,13 @@ void TransformLogic::GetPosition(float* x, float* y, float* z, const TransformCo
 		*z = storedValue.z;
 }
 
+DirectX::XMFLOAT3 TransformLogic::GetPosition(const TransformComponent& transformComponent)
+{
+	DirectX::XMFLOAT3 storedValue;
+	XMStoreFloat3(&storedValue, transformComponent.PositionVector);
+	return storedValue;
+}
+
 void TransformLogic::AdjustPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)
 {
 	transformComponent.PositionVector = DirectX::XMVectorAdd(transformComponent.PositionVector, pos);
@@ -77,6 +84,13 @@ void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformCo
 		*y = storedValue.y;
 	if (z != nullptr)
 		*z = storedValue.z;
+}
+
+DirectX::XMFLOAT3 TransformLogic::GetRotation(const TransformComponent& transformComponent)
+{
+	DirectX::XMFLOAT3 storedValue;
+	XMStoreFloat3(&storedValue, transformComponent.RotationVector);
+	return storedValue;
 }
 
 void TransformLogic::LookAt(DirectX::XMFLOAT3 targetPosition, TransformComponent& transformComponent)

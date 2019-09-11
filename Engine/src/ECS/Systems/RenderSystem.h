@@ -14,6 +14,8 @@
 #include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
 #include "../../Renderer/RenderTexture.h"
 #include "../../Renderer/PostProcessing/ReusablePostProcessing.h"
+#include "../Components/TransformComponent.h"
+#include "../../Renderer/ConstantBufferTypes/CameraBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -41,6 +43,7 @@ private:
 	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const;
 
 	CameraComponent& GetMainCamera() const;
+	TransformComponent& GetMainCameraTransform() const;
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
 
@@ -68,6 +71,7 @@ private:
 
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;
+	ConstantBuffer<CameraBuffer> CameraBufferInstance;
 	ConstantBuffer<SimplePerObjectBuffer> SimplePerObjectBufferInstance;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;

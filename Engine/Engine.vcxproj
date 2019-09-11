@@ -59,6 +59,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\CameraBuffer.h" />
     <ClInclude Include="src\Loaders\PostProcessingLoader.h" />
     <ClInclude Include="src\Renderer\PostProcessing\ReusablePostProcessing.h" />
     <ClInclude Include="src\Renderer\RenderTexture.h" />

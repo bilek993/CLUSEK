@@ -11,6 +11,7 @@
 #include "../../Tags.h"
 #include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
 #include "../../Loaders/PostProcessingLoader.h"
+#include "../../Renderer/TransformLogic.h"
 
 void RenderSystem::Start()
 {
@@ -382,6 +383,10 @@ void RenderSystem::InitializeConstantBuffers()
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'LightAndAlphaBufferInstance' constant buffer.");
 
+	hr = CameraBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'CameraBufferInstance' constant buffer.");
+
 	hr = SimplePerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'SimplePerObjectBufferInstance' constant buffer.");
@@ -436,6 +441,20 @@ CameraComponent& RenderSystem::GetMainCamera() const
 	return view.raw<CameraComponent>()[0];
 }
 
+TransformComponent& RenderSystem::GetMainCameraTransform() const
+{
+	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
+	if (view.size() != 1)
+	{
+		if (view.size() > 1)
+			Logger::Error("More than one main render camera found!");
+		else
+			Logger::Error("Main render camera not found!");
+	}
+
+	return view.raw<TransformComponent>()[0];
+}
+
 
 void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)
 {
@@ -457,10 +476,12 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 
 void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent)
 {
+	auto& mainCameraTransform = GetMainCameraTransform();
+
 	UINT offset = 0;
 	ChangeShader(UberVertexShader, UberPixelShader);
 
-	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset](ModelRenderComponent &modelRenderComponent)
+	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset, &mainCameraTransform](ModelRenderComponent &modelRenderComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
@@ -476,6 +497,11 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 		LightAndAlphaBufferInstance.ApplyChanges();
 
 		DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
+
+		CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransform);
+		CameraBufferInstance.ApplyChanges();
+
+		DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{

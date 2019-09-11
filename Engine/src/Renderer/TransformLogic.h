@@ -16,7 +16,11 @@ public:
 	static void AdjustRotation(float x, float y, float z, TransformComponent &transformComponent);
 
 	static void GetPosition(float* x, float* y, float* z, const TransformComponent &transformComponent);
+	static DirectX::XMFLOAT3 GetPosition(const TransformComponent &transformComponent);
+
 	static void GetRotation(float* x, float* y, float* z, const TransformComponent &transformComponent);
+	static DirectX::XMFLOAT3 GetRotation(const TransformComponent &transformComponent);
+
 
 	static void LookAt(DirectX::XMFLOAT3 targetPosition, TransformComponent &transformComponent);
 };

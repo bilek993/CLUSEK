@@ -10,6 +10,11 @@ cbuffer LightAndAlphaBuffer : register(b0)
     float Alpha;
 }
 
+cbuffer CameraBuffer : register(b1)
+{
+    float3 CameraPosition;
+}
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
@@ -38,7 +43,7 @@ float4 main(PS_INPUT input) : SV_TARGET
 
     float3 directionalLight = saturate(dot(DirectionalLightDirection, normal) * (DirectionalLightColor * DirectionalLightStrength) * albedoColor);
 
-    float3 specular = pow(max(dot(normal, calculateHalfwayVector(DirectionalLightDirection, float3(0, 8, -2), input.WorldPosition)), 0.0), 64.0); // TODO: Add camera position
+    float3 specular = pow(max(dot(normal, calculateHalfwayVector(DirectionalLightDirection, CameraPosition, input.WorldPosition)), 0.0), 32.0);
 
     float3 finalColor = albedoColor + directionalLight + specular;
 
