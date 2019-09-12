@@ -68,6 +68,8 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, PathToResources, data, value);
 			MAP_CONFIG_FIELD(key, PathToMap, data, value);
 			MAP_CONFIG_FIELD(key, PathToPostProcessing, data, value);
+
+			MAP_CONFIG_FIELD(key, PathToBrdfLut, data, value);
 		}
 
 		Logger::Debug("Configuration has been successfully loaded!");

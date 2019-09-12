@@ -25,13 +25,13 @@ void RenderSystem::Start()
 	InitializeClearColorSettings();
 
 	if (!InitializeDirectX())
-		Logger::Error("DirectX initialization failed");
+		Logger::Error("DirectX initialization failed!");
 
 	if (!InitializeShaders())
-		Logger::Error("Shaders initialization failed");
+		Logger::Error("Shaders initialization failed!");
 
-	if (!PbrResourceInstance.Initialize(Device.Get(), "Data/Textures/PBR/ibl_brdf_lut.png"))
-		Logger::Error("PBR resources initialization failed");
+	if (!PbrResourceInstance.Initialize(Device.Get(), ConfigurationData->PathToBrdfLut))
+		Logger::Error("PBR resources initialization failed!");
 
 	InitializeConstantBuffers();
 	InitializePostProcessing();

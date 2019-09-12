@@ -51,4 +51,7 @@ struct ConfigData final
 	std::string PathToResources = "";
 	std::string PathToMap = "";
 	std::string PathToPostProcessing = "";
+
+	// PBR settings
+	std::string PathToBrdfLut = "";
 };
