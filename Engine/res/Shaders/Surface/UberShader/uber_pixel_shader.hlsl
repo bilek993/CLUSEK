@@ -33,19 +33,16 @@ float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 albedoColor = AlbedoTexture.Sample(Sampler, input.TextureCoord).rgb;
     float3 normalColor = NormalTexture.Sample(Sampler, input.TextureCoord).rgb;
-    float metalicColor = MetalicSmoothnessTexture.Sample(Sampler, input.TextureCoord).r;
-    float smoothnessColor = MetalicSmoothnessTexture.Sample(Sampler, input.TextureCoord).a;
+    float2 metalicSmoothnessColor = MetalicSmoothnessTexture.Sample(Sampler, input.TextureCoord).ra;
     float occlusionColor = MetalicSmoothnessTexture.Sample(Sampler, input.TextureCoord).r;
 
-    albedoColor = gammaCorrectTexture(albedoColor);
+    float3 albedoColorCorrected = gammaCorrectTexture(albedoColor);
+    float3 calculatedNormal = calculateNormal(normalColor, input.TBN);
+    float roughness = 1 - metalicSmoothnessColor.y;
 
-    float3 normal = calculateNormal(normalColor, input.TBN);
-
-    float3 directionalLight = saturate(dot(DirectionalLightDirection, normal) * (DirectionalLightColor * DirectionalLightStrength) * albedoColor);
-
-    float3 specular = pow(max(dot(normal, calculateHalfwayVector(DirectionalLightDirection, CameraPosition, input.WorldPosition)), 0.0), 32.0);
-
-    float3 finalColor = albedoColor + directionalLight + specular;
+    float3 finalColor = pbr(albedoColorCorrected, calculatedNormal, metalicSmoothnessColor.x, roughness, occlusionColor, 
+                            DirectionalLightDirection, DirectionalLightColor * DirectionalLightStrength, CameraPosition, 
+                            input.WorldPosition);
 
     return float4(finalColor, Alpha);
 }

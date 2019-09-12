@@ -1,7 +1,7 @@
 static const float PI = 3.14159265359f;
 
-float3 calculateHalfwayVector(float3 lightDirection, float3 viewPosition, float3 pixelPosition)
+float3 pbr(float3 albedo, float3 normal, float metallic, float roughness, float occlusion,
+          float3 lightDirection, float3 lightColor, float3 cameraPosition, float3 pixelPosition)
 {
-    float3 viewDirection = normalize(viewPosition - pixelPosition);
-    return normalize(lightDirection + viewDirection);
+    return albedo;
 }
