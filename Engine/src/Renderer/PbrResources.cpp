@@ -6,9 +6,12 @@
 
 bool PbrResource::Initialize(ID3D11Device* device, const std::string& pathToBrdfLutFile)
 {
+	Logger::Debug("Preparing PBR resources...");
+
 	if (!LoadBrdfLutFile(device, pathToBrdfLutFile))
 		return false;
-	
+
+	Logger::Debug("All PBR resources initialized!");
 	return true;
 }
 

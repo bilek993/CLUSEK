@@ -115,6 +115,9 @@
     <Filter Include="Resource Files\Shaders\Surface\UberShader">
       <UniqueIdentifier>{e3808e4a-1c17-447f-940a-2f5b571ce466}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\Compute">
+      <UniqueIdentifier>{5cf15d40-2d27-4341-825a-d0d2412ddeeb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
