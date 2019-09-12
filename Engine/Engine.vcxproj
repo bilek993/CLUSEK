@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\PbrResources.cpp" />
     <ClCompile Include="src\Loaders\PostProcessingLoader.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\ReusablePostProcessing.cpp" />
     <ClCompile Include="src\Renderer\RenderTexture.cpp" />
@@ -59,6 +60,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\PbrResources.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\CameraBuffer.h" />
     <ClInclude Include="src\Loaders\PostProcessingLoader.h" />
     <ClInclude Include="src\Renderer\PostProcessing\ReusablePostProcessing.h" />

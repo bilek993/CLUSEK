@@ -255,6 +255,9 @@
     <ClCompile Include="src\Loaders\PostProcessingLoader.cpp">
       <Filter>Source Files\Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\PbrResources.cpp">
+      <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -460,6 +463,9 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\ConstantBufferTypes\CameraBuffer.h">
       <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\PbrResources.h">
+      <Filter>Header Files\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

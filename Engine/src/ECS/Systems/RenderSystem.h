@@ -13,9 +13,9 @@
 #include "../../Renderer/ConstantBufferTypes/LightAndAlphaBuffer.h"
 #include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
 #include "../../Renderer/RenderTexture.h"
-#include "../../Renderer/PostProcessing/ReusablePostProcessing.h"
 #include "../Components/TransformComponent.h"
 #include "../../Renderer/ConstantBufferTypes/CameraBuffer.h"
+#include "../../Renderer/PbrResources.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -73,6 +73,8 @@ private:
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;
 	ConstantBuffer<CameraBuffer> CameraBufferInstance;
 	ConstantBuffer<SimplePerObjectBuffer> SimplePerObjectBufferInstance;
+
+	PbrResource PbrResourceInstance;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilBuffer;

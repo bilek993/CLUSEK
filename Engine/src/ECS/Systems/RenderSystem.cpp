@@ -30,6 +30,9 @@ void RenderSystem::Start()
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed");
 
+	if (!PbrResourceInstance.Initialize(Device.Get(), "Data/Textures/PBR/ibl_brdf_lut.png"))
+		Logger::Error("PBR resources initialization failed");
+
 	InitializeConstantBuffers();
 	InitializePostProcessing();
 
