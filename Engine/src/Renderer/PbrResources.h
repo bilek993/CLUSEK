@@ -7,6 +7,8 @@ class PbrResource final
 {
 public:
 	bool Initialize(ID3D11Device* device, const std::string& pathToBrdfLutFile);
+
+	ID3D11ShaderResourceView** GetAddressOfBrdfLutResourceTexture();
 private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> BrdfLutResourceTexture;
 

@@ -12,6 +12,11 @@ bool PbrResource::Initialize(ID3D11Device* device, const std::string& pathToBrdf
 	return true;
 }
 
+ID3D11ShaderResourceView** PbrResource::GetAddressOfBrdfLutResourceTexture()
+{
+	return BrdfLutResourceTexture.GetAddressOf();
+}
+
 bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, const std::string& path)
 {
 	if (StringUtil::FindExtension(path) == "DDS")
