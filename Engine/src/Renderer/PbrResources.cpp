@@ -11,8 +11,9 @@ bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context,
 
 	if (!LoadBrdfLutFile(device, pathToBrdfLutFile))
 		return false;
-
 	if (!GenerateIrradiance(device, context))
+		return false;
+	if (!GenerateRadiance(device, context))
 		return false;
 
 	CleanUp(context);
@@ -76,6 +77,13 @@ bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* 
 	context->CSSetUnorderedAccessViews(0, 1, IrradianceTexture.UnorderedAccessView.GetAddressOf(), nullptr);
 	context->Dispatch(IrradianceTexture.Width / THREAD_COUNT, IrradianceTexture.Height / THREAD_COUNT, CUBE_SIZE);
 
+	return true;
+}
+
+bool PbrResource::GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* context)
+{
+	Logger::Debug("Preparing to generate radiance map...");
+	// TODO: Add code here
 	return true;
 }
 
