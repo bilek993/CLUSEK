@@ -1,3 +1,5 @@
+<img src=".docs/logo.png" width="256">
+
 CLUSEK
 ==================================
 
