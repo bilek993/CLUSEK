@@ -17,9 +17,9 @@ void main(uint3 threadID : SV_DispatchThreadID)
     float3 right = cross(up, normal);
     up = cross(normal, right);
 
-    float3 irradiance = float3(1.0f, 0.0f, 0.0f);
+    float3 irradiance = float3(0.0f, 0.0f, 0.0f);
 
-    float sampleDelta = 0.025;
+    float sampleDelta = 0.025f;
     float nrSamples = 0.0f;
 
     for (float phi = 0.0f; phi < 2.0f * PI; phi += sampleDelta)
