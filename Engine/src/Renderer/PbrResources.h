@@ -13,6 +13,7 @@ public:
 	ID3D11ShaderResourceView** GetAddressOfIrradianceResourceTexture();
 private:
 	inline static const int THREAD_COUNT = 32;
+	inline static const int CUBE_SIZE = 6;
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> BrdfLutResourceTexture;
 
