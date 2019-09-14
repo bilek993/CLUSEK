@@ -15,6 +15,8 @@ bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context,
 	if (!GenerateIrradiance(device, context))
 		return false;
 
+	CleanUp(context);
+
 	Logger::Debug("All PBR resources initialized!");
 	return true;
 }
@@ -70,10 +72,15 @@ bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* 
 	context->CSSetUnorderedAccessViews(0, 1, IrradianceTexture.UnorderedAccessView.GetAddressOf(), nullptr);
 	context->Dispatch(IrradianceTexture.Width / THREAD_COUNT, IrradianceTexture.Height / THREAD_COUNT, CUBE_SIZE);
 
-	ID3D11UnorderedAccessView* const nullView[] = { nullptr }; // TODO: Remove this from here
-	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr); // TODO: Remove this from here
-
 	return true;
+}
+
+void PbrResource::CleanUp(ID3D11DeviceContext* context) const
+{
+	Logger::Debug("Preparing clean up mechanism, after PBR Resources initialization...");
+
+	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
+	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
 }
 
 ComputeTexture PbrResource::CreateCubeTexture(ID3D11Device* device, const int width, const int height, 
@@ -95,7 +102,7 @@ ComputeTexture PbrResource::CreateCubeTexture(ID3D11Device* device, const int wi
 	textureDesc.Width = width;
 	textureDesc.Height = height;
 	textureDesc.MipLevels = useMips ? 0 : 1;
-	textureDesc.ArraySize = 6;
+	textureDesc.ArraySize = CUBE_SIZE;
 	textureDesc.Format = format;
 	textureDesc.SampleDesc.Count = 1;
 	textureDesc.Usage = D3D11_USAGE_DEFAULT;

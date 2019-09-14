@@ -21,6 +21,7 @@ private:
 
 	bool LoadBrdfLutFile(ID3D11Device* device, const std::string& path);
 	bool GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context);
+	void CleanUp(ID3D11DeviceContext* context) const;
 
 	ComputeTexture CreateCubeTexture(ID3D11Device* device, int width, int height, 
 		DXGI_FORMAT format, bool useMips) const;
