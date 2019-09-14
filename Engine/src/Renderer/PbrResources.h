@@ -12,6 +12,8 @@ public:
 	ID3D11ShaderResourceView** GetAddressOfBrdfLutResourceTexture();
 	ID3D11ShaderResourceView** GetAddressOfIrradianceResourceTexture();
 private:
+	inline static const int THREAD_COUNT = 32;
+
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> BrdfLutResourceTexture;
 
 	ComputeTexture IrradianceTexture;

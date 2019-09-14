@@ -68,7 +68,7 @@ bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* 
 
 	context->CSSetShader(irradianceComputeShader.GetShader(), nullptr, 0);
 	context->CSSetUnorderedAccessViews(0, 1, IrradianceTexture.UnorderedAccessView.GetAddressOf(), nullptr);
-	context->Dispatch(IrradianceTexture.Width / 32, IrradianceTexture.Height / 32, 6);
+	context->Dispatch(IrradianceTexture.Width / THREAD_COUNT, IrradianceTexture.Height / THREAD_COUNT, 6);
 
 	ID3D11UnorderedAccessView* const nullView[] = { nullptr }; // TODO: Remove this from here
 	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr); // TODO: Remove this from here
