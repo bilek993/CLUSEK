@@ -149,7 +149,7 @@ or
 
 ## Redistribution
 
-For easier, consistent and bug-free application redistribution for end-user, the special power shell script can be used. To execute this script you enter below command in your PowerShell terminal:
+For easier, consistent and bug-free application redistribution for end-user, the special power shell script can be used. To execute this script you enter below commands in your PowerShell terminal:
 
 > Set-ExecutionPolicy Unrestricted -force
 
