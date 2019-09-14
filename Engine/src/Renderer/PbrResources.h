@@ -7,7 +7,8 @@
 class PbrResource final
 {
 public:
-	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& pathToBrdfLutFile);
+	bool Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& pathToBrdfLutFile,
+		ID3D11ShaderResourceView* const* skyResourceView);
 
 	ID3D11ShaderResourceView** GetAddressOfBrdfLutResourceTexture();
 	ID3D11ShaderResourceView** GetAddressOfIrradianceResourceTexture();
@@ -23,7 +24,8 @@ private:
 
 	bool InitializeSamplerState(ID3D11Device* device);
 	bool LoadBrdfLutFile(ID3D11Device* device, const std::string& path);
-	bool GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context);
+	bool GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context, 
+		ID3D11ShaderResourceView* const* skyResourceView);
 	bool GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* context);
 	void CleanUp(ID3D11DeviceContext* context) const;
 

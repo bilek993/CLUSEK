@@ -30,9 +30,6 @@ void RenderSystem::Start()
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed!");
 
-	if (!PbrResourceInstance.Initialize(Device.Get(), DeviceContext.Get(), ConfigurationData->PathToBrdfLut))
-		Logger::Error("PBR resources initialization failed!");
-
 	InitializeConstantBuffers();
 	InitializePostProcessing();
 
@@ -40,6 +37,9 @@ void RenderSystem::Start()
 
 	InitializeSkyboxComponent();
 	InitializeModelRenderComponent();
+
+	if (!InitializePbrResources())
+		Logger::Error("PBR resources initialization failed!");
 }
 
 void RenderSystem::Update(const float deltaTime)
@@ -356,6 +356,21 @@ bool RenderSystem::InitializeShaders()
 
 	Logger::Debug("All shaders successfully initialized.");
 	return true;
+}
+
+bool RenderSystem::InitializePbrResources()
+{
+	auto view = Registry->view<SkyboxComponent>();
+	if (view.size() != 1)
+	{
+		if (view.size() > 1)
+			Logger::Warning("More than one skybox component found! Engine will use first one.");
+		else
+			Logger::Error("No skybox component found!");
+	}
+
+	return PbrResourceInstance.Initialize(Device.Get(), DeviceContext.Get(), 
+		ConfigurationData->PathToBrdfLut, view.raw()[0].Material.SkyMap->GetAddressOf());
 }
 
 void RenderSystem::InitializeLightSettings() const

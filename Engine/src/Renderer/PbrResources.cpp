@@ -5,7 +5,8 @@
 #include <WICTextureLoader.h>
 #include "Shaders/ComputeShader.h"
 
-bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& pathToBrdfLutFile)
+bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& pathToBrdfLutFile,
+	ID3D11ShaderResourceView* const* skyResourceView)
 {
 	Logger::Debug("Preparing PBR resources...");
 
@@ -13,7 +14,7 @@ bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context,
 		return false;
 	if (!LoadBrdfLutFile(device, pathToBrdfLutFile))
 		return false;
-	if (!GenerateIrradiance(device, context))
+	if (!GenerateIrradiance(device, context, skyResourceView))
 		return false;
 	if (!GenerateRadiance(device, context))
 		return false;
@@ -83,7 +84,8 @@ bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, const std::string& path)
 	return true;
 }
 
-bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context)
+bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context,
+	ID3D11ShaderResourceView* const* skyResourceView)
 {
 	Logger::Debug("Preparing to generate irradiance map...");
 
@@ -99,7 +101,9 @@ bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* 
 	CreateUnorderedAccessView(device, IrradianceTexture);
 
 	context->CSSetShader(irradianceComputeShader.GetShader(), nullptr, 0);
+	context->CSSetShaderResources(0, 1, skyResourceView);
 	context->CSSetUnorderedAccessViews(0, 1, IrradianceTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+	context->CSSetSamplers(0, 1, SamplerState.GetAddressOf());
 	context->Dispatch(IrradianceTexture.Width / THREAD_COUNT, IrradianceTexture.Height / THREAD_COUNT, CUBE_SIZE);
 
 	return true;

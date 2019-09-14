@@ -30,6 +30,7 @@ public:
 private:
 	bool InitializeDirectX();
 	bool InitializeShaders();
+	bool InitializePbrResources();
 	void InitializeLightSettings() const;
 	void InitializeClearColorSettings() const;
 	void InitializeConstantBuffers();
