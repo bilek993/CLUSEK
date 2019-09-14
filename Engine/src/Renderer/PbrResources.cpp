@@ -16,7 +16,7 @@ bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context,
 		return false;
 	if (!GenerateIrradiance(device, context, skyResourceView))
 		return false;
-	if (!GenerateRadiance(device, context))
+	if (!GenerateRadiance(device, context, skyResourceView))
 		return false;
 
 	CleanUp(context);
@@ -33,6 +33,11 @@ ID3D11ShaderResourceView** PbrResource::GetAddressOfBrdfLutResourceTexture()
 ID3D11ShaderResourceView** PbrResource::GetAddressOfIrradianceResourceTexture()
 {
 	return IrradianceTexture.ShaderResourceView.GetAddressOf();
+}
+
+ID3D11ShaderResourceView** PbrResource::GetAddressOfRadianceResourceTexture()
+{
+	return RadianceTexture.ShaderResourceView.GetAddressOf();
 }
 
 bool PbrResource::InitializeSamplerState(ID3D11Device* device)
@@ -109,10 +114,28 @@ bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* 
 	return true;
 }
 
-bool PbrResource::GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* context)
+bool PbrResource::GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* context,
+	ID3D11ShaderResourceView* const* skyResourceView)
 {
 	Logger::Debug("Preparing to generate radiance map...");
-	// TODO: Add code here
+
+	ComputeShader radianceComputeShader;
+
+	if (!radianceComputeShader.Initialize(device, L"radiance_compute_shader.cso"))
+	{
+		Logger::Error("RadianceComputeShader not initialized due to critical problem!");
+		return false;
+	}
+
+	RadianceTexture = CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
+	CreateUnorderedAccessView(device, RadianceTexture);
+
+	context->CSSetShader(radianceComputeShader.GetShader(), nullptr, 0);
+	context->CSSetShaderResources(0, 1, skyResourceView);
+	context->CSSetUnorderedAccessViews(0, 1, RadianceTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+	context->CSSetSamplers(0, 1, SamplerState.GetAddressOf());
+	context->Dispatch(RadianceTexture.Width / THREAD_COUNT, RadianceTexture.Height / THREAD_COUNT, CUBE_SIZE);
+
 	return true;
 }
 
