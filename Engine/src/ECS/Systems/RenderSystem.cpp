@@ -30,7 +30,7 @@ void RenderSystem::Start()
 	if (!InitializeShaders())
 		Logger::Error("Shaders initialization failed!");
 
-	if (!PbrResourceInstance.Initialize(Device.Get(), ConfigurationData->PathToBrdfLut))
+	if (!PbrResourceInstance.Initialize(Device.Get(), DeviceContext.Get(), ConfigurationData->PathToBrdfLut))
 		Logger::Error("PBR resources initialization failed!");
 
 	InitializeConstantBuffers();
@@ -471,7 +471,7 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 		SimplePerObjectBufferInstance.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
-		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
+		DeviceContext->PSSetShaderResources(0, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
 
 		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
 	});

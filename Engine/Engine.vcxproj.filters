@@ -261,6 +261,9 @@
     <ClCompile Include="src\Renderer\PbrResources.cpp">
       <Filter>Source Files\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Shaders\ComputeShader.cpp">
+      <Filter>Source Files\Renderer\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -470,6 +473,12 @@
     <ClInclude Include="src\Renderer\PbrResources.h">
       <Filter>Header Files\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\Shaders\ComputeShader.h">
+      <Filter>Header Files\Renderer\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\ComputeTexture.h">
+      <Filter>Header Files\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">
@@ -502,6 +511,9 @@
     <FxCompile Include="res\Shaders\PostProcessing\post_processing_vertex_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
+    <FxCompile Include="res\Shaders\Compute\irradiance_compute_shader.hlsl">
+      <Filter>Resource Files\Shaders\Compute</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\Includes\gamma_correction_utils.hlsli">
@@ -511,6 +523,9 @@
       <Filter>Resource Files\Shaders\Includes</Filter>
     </None>
     <None Include="res\Shaders\Includes\pbr.hlsli">
+      <Filter>Resource Files\Shaders\Includes</Filter>
+    </None>
+    <None Include="res\Shaders\Includes\sampling_helper.hlsli">
       <Filter>Resource Files\Shaders\Includes</Filter>
     </None>
   </ItemGroup>
