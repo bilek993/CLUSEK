@@ -33,6 +33,8 @@ ID3D11ShaderResourceView** PbrResource::GetAddressOfIrradianceResourceTexture()
 
 bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, const std::string& path)
 {
+	Logger::Debug("Preparing BRDF Lut file...");
+
 	if (StringUtil::FindExtension(path) == "DDS")
 	{
 		const auto hr = DirectX::CreateDDSTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, BrdfLutResourceTexture.GetAddressOf());
@@ -57,6 +59,8 @@ bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, const std::string& path)
 
 bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context)
 {
+	Logger::Debug("Preparing to generate irradiance map...");
+
 	ComputeShader irradianceComputeShader;
 
 	if (!irradianceComputeShader.Initialize(device, L"irradiance_compute_shader.cso"))
