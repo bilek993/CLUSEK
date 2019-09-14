@@ -9,6 +9,8 @@ bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context,
 {
 	Logger::Debug("Preparing PBR resources...");
 
+	if (!InitializeSamplerState(device))
+		return false;
 	if (!LoadBrdfLutFile(device, pathToBrdfLutFile))
 		return false;
 	if (!GenerateIrradiance(device, context))
@@ -30,6 +32,29 @@ ID3D11ShaderResourceView** PbrResource::GetAddressOfBrdfLutResourceTexture()
 ID3D11ShaderResourceView** PbrResource::GetAddressOfIrradianceResourceTexture()
 {
 	return IrradianceTexture.ShaderResourceView.GetAddressOf();
+}
+
+bool PbrResource::InitializeSamplerState(ID3D11Device* device)
+{
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	const auto hr = device->CreateSamplerState(&samplerDesc, SamplerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Couldn't create sampler state for PBR Resource!");
+		return false;
+	}
+
+	return true;
 }
 
 bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, const std::string& path)

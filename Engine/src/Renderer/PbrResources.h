@@ -15,10 +15,13 @@ private:
 	inline static const int THREAD_COUNT = 32;
 	inline static const int CUBE_SIZE = 6;
 
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
+
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> BrdfLutResourceTexture;
 
 	ComputeTexture IrradianceTexture;
 
+	bool InitializeSamplerState(ID3D11Device* device);
 	bool LoadBrdfLutFile(ID3D11Device* device, const std::string& path);
 	bool GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context);
 	bool GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* context);
