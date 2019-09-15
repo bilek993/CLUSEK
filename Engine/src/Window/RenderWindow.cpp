@@ -3,7 +3,7 @@
 #include <Keyboard.h>
 #include <Mouse.h>
 #include <winuser.h>
-#include "../../resource.h"
+#include "../resource.h"
 
 bool RenderWindow::Initialize(const HINSTANCE hInstance, const std::string& windowTitle, 
 	const std::string& windowClass, const int width, const int height)
