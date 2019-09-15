@@ -486,7 +486,7 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 		SimplePerObjectBufferInstance.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
-		DeviceContext->PSSetShaderResources(0, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
+		DeviceContext->PSSetShaderResources(0, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
 
 		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
 	});

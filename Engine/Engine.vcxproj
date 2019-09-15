@@ -61,6 +61,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\RadianceBuffer.h" />
     <ClInclude Include="src\Renderer\ComputeTexture.h" />
     <ClInclude Include="src\Renderer\Shaders\ComputeShader.h" />
     <ClInclude Include="src\Renderer\PbrResources.h" />
@@ -116,7 +117,7 @@
     <ClInclude Include="src\Renderer\AdapterReader.h" />
     <ClInclude Include="src\Window\IOData.h" />
     <ClInclude Include="src\Window\IODevices.h" />
-	<ClInclude Include="src\resource.h" />
+    <ClInclude Include="src\resource.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Loaders\ConfigData.h" />
     <ClInclude Include="src\Loaders\ConfigLoader.h" />

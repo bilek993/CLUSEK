@@ -4,6 +4,8 @@
 #include <DDSTextureLoader.h>
 #include <WICTextureLoader.h>
 #include "Shaders/ComputeShader.h"
+#include "ConstantBufferTypes/RadianceBuffer.h"
+#include "ConstantBuffer.h"
 
 bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& pathToBrdfLutFile,
 	ID3D11ShaderResourceView* const* skyResourceView)
@@ -127,14 +129,34 @@ bool PbrResource::GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* co
 		return false;
 	}
 
-	RadianceTexture = CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
-	CreateUnorderedAccessView(device, RadianceTexture);
+	RadianceTexture = CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
 
 	context->CSSetShader(radianceComputeShader.GetShader(), nullptr, 0);
-	context->CSSetShaderResources(0, 1, skyResourceView);
-	context->CSSetUnorderedAccessViews(0, 1, RadianceTexture.UnorderedAccessView.GetAddressOf(), nullptr);
 	context->CSSetSamplers(0, 1, SamplerState.GetAddressOf());
-	context->Dispatch(RadianceTexture.Width / THREAD_COUNT, RadianceTexture.Height / THREAD_COUNT, CUBE_SIZE);
+	context->CSSetShaderResources(0, 1, skyResourceView);
+
+	ConstantBuffer<RadianceBuffer> constantBuffer;
+	const auto hr = constantBuffer.Initialize(device, context);
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'RadianceBuffer' constant buffer.");
+
+	const auto deltaRoughness = 1.0f / std::max(1.0f, static_cast<float>(RadianceTexture.Levels - 1));
+	auto size = RadianceTexture.Width;
+
+	for (auto level = 0; level < RadianceTexture.Levels; level++)
+	{
+		const auto threadGroupCount = std::max(1, size);
+		CreateUnorderedAccessView(device, RadianceTexture, level);
+
+		constantBuffer.Data.Roughness = level * deltaRoughness;
+		constantBuffer.ApplyChanges();
+
+		context->CSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
+		context->CSSetUnorderedAccessViews(0, 1, RadianceTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+		context->Dispatch(threadGroupCount, threadGroupCount, CUBE_SIZE);
+
+		size /= 2;
+	}
 
 	return true;
 }
@@ -199,6 +221,8 @@ ComputeTexture PbrResource::CreateCubeTexture(ID3D11Device* device, const int wi
 
 void PbrResource::CreateUnorderedAccessView(ID3D11Device* device, ComputeTexture& texture, const int mipSlice) const
 {
+	texture.UnorderedAccessView.Reset();
+
 	D3D11_TEXTURE2D_DESC textureDesc;
 	texture.Texture->GetDesc(&textureDesc);
 

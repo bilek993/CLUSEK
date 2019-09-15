@@ -2,6 +2,11 @@
 
 static const float PI = 3.14159265359f;
 
+cbuffer RadianceBuffer : register(b0)
+{
+    float Roughness;
+};
+
 TextureCube InputTexture : register(t0);
 RWTexture2DArray<float4> OutputTexture : register(u0);
 SamplerState Sampler : register(s0);
