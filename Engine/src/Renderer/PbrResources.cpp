@@ -161,12 +161,15 @@ bool PbrResource::GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* co
 	return true;
 }
 
-void PbrResource::CleanUp(ID3D11DeviceContext* context) const
+void PbrResource::CleanUp(ID3D11DeviceContext* context)
 {
 	Logger::Debug("Preparing clean up mechanism, after PBR Resources initialization...");
 
 	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
 	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
+
+	IrradianceTexture.UnorderedAccessView.Reset();
+	RadianceTexture.UnorderedAccessView.Reset();
 }
 
 ComputeTexture PbrResource::CreateCubeTexture(ID3D11Device* device, const int width, const int height, 
