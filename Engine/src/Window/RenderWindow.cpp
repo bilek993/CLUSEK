@@ -146,8 +146,8 @@ void RenderWindow::RegisterWindowClass() const
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = HInstance;
-	wc.hIcon = static_cast<HICON>(LoadImage(HInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 256, 256, 0));
-	wc.hIconSm = static_cast<HICON>(LoadImage(HInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 16, 16, 0));
+	wc.hIcon = static_cast<HICON>(LoadImage(HInstance, MAKEINTRESOURCE(APP_ICON), IMAGE_ICON, 256, 256, 0));
+	wc.hIconSm = static_cast<HICON>(LoadImage(HInstance, MAKEINTRESOURCE(APP_ICON), IMAGE_ICON, 16, 16, 0));
 	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hbrBackground = nullptr;
 	wc.lpszMenuName = nullptr;

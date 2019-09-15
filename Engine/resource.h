@@ -2,7 +2,7 @@
 // Microsoft Visual C++ generated include file.
 // Used by Engine.rc
 //
-#define IDI_ICON1                       101
+#define APP_ICON                        6
 
 // Next default values for new objects
 // 
