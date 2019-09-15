@@ -118,6 +118,9 @@
     <Filter Include="Resource Files\Shaders\Compute">
       <UniqueIdentifier>{5cf15d40-2d27-4341-825a-d0d2412ddeeb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Icons">
+      <UniqueIdentifier>{cbc6585b-8b94-4eaf-91f6-7fef98306d78}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -479,6 +482,9 @@
     <ClInclude Include="src\Renderer\ComputeTexture.h">
       <Filter>Header Files\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">
@@ -531,5 +537,15 @@
     <None Include="res\Shaders\Includes\sampling_helper.hlsli">
       <Filter>Resource Files\Shaders\Includes</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Icons\app_icon.ico">
+      <Filter>Resource Files\Icons</Filter>
+    </Image>
   </ItemGroup>
 </Project>

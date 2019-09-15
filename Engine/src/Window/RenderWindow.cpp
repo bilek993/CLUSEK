@@ -2,6 +2,8 @@
 #include "../Utils/Logger.h"
 #include <Keyboard.h>
 #include <Mouse.h>
+#include <winuser.h>
+#include "../../resource.h"
 
 bool RenderWindow::Initialize(const HINSTANCE hInstance, const std::string& windowTitle, 
 	const std::string& windowClass, const int width, const int height)
@@ -144,8 +146,8 @@ void RenderWindow::RegisterWindowClass() const
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = HInstance;
-	wc.hIcon = nullptr;
-	wc.hIconSm = nullptr;
+	wc.hIcon = static_cast<HICON>(LoadImage(HInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 256, 256, 0));
+	wc.hIconSm = static_cast<HICON>(LoadImage(HInstance, MAKEINTRESOURCE(IDI_ICON1), IMAGE_ICON, 16, 16, 0));
 	wc.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wc.hbrBackground = nullptr;
 	wc.lpszMenuName = nullptr;

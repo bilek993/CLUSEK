@@ -61,6 +61,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\Renderer\ComputeTexture.h" />
     <ClInclude Include="src\Renderer\Shaders\ComputeShader.h" />
     <ClInclude Include="src\Renderer\PbrResources.h" />
@@ -212,6 +213,12 @@
     <None Include="res\Shaders\Includes\normal_utils.hlsli" />
     <None Include="res\Shaders\Includes\gamma_correction_utils.hlsli" />
     <None Include="res\Shaders\Includes\sampling_helper.hlsli" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\Icons\app_icon.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
