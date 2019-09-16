@@ -5,6 +5,8 @@
 #include <json.hpp>
 #include "../Utils/StringUtil.h"
 #include "../Renderer/Shaders/ComputeShader.h"
+#include "../Renderer/ComputeTexture.h"
+#include "../Renderer/Generators/ResourcesGenerator.h"
 
 // This variable cannot be inline due to stupid compiler error in VS 2017
 std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
@@ -21,7 +23,7 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 		LoadTextureToMaterial(device, *resource, path);
 
 		if (convertLatLongToCubeMap)
-			resource = ConvertLatLongToCubeMap(device, context, resource->Get());
+			resource = ConvertLatLongToCubeMap(device, context, resource->GetAddressOf());
 
 		TextureResources[resourceId] = resource;
 	}
@@ -142,18 +144,28 @@ void MaterialLoader::SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::Com
 }
 
 std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::ConvertLatLongToCubeMap(ID3D11Device* device, 
-	ID3D11DeviceContext* context, ID3D11ShaderResourceView* inputResourceView)
+	ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView)
 {
-	auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
-
 	CreateSamplerStateIfNeeded(device);
 
-	// TODO: Add code here
+	ComputeShader latlongToCubemapComputeShader;
+
+	if (!latlongToCubemapComputeShader.Initialize(device, L"latlong_to_cubemap_compute_shader.cso"))
+		Logger::Error("RadianceComputeShader not initialized due to critical problem!");
+
+	auto texture = ResourcesGenerator::CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
+	ResourcesGenerator::CreateUnorderedAccessView(device, texture);
+
+	context->CSSetShader(latlongToCubemapComputeShader.GetShader(), nullptr, 0);
+	context->CSSetShaderResources(0, 1, inputResourceView);
+	context->CSSetUnorderedAccessViews(0, 1, texture.UnorderedAccessView.GetAddressOf(), nullptr);
+	context->CSSetSamplers(0, 1, SamplerState.GetAddressOf());
+	context->Dispatch(texture.Width / THREAD_COUNT, texture.Height / THREAD_COUNT, CUBE_SIZE);
 
 	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
 	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
 
-	return resource;
+	return std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>(texture.ShaderResourceView);
 }
 
 void MaterialLoader::CreateSamplerStateIfNeeded(ID3D11Device* device)

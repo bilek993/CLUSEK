@@ -15,7 +15,8 @@ public:
 	static void SetResourceForManuallyForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material, const std::string& albedoTextureId);
 	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
 private:
-	static std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> TextureResources;
+	inline static const int THREAD_COUNT = 32;
+	inline static const int CUBE_SIZE = 6;
 
 	enum FallbackColor : unsigned int
 	{
@@ -25,6 +26,8 @@ private:
 		DefaultOcclusion = 0xffffffff, // Alpha = ff, Blue = ff, Green = ff, Red = ff
 	};
 
+	static std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> TextureResources;
+
 	static inline Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> GetTextureById(ID3D11Device* device, const std::string& id, 
@@ -33,6 +36,6 @@ private:
 	static void SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, FallbackColor fallbackColor);
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> ConvertLatLongToCubeMap(ID3D11Device* device, 
-		ID3D11DeviceContext* context, ID3D11ShaderResourceView* inputResourceView);
+		ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView);
 	static void CreateSamplerStateIfNeeded(ID3D11Device* device);
 };
