@@ -146,6 +146,21 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 {
 	auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
 
+	CreateSamplerStateIfNeeded(device);
+
+	// TODO: Add code here
+
+	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
+	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
+
+	return resource;
+}
+
+void MaterialLoader::CreateSamplerStateIfNeeded(ID3D11Device* device)
+{
+	if (SamplerState)
+		return;
+
 	D3D11_SAMPLER_DESC samplerDesc;
 	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
 
@@ -157,15 +172,7 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
-	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
-	const auto hr = device->CreateSamplerState(&samplerDesc, samplerState.GetAddressOf());
+	const auto hr = device->CreateSamplerState(&samplerDesc, SamplerState.GetAddressOf());
 	if (FAILED(hr))
 		Logger::Error("Couldn't create sampler state for 'Material Loader'!");
-
-	// TODO: Add code here
-
-	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
-	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
-
-	return resource;
 }

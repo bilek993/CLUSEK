@@ -3,6 +3,7 @@
 #include "../Renderer/Mesh.h"
 #include <unordered_map>
 #include "../Renderer/Materials/SkyShaderMaterial.h"
+#include "../Renderer/Shaders/ComputeShader.h"
 
 class MaterialLoader final
 {
@@ -24,6 +25,8 @@ private:
 		DefaultOcclusion = 0xffffffff, // Alpha = ff, Blue = ff, Green = ff, Red = ff
 	};
 
+	static inline Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
+
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> GetTextureById(ID3D11Device* device, const std::string& id, 
 		FallbackColor fallbackColor);
 	static void LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, const std::string& path);
@@ -31,4 +34,5 @@ private:
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> ConvertLatLongToCubeMap(ID3D11Device* device, 
 		ID3D11DeviceContext* context, ID3D11ShaderResourceView* inputResourceView);
+	static void CreateSamplerStateIfNeeded(ID3D11Device* device);
 };
