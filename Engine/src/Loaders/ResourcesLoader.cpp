@@ -33,7 +33,7 @@ void ResourcesLoader::LoadTextures(ID3D11Device* device, const nlohmann::json& j
 	for (auto it = json.begin(); it != json.end(); ++it)
 	{
 		const auto key = static_cast<std::string>(it.key());
-		const auto value = it.value().get<std::string>();
+		const auto value = it.value()["Path"].get<std::string>();
 		MaterialLoader::LoadResource(device, value, key);
 	}
 
