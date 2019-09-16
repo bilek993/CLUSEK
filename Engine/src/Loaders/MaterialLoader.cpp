@@ -153,7 +153,7 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 	if (!latlongToCubemapComputeShader.Initialize(device, L"latlong_to_cubemap_compute_shader.cso"))
 		Logger::Error("RadianceComputeShader not initialized due to critical problem!");
 
-	auto texture = ResourcesGenerator::CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
+	auto texture = ResourcesGenerator::CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
 	ResourcesGenerator::CreateUnorderedAccessView(device, texture);
 
 	context->CSSetShader(latlongToCubemapComputeShader.GetShader(), nullptr, 0);
