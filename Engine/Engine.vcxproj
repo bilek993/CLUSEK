@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\Generators\ResourcesGenerator.cpp" />
     <ClCompile Include="src\Renderer\Shaders\ComputeShader.cpp" />
     <ClCompile Include="src\Renderer\PbrResources.cpp" />
     <ClCompile Include="src\Loaders\PostProcessingLoader.cpp" />
@@ -61,6 +62,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Generators\ResourcesGenerator.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\RadianceBuffer.h" />
     <ClInclude Include="src\Renderer\ComputeTexture.h" />
     <ClInclude Include="src\Renderer\Shaders\ComputeShader.h" />

@@ -267,6 +267,9 @@
     <ClCompile Include="src\Renderer\Shaders\ComputeShader.cpp">
       <Filter>Source Files\Renderer\Shaders</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Generators\ResourcesGenerator.cpp">
+      <Filter>Source Files\Renderer\Generators</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -487,6 +490,9 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\ConstantBufferTypes\RadianceBuffer.h">
       <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Generators\ResourcesGenerator.h">
+      <Filter>Header Files\Renderer\Generators</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

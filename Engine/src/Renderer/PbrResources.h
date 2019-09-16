@@ -30,8 +30,4 @@ private:
 	bool GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* context,
 		ID3D11ShaderResourceView* const* skyResourceView);
 	void CleanUp(ID3D11DeviceContext* context);
-
-	ComputeTexture CreateCubeTexture(ID3D11Device* device, int width, int height, 
-		DXGI_FORMAT format, bool useMips) const;
-	void CreateUnorderedAccessView(ID3D11Device* device, ComputeTexture& texture, int mipSlice = 0) const;
 };
