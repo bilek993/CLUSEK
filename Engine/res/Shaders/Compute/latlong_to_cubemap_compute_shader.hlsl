@@ -16,5 +16,5 @@ void main(uint3 threadID : SV_DispatchThreadID)
     float phi = atan2(normal.z, normal.x);
     float theta = acos(normal.y);
 
-    OutputTexture[threadID] = float4(InputTexture.SampleLevel(Sampler, float2(phi / (PI * PI), theta / (PI * PI)), 0).rgb, 1.0f);
+    OutputTexture[threadID] = InputTexture.SampleLevel(Sampler, float2(phi / (2 * PI), theta / PI), 0);
 }
