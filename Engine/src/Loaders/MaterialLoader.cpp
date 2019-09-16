@@ -8,7 +8,8 @@
 // This variable cannot be inline due to stupid compiler error in VS 2017
 std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
 
-void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path, const std::string& resourceId)
+void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path, const std::string& resourceId,
+	bool convertLatLongToCubeMap)
 {
 	Logger::Debug("Preparing to load resource '" + resourceId + "' from path '" + path + "'...");
 	const auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();

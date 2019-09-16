@@ -32,9 +32,13 @@ void ResourcesLoader::LoadTextures(ID3D11Device* device, const nlohmann::json& j
 {
 	for (auto it = json.begin(); it != json.end(); ++it)
 	{
-		const auto key = static_cast<std::string>(it.key());
-		const auto value = it.value()["Path"].get<std::string>();
-		MaterialLoader::LoadResource(device, value, key);
+		const auto id = static_cast<std::string>(it.key());
+		auto value = it.value();
+
+		const auto path = value["Path"].get<std::string>();
+		const auto convertLatLongToCubeMap = value["ConvertLatLongToCubeMap"].is_null() ? false : value["ConvertLatLongToCubeMap"].get<bool>();
+
+		MaterialLoader::LoadResource(device, path, id, convertLatLongToCubeMap);
 	}
 
 	Logger::Debug("Loaded " + std::to_string(json.size()) + " texture files.");
