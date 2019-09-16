@@ -4,20 +4,25 @@
 #include <fstream>
 #include <json.hpp>
 #include "../Utils/StringUtil.h"
+#include "../Renderer/Shaders/ComputeShader.h"
 
 // This variable cannot be inline due to stupid compiler error in VS 2017
 std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
 
-void MaterialLoader::LoadResource(ID3D11Device* device, const std::string& path, const std::string& resourceId,
-	bool convertLatLongToCubeMap)
+void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, 
+	const std::string& resourceId, const bool convertLatLongToCubeMap)
 {
 	Logger::Debug("Preparing to load resource '" + resourceId + "' from path '" + path + "'...");
-	const auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+	auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
 
 	if (!path.empty())
 	{
 		Logger::Debug("Adding resource '" + resourceId + "' into memory...");
 		LoadTextureToMaterial(device, *resource, path);
+
+		if (convertLatLongToCubeMap)
+			resource = ConvertLatLongToCubeMap(device, context, resource->Get());
+
 		TextureResources[resourceId] = resource;
 	}
 	else
@@ -134,4 +139,33 @@ void MaterialLoader::SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::Com
 	hr = device->CreateShaderResourceView(texture, &srvDesc, textureResource.GetAddressOf());
 	if (FAILED(hr))
 		Logger::Error("Creating error texture failed!");
+}
+
+std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::ConvertLatLongToCubeMap(ID3D11Device* device, 
+	ID3D11DeviceContext* context, ID3D11ShaderResourceView* inputResourceView)
+{
+	auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
+
+	D3D11_SAMPLER_DESC samplerDesc;
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
+	const auto hr = device->CreateSamplerState(&samplerDesc, samplerState.GetAddressOf());
+	if (FAILED(hr))
+		Logger::Error("Couldn't create sampler state for 'Material Loader'!");
+
+	// TODO: Add code here
+
+	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
+	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
+
+	return resource;
 }

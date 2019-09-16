@@ -4,7 +4,7 @@
 #include "ModelLoader.h"
 #include <fstream>
 
-void ResourcesLoader::Load(ID3D11Device* device, const std::string& pathToResourceFile)
+void ResourcesLoader::Load(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& pathToResourceFile)
 {
 	Logger::Debug("Preparing to load resource...");
 
@@ -13,7 +13,7 @@ void ResourcesLoader::Load(ID3D11Device* device, const std::string& pathToResour
 	inputFile >> jsonObject;
 
 	LoadModels(device, jsonObject["Models"]);
-	LoadTextures(device, jsonObject["Textures"]);
+	LoadTextures(device, context, jsonObject["Textures"]);
 }
 
 void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& json)
@@ -28,7 +28,7 @@ void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& jso
 	Logger::Debug("Loaded " + std::to_string(json.size()) + " model files.");
 }
 
-void ResourcesLoader::LoadTextures(ID3D11Device* device, const nlohmann::json& json)
+void ResourcesLoader::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* context, const nlohmann::json& json)
 {
 	for (auto it = json.begin(); it != json.end(); ++it)
 	{
@@ -38,7 +38,7 @@ void ResourcesLoader::LoadTextures(ID3D11Device* device, const nlohmann::json& j
 		const auto path = value["Path"].get<std::string>();
 		const auto convertLatLongToCubeMap = value["ConvertLatLongToCubeMap"].is_null() ? false : value["ConvertLatLongToCubeMap"].get<bool>();
 
-		MaterialLoader::LoadResource(device, path, id, convertLatLongToCubeMap);
+		MaterialLoader::LoadResource(device, context, path, id, convertLatLongToCubeMap);
 	}
 
 	Logger::Debug("Loaded " + std::to_string(json.size()) + " texture files.");
