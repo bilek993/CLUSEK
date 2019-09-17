@@ -153,7 +153,7 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 	if (!latlongToCubemapComputeShader.Initialize(device, L"latlong_to_cubemap_compute_shader.cso"))
 		Logger::Error("RadianceComputeShader not initialized due to critical problem!");
 
-	auto texture = ResourcesGenerator::CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
+	auto texture = ResourcesGenerator::CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
 	ResourcesGenerator::CreateUnorderedAccessView(device, texture);
 
 	context->CSSetShader(latlongToCubemapComputeShader.GetShader(), nullptr, 0);
@@ -161,6 +161,8 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 	context->CSSetUnorderedAccessViews(0, 1, texture.UnorderedAccessView.GetAddressOf(), nullptr);
 	context->CSSetSamplers(0, 1, SamplerState.GetAddressOf());
 	context->Dispatch(texture.Width / THREAD_COUNT, texture.Height / THREAD_COUNT, CUBE_SIZE);
+
+	context->GenerateMips(texture.ShaderResourceView.Get());
 
 	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
 	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
