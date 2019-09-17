@@ -146,7 +146,7 @@ bool PbrResource::GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* co
 
 	for (auto level = 0; level < RadianceTexture.Levels; level++)
 	{
-		const auto threadGroupCount = std::max(1, size);
+		const auto threadGroupCount = std::max(1, size / 32);
 		ResourcesGenerator::CreateUnorderedAccessView(device, RadianceTexture, level);
 
 		constantBuffer.Data.Roughness = level * deltaRoughness;
