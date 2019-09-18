@@ -27,6 +27,9 @@ Texture2D AlbedoTexture : register(t0);
 Texture2D NormalTexture : register(t1);
 Texture2D MetalicSmoothnessTexture : register(t2);
 Texture2D OcclusionTexture : register(t3);
+TextureCube IrradianceTexture : register(t4);
+TextureCube RadianceTexture : register(t5);
+Texture2D BrdfLut : register(t6);
 SamplerState DefaultSampler : register(s0);
 SamplerState BrdfSampler : register(s1);
 
@@ -43,6 +46,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
 
     float3 finalColor = pbr(albedoColorCorrected, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor, 
+                            IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
                             DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition);
 
     return float4(finalColor, Alpha);
