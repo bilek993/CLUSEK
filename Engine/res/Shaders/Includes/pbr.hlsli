@@ -37,13 +37,13 @@ float3 fresnelSchlick(float cosTheta, float3 F0)
 
 float3 fresnelSchlickRoughness(float cosTheta, float3 F0, float roughness)
 {
-    return F0 + (max(float3(1.0f - roughness), F0) - F0) * pow(1.0f - cosTheta, 5.0f);
+    return F0 + (max(float(1.0f - roughness).xxx, F0) - F0) * pow(1.0f - cosTheta, 5.0f);
 }
 
-int getTextureMipMapLevels(TextureCube texture)
+int getTextureMipMapLevels(TextureCube input)
 {
     int width, heigth, levels;
-    texture.GetDimensions(0, width, heigth, levels);
+    input.GetDimensions(0, width, heigth, levels);
     return levels;
 }
 
