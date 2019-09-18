@@ -4,8 +4,8 @@ struct PS_INPUT
     float2 TextureCoord : TEXCOORD;
 };
 
-Texture2D InputTexture : TEXTURE : register(t0);
-SamplerState Sampler : SAMPLER : register(s0);
+Texture2D InputTexture : register(t0);
+SamplerState Sampler : register(s0);
 
 float3 aces(float3 x)
 {

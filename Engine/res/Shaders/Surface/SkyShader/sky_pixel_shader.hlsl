@@ -6,8 +6,8 @@ struct PS_INPUT
     float3 TextureCoord : TEXCOORD;
 };
 
-TextureCube SkyMap : TEXTURE : register(t0);
-SamplerState Sampler : SAMPLER : register(s0);
+TextureCube SkyMap : register(t0);
+SamplerState Sampler : register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
