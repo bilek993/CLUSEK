@@ -62,16 +62,13 @@ float ndfGGX(float cosLh, float roughness)
     return alphaSquare / (PI * denominator * denominator);
 }
 
-[numthreads(32, 32, 1)]
-void main(uint3 threadID : SV_DispatchThreadID)
+void copyTextures(uint3 threadID, float3 normal)
 {
-    float outputWidth, outputHeight, outputDepth;
-    OutputTexture.GetDimensions(outputWidth, outputHeight, outputDepth);
-    float3 normal = getSamplingVector(threadID, outputWidth, outputHeight, outputDepth);
+    OutputTexture[threadID] = float4(InputTexture.SampleLevel(Sampler, normal, 0).rgb, 1.0f);
+}
 
-    float inputWidth, inputHeight, inputLevels;
-    InputTexture.GetDimensions(0, inputWidth, inputHeight, inputLevels);
-
+void calculateRadiance(uint3 threadID, float3 normal, float inputWidth, float inputHeight)
+{
     float wt = 4.0 * PI / (6 * inputWidth * inputHeight);
 
     float3 S, T;
@@ -105,4 +102,21 @@ void main(uint3 threadID : SV_DispatchThreadID)
     color /= weight;
     
     OutputTexture[threadID] = float4(color, 1.0f);
+}
+
+[numthreads(32, 32, 1)]
+void main(uint3 threadID : SV_DispatchThreadID)
+{
+    float outputWidth, outputHeight, outputDepth;
+    OutputTexture.GetDimensions(outputWidth, outputHeight, outputDepth);
+    float3 normal = getSamplingVector(threadID, outputWidth, outputHeight, outputDepth);
+
+    float inputWidth, inputHeight, inputLevels;
+    InputTexture.GetDimensions(0, inputWidth, inputHeight, inputLevels);
+
+    if (inputWidth == outputWidth && inputHeight == outputHeight)
+        copyTextures(threadID, normal);
+    else
+        calculateRadiance(threadID, normal, inputWidth, inputHeight);
+
 }
