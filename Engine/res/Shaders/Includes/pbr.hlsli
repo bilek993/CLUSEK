@@ -32,7 +32,7 @@ float geometrySmith(float3 normal, float roughness, float cosView, float cosLigh
 
 float3 fresnelSchlick(float cosTheta, float3 F0)
 {
-    return F0 + (1.0f - F0) * pow(1.0 - cosTheta, 5.0f);
+    return F0 + (1.0f - F0) * pow(1.0f - cosTheta, 5.0f);
 }
 
 float3 fresnelSchlickRoughness(float cosTheta, float3 F0, float roughness)
@@ -82,7 +82,7 @@ float3 pbr(float3 albedo, float3 normal, float metallic, float roughness, float 
     float2 brdf = brdfLut.Sample(brdfSampler, float2(max(dot(normal, viewDirection), 0.0f), roughness)).xy;
     float3 specularColor = radiance * (fresnelRoughness * brdf.x, brdf.y);
 
-    float3 ambient = (kD * diffuse + specular) * occlusion;
+    float3 ambient = (kD * diffuse + specularColor) * occlusion;
 
     return ambient + directLighting;
 }
