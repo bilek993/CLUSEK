@@ -78,9 +78,9 @@ float3 pbr(float3 albedo, float3 normal, float metallic, float roughness, float 
     float3 diffuse = irradiance * albedo;
 
     int radianceLevels = getTextureMipMapLevels(radianceTexture);
-    float3 radiance = radianceTexture.SampleLevel(defaultSampler, reflectionDirection, roughness * radianceLevels);
+    float3 radiance = radianceTexture.SampleLevel(defaultSampler, reflectionDirection, roughness * radianceLevels).rgb;
     float2 brdf = brdfLut.Sample(brdfSampler, float2(max(dot(normal, viewDirection), 0.0f), roughness)).xy;
-    float3 specularColor = radiance * (fresnelRoughness * brdf.x, brdf.y);
+    float3 specularColor = radiance * (fresnelRoughness * brdf.x + brdf.y);
 
     float3 ambient = (kD * diffuse + specularColor) * occlusion;
 
