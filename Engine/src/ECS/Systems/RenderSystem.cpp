@@ -553,6 +553,9 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(2, 1, mesh.Material.MetalicSmoothnessTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
+			DeviceContext->PSSetShaderResources(4, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
+			DeviceContext->PSSetShaderResources(5, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
+			DeviceContext->PSSetShaderResources(6, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
@@ -572,6 +575,9 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(2, 1, mesh.Material.MetalicSmoothnessTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
+			DeviceContext->PSSetShaderResources(4, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
+			DeviceContext->PSSetShaderResources(5, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
+			DeviceContext->PSSetShaderResources(6, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
