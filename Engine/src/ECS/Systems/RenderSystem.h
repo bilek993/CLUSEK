@@ -84,7 +84,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;
 
-	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultSamplerState;
 };
 
 template <class T>

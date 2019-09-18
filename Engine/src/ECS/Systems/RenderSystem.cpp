@@ -62,7 +62,7 @@ void RenderSystem::RenderFrameBegin() const
 	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
 
-	DeviceContext->PSSetSamplers(0, 1, SamplerState.GetAddressOf());
+	DeviceContext->PSSetSamplers(0, 1, DefaultSamplerState.GetAddressOf());
 }
 
 void RenderSystem::RenderFrameEnd() const
@@ -293,7 +293,7 @@ bool RenderSystem::InitializeDirectX()
 
 	Logger::Debug("Blend state is set successfully.");
 
-	// Sampler state initialization
+	// Default sampler state initialization
 
 	D3D11_SAMPLER_DESC samplerDesc;
 	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
@@ -307,7 +307,7 @@ bool RenderSystem::InitializeDirectX()
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
-	hr = Device->CreateSamplerState(&samplerDesc, SamplerState.GetAddressOf());
+	hr = Device->CreateSamplerState(&samplerDesc, DefaultSamplerState.GetAddressOf());
 	if (FAILED(hr))
 	{
 		Logger::Error("Error creating sampler state!");

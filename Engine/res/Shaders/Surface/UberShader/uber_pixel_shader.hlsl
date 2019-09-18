@@ -27,14 +27,14 @@ Texture2D AlbedoTexture : TEXTURE : register(t0);
 Texture2D NormalTexture : TEXTURE : register(t1);
 Texture2D MetalicSmoothnessTexture : TEXTURE : register(t2);
 Texture2D OcclusionTexture : TEXTURE : register(t3);
-SamplerState Sampler : SAMPLER : register(s0);
+SamplerState DefaultSampler : SAMPLER : register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    float3 albedoColor = AlbedoTexture.Sample(Sampler, input.TextureCoord).rgb;
-    float3 normalColor = NormalTexture.Sample(Sampler, input.TextureCoord).rgb;
-    float4 metalicSmoothnessColor = MetalicSmoothnessTexture.Sample(Sampler, input.TextureCoord);
-    float occlusionColor = MetalicSmoothnessTexture.Sample(Sampler, input.TextureCoord).r;
+    float3 albedoColor = AlbedoTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
+    float3 normalColor = NormalTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
+    float4 metalicSmoothnessColor = MetalicSmoothnessTexture.Sample(DefaultSampler, input.TextureCoord);
+    float occlusionColor = MetalicSmoothnessTexture.Sample(DefaultSampler, input.TextureCoord).r;
 
     float3 albedoColorCorrected = gammaCorrectTexture(albedoColor);
     float3 calculatedNormal = calculateNormal(normalColor, input.TBN);
