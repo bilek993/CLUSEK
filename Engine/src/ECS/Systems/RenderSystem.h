@@ -85,6 +85,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultSamplerState;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> BrdfSamplerState;
 };
 
 template <class T>

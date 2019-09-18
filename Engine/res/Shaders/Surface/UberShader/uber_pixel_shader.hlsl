@@ -28,6 +28,7 @@ Texture2D NormalTexture : TEXTURE : register(t1);
 Texture2D MetalicSmoothnessTexture : TEXTURE : register(t2);
 Texture2D OcclusionTexture : TEXTURE : register(t3);
 SamplerState DefaultSampler : SAMPLER : register(s0);
+SamplerState BrdfSampler : SAMPLER : register(s1);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {

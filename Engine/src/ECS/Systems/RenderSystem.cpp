@@ -63,6 +63,7 @@ void RenderSystem::RenderFrameBegin() const
 	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
 
 	DeviceContext->PSSetSamplers(0, 1, DefaultSamplerState.GetAddressOf());
+	DeviceContext->PSSetSamplers(1, 1, BrdfSamplerState.GetAddressOf());
 }
 
 void RenderSystem::RenderFrameEnd() const
@@ -310,10 +311,31 @@ bool RenderSystem::InitializeDirectX()
 	hr = Device->CreateSamplerState(&samplerDesc, DefaultSamplerState.GetAddressOf());
 	if (FAILED(hr))
 	{
-		Logger::Error("Error creating sampler state!");
+		Logger::Error("Error creating default sampler state!");
 		return false;
 	}
-	Logger::Debug("Sampler state is set successfully.");
+	Logger::Debug("Default sampler state is set successfully.");
+
+	// BRDF sampler state initialization
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.MaxAnisotropy = D3D11_REQ_MAXANISOTROPY;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	hr = Device->CreateSamplerState(&samplerDesc, BrdfSamplerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating BRDF sampler state!");
+		return false;
+	}
+	Logger::Debug("BRDF sampler state is set successfully.");
 
 	// Topology initialization
 
