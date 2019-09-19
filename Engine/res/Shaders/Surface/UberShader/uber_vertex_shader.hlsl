@@ -28,7 +28,7 @@ VS_OUTPUT main(VS_INPUT input)
     output.Position = mul(float4(input.Position, 1.0f), WorldViewProjectionMat);
     output.WorldPosition = mul(float4(input.Position, 1.0f), WorldMatrix).xyz;
     output.TextureCoord = input.TextureCoord;
-    output.TBN = calculateTBN(input.Normal, input.Tangent);
+    output.TBN = calculateTBN(mul(float4(input.Normal, 0.0f), WorldMatrix).xyz, (mul(float4(input.Tangent, 0.0f), WorldMatrix).xyz));
 
     return output;
 }
