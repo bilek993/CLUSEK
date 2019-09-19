@@ -73,8 +73,8 @@ float3 pbr(float3 albedo, float3 normal, float metallic, float roughness, float 
 
     float3 directLighting = (kD * albedo / PI + specular) * lightColor * cosLight;
 
-    float3 fresnelRoughness = fresnelSchlickRoughness(max(dot(normal, viewDirection), 0.0f), F0, roughness);
-    kD = lerp(float3(1.0f, 1.0f, 1.0f) - fresnelRoughness, float3(0.0f, 0.0f, 0.0f), metallic);
+    F = fresnelSchlickRoughness(max(dot(normal, viewDirection), 0.0f), F0, roughness);
+    kD = lerp(float3(1.0f, 1.0f, 1.0f) - F, float3(0.0f, 0.0f, 0.0f), metallic);
 
     float3 irradiance = irradianceTexture.Sample(defaultSampler, normal).rgb;
     float3 diffuse = irradiance * albedo;
@@ -82,7 +82,7 @@ float3 pbr(float3 albedo, float3 normal, float metallic, float roughness, float 
     int radianceLevels = getTextureMipMapLevels(radianceTexture);
     float3 radiance = radianceTexture.SampleLevel(defaultSampler, reflectionDirection, roughness * radianceLevels).rgb;
     float2 brdf = brdfLut.Sample(brdfSampler, float2(max(dot(normal, viewDirection), 0.0f), roughness)).xy;
-    float3 specularColor = radiance * (fresnelRoughness * brdf.x + brdf.y);
+    float3 specularColor = radiance * (F * brdf.x + brdf.y);
 
     float3 ambientLighting = (kD * diffuse + specularColor) * occlusion;
 
