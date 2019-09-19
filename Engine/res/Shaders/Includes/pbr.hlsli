@@ -1,5 +1,5 @@
 static const float PI = 3.14159265359f;
-static const float3 DIELECTRIC_FACTOR = 0.04;
+static const float3 DIELECTRIC_FACTOR = float3(0.04f, 0.04f, 0.04f);
 static const float EPSILON = 0.00001f;
 
 float distributionGGX(float3 normal, float3 halfway, float roughness)
