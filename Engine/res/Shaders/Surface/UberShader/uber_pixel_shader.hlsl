@@ -38,7 +38,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 albedoColor = AlbedoTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
     float3 normalColor = NormalTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
     float4 metalicSmoothnessColor = MetalicSmoothnessTexture.Sample(DefaultSampler, input.TextureCoord);
-    float occlusionColor = MetalicSmoothnessTexture.Sample(DefaultSampler, input.TextureCoord).r;
+    float occlusionColor = OcclusionTexture.Sample(DefaultSampler, input.TextureCoord).r;
 
     float3 albedoColorCorrected = gammaCorrectTexture(albedoColor);
     float3 calculatedNormal = calculateNormal(normalColor, input.TBN);
