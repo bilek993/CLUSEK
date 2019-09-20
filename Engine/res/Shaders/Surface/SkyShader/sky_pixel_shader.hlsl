@@ -1,5 +1,3 @@
-#include "../../Includes/gamma_correction_utils.hlsli"
-
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;

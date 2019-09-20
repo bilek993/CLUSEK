@@ -1,4 +1,3 @@
-#include "../../Includes/gamma_correction_utils.hlsli"
 #include "../../Includes/normal_utils.hlsli"
 #include "../../Includes/pbr.hlsli"
 
@@ -40,12 +39,11 @@ float4 main(PS_INPUT input) : SV_TARGET
     float4 metalicSmoothnessColor = MetalicSmoothnessTexture.Sample(DefaultSampler, input.TextureCoord);
     float occlusionColor = OcclusionTexture.Sample(DefaultSampler, input.TextureCoord).r;
 
-    float3 albedoColorCorrected = gammaCorrectTexture(albedoColor);
     float3 calculatedNormal = calculateNormal(normalColor, input.TBN);
     float roughness = 1 - metalicSmoothnessColor.a;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
 
-    float3 finalColor = pbr(albedoColorCorrected, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor, 
+    float3 finalColor = pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
                             DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition);
 
