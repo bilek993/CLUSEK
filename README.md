@@ -152,6 +152,8 @@ or
 git lfs clone git@github.com:bilek993/CLUSEK.git
 ```
 
+> Due to significant repository size, cloning repository may take some time.
+
 
 
 ## Redistribution
