@@ -57,4 +57,6 @@ struct ConfigData final
 
 	// PBR settings
 	std::string PathToBrdfLut = "";
+	int IrradianceTextureSize = 32;
+	int RadianceTextureSize = 1024;
 };

@@ -393,7 +393,7 @@ bool RenderSystem::InitializePbrResources()
 	}
 
 	return PbrResourceInstance.Initialize(Device.Get(), DeviceContext.Get(), 
-		ConfigurationData->PathToBrdfLut, view.raw()[0].Material.SkyMap->GetAddressOf());
+		ConfigurationData, view.raw()[0].Material.SkyMap->GetAddressOf());
 }
 
 void RenderSystem::InitializeLightSettings() const

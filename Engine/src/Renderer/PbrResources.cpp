@@ -8,18 +8,18 @@
 #include "ConstantBuffer.h"
 #include "Generators/ResourcesGenerator.h"
 
-bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& pathToBrdfLutFile,
+bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const ConfigData* config,
 	ID3D11ShaderResourceView* const* skyResourceView)
 {
 	Logger::Debug("Preparing PBR resources...");
 
 	if (!InitializeSamplerState(device))
 		return false;
-	if (!LoadBrdfLutFile(device, pathToBrdfLutFile))
+	if (!LoadBrdfLutFile(device, config->PathToBrdfLut))
 		return false;
-	if (!GenerateIrradiance(device, context, skyResourceView))
+	if (!GenerateIrradiance(device, context, skyResourceView, config->IrradianceTextureSize))
 		return false;
-	if (!GenerateRadiance(device, context, skyResourceView))
+	if (!GenerateRadiance(device, context, skyResourceView, config->RadianceTextureSize))
 		return false;
 
 	CleanUp(context);
@@ -93,7 +93,7 @@ bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, const std::string& path)
 }
 
 bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context,
-	ID3D11ShaderResourceView* const* skyResourceView)
+	ID3D11ShaderResourceView* const* skyResourceView, const int textureSize)
 {
 	Logger::Debug("Preparing to generate irradiance map...");
 
@@ -105,7 +105,7 @@ bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* 
 		return false;
 	}
 
-	IrradianceTexture = ResourcesGenerator::CreateCubeTexture(device, 32, 32, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
+	IrradianceTexture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
 	ResourcesGenerator::CreateUnorderedAccessView(device, IrradianceTexture);
 
 	context->CSSetShader(irradianceComputeShader.GetShader(), nullptr, 0);
@@ -118,7 +118,7 @@ bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* 
 }
 
 bool PbrResource::GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* context,
-	ID3D11ShaderResourceView* const* skyResourceView)
+	ID3D11ShaderResourceView* const* skyResourceView, const int textureSize)
 {
 	Logger::Debug("Preparing to generate radiance map...");
 
@@ -130,7 +130,7 @@ bool PbrResource::GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* co
 		return false;
 	}
 
-	RadianceTexture = ResourcesGenerator::CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
+	RadianceTexture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
 
 	context->CSSetShader(radianceComputeShader.GetShader(), nullptr, 0);
 	context->CSSetSamplers(0, 1, SamplerState.GetAddressOf());
