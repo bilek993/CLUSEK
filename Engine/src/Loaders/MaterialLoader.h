@@ -4,11 +4,13 @@
 #include <unordered_map>
 #include "../Renderer/Materials/SkyShaderMaterial.h"
 #include "../Renderer/Shaders/ComputeShader.h"
+#include "ConfigData.h"
 
 class MaterialLoader final
 {
 public:
-	static void LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, const std::string& resourceId, bool convertLatLongToCubeMap);
+	static void LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, const std::string& resourceId, 
+		bool convertLatLongToCubeMap, const ConfigData* config);
 	static void SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId, 
 		const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId, 
 		const std::string& occlusionTextureId, float alpha);
@@ -36,6 +38,6 @@ private:
 	static void SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, FallbackColor fallbackColor);
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> ConvertLatLongToCubeMap(ID3D11Device* device, 
-		ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView);
+		ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView, int textureSize);
 	static void CreateSamplerStateIfNeeded(ID3D11Device* device);
 };

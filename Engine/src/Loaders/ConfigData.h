@@ -47,6 +47,9 @@ struct ConfigData final
 	float DirectionalLightDirectionY = 0.5f;
 	float DirectionalLightDirectionZ = -1.0f;
 
+	// Loaders settings
+	int CubemapGeneratedSize = 1024;
+
 	// Files responsible for world description
 	std::string PathToResources = "";
 	std::string PathToMap = "";

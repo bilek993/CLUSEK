@@ -12,7 +12,7 @@
 std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
 
 void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, 
-	const std::string& resourceId, const bool convertLatLongToCubeMap)
+	const std::string& resourceId, const bool convertLatLongToCubeMap, const ConfigData* config)
 {
 	Logger::Debug("Preparing to load resource '" + resourceId + "' from path '" + path + "'...");
 	auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
@@ -23,7 +23,7 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 		LoadTextureToMaterial(device, *resource, path);
 
 		if (convertLatLongToCubeMap)
-			resource = ConvertLatLongToCubeMap(device, context, resource->GetAddressOf());
+			resource = ConvertLatLongToCubeMap(device, context, resource->GetAddressOf(), config->CubemapGeneratedSize);
 
 		TextureResources[resourceId] = resource;
 	}
@@ -144,7 +144,7 @@ void MaterialLoader::SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::Com
 }
 
 std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::ConvertLatLongToCubeMap(ID3D11Device* device, 
-	ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView)
+	ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView, const int textureSize)
 {
 	CreateSamplerStateIfNeeded(device);
 
@@ -153,7 +153,7 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 	if (!latlongToCubemapComputeShader.Initialize(device, L"latlong_to_cubemap_compute_shader.cso"))
 		Logger::Error("RadianceComputeShader not initialized due to critical problem!");
 
-	auto texture = ResourcesGenerator::CreateCubeTexture(device, 1024, 1024, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
+	auto texture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
 	ResourcesGenerator::CreateUnorderedAccessView(device, texture);
 
 	context->CSSetShader(latlongToCubemapComputeShader.GetShader(), nullptr, 0);

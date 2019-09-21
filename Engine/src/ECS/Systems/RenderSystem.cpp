@@ -33,7 +33,7 @@ void RenderSystem::Start()
 	InitializeConstantBuffers();
 	InitializePostProcessing();
 
-	ResourcesLoader::Load(Device.Get(), DeviceContext.Get(), ConfigurationData->PathToResources);
+	ResourcesLoader::Load(Device.Get(), DeviceContext.Get(), ConfigurationData);
 
 	InitializeSkyboxComponent();
 	InitializeModelRenderComponent();
