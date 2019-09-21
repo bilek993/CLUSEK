@@ -52,6 +52,8 @@ float3 pbr(float3 albedo, float3 normal, float metallic, float roughness, float 
           SamplerState defaultSampler, SamplerState brdfSampler, float3 lightDirection, 
           float3 lightColor, float3 cameraPosition, float3 pixelPosition)
 {
+    lightDirection *= -1;
+
     float3 viewDirection = normalize(cameraPosition - pixelPosition);
     float3 halfwayDirection = normalize(viewDirection + lightDirection);
     float3 reflectionDirection = reflect(-viewDirection, normal);
