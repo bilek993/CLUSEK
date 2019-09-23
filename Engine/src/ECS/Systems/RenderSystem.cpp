@@ -170,7 +170,8 @@ bool RenderSystem::InitializeDirectX()
 
 	// Intermediate render texture initialization
 
-	if (!IntermediateRenderTexture.Initialize(Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT))
+	if (!IntermediateRenderTexture.Initialize(Device.Get(), WindowWidth, WindowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT,
+		ConfigurationData->MultisamplesCount, ConfigurationData->MultisamplesQuality))
 	{
 		Logger::Error("Error creating Intermediate render texture!");
 		return false;
@@ -186,8 +187,8 @@ bool RenderSystem::InitializeDirectX()
 	depthStencilTextureDesc.MipLevels = 1;
 	depthStencilTextureDesc.ArraySize = 1;
 	depthStencilTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilTextureDesc.SampleDesc.Count = 1;
-	depthStencilTextureDesc.SampleDesc.Quality = 0;
+	depthStencilTextureDesc.SampleDesc.Count = ConfigurationData->MultisamplesCount;
+	depthStencilTextureDesc.SampleDesc.Quality = ConfigurationData->MultisamplesQuality;
 	depthStencilTextureDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthStencilTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 	depthStencilTextureDesc.CPUAccessFlags = 0;
@@ -439,6 +440,9 @@ void RenderSystem::InitializePostProcessing()
 	PostProcessingLoader::Load(ConfigurationData->PathToPostProcessing, CurrentPostProcessingSettings,
 		DeviceContext.Get(), Device.Get(), WindowWidth, WindowHeight);
 
+	MultisamplingPostProcessingInstance = std::make_unique<MultisamplingPostProcessing>(DeviceContext.Get(),
+		Device.Get(), WindowWidth, WindowHeight, CurrentPostProcessingSettings->Format);
+
 	CopyToBackBufferPostProcessingInstance = std::make_unique<CopyToBackBufferPostProcessing>(DeviceContext.Get(), 
 		Device.Get(), BackBufferRenderTargetView.GetAddressOf());
 }
@@ -589,6 +593,9 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 void RenderSystem::PerformPostProcessing() const
 {
 	auto currentInput = IntermediateRenderTexture.GetShaderResourceView();
+
+	if (ConfigurationData->MultisamplesCount > 1)
+		currentInput = MultisamplingPostProcessingInstance->Process(currentInput.GetAddressOf());
 
 	for (auto& postProcessingEffect : CurrentPostProcessingSettings->List)
 		currentInput = postProcessingEffect->Process(currentInput.GetAddressOf());

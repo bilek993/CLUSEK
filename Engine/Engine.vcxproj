@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.cpp" />
     <ClCompile Include="src\Renderer\Generators\ResourcesGenerator.cpp" />
     <ClCompile Include="src\Renderer\Shaders\ComputeShader.cpp" />
     <ClCompile Include="src\Renderer\PbrResources.cpp" />
@@ -62,6 +63,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.h" />
     <ClInclude Include="src\Renderer\Generators\ResourcesGenerator.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\RadianceBuffer.h" />
     <ClInclude Include="src\Renderer\ComputeTexture.h" />
@@ -138,6 +140,12 @@
     <ClInclude Include="src\Tags.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="res\Shaders\PostProcessing\multisampling_pixel_shader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="res\Shaders\Compute\brdf_lut_compute_shader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>

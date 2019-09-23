@@ -270,6 +270,9 @@
     <ClCompile Include="src\Renderer\Generators\ResourcesGenerator.cpp">
       <Filter>Source Files\Renderer\Generators</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.cpp">
+      <Filter>Source Files\Renderer\PostProcessing</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -494,6 +497,9 @@
     <ClInclude Include="src\Renderer\Generators\ResourcesGenerator.h">
       <Filter>Header Files\Renderer\Generators</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.h">
+      <Filter>Header Files\Renderer\PostProcessing</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">
@@ -537,6 +543,9 @@
     </FxCompile>
     <FxCompile Include="res\Shaders\Compute\brdf_lut_compute_shader.hlsl">
       <Filter>Resource Files\Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\PostProcessing\multisampling_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

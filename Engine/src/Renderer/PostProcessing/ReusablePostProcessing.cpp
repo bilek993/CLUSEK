@@ -15,7 +15,8 @@ ReusablePostProcessing::ReusablePostProcessing(ID3D11DeviceContext* deviceContex
 	if (!PixelShaderInstance.Initialize(Device, StringUtil::StringToWide(pixelShaderFilename)))
 		Logger::Error("'" + pixelShaderFilename + "' not initialized due to critical problem!");
 
-	if (!OutputRenderTexture.Initialize(device, windowWidth, windowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT))
+	if (!OutputRenderTexture.Initialize(device, windowWidth, windowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT,
+		1, 0))
 		Logger::Error("OutputRenderTexture not initialized due to critical problem!");
 }
 

@@ -16,6 +16,7 @@
 #include "../Components/TransformComponent.h"
 #include "../../Renderer/ConstantBufferTypes/CameraBuffer.h"
 #include "../../Renderer/PbrResources.h"
+#include "../../Renderer/PostProcessing/MultisamplingPostProcessing.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -55,6 +56,7 @@ private:
 
 	int SyncIntervals = 1;
 
+	std::unique_ptr<MultisamplingPostProcessing> MultisamplingPostProcessingInstance;
 	std::unique_ptr<CopyToBackBufferPostProcessing> CopyToBackBufferPostProcessingInstance;
 
 	Microsoft::WRL::ComPtr<ID3D11Device> Device;
