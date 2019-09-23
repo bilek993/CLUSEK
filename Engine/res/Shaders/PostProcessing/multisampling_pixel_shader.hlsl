@@ -5,7 +5,6 @@ struct PS_INPUT
 };
 
 Texture2DMS<float4> InputTexture : register(t0);
-SamplerState Sampler : register(s0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
