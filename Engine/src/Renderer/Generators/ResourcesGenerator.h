@@ -9,5 +9,7 @@ public:
 
 	static ComputeTexture CreateCubeTexture(ID3D11Device* device, int width, int height, DXGI_FORMAT format, 
 		bool useMips);
+	static ComputeTexture CreateFlatTexture(ID3D11Device* device, int width, int height, DXGI_FORMAT format,
+		bool useMips);
 	static void CreateUnorderedAccessView(ID3D11Device* device, ComputeTexture& texture, int mipSlice = 0);
 };

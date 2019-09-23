@@ -20,12 +20,13 @@ private:
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> SamplerState;
 
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> BrdfLutResourceTexture;
+	ComputeTexture BrdfLutTexture;
 	ComputeTexture IrradianceTexture;
 	ComputeTexture RadianceTexture;
 
 	bool InitializeSamplerState(ID3D11Device* device);
-	bool LoadBrdfLutFile(ID3D11Device* device, const std::string& path);
+	bool LoadBrdfLutFile(ID3D11Device* device, ID3D11DeviceContext* context,
+		int textureSize);
 	bool GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context, 
 		ID3D11ShaderResourceView* const* skyResourceView, int textureSize);
 	bool GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* context,

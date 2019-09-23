@@ -1,7 +1,6 @@
 #include "PbrResources.h"
 #include "../Utils/Logger.h"
 #include "../Utils/StringUtil.h"
-#include <DDSTextureLoader.h>
 #include <WICTextureLoader.h>
 #include "Shaders/ComputeShader.h"
 #include "ConstantBufferTypes/RadianceBuffer.h"
@@ -15,7 +14,7 @@ bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context,
 
 	if (!InitializeSamplerState(device))
 		return false;
-	if (!LoadBrdfLutFile(device, config->PathToBrdfLut))
+	if (!LoadBrdfLutFile(device, context, 256))
 		return false;
 	if (!GenerateIrradiance(device, context, skyResourceView, config->IrradianceTextureSize))
 		return false;
@@ -30,7 +29,7 @@ bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context,
 
 ID3D11ShaderResourceView** PbrResource::GetAddressOfBrdfLutResourceTexture()
 {
-	return BrdfLutResourceTexture.GetAddressOf();
+	return BrdfLutTexture.ShaderResourceView.GetAddressOf();
 }
 
 ID3D11ShaderResourceView** PbrResource::GetAddressOfIrradianceResourceTexture()
@@ -66,28 +65,25 @@ bool PbrResource::InitializeSamplerState(ID3D11Device* device)
 	return true;
 }
 
-bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, const std::string& path)
+bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, ID3D11DeviceContext* context,
+	const int textureSize)
 {
-	Logger::Debug("Preparing BRDF Lut file...");
+	Logger::Debug("Preparing to generate BRDF Lut...");
 
-	if (StringUtil::FindExtension(path) == "DDS")
+	ComputeShader brdfLutComputeShader;
+
+	if (!brdfLutComputeShader.Initialize(device, L"brdf_lut_compute_shader.cso"))
 	{
-		const auto hr = DirectX::CreateDDSTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, BrdfLutResourceTexture.GetAddressOf());
-		if (FAILED(hr))
-		{
-			Logger::Error("Couldn't load texture from file!");
-			return false;
-		}
+		Logger::Error("BrdfLutComputeShader not initialized due to critical problem!");
+		return false;
 	}
-	else
-	{
-		const auto hr = DirectX::CreateWICTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, BrdfLutResourceTexture.GetAddressOf());
-		if (FAILED(hr))
-		{
-			Logger::Error("Couldn't load texture from file!");
-			return false;
-		}
-	}
+
+	BrdfLutTexture = ResourcesGenerator::CreateFlatTexture(device, textureSize, textureSize, DXGI_FORMAT_R16G16_FLOAT, false);
+	ResourcesGenerator::CreateUnorderedAccessView(device, BrdfLutTexture);
+
+	context->CSSetShader(brdfLutComputeShader.GetShader(), nullptr, 0);
+	context->CSSetUnorderedAccessViews(0, 1, BrdfLutTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+	context->Dispatch(BrdfLutTexture.Width / THREAD_COUNT, BrdfLutTexture.Height / THREAD_COUNT, CUBE_SIZE);
 
 	return true;
 }
@@ -169,6 +165,7 @@ void PbrResource::CleanUp(ID3D11DeviceContext* context)
 	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
 	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
 
+	BrdfLutTexture.UnorderedAccessView.Reset();
 	IrradianceTexture.UnorderedAccessView.Reset();
 	RadianceTexture.UnorderedAccessView.Reset();
 }
