@@ -224,6 +224,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Shaders\Includes\pbr_compute_shared.hlsli" />
     <None Include="res\Shaders\Includes\pbr.hlsli" />
     <None Include="res\Shaders\Includes\normal_utils.hlsli" />
     <None Include="res\Shaders\Includes\sampling_helper.hlsli" />

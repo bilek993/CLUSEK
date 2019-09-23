@@ -549,6 +549,9 @@
     <None Include="res\Shaders\Includes\sampling_helper.hlsli">
       <Filter>Resource Files\Shaders\Includes</Filter>
     </None>
+    <None Include="res\Shaders\Includes\pbr_compute_shared.hlsli">
+      <Filter>Resource Files\Shaders\Includes</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine.rc">
