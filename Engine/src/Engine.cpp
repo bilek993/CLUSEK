@@ -58,6 +58,9 @@ void Engine::CreateSystems()
 {
 	std::unique_ptr<BaseSystem> systemBasePtr;
 
+	systemBasePtr = std::make_unique<RenderSystem>();
+	Systems.emplace_back(SystemHolder("Render System", systemBasePtr, true));
+
 	systemBasePtr = std::make_unique<CameraSystem>();
 	Systems.emplace_back(SystemHolder("Camera System", systemBasePtr, true));
 
@@ -66,9 +69,6 @@ void Engine::CreateSystems()
 
 	systemBasePtr = std::make_unique<SkyboxSystem>();
 	Systems.emplace_back(SystemHolder("Skybox System", systemBasePtr, true));
-
-	systemBasePtr = std::make_unique<RenderSystem>();
-	Systems.emplace_back(SystemHolder("Render System", systemBasePtr, true));
 
 	for (auto i = 0; i < Systems.size(); i++)
 	{
