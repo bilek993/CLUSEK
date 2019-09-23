@@ -14,7 +14,7 @@ bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context,
 
 	if (!InitializeSamplerState(device))
 		return false;
-	if (!LoadBrdfLutFile(device, context, 256))
+	if (!LoadBrdfLutFile(device, context, config->BrdfLutTextureSize))
 		return false;
 	if (!GenerateIrradiance(device, context, skyResourceView, config->IrradianceTextureSize))
 		return false;

@@ -71,6 +71,7 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, PathToMap, data, value);
 			MAP_CONFIG_FIELD(key, PathToPostProcessing, data, value);
 
+			MAP_CONFIG_FIELD(key, BrdfLutTextureSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, IrradianceTextureSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, RadianceTextureSize, data, std::stoi(value));
 		}
