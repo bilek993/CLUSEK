@@ -33,6 +33,8 @@ void RenderSystem::Start()
 	InitializeConstantBuffers();
 	InitializePostProcessing();
 
+	ShowLoadingScreen();
+
 	ResourcesLoader::Load(Device.Get(), DeviceContext.Get(), ConfigurationData);
 
 	InitializeSkyboxComponent();
@@ -445,6 +447,15 @@ void RenderSystem::InitializePostProcessing()
 
 	CopyToBackBufferPostProcessingInstance = std::make_unique<CopyToBackBufferPostProcessing>(DeviceContext.Get(), 
 		Device.Get(), BackBufferRenderTargetView.GetAddressOf());
+}
+
+void RenderSystem::ShowLoadingScreen()
+{
+	RenderFrameBegin();
+
+	
+
+	RenderFrameEnd();
 }
 
 void RenderSystem::InitializeSkyboxComponent()

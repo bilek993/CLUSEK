@@ -36,6 +36,7 @@ private:
 	void InitializeClearColorSettings() const;
 	void InitializeConstantBuffers();
 	void InitializePostProcessing();
+	void ShowLoadingScreen();
 	void InitializeSkyboxComponent();
 	void InitializeModelRenderComponent();
 
