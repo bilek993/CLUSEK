@@ -13,6 +13,7 @@
 #include "../../Loaders/PostProcessingLoader.h"
 #include "../../Renderer/TransformLogic.h"
 #include "../../Renderer/Generators/QuadGenerator.h"
+#include "../../Renderer/ModelViewLogic.h"
 
 void RenderSystem::Start()
 {
@@ -471,8 +472,10 @@ void RenderSystem::ShowLoadingScreen()
 
 	ChangeShader(SimpleVertexShader, SimplePixelShader);
 
+	const auto ratio = static_cast<float>(ConfigurationData->WindowWidth) / static_cast<float>(ConfigurationData->WindowHeight);
+
 	SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
-		XMMatrixTranspose(DirectX::XMMatrixTranslation(0.0f, 0.0f, 0.0f));
+		XMMatrixTranspose(ModelViewLogic::GenerateOrthographicProjectionMatrix(ratio));
 	SimplePerObjectBufferInstance.ApplyChanges();
 
 	DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
@@ -480,7 +483,7 @@ void RenderSystem::ShowLoadingScreen()
 
 	VertexBuffer<PositionVertex> vertexBuffer;
 	IndexBuffer indexBuffer;
-	QuadGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer, -0.5f, -0.5f, 0.5f, 0.5f);
+	QuadGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer, -0.25f, -0.25f, 0.25f, 0.25f);
 
 	UINT offset = 0;
 	Draw(vertexBuffer, indexBuffer, offset);

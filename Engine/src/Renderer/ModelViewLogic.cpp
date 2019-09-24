@@ -21,3 +21,8 @@ void ModelViewLogic::UpdateModelMatrix(DirectX::XMMATRIX& worldMatrix, Transform
 	transformComponent.VectorForward = XMVector3TransformCoord(TransformComponent::FORWARD_VECTOR, vecRotationMatrix);
 	transformComponent.VectorRight = XMVector3TransformCoord(TransformComponent::RIGHT_VECTOR, vecRotationMatrix);
 }
+
+DirectX::XMMATRIX ModelViewLogic::GenerateOrthographicProjectionMatrix(const float ratio)
+{
+	return DirectX::XMMatrixOrthographicOffCenterLH(-1, 1, -1/ratio, 1/ratio, -1.0f, 1.0f);
+}
