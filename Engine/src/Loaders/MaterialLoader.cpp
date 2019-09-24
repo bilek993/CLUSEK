@@ -45,7 +45,7 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 	mesh.Material.Alpha = alpha;
 }
 
-void MaterialLoader::SetResourceForManuallyForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material,
+void MaterialLoader::SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material,
 	const std::string& albedoTextureId)
 {
 	material.SkyMap = GetTextureById(device, albedoTextureId, DefaultAlbedo);
