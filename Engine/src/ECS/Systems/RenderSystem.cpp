@@ -12,6 +12,7 @@
 #include "../../Renderer/PostProcessing/CopyToBackBufferPostProcessing.h"
 #include "../../Loaders/PostProcessingLoader.h"
 #include "../../Renderer/TransformLogic.h"
+#include "../../Renderer/Generators/QuadGenerator.h"
 
 void RenderSystem::Start()
 {
@@ -468,7 +469,21 @@ void RenderSystem::ShowLoadingScreen()
 	RenderFrameBegin();
 	DeviceContext->ClearRenderTargetView(IntermediateRenderTexture.GetRenderTargetViewPointer(), BACKGROUND_COLOR);
 
+	ChangeShader(SimpleVertexShader, SimplePixelShader);
 
+	SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
+		XMMatrixTranspose(DirectX::XMMatrixTranslation(0.0f, 0.0f, 0.0f));
+	SimplePerObjectBufferInstance.ApplyChanges();
+
+	DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
+	// TODO: Add setting Pixel Shader resource (loading image) here
+
+	VertexBuffer<PositionVertex> vertexBuffer;
+	IndexBuffer indexBuffer;
+	QuadGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer, -0.5f, -0.5f, 0.5f, 0.5f);
+
+	UINT offset = 0;
+	Draw(vertexBuffer, indexBuffer, offset);
 
 	PerformPostProcessing();
 	RenderFrameEnd();
