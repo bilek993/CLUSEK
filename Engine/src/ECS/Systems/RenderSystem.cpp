@@ -452,9 +452,11 @@ void RenderSystem::InitializePostProcessing()
 void RenderSystem::ShowLoadingScreen()
 {
 	RenderFrameBegin();
+	DeviceContext->ClearRenderTargetView(IntermediateRenderTexture.GetRenderTargetViewPointer(), BACKGROUND_COLOR);
 
-	
 
+
+	PerformPostProcessing();
 	RenderFrameEnd();
 }
 
