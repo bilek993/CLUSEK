@@ -378,6 +378,20 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
+	// Simple shader
+
+	if (!SimpleVertexShader.Initialize(Device.Get(), L"simple_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
+	{
+		Logger::Error("SimpleVertexShader not initialized due to critical problem!");
+		return false;
+	}
+
+	if (!SimplePixelShader.Initialize(Device.Get(), L"simple_pixel_shader.cso"))
+	{
+		Logger::Error("SimplePixelShader not initialized due to critical problem!");
+		return false;
+	}
+
 	// Generic code
 
 	Logger::Debug("All shaders successfully initialized.");

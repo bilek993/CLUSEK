@@ -73,6 +73,9 @@ private:
 	VertexShader SkyVertexShader;
 	PixelShader SkyPixelShader;
 
+	VertexShader SimpleVertexShader;
+	PixelShader SimplePixelShader;
+
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;
 	ConstantBuffer<CameraBuffer> CameraBufferInstance;
