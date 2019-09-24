@@ -15,6 +15,7 @@ public:
 		const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId, 
 		const std::string& occlusionTextureId, float alpha);
 	static void SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material, const std::string& albedoTextureId);
+	static void GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& resourceView);
 	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
 private:
 	inline static const int THREAD_COUNT = 32;

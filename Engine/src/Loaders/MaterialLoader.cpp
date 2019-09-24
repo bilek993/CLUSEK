@@ -8,7 +8,7 @@
 #include "../Renderer/ComputeTexture.h"
 #include "../Renderer/Generators/ResourcesGenerator.h"
 
-// This variable cannot be inline due to stupid compiler error in VS 2017
+// This variable cannot be inlined due to stupid compiler error in VS 2017
 std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
 
 void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, 
@@ -49,6 +49,23 @@ void MaterialLoader::SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMa
 	const std::string& albedoTextureId)
 {
 	material.SkyMap = GetTextureById(device, albedoTextureId, DefaultAlbedo);
+}
+
+void MaterialLoader::GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path,
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& resourceView)
+{
+	if (StringUtil::FindExtension(path) == "DDS")
+	{
+		const auto hr = DirectX::CreateDDSTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, resourceView.GetAddressOf());
+		if (FAILED(hr))
+			Logger::Error("Couldn't load texture from file!");
+	}
+	else
+	{
+		const auto hr = DirectX::CreateWICTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, resourceView.GetAddressOf());
+		if (FAILED(hr))
+			Logger::Error("Couldn't load texture from file!");
+	}
 }
 
 void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)

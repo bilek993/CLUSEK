@@ -478,12 +478,15 @@ void RenderSystem::ShowLoadingScreen()
 		XMMatrixTranspose(ModelViewLogic::GenerateOrthographicProjectionMatrix(ratio));
 	SimplePerObjectBufferInstance.ApplyChanges();
 
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> loadingTextureResourceView;
+	MaterialLoader::GetAndSetLoadingTexture(Device.Get(), "Data/Textures/Engine/LoadingLogo.png", loadingTextureResourceView);
+
 	DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
-	// TODO: Add setting Pixel Shader resource (loading image) here
+	DeviceContext->PSSetShaderResources(0, 1, loadingTextureResourceView.GetAddressOf());
 
 	VertexBuffer<PositionVertex> vertexBuffer;
 	IndexBuffer indexBuffer;
-	QuadGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer, -0.25f, -0.25f, 0.25f, 0.25f);
+	QuadGenerator::Generate(Device.Get(), vertexBuffer, indexBuffer, -0.5f, -0.5f, 0.5f, 0.5f);
 
 	UINT offset = 0;
 	Draw(vertexBuffer, indexBuffer, offset);
