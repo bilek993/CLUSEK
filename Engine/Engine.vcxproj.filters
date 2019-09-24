@@ -121,7 +121,7 @@
     <Filter Include="Resource Files\Icons">
       <UniqueIdentifier>{cbc6585b-8b94-4eaf-91f6-7fef98306d78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\Surface\SimpleShader">
+    <Filter Include="Resource Files\Shaders\Surface\LoadingLogoShader">
       <UniqueIdentifier>{bc98a98f-44c0-4da1-a89b-468995fc7ae7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -550,11 +550,11 @@
     <FxCompile Include="res\Shaders\PostProcessing\multisampling_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\SimpleShader\simple_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\SimpleShader</Filter>
+    <FxCompile Include="res\Shaders\Surface\LoadingLogoShader\loading_logo_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\LoadingLogoShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\SimpleShader\simple_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\SimpleShader</Filter>
+    <FxCompile Include="res\Shaders\Surface\LoadingLogoShader\loading_logo_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\LoadingLogoShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

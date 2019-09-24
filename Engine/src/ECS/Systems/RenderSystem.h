@@ -73,8 +73,8 @@ private:
 	VertexShader SkyVertexShader;
 	PixelShader SkyPixelShader;
 
-	VertexShader SimpleVertexShader;
-	PixelShader SimplePixelShader;
+	VertexShader LoadingLogoVertexShader;
+	PixelShader LoadingLogoPixelShader;
 
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;

@@ -382,15 +382,15 @@ bool RenderSystem::InitializeShaders()
 
 	// Simple shader
 
-	if (!SimpleVertexShader.Initialize(Device.Get(), L"simple_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
+	if (!LoadingLogoVertexShader.Initialize(Device.Get(), L"loading_logo_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
 	{
-		Logger::Error("SimpleVertexShader not initialized due to critical problem!");
+		Logger::Error("LoadingLogoVertexShader not initialized due to critical problem!");
 		return false;
 	}
 
-	if (!SimplePixelShader.Initialize(Device.Get(), L"simple_pixel_shader.cso"))
+	if (!LoadingLogoPixelShader.Initialize(Device.Get(), L"loading_logo_pixel_shader.cso"))
 	{
-		Logger::Error("SimplePixelShader not initialized due to critical problem!");
+		Logger::Error("LoadingLogoPixelShader not initialized due to critical problem!");
 		return false;
 	}
 
@@ -470,7 +470,7 @@ void RenderSystem::ShowLoadingScreen()
 	RenderFrameBegin();
 	DeviceContext->ClearRenderTargetView(IntermediateRenderTexture.GetRenderTargetViewPointer(), BACKGROUND_COLOR);
 
-	ChangeShader(SimpleVertexShader, SimplePixelShader);
+	ChangeShader(LoadingLogoVertexShader, LoadingLogoPixelShader);
 
 	const auto ratio = static_cast<float>(ConfigurationData->WindowWidth) / static_cast<float>(ConfigurationData->WindowHeight);
 
