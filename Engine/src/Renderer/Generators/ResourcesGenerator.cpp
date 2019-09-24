@@ -111,7 +111,7 @@ void ResourcesGenerator::CreateUnorderedAccessView(ID3D11Device* device, Compute
 	ZeroMemory(&unorderedAccessViewDesc, sizeof(D3D11_UNORDERED_ACCESS_VIEW_DESC));
 
 	unorderedAccessViewDesc.Format = textureDesc.Format;
-	unorderedAccessViewDesc.ViewDimension = D3D11_UAV_DIMENSION_TEXTURE2DARRAY;
+	unorderedAccessViewDesc.ViewDimension = textureDesc.ArraySize > 1 ? D3D11_UAV_DIMENSION_TEXTURE2DARRAY : D3D11_UAV_DIMENSION_TEXTURE2D;
 	unorderedAccessViewDesc.Texture2DArray.MipSlice = mipSlice;
 	unorderedAccessViewDesc.Texture2DArray.FirstArraySlice = 0;
 	unorderedAccessViewDesc.Texture2DArray.ArraySize = textureDesc.ArraySize;
