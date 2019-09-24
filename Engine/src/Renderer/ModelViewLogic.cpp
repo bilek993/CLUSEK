@@ -24,5 +24,5 @@ void ModelViewLogic::UpdateModelMatrix(DirectX::XMMATRIX& worldMatrix, Transform
 
 DirectX::XMMATRIX ModelViewLogic::GenerateOrthographicProjectionMatrix(const float ratio)
 {
-	return DirectX::XMMatrixOrthographicOffCenterLH(-1, 1, -1/ratio, 1/ratio, -1.0f, 1.0f);
+	return DirectX::XMMatrixOrthographicLH(ratio, 1, -1.0f, 1.0f);
 }
