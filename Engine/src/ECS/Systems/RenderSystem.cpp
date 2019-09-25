@@ -482,7 +482,7 @@ void RenderSystem::ShowLoadingScreen()
 	SimplePerObjectBufferInstance.ApplyChanges();
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> loadingTextureResourceView;
-	MaterialLoader::GetAndSetLoadingTexture(Device.Get(), "Data/Textures/Engine/LoadingLogo.png", loadingTextureResourceView);
+	MaterialLoader::GetAndSetLoadingTexture(Device.Get(), ConfigurationData->PathToLoadingLogo, loadingTextureResourceView);
 
 	DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
 	DeviceContext->PSSetShaderResources(0, 1, loadingTextureResourceView.GetAddressOf());

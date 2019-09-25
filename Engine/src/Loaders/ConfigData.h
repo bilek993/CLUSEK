@@ -30,6 +30,9 @@ struct ConfigData final
 	float ClearColorGreen = 1.0f;
 	float ClearColorBlue = 1.0f;
 
+	// Loading screen settings
+	std::string PathToLoadingLogo = "";
+
 	// Main camera settings
 	float MainCameraFov = 90.0f;
 	float MaxRotationX = 90.0f;
