@@ -475,7 +475,7 @@ void RenderSystem::ShowLoadingScreen()
 	const auto ratio = static_cast<float>(ConfigurationData->WindowWidth) / static_cast<float>(ConfigurationData->WindowHeight);
 
 	SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
-		XMMatrixTranspose(ModelViewLogic::GenerateOrthographicProjectionMatrix(ratio));
+		XMMatrixTranspose(DirectX::XMMatrixScaling(0.75f, 0.75f, 0.75f) * ModelViewLogic::GenerateOrthographicProjectionMatrix(ratio));
 	SimplePerObjectBufferInstance.ApplyChanges();
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> loadingTextureResourceView;
