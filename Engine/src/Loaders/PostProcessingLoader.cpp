@@ -20,6 +20,7 @@ void PostProcessingLoader::Load(const std::string& path, PostProcessingSettings*
 		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Reinhard Tone Mapper", "reinhard_tone_mapper_pixel_shader.cso");
 		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Simple ACES Tone Mapper", "simple_aces_tone_mapper_pixel_shader.cso");
 		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Complex ACES Tone Mapper", "complex_aces_tone_mapper_pixel_shader.cso");
+		MAP_POST_PROCESSING_EFFECT(postProcessingEffectName, "Chromatic Aberration", "chromatic_aberration_pixel_shader.cso");
 	}
 }
 

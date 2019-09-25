@@ -556,6 +556,9 @@
     <FxCompile Include="res\Shaders\Surface\LoadingLogoShader\loading_logo_vertex_shader.hlsl">
       <Filter>Resource Files\Shaders\Surface\LoadingLogoShader</Filter>
     </FxCompile>
+    <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\Includes\normal_utils.hlsli">

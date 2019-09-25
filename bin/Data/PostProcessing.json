@@ -1,4 +1,5 @@
 [
   "Complex ACES Tone Mapper",
-  "Gamma Correction"
+  "Gamma Correction",
+  "Chromatic Aberration"
 ]

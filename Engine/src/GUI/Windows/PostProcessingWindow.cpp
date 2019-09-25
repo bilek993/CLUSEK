@@ -80,6 +80,9 @@ void PostProcessingWindow::AddNewPostProcessingEffect() const
 	case 3:
 		MAP_POST_PROCESSING_EFFECT("Complex ACES Tone Mapper", "complex_aces_tone_mapper_pixel_shader.cso");
 		break;
+	case 4:
+		MAP_POST_PROCESSING_EFFECT("Chromatic Aberratio", "chromatic_aberration_pixel_shader.cso");
+		break;
 	default:
 		Logger::Warning("Selected item is incorrect.");
 	}
