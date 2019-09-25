@@ -477,8 +477,11 @@ void RenderSystem::ShowLoadingScreen()
 	const auto ratio = static_cast<float>(ConfigurationData->WindowWidth) / static_cast<float>(ConfigurationData->WindowHeight);
 	Logger::Debug("Screen ratio: " + std::to_string(ratio) + ".");
 
+	const auto logoScale = DirectX::XMMatrixScaling(ConfigurationData->LogoScale, 
+		ConfigurationData->LogoScale, ConfigurationData->LogoScale);
+
 	SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
-		XMMatrixTranspose(DirectX::XMMatrixScaling(0.75f, 0.75f, 0.75f) * ModelViewLogic::GenerateOrthographicProjectionMatrix(ratio));
+		XMMatrixTranspose(logoScale * ModelViewLogic::GenerateOrthographicProjectionMatrix(ratio));
 	SimplePerObjectBufferInstance.ApplyChanges();
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> loadingTextureResourceView;

@@ -32,6 +32,7 @@ struct ConfigData final
 
 	// Loading screen settings
 	std::string PathToLoadingLogo = "";
+	float LogoScale;
 
 	// Main camera settings
 	float MainCameraFov = 90.0f;
