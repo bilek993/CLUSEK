@@ -467,12 +467,15 @@ void RenderSystem::InitializePostProcessing()
 
 void RenderSystem::ShowLoadingScreen()
 {
+	Logger::Debug("Preparing loading screen...");
+
 	RenderFrameBegin();
 	DeviceContext->ClearRenderTargetView(IntermediateRenderTexture.GetRenderTargetViewPointer(), BACKGROUND_COLOR);
 
 	ChangeShader(LoadingLogoVertexShader, LoadingLogoPixelShader);
 
 	const auto ratio = static_cast<float>(ConfigurationData->WindowWidth) / static_cast<float>(ConfigurationData->WindowHeight);
+	Logger::Debug("Screen ratio: " + std::to_string(ratio) + ".");
 
 	SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
 		XMMatrixTranspose(DirectX::XMMatrixScaling(0.75f, 0.75f, 0.75f) * ModelViewLogic::GenerateOrthographicProjectionMatrix(ratio));
@@ -493,6 +496,8 @@ void RenderSystem::ShowLoadingScreen()
 
 	PerformPostProcessing();
 	RenderFrameEnd();
+
+	Logger::Debug("Showed loading screen!");
 }
 
 void RenderSystem::InitializeSkyboxComponent()

@@ -54,6 +54,8 @@ void MaterialLoader::SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMa
 void MaterialLoader::GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path,
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& resourceView)
 {
+	Logger::Debug("Preparing to load loading logo from file...");
+
 	if (StringUtil::FindExtension(path) == "DDS")
 	{
 		const auto hr = DirectX::CreateDDSTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, resourceView.GetAddressOf());
