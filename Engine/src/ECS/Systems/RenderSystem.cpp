@@ -66,7 +66,7 @@ void RenderSystem::RenderFrameBegin() const
 	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
 
-	DeviceContext->PSSetSamplers(0, 1, DefaultSamplerState.GetAddressOf());
+	DeviceContext->PSSetSamplers(0, 1, DefaultWrapSamplerState.GetAddressOf());
 	DeviceContext->PSSetSamplers(1, 1, BrdfSamplerState.GetAddressOf());
 }
 
@@ -299,7 +299,7 @@ bool RenderSystem::InitializeDirectX()
 
 	Logger::Debug("Blend state is set successfully.");
 
-	// Default sampler state initialization
+	// Default wrap sampler state initialization
 
 	D3D11_SAMPLER_DESC samplerDesc;
 	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
@@ -313,13 +313,34 @@ bool RenderSystem::InitializeDirectX()
 	samplerDesc.MinLOD = 0;
 	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
-	hr = Device->CreateSamplerState(&samplerDesc, DefaultSamplerState.GetAddressOf());
+	hr = Device->CreateSamplerState(&samplerDesc, DefaultWrapSamplerState.GetAddressOf());
 	if (FAILED(hr))
 	{
-		Logger::Error("Error creating default sampler state!");
+		Logger::Error("Error creating default wrap sampler state!");
 		return false;
 	}
-	Logger::Debug("Default sampler state is set successfully.");
+	Logger::Debug("Default wrap sampler state is set successfully.");
+
+	// Default clamp sampler state initialization
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+
+	samplerDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.MaxAnisotropy = D3D11_REQ_MAXANISOTROPY;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	hr = Device->CreateSamplerState(&samplerDesc, DefaultClampSamplerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating default clamp sampler state!");
+		return false;
+	}
+	Logger::Debug("Default clamp sampler state is set successfully.");
 
 	// BRDF sampler state initialization
 

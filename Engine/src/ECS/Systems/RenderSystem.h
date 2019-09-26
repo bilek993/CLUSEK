@@ -90,7 +90,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;
 
-	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultSamplerState;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultWrapSamplerState;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultClampSamplerState;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> BrdfSamplerState;
 
 	inline static const float BACKGROUND_COLOR[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
