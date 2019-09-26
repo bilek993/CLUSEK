@@ -5,7 +5,7 @@ struct PS_INPUT
 };
 
 Texture2D InputTexture : register(t0);
-SamplerState Sampler : register(s0);
+SamplerState Sampler : register(s1);
 
 static const float3x3 ACESInputMat =
 {
