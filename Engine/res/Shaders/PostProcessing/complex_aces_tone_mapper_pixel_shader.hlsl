@@ -7,14 +7,14 @@ struct PS_INPUT
 Texture2D InputTexture : register(t0);
 SamplerState Sampler : register(s1);
 
-static const float3x3 ACESInputMat =
+static const float3x3 ACES_INPUT_MAT =
 {
     { 0.59719, 0.35458, 0.04823 },
     { 0.07600, 0.90834, 0.01566 },
     { 0.02840, 0.13383, 0.83777 }
 };
 
-static const float3x3 ACESOutputMat =
+static const float3x3 ACES_OUTPUT_MAT =
 {
     { 1.60475, -0.53108, -0.07367 },
     { -0.10208, 1.10813, -0.00605 },
@@ -32,9 +32,9 @@ float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 output = InputTexture.Sample(Sampler, input.TextureCoord).rgb;
 
-    output = mul(ACESInputMat, output);
+    output = mul(ACES_INPUT_MAT, output);
     output = RRTAndODTFit(output);
-    output = mul(ACESOutputMat, output);
+    output = mul(ACES_OUTPUT_MAT, output);
     output = saturate(output);
 
     return float4(output, 1.0f);
