@@ -54,13 +54,13 @@ struct ConfigData final
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;
 
-	// Files responsible for world description
-	std::string PathToResources = "";
-	std::string PathToMap = "";
-	std::string PathToPostProcessing = "";
-
 	// PBR settings
 	int BrdfLutTextureSize = 128;
 	int IrradianceTextureSize = 32;
 	int RadianceTextureSize = 1024;
+
+	// Files responsible for world description
+	std::string PathToResources = "";
+	std::string PathToMap = "";
+	std::string PathToPostProcessing = "";
 };
