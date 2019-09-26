@@ -30,7 +30,7 @@ TextureCube IrradianceTexture : register(t4);
 TextureCube RadianceTexture : register(t5);
 Texture2D BrdfLut : register(t6);
 SamplerState DefaultSampler : register(s0);
-SamplerState BrdfSampler : register(s1);
+SamplerState BrdfSampler : register(s2);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {

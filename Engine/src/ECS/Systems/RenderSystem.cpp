@@ -67,7 +67,8 @@ void RenderSystem::RenderFrameBegin() const
 	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
 
 	DeviceContext->PSSetSamplers(0, 1, DefaultWrapSamplerState.GetAddressOf());
-	DeviceContext->PSSetSamplers(1, 1, BrdfSamplerState.GetAddressOf());
+	DeviceContext->PSSetSamplers(1, 1, DefaultClampSamplerState.GetAddressOf());
+	DeviceContext->PSSetSamplers(2, 1, BrdfSamplerState.GetAddressOf());
 }
 
 void RenderSystem::RenderFrameEnd() const
