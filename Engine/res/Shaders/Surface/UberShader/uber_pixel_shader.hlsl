@@ -26,9 +26,10 @@ Texture2D AlbedoTexture : register(t0);
 Texture2D NormalTexture : register(t1);
 Texture2D MetalicSmoothnessTexture : register(t2);
 Texture2D OcclusionTexture : register(t3);
-TextureCube IrradianceTexture : register(t4);
-TextureCube RadianceTexture : register(t5);
-Texture2D BrdfLut : register(t6);
+Texture2D EmissionTexture : register(t4);
+TextureCube IrradianceTexture : register(t5);
+TextureCube RadianceTexture : register(t6);
+Texture2D BrdfLut : register(t7);
 SamplerState DefaultSampler : register(s0);
 SamplerState BrdfSampler : register(s2);
 
@@ -38,6 +39,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 normalColor = NormalTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
     float4 metalicSmoothnessColor = MetalicSmoothnessTexture.Sample(DefaultSampler, input.TextureCoord);
     float occlusionColor = OcclusionTexture.Sample(DefaultSampler, input.TextureCoord).r;
+    float3 emissionColor = EmissionTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
 
     float3 calculatedNormal = calculateNormal(normalColor, input.TBN);
     float roughness = 1 - metalicSmoothnessColor.a;
@@ -47,5 +49,5 @@ float4 main(PS_INPUT input) : SV_TARGET
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
                             DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition);
 
-    return float4(finalColor, Alpha);
+    return float4(finalColor + emissionColor, Alpha);
 }
