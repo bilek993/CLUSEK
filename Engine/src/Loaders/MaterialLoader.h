@@ -13,7 +13,7 @@ public:
 		bool convertLatLongToCubeMap, const ConfigData* config);
 	static void SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId, 
 		const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId, 
-		const std::string& occlusionTextureId, float alpha);
+		const std::string& occlusionTextureId, const std::string& emissionTextureId, float alpha);
 	static void SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material, const std::string& albedoTextureId);
 	static void GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& resourceView);
 	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
@@ -27,6 +27,7 @@ private:
 		DefaultNormal = 0xffff8080, // Alpha = ff, Blue = ff, Green = 80, Red = 80
 		DefaultMetalicSmoothness = 0x80000000, // Alpha = 80, Blue = 0, Green = 0, Red = 0
 		DefaultOcclusion = 0xffffffff, // Alpha = ff, Blue = ff, Green = ff, Red = ff
+		DefaultEmission = 0xff000000, // Alpha = ff, Blue = 00, Green = 00, Red = 00
 	};
 
 	static std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> TextureResources;

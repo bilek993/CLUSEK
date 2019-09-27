@@ -35,12 +35,13 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 
 void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId,
 	const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId,
-	const std::string& occlusionTextureId, const float alpha)
+	const std::string& occlusionTextureId, const std::string& emissionTextureId, const float alpha)
 {
 	mesh.Material.AlbedoTexture = GetTextureById(device, albedoTextureId, DefaultAlbedo);
 	mesh.Material.NormalTexture = GetTextureById(device, normalTextureId, DefaultNormal);
 	mesh.Material.MetalicSmoothnessTexture = GetTextureById(device, metalicSmoothnessTextureId, DefaultMetalicSmoothness);
 	mesh.Material.OcclusionTexture = GetTextureById(device, occlusionTextureId, DefaultOcclusion);
+	mesh.Material.EmissionTexture = GetTextureById(device, emissionTextureId, DefaultEmission);
 
 	mesh.Material.Alpha = alpha;
 }
@@ -90,6 +91,7 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 		auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
 		auto metalicSmoothnessTextureJsonInfo = jsonObject[mesh.Name]["MetalicSmoothnessTexture"];
 		auto occlusionTextureJsonInfo = jsonObject[mesh.Name]["OcclusionTexture"];
+		auto emissionTextureJsonInfo = jsonObject[mesh.Name]["EmissionTexture"];
 
 		SetResourceForMesh(	device,
 							mesh,
@@ -97,6 +99,7 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 							normalTextureJsonInfo.is_null() ? "" : normalTextureJsonInfo.get<std::string>(),
 							metalicSmoothnessTextureJsonInfo.is_null() ? "" : metalicSmoothnessTextureJsonInfo.get<std::string>(),
 							occlusionTextureJsonInfo.is_null() ? "" : occlusionTextureJsonInfo.get<std::string>(),
+							emissionTextureJsonInfo.is_null() ? "" : emissionTextureJsonInfo.get<std::string>(),
 							alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>());
 	}
 }
