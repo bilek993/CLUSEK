@@ -124,6 +124,12 @@
     <Filter Include="Resource Files\Shaders\Surface\LoadingLogoShader">
       <UniqueIdentifier>{bc98a98f-44c0-4da1-a89b-468995fc7ae7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Physics">
+      <UniqueIdentifier>{d5c482e5-319d-4f1e-b6e2-bc774af39873}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Physics">
+      <UniqueIdentifier>{3dfb8b99-6446-499f-b787-95aa5991653e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -278,6 +284,9 @@
     </ClCompile>
     <ClCompile Include="src\ECS\Systems\PhysicsSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsErrorCallback.cpp">
+      <Filter>Source Files\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -508,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="src\ECS\Systems\PhysicsSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\PhysicsErrorCallback.h">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,6 +6,7 @@
 #include "ECS/Systems/RotationSystem.h"
 #include "Loaders/MapLoader.h"
 #include "ECS/Systems/SkyboxSystem.h"
+#include "ECS/Systems/PhysicsSystem.h"
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 {
@@ -60,6 +61,9 @@ void Engine::CreateSystems()
 
 	systemBasePtr = std::make_unique<RenderSystem>();
 	Systems.emplace_back(SystemHolder("Render System", systemBasePtr, true));
+
+	systemBasePtr = std::make_unique<PhysicsSystem>();
+	Systems.emplace_back(SystemHolder("Physics System", systemBasePtr, true));
 
 	systemBasePtr = std::make_unique<CameraSystem>();
 	Systems.emplace_back(SystemHolder("Camera System", systemBasePtr, true));
