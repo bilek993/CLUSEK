@@ -28,11 +28,8 @@ void PhysicsSystem::Update(const float deltaTime)
 
 PhysicsSystem::~PhysicsSystem()
 {
-	Logger::Debug("Cleaning up physics system...");
-
 	if (PhysXVisualDebugger)
 	{
-		Logger::Warning("Shutting down PhysX Visual Debugger...");
 		auto transport = PhysXVisualDebugger->getTransport();
 
 		PX_RELEASE(PhysXVisualDebugger);
