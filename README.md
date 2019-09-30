@@ -135,6 +135,7 @@ Occlusion maps helps recreate indirect lighting without time-consuming, real-tim
 * [Dear ImGui](https://github.com/ocornut/imgui/tree/9f35ba8546b075dfb5d148be4e468ef8c0f5a41c)
 * [Assimp](https://github.com/assimp/assimp/tree/80799bdbf90ce626475635815ee18537718a05b1)
 * [Nlohmann JSON](https://github.com/nlohmann/json/tree/ffe0e3d70f110bb1ca16f34d7d07a2f0e0974ea6)
+* [PhysX](https://github.com/NVIDIAGameWorks/PhysX/tree/ae80dede0546d652040ae6260a810e53e20a06fa)
 
 
 
