@@ -336,7 +336,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\DirectXTK\includes\;$(SolutionDir)Dependencies\EnTT\includes\;$(SolutionDir)Dependencies\ImGui\includes\;$(SolutionDir)Dependencies\Assimp\includes\;$(SolutionDir)Dependencies\Nlohmann-JSON\includes\;$(SolutionDir)Dependencies\PhysX\includes\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX;_ENABLE_EXTENDED_ALIGNED_STORAGE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;_ENABLE_EXTENDED_ALIGNED_STORAGE;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
