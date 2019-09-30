@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\ECS\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.cpp" />
     <ClCompile Include="src\Renderer\Generators\ResourcesGenerator.cpp" />
     <ClCompile Include="src\Renderer\Shaders\ComputeShader.cpp" />
@@ -63,6 +64,7 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ECS\Systems\PhysicsSystem.h" />
     <ClInclude Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.h" />
     <ClInclude Include="src\Renderer\Generators\ResourcesGenerator.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\RadianceBuffer.h" />

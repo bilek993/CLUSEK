@@ -276,6 +276,9 @@
     <ClCompile Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.cpp">
       <Filter>Source Files\Renderer\PostProcessing</Filter>
     </ClCompile>
+    <ClCompile Include="src\ECS\Systems\PhysicsSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -502,6 +505,9 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.h">
       <Filter>Header Files\Renderer\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Systems\PhysicsSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
