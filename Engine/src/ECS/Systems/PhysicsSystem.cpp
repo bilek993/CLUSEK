@@ -44,6 +44,10 @@ void PhysicsSystem::Update(const float deltaTime)
 
 PhysicsSystem::~PhysicsSystem()
 {
+	PX_RELEASE(Scene);
+	PX_RELEASE(Dispatcher);
+	PX_RELEASE(Physics);
+
 	if (PhysXVisualDebugger)
 	{
 		auto transport = PhysXVisualDebugger->getTransport();
