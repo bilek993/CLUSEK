@@ -21,5 +21,5 @@ private:
 	physx::PxDefaultCpuDispatcher* Dispatcher = nullptr;
 	physx::PxScene* Scene = nullptr;
 
-	physx::PxPvd* PhysXVisualDebugger = nullptr;
+	physx::PxPvd* Pvd = nullptr;
 };

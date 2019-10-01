@@ -14,13 +14,13 @@ void PhysicsSystem::Start()
 #ifdef _DEBUG
 	Logger::Warning("PhysX is in debug mode and PhysX Visual Debugger is enabled! Physics will be much slower!");
 
-	PhysXVisualDebugger = PxCreatePvd(*Foundation);
+	Pvd = PxCreatePvd(*Foundation);
 
 	const auto transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
-	PhysXVisualDebugger->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
+	Pvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
 #endif
 
-	Physics = PxCreatePhysics(PX_PHYSICS_VERSION, *Foundation, physx::PxTolerancesScale(), true, PhysXVisualDebugger);
+	Physics = PxCreatePhysics(PX_PHYSICS_VERSION, *Foundation, physx::PxTolerancesScale(), true, Pvd);
 
 	physx::PxSceneDesc sceneDesc(Physics->getTolerancesScale());
 	sceneDesc.gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);
@@ -48,11 +48,11 @@ PhysicsSystem::~PhysicsSystem()
 	PX_RELEASE(Dispatcher);
 	PX_RELEASE(Physics);
 
-	if (PhysXVisualDebugger)
+	if (Pvd)
 	{
-		auto transport = PhysXVisualDebugger->getTransport();
+		auto transport = Pvd->getTransport();
 
-		PX_RELEASE(PhysXVisualDebugger);
+		PX_RELEASE(Pvd);
 		PX_RELEASE(transport);
 	}
 
