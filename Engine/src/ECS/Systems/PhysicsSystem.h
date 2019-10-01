@@ -3,7 +3,7 @@
 #include "../../Physics/PhysicsErrorCallback.h"
 #include "PxPhysicsAPI.h"
 
-#define PX_RELEASE(x) if(x) x->release(); x = NULL;
+#define PX_RELEASE(x) if(x) { x->release(); x = nullptr; }
 
 class PhysicsSystem final : public BaseSystem
 {
