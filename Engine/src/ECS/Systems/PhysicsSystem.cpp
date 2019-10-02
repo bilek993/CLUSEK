@@ -39,7 +39,8 @@ void PhysicsSystem::Start()
 
 void PhysicsSystem::Update(const float deltaTime)
 {
-	// TODO: Implement me!
+	Scene->simulate(deltaTime / 1000.0f);
+	Scene->fetchResults(true);
 }
 
 PhysicsSystem::~PhysicsSystem()
