@@ -5,6 +5,40 @@ void PhysicsSystem::Start()
 {
 	Logger::Debug("Staring physics system...");
 
+	InitializeCore();
+	InitializePhysicsMaterialComponents();
+}
+
+void PhysicsSystem::Update(const float deltaTime)
+{
+	Scene->simulate(deltaTime / 1000.0f);
+	Scene->fetchResults(true);
+}
+
+PhysicsSystem::~PhysicsSystem()
+{
+	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
+	{
+		PX_RELEASE(physicsMaterialComponent.Material);
+	});
+
+	PX_RELEASE(Scene);
+	PX_RELEASE(Dispatcher);
+	PX_RELEASE(Physics);
+
+	if (Pvd)
+	{
+		auto transport = Pvd->getTransport();
+
+		PX_RELEASE(Pvd);
+		PX_RELEASE(transport);
+	}
+
+	PX_RELEASE(Foundation);
+}
+
+void PhysicsSystem::InitializeCore()
+{
 	const auto version = PX_PHYSICS_VERSION;
 	Logger::Debug("Physics Library used: PhysX (" + std::to_string(version) + ") by Nvidia.");
 
@@ -36,36 +70,6 @@ void PhysicsSystem::Start()
 	pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
 	pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
 #endif
-
-	InitializePhysicsMaterialComponents();
-}
-
-void PhysicsSystem::Update(const float deltaTime)
-{
-	Scene->simulate(deltaTime / 1000.0f);
-	Scene->fetchResults(true);
-}
-
-PhysicsSystem::~PhysicsSystem()
-{
-	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
-	{
-		PX_RELEASE(physicsMaterialComponent.Material);
-	});
-
-	PX_RELEASE(Scene);
-	PX_RELEASE(Dispatcher);
-	PX_RELEASE(Physics);
-
-	if (Pvd)
-	{
-		auto transport = Pvd->getTransport();
-
-		PX_RELEASE(Pvd);
-		PX_RELEASE(transport);
-	}
-
-	PX_RELEASE(Foundation);
 }
 
 void PhysicsSystem::InitializePhysicsMaterialComponents()
