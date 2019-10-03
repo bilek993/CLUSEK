@@ -95,5 +95,15 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  }
 	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	    "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.5,
+	    "DynamicFriction": 0.5,
+	    "Restitution": 0.6
+	  }
+	}
   }
 ]

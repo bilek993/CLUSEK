@@ -1,4 +1,5 @@
 #include "PhysicsSystem.h"
+#include "../Components/PhysicsMaterialComponent.h"
 
 void PhysicsSystem::Start()
 {
@@ -35,6 +36,8 @@ void PhysicsSystem::Start()
 	pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
 	pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
 #endif
+
+	InitializePhysicsMaterialComponents();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -45,6 +48,11 @@ void PhysicsSystem::Update(const float deltaTime)
 
 PhysicsSystem::~PhysicsSystem()
 {
+	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
+	{
+		PX_RELEASE(physicsMaterialComponent.Material);
+	});
+
 	PX_RELEASE(Scene);
 	PX_RELEASE(Dispatcher);
 	PX_RELEASE(Physics);
@@ -58,4 +66,14 @@ PhysicsSystem::~PhysicsSystem()
 	}
 
 	PX_RELEASE(Foundation);
+}
+
+void PhysicsSystem::InitializePhysicsMaterialComponents()
+{
+	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
+	{
+		physicsMaterialComponent.Material = Physics->createMaterial(physicsMaterialComponent.StaticFriction, 
+																	physicsMaterialComponent.DynamicFriction, 
+																	physicsMaterialComponent.Restitution);
+	});
 }

@@ -12,6 +12,8 @@ public:
 	void Update(float deltaTime) override;
 	~PhysicsSystem() override;
 private:
+	void InitializePhysicsMaterialComponents();
+
 	physx::PxDefaultAllocator Allocator;
 	PhysicsErrorCallback ErrorCallback;
 

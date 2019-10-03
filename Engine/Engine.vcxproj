@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Loaders\Components\PhysicsMaterialComponentLoader.cpp" />
     <ClCompile Include="src\Physics\PhysicsErrorCallback.cpp" />
     <ClCompile Include="src\ECS\Systems\PhysicsSystem.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.cpp" />
@@ -65,6 +66,8 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Loaders\Components\PhysicsMaterialComponentLoader.h" />
+    <ClInclude Include="src\ECS\Components\PhysicsMaterialComponent.h" />
     <ClInclude Include="src\Physics\PhysicsErrorCallback.h" />
     <ClInclude Include="src\ECS\Systems\PhysicsSystem.h" />
     <ClInclude Include="src\Renderer\PostProcessing\MultisamplingPostProcessing.h" />

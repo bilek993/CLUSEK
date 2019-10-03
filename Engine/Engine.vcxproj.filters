@@ -288,6 +288,9 @@
     <ClCompile Include="src\Physics\PhysicsErrorCallback.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Loaders\Components\PhysicsMaterialComponentLoader.cpp">
+      <Filter>Source Files\Loaders\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -520,6 +523,12 @@
     </ClInclude>
     <ClInclude Include="src\Physics\PhysicsErrorCallback.h">
       <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Components\PhysicsMaterialComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\Components\PhysicsMaterialComponentLoader.h">
+      <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
