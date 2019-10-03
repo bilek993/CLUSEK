@@ -59,6 +59,11 @@ struct ConfigData final
 	int IrradianceTextureSize = 32;
 	int RadianceTextureSize = 1024;
 
+	// Physics settings
+	std::string PvdSocketHost = "127.0.0.1";
+	int PvdSocketPort = 5425;
+	int PvdSocketTimeout = 25;
+
 	// Files responsible for world description
 	std::string PathToResources = "";
 	std::string PathToMap = "";

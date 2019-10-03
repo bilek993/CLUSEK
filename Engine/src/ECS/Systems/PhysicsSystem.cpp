@@ -16,7 +16,7 @@ void PhysicsSystem::Start()
 
 	Pvd = PxCreatePvd(*Foundation);
 
-	const auto transport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
+	const auto transport = physx::PxDefaultPvdSocketTransportCreate(ConfigurationData->PvdSocketHost.c_str(), ConfigurationData->PvdSocketPort, ConfigurationData->PvdSocketTimeout);
 	Pvd->connect(*transport, physx::PxPvdInstrumentationFlag::eALL);
 #endif
 
