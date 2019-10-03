@@ -29,6 +29,9 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 	InitializeSystems();
 	InitializeUserInterface();
 
+	Logger::Debug("Resetting timer...");
+	Time.Restart();
+
 	return true;
 }
 
