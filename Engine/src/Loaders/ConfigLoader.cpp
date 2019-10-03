@@ -77,6 +77,9 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, PvdSocketHost, data, value);
 			MAP_CONFIG_FIELD(key, PvdSocketPort, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, PvdSocketTimeout, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, GravityX, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, GravityY, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, GravityZ, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, PathToResources, data, value);
 			MAP_CONFIG_FIELD(key, PathToMap, data, value);

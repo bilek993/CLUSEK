@@ -63,6 +63,9 @@ struct ConfigData final
 	std::string PvdSocketHost = "127.0.0.1";
 	int PvdSocketPort = 5425;
 	int PvdSocketTimeout = 25;
+	float GravityX = 0.0f;
+	float GravityY = -9.81f;
+	float GravityZ = 0.0f;
 
 	// Files responsible for world description
 	std::string PathToResources = "";
