@@ -94,5 +94,6 @@ void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()
 																					rigidbodyStaticPlaneComponent.NormalY, 
 																					rigidbodyStaticPlaneComponent.NormalZ, 
 																					rigidbodyStaticPlaneComponent.Distance), *physicsMaterialComponent.Material);
+		Scene->addActor(*rigidbodyStaticPlaneComponent.Body);
 	});
 }

@@ -108,7 +108,7 @@
 	    "NormalX": 0.0,
 		"NormalY": 1.0,
 		"NormalZ": 0.0,
-		"Distance": -100.0
+		"Distance": 100.0
 	  }
 	}
   }
