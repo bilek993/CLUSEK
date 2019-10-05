@@ -99,10 +99,16 @@
   {
     "Tags": [],
 	"Components": {
-	    "PhysicsMaterialComponent": {
+	  "PhysicsMaterialComponent": {
 	    "StaticFriction": 0.5,
 	    "DynamicFriction": 0.5,
 	    "Restitution": 0.6
+	  },
+	  "RigidbodyStaticPlaneComponent": {
+	    "NormalX": 0.0,
+		"NormalY": 1.0,
+		"NormalZ": 0.0,
+		"Distance": -100.0
 	  }
 	}
   }
