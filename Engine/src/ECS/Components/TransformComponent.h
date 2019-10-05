@@ -9,6 +9,8 @@ struct TransformComponent final
 	DirectX::XMVECTOR VectorForward;
 	DirectX::XMVECTOR VectorRight;
 
+	bool ValuesChanged = true;
+
 	inline static const DirectX::XMVECTOR FORWARD_VECTOR = DirectX::XMVectorSet(0.0f, 0.0f, 1.0f, 0.0f);
 	inline static const DirectX::XMVECTOR UP_VECTOR = DirectX::XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 	inline static const DirectX::XMVECTOR RIGHT_VECTOR = DirectX::XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f);

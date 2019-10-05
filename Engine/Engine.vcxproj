@@ -64,6 +64,7 @@
     <ClCompile Include="src\Utils\StringUtil.cpp" />
     <ClCompile Include="src\GUI\Windows\SystemsManagerWindow.cpp" />
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
+    <ClCompile Include="src\ECS\Systems\TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Loaders\Components\PhysicsMaterialComponentLoader.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="src\GUI\Windows\SystemsManagerWindow.h" />
     <ClInclude Include="src\Loaders\Components\TransformComponentLoader.h" />
     <ClInclude Include="src\Tags.h" />
+    <ClInclude Include="src\ECS\Systems\TransformSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

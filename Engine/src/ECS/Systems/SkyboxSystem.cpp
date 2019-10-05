@@ -22,9 +22,8 @@ void SkyboxSystem::Update(float deltaTime)
 
 	auto &cameraTransformComponent = view.raw<TransformComponent>()[0];
 
-	Registry->view<TransformComponent, SkyboxComponent>().each([&deltaTime, &cameraTransformComponent](TransformComponent &transformComponent, SkyboxComponent &skyboxComponent)
+	Registry->view<TransformComponent, SkyboxComponent>().each([&cameraTransformComponent](TransformComponent &transformComponent, SkyboxComponent &skyboxComponent)
 	{
 		TransformLogic::SetPosition(cameraTransformComponent.PositionVector, transformComponent);
-		ModelViewLogic::UpdateModelMatrix(skyboxComponent.WorldMatrix, transformComponent);
 	});
 }

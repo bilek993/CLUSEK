@@ -3,29 +3,35 @@
 
 void TransformLogic::SetPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)
 {
+	transformComponent.ValuesChanged = true;
 	transformComponent.PositionVector = pos;
 }
 
 void TransformLogic::SetPosition(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
+	transformComponent.ValuesChanged = true;
+
 	auto newPosition = DirectX::XMFLOAT3(x, y, z);
 	transformComponent.PositionVector = XMLoadFloat3(&newPosition);
 }
 
 void TransformLogic::SetRotation(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
 {
+	transformComponent.ValuesChanged = true;
 	transformComponent.RotationVector = rot;
 }
 
 void TransformLogic::SetRotation(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
+	transformComponent.ValuesChanged = true;
+
 	auto newRotation = DirectX::XMFLOAT3(x, y, z);
 	transformComponent.RotationVector = XMLoadFloat3(&newRotation);
 }
 
 void TransformLogic::GetPosition(float* x, float* y, float* z, const TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 storedValue;
+	DirectX::XMFLOAT3 storedValue{};
 	XMStoreFloat3(&storedValue, transformComponent.PositionVector);
 
 	if (x != nullptr)
@@ -38,19 +44,23 @@ void TransformLogic::GetPosition(float* x, float* y, float* z, const TransformCo
 
 DirectX::XMFLOAT3 TransformLogic::GetPosition(const TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 storedValue;
+	DirectX::XMFLOAT3 storedValue{};
 	XMStoreFloat3(&storedValue, transformComponent.PositionVector);
 	return storedValue;
 }
 
 void TransformLogic::AdjustPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)
 {
+	transformComponent.ValuesChanged = true;
+
 	transformComponent.PositionVector = DirectX::XMVectorAdd(transformComponent.PositionVector, pos);
 }
 
 void TransformLogic::AdjustPosition(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 storedValue;
+	transformComponent.ValuesChanged = true;
+
+	DirectX::XMFLOAT3 storedValue{};
 	XMStoreFloat3(&storedValue, transformComponent.PositionVector);
 	storedValue.x += x;
 	storedValue.y += y;
@@ -60,12 +70,15 @@ void TransformLogic::AdjustPosition(const float x, const float y, const float z,
 
 void TransformLogic::AdjustRotation(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
 {
+	transformComponent.ValuesChanged = true;
 	transformComponent.RotationVector = DirectX::XMVectorAdd(transformComponent.RotationVector, rot);;
 }
 
 void TransformLogic::AdjustRotation(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 storedValue;
+	transformComponent.ValuesChanged = true;
+
+	DirectX::XMFLOAT3 storedValue{};
 	XMStoreFloat3(&storedValue, transformComponent.RotationVector);
 	storedValue.x += x;
 	storedValue.y += y;
@@ -75,7 +88,7 @@ void TransformLogic::AdjustRotation(const float x, const float y, const float z,
 
 void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 storedValue;
+	DirectX::XMFLOAT3 storedValue{};
 	XMStoreFloat3(&storedValue, transformComponent.RotationVector);
 
 	if (x != nullptr)
@@ -88,14 +101,16 @@ void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformCo
 
 DirectX::XMFLOAT3 TransformLogic::GetRotation(const TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 storedValue;
+	DirectX::XMFLOAT3 storedValue{};
 	XMStoreFloat3(&storedValue, transformComponent.RotationVector);
 	return storedValue;
 }
 
 void TransformLogic::LookAt(DirectX::XMFLOAT3 targetPosition, TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 currentCameraPosition;
+	transformComponent.ValuesChanged = true;
+
+	DirectX::XMFLOAT3 currentCameraPosition{};
 	XMStoreFloat3(&currentCameraPosition, transformComponent.PositionVector);
 
 	if (currentCameraPosition.x == targetPosition.x && currentCameraPosition.y == targetPosition.y && currentCameraPosition.z == targetPosition.z)

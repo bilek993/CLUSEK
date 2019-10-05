@@ -7,6 +7,7 @@
 #include "Loaders/MapLoader.h"
 #include "ECS/Systems/SkyboxSystem.h"
 #include "ECS/Systems/PhysicsSystem.h"
+#include "ECS/Systems/TransformSystem.h"
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 {
@@ -62,6 +63,7 @@ void Engine::CreateSystems()
 {
 	std::unique_ptr<BaseSystem> systemBasePtr;
 
+	// Render system should be first
 	systemBasePtr = std::make_unique<RenderSystem>();
 	Systems.emplace_back(SystemHolder("Render System", systemBasePtr, true));
 
@@ -76,6 +78,10 @@ void Engine::CreateSystems()
 
 	systemBasePtr = std::make_unique<SkyboxSystem>();
 	Systems.emplace_back(SystemHolder("Skybox System", systemBasePtr, true));
+
+	// Transform system should be last
+	systemBasePtr = std::make_unique<TransformSystem>();
+	Systems.emplace_back(SystemHolder("Transform System", systemBasePtr, true));
 
 	for (auto i = 0; i < Systems.size(); i++)
 	{

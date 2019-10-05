@@ -291,6 +291,9 @@
     <ClCompile Include="src\Loaders\Components\PhysicsMaterialComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\ECS\Systems\TransformSystem.cpp">
+      <Filter>Source Files\ECS\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -529,6 +532,9 @@
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\PhysicsMaterialComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Systems\TransformSystem.h">
+      <Filter>Header Files\ECS\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
