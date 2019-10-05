@@ -13,7 +13,9 @@ public:
 	~PhysicsSystem() override;
 private:
 	void InitializeCore();
+
 	void InitializePhysicsMaterialComponents();
+	void InitializeRigidbodyStaticPlaneComponents();
 
 	physx::PxDefaultAllocator Allocator;
 	PhysicsErrorCallback ErrorCallback;

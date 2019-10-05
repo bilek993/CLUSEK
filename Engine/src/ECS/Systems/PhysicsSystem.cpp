@@ -1,12 +1,15 @@
 #include "PhysicsSystem.h"
 #include "../Components/PhysicsMaterialComponent.h"
+#include "../Components/RigidbodyStaticPlaneComponent.h"
 
 void PhysicsSystem::Start()
 {
 	Logger::Debug("Staring physics system...");
 
 	InitializeCore();
+
 	InitializePhysicsMaterialComponents();
+	InitializeRigidbodyStaticPlaneComponents();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -79,5 +82,17 @@ void PhysicsSystem::InitializePhysicsMaterialComponents()
 		physicsMaterialComponent.Material = Physics->createMaterial(physicsMaterialComponent.StaticFriction, 
 																	physicsMaterialComponent.DynamicFriction, 
 																	physicsMaterialComponent.Restitution);
+	});
+}
+
+void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()
+{
+	Registry->view<PhysicsMaterialComponent, RigidbodyStaticPlaneComponent>().each(
+		[this](PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticPlaneComponent &rigidbodyStaticPlaneComponent)
+	{
+		rigidbodyStaticPlaneComponent.Body = PxCreatePlane(*Physics, physx::PxPlane(rigidbodyStaticPlaneComponent.NormalX, 
+																					rigidbodyStaticPlaneComponent.NormalY, 
+																					rigidbodyStaticPlaneComponent.NormalZ, 
+																					rigidbodyStaticPlaneComponent.Distance), *physicsMaterialComponent.Material);
 	});
 }
