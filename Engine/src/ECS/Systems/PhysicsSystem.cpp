@@ -2,6 +2,7 @@
 #include "../Components/PhysicsMaterialComponent.h"
 #include "../Components/RigidbodyStaticPlaneComponent.h"
 #include "../Components/RigidbodyStaticBoxComponent.h"
+#include "../Components/TransformComponent.h"
 
 void PhysicsSystem::Start()
 {
@@ -102,12 +103,15 @@ void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()
 
 void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 {
-	Registry->view<PhysicsMaterialComponent, RigidbodyStaticBoxComponent>().each(
-		[this](PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticBoxComponent &rigidbodyStaticBoxComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticBoxComponent>().each(
+		[this](TransformComponent &transformComponent,PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticBoxComponent &rigidbodyStaticBoxComponent)
 	{
+		const auto geometry = physx::PxBoxGeometry(rigidbodyStaticBoxComponent.Width / 2, rigidbodyStaticBoxComponent.Height / 2, rigidbodyStaticBoxComponent.Depth / 2);
+		const auto transform = physx::PxTransform(physx::PxVec3(0.0));
+
 		rigidbodyStaticBoxComponent.Body = PxCreateStatic(	*Physics, 
-															physx::PxTransform(physx::PxVec3(0.0f)), 
-															physx::PxBoxGeometry(rigidbodyStaticBoxComponent.Width/2, rigidbodyStaticBoxComponent.Height/2, rigidbodyStaticBoxComponent.Depth/2),
+															transform,
+															geometry,
 															*physicsMaterialComponent.Material);
 		Scene->addActor(*rigidbodyStaticBoxComponent.Body);
 	});

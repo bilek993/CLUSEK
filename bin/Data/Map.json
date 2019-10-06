@@ -115,6 +115,14 @@
   {
     "Tags": [],
 	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 2.1,
+		"PositionY": 2.0,
+		"PositionZ": 7.6,
+		"RotationX": 0.0,
+		"RotationY": 3.14,
+		"RotationZ": 0.0
+	  },
 	  "PhysicsMaterialComponent": {
 	    "StaticFriction": 0.5,
 	    "DynamicFriction": 0.5,
