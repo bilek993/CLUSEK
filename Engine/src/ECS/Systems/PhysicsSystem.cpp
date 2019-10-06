@@ -107,7 +107,7 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 	{
 		rigidbodyStaticBoxComponent.Body = PxCreateStatic(	*Physics, 
 															physx::PxTransform(physx::PxVec3(0.0f)), 
-															physx::PxBoxGeometry(2.0, 5.0, 2.0),
+															physx::PxBoxGeometry(rigidbodyStaticBoxComponent.Width/2, rigidbodyStaticBoxComponent.Height/2, rigidbodyStaticBoxComponent.Depth/2),
 															*physicsMaterialComponent.Material);
 		Scene->addActor(*rigidbodyStaticBoxComponent.Body);
 	});

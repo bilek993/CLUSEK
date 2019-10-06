@@ -108,7 +108,7 @@
 	    "NormalX": 0.0,
 		"NormalY": 1.0,
 		"NormalZ": 0.0,
-		"Distance": 100.0
+		"Distance": 5.0
 	  }
 	}
   },
@@ -121,6 +121,9 @@
 	    "Restitution": 0.6
 	  },
 	  "RigidbodyStaticBoxComponent": {
+	    "Width": 2.0,
+		"Height": 1.0,
+		"Depth": 2.0
 	  }
 	}
   }

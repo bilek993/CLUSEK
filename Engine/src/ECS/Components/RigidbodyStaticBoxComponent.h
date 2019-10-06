@@ -3,7 +3,9 @@
 
 struct RigidbodyStaticBoxComponent final
 {
-	// TODO: add code here
+	float Width;
+	float Height;
+	float Depth;
 
 	physx::PxRigidStatic* Body;
 };
