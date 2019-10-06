@@ -4,6 +4,7 @@
 #include "../Components/RigidbodyStaticBoxComponent.h"
 #include "../Components/TransformComponent.h"
 #include "../../Renderer/TransformLogic.h"
+#include "../../Physics/PhysicsUnitConversion.h"
 
 void PhysicsSystem::Start()
 {
@@ -107,11 +108,12 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticBoxComponent>().each(
 		[this](TransformComponent &transformComponent,PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticBoxComponent &rigidbodyStaticBoxComponent)
 	{
-		const auto transformPosition = TransformLogic::GetPosition(transformComponent);
-		const auto transformRotation = TransformLogic::GetRotation(transformComponent);
+		const auto position = TransformLogic::GetPosition(transformComponent);
+		const auto rotation = TransformLogic::GetRotation(transformComponent);
 
 		const auto geometry = physx::PxBoxGeometry(rigidbodyStaticBoxComponent.Width / 2, rigidbodyStaticBoxComponent.Height / 2, rigidbodyStaticBoxComponent.Depth / 2);
-		const auto transform = physx::PxTransform(physx::PxVec3(transformPosition.x, transformPosition.y, transformPosition.z));
+		const auto transform = physx::PxTransform(	physx::PxVec3(position.x, position.y, position.z),
+													PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotation));
 
 		rigidbodyStaticBoxComponent.Body = PxCreateStatic(	*Physics, 
 															transform,

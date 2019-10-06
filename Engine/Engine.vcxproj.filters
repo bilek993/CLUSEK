@@ -300,6 +300,9 @@
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticBoxComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsUnitConversion.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -553,6 +556,9 @@
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticBoxComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\PhysicsUnitConversion.h">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
