@@ -3,6 +3,7 @@
 #include "../Components/RigidbodyStaticPlaneComponent.h"
 #include "../Components/RigidbodyStaticBoxComponent.h"
 #include "../Components/TransformComponent.h"
+#include "../../Renderer/TransformLogic.h"
 
 void PhysicsSystem::Start()
 {
@@ -106,8 +107,11 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticBoxComponent>().each(
 		[this](TransformComponent &transformComponent,PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticBoxComponent &rigidbodyStaticBoxComponent)
 	{
+		const auto transformPosition = TransformLogic::GetPosition(transformComponent);
+		const auto transformRotation = TransformLogic::GetRotation(transformComponent);
+
 		const auto geometry = physx::PxBoxGeometry(rigidbodyStaticBoxComponent.Width / 2, rigidbodyStaticBoxComponent.Height / 2, rigidbodyStaticBoxComponent.Depth / 2);
-		const auto transform = physx::PxTransform(physx::PxVec3(0.0));
+		const auto transform = physx::PxTransform(physx::PxVec3(transformPosition.x, transformPosition.y, transformPosition.z));
 
 		rigidbodyStaticBoxComponent.Body = PxCreateStatic(	*Physics, 
 															transform,

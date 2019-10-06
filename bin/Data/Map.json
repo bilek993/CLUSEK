@@ -116,11 +116,11 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
-	    "PositionX": 2.1,
-		"PositionY": 2.0,
-		"PositionZ": 7.6,
+	    "PositionX": 0.0,
+		"PositionY": 0.0,
+		"PositionZ": 0.0,
 		"RotationX": 0.0,
-		"RotationY": 3.14,
+		"RotationY": 0.0,
 		"RotationZ": 0.0
 	  },
 	  "PhysicsMaterialComponent": {
