@@ -108,12 +108,8 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticBoxComponent>().each(
 		[this](TransformComponent &transformComponent,PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticBoxComponent &rigidbodyStaticBoxComponent)
 	{
-		const auto position = TransformLogic::GetPosition(transformComponent);
-		const auto rotation = TransformLogic::GetRotation(transformComponent);
-
 		const auto geometry = physx::PxBoxGeometry(rigidbodyStaticBoxComponent.Width / 2, rigidbodyStaticBoxComponent.Height / 2, rigidbodyStaticBoxComponent.Depth / 2);
-		const auto transform = physx::PxTransform(	physx::PxVec3(position.x, position.y, position.z),
-													PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotation));
+		const auto transform = CalculatePxTransform(transformComponent);
 
 		rigidbodyStaticBoxComponent.Body = PxCreateStatic(	*Physics, 
 															transform,
@@ -121,4 +117,13 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 															*physicsMaterialComponent.Material);
 		Scene->addActor(*rigidbodyStaticBoxComponent.Body);
 	});
+}
+
+physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
+{
+	const auto position = TransformLogic::GetPosition(transformComponent);
+	const auto rotation = TransformLogic::GetRotation(transformComponent);
+
+	return physx::PxTransform(	physx::PxVec3(position.x, position.y, position.z),
+								PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotation));
 }

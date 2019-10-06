@@ -5,6 +5,8 @@
 
 #define PX_RELEASE(x) if(x) { x->release(); x = nullptr; }
 
+struct TransformComponent;
+
 class PhysicsSystem final : public BaseSystem
 {
 public:
@@ -17,6 +19,8 @@ private:
 	void InitializePhysicsMaterialComponents();
 	void InitializeRigidbodyStaticPlaneComponents();
 	void InitializeRigidbodyStaticBoxComponents();
+
+	physx::PxTransform CalculatePxTransform(const TransformComponent &transformComponent) const;
 
 	physx::PxDefaultAllocator Allocator;
 	PhysicsErrorCallback ErrorCallback;
