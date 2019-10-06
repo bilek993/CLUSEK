@@ -9,6 +9,7 @@
 #include "Components/PhysicsMaterialComponentLoader.h"
 #include "Components/RigidbodyStaticPlaneComponentLoader.h"
 #include "Components/RigidbodyStaticBoxComponentLoader.h"
+#include "Components/RigidbodyDynamicBoxComponentLoader.h"
 
 #define MAP_LOADER_TAGS(INPUT_TAG, EXPECTED_TAG, HASHED_TAG, REGISTRY, ENTITY) if (strcmp(INPUT_TAG, EXPECTED_TAG) == 0) REGISTRY.assign<entt::tag<HASHED_TAG>>(ENTITY);
 #define MAP_COMPONENT_LOADERS(JSON, COMPONENT_ID, REGISTRY, ENTITY) if (JSON.key() == #COMPONENT_ID) COMPONENT_ID##LoaderInstance.Add(JSON.value(), REGISTRY, ENTITY);
@@ -29,4 +30,5 @@ private:
 	inline static PhysicsMaterialComponentLoader PhysicsMaterialComponentLoaderInstance;
 	inline static RigidbodyStaticPlaneComponentLoader RigidbodyStaticPlaneComponentLoaderInstance;
 	inline static RigidbodyStaticBoxComponentLoader RigidbodyStaticBoxComponentLoaderInstance;
+	inline static RigidbodyDynamicBoxComponentLoader RigidbodyDynamicBoxComponentLoaderInstance;
 };

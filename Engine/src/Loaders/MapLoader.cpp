@@ -45,5 +45,6 @@ void MapLoader::AddComponents(nlohmann::json& json, entt::registry& registry, co
 		MAP_COMPONENT_LOADERS(it, PhysicsMaterialComponent, registry, entity);
 		MAP_COMPONENT_LOADERS(it, RigidbodyStaticPlaneComponent, registry, entity);
 		MAP_COMPONENT_LOADERS(it, RigidbodyStaticBoxComponent, registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyDynamicBoxComponent, registry, entity);
 	}
 }

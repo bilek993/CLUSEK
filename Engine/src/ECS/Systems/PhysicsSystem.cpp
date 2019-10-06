@@ -5,6 +5,7 @@
 #include "../Components/TransformComponent.h"
 #include "../../Renderer/TransformLogic.h"
 #include "../../Physics/PhysicsUnitConversion.h"
+#include "../Components/RigidbodyDynamicBoxComponent.h"
 
 void PhysicsSystem::Start()
 {
@@ -15,6 +16,7 @@ void PhysicsSystem::Start()
 	InitializePhysicsMaterialComponents();
 	InitializeRigidbodyStaticPlaneComponents();
 	InitializeRigidbodyStaticBoxComponents();
+	InitializeRigidbodyDynamicBoxComponents();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -116,6 +118,23 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 															geometry,
 															*physicsMaterialComponent.Material);
 		Scene->addActor(*rigidbodyStaticBoxComponent.Body);
+	});
+}
+
+void PhysicsSystem::InitializeRigidbodyDynamicBoxComponents()
+{
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicBoxComponent>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicBoxComponent &rigidbodyDynamicBoxComponent)
+	{
+		const auto geometry = physx::PxBoxGeometry(rigidbodyDynamicBoxComponent.Width / 2, rigidbodyDynamicBoxComponent.Height / 2, rigidbodyDynamicBoxComponent.Depth / 2);
+		const auto transform = CalculatePxTransform(transformComponent);
+
+		rigidbodyDynamicBoxComponent.Body = PxCreateDynamic(*Physics,
+															transform,
+															geometry,
+															*physicsMaterialComponent.Material,
+															rigidbodyDynamicBoxComponent.Density);
+		Scene->addActor(*rigidbodyDynamicBoxComponent.Body);
 	});
 }
 

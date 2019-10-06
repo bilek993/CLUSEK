@@ -19,6 +19,7 @@ private:
 	void InitializePhysicsMaterialComponents();
 	void InitializeRigidbodyStaticPlaneComponents();
 	void InitializeRigidbodyStaticBoxComponents();
+	void InitializeRigidbodyDynamicBoxComponents();
 
 	physx::PxTransform CalculatePxTransform(const TransformComponent &transformComponent) const;
 
