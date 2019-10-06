@@ -16,6 +16,7 @@ private:
 
 	void InitializePhysicsMaterialComponents();
 	void InitializeRigidbodyStaticPlaneComponents();
+	void InitializeRigidbodyStaticBoxComponents();
 
 	physx::PxDefaultAllocator Allocator;
 	PhysicsErrorCallback ErrorCallback;

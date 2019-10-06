@@ -1,6 +1,7 @@
 #include "PhysicsSystem.h"
 #include "../Components/PhysicsMaterialComponent.h"
 #include "../Components/RigidbodyStaticPlaneComponent.h"
+#include "../Components/RigidbodyStaticBoxComponent.h"
 
 void PhysicsSystem::Start()
 {
@@ -10,6 +11,7 @@ void PhysicsSystem::Start()
 
 	InitializePhysicsMaterialComponents();
 	InitializeRigidbodyStaticPlaneComponents();
+	InitializeRigidbodyStaticBoxComponents();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -95,5 +97,18 @@ void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()
 																					rigidbodyStaticPlaneComponent.NormalZ, 
 																					rigidbodyStaticPlaneComponent.Distance), *physicsMaterialComponent.Material);
 		Scene->addActor(*rigidbodyStaticPlaneComponent.Body);
+	});
+}
+
+void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
+{
+	Registry->view<PhysicsMaterialComponent, RigidbodyStaticBoxComponent>().each(
+		[this](PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticBoxComponent &rigidbodyStaticBoxComponent)
+	{
+		rigidbodyStaticBoxComponent.Body = PxCreateStatic(	*Physics, 
+															physx::PxTransform(physx::PxVec3(0.0f)), 
+															physx::PxBoxGeometry(2.0, 5.0, 2.0),
+															*physicsMaterialComponent.Material);
+		Scene->addActor(*rigidbodyStaticBoxComponent.Body);
 	});
 }

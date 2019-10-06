@@ -297,6 +297,9 @@
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticPlaneComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Loaders\Components\RigidbodyStaticBoxComponentLoader.cpp">
+      <Filter>Source Files\Loaders\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -543,6 +546,12 @@
       <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticPlaneComponentLoader.h">
+      <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Components\RigidbodyStaticBoxComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\Components\RigidbodyStaticBoxComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
   </ItemGroup>

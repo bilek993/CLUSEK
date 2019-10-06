@@ -111,5 +111,17 @@
 		"Distance": 100.0
 	  }
 	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.5,
+	    "DynamicFriction": 0.5,
+	    "Restitution": 0.6
+	  },
+	  "RigidbodyStaticBoxComponent": {
+	  }
+	}
   }
 ]

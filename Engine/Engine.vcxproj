@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Loaders\Components\RigidbodyStaticBoxComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticPlaneComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\PhysicsMaterialComponentLoader.cpp" />
     <ClCompile Include="src\Physics\PhysicsErrorCallback.cpp" />
@@ -68,6 +69,8 @@
     <ClCompile Include="src\ECS\Systems\TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Loaders\Components\RigidbodyStaticBoxComponentLoader.h" />
+    <ClInclude Include="src\ECS\Components\RigidbodyStaticBoxComponent.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticPlaneComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\RigidbodyStaticPlaneComponent.h" />
     <ClInclude Include="src\Loaders\Components\PhysicsMaterialComponentLoader.h" />
