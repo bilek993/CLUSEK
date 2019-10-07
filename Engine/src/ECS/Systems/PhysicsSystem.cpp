@@ -35,7 +35,7 @@ void PhysicsSystem::Update(const float deltaTime)
 
 PhysicsSystem::~PhysicsSystem()
 {
-	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
+	Registry->view<PhysicsMaterialComponent>().each([](PhysicsMaterialComponent &physicsMaterialComponent)
 	{
 		PX_RELEASE(physicsMaterialComponent.Material);
 	});
