@@ -66,6 +66,7 @@ struct ConfigData final
 	float GravityX = 0.0f;
 	float GravityY = -9.81f;
 	float GravityZ = 0.0f;
+	float PhysicsDeltaTime = 33.3f;
 
 	// Files responsible for world description
 	std::string PathToResources = "";
