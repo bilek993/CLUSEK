@@ -33,4 +33,6 @@ private:
 	physx::PxScene* Scene = nullptr;
 
 	physx::PxPvd* Pvd = nullptr;
+
+	float TimeSum = 0.0f;
 };

@@ -21,8 +21,15 @@ void PhysicsSystem::Start()
 
 void PhysicsSystem::Update(const float deltaTime)
 {
-	Scene->simulate(deltaTime / 1000.0f);
-	Scene->fetchResults(true);
+	TimeSum += deltaTime;
+
+	while (TimeSum >= 33.3333)
+	{
+		TimeSum -= 33.3333;
+
+		Scene->simulate(33.3333 / 1000.0f);
+		Scene->fetchResults(true);
+	}
 }
 
 PhysicsSystem::~PhysicsSystem()
