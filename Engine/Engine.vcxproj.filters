@@ -306,6 +306,9 @@
     <ClCompile Include="src\Loaders\Components\RigidbodyDynamicBoxComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Loaders\Components\RigidbodyStaticSphereComponentLoader.cpp">
+      <Filter>Source Files\Loaders\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -567,6 +570,12 @@
       <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicBoxComponentLoader.h">
+      <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Components\RigidbodyStaticSphereComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\Components\RigidbodyStaticSphereComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
   </ItemGroup>
