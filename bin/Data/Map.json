@@ -139,6 +139,27 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
+	    "PositionX": -3.0,
+		"PositionY": 0.0,
+		"PositionZ": 0.0,
+		"RotationX": 0.0,
+		"RotationY": 0.0,
+		"RotationZ": 0.0
+	  },
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.5,
+	    "DynamicFriction": 0.5,
+	    "Restitution": 0.2
+	  },
+	  "RigidbodyStaticSphereComponent": {
+	    "Radius": 1.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
 	    "PositionX": 0.0,
 		"PositionY": 10.0,
 		"PositionZ": 0.0,
