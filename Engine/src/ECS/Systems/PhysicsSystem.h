@@ -2,6 +2,8 @@
 #include "BaseSystem.h"
 #include "../../Physics/PhysicsErrorCallback.h"
 #include "PxPhysicsAPI.h"
+#include "../../Physics/PhysicsUnitConversion.h"
+#include "../../Renderer/TransformLogic.h"
 
 #define PX_RELEASE(x) if(x) { x->release(); x = nullptr; }
 
@@ -22,6 +24,10 @@ private:
 	void InitializeRigidbodyDynamicBoxComponents();
 
 	void UpdateSimulation() const;
+	void UpdateMatrices() const;
+
+	template<class T>
+	void UpdateMatrixFromRigidbody() const;
 
 	physx::PxTransform CalculatePxTransform(const TransformComponent &transformComponent) const;
 
@@ -38,3 +44,21 @@ private:
 
 	float TimeSum = 0.0f;
 };
+
+template <class T>
+void PhysicsSystem::UpdateMatrixFromRigidbody() const
+{
+	Registry->view<TransformComponent, T>().each([](TransformComponent &transformComponent, T &rigidbodyComponent)
+	{
+		const auto body = rigidbodyComponent.Body;
+		if (!body->isSleeping())
+		{
+			const auto globalPose = body->getGlobalPose();
+			const auto position = globalPose.p;
+			const auto rotation = PhysicsUnitConversion::PhysicsQuaternionToDirectEuler(globalPose.q);
+
+			TransformLogic::SetPosition(position.x, position.y, position.z, transformComponent);
+			TransformLogic::SetRotation(rotation.x, rotation.y, rotation.z, transformComponent);
+		}
+	});
+}

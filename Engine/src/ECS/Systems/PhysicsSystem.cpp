@@ -27,6 +27,7 @@ void PhysicsSystem::Update(const float deltaTime)
 	{
 		TimeSum -= ConfigurationData->PhysicsDeltaTime;
 		UpdateSimulation();
+		UpdateMatrices();
 	}
 }
 
@@ -147,6 +148,11 @@ void PhysicsSystem::UpdateSimulation() const
 {
 	Scene->simulate(ConfigurationData->PhysicsDeltaTime / 1000.0f);
 	Scene->fetchResults(true);
+}
+
+void PhysicsSystem::UpdateMatrices() const
+{
+	UpdateMatrixFromRigidbody<RigidbodyDynamicBoxComponent>();
 }
 
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
