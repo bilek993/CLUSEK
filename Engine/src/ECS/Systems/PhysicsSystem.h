@@ -21,6 +21,8 @@ private:
 	void InitializeRigidbodyStaticBoxComponents();
 	void InitializeRigidbodyDynamicBoxComponents();
 
+	void UpdateSimulation() const;
+
 	physx::PxTransform CalculatePxTransform(const TransformComponent &transformComponent) const;
 
 	physx::PxDefaultAllocator Allocator;

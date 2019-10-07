@@ -26,9 +26,7 @@ void PhysicsSystem::Update(const float deltaTime)
 	while (TimeSum >= ConfigurationData->PhysicsDeltaTime)
 	{
 		TimeSum -= ConfigurationData->PhysicsDeltaTime;
-
-		Scene->simulate(ConfigurationData->PhysicsDeltaTime / 1000.0f);
-		Scene->fetchResults(true);
+		UpdateSimulation();
 	}
 }
 
@@ -143,6 +141,12 @@ void PhysicsSystem::InitializeRigidbodyDynamicBoxComponents()
 															rigidbodyDynamicBoxComponent.Density);
 		Scene->addActor(*rigidbodyDynamicBoxComponent.Body);
 	});
+}
+
+void PhysicsSystem::UpdateSimulation() const
+{
+	Scene->simulate(ConfigurationData->PhysicsDeltaTime / 1000.0f);
+	Scene->fetchResults(true);
 }
 
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
