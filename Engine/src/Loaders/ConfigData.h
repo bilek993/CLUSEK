@@ -14,6 +14,7 @@ struct ConfigData final
 	int WindowHeight = 480;
 
 	// ImGui
+	int EnableImGuiOnStart = 0;
 	std::string PathToImGuiFont = "";
 
 	// DirectX settings

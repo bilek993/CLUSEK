@@ -19,6 +19,8 @@ void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D1
 	SetupStyle(configData);
 
 	FunctionCloseEngine = functionCloseEngine;
+
+	IsEnabled = configData->EnableImGuiOnStart == 1 ? true : false;
 }
 
 void DebugUserInterface::BeforeUpdate() const
