@@ -11,6 +11,7 @@
 #include "Components/RigidbodyStaticBoxComponentLoader.h"
 #include "Components/RigidbodyDynamicBoxComponentLoader.h"
 #include "Components/RigidbodyStaticSphereComponentLoader.h"
+#include "Components/RigidbodyDynamicSphereComponentLoader.h"
 
 #define MAP_LOADER_TAGS(INPUT_TAG, EXPECTED_TAG, HASHED_TAG, REGISTRY, ENTITY) if (strcmp(INPUT_TAG, EXPECTED_TAG) == 0) REGISTRY.assign<entt::tag<HASHED_TAG>>(ENTITY);
 #define MAP_COMPONENT_LOADERS(JSON, COMPONENT_ID, REGISTRY, ENTITY) if (JSON.key() == #COMPONENT_ID) COMPONENT_ID##LoaderInstance.Add(JSON.value(), REGISTRY, ENTITY);
@@ -33,4 +34,5 @@ private:
 	inline static RigidbodyStaticBoxComponentLoader RigidbodyStaticBoxComponentLoaderInstance;
 	inline static RigidbodyDynamicBoxComponentLoader RigidbodyDynamicBoxComponentLoaderInstance;
 	inline static RigidbodyStaticSphereComponentLoader RigidbodyStaticSphereComponentLoaderInstance;
+	inline static RigidbodyDynamicSphereComponentLoader RigidbodyDynamicSphereComponentLoaderInstance;
 };

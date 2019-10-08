@@ -7,6 +7,7 @@
 #include "../../Physics/PhysicsUnitConversion.h"
 #include "../Components/RigidbodyDynamicBoxComponent.h"
 #include "../Components/RigidbodyStaticSphereComponent.h"
+#include "../Components/RigidbodyDynamicSphereComponent.h"
 
 void PhysicsSystem::Start()
 {
@@ -19,6 +20,7 @@ void PhysicsSystem::Start()
 	InitializeRigidbodyStaticBoxComponents();
 	InitializeRigidbodyDynamicBoxComponents();
 	InitializeRigidbodyStaticSphereComponents();
+	InitializeRigidbodyDynamicSphereComponents();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -162,6 +164,23 @@ void PhysicsSystem::InitializeRigidbodyStaticSphereComponents()
 	});
 }
 
+void PhysicsSystem::InitializeRigidbodyDynamicSphereComponents()
+{
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicSphereComponent>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicSphereComponent &rigidbodyDynamicSphereComponent)
+	{
+		const auto geometry = physx::PxSphereGeometry(rigidbodyDynamicSphereComponent.Radius);
+		const auto transform = CalculatePxTransform(transformComponent);
+
+		rigidbodyDynamicSphereComponent.Body = PxCreateDynamic(*Physics,
+			transform,
+			geometry,
+			*physicsMaterialComponent.Material,
+			rigidbodyDynamicSphereComponent.Density);
+		Scene->addActor(*rigidbodyDynamicSphereComponent.Body);
+	});
+}
+
 void PhysicsSystem::UpdateSimulation() const
 {
 	Scene->simulate(ConfigurationData->PhysicsDeltaTime / 1000.0f);
@@ -171,6 +190,7 @@ void PhysicsSystem::UpdateSimulation() const
 void PhysicsSystem::UpdateMatrices() const
 {
 	UpdateMatrixFromRigidbody<RigidbodyDynamicBoxComponent>();
+	UpdateMatrixFromRigidbody<RigidbodyDynamicSphereComponent>();
 }
 
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const

@@ -23,6 +23,7 @@ private:
 	void InitializeRigidbodyStaticBoxComponents();
 	void InitializeRigidbodyDynamicBoxComponents();
 	void InitializeRigidbodyStaticSphereComponents();
+	void InitializeRigidbodyDynamicSphereComponents();
 
 	void UpdateSimulation() const;
 	void UpdateMatrices() const;
