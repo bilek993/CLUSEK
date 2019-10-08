@@ -156,10 +156,10 @@ void PhysicsSystem::InitializeRigidbodyStaticSphereComponents()
 		const auto geometry = physx::PxSphereGeometry(rigidbodyStaticSphereComponent.Radius);
 		const auto transform = CalculatePxTransform(transformComponent);
 
-		rigidbodyStaticSphereComponent.Body = PxCreateStatic(*Physics,
-			transform,
-			geometry,
-			*physicsMaterialComponent.Material);
+		rigidbodyStaticSphereComponent.Body = PxCreateStatic(	*Physics,
+																transform,
+																geometry,
+																*physicsMaterialComponent.Material);
 		Scene->addActor(*rigidbodyStaticSphereComponent.Body);
 	});
 }
@@ -172,11 +172,11 @@ void PhysicsSystem::InitializeRigidbodyDynamicSphereComponents()
 		const auto geometry = physx::PxSphereGeometry(rigidbodyDynamicSphereComponent.Radius);
 		const auto transform = CalculatePxTransform(transformComponent);
 
-		rigidbodyDynamicSphereComponent.Body = PxCreateDynamic(*Physics,
-			transform,
-			geometry,
-			*physicsMaterialComponent.Material,
-			rigidbodyDynamicSphereComponent.Density);
+		rigidbodyDynamicSphereComponent.Body = PxCreateDynamic(	*Physics,
+																transform,
+																geometry,
+																*physicsMaterialComponent.Material,
+																rigidbodyDynamicSphereComponent.Density);
 		Scene->addActor(*rigidbodyDynamicSphereComponent.Body);
 	});
 }
