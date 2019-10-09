@@ -43,6 +43,14 @@ PhysicsSystem::~PhysicsSystem()
 		PX_RELEASE(physicsMaterialComponent.Material);
 	});
 
+	const auto numberOfActors = Scene->getNbActors(physx::PxActorTypeFlag::eRIGID_DYNAMIC | physx::PxActorTypeFlag::eRIGID_STATIC);
+	std::vector<physx::PxRigidActor*> actors(numberOfActors);
+	Scene->getActors(physx::PxActorTypeFlag::eRIGID_DYNAMIC | physx::PxActorTypeFlag::eRIGID_STATIC, 
+		reinterpret_cast<physx::PxActor**>(&actors[0]), numberOfActors);
+
+	for (auto actor : actors)
+		PX_RELEASE(actor);
+
 	PX_RELEASE(Scene);
 	PX_RELEASE(Dispatcher);
 	PX_RELEASE(Physics);
