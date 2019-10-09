@@ -8,6 +8,7 @@
 #include "../Components/RigidbodyDynamicBoxComponent.h"
 #include "../Components/RigidbodyStaticSphereComponent.h"
 #include "../Components/RigidbodyDynamicSphereComponent.h"
+#include <thread>
 
 void PhysicsSystem::Start()
 {
@@ -77,9 +78,11 @@ void PhysicsSystem::InitializeCore()
 
 	Physics = PxCreatePhysics(PX_PHYSICS_VERSION, *Foundation, physx::PxTolerancesScale(), true, Pvd);
 
+	const auto numberOfThreads = std::thread::hardware_concurrency();
+
 	physx::PxSceneDesc sceneDesc(Physics->getTolerancesScale());
 	sceneDesc.gravity = physx::PxVec3(ConfigurationData->GravityX, ConfigurationData->GravityY, ConfigurationData->GravityZ);
-	Dispatcher = physx::PxDefaultCpuDispatcherCreate(2);
+	Dispatcher = physx::PxDefaultCpuDispatcherCreate(numberOfThreads);
 	sceneDesc.cpuDispatcher = Dispatcher;
 	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
 	Scene = Physics->createScene(sceneDesc);
