@@ -25,6 +25,7 @@ private:
 	void InitializeRigidbodyStaticSphereComponents();
 	void InitializeRigidbodyDynamicSphereComponents();
 	void InitializeRigidbodyStaticCapsuleComponents();
+	void InitializeRigidbodyDynamicCapsuleComponents();
 
 	void UpdateSimulation() const;
 	void UpdateMatrices() const;
