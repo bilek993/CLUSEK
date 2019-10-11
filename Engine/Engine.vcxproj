@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Loaders\Components\RigidbodyStaticCapsuleComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyDynamicSphereComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticSphereComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyDynamicBoxComponentLoader.cpp" />
@@ -73,6 +74,8 @@
     <ClCompile Include="src\ECS\Systems\TransformSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Loaders\Components\RigidbodyStaticCapsuleComponentLoader.h" />
+    <ClInclude Include="src\ECS\Components\RigidbodyStaticCapsuleComponent.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicSphereComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\RigidbodyDynamicSphereComponent.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticSphereComponentLoader.h" />

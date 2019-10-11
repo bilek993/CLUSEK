@@ -9,6 +9,7 @@
 #include "../Components/RigidbodyStaticSphereComponent.h"
 #include "../Components/RigidbodyDynamicSphereComponent.h"
 #include <thread>
+#include "../Components/RigidbodyStaticCapsuleComponent.h"
 
 void PhysicsSystem::Start()
 {
@@ -22,6 +23,7 @@ void PhysicsSystem::Start()
 	InitializeRigidbodyDynamicBoxComponents();
 	InitializeRigidbodyStaticSphereComponents();
 	InitializeRigidbodyDynamicSphereComponents();
+	InitializeRigidbodyStaticCapsuleComponents();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -189,6 +191,22 @@ void PhysicsSystem::InitializeRigidbodyDynamicSphereComponents()
 																*physicsMaterialComponent.Material,
 																rigidbodyDynamicSphereComponent.Density);
 		Scene->addActor(*rigidbodyDynamicSphereComponent.Body);
+	});
+}
+
+void PhysicsSystem::InitializeRigidbodyStaticCapsuleComponents()
+{
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticCapsuleComponent>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticCapsuleComponent &rigidbodyStaticCapsuleComponent)
+	{
+		const auto geometry = physx::PxCapsuleGeometry(rigidbodyStaticCapsuleComponent.Radius, rigidbodyStaticCapsuleComponent.Height / 2);
+		const auto transform = CalculatePxTransform(transformComponent);
+
+		rigidbodyStaticCapsuleComponent.Body = PxCreateStatic(	*Physics,
+																transform,
+																geometry,
+																*physicsMaterialComponent.Material);
+		Scene->addActor(*rigidbodyStaticCapsuleComponent.Body);
 	});
 }
 

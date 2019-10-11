@@ -160,6 +160,28 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
+	    "PositionX": -12.0,
+		"PositionY": 0.0,
+		"PositionZ": 0.0,
+		"RotationX": 0.0,
+		"RotationY": 0.0,
+		"RotationZ": 0.0
+	  },
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.5,
+	    "DynamicFriction": 0.5,
+	    "Restitution": 0.2
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 3.0,
+	    "Radius": 1.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
 	    "PositionX": -4.0,
 		"PositionY": 5.0,
 		"PositionZ": 0.0,
