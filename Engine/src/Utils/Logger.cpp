@@ -1,6 +1,7 @@
 #include "Logger.h"
 #include <Windows.h>
 #include <chrono>
+#include <cassert>
 
 void Logger::Initialize(const bool enabled, const std::string& destination)
 {
@@ -29,6 +30,8 @@ void Logger::Free()
 
 	fclose(Fp);
 	FreeConsole();
+
+	Fp = nullptr;
 }
 
 void Logger::SetLevel(const int level)
@@ -63,6 +66,9 @@ void Logger::Debug(const std::string& input)
 	if (!IsEnabled || Level > 0)
 		return;
 
+	// Assertion fails if logger is at this point not initialized or free method has been called
+	assert(Fp);
+
 	printf(GenerateDebugString(input, "DBG").c_str());
 }
 
@@ -71,6 +77,9 @@ void Logger::Warning(const std::string& input)
 	if (!IsEnabled || Level > 1)
 		return;
 
+	// Assertion fails if logger is at this point not initialized or free method has been called
+	assert(Fp);
+
 	printf(GenerateDebugString(input, "WRN").c_str());
 }
 
@@ -78,8 +87,13 @@ void Logger::Error(const std::string& input)
 {
 	MessageBox(nullptr, input.c_str(), "Fatal error", MB_ICONSTOP | MB_OK);
 
-	if (IsEnabled && Level <= 2)
+	if (IsEnabled && Level <= 2) 
+	{
+		// Assertion fails if logger is at this point not initialized or free method has been called
+		assert(Fp);
+
 		printf(GenerateDebugString(input, "ERR").c_str());
+	}
 }
 
 std::string Logger::GenerateDebugString(const std::string& input, const std::string& level)
