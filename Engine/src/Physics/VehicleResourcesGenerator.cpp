@@ -1,0 +1,1 @@
+#include "VehicleResourcesGenerator.h"

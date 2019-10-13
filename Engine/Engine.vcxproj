@@ -73,6 +73,7 @@
     <ClCompile Include="src\GUI\Windows\SystemsManagerWindow.cpp" />
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
     <ClCompile Include="src\ECS\Systems\TransformSystem.cpp" />
+    <ClCompile Include="src\Physics\VehicleResourcesGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCapsuleComponentLoader.h" />
@@ -170,6 +171,7 @@
     <ClInclude Include="src\Loaders\Components\TransformComponentLoader.h" />
     <ClInclude Include="src\Tags.h" />
     <ClInclude Include="src\ECS\Systems\TransformSystem.h" />
+    <ClInclude Include="src\Physics\VehicleResourcesGenerator.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

@@ -318,6 +318,9 @@
     <ClCompile Include="src\Loaders\Components\RigidbodyDynamicCapsuleComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\VehicleResourcesGenerator.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -604,6 +607,9 @@
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCapsuleComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\VehicleResourcesGenerator.h">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
