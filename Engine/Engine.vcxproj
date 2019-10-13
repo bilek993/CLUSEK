@@ -74,8 +74,11 @@
     <ClCompile Include="src\Loaders\Components\TransformComponentLoader.cpp" />
     <ClCompile Include="src\ECS\Systems\TransformSystem.cpp" />
     <ClCompile Include="src\Physics\VehicleResourcesGenerator.cpp" />
+    <ClCompile Include="src\Loaders\Components\VehicleComponentLoader.cpp" />
+    <ClCompile Include="src\Loaders\Components\WheelComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ECS\Components\WheelComponent.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCapsuleComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\RigidbodyDynamicCapsuleComponent.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticCapsuleComponentLoader.h" />
@@ -172,6 +175,9 @@
     <ClInclude Include="src\Tags.h" />
     <ClInclude Include="src\ECS\Systems\TransformSystem.h" />
     <ClInclude Include="src\Physics\VehicleResourcesGenerator.h" />
+    <ClInclude Include="src\ECS\Components\VehicleComponent.h" />
+    <ClInclude Include="src\Loaders\Components\VehicleComponentLoader.h" />
+    <ClInclude Include="src\Loaders\Components\WheelComponentLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

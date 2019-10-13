@@ -2,5 +2,6 @@
 
 class VehicleResourcesGenerator final
 {
-	
+public:
+
 };
