@@ -40,6 +40,7 @@ private:
 
 	physx::PxFoundation* Foundation = nullptr;
 	physx::PxPhysics* Physics = nullptr;
+	physx::PxCooking* Cooking = nullptr;
 
 	physx::PxDefaultCpuDispatcher* Dispatcher = nullptr;
 	physx::PxScene* Scene = nullptr;

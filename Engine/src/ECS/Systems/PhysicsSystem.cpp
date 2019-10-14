@@ -67,6 +67,8 @@ PhysicsSystem::~PhysicsSystem()
 		PX_RELEASE(transport);
 	}
 
+	PX_RELEASE(Cooking);
+
 	PX_RELEASE(Foundation);
 }
 
@@ -98,6 +100,8 @@ void PhysicsSystem::InitializeCore()
 	sceneDesc.cpuDispatcher = Dispatcher;
 	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
 	Scene = Physics->createScene(sceneDesc);
+
+	Cooking = PxCreateCooking(PX_PHYSICS_VERSION, *Foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
 
 #ifdef _DEBUG
 	auto pvdClient = Scene->getScenePvdClient();;
