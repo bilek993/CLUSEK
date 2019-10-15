@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <core/hashed_string.hpp>
 
 struct Tags final
