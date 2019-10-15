@@ -1,7 +1,7 @@
 #pragma once
+#include "PxPhysicsAPI.h"
 
 struct VehicleComponent final
 {
-	int Test123;
-	// TODO: Implement this
+	physx::PxVehicleDrive4W* Vehicle;
 };

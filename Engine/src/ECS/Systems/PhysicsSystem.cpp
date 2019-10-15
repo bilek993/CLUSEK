@@ -31,6 +31,7 @@ void PhysicsSystem::Start()
 	InitializeRigidbodyDynamicCapsuleComponents();
 	InitializeRigidbodyStaticCylinderComponents();
 	InitializeRigidbodyDynamicCylinderComponents();
+	InitializeVehicle();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -270,6 +271,10 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 																*physicsMaterialComponent.Material);
 		Scene->addActor(*rigidbodyDynamicCylinderComponent.Body);
 	});
+}
+
+void PhysicsSystem::InitializeVehicle()
+{
 }
 
 void PhysicsSystem::UpdateSimulation() const
