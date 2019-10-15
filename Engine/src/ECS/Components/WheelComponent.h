@@ -2,6 +2,6 @@
 
 struct WheelComponent final
 {
-	int Test123;
-	// TODO: Implement this
+	std::string VehicleId;
+	int WheelId;
 };

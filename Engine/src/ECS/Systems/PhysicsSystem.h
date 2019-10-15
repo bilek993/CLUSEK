@@ -28,7 +28,7 @@ private:
 	void InitializeRigidbodyDynamicCapsuleComponents();
 	void InitializeRigidbodyStaticCylinderComponents();
 	void InitializeRigidbodyDynamicCylinderComponents();
-	void InitializeVehicle();
+	void InitializeVehicleAndWheels();
 
 	void UpdateSimulation() const;
 	void UpdateMatrices() const;
@@ -37,6 +37,8 @@ private:
 	void UpdateMatrixFromRigidbody() const;
 
 	physx::PxTransform CalculatePxTransform(const TransformComponent &transformComponent) const;
+
+	void AssociateWheelsWithVehicles();
 
 	physx::PxDefaultAllocator Allocator;
 	PhysicsErrorCallback ErrorCallback;

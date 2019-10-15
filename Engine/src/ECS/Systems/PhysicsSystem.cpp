@@ -14,6 +14,8 @@
 #include "../../Physics/PhysicsMeshGenerator.h"
 #include "../../Loaders/Components/RigidbodyStaticCylinderComponent.h"
 #include "../Components/RigidbodyDynamicCylinderComponent.h"
+#include "../Components/WheelComponent.h"
+#include "../Components/VehicleComponent.h"
 
 void PhysicsSystem::Start()
 {
@@ -31,7 +33,7 @@ void PhysicsSystem::Start()
 	InitializeRigidbodyDynamicCapsuleComponents();
 	InitializeRigidbodyStaticCylinderComponents();
 	InitializeRigidbodyDynamicCylinderComponents();
-	InitializeVehicle();
+	InitializeVehicleAndWheels();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -273,8 +275,9 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 	});
 }
 
-void PhysicsSystem::InitializeVehicle()
+void PhysicsSystem::InitializeVehicleAndWheels()
 {
+	AssociateWheelsWithVehicles();
 }
 
 void PhysicsSystem::UpdateSimulation() const
@@ -296,4 +299,32 @@ physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent&
 
 	return physx::PxTransform(	physx::PxVec3(position.x, position.y, position.z),
 								PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotation));
+}
+
+void PhysicsSystem::AssociateWheelsWithVehicles()
+{
+	Logger::Debug("Preparing to associate wheels with vehicles by id...");
+
+	Registry->view<TransformComponent, PhysicsMaterialComponent, WheelComponent>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, WheelComponent &wheelComponent)
+	{
+		Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
+			[&wheelComponent](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, VehicleComponent &vehicleComponent)
+		{
+			if (wheelComponent.VehicleId == vehicleComponent.VehicleId)
+			{
+				Logger::Debug("Found vehicle for wheel!");
+
+				if (wheelComponent.WheelId > 4 || wheelComponent.WheelId < 0)
+				{
+					Logger::Error("Wheel outside of range 0-4! Only four wheels vehicle are supported!");
+				}
+				else
+				{
+					Logger::Debug("Connecting wheel " + std::to_string(wheelComponent.WheelId) + "to vehicle " + wheelComponent.VehicleId + "...");
+					vehicleComponent.Wheels[wheelComponent.WheelId] = &wheelComponent;
+				}
+			}
+		});
+	});
 }
