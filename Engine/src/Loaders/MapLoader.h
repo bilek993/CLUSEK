@@ -15,6 +15,7 @@
 #include "Components/RigidbodyStaticCapsuleComponentLoader.h"
 #include "Components/RigidbodyDynamicCapsuleComponentLoader.h"
 #include "Components/RigidbodyStaticCylinderComponentLoader.h"
+#include "Components/RigidbodyDynamicCylinderComponentLoader.h"
 #include "Components/WheelComponentLoader.h"
 #include "Components/VehicleComponentLoader.h"
 
@@ -43,6 +44,7 @@ private:
 	inline static RigidbodyStaticCapsuleComponentLoader RigidbodyStaticCapsuleComponentLoaderInstance;
 	inline static RigidbodyDynamicCapsuleComponentLoader RigidbodyDynamicCapsuleComponentLoaderInstance;
 	inline static RigidbodyStaticCylinderComponentLoader RigidbodyStaticCylinderComponentLoaderInstance;
+	inline static RigidbodyDynamicCylinderComponentLoader RigidbodyDynamicCylinderComponentLoaderInstance;
 	inline static VehicleComponentLoader VehicleComponentLoaderInstance;
 	inline static WheelComponentLoader WheelComponentLoaderInstance;
 };
