@@ -33,7 +33,7 @@ void PhysicsSystem::Start()
 	InitializeRigidbodyDynamicCapsuleComponents();
 	InitializeRigidbodyStaticCylinderComponents();
 	InitializeRigidbodyDynamicCylinderComponents();
-	InitializeVehicleAndWheels();
+	InitializeVehiclesAndWheels();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -121,6 +121,8 @@ void PhysicsSystem::InitializeCore()
 
 void PhysicsSystem::InitializePhysicsMaterialComponents()
 {
+	Logger::Debug("Preparing to initialize physics material...");
+
 	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
 	{
 		physicsMaterialComponent.Material = Physics->createMaterial(physicsMaterialComponent.StaticFriction, 
@@ -131,6 +133,8 @@ void PhysicsSystem::InitializePhysicsMaterialComponents()
 
 void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()
 {
+	Logger::Debug("Preparing to initialize rigidbody static planes...");
+
 	Registry->view<PhysicsMaterialComponent, RigidbodyStaticPlaneComponent>().each(
 		[this](PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticPlaneComponent &rigidbodyStaticPlaneComponent)
 	{
@@ -144,6 +148,8 @@ void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()
 
 void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 {
+	Logger::Debug("Preparing to initialize rigidbody static boxes...");
+
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticBoxComponent>().each(
 		[this](TransformComponent &transformComponent,PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticBoxComponent &rigidbodyStaticBoxComponent)
 	{
@@ -160,6 +166,8 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 
 void PhysicsSystem::InitializeRigidbodyDynamicBoxComponents()
 {
+	Logger::Debug("Preparing to initialize rigidbody dynamic boxes...");
+
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicBoxComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicBoxComponent &rigidbodyDynamicBoxComponent)
 	{
@@ -177,6 +185,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicBoxComponents()
 
 void PhysicsSystem::InitializeRigidbodyStaticSphereComponents()
 {
+	Logger::Debug("Preparing to initialize rigidbody static spheres...");
+
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticSphereComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticSphereComponent &rigidbodyStaticSphereComponent)
 	{
@@ -193,6 +203,8 @@ void PhysicsSystem::InitializeRigidbodyStaticSphereComponents()
 
 void PhysicsSystem::InitializeRigidbodyDynamicSphereComponents()
 {
+	Logger::Debug("Preparing to initialize rigidbody dynamic spheres...");
+
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicSphereComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicSphereComponent &rigidbodyDynamicSphereComponent)
 	{
@@ -210,6 +222,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicSphereComponents()
 
 void PhysicsSystem::InitializeRigidbodyStaticCapsuleComponents()
 {
+	Logger::Debug("Preparing to initialize rigidbody static capsules...");
+
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticCapsuleComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticCapsuleComponent &rigidbodyStaticCapsuleComponent)
 	{
@@ -226,6 +240,8 @@ void PhysicsSystem::InitializeRigidbodyStaticCapsuleComponents()
 
 void PhysicsSystem::InitializeRigidbodyDynamicCapsuleComponents()
 {
+	Logger::Debug("Preparing to initialize rigidbody dynamic capsules...");
+
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicCapsuleComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicCapsuleComponent &rigidbodyDynamicCapsuleComponent)
 	{
@@ -243,6 +259,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicCapsuleComponents()
 
 void PhysicsSystem::InitializeRigidbodyStaticCylinderComponents()
 {
+	Logger::Debug("Preparing to initialize rigidbody static cylinders...");
+
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticCylinderComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticCylinderComponent &rigidbodyStaticCylinderComponent)
 	{
@@ -260,6 +278,8 @@ void PhysicsSystem::InitializeRigidbodyStaticCylinderComponents()
 
 void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 {
+	Logger::Debug("Preparing to initialize rigidbody dynamic cylinders...");
+
 	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicCylinderComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicCylinderComponent &rigidbodyDynamicCylinderComponent)
 	{
@@ -275,8 +295,10 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 	});
 }
 
-void PhysicsSystem::InitializeVehicleAndWheels()
+void PhysicsSystem::InitializeVehiclesAndWheels()
 {
+	Logger::Debug("Preparing to initialize vehicles and wheels...");
+
 	AssociateWheelsWithVehicles();
 }
 
