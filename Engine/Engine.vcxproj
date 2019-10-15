@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Loaders\Components\RigidbodyStaticCylinderComponentLoader.cpp" />
     <ClCompile Include="src\Physics\PhysicsMeshGenerator.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyDynamicCapsuleComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticCapsuleComponentLoader.cpp" />
@@ -79,6 +80,8 @@
     <ClCompile Include="src\Loaders\Components\WheelComponentLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Loaders\Components\RigidbodyStaticCylinderComponentLoader.h" />
+    <ClInclude Include="src\Loaders\Components\RigidbodyStaticCylinderComponent.h" />
     <ClInclude Include="src\Physics\PhysicsMeshGenerator.h" />
     <ClInclude Include="src\ECS\Components\WheelComponent.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCapsuleComponentLoader.h" />

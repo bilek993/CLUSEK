@@ -11,6 +11,8 @@
 #include <thread>
 #include "../Components/RigidbodyStaticCapsuleComponent.h"
 #include "../Components/RigidbodyDynamicCapsuleComponent.h"
+#include "../../Physics/PhysicsMeshGenerator.h"
+#include "../../Loaders/Components/RigidbodyStaticCylinderComponent.h"
 
 void PhysicsSystem::Start()
 {
@@ -26,6 +28,7 @@ void PhysicsSystem::Start()
 	InitializeRigidbodyDynamicSphereComponents();
 	InitializeRigidbodyStaticCapsuleComponents();
 	InitializeRigidbodyDynamicCapsuleComponents();
+	InitializeRigidbodyStaticCylinderComponents();
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -230,6 +233,23 @@ void PhysicsSystem::InitializeRigidbodyDynamicCapsuleComponents()
 																*physicsMaterialComponent.Material,
 																rigidbodyDynamicCapsuleComponent.Density);
 		Scene->addActor(*rigidbodyDynamicCapsuleComponent.Body);
+	});
+}
+
+void PhysicsSystem::InitializeRigidbodyStaticCylinderComponents()
+{
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticCylinderComponent>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticCylinderComponent &rigidbodyStaticCylinderComponent)
+	{
+		const auto geometry = physx::PxConvexMeshGeometry(
+			PhysicsMeshGenerator::CreateCylinder(*Physics, *Cooking, rigidbodyStaticCylinderComponent.Width, rigidbodyStaticCylinderComponent.Radius));
+		const auto transform = CalculatePxTransform(transformComponent);
+
+		rigidbodyStaticCylinderComponent.Body = PxCreateStatic(	*Physics,
+																transform,
+																geometry,
+																*physicsMaterialComponent.Material);
+		Scene->addActor(*rigidbodyStaticCylinderComponent.Body);
 	});
 }
 
