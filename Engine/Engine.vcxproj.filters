@@ -327,6 +327,9 @@
     <ClCompile Include="src\Loaders\Components\WheelComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsMeshGenerator.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -628,6 +631,9 @@
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\WheelComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\PhysicsMeshGenerator.h">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
