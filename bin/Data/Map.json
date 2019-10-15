@@ -28,6 +28,9 @@
 	  "ModelRenderComponent": {
 	    "ModelId": "CivilianVehicle",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
+	  },
+	  "VehicleComponent": {
+		"VehicleId": "PlayerVehicle"
 	  }
 	}
   },
@@ -42,6 +45,10 @@
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
+	  },
+	  "WheelComponent": {
+		"VehicleId": "PlayerVehicle",
+		"WheelId": 1
 	  }
 	}
   },
@@ -59,6 +66,10 @@
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
+	  },
+	  "WheelComponent": {
+		"VehicleId": "PlayerVehicle",
+		"WheelId": 3
 	  }
 	}
   },
@@ -76,6 +87,10 @@
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
+	  },
+	  "WheelComponent": {
+		"VehicleId": "PlayerVehicle",
+		"WheelId": 0
 	  }
 	}
   },
@@ -93,6 +108,10 @@
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
+	  },
+	  "WheelComponent": {
+		"VehicleId": "PlayerVehicle",
+		"WheelId": 2
 	  }
 	}
   },
@@ -109,141 +128,6 @@
 		"NormalY": 1.0,
 		"NormalZ": 0.0,
 		"Distance": 1.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": 1.1,
-		"PositionY": 0.0,
-		"PositionZ": 0.0,
-		"RotationX": 0.0,
-		"RotationY": 0.0,
-		"RotationZ": 0.0
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.5,
-	    "DynamicFriction": 0.5,
-	    "Restitution": 0.2
-	  },
-	  "RigidbodyStaticBoxComponent": {
-	    "Width": 2.0,
-		"Height": 1.0,
-		"Depth": 2.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": -3.0,
-		"PositionY": 0.0,
-		"PositionZ": 0.0,
-		"RotationX": 0.0,
-		"RotationY": 0.0,
-		"RotationZ": 0.0
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.5,
-	    "DynamicFriction": 0.5,
-	    "Restitution": 0.2
-	  },
-	  "RigidbodyStaticSphereComponent": {
-	    "Radius": 1.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": -12.0,
-		"PositionY": 0.0,
-		"PositionZ": 0.0,
-		"RotationX": 0.0,
-		"RotationY": 0.0,
-		"RotationZ": 0.0
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.5,
-	    "DynamicFriction": 0.5,
-	    "Restitution": 0.2
-	  },
-	  "RigidbodyStaticCapsuleComponent": {
-		"Height": 3.0,
-	    "Radius": 1.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": -12.0,
-		"PositionY": 2.0,
-		"PositionZ": 0.25,
-		"RotationX": 0.0,
-		"RotationY": 0.0,
-		"RotationZ": 0.0
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.5,
-	    "DynamicFriction": 0.5,
-	    "Restitution": 0.2
-	  },
-	  "RigidbodyDynamicCapsuleComponent": {
-		"Height": 2.0,
-	    "Radius": 1.0,
-		"Density": 1.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": -4.0,
-		"PositionY": 5.0,
-		"PositionZ": 0.0,
-		"RotationX": 0.0,
-		"RotationY": 0.0,
-		"RotationZ": 0.0
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.5,
-	    "DynamicFriction": 0.5,
-	    "Restitution": 0.2
-	  },
-	  "RigidbodyDynamicSphereComponent": {
-	    "Radius": 1.0,
-		"Density": 0.5
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": 0.0,
-		"PositionY": 10.0,
-		"PositionZ": 0.0,
-		"RotationX": 0.0,
-		"RotationY": 0.0,
-		"RotationZ": 0.0
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.5,
-	    "DynamicFriction": 0.5,
-	    "Restitution": 0.2
-	  },
-	  "RigidbodyDynamicBoxComponent": {
-	    "Width": 1.0,
-		"Height": 1.0,
-		"Depth": 1.0,
-		"Density": 1.0
 	  }
 	}
   }
