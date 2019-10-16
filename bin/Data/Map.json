@@ -29,6 +29,11 @@
 	    "ModelId": "CivilianVehicle",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
+	  "PhysicsMaterialComponent": {
+        "StaticFriction": 0.1,
+        "DynamicFriction": 0.1,
+        "Restitution": 0.1
+      },
 	  "VehicleComponent": {
 		"VehicleId": "PlayerVehicle"
 	  }
@@ -46,6 +51,11 @@
 	    "ModelId": "Wheel",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
+	  "PhysicsMaterialComponent": {
+        "StaticFriction": 0.1,
+        "DynamicFriction": 0.1,
+        "Restitution": 0.1
+      },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 1
@@ -67,6 +77,11 @@
 	    "ModelId": "Wheel",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
+	  "PhysicsMaterialComponent": {
+        "StaticFriction": 0.1,
+        "DynamicFriction": 0.1,
+        "Restitution": 0.1
+      },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 3
@@ -88,6 +103,11 @@
 	    "ModelId": "Wheel",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
+	  "PhysicsMaterialComponent": {
+        "StaticFriction": 0.1,
+        "DynamicFriction": 0.1,
+        "Restitution": 0.1
+      },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 0
@@ -109,6 +129,11 @@
 	    "ModelId": "Wheel",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
+	  "PhysicsMaterialComponent": {
+        "StaticFriction": 0.1,
+        "DynamicFriction": 0.1,
+        "Restitution": 0.1
+      },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 2
