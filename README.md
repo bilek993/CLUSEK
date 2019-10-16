@@ -99,7 +99,7 @@ The best way to work with this game engine is to use free software named [Blende
 
 ## Texture maps
 
-xyz
+Some maps can differ from game engine to game engine. That is why some map has to be designed in a specify way. This game engine tries to be as much as possible compatible with Unity maps.
 
 ### Normal maps
 
@@ -141,12 +141,36 @@ Vehicle identificator, that is used to associate this wheel with the vehicle. It
 * **WheelId** (_required_, _int_)<br/>
 A numeric value, that is used to connect a wheel to the correct position in a vehicle. This value is required to be in range 0-4. This game engine requires this value to be: 0 for front left, 1 for front right, 2 for rear left and 3 for rear right wheel.
 
+* **Mass** (_required_, _float_)<br/>
+Wheel rigidbody mass in kilograms.
+
 ### Vehicle Component
 
 This component is required for core vehicle. It has to be assigned to the vehicle core (chase) with other required components to make vehicle work. Parameters that can be changed or set for this component:
 
 * **VehicleId** (_required_, _std::string_)<br/>
 A unique value for a vehicle. Each vehicle needs to have a different value in this parameter field.
+
+* **Mass** (_required_, _float_)<br/>
+Vehicle rigidbody mass in kilograms.
+
+* **DimensionX** (_required_, _float_)<br/>
+Vehicle chassis size on axis X.
+
+* **DimensionY** (_required_, _float_)<br/>
+Vehicle chassis size on axis Y.
+
+* **DimensionZ** (_required_, _float_)<br/>
+Vehicle chassis size on axis Z.
+
+* **CenterOfMassOffsetX** (_optional_, _float_)<br/>
+Center of mass offset from default vehicle position on axis X.
+
+* **CenterOfMassOffsetY** (_optional_, _float_)<br/>
+Center of mass offset from default vehicle position on axis Y.
+
+* **CenterOfMassOffsetZ** (_optional_, _float_)<br/>
+Center of mass offset from default vehicle position on axis Z.
 
 
 
