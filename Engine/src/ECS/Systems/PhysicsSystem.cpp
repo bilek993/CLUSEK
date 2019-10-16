@@ -16,6 +16,7 @@
 #include "../Components/RigidbodyDynamicCylinderComponent.h"
 #include "../Components/WheelComponent.h"
 #include "../Components/VehicleComponent.h"
+#include "../../Physics/VehicleResourcesGenerator.h"
 
 void PhysicsSystem::Start()
 {
@@ -301,6 +302,8 @@ void PhysicsSystem::InitializeVehiclesAndWheels()
 
 	AssociateWheelsWithVehicles();
 	VerifyWheelsForEachVehicle();
+	CreateVehicle();
+
 }
 
 void PhysicsSystem::UpdateSimulation() const
@@ -369,5 +372,19 @@ void PhysicsSystem::VerifyWheelsForEachVehicle() const
 				Logger::Error("Wheel with id " + std::to_string(i) + " not assigned to vehicle " + vehicleComponent.VehicleId + "!");
 			}
 		}
+	});
+}
+
+void PhysicsSystem::CreateVehicle()
+{
+	Logger::Debug("Preparing to create physics vehicles...");
+
+	Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, VehicleComponent &vehicleComponent)
+	{
+		const auto vehicle = VehicleResourcesGenerator::Create4WheelVehicle(Physics, Cooking, vehicleComponent);
+
+		if (!vehicle)
+			Logger::Error("Vehicle couldn't be created!");
 	});
 }

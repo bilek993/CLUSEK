@@ -40,6 +40,7 @@ private:
 
 	void AssociateWheelsWithVehicles();
 	void VerifyWheelsForEachVehicle() const;
+	void CreateVehicle();
 
 	physx::PxDefaultAllocator Allocator;
 	PhysicsErrorCallback ErrorCallback;

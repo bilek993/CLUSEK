@@ -2,6 +2,7 @@
 #include "PxPhysicsAPI.h"
 #include "WheelComponent.h"
 #include "PhysicsMaterialComponent.h"
+#include <string>
 
 struct VehicleComponent final
 {
