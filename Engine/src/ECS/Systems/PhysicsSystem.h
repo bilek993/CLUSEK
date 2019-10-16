@@ -39,6 +39,7 @@ private:
 	physx::PxTransform CalculatePxTransform(const TransformComponent &transformComponent) const;
 
 	void AssociateWheelsWithVehicles();
+	void VerifyWheelsForEachVehicle() const;
 
 	physx::PxDefaultAllocator Allocator;
 	PhysicsErrorCallback ErrorCallback;

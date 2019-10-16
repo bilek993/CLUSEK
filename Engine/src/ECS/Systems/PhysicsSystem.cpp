@@ -300,6 +300,7 @@ void PhysicsSystem::InitializeVehiclesAndWheels()
 	Logger::Debug("Preparing to initialize vehicles and wheels...");
 
 	AssociateWheelsWithVehicles();
+	VerifyWheelsForEachVehicle();
 }
 
 void PhysicsSystem::UpdateSimulation() const
@@ -350,5 +351,23 @@ void PhysicsSystem::AssociateWheelsWithVehicles()
 				}
 			}
 		});
+	});
+}
+
+void PhysicsSystem::VerifyWheelsForEachVehicle() const
+{
+	Logger::Debug("Checking if each vehicle has got all four wheels assigned...");
+
+	Registry->view<VehicleComponent>().each([](VehicleComponent &vehicleComponent)
+	{
+		const auto size = sizeof(vehicleComponent.Wheels) / sizeof(vehicleComponent.Wheels[0]);
+
+		for (auto i = 0; i < size; i++)
+		{
+			if (vehicleComponent.Wheels[i] == nullptr || vehicleComponent.WheelsMaterials[i] == nullptr)
+			{
+				Logger::Error("Wheel with id " + std::to_string(i) + " not assigned to vehicle " + vehicleComponent.VehicleId + "!");
+			}
+		}
 	});
 }
