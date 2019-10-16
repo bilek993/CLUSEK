@@ -127,6 +127,29 @@ Occlusion maps helps recreate indirect lighting without time-consuming, real-tim
 
 
 
+## Vehicles
+
+This game engine supports advanced vehicles simulation, thanks to the physics library. At this moment only 4 wheels vehicles are supported. If other vehicles will be supported, this documentation will be updated. To make one new vehicle, a map designer has to place 4 entities on map: one for core vehicle and four for wheels.
+
+### Wheel Component
+
+This component is required for wheels. It has to be assigned to the wheels with other required components to make wheels works. Parameters that can be changed or set for this component:
+
+* **VehicleId** (_required_, _std::string_)<br/>
+Vehicle identificator, that is used to associate this wheel with the vehicle. It has to identical to the same parameter in the vehicle component.
+
+* **WheelId** (_required_, _int_)<br/>
+A numeric value, that is used to connect a wheel to the correct position in a vehicle. This value is required to be in range 0-4. This game engine requires this value to be: 0 for front left, 1 for front right, 2 for rear left and 3 for rear right wheel.
+
+### Vehicle Component
+
+This component is required for core vehicle. It has to be assigned to the vehicle core (chase) with other required components to make vehicle work. Parameters that can be changed or set for this component:
+
+* **VehicleId** (_required_, _std::string_)<br/>
+A unique value for a vehicle. Each vehicle needs to have a different value in this parameter field.
+
+
+
 ## Requirements
 
 ### Runtime requirements:
