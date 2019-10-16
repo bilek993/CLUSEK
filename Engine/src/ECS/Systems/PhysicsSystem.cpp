@@ -328,10 +328,11 @@ void PhysicsSystem::AssociateWheelsWithVehicles()
 	Logger::Debug("Preparing to associate wheels with vehicles by id...");
 
 	Registry->view<TransformComponent, PhysicsMaterialComponent, WheelComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, WheelComponent &wheelComponent)
+		[this](TransformComponent &transformComponentWheel, PhysicsMaterialComponent &physicsMaterialComponentWheel, WheelComponent &wheelComponent)
 	{
 		Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
-			[&wheelComponent](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, VehicleComponent &vehicleComponent)
+			[&wheelComponent, &physicsMaterialComponentWheel](TransformComponent &transformComponentVehicle, 
+				PhysicsMaterialComponent &physicsMaterialComponentVehicle, VehicleComponent &vehicleComponent)
 		{
 			if (wheelComponent.VehicleId == vehicleComponent.VehicleId)
 			{
@@ -343,8 +344,9 @@ void PhysicsSystem::AssociateWheelsWithVehicles()
 				}
 				else
 				{
-					Logger::Debug("Connecting wheel " + std::to_string(wheelComponent.WheelId) + "to vehicle " + wheelComponent.VehicleId + "...");
+					Logger::Debug("Connecting wheel " + std::to_string(wheelComponent.WheelId) + " to vehicle " + wheelComponent.VehicleId + "...");
 					vehicleComponent.Wheels[wheelComponent.WheelId] = &wheelComponent;
+					vehicleComponent.WheelsMaterials[wheelComponent.WheelId] = &physicsMaterialComponentWheel;
 				}
 			}
 		});
