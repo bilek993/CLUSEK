@@ -360,7 +360,7 @@ void PhysicsSystem::VerifyWheelsForEachVehicle() const
 
 	Registry->view<VehicleComponent>().each([](VehicleComponent &vehicleComponent)
 	{
-		const auto size = sizeof(vehicleComponent.Wheels) / sizeof(vehicleComponent.Wheels[0]);
+		const auto size = std::size(vehicleComponent.Wheels);
 
 		for (auto i = 0; i < size; i++)
 		{
