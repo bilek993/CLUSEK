@@ -45,7 +45,7 @@ physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx
 		wheelShape->setLocalPose(physx::PxTransform(physx::PxIdentity));
 	}
 
-	physx::PxConvexMeshGeometry vehicleGeometry(vehicleMesh);
+	const physx::PxConvexMeshGeometry vehicleGeometry(vehicleMesh);
 	auto vehicleShape = physx::PxRigidActorExt::createExclusiveShape(*vehicleActor, vehicleGeometry, *vehicleMaterialComponent.Material);
 	vehicleShape->setLocalPose(physx::PxTransform(physx::PxIdentity));
 

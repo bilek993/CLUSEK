@@ -144,6 +144,13 @@ A numeric value, that is used to connect a wheel to the correct position in a ve
 * **Mass** (_required_, _float_)<br/>
 Wheel rigidbody mass in kilograms.
 
+* **Width** (_required_, _float_)<br/>
+Width of wheel.
+
+* **Radius** (_required_, _float_)<br/>
+Radius of wheel, which is half of diameter.
+
+
 ### Vehicle Component
 
 This component is required for core vehicle. It has to be assigned to the vehicle core (chase) with other required components to make vehicle work. Parameters that can be changed or set for this component:

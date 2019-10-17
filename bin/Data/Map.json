@@ -63,7 +63,9 @@
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 1,
-		"Mass": 25.0
+		"Mass": 25.0,
+		"Width": 1.03,
+		"Radius": 1.285
 	  }
 	}
   },
@@ -90,7 +92,9 @@
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 3,
-		"Mass": 25.0
+		"Mass": 25.0,
+		"Width": 1.03,
+		"Radius": 1.285
 	  }
 	}
   },
@@ -117,7 +121,9 @@
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 0,
-		"Mass": 25.0
+		"Mass": 25.0,
+		"Width": 1.03,
+		"Radius": 1.285
 	  }
 	}
   },
@@ -144,7 +150,9 @@
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 2,
-		"Mass": 25.0
+		"Mass": 25.0,
+		"Width": 1.03,
+		"Radius": 1.285
 	  }
 	}
   },
