@@ -288,10 +288,11 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 			PhysicsMeshGenerator::CreateCylinder(*Physics, *Cooking, rigidbodyDynamicCylinderComponent.Width, rigidbodyDynamicCylinderComponent.Radius));
 		const auto transform = CalculatePxTransform(transformComponent);
 
-		rigidbodyDynamicCylinderComponent.Body = PxCreateStatic(*Physics,
+		rigidbodyDynamicCylinderComponent.Body = PxCreateDynamic(*Physics,
 																transform,
 																geometry,
-																*physicsMaterialComponent.Material);
+																*physicsMaterialComponent.Material,
+																rigidbodyDynamicCylinderComponent.Density);
 		Scene->addActor(*rigidbodyDynamicCylinderComponent.Body);
 	});
 }
