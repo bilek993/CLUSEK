@@ -385,7 +385,7 @@ void PhysicsSystem::CreateVehicle()
 	Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, VehicleComponent &vehicleComponent)
 	{
-		const auto vehicle = VehicleResourcesGenerator::Create4WheelVehicle(Physics, Cooking, vehicleComponent);
+		const auto vehicle = VehicleResourcesGenerator::Create4WheelVehicle(Physics, Cooking, vehicleComponent, physicsMaterialComponent);
 
 		if (!vehicle)
 			Logger::Error("Vehicle couldn't be created!");

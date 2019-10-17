@@ -7,5 +7,5 @@ struct RigidbodyDynamicCylinderComponent final
 	float Radius;
 	float Density;
 
-	physx::PxRigidStatic* Body;
+	physx::PxRigidDynamic* Body;
 };
