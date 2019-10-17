@@ -316,6 +316,8 @@ void PhysicsSystem::UpdateMatrices() const
 {
 	UpdateMatrixFromRigidbody<RigidbodyDynamicBoxComponent>();
 	UpdateMatrixFromRigidbody<RigidbodyDynamicSphereComponent>();
+	UpdateMatrixFromRigidbody<RigidbodyDynamicCapsuleComponent>();
+	UpdateMatrixFromRigidbody<RigidbodyDynamicCylinderComponent>();
 }
 
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
