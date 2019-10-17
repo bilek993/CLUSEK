@@ -4,16 +4,6 @@
 physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::PxPhysics* physics,
 	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent)
 {
-	auto vehicleAuto = Create4WheelVehicleActor(physics, cooking, vehicleComponent, vehicleMaterialComponent);
-
-	return nullptr;
-}
-
-physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx::PxPhysics* physics,
-	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent)
-{
-	const auto wheelsCount = std::size(vehicleComponent.Wheels);
-
 	const physx::PxVec3 vehicleMomentOfInertia(
 		(vehicleComponent.DimensionY * vehicleComponent.DimensionY + vehicleComponent.DimensionZ * vehicleComponent.DimensionZ) * vehicleComponent.Mass / 12.0f,
 		(vehicleComponent.DimensionX * vehicleComponent.DimensionX + vehicleComponent.DimensionZ * vehicleComponent.DimensionZ) * 0.8f * vehicleComponent.Mass / 12.0f,
@@ -21,6 +11,27 @@ physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx
 	);
 	const physx::PxVec3 vehicleCenterOfMassOffset(vehicleComponent.CenterOfMassOffsetX, vehicleComponent.CenterOfMassOffsetY, vehicleComponent.CenterOfMassOffsetZ);
 	const physx::PxVec3 vehicleDimensions(vehicleComponent.DimensionX, vehicleComponent.DimensionY, vehicleComponent.DimensionZ);
+
+	physx::PxVehicleChassisData chassisData;
+	chassisData.mMOI = vehicleMomentOfInertia;
+	chassisData.mMass = vehicleComponent.Mass;
+	chassisData.mCMOffset = vehicleCenterOfMassOffset;
+
+	auto vehicleActor = Create4WheelVehicleActor(	physics, 
+													cooking, 
+													vehicleComponent, 
+													vehicleMaterialComponent,
+													vehicleDimensions, 
+													chassisData);
+
+	return nullptr;
+}
+
+physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx::PxPhysics* physics,
+	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
+	const physx::PxVec3& vehicleDimensions, const physx::PxVehicleChassisData& chassisData)
+{
+	const auto wheelsCount = std::size(vehicleComponent.Wheels);
 
 	std::vector<physx::PxConvexMesh*> wheelMeshes;
 	for (auto i = 0; i < wheelsCount; i++)
@@ -30,11 +41,6 @@ physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx
 	}
 
 	const auto vehicleMesh = PhysicsMeshGenerator::CreateCustomBox(*physics, *cooking, vehicleDimensions);
-
-	physx::PxVehicleChassisData rigidbodyData;
-	rigidbodyData.mMOI = vehicleMomentOfInertia;
-	rigidbodyData.mMass = vehicleComponent.Mass;
-	rigidbodyData.mCMOffset = vehicleCenterOfMassOffset;
 
 	const auto vehicleActor = physics->createRigidDynamic(physx::PxTransform(physx::PxIdentity));
 
@@ -49,9 +55,9 @@ physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx
 	auto vehicleShape = physx::PxRigidActorExt::createExclusiveShape(*vehicleActor, vehicleGeometry, *vehicleMaterialComponent.Material);
 	vehicleShape->setLocalPose(physx::PxTransform(physx::PxIdentity));
 
-	vehicleActor->setMass(rigidbodyData.mMass);
-	vehicleActor->setMassSpaceInertiaTensor(rigidbodyData.mMOI);
-	vehicleActor->setCMassLocalPose(physx::PxTransform(rigidbodyData.mCMOffset, physx::PxQuat(physx::PxIdentity)));
+	vehicleActor->setMass(chassisData.mMass);
+	vehicleActor->setMassSpaceInertiaTensor(chassisData.mMOI);
+	vehicleActor->setCMassLocalPose(physx::PxTransform(chassisData.mCMOffset, physx::PxQuat(physx::PxIdentity)));
 
 	return vehicleActor;
 }

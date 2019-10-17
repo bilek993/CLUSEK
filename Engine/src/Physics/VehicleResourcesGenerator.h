@@ -9,5 +9,6 @@ public:
 		const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent);
 private:
 	static physx::PxRigidDynamic* Create4WheelVehicleActor(physx::PxPhysics* physics, const physx::PxCooking* cooking,
-		const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent);
+		const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
+		const physx::PxVec3& vehicleDimensions, const physx::PxVehicleChassisData& chassisData);
 };
