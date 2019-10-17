@@ -1,4 +1,5 @@
 #include "PhysicsMeshGenerator.h"
+#include "../Utils/Logger.h"
 
 physx::PxConvexMesh* PhysicsMeshGenerator::CreateCylinder(physx::PxPhysics& physics, const physx::PxCooking& cooking,
 	const float width, const float radius, const int halfVerticesCount)
@@ -23,6 +24,28 @@ physx::PxConvexMesh* PhysicsMeshGenerator::CreateCylinder(physx::PxPhysics& phys
 	return CreateConvexMesh(physics, cooking, points, halfVerticesCount * 2);
 }
 
+physx::PxConvexMesh* PhysicsMeshGenerator::CreateCustomBox(physx::PxPhysics& physics, const physx::PxCooking& cooking,
+	const physx::PxVec3& dimensions)
+{
+	const auto x = dimensions.x * 0.5f;
+	const auto y = dimensions.x * 0.5f;
+	const auto z = dimensions.x * 0.5f;
+
+	std::vector<physx::PxVec3> vertices =
+	{
+		physx::PxVec3(x,y,-z),
+		physx::PxVec3(x,y,z),
+		physx::PxVec3(x,-y,z),
+		physx::PxVec3(x,-y,-z),
+		physx::PxVec3(-x,y,-z),
+		physx::PxVec3(-x,y,z),
+		physx::PxVec3(-x,-y,z),
+		physx::PxVec3(-x,-y,-z)
+	};
+
+	return CreateConvexMesh(physics, cooking, vertices, vertices.size());
+}
+
 physx::PxConvexMesh* PhysicsMeshGenerator::CreateConvexMesh(physx::PxPhysics& physics, const physx::PxCooking& cooking,
 	const std::vector<physx::PxVec3>& vertices, const int verticesCount)
 {
@@ -39,6 +62,10 @@ physx::PxConvexMesh* PhysicsMeshGenerator::CreateConvexMesh(physx::PxPhysics& ph
 	{
 		physx::PxDefaultMemoryInputData id(buffer.getData(), buffer.getSize());
 		convexMesh = physics.createConvexMesh(id);
+	}
+	else
+	{
+		Logger::Error("Error when cooking a convex mesh!");
 	}
 
 	return  convexMesh;
