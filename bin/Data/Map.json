@@ -39,7 +39,11 @@
 		"Mass": 1500,
 		"DimensionX": 6.94,
 		"DimensionY": 5.06,
-		"DimensionZ": 18.2
+		"DimensionZ": 18.2,
+		"CenterOfMassOffsetX": 0.0,
+		"CenterOfMassOffsetY": 0.0,
+		"CenterOfMassOffsetZ": 0.0,
+		"MaxHandBrakeTorque": 4000.0
 	  }
 	}
   },
@@ -65,7 +69,13 @@
 		"WheelId": 1,
 		"Mass": 25.0,
 		"Width": 1.03,
-		"Radius": 1.285
+		"Radius": 1.285,
+		"SuspensionMaxCompression": 0.3,
+		"SuspensionMaxDroop": 0.1,
+		"SuspensionSpringStrength": 35000.0,
+		"SuspensionSpringDamperRate": 4500.0,
+		"SuspensionForceApplicationPoinOffset": -0.3,
+		"TireForceApplicationPoinOffset": -0.3
 	  }
 	}
   },
@@ -94,7 +104,13 @@
 		"WheelId": 3,
 		"Mass": 25.0,
 		"Width": 1.03,
-		"Radius": 1.285
+		"Radius": 1.285,
+		"SuspensionMaxCompression": 0.3,
+		"SuspensionMaxDroop": 0.1,
+		"SuspensionSpringStrength": 35000.0,
+		"SuspensionSpringDamperRate": 4500.0,
+		"SuspensionForceApplicationPoinOffset": -0.3,
+		"TireForceApplicationPoinOffset": -0.3
 	  }
 	}
   },
@@ -123,7 +139,13 @@
 		"WheelId": 0,
 		"Mass": 25.0,
 		"Width": 1.03,
-		"Radius": 1.285
+		"Radius": 1.285,
+		"SuspensionMaxCompression": 0.3,
+		"SuspensionMaxDroop": 0.1,
+		"SuspensionSpringStrength": 35000.0,
+		"SuspensionSpringDamperRate": 4500.0,
+		"SuspensionForceApplicationPoinOffset": -0.3,
+		"TireForceApplicationPoinOffset": -0.3
 	  }
 	}
   },
@@ -152,7 +174,13 @@
 		"WheelId": 2,
 		"Mass": 25.0,
 		"Width": 1.03,
-		"Radius": 1.285
+		"Radius": 1.285,
+		"SuspensionMaxCompression": 0.3,
+		"SuspensionMaxDroop": 0.1,
+		"SuspensionSpringStrength": 35000.0,
+		"SuspensionSpringDamperRate": 4500.0,
+		"SuspensionForceApplicationPoinOffset": -0.3,
+		"TireForceApplicationPoinOffset": -0.3
 	  }
 	}
   },
