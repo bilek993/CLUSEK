@@ -1,9 +1,13 @@
 #include "VehicleResourcesGenerator.h"
 #include "PhysicsMeshGenerator.h"
+#include "../Renderer/TransformLogic.h"
 
 physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::PxPhysics* physics,
-	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent)
+	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
+	const TransformComponent& vehicleTransformComponent)
 {
+	const auto wheelsCount = std::size(vehicleComponent.Wheels);
+
 	const physx::PxVec3 vehicleMomentOfInertia(
 		(vehicleComponent.DimensionY * vehicleComponent.DimensionY + vehicleComponent.DimensionZ * vehicleComponent.DimensionZ) * vehicleComponent.Mass / 12.0f,
 		(vehicleComponent.DimensionX * vehicleComponent.DimensionX + vehicleComponent.DimensionZ * vehicleComponent.DimensionZ) * 0.8f * vehicleComponent.Mass / 12.0f,
@@ -22,17 +26,29 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 													vehicleComponent, 
 													vehicleMaterialComponent,
 													vehicleDimensions, 
-													chassisData);
+													chassisData,
+													wheelsCount);
+
+	const auto wheelsOffsets = GenerateWheelsOffsets(	vehicleTransformComponent, 
+														vehicleComponent,
+														wheelsCount);
+
+	auto wheelsSimData = CreateWheelsSimData(	vehicleComponent, 
+												wheelsCount, 
+												vehicleCenterOfMassOffset,
+												wheelsOffsets);
+
+	// TODO: ADD new code here
+
+	wheelsSimData->free();
 
 	return nullptr;
 }
 
 physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx::PxPhysics* physics,
 	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
-	const physx::PxVec3& vehicleDimensions, const physx::PxVehicleChassisData& chassisData)
+	const physx::PxVec3& vehicleDimensions, const physx::PxVehicleChassisData& chassisData, const int wheelsCount)
 {
-	const auto wheelsCount = std::size(vehicleComponent.Wheels);
-
 	std::vector<physx::PxConvexMesh*> wheelMeshes;
 	for (auto i = 0; i < wheelsCount; i++)
 	{
@@ -60,4 +76,120 @@ physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx
 	vehicleActor->setCMassLocalPose(physx::PxTransform(chassisData.mCMOffset, physx::PxQuat(physx::PxIdentity)));
 
 	return vehicleActor;
+}
+
+std::vector<physx::PxVec3> VehicleResourcesGenerator::GenerateWheelsOffsets(const TransformComponent& vehicleTransformComponent, 
+	const VehicleComponent& vehicleComponent, const int wheelsCount)
+{
+	std::vector<physx::PxVec3> offsets;
+
+	for (auto i = 0; i < wheelsCount; i++)
+	{
+		const auto wheelPosition = TransformLogic::GetPosition(*vehicleComponent.WheelTransform[i]);
+		const auto vehiclePosition = TransformLogic::GetPosition(vehicleTransformComponent);
+
+		physx::PxVec3 offset(
+			wheelPosition.x - vehiclePosition.x,
+			wheelPosition.y - vehiclePosition.y,
+			wheelPosition.z - vehiclePosition.z
+		);
+
+		offsets.emplace_back(offset);
+	}
+
+	return offsets;
+}
+
+physx::PxVehicleWheelsSimData* VehicleResourcesGenerator::CreateWheelsSimData(const VehicleComponent& vehicleComponent, 
+	const int wheelsCount, const physx::PxVec3& vehicleCenterOfMassOffset, const std::vector<physx::PxVec3>& wheelsOffset)
+{
+	auto wheelsSimData = physx::PxVehicleWheelsSimData::allocate(wheelsCount);
+
+	std::vector<physx::PxVehicleWheelData> wheels;
+	for (auto i = 0; i < wheelsCount; i++)
+	{
+		wheels.emplace_back(physx::PxVehicleWheelData());
+		wheels[i].mMass = vehicleComponent.Wheels[i]->Mass;
+		wheels[i].mMOI = 0.5f * vehicleComponent.Wheels[i]->Mass * vehicleComponent.Wheels[i]->Radius * vehicleComponent.Wheels[i]->Radius;
+		wheels[i].mRadius = vehicleComponent.Wheels[i]->Radius;
+		wheels[i].mWidth = vehicleComponent.Wheels[i]->Width;
+	}
+
+	wheels[physx::PxVehicleDrive4WWheelOrder::eREAR_LEFT].mMaxHandBrakeTorque = vehicleComponent.MaxHandBrakeTorque;
+	wheels[physx::PxVehicleDrive4WWheelOrder::eREAR_RIGHT].mMaxHandBrakeTorque = vehicleComponent.MaxHandBrakeTorque;
+	wheels[physx::PxVehicleDrive4WWheelOrder::eFRONT_LEFT].mMaxSteer = vehicleComponent.MaxSteer;
+	wheels[physx::PxVehicleDrive4WWheelOrder::eFRONT_RIGHT].mMaxSteer = vehicleComponent.MaxSteer;
+
+	std::vector<physx::PxVehicleTireData> tires;
+	for (auto i = 0; i < wheelsCount; i++)
+	{
+		tires.emplace_back(physx::PxVehicleTireData());
+		tires[i].mType = vehicleComponent.Wheels[i]->TireType;
+	}
+
+	std::vector<physx::PxVehicleSuspensionData> suspensions;
+
+	std::vector<float> suspensionSprungMasses(wheelsCount);
+	PxVehicleComputeSprungMasses(wheelsCount, wheelsOffset.data(), vehicleCenterOfMassOffset, 
+		vehicleComponent.Mass, 1, suspensionSprungMasses.data());
+
+	for (auto i = 0; i < wheelsCount; i++)
+	{
+		suspensions.emplace_back(physx::PxVehicleSuspensionData());
+		suspensions[i].mMaxCompression = vehicleComponent.Wheels[i]->SuspensionMaxCompression;
+		suspensions[i].mMaxDroop = vehicleComponent.Wheels[i]->SuspensionMaxDroop;
+		suspensions[i].mSpringStrength = vehicleComponent.Wheels[i]->SuspensionSpringStrength;
+		suspensions[i].mSpringDamperRate = vehicleComponent.Wheels[i]->SuspensionSpringDamperRate;
+		suspensions[i].mSprungMass = suspensionSprungMasses[i];
+	}
+
+	for (auto i = 0; i < wheelsCount; i+=2)
+	{
+		suspensions[i].mCamberAtRest = vehicleComponent.Wheels[i]->CamberAngleAtRest;
+		suspensions[i].mCamberAtMaxDroop = vehicleComponent.Wheels[i]->SuspensionMaxDroop;
+		suspensions[i].mCamberAtMaxCompression = vehicleComponent.Wheels[i]->SuspensionMaxCompression;
+
+		suspensions[i+1].mCamberAtRest = -vehicleComponent.Wheels[i]->CamberAngleAtRest;
+		suspensions[i+1].mCamberAtMaxDroop = -vehicleComponent.Wheels[i]->SuspensionMaxDroop;
+		suspensions[i+1].mCamberAtMaxCompression = -vehicleComponent.Wheels[i]->SuspensionMaxCompression;
+	}
+
+	std::vector<physx::PxVec3> suspensionTravelDirections(wheelsCount);
+	std::vector<physx::PxVec3> wheelCentreCMOffsets(wheelsCount);
+	std::vector<physx::PxVec3> suspensionForceAppCMOffsets(wheelsCount);
+	std::vector<physx::PxVec3> tireForceAppCMOffsets(wheelsCount);
+
+	for (auto i = 0; i < wheelsCount; i++)
+	{
+		suspensionTravelDirections[i] = physx::PxVec3(0.0f, -1.0f, 0.0f);
+		wheelCentreCMOffsets[i] = wheelsOffset[i] - vehicleCenterOfMassOffset;
+		suspensionForceAppCMOffsets[i] = physx::PxVec3(wheelCentreCMOffsets[i].x, vehicleComponent.Wheels[i]->SuspensionForceApplicationPoinOffset, wheelCentreCMOffsets[i].z);
+		tireForceAppCMOffsets[i] = physx::PxVec3(wheelCentreCMOffsets[i].x, vehicleComponent.Wheels[i]->TireForceApplicationPoinOffset, wheelCentreCMOffsets[i].z);
+	}
+
+	for (auto i = 0; i < wheelsCount; i++)
+	{
+		wheelsSimData->setWheelData(i, wheels[i]);
+		wheelsSimData->setTireData(i, tires[i]);
+		wheelsSimData->setSuspensionData(i, suspensions[i]);
+		wheelsSimData->setSuspTravelDirection(i, suspensionTravelDirections[i]);
+		wheelsSimData->setWheelCentreOffset(i, wheelCentreCMOffsets[i]);
+		wheelsSimData->setSuspForceAppPointOffset(i, suspensionForceAppCMOffsets[i]);
+		wheelsSimData->setTireForceAppPointOffset(i, tireForceAppCMOffsets[i]);
+		wheelsSimData->setWheelShapeMapping(i, physx::PxI32(i));
+	}
+
+	physx::PxVehicleAntiRollBarData antiRollBarFront;
+	antiRollBarFront.mWheel0 = physx::PxVehicleDrive4WWheelOrder::eFRONT_LEFT;
+	antiRollBarFront.mWheel1 = physx::PxVehicleDrive4WWheelOrder::eFRONT_RIGHT;
+	antiRollBarFront.mStiffness = vehicleComponent.AntiRollBarStiffness;
+	wheelsSimData->addAntiRollBarData(antiRollBarFront);
+
+	physx::PxVehicleAntiRollBarData antiRollBarRear;
+	antiRollBarRear.mWheel0 = physx::PxVehicleDrive4WWheelOrder::eREAR_LEFT;
+	antiRollBarRear.mWheel1 = physx::PxVehicleDrive4WWheelOrder::eREAR_RIGHT;
+	antiRollBarRear.mStiffness = vehicleComponent.AntiRollBarStiffness;
+	wheelsSimData->addAntiRollBarData(antiRollBarRear);
+
+	return wheelsSimData;
 }

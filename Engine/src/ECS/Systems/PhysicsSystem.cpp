@@ -338,7 +338,7 @@ void PhysicsSystem::AssociateWheelsWithVehicles()
 		[this](TransformComponent &transformComponentWheel, PhysicsMaterialComponent &physicsMaterialComponentWheel, WheelComponent &wheelComponent)
 	{
 		Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
-			[&wheelComponent, &physicsMaterialComponentWheel](TransformComponent &transformComponentVehicle, 
+			[&wheelComponent, &physicsMaterialComponentWheel, &transformComponentWheel](TransformComponent &transformComponentVehicle,
 				PhysicsMaterialComponent &physicsMaterialComponentVehicle, VehicleComponent &vehicleComponent)
 		{
 			if (wheelComponent.VehicleId == vehicleComponent.VehicleId)
@@ -354,6 +354,7 @@ void PhysicsSystem::AssociateWheelsWithVehicles()
 					Logger::Debug("Connecting wheel " + std::to_string(wheelComponent.WheelId) + " to vehicle " + wheelComponent.VehicleId + "...");
 					vehicleComponent.Wheels[wheelComponent.WheelId] = &wheelComponent;
 					vehicleComponent.WheelsMaterials[wheelComponent.WheelId] = &physicsMaterialComponentWheel;
+					vehicleComponent.WheelTransform[wheelComponent.WheelId] = &transformComponentWheel;
 				}
 			}
 		});
@@ -385,7 +386,11 @@ void PhysicsSystem::CreateVehicle()
 	Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, VehicleComponent &vehicleComponent)
 	{
-		const auto vehicle = VehicleResourcesGenerator::Create4WheelVehicle(Physics, Cooking, vehicleComponent, physicsMaterialComponent);
+		const auto vehicle = VehicleResourcesGenerator::Create4WheelVehicle(Physics, 
+																			Cooking, 
+																			vehicleComponent, 
+																			physicsMaterialComponent,
+																			transformComponent);
 
 		if (!vehicle)
 			Logger::Error("Vehicle couldn't be created!");

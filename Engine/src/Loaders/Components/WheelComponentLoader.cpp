@@ -11,4 +11,14 @@ void WheelComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	MAP_LOADER_BASIC_FIELD(Mass, json, component, float);
 	MAP_LOADER_BASIC_FIELD(Width, json, component, float);
 	MAP_LOADER_BASIC_FIELD(Radius, json, component, float);
+	MAP_LOADER_BASIC_FIELD(TireType, json, component, int);
+	MAP_LOADER_BASIC_FIELD(SuspensionMaxCompression, json, component, float);
+	MAP_LOADER_BASIC_FIELD(SuspensionMaxDroop, json, component, float);
+	MAP_LOADER_BASIC_FIELD(SuspensionSpringStrength, json, component, float);
+	MAP_LOADER_BASIC_FIELD(SuspensionSpringDamperRate, json, component, float);
+	MAP_LOADER_BASIC_FIELD(CamberAngleAtRest, json, component, float);
+	MAP_LOADER_BASIC_FIELD(CamberAngleAtMaxDroop, json, component, float);
+	MAP_LOADER_BASIC_FIELD(CamberAngleAtMaxCompression, json, component, float);
+	MAP_LOADER_BASIC_FIELD(SuspensionForceApplicationPoinOffset, json, component, float);
+	MAP_LOADER_BASIC_FIELD(TireForceApplicationPoinOffset, json, component, float);
 }
