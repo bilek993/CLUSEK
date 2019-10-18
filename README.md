@@ -219,6 +219,28 @@ Maximum steering angle, that can be achieved by front wheels in radians.
 * **AntiRollBarStiffness** (_optional_, _float_)<br/>
 Stiffness of anti-roll bar in kilograms per second-squared. This value is shared by front and rear anti-roll bar.
 
+* **DifferentialType** (_optional_, _std::string_)<br/>
+Differential type identificator. Supported differential types values: LIMITED_SLIP_4W, LIMITED_SLIP_FRONT, LIMITED_SLIP_REAR, OPEN_4W, OPEN_FRONT, OPEN_REAR.
+
+* **PeakTorque** (_optional_, _float_)<br/>
+Maximum available torque in kilograms metres-squared per second-squared.
+
+* **MaxOmega** (_optional_, _float_)<br/>
+Maximum rotation speed of the engine in radians per second.
+
+* **GearsSwitchTime** (_optional_, _float_)<br/>
+Time to switch gear in seconds.
+
+* **ClutchAccuracyMode** (_optional_, _std::string_)<br/>
+Accuracy of clutch, when calculating rotations. Accuracy of clutch can be set to BEST_POSSIBLE or ESTIMATE, but second mode should be used only, if first mode doesn't deliver enought performace.
+
+* **ClutchStrength** (_optional_, _float_)<br/>
+Strength of clutch in kilograms metres-squared per second.
+
+* **AckermannAccuracy** (_optional_, _float_)<br/>
+Accuracy of steer calculation, where 0.0 is no Ackermann steer-correction and 1.0 is equal to perfect Ackermann steer-correction.
+
+
 
 
 ## Requirements
