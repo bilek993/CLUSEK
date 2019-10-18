@@ -38,7 +38,8 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 													vehicleCenterOfMassOffset,
 													wheelsOffsets);
 
-	const auto driveSimData = CreateDriveSimData(vehicleComponent);
+	const auto driveSimData = CreateDriveSimData(	vehicleComponent,
+													wheelsSimData);
 
 	wheelsSimData->free();
 
@@ -194,7 +195,55 @@ physx::PxVehicleWheelsSimData* VehicleResourcesGenerator::CreateWheelsSimData(co
 	return wheelsSimData;
 }
 
-physx::PxVehicleDriveSimData4W VehicleResourcesGenerator::CreateDriveSimData(const VehicleComponent& vehicleComponent)
+physx::PxVehicleDriveSimData4W VehicleResourcesGenerator::CreateDriveSimData(const VehicleComponent& vehicleComponent,
+	const physx::PxVehicleWheelsSimData* wheelsSimData)
 {
-	return physx::PxVehicleDriveSimData4W();
+	physx::PxVehicleDriveSimData4W driveSimData;
+
+	physx::PxVehicleDifferential4WData differential;
+	if (vehicleComponent.DifferentialType == "LIMITED_SLIP_4W")
+		differential.mType = physx::PxVehicleDifferential4WData::eDIFF_TYPE_LS_4WD;
+	else if (vehicleComponent.DifferentialType == "LIMITED_SLIP_FRONT")
+		differential.mType = physx::PxVehicleDifferential4WData::eDIFF_TYPE_LS_FRONTWD;
+	else if (vehicleComponent.DifferentialType == "LIMITED_SLIP_REAR")
+		differential.mType = physx::PxVehicleDifferential4WData::eDIFF_TYPE_LS_REARWD;
+	else if (vehicleComponent.DifferentialType == "OPEN_4W")
+		differential.mType = physx::PxVehicleDifferential4WData::eDIFF_TYPE_OPEN_4WD;
+	else if (vehicleComponent.DifferentialType == "OPEN_FRONT")
+		differential.mType = physx::PxVehicleDifferential4WData::eDIFF_TYPE_OPEN_FRONTWD;
+	else if (vehicleComponent.DifferentialType == "OPEN_REAR")
+		differential.mType = physx::PxVehicleDifferential4WData::eDIFF_TYPE_OPEN_REARWD;
+	driveSimData.setDiffData(differential);
+
+	physx::PxVehicleEngineData engine;
+	engine.mPeakTorque = vehicleComponent.PeakTorque;
+	engine.mMaxOmega = vehicleComponent.MaxOmega;
+	driveSimData.setEngineData(engine);
+
+	physx::PxVehicleGearsData gears;
+	gears.mSwitchTime = vehicleComponent.GearsSwitchTime;
+	driveSimData.setGearsData(gears);
+
+	physx::PxVehicleClutchData clutch;
+	if (vehicleComponent.ClutchAccuracyMode == "BEST_POSSIBLE")
+		clutch.mAccuracyMode = physx::PxVehicleClutchAccuracyMode::eBEST_POSSIBLE;
+	else if (vehicleComponent.ClutchAccuracyMode == "ESTIMATE")
+		clutch.mAccuracyMode = physx::PxVehicleClutchAccuracyMode::eESTIMATE;
+	clutch.mStrength = vehicleComponent.ClutchStrength;
+	driveSimData.setClutchData(clutch);
+
+	physx::PxVehicleAckermannGeometryData ackermann;
+	ackermann.mAccuracy = vehicleComponent.AckermannAccuracy;
+	ackermann.mAxleSeparation =
+		wheelsSimData->getWheelCentreOffset(physx::PxVehicleDrive4WWheelOrder::eFRONT_LEFT).z - 
+		wheelsSimData->getWheelCentreOffset(physx::PxVehicleDrive4WWheelOrder::eREAR_LEFT).z;
+	ackermann.mFrontWidth =
+		wheelsSimData->getWheelCentreOffset(physx::PxVehicleDrive4WWheelOrder::eFRONT_RIGHT).x -
+		wheelsSimData->getWheelCentreOffset(physx::PxVehicleDrive4WWheelOrder::eFRONT_LEFT).x;
+	ackermann.mRearWidth =
+		wheelsSimData->getWheelCentreOffset(physx::PxVehicleDrive4WWheelOrder::eREAR_RIGHT).x -
+		wheelsSimData->getWheelCentreOffset(physx::PxVehicleDrive4WWheelOrder::eREAR_LEFT).x;
+	driveSimData.setAckermannGeometryData(ackermann);
+
+	return driveSimData;
 }

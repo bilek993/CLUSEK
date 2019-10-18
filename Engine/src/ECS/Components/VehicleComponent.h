@@ -18,6 +18,13 @@ struct VehicleComponent final
 	float MaxHandBrakeTorque;
 	float MaxSteer = physx::PxPi * 0.3333f;
 	float AntiRollBarStiffness = 10000.0f;
+	std::string DifferentialType = "LIMITED_SLIP_4W";
+	float PeakTorque = 500.0f;
+	float MaxOmega = 600.0f;
+	float GearsSwitchTime = 0.85f;
+	std::string ClutchAccuracyMode = "BEST_POSSIBLE";
+	float ClutchStrength = 10.0f;
+	float AckermannAccuracy = 1.0f;
 
 	WheelComponent* Wheels[4];
 	PhysicsMaterialComponent* WheelsMaterials[4];
