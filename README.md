@@ -150,6 +150,37 @@ Width of wheel.
 * **Radius** (_required_, _float_)<br/>
 Radius of wheel, which is half of diameter.
 
+* **TireType** (_optional_, _int_)<br/>
+Represents tire condition, where 0 represents normal (almost unused) tire and 1 represents worn tire.
+
+* **SuspensionMaxCompression** (_optional_, _float_)<br/>
+Maximum allowed compression by suspension spring.
+
+* **SuspensionMaxDroop** (_optional_, _float_)<br/>
+Maximum allowed elongation by suspension spring.
+
+* **SuspensionSpringStrength** (_required_, _float_)<br/>
+Strength of spring in suspension in kilograms per second-squared.
+
+* **SuspensionSpringDamperRate** (_required_, _float_)<br/>
+Spring damper rate in kilograms per second.
+
+* **CamberAngleAtRest** (_optional_, _float_)<br/>
+Angel between the vertical axis of the wheel and the vertical axis of the wheel, when viewed from the front/rear of the vehicle when the vehicle is in a rest position. Rest position means, that the vehicle should be moving perfectly forward when it would be in motion. This angel is represented in radians unit. For 99.9% type of vehicles it should be left to default value.
+
+* **CamberAngleAtMaxDroop** (_optional_, _float_)<br/>
+Angel between the vertical axis of the wheel and the vertical axis of the wheel, when viewed from the front/rear of the vehicle when the suspension is at maximum droop. This angel is represented in radians unit.
+
+* **CamberAngleAtMaxCompression** (_optional_, _float_)<br/>
+Angel between the vertical axis of the wheel and the vertical axis of the wheel, when viewed from the front/rear of the vehicle when the suspension is at maximum droop. This angel is represented in radians unit.
+
+* **SuspensionForceApplicationPoinOffset** (_optional_, _float_)<br/>
+Suspension force application offset on Y axis.
+
+* **TireForceApplicationPoinOffset** (_optional_, _float_)<br/>
+Tire force application offset on Y axis.
+
+
 
 ### Vehicle Component
 
@@ -178,6 +209,15 @@ Center of mass offset from default vehicle position on axis Y.
 
 * **CenterOfMassOffsetZ** (_optional_, _float_)<br/>
 Center of mass offset from default vehicle position on axis Z.
+
+* **MaxHandBrakeTorque** (_required_, _float_)<br/>
+Maximum torque that can be applied to rear wheels, when using handbrake. This value is specified in kilograms metres-squared per second-squared.
+
+* **MaxSteer** (_optional_, _float_)<br/>
+Maximum steering angle, that can be achieved by front wheels in radians.
+
+* **AntiRollBarStiffness** (_optional_, _float_)<br/>
+Stiffness of anti-roll bar in kilograms per second-squared. This value is shared by front and rear anti-roll bar.
 
 
 
