@@ -21,24 +21,24 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 	chassisData.mMass = vehicleComponent.Mass;
 	chassisData.mCMOffset = vehicleCenterOfMassOffset;
 
-	auto vehicleActor = Create4WheelVehicleActor(	physics, 
-													cooking, 
-													vehicleComponent, 
-													vehicleMaterialComponent,
-													vehicleDimensions, 
-													chassisData,
-													wheelsCount);
+	const auto vehicleActor = Create4WheelVehicleActor(	physics, 
+														cooking, 
+														vehicleComponent, 
+														vehicleMaterialComponent,
+														vehicleDimensions, 
+														chassisData,
+														wheelsCount);
 
 	const auto wheelsOffsets = GenerateWheelsOffsets(	vehicleTransformComponent, 
 														vehicleComponent,
 														wheelsCount);
 
-	auto wheelsSimData = CreateWheelsSimData(	vehicleComponent, 
-												wheelsCount, 
-												vehicleCenterOfMassOffset,
-												wheelsOffsets);
+	const auto wheelsSimData = CreateWheelsSimData(	vehicleComponent, 
+													wheelsCount, 
+													vehicleCenterOfMassOffset,
+													wheelsOffsets);
 
-	// TODO: ADD new code here
+	const auto driveSimData = CreateDriveSimData(vehicleComponent);
 
 	wheelsSimData->free();
 
@@ -192,4 +192,9 @@ physx::PxVehicleWheelsSimData* VehicleResourcesGenerator::CreateWheelsSimData(co
 	wheelsSimData->addAntiRollBarData(antiRollBarRear);
 
 	return wheelsSimData;
+}
+
+physx::PxVehicleDriveSimData4W VehicleResourcesGenerator::CreateDriveSimData(const VehicleComponent& vehicleComponent)
+{
+	return physx::PxVehicleDriveSimData4W();
 }

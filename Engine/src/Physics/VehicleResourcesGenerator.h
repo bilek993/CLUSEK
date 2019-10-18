@@ -19,4 +19,6 @@ private:
 
 	static physx::PxVehicleWheelsSimData* CreateWheelsSimData(const VehicleComponent& vehicleComponent, 
 		int wheelsCount, const physx::PxVec3& vehicleCenterOfMassOffset, const std::vector<physx::PxVec3>& wheelsOffset);
+
+	static physx::PxVehicleDriveSimData4W CreateDriveSimData(const VehicleComponent& vehicleComponent);
 };
