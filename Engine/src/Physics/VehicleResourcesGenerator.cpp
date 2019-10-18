@@ -146,12 +146,12 @@ physx::PxVehicleWheelsSimData* VehicleResourcesGenerator::CreateWheelsSimData(co
 	for (auto i = 0; i < wheelsCount; i+=2)
 	{
 		suspensions[i].mCamberAtRest = vehicleComponent.Wheels[i]->CamberAngleAtRest;
-		suspensions[i].mCamberAtMaxDroop = vehicleComponent.Wheels[i]->SuspensionMaxDroop;
-		suspensions[i].mCamberAtMaxCompression = vehicleComponent.Wheels[i]->SuspensionMaxCompression;
+		suspensions[i].mCamberAtMaxDroop = vehicleComponent.Wheels[i]->CamberAngleAtMaxDroop;
+		suspensions[i].mCamberAtMaxCompression = vehicleComponent.Wheels[i]->CamberAngleAtMaxCompression;
 
 		suspensions[i+1].mCamberAtRest = -vehicleComponent.Wheels[i]->CamberAngleAtRest;
-		suspensions[i+1].mCamberAtMaxDroop = -vehicleComponent.Wheels[i]->SuspensionMaxDroop;
-		suspensions[i+1].mCamberAtMaxCompression = -vehicleComponent.Wheels[i]->SuspensionMaxCompression;
+		suspensions[i+1].mCamberAtMaxDroop = -vehicleComponent.Wheels[i]->CamberAngleAtMaxDroop;
+		suspensions[i+1].mCamberAtMaxCompression = -vehicleComponent.Wheels[i]->CamberAngleAtMaxCompression;
 	}
 
 	std::vector<physx::PxVec3> suspensionTravelDirections(wheelsCount);
