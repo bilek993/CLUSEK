@@ -64,6 +64,8 @@ PhysicsSystem::~PhysicsSystem()
 	for (auto actor : actors)
 		PX_RELEASE(actor);
 
+	physx::PxCloseVehicleSDK();
+
 	PX_RELEASE(Scene);
 	PX_RELEASE(Dispatcher);
 	PX_RELEASE(Physics);
@@ -112,7 +114,7 @@ void PhysicsSystem::InitializeCore()
 
 	Cooking = PxCreateCooking(PX_PHYSICS_VERSION, *Foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
 
-	physx::PxInitVehicleSDK(*Physics);
+	PxInitVehicleSDK(*Physics);
 
 #ifdef _DEBUG
 	auto pvdClient = Scene->getScenePvdClient();;
