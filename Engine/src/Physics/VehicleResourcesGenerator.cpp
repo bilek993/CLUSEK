@@ -41,16 +41,16 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 	const auto driveSimData = CreateDriveSimData(	vehicleComponent,
 													wheelsSimData);
 
-	auto vehicle4Wheels = physx::PxVehicleDrive4W::allocate(wheelsCount);
-	vehicle4Wheels->setup(	physics, 
-							vehicleActor,
-							*wheelsSimData, 
-							driveSimData,
-							wheelsCount - 4);
+	auto vehicleDrive4Wheels = physx::PxVehicleDrive4W::allocate(wheelsCount);
+	vehicleDrive4Wheels->setup(	physics,
+								vehicleActor,
+								*wheelsSimData, 
+								driveSimData,
+								wheelsCount - 4);
 
 	wheelsSimData->free();
 
-	return vehicle4Wheels;
+	return vehicleDrive4Wheels;
 }
 
 physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx::PxPhysics* physics,
