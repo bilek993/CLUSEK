@@ -395,6 +395,11 @@ void PhysicsSystem::CreateVehicle()
 																			transformComponent);
 
 		if (!vehicle)
+		{
 			Logger::Error("Vehicle couldn't be created!");
+			return;
+		}
+
+		Scene->addActor(*vehicle->getRigidDynamicActor());
 	});
 }
