@@ -401,5 +401,9 @@ void PhysicsSystem::CreateVehicle()
 		}
 
 		Scene->addActor(*vehicle->getRigidDynamicActor());
+
+		vehicle->setToRestState();
+		vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eFIRST);
+		vehicle->mDriveDynData.setUseAutoGears(true);
 	});
 }

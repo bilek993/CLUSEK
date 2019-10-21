@@ -268,4 +268,5 @@ void VehicleResourcesGenerator::SetInitialTransform(const TransformComponent& ve
 	const auto rotation = PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(directRotation);
 
 	vehicle->getRigidDynamicActor()->setGlobalPose(physx::PxTransform(position, rotation));
+	vehicle->getRigidDynamicActor()->setRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD, true);
 }
