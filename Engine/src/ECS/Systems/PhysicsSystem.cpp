@@ -112,6 +112,8 @@ void PhysicsSystem::InitializeCore()
 
 	Cooking = PxCreateCooking(PX_PHYSICS_VERSION, *Foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
 
+	physx::PxInitVehicleSDK(*Physics);
+
 #ifdef _DEBUG
 	auto pvdClient = Scene->getScenePvdClient();;
 	pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
