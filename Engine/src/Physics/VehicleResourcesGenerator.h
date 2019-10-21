@@ -22,4 +22,6 @@ private:
 
 	static physx::PxVehicleDriveSimData4W CreateDriveSimData(const VehicleComponent& vehicleComponent,
 		const physx::PxVehicleWheelsSimData* wheelsSimData);
+
+	static void SetInitialTransform(const TransformComponent& vehicleTransformComponent, physx::PxVehicleDrive4W* vehicle);
 };

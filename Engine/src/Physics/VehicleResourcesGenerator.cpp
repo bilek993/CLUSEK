@@ -1,6 +1,7 @@
 #include "VehicleResourcesGenerator.h"
 #include "PhysicsMeshGenerator.h"
 #include "../Renderer/TransformLogic.h"
+#include "PhysicsUnitConversion.h"
 
 physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::PxPhysics* physics,
 	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
@@ -47,6 +48,8 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 								*wheelsSimData, 
 								driveSimData,
 								wheelsCount - 4);
+
+	SetInitialTransform(vehicleTransformComponent, vehicleDrive4Wheels);
 
 	wheelsSimData->free();
 
@@ -97,9 +100,9 @@ std::vector<physx::PxVec3> VehicleResourcesGenerator::GenerateWheelsOffsets(cons
 		const auto vehiclePosition = TransformLogic::GetPosition(vehicleTransformComponent);
 
 		physx::PxVec3 offset(
-			wheelPosition.x - vehiclePosition.x,
-			wheelPosition.y - vehiclePosition.y,
-			wheelPosition.z - vehiclePosition.z
+			wheelPosition.x,
+			wheelPosition.y,
+			wheelPosition.z
 		);
 
 		offsets.emplace_back(offset);
@@ -253,4 +256,16 @@ physx::PxVehicleDriveSimData4W VehicleResourcesGenerator::CreateDriveSimData(con
 	driveSimData.setAckermannGeometryData(ackermann);
 
 	return driveSimData;
+}
+
+void VehicleResourcesGenerator::SetInitialTransform(const TransformComponent& vehicleTransformComponent,
+	physx::PxVehicleDrive4W* vehicle)
+{
+	const auto directPosition = TransformLogic::GetPosition(vehicleTransformComponent);
+	const auto directRotation = TransformLogic::GetRotation(vehicleTransformComponent);
+
+	const auto position = physx::PxVec3(directPosition.x, directPosition.y, directPosition.z);
+	const auto rotation = PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(directRotation);
+
+	vehicle->getRigidDynamicActor()->setGlobalPose(physx::PxTransform(position, rotation));
 }
