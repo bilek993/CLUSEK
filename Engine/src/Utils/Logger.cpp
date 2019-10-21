@@ -68,6 +68,8 @@ void Logger::Debug(const std::string& input)
 
 	// Assertion fails if logger is at this point not initialized or free method has been called
 	assert(Fp);
+	if (!Fp)
+		return;
 
 	printf(GenerateDebugString(input, "DBG").c_str());
 }
@@ -79,6 +81,8 @@ void Logger::Warning(const std::string& input)
 
 	// Assertion fails if logger is at this point not initialized or free method has been called
 	assert(Fp);
+	if (!Fp)
+		return;
 
 	printf(GenerateDebugString(input, "WRN").c_str());
 }
@@ -91,6 +95,8 @@ void Logger::Error(const std::string& input)
 	{
 		// Assertion fails if logger is at this point not initialized or free method has been called
 		assert(Fp);
+		if (!Fp)
+			return;
 
 		printf(GenerateDebugString(input, "ERR").c_str());
 	}
