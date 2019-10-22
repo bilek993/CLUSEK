@@ -28,8 +28,8 @@ physx::PxConvexMesh* PhysicsMeshGenerator::CreateCustomBox(physx::PxPhysics& phy
 	const physx::PxVec3& dimensions)
 {
 	const auto x = dimensions.x * 0.5f;
-	const auto y = dimensions.x * 0.5f;
-	const auto z = dimensions.x * 0.5f;
+	const auto y = dimensions.y * 0.5f;
+	const auto z = dimensions.z * 0.5f;
 
 	std::vector<physx::PxVec3> vertices =
 	{
