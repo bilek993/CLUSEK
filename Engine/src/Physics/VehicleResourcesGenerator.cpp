@@ -56,6 +56,40 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 	return vehicleDrive4Wheels;
 }
 
+physx::PxVehicleDrivableSurfaceToTireFrictionPairs* VehicleResourcesGenerator::CreateFrictionPairs(
+	physx::PxPhysics& physics)
+{
+	const auto numberOfSurfaceTypes = 1;
+	const auto numberOfTireTypes = 2;
+
+	const float tireFrictionMultipliers[numberOfSurfaceTypes][numberOfTireTypes] =
+	{
+		//NORMAL,	WORN
+		{1.00f,		0.1f} //TARMAC
+	};
+
+	physx::PxVehicleDrivableSurfaceType surfaceTypes[1];
+	surfaceTypes[0].mType = 0; //TARMAC
+
+	const physx::PxMaterial* surfaceMaterials[1];
+	surfaceMaterials[0] = physics.createMaterial(0.1f, 0.1f, 0.01f);
+
+	physx::PxVehicleDrivableSurfaceToTireFrictionPairs* surfaceTirePairs =
+		physx::PxVehicleDrivableSurfaceToTireFrictionPairs::allocate(numberOfTireTypes, numberOfSurfaceTypes);
+
+	surfaceTirePairs->setup(numberOfTireTypes, numberOfSurfaceTypes, surfaceMaterials, surfaceTypes);
+
+	for (auto i = 0; i < numberOfSurfaceTypes; i++)
+	{
+		for (auto j = 0; j < numberOfTireTypes; j++)
+		{
+			surfaceTirePairs->setTypePairFriction(i, j, tireFrictionMultipliers[i][j]);
+		}
+	}
+
+	return surfaceTirePairs;
+}
+
 physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx::PxPhysics* physics,
 	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
 	const physx::PxVec3& vehicleDimensions, const physx::PxVehicleChassisData& chassisData, const int wheelsCount)

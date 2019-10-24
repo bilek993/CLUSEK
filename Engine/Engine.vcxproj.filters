@@ -336,6 +336,9 @@
     <ClCompile Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\VehicleSceneQueryData.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -652,6 +655,9 @@
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\VehicleSceneQueryData.h">
+      <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

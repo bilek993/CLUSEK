@@ -4,6 +4,7 @@
 #include "PxPhysicsAPI.h"
 #include "../../Physics/PhysicsUnitConversion.h"
 #include "../../Renderer/TransformLogic.h"
+#include "../../Physics/VehicleSceneQueryData.h"
 
 #define PX_RELEASE(x) if(x) { x->release(); x = nullptr; }
 
@@ -36,6 +37,8 @@ private:
 	template<class T>
 	void UpdateMatrixFromRigidbody() const;
 
+	void UpdateVehicles() const;
+
 	physx::PxTransform CalculatePxTransform(const TransformComponent &transformComponent) const;
 
 	void AssociateWheelsWithVehicles();
@@ -53,6 +56,11 @@ private:
 	physx::PxScene* Scene = nullptr;
 
 	physx::PxPvd* Pvd = nullptr;
+
+	VehicleSceneQueryData* VehicleSceneQueryData = nullptr;
+	physx::PxBatchQuery* BatchQuery = nullptr;
+
+	physx::PxVehicleDrivableSurfaceToTireFrictionPairs* FrictionPairs = nullptr;
 
 	float TimeSum = 0.0f;
 };

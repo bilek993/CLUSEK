@@ -45,6 +45,7 @@ void PhysicsSystem::Update(const float deltaTime)
 	{
 		TimeSum -= ConfigurationData->PhysicsDeltaTime;
 		UpdateSimulation();
+		UpdateVehicles();
 		UpdateMatrices();
 	}
 }
@@ -114,14 +115,26 @@ void PhysicsSystem::InitializeCore()
 
 	Cooking = PxCreateCooking(PX_PHYSICS_VERSION, *Foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
 
-	PxInitVehicleSDK(*Physics);
-
 #ifdef _DEBUG
 	auto pvdClient = Scene->getScenePvdClient();;
 	pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
 	pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
 	pvdClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
 #endif
+
+	PxInitVehicleSDK(*Physics);
+
+	const auto vehiclesCount = Registry->view<VehicleComponent>().size();
+
+	VehicleSceneQueryData = VehicleSceneQueryData::Allocate(vehiclesCount,
+															PX_MAX_NB_WHEELS, 
+															8, // TODO: Move this to config file
+															vehiclesCount,
+															Allocator);
+
+	BatchQuery = VehicleSceneQueryData::SetUpBatchedSceneQuery(0, *VehicleSceneQueryData, Scene);
+
+	FrictionPairs = VehicleResourcesGenerator::CreateFrictionPairs(*Physics);
 }
 
 void PhysicsSystem::InitializePhysicsMaterialComponents()
@@ -308,7 +321,6 @@ void PhysicsSystem::InitializeVehiclesAndWheels()
 	AssociateWheelsWithVehicles();
 	VerifyWheelsForEachVehicle();
 	CreateVehicle();
-
 }
 
 void PhysicsSystem::UpdateSimulation() const
@@ -323,6 +335,42 @@ void PhysicsSystem::UpdateMatrices() const
 	UpdateMatrixFromRigidbody<RigidbodyDynamicSphereComponent>();
 	UpdateMatrixFromRigidbody<RigidbodyDynamicCapsuleComponent>();
 	UpdateMatrixFromRigidbody<RigidbodyDynamicCylinderComponent>();
+}
+
+void PhysicsSystem::UpdateVehicles() const
+{
+	std::vector<physx::PxVehicleWheels*> vehicles;
+	Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
+		[&vehicles](TransformComponent &transformComponentVehicle,
+			PhysicsMaterialComponent &physicsMaterialComponentVehicle, VehicleComponent &vehicleComponent)
+	{
+		vehicles.emplace_back(vehicleComponent.Vehicle);
+	});
+
+	const auto sweepResults = VehicleSceneQueryData->GetSweepResultBuffer(0);
+	const auto sweepResultsSize = VehicleSceneQueryData->GetSweepResultSize();
+	PxVehicleSuspensionSweeps(	BatchQuery, 
+								vehicles.size(), 
+								vehicles.data(), 
+								sweepResultsSize, 
+								sweepResults, 
+								8, // TODO: Move this to config file
+								nullptr, 
+								1.0f, 
+								1.01f);
+
+	const auto gravity = Scene->getGravity();;
+	physx::PxWheelQueryResult wheelQueryResults[PX_MAX_NB_WHEELS][2];
+	physx::PxVehicleWheelQueryResult vehicleQueryResults[1] =
+	{
+		{ wheelQueryResults[0], vehicles[0]->mWheelsSimData.getNbWheels() },
+	};
+	PxVehicleUpdates(	ConfigurationData->PhysicsDeltaTime / 1000.0f,
+						gravity,
+						*FrictionPairs, 
+						vehicles.size(), 
+						vehicles.data(), 
+						vehicleQueryResults);
 }
 
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
@@ -401,6 +449,9 @@ void PhysicsSystem::CreateVehicle()
 			Logger::Error("Vehicle couldn't be created!");
 			return;
 		}
+
+
+		vehicleComponent.Vehicle = vehicle;
 
 		Scene->addActor(*vehicle->getRigidDynamicActor());
 

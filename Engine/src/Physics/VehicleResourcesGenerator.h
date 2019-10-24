@@ -9,6 +9,9 @@ public:
 	static physx::PxVehicleDrive4W* Create4WheelVehicle(physx::PxPhysics* physics, const physx::PxCooking* cooking,
 		const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
 		const TransformComponent& vehicleTransformComponent);
+
+	static physx::PxVehicleDrivableSurfaceToTireFrictionPairs* CreateFrictionPairs(physx::PxPhysics& physics);
+
 private:
 	static physx::PxRigidDynamic* Create4WheelVehicleActor(physx::PxPhysics* physics, const physx::PxCooking* cooking,
 		const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,

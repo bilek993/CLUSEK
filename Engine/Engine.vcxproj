@@ -79,6 +79,7 @@
     <ClCompile Include="src\Physics\VehicleResourcesGenerator.cpp" />
     <ClCompile Include="src\Loaders\Components\VehicleComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\WheelComponentLoader.cpp" />
+    <ClCompile Include="src\Physics\VehicleSceneQueryData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.h" />
@@ -186,6 +187,7 @@
     <ClInclude Include="src\ECS\Components\VehicleComponent.h" />
     <ClInclude Include="src\Loaders\Components\VehicleComponentLoader.h" />
     <ClInclude Include="src\Loaders\Components\WheelComponentLoader.h" />
+    <ClInclude Include="src\Physics\VehicleSceneQueryData.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">
