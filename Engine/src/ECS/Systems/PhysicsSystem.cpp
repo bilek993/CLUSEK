@@ -364,7 +364,7 @@ void PhysicsSystem::UpdateVehicles() const
 								1.01f);
 
 	const auto gravity = Scene->getGravity();;
-	physx::PxWheelQueryResult wheelQueryResults[PX_MAX_NB_WHEELS][2];
+	physx::PxWheelQueryResult wheelQueryResults[4][1];
 	physx::PxVehicleWheelQueryResult vehicleQueryResults[1] =
 	{
 		{ wheelQueryResults[0], vehicles[0]->mWheelsSimData.getNbWheels() },
