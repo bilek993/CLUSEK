@@ -188,6 +188,7 @@
     <ClInclude Include="src\Loaders\Components\VehicleComponentLoader.h" />
     <ClInclude Include="src\Loaders\Components\WheelComponentLoader.h" />
     <ClInclude Include="src\Physics\VehicleSceneQueryData.h" />
+    <ClInclude Include="src\Physics\SurfaceFilterTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

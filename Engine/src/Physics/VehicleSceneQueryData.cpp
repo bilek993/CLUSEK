@@ -1,4 +1,5 @@
 #include "VehicleSceneQueryData.h"
+#include "SurfaceFilterTypes.h"
 
 VehicleSceneQueryData* VehicleSceneQueryData::Allocate(const int maxNumVehicles, const int maxNumWheelsPerVehicle,
 	const int maxNumHitPointsPerWheel, const int numVehiclesInBatch, physx::PxAllocatorCallback& allocator)
@@ -33,6 +34,15 @@ VehicleSceneQueryData* VehicleSceneQueryData::Allocate(const int maxNumVehicles,
 	for (auto i = 0; i < maxNumHitPoints; i++)
 		new(sqData->SweepHitBuffer + i) physx::PxSweepHit();
 
+	sqData->PreFilterShader = [](physx::PxFilterData filterData0, physx::PxFilterData filterData1, const void* constantBlock, physx::PxU32 constantBlockSize, physx::PxHitFlags& queryFlags)
+	{
+		return (0 == (filterData1.word3 & Drivable)) ? physx::PxQueryHitType::eNONE : physx::PxQueryHitType::eTOUCH;
+	};
+	sqData->PostFilterShader = [](physx::PxFilterData filterData0, physx::PxFilterData filterData1, const void* constantBlock, physx::PxU32 constantBlockSize, const physx::PxQueryHit& hit)
+	{ 
+		return static_cast<const physx::PxSweepHit&>(hit).hadInitialOverlap() ? physx::PxQueryHitType::eNONE : physx::PxQueryHitType::eTOUCH;
+	};
+
 	return sqData;
 }
 
@@ -52,6 +62,9 @@ physx::PxBatchQuery* VehicleSceneQueryData::SetUpBatchedSceneQuery(const int bat
 	sqDesc.queryMemory.userSweepResultBuffer = vehicleSceneQueryData.SweepResults + batchId * maxNumQueriesInBatch;
 	sqDesc.queryMemory.userSweepTouchBuffer = vehicleSceneQueryData.SweepHitBuffer + batchId * maxNumHitResultsInBatch;
 	sqDesc.queryMemory.sweepTouchBufferSize = maxNumHitResultsInBatch;
+
+	sqDesc.preFilterShader = vehicleSceneQueryData.PreFilterShader;
+	sqDesc.postFilterShader = vehicleSceneQueryData.PostFilterShader;
 
 	return scene->createBatchQuery(sqDesc);
 }

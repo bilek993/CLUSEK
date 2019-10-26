@@ -21,4 +21,7 @@ private:
 
 	physx::PxSweepQueryResult* SweepResults = nullptr;
 	physx::PxSweepHit* SweepHitBuffer = nullptr;
+
+	physx::PxBatchQueryPreFilterShader PreFilterShader = nullptr;
+	physx::PxBatchQueryPostFilterShader PostFilterShader = nullptr;
 };
