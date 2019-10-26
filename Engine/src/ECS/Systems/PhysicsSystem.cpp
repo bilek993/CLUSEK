@@ -123,6 +123,10 @@ void PhysicsSystem::InitializeCore()
 #endif
 
 	PxInitVehicleSDK(*Physics);
+	physx::PxVehicleSetBasisVectors(physx::PxVec3(0, 1, 0), physx::PxVec3(0, 0, 1));
+	physx::PxVehicleSetUpdateMode(physx::PxVehicleUpdateMode::eVELOCITY_CHANGE); // TODO: Move this to config file
+	physx::PxVehicleSetSweepHitRejectionAngles(physx::PxPi / 4.0f, physx::PxPi / 4.0f); // TODO: Move this to config file
+	physx::PxVehicleSetMaxHitActorAcceleration(50.0f); // TODO: Move this to config file
 
 	const auto vehiclesCount = Registry->view<VehicleComponent>().size();
 
