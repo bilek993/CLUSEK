@@ -66,6 +66,15 @@ PhysicsSystem::~PhysicsSystem()
 	for (auto actor : actors)
 		PX_RELEASE(actor);
 
+	Registry->view<VehicleComponent>().each([](VehicleComponent &vehicleComponent)
+	{
+		PX_RELEASE(vehicleComponent.Vehicle);
+	});
+
+	VehicleSceneQueryData->Free(Allocator);
+	PX_RELEASE(BatchQuery);
+	PX_RELEASE(FrictionPairs);
+
 	physx::PxCloseVehicleSDK();
 
 	PX_RELEASE(Scene);
@@ -81,7 +90,6 @@ PhysicsSystem::~PhysicsSystem()
 	}
 
 	PX_RELEASE(Cooking);
-
 	PX_RELEASE(Foundation);
 }
 
