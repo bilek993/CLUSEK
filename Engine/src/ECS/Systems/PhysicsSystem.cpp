@@ -166,7 +166,8 @@ void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()
 																					rigidbodyStaticPlaneComponent.NormalZ, 
 																					rigidbodyStaticPlaneComponent.Distance), *physicsMaterialComponent.Material);
 
-		SetFiltersForComponent(*rigidbodyStaticPlaneComponent.Body);
+		SetFiltersForComponent(	*rigidbodyStaticPlaneComponent.Body,
+								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*rigidbodyStaticPlaneComponent.Body);
 	});
@@ -187,7 +188,8 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 															geometry,
 															*physicsMaterialComponent.Material);
 
-		SetFiltersForComponent(*rigidbodyStaticBoxComponent.Body);
+		SetFiltersForComponent(	*rigidbodyStaticBoxComponent.Body, 
+								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*rigidbodyStaticBoxComponent.Body);
 	});
@@ -209,7 +211,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicBoxComponents()
 															*physicsMaterialComponent.Material,
 															rigidbodyDynamicBoxComponent.Density);
 
-		SetFiltersForComponent(*rigidbodyDynamicBoxComponent.Body);
+		SetFiltersForComponent(	*rigidbodyDynamicBoxComponent.Body,
+								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*rigidbodyDynamicBoxComponent.Body);
 	});
@@ -230,7 +233,8 @@ void PhysicsSystem::InitializeRigidbodyStaticSphereComponents()
 																geometry,
 																*physicsMaterialComponent.Material);
 
-		SetFiltersForComponent(*rigidbodyStaticSphereComponent.Body);
+		SetFiltersForComponent(	*rigidbodyStaticSphereComponent.Body, 
+								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*rigidbodyStaticSphereComponent.Body);
 	});
@@ -252,7 +256,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicSphereComponents()
 																*physicsMaterialComponent.Material,
 																rigidbodyDynamicSphereComponent.Density);
 
-		SetFiltersForComponent(*rigidbodyDynamicSphereComponent.Body);
+		SetFiltersForComponent(	*rigidbodyDynamicSphereComponent.Body,
+								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*rigidbodyDynamicSphereComponent.Body);
 	});
@@ -273,7 +278,8 @@ void PhysicsSystem::InitializeRigidbodyStaticCapsuleComponents()
 																geometry,
 																*physicsMaterialComponent.Material);
 
-		SetFiltersForComponent(*rigidbodyStaticCapsuleComponent.Body);
+		SetFiltersForComponent(	*rigidbodyStaticCapsuleComponent.Body, 
+								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*rigidbodyStaticCapsuleComponent.Body);
 	});
@@ -295,7 +301,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicCapsuleComponents()
 																*physicsMaterialComponent.Material,
 																rigidbodyDynamicCapsuleComponent.Density);
 
-		SetFiltersForComponent(*rigidbodyDynamicCapsuleComponent.Body);
+		SetFiltersForComponent(	*rigidbodyDynamicCapsuleComponent.Body, 
+								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*rigidbodyDynamicCapsuleComponent.Body);
 	});
@@ -317,7 +324,8 @@ void PhysicsSystem::InitializeRigidbodyStaticCylinderComponents()
 																geometry,
 																*physicsMaterialComponent.Material);
 
-		SetFiltersForComponent(*rigidbodyStaticCylinderComponent.Body);
+		SetFiltersForComponent(	*rigidbodyStaticCylinderComponent.Body,
+								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*rigidbodyStaticCylinderComponent.Body);
 	});
@@ -340,7 +348,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 																*physicsMaterialComponent.Material,
 																rigidbodyDynamicCylinderComponent.Density);
 
-		SetFiltersForComponent(*rigidbodyDynamicCylinderComponent.Body);
+		SetFiltersForComponent(	*rigidbodyDynamicCylinderComponent.Body, 
+								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*rigidbodyDynamicCylinderComponent.Body);
 	});
@@ -355,11 +364,11 @@ void PhysicsSystem::InitializeVehiclesAndWheels()
 	CreateVehicle();
 }
 
-void PhysicsSystem::SetFiltersForComponent(physx::PxRigidActor& actor) const
+void PhysicsSystem::SetFiltersForComponent(physx::PxRigidActor& actor, const std::string& type) const
 {
 	physx::PxFilterData filterData;
 
-	PhysicsFilterHelper::SetSurfaceFilter(filterData, "Drivable");
+	PhysicsFilterHelper::SetSurfaceFilter(filterData, type);
 	PhysicsFilterHelper::SetQueryFilterDataForShape(actor, filterData);
 }
 

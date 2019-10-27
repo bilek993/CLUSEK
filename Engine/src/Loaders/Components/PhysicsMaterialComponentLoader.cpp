@@ -9,4 +9,5 @@ void PhysicsMaterialComponentLoader::Add(nlohmann::json& json, entt::registry& r
 	MAP_LOADER_BASIC_FIELD(StaticFriction, json, component, float);
 	MAP_LOADER_BASIC_FIELD(DynamicFriction, json, component, float);
 	MAP_LOADER_BASIC_FIELD(Restitution, json, component, float);
+	MAP_LOADER_BASIC_FIELD(SurfaceFilterType, json, component, std::string);
 }

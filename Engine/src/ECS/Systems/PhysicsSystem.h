@@ -31,7 +31,7 @@ private:
 	void InitializeRigidbodyDynamicCylinderComponents();
 	void InitializeVehiclesAndWheels();
 
-	void SetFiltersForComponent(physx::PxRigidActor& actor) const;
+	void SetFiltersForComponent(physx::PxRigidActor& actor, const std::string& type) const;
 
 	void UpdateSimulation() const;
 	void UpdateMatrices() const;
