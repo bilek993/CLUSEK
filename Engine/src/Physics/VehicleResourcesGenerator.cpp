@@ -2,6 +2,7 @@
 #include "PhysicsMeshGenerator.h"
 #include "../Renderer/TransformLogic.h"
 #include "PhysicsUnitConversion.h"
+#include "PhysicsFilterHelper.h"
 
 physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::PxPhysics* physics,
 	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
@@ -212,6 +213,9 @@ physx::PxVehicleWheelsSimData* VehicleResourcesGenerator::CreateWheelsSimData(co
 		tireForceAppCMOffsets[i] = physx::PxVec3(wheelCentreCMOffsets[i].x, vehicleComponent.Wheels[i]->TireForceApplicationPoinOffset, wheelCentreCMOffsets[i].z);
 	}
 
+	physx::PxFilterData filterData;
+	PhysicsFilterHelper::SetSurfaceFilter(filterData, Undrivable);
+
 	for (auto i = 0; i < wheelsCount; i++)
 	{
 		wheelsSimData->setWheelData(i, wheels[i]);
@@ -221,6 +225,7 @@ physx::PxVehicleWheelsSimData* VehicleResourcesGenerator::CreateWheelsSimData(co
 		wheelsSimData->setWheelCentreOffset(i, wheelCentreCMOffsets[i]);
 		wheelsSimData->setSuspForceAppPointOffset(i, suspensionForceAppCMOffsets[i]);
 		wheelsSimData->setTireForceAppPointOffset(i, tireForceAppCMOffsets[i]);
+		wheelsSimData->setSceneQueryFilterData(i, filterData);
 		wheelsSimData->setWheelShapeMapping(i, physx::PxI32(i));
 	}
 
