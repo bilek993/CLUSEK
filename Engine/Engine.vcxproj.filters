@@ -339,6 +339,9 @@
     <ClCompile Include="src\Physics\VehicleSceneQueryData.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsFilterHelper.cpp">
+      <Filter>Source Files\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -660,6 +663,9 @@
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\Physics\SurfaceFilterTypes.h">
+      <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Physics\PhysicsFilterHelper.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
   </ItemGroup>

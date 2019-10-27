@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\PhysicsFilterHelper.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticCylinderComponentLoader.cpp" />
     <ClCompile Include="src\Physics\PhysicsMeshGenerator.cpp" />
@@ -82,6 +83,7 @@
     <ClCompile Include="src\Physics\VehicleSceneQueryData.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Physics\PhysicsFilterHelper.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\RigidbodyDynamicCylinderComponent.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticCylinderComponentLoader.h" />

@@ -17,6 +17,7 @@
 #include "../Components/WheelComponent.h"
 #include "../Components/VehicleComponent.h"
 #include "../../Physics/VehicleResourcesGenerator.h"
+#include "../../Physics/PhysicsFilterHelper.h"
 
 void PhysicsSystem::Start()
 {
@@ -164,6 +165,9 @@ void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()
 																					rigidbodyStaticPlaneComponent.NormalY, 
 																					rigidbodyStaticPlaneComponent.NormalZ, 
 																					rigidbodyStaticPlaneComponent.Distance), *physicsMaterialComponent.Material);
+
+		SetFiltersForComponent(*rigidbodyStaticPlaneComponent.Body);
+
 		Scene->addActor(*rigidbodyStaticPlaneComponent.Body);
 	});
 }
@@ -182,6 +186,9 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 															transform,
 															geometry,
 															*physicsMaterialComponent.Material);
+
+		SetFiltersForComponent(*rigidbodyStaticBoxComponent.Body);
+
 		Scene->addActor(*rigidbodyStaticBoxComponent.Body);
 	});
 }
@@ -201,6 +208,9 @@ void PhysicsSystem::InitializeRigidbodyDynamicBoxComponents()
 															geometry,
 															*physicsMaterialComponent.Material,
 															rigidbodyDynamicBoxComponent.Density);
+
+		SetFiltersForComponent(*rigidbodyDynamicBoxComponent.Body);
+
 		Scene->addActor(*rigidbodyDynamicBoxComponent.Body);
 	});
 }
@@ -219,6 +229,9 @@ void PhysicsSystem::InitializeRigidbodyStaticSphereComponents()
 																transform,
 																geometry,
 																*physicsMaterialComponent.Material);
+
+		SetFiltersForComponent(*rigidbodyStaticSphereComponent.Body);
+
 		Scene->addActor(*rigidbodyStaticSphereComponent.Body);
 	});
 }
@@ -238,6 +251,9 @@ void PhysicsSystem::InitializeRigidbodyDynamicSphereComponents()
 																geometry,
 																*physicsMaterialComponent.Material,
 																rigidbodyDynamicSphereComponent.Density);
+
+		SetFiltersForComponent(*rigidbodyDynamicSphereComponent.Body);
+
 		Scene->addActor(*rigidbodyDynamicSphereComponent.Body);
 	});
 }
@@ -256,6 +272,9 @@ void PhysicsSystem::InitializeRigidbodyStaticCapsuleComponents()
 																transform,
 																geometry,
 																*physicsMaterialComponent.Material);
+
+		SetFiltersForComponent(*rigidbodyStaticCapsuleComponent.Body);
+
 		Scene->addActor(*rigidbodyStaticCapsuleComponent.Body);
 	});
 }
@@ -275,6 +294,9 @@ void PhysicsSystem::InitializeRigidbodyDynamicCapsuleComponents()
 																geometry,
 																*physicsMaterialComponent.Material,
 																rigidbodyDynamicCapsuleComponent.Density);
+
+		SetFiltersForComponent(*rigidbodyDynamicCapsuleComponent.Body);
+
 		Scene->addActor(*rigidbodyDynamicCapsuleComponent.Body);
 	});
 }
@@ -294,6 +316,9 @@ void PhysicsSystem::InitializeRigidbodyStaticCylinderComponents()
 																transform,
 																geometry,
 																*physicsMaterialComponent.Material);
+
+		SetFiltersForComponent(*rigidbodyStaticCylinderComponent.Body);
+
 		Scene->addActor(*rigidbodyStaticCylinderComponent.Body);
 	});
 }
@@ -314,6 +339,9 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 																geometry,
 																*physicsMaterialComponent.Material,
 																rigidbodyDynamicCylinderComponent.Density);
+
+		SetFiltersForComponent(*rigidbodyDynamicCylinderComponent.Body);
+
 		Scene->addActor(*rigidbodyDynamicCylinderComponent.Body);
 	});
 }
@@ -325,6 +353,14 @@ void PhysicsSystem::InitializeVehiclesAndWheels()
 	AssociateWheelsWithVehicles();
 	VerifyWheelsForEachVehicle();
 	CreateVehicle();
+}
+
+void PhysicsSystem::SetFiltersForComponent(physx::PxRigidActor& actor) const
+{
+	physx::PxFilterData filterData;
+
+	PhysicsFilterHelper::SetSurfaceFilter(filterData, "Drivable");
+	PhysicsFilterHelper::SetQueryFilterDataForShape(actor, filterData);
 }
 
 void PhysicsSystem::UpdateSimulation() const
