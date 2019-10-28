@@ -397,11 +397,16 @@ void PhysicsSystem::UpdateMatrices() const
 void PhysicsSystem::UpdateVehicles() const
 {
 	std::vector<physx::PxVehicleWheels*> vehicles;
+	std::vector<TransformComponent*> transformComponents;
+	std::vector<VehicleComponent*> vehicleComponents;
+
 	Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
-		[&vehicles](TransformComponent &transformComponentVehicle,
+		[&vehicles, &transformComponents, &vehicleComponents](TransformComponent &transformComponentVehicle,
 			PhysicsMaterialComponent &physicsMaterialComponentVehicle, VehicleComponent &vehicleComponent)
 	{
 		vehicles.emplace_back(vehicleComponent.Vehicle);
+		transformComponents.emplace_back(&transformComponentVehicle);
+		vehicleComponents.emplace_back(&vehicleComponent);
 
 		vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL, 0.55f); // TODO: Debug purposes only. Remove this in future!
 		vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT, 0.25f); // TODO: Debug purposes only. Remove this in future!
@@ -434,6 +439,31 @@ void PhysicsSystem::UpdateVehicles() const
 						vehicles.size(), 
 						vehicles.data(), 
 						vehicleQueryResults.data());
+
+	for (auto i = 0; i < vehicles.size(); i++)
+	{
+		const auto rigidActor = vehicles[i]->getRigidDynamicActor();
+
+		if (rigidActor->isSleeping())
+			return;
+
+		const auto chassisGlobalPose = rigidActor->getGlobalPose();
+		const auto positionChassis = chassisGlobalPose.p;
+		const auto rotationChassis = PhysicsUnitConversion::PhysicsQuaternionToDirectEuler(chassisGlobalPose.q);
+
+			TransformLogic::SetPosition(positionChassis.x, positionChassis.y, positionChassis.z, *transformComponents[i]);
+			TransformLogic::SetRotation(rotationChassis.x, rotationChassis.y, rotationChassis.z, *transformComponents[i]);
+
+		for (auto w = 0; w < std::size(vehicleComponents[i]->Wheels); w++)
+		{
+			const auto wheelLocalPose = wheelQueryResults[i * 4 + w].localPose;
+			const auto positionWheel = wheelLocalPose.p + chassisGlobalPose.p;
+			const auto rotationWheel = PhysicsUnitConversion::PhysicsQuaternionToDirectEuler(wheelLocalPose.q); // TODO: Fix rotation
+
+			TransformLogic::SetPosition(positionWheel.x, positionWheel.y, positionWheel.z, *vehicleComponents[i]->WheelTransform[w]);
+			TransformLogic::SetRotation(rotationWheel.x, rotationWheel.y, rotationWheel.z, *vehicleComponents[i]->WheelTransform[w]);
+		}
+	}
 }
 
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
