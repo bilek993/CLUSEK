@@ -75,8 +75,7 @@ physx::PxVehicleDrivableSurfaceToTireFrictionPairs* VehicleResourcesGenerator::C
 	const physx::PxMaterial* surfaceMaterials[1];
 	surfaceMaterials[0] = physics.createMaterial(0.1f, 0.1f, 0.01f);
 
-	physx::PxVehicleDrivableSurfaceToTireFrictionPairs* surfaceTirePairs =
-		physx::PxVehicleDrivableSurfaceToTireFrictionPairs::allocate(numberOfTireTypes, numberOfSurfaceTypes);
+	auto surfaceTirePairs =	physx::PxVehicleDrivableSurfaceToTireFrictionPairs::allocate(numberOfTireTypes, numberOfSurfaceTypes);
 
 	surfaceTirePairs->setup(numberOfTireTypes, numberOfSurfaceTypes, surfaceMaterials, surfaceTypes);
 
@@ -134,7 +133,7 @@ std::vector<physx::PxVec3> VehicleResourcesGenerator::GenerateWheelsOffsets(cons
 		const auto wheelPosition = TransformLogic::GetPosition(*vehicleComponent.WheelTransform[i]);
 		const auto vehiclePosition = TransformLogic::GetPosition(vehicleTransformComponent);
 
-		physx::PxVec3 offset(
+		physx::PxVec3 offset( // TODO: Add offset from vehicle position
 			wheelPosition.x,
 			wheelPosition.y,
 			wheelPosition.z

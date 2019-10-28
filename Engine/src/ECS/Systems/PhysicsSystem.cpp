@@ -132,15 +132,15 @@ void PhysicsSystem::InitializeCore()
 #endif
 
 	PxInitVehicleSDK(*Physics);
-	physx::PxVehicleSetBasisVectors(physx::PxVec3(0, 1, 0), physx::PxVec3(0, 0, 1));
-	physx::PxVehicleSetUpdateMode(physx::PxVehicleUpdateMode::eVELOCITY_CHANGE); // TODO: Move this to config file
+	PxVehicleSetBasisVectors(physx::PxVec3(0, 1, 0), physx::PxVec3(0, 0, 1));
+	PxVehicleSetUpdateMode(physx::PxVehicleUpdateMode::eVELOCITY_CHANGE); // TODO: Move this to config file
 	physx::PxVehicleSetSweepHitRejectionAngles(physx::PxPi / 4.0f, physx::PxPi / 4.0f); // TODO: Move this to config file
 	physx::PxVehicleSetMaxHitActorAcceleration(50.0f); // TODO: Move this to config file
 
 	const auto vehiclesCount = Registry->view<VehicleComponent>().size();
 
 	VehicleSceneQueryData = VehicleSceneQueryData::Allocate(vehiclesCount,
-															PX_MAX_NB_WHEELS, 
+															4, 
 															8, // TODO: Move this to config file
 															vehiclesCount,
 															Allocator);
@@ -420,17 +420,20 @@ void PhysicsSystem::UpdateVehicles() const
 								1.01f);
 
 	const auto gravity = Scene->getGravity();;
-	physx::PxWheelQueryResult wheelQueryResults[4][1];
-	physx::PxVehicleWheelQueryResult vehicleQueryResults[1] =
+	std::vector<physx::PxWheelQueryResult> wheelQueryResults(4 * vehicles.size());
+
+	std::vector<physx::PxVehicleWheelQueryResult> vehicleQueryResults(vehicles.size());
+	for (auto i = 0; i < vehicles.size(); i++)
 	{
-		{ wheelQueryResults[0], vehicles[0]->mWheelsSimData.getNbWheels() },
-	};
+		vehicleQueryResults[i] = { &wheelQueryResults[i * 4], vehicles[i]->mWheelsSimData.getNbWheels() };
+	}
+
 	PxVehicleUpdates(	ConfigurationData->PhysicsDeltaTime / 1000.0f,
 						gravity,
 						*FrictionPairs, 
 						vehicles.size(), 
 						vehicles.data(), 
-						vehicleQueryResults);
+						vehicleQueryResults.data());
 }
 
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const

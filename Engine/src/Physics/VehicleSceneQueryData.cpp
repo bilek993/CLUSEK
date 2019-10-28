@@ -17,33 +17,35 @@ VehicleSceneQueryData* VehicleSceneQueryData::Allocate(const int maxNumVehicles,
 	const auto size = sqDataSize + raycastResultSize + raycastHitSize + sweepResultSize + sweepHitSize;
 	auto buffer = static_cast<physx::PxU8*>(allocator.allocate(size, nullptr, nullptr, 0));
 
-	auto sqData = new(buffer) VehicleSceneQueryData();
-	sqData->NumberOfQueriesPerBatch = numVehiclesInBatch * maxNumWheelsPerVehicle;
-	sqData->NumberOfHitsResultsPerQuery = maxNumHitPointsPerWheel;
+	const auto sceneQueryData = new(buffer) VehicleSceneQueryData();
+	sceneQueryData->NumberOfQueriesPerBatch = numVehiclesInBatch * maxNumWheelsPerVehicle;
+	sceneQueryData->NumberOfHitsResultsPerQuery = maxNumHitPointsPerWheel;
 	buffer += sqDataSize;
 
-	sqData->SweepResults = reinterpret_cast<physx::PxSweepQueryResult*>(buffer);
+	sceneQueryData->SweepResults = reinterpret_cast<physx::PxSweepQueryResult*>(buffer);
 	buffer += sweepResultSize;
 
-	sqData->SweepHitBuffer = reinterpret_cast<physx::PxSweepHit*>(buffer);
+	sceneQueryData->SweepHitBuffer = reinterpret_cast<physx::PxSweepHit*>(buffer);
 	buffer += sweepHitSize;
 
 	for (auto i = 0; i < maxNumWheels; i++)
-		new(sqData->SweepResults + i) physx::PxSweepQueryResult();
+		new(sceneQueryData->SweepResults + i) physx::PxSweepQueryResult();
 
 	for (auto i = 0; i < maxNumHitPoints; i++)
-		new(sqData->SweepHitBuffer + i) physx::PxSweepHit();
+		new(sceneQueryData->SweepHitBuffer + i) physx::PxSweepHit();
 
-	sqData->PreFilterShader = [](physx::PxFilterData filterData0, physx::PxFilterData filterData1, const void* constantBlock, physx::PxU32 constantBlockSize, physx::PxHitFlags& queryFlags)
+	sceneQueryData->PreFilterShader = [](physx::PxFilterData filterData0, const physx::PxFilterData filterData1, 
+		const void* constantBlock, physx::PxU32 constantBlockSize, physx::PxHitFlags& queryFlags)
 	{
 		return (0 == (filterData1.word3 & Drivable)) ? physx::PxQueryHitType::eNONE : physx::PxQueryHitType::eTOUCH;
 	};
-	sqData->PostFilterShader = [](physx::PxFilterData filterData0, physx::PxFilterData filterData1, const void* constantBlock, physx::PxU32 constantBlockSize, const physx::PxQueryHit& hit)
+	sceneQueryData->PostFilterShader = [](physx::PxFilterData filterData0, physx::PxFilterData filterData1, 
+		const void* constantBlock, physx::PxU32 constantBlockSize, const physx::PxQueryHit& hit)
 	{ 
 		return static_cast<const physx::PxSweepHit&>(hit).hadInitialOverlap() ? physx::PxQueryHitType::eNONE : physx::PxQueryHitType::eTOUCH;
 	};
 
-	return sqData;
+	return sceneQueryData;
 }
 
 void VehicleSceneQueryData::Free(physx::PxAllocatorCallback& allocator)
