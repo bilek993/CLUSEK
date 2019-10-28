@@ -133,15 +133,15 @@ void PhysicsSystem::InitializeCore()
 
 	PxInitVehicleSDK(*Physics);
 	PxVehicleSetBasisVectors(physx::PxVec3(0, 1, 0), physx::PxVec3(0, 0, 1));
-	PxVehicleSetUpdateMode(physx::PxVehicleUpdateMode::eVELOCITY_CHANGE); // TODO: Move this to config file
-	physx::PxVehicleSetSweepHitRejectionAngles(physx::PxPi / 4.0f, physx::PxPi / 4.0f); // TODO: Move this to config file
-	physx::PxVehicleSetMaxHitActorAcceleration(50.0f); // TODO: Move this to config file
+	PxVehicleSetUpdateMode(ConfigurationData->VehicleUpdateMode == "ACCELERATION" ? physx::PxVehicleUpdateMode::eACCELERATION : physx::PxVehicleUpdateMode::eVELOCITY_CHANGE);
+	physx::PxVehicleSetSweepHitRejectionAngles(ConfigurationData->VehicleSweepPointRejectionAngle, ConfigurationData->VehicleSweepNormalRejectionAngle);
+	physx::PxVehicleSetMaxHitActorAcceleration(ConfigurationData->VehicleMaxHitAcceleration);
 
 	const auto vehiclesCount = Registry->view<VehicleComponent>().size();
 
 	VehicleSceneQueryData = VehicleSceneQueryData::Allocate(vehiclesCount,
 															4, 
-															8, // TODO: Move this to config file
+															ConfigurationData->VehicleMaxHitPointsPerWheel,
 															vehiclesCount,
 															Allocator);
 
@@ -414,7 +414,7 @@ void PhysicsSystem::UpdateVehicles() const
 								vehicles.data(), 
 								sweepResultsSize, 
 								sweepResults, 
-								8, // TODO: Move this to config file
+								ConfigurationData->VehicleHitsPerQuery,
 								nullptr, 
 								1.0f, 
 								1.01f);

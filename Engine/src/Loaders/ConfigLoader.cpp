@@ -82,6 +82,12 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, GravityY, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, GravityZ, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, PhysicsDeltaTime, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, VehicleUpdateMode, data, value);
+			MAP_CONFIG_FIELD(key, VehicleSweepPointRejectionAngle, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, VehicleSweepNormalRejectionAngle, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, VehicleMaxHitAcceleration, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, VehicleMaxHitPointsPerWheel, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, VehicleHitsPerQuery, data, std::stoi(value));
 
 			MAP_CONFIG_FIELD(key, PathToResources, data, value);
 			MAP_CONFIG_FIELD(key, PathToMap, data, value);

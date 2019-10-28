@@ -68,6 +68,12 @@ struct ConfigData final
 	float GravityY = -9.81f;
 	float GravityZ = 0.0f;
 	float PhysicsDeltaTime = 33.3f;
+	std::string VehicleUpdateMode = "VELOCITY_CHANGE";
+	float VehicleSweepPointRejectionAngle = 0.785f;
+	float VehicleSweepNormalRejectionAngle = 0.785f;
+	float VehicleMaxHitAcceleration = 50.0f;
+	int VehicleMaxHitPointsPerWheel = 8;
+	int VehicleHitsPerQuery = 8;
 
 	// Files responsible for world description
 	std::string PathToResources = "";
