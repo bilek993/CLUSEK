@@ -133,10 +133,10 @@ std::vector<physx::PxVec3> VehicleResourcesGenerator::GenerateWheelsOffsets(cons
 		const auto wheelPosition = TransformLogic::GetPosition(*vehicleComponent.WheelTransform[i]);
 		const auto vehiclePosition = TransformLogic::GetPosition(vehicleTransformComponent);
 
-		physx::PxVec3 offset( // TODO: Add offset from vehicle position
-			wheelPosition.x,
-			wheelPosition.y,
-			wheelPosition.z
+		physx::PxVec3 offset(
+			wheelPosition.x - vehiclePosition.x,
+			wheelPosition.y - vehiclePosition.y,
+			wheelPosition.z - vehiclePosition.z
 		);
 
 		offsets.emplace_back(offset);
