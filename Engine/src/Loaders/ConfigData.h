@@ -74,6 +74,8 @@ struct ConfigData final
 	float VehicleMaxHitAcceleration = 50.0f;
 	int VehicleMaxHitPointsPerWheel = 8;
 	int VehicleHitsPerQuery = 8;
+	float VehicleSweepWidthScale = 1.0f;
+	float VehicleSweepRadiusScale = 1.01f;
 
 	// Files responsible for world description
 	std::string PathToResources = "";

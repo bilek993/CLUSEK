@@ -416,8 +416,8 @@ void PhysicsSystem::UpdateVehicles() const
 								sweepResults, 
 								ConfigurationData->VehicleHitsPerQuery,
 								nullptr, 
-								1.0f, 
-								1.01f);
+								ConfigurationData->VehicleSweepWidthScale, 
+								ConfigurationData->VehicleSweepRadiusScale);
 
 	const auto gravity = Scene->getGravity();;
 	std::vector<physx::PxWheelQueryResult> wheelQueryResults(4 * vehicles.size());
