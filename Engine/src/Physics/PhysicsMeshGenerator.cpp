@@ -31,7 +31,7 @@ physx::PxConvexMesh* PhysicsMeshGenerator::CreateCustomBox(physx::PxPhysics& phy
 	const auto y = dimensions.y * 0.5f;
 	const auto z = dimensions.z * 0.5f;
 
-	std::vector<physx::PxVec3> vertices =
+	const std::vector<physx::PxVec3> vertices =
 	{
 		physx::PxVec3(x,y,-z),
 		physx::PxVec3(x,y,z),
