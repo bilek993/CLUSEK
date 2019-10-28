@@ -21,7 +21,7 @@ physx::PxConvexMesh* PhysicsMeshGenerator::CreateCylinder(physx::PxPhysics& phys
 		points[position + 1] = physx::PxVec3(width / 2.0f, y, z);
 	}
 
-	return CreateConvexMesh(physics, cooking, points, halfVerticesCount * 2);
+	return CreateConvexMesh(physics, cooking, points);
 }
 
 physx::PxConvexMesh* PhysicsMeshGenerator::CreateCustomBox(physx::PxPhysics& physics, const physx::PxCooking& cooking,
@@ -43,14 +43,14 @@ physx::PxConvexMesh* PhysicsMeshGenerator::CreateCustomBox(physx::PxPhysics& phy
 		physx::PxVec3(-x,-y,-z)
 	};
 
-	return CreateConvexMesh(physics, cooking, vertices, vertices.size());
+	return CreateConvexMesh(physics, cooking, vertices);
 }
 
 physx::PxConvexMesh* PhysicsMeshGenerator::CreateConvexMesh(physx::PxPhysics& physics, const physx::PxCooking& cooking,
-	const std::vector<physx::PxVec3>& vertices, const int verticesCount)
+	const std::vector<physx::PxVec3>& vertices)
 {
 	physx::PxConvexMeshDesc convexDesc;
-	convexDesc.points.count = verticesCount;
+	convexDesc.points.count = vertices.size();
 	convexDesc.points.stride = sizeof(physx::PxVec3);
 	convexDesc.points.data = vertices.data();
 	convexDesc.flags = physx::PxConvexFlag::eCOMPUTE_CONVEX;
