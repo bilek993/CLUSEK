@@ -451,8 +451,8 @@ void PhysicsSystem::UpdateVehicles() const
 		const auto positionChassis = chassisGlobalPose.p;
 		const auto rotationChassis = PhysicsUnitConversion::PhysicsQuaternionToDirectEuler(chassisGlobalPose.q);
 
-			TransformLogic::SetPosition(positionChassis.x, positionChassis.y, positionChassis.z, *transformComponents[i]);
-			TransformLogic::SetRotation(rotationChassis.x, rotationChassis.y, rotationChassis.z, *transformComponents[i]);
+		TransformLogic::SetPosition(positionChassis.x, positionChassis.y, positionChassis.z, *transformComponents[i]);
+		TransformLogic::SetRotation(rotationChassis.x, rotationChassis.y, rotationChassis.z, *transformComponents[i]);
 
 		for (auto w = 0; w < std::size(vehicleComponents[i]->Wheels); w++)
 		{
