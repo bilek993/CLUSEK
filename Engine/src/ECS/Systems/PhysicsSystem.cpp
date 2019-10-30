@@ -469,7 +469,7 @@ void PhysicsSystem::UpdateVehicles() const
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
 {
 	const auto position = TransformLogic::GetPosition(transformComponent);
-	const auto rotation = TransformLogic::GetRotation(transformComponent);
+	const auto rotation = TransformLogic::GetRotationEuler(transformComponent);
 
 	return physx::PxTransform(	physx::PxVec3(position.x, position.y, position.z),
 								PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotation));

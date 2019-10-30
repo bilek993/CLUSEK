@@ -300,7 +300,7 @@ void VehicleResourcesGenerator::SetInitialTransform(const TransformComponent& ve
 	physx::PxVehicleDrive4W* vehicle)
 {
 	const auto directPosition = TransformLogic::GetPosition(vehicleTransformComponent);
-	const auto directRotation = TransformLogic::GetRotation(vehicleTransformComponent);
+	const auto directRotation = TransformLogic::GetRotationEuler(vehicleTransformComponent);
 
 	const auto position = physx::PxVec3(directPosition.x, directPosition.y, directPosition.z);
 	const auto rotation = PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(directRotation);

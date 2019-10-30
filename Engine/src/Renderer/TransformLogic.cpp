@@ -80,16 +80,11 @@ void TransformLogic::AdjustPosition(const float x, const float y, const float z,
 	transformComponent.PositionVector = XMLoadFloat3(&storedValue);
 }
 
-void TransformLogic::AdjustRotation(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
-{
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = EulerAngels;
-
-	transformComponent.RotationVectorEuler = DirectX::XMVectorAdd(transformComponent.RotationVectorEuler, rot);;
-}
-
 void TransformLogic::AdjustRotation(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
+	if (transformComponent.RotationModeForChanges != EulerAngels)
+		Logger::Warning("Adjusted euler angels in incorrect mode!");
+
 	transformComponent.ValuesChanged = true;
 	transformComponent.RotationModeForChanges = EulerAngels;
 
@@ -101,8 +96,50 @@ void TransformLogic::AdjustRotation(const float x, const float y, const float z,
 	transformComponent.RotationVectorEuler = XMLoadFloat3(&storedValue);
 }
 
+void TransformLogic::AdjustRotation(const float x, const float y, const float z, const float w, TransformComponent& transformComponent)
+{
+	if (transformComponent.RotationModeForChanges != Quaternions)
+		Logger::Warning("Adjusted quaternions in incorrect mode!");
+
+	transformComponent.ValuesChanged = true;
+	transformComponent.RotationModeForChanges = Quaternions;
+
+	DirectX::XMFLOAT4 storedValue{};
+	XMStoreFloat4(&storedValue, transformComponent.RotationVectorEuler);
+	storedValue.x += x;
+	storedValue.y += y;
+	storedValue.z += z;
+	storedValue.w += w;
+	transformComponent.RotationVectorQuat = XMLoadFloat4(&storedValue);
+}
+
+void TransformLogic::AdjustRotationEuler(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
+{
+	if (transformComponent.RotationModeForChanges != EulerAngels)
+		Logger::Warning("Adjusted euler angels in incorrect mode!");
+
+	transformComponent.ValuesChanged = true;
+	transformComponent.RotationModeForChanges = EulerAngels;
+
+	transformComponent.RotationVectorEuler = DirectX::XMVectorAdd(transformComponent.RotationVectorEuler, rot);
+}
+
+void TransformLogic::AdjustRotationQuat(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
+{
+	if (transformComponent.RotationModeForChanges != Quaternions)
+		Logger::Warning("Adjusted quaternions in incorrect mode!");
+
+	transformComponent.ValuesChanged = true;
+	transformComponent.RotationModeForChanges = Quaternions;
+
+	transformComponent.RotationVectorQuat = DirectX::XMVectorAdd(transformComponent.RotationVectorQuat, rot);
+}
+
 void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformComponent& transformComponent)
 {
+	if (transformComponent.RotationModeForChanges != EulerAngels)
+		Logger::Warning("GetRotation called in for euler called in quaternions mode!");
+
 	DirectX::XMFLOAT3 storedValue{};
 	XMStoreFloat3(&storedValue, transformComponent.RotationVectorEuler);
 
@@ -114,10 +151,35 @@ void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformCo
 		*z = storedValue.z;
 }
 
-DirectX::XMFLOAT3 TransformLogic::GetRotation(const TransformComponent& transformComponent)
+void TransformLogic::GetRotation(float* x, float* y, float* z, float* w, const TransformComponent& transformComponent)
+{
+	if (transformComponent.RotationModeForChanges != Quaternions)
+		Logger::Warning("GetRotation called in for quaternions called in euler mode!");
+
+	DirectX::XMFLOAT4 storedValue{};
+	XMStoreFloat4(&storedValue, transformComponent.RotationVectorQuat);
+
+	if (x != nullptr)
+		*x = storedValue.x;
+	if (y != nullptr)
+		*y = storedValue.y;
+	if (z != nullptr)
+		*z = storedValue.z;
+	if (w != nullptr)
+		*w = storedValue.w;
+}
+
+DirectX::XMFLOAT3 TransformLogic::GetRotationEuler(const TransformComponent& transformComponent)
 {
 	DirectX::XMFLOAT3 storedValue{};
 	XMStoreFloat3(&storedValue, transformComponent.RotationVectorEuler);
+	return storedValue;
+}
+
+DirectX::XMFLOAT4 TransformLogic::GetRotationQuat(const TransformComponent& transformComponent)
+{
+	DirectX::XMFLOAT4 storedValue{};
+	XMStoreFloat4(&storedValue, transformComponent.RotationVectorQuat);
 	return storedValue;
 }
 
