@@ -445,7 +445,7 @@ void PhysicsSystem::UpdateVehicles() const
 		const auto rigidActor = vehicles[i]->getRigidDynamicActor();
 
 		if (rigidActor->isSleeping())
-			return;
+			continue;
 
 		const auto chassisGlobalPose = rigidActor->getGlobalPose();
 		const auto positionChassis = chassisGlobalPose.p;
