@@ -668,6 +668,9 @@
     <ClInclude Include="src\Physics\PhysicsFilterHelper.h">
       <Filter>Header Files\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\RotationMode.h">
+      <Filter>Header Files\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">

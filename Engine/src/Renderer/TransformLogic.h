@@ -9,6 +9,7 @@ public:
 	static void SetPosition(float x, float y, float z, TransformComponent &transformComponent);
 	static void SetRotation(const DirectX::XMVECTOR &rot, TransformComponent &transformComponent);
 	static void SetRotation(float x, float y, float z, TransformComponent &transformComponent);
+	static void SetRotation(float x, float y, float z, float w, TransformComponent &transformComponent);
 
 	static void AdjustPosition(const DirectX::XMVECTOR &pos, TransformComponent &transformComponent);
 	static void AdjustPosition(float x, float y, float z, TransformComponent &transformComponent);

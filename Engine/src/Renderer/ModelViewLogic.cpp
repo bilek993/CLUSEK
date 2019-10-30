@@ -2,7 +2,15 @@
 
 void ModelViewLogic::UpdateViewMatrix(CameraComponent& cameraComponent, TransformComponent& transformComponent)
 {
-	const auto cameraRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(transformComponent.RotationVector);
+	DirectX::XMMATRIX cameraRotationMatrix{};
+
+	if (transformComponent.RotationModeForChanges == EulerAngels)
+		cameraRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(transformComponent.RotationVectorEuler);
+	else
+		cameraRotationMatrix = DirectX::XMMatrixRotationQuaternion(transformComponent.RotationVectorQuat);
+
+	const auto vecTranslationMatrix = DirectX::XMMatrixTranslationFromVector(transformComponent.PositionVector);
+
 	const auto cameraDirection = XMVector3TransformCoord(TransformComponent::FORWARD_VECTOR, cameraRotationMatrix);
 	const auto cameraTarget = DirectX::XMVectorAdd(cameraDirection, transformComponent.PositionVector);
 	const auto upDirection = XMVector3TransformCoord(TransformComponent::UP_VECTOR, cameraRotationMatrix);
@@ -14,7 +22,13 @@ void ModelViewLogic::UpdateViewMatrix(CameraComponent& cameraComponent, Transfor
 
 void ModelViewLogic::UpdateModelMatrix(DirectX::XMMATRIX& worldMatrix, TransformComponent& transformComponent)
 {
-	const auto vecRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(transformComponent.RotationVector);
+	DirectX::XMMATRIX vecRotationMatrix{};
+
+	if (transformComponent.RotationModeForChanges == EulerAngels)
+		vecRotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(transformComponent.RotationVectorEuler);
+	else
+		vecRotationMatrix = DirectX::XMMatrixRotationQuaternion(transformComponent.RotationVectorQuat);
+
 	const auto vecTranslationMatrix = DirectX::XMMatrixTranslationFromVector(transformComponent.PositionVector);
 	worldMatrix = XMMatrixMultiply(vecRotationMatrix, vecTranslationMatrix);
 
