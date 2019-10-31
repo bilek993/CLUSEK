@@ -48,6 +48,9 @@ void ModelViewLogic::UpdateModelMatrix(DirectX::XMMATRIX& worldMatrix, Transform
 	else
 	{
 		worldMatrix = transformComponent.WorldMatrixForced;
+
+		transformComponent.VectorForward = XMVector3TransformCoord(TransformComponent::FORWARD_VECTOR, transformComponent.RotationMatrixForced);
+		transformComponent.VectorRight = XMVector3TransformCoord(TransformComponent::RIGHT_VECTOR, transformComponent.RotationMatrixForced);
 	}
 }
 

@@ -1,7 +1,7 @@
 #include "TransformLogic.h"
 #include "../Utils/Logger.h"
 
-void TransformLogic::SetMatrix(const physx::PxMat44& matrix, TransformComponent& transformComponent)
+void TransformLogic::SetMatrix(const physx::PxMat44& matrix, const physx::PxQuat& quaternion, TransformComponent& transformComponent)
 {
 	transformComponent.ValuesChanged = true;
 	transformComponent.RotationModeForChanges = ForcedMatrix;
@@ -12,6 +12,9 @@ void TransformLogic::SetMatrix(const physx::PxMat44& matrix, TransformComponent&
 		matrix[0][2], matrix[1][2], matrix[2][2], matrix[3][2],
 		matrix[0][3], matrix[1][3], matrix[2][3], matrix[3][3]
 	);
+
+	auto directQuaternion = DirectX::XMFLOAT4(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
+	transformComponent.RotationMatrixForced = DirectX::XMMatrixRotationQuaternion(XMLoadFloat4(&directQuaternion));
 }
 
 void TransformLogic::SetPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)

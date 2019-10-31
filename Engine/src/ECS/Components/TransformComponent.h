@@ -8,6 +8,7 @@ struct TransformComponent final
 	DirectX::XMVECTOR RotationVectorEuler;
 	DirectX::XMVECTOR RotationVectorQuat;
 	DirectX::XMMATRIX WorldMatrixForced;
+	DirectX::XMMATRIX RotationMatrixForced;
 
 	DirectX::XMVECTOR VectorForward;
 	DirectX::XMVECTOR VectorRight;

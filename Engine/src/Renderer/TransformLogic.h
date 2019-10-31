@@ -6,7 +6,7 @@
 class TransformLogic final
 {
 public:
-	static void SetMatrix(const physx::PxMat44 &matrix, TransformComponent &transformComponent);
+	static void SetMatrix(const physx::PxMat44 &matrix, const physx::PxQuat& quaternion, TransformComponent &transformComponent);
 
 	static void SetPosition(const DirectX::XMVECTOR &pos,TransformComponent &transformComponent);
 	static void SetPosition(float x, float y, float z, TransformComponent &transformComponent);
