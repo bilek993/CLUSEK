@@ -9,12 +9,17 @@ void TransformLogic::SetMatrix(const DirectX::XMMATRIX& matrix, TransformCompone
 	transformComponent.WorldMatrixForced = matrix;
 }
 
-void TransformLogic::SetMatrix(const physx::PxMat44, TransformComponent& transformComponent)
+void TransformLogic::SetMatrix(const physx::PxMat44& matrix, TransformComponent& transformComponent)
 {
 	transformComponent.ValuesChanged = true;
 	transformComponent.RotationModeForChanges = ForcedMatrix;
 
-	// TODO: Add missing code
+	transformComponent.WorldMatrixForced = DirectX::XMMATRIX(
+		matrix[0][0], matrix[1][0], matrix[2][0], matrix[3][0],
+		matrix[0][1], matrix[1][1], matrix[2][1], matrix[3][1],
+		matrix[0][2], matrix[1][2], matrix[2][2], matrix[3][2],
+		matrix[0][3], matrix[1][3], matrix[2][3], matrix[3][3]
+	);
 }
 
 void TransformLogic::SetPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)

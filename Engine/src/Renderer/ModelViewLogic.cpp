@@ -1,4 +1,5 @@
 #include "ModelViewLogic.h"
+#include "../Utils/Logger.h"
 
 void ModelViewLogic::UpdateViewMatrix(CameraComponent& cameraComponent, TransformComponent& transformComponent)
 {
@@ -23,7 +24,7 @@ void ModelViewLogic::UpdateViewMatrix(CameraComponent& cameraComponent, Transfor
 	}
 	else
 	{
-		// TODO: Add missing code
+		Logger::Error("Forced matrix mode is not supported for camera! Consider using another mode.");
 	}
 }
 
@@ -46,7 +47,7 @@ void ModelViewLogic::UpdateModelMatrix(DirectX::XMMATRIX& worldMatrix, Transform
 	}
 	else
 	{
-		// TODO: Add missing code
+		worldMatrix = transformComponent.WorldMatrixForced;
 	}
 }
 

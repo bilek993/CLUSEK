@@ -458,10 +458,10 @@ void PhysicsSystem::UpdateVehicles() const
 		{
 			const auto wheelLocalPose = wheelQueryResults[i * 4 + w].localPose;
 
-			physx::PxMat44 wheelMatrix(wheelLocalPose);
-			wheelMatrix *= physx::PxMat44(chassisGlobalPose);
+			physx::PxMat44 wheelMatrix(chassisGlobalPose);
+			wheelMatrix *= physx::PxMat44(wheelLocalPose);
 
-			TransformLogic::SetMatrix(wheelMatrix, *vehicleComponents[i]->WheelTransform[w]);
+			TransformLogic::SetMatrix(wheelMatrix.getTranspose(), *vehicleComponents[i]->WheelTransform[w]);
 		}
 	}
 }
