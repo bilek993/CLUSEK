@@ -1,14 +1,6 @@
 #include "TransformLogic.h"
 #include "../Utils/Logger.h"
 
-void TransformLogic::SetMatrix(const DirectX::XMMATRIX& matrix, TransformComponent& transformComponent)
-{
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = ForcedMatrix;
-
-	transformComponent.WorldMatrixForced = matrix;
-}
-
 void TransformLogic::SetMatrix(const physx::PxMat44& matrix, TransformComponent& transformComponent)
 {
 	transformComponent.ValuesChanged = true;
