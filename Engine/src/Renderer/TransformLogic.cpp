@@ -1,6 +1,22 @@
 #include "TransformLogic.h"
 #include "../Utils/Logger.h"
 
+void TransformLogic::SetMatrix(const DirectX::XMMATRIX& matrix, TransformComponent& transformComponent)
+{
+	transformComponent.ValuesChanged = true;
+	transformComponent.RotationModeForChanges = ForcedMatrix;
+
+	transformComponent.WorldMatrixForced = matrix;
+}
+
+void TransformLogic::SetMatrix(const physx::PxMat44, TransformComponent& transformComponent)
+{
+	transformComponent.ValuesChanged = true;
+	transformComponent.RotationModeForChanges = ForcedMatrix;
+
+	// TODO: Add missing code
+}
+
 void TransformLogic::SetPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)
 {
 	transformComponent.ValuesChanged = true;
@@ -18,8 +34,8 @@ void TransformLogic::SetPosition(const float x, const float y, const float z, Tr
 void TransformLogic::SetRotation(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
 {
 	transformComponent.ValuesChanged = true;
-
 	transformComponent.RotationModeForChanges = EulerAngels;
+
 	transformComponent.RotationVectorEuler = rot;
 }
 
@@ -138,7 +154,7 @@ void TransformLogic::AdjustRotationQuat(const DirectX::XMVECTOR& rot, TransformC
 void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformComponent& transformComponent)
 {
 	if (transformComponent.RotationModeForChanges != EulerAngels)
-		Logger::Warning("GetRotation called in for euler called in quaternions mode!");
+		Logger::Warning("GetRotation called in for euler called in incorrect mode!");
 
 	DirectX::XMFLOAT3 storedValue{};
 	XMStoreFloat3(&storedValue, transformComponent.RotationVectorEuler);
@@ -154,7 +170,7 @@ void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformCo
 void TransformLogic::GetRotation(float* x, float* y, float* z, float* w, const TransformComponent& transformComponent)
 {
 	if (transformComponent.RotationModeForChanges != Quaternions)
-		Logger::Warning("GetRotation called in for quaternions called in euler mode!");
+		Logger::Warning("GetRotation called in for quaternions called in incorrect mode!");
 
 	DirectX::XMFLOAT4 storedValue{};
 	XMStoreFloat4(&storedValue, transformComponent.RotationVectorQuat);

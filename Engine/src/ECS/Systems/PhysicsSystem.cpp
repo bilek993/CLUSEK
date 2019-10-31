@@ -457,11 +457,11 @@ void PhysicsSystem::UpdateVehicles() const
 		for (auto w = 0; w < std::size(vehicleComponents[i]->Wheels); w++)
 		{
 			const auto wheelLocalPose = wheelQueryResults[i * 4 + w].localPose;
-			const auto positionWheel = wheelLocalPose.p + chassisGlobalPose.p;
-			const auto rotationWheel = wheelLocalPose.q;
 
-			TransformLogic::SetPosition(positionWheel.x, positionWheel.y, positionWheel.z, *vehicleComponents[i]->WheelTransform[w]);
-			TransformLogic::SetRotation(rotationWheel.x, rotationWheel.y, rotationWheel.z, rotationWheel.w, *vehicleComponents[i]->WheelTransform[w]);
+			physx::PxMat44 wheelMatrix(wheelLocalPose);
+			wheelMatrix *= physx::PxMat44(chassisGlobalPose);
+
+			TransformLogic::SetMatrix(wheelMatrix, *vehicleComponents[i]->WheelTransform[w]);
 		}
 	}
 }
@@ -542,7 +542,6 @@ void PhysicsSystem::CreateVehicle()
 			Logger::Error("Vehicle couldn't be created!");
 			return;
 		}
-
 
 		vehicleComponent.Vehicle = vehicle;
 

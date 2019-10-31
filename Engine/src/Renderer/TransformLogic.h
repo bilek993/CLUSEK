@@ -1,10 +1,14 @@
 #pragma once
 #include <DirectXMath.h>
+#include "PxPhysicsAPI.h"
 #include "../ECS/Components/TransformComponent.h"
 
 class TransformLogic final
 {
 public:
+	static void SetMatrix(const DirectX::XMMATRIX &matrix, TransformComponent &transformComponent);
+	static void SetMatrix(const physx::PxMat44, TransformComponent &transformComponent);
+
 	static void SetPosition(const DirectX::XMVECTOR &pos,TransformComponent &transformComponent);
 	static void SetPosition(float x, float y, float z, TransformComponent &transformComponent);
 

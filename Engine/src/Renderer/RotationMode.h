@@ -3,5 +3,6 @@
 enum RotationMode
 {
 	EulerAngels,
-	Quaternions
+	Quaternions,
+	ForcedMatrix,
 };
