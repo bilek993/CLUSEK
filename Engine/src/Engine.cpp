@@ -13,6 +13,9 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 {
 	Logger::Debug("Engine initialization...");
 
+	Timer engineInitializationTimer;
+	engineInitializationTimer.Restart();
+
 	const auto hr = CoInitialize(nullptr);
 	if (FAILED(hr))
 	{
@@ -32,6 +35,9 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 
 	Logger::Debug("Resetting timer...");
 	Time.Restart();
+
+	const auto engineInitializationTime = static_cast<int>(ceil(engineInitializationTimer.GetDeltaTimeAndRestart()));
+	Logger::Debug("Engine initialization took: " + std::to_string(engineInitializationTime) + " ms.");
 
 	return true;
 }
