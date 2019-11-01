@@ -80,7 +80,7 @@ void PhysicsSystem::UpdateMatrixFromRigidbody() const
 			const auto rotation = globalPose.q;
 
 			TransformLogic::SetPosition(position.x, position.y, position.z, transformComponent);
-			TransformLogic::SetRotation(rotation.x, rotation.y, rotation.y, rotation.z, transformComponent);
+			TransformLogic::SetRotation(rotation.x, rotation.y, rotation.z, rotation.w, transformComponent);
 		}
 	});
 }
