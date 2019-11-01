@@ -190,6 +190,34 @@
   {
     "Tags": [],
 	"Components": {
+	  "TransformComponent": {
+	    "PositionX": -4.0,
+		"PositionY": 20.0,
+		"PositionZ": 0.0,
+		"RotationX": 0.0,
+		"RotationY": 0.0,
+		"RotationZ": 0.0
+	  },
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.5,
+	    "DynamicFriction": 0.5,
+	    "Restitution": 0.5
+	  },
+	  "RigidbodyDynamicBoxComponent": {
+	    "Width": 1.03,
+		"Height": 2.57,
+		"Depth": 2.57,
+		"Density": 25.0
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "Wheel",
+		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
 	  "PhysicsMaterialComponent": {
 	    "StaticFriction": 0.5,
 	    "DynamicFriction": 0.5,
