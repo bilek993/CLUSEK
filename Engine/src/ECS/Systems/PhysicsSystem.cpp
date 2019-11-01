@@ -469,10 +469,28 @@ void PhysicsSystem::UpdateVehicles() const
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
 {
 	const auto position = TransformLogic::GetPosition(transformComponent);
-	const auto rotation = TransformLogic::GetRotationEuler(transformComponent);
 
-	return physx::PxTransform(	physx::PxVec3(position.x, position.y, position.z),
-								PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotation));
+	if (transformComponent.RotationModeForChanges == EulerAngels) 
+	{
+		const auto rotationEuler = TransformLogic::GetRotationEuler(transformComponent);
+
+		return physx::PxTransform(physx::PxVec3(position.x, position.y, position.z),
+			PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotationEuler));
+	}
+	else if (transformComponent.RotationModeForChanges == Quaternions)
+	{
+		float x, y, z, w;
+		TransformLogic::GetRotation(&x, &y, &z, &w, transformComponent);
+
+		return physx::PxTransform(physx::PxVec3(position.x, position.y, position.z),
+			physx::PxQuat(x, y, z, w));
+	}
+	else
+	{
+		Logger::Error("Cannot calculate PhysX Transform for this mode!");
+		return physx::PxTransform(physx::PxIdentity);
+	}
+
 }
 
 void PhysicsSystem::AssociateWheelsWithVehicles()
