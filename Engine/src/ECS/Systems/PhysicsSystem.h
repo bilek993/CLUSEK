@@ -77,10 +77,10 @@ void PhysicsSystem::UpdateMatrixFromRigidbody() const
 		{
 			const auto globalPose = body->getGlobalPose();
 			const auto position = globalPose.p;
-			const auto rotation = PhysicsUnitConversion::PhysicsQuaternionToDirectEuler(globalPose.q);
+			const auto rotation = globalPose.q;
 
 			TransformLogic::SetPosition(position.x, position.y, position.z, transformComponent);
-			TransformLogic::SetRotation(rotation.x, rotation.y, rotation.z, transformComponent);
+			TransformLogic::SetRotation(rotation.x, rotation.y, rotation.y, rotation.z, transformComponent);
 		}
 	});
 }
