@@ -26,7 +26,7 @@
 	"Components": {
 	  "TransformComponent": {
 	    "PositionX": 0.0,
-		"PositionY": 4.0,
+		"PositionY": 2.0,
 		"PositionZ": 0.0
 	  },
 	  "ModelRenderComponent": {
@@ -41,9 +41,9 @@
 	  "VehicleComponent": {
 		"VehicleId": "PlayerVehicle",
 		"Mass": 1500,
-		"DimensionX": 2.5,
-		"DimensionY": 2.0,
-		"DimensionZ": 5.0,
+		"DimensionX": 6.94,
+		"DimensionY": 5.6,
+		"DimensionZ": 18.2,
 		"CenterOfMassOffsetX": 0.0,
 		"CenterOfMassOffsetY": -0.35,
 		"CenterOfMassOffsetZ": 0.25,
@@ -56,9 +56,9 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
-	    "PositionX": 1.05,
-		"PositionY": 2.0,
-		"PositionZ": 1.5
+	    "PositionX": 2.94,
+		"PositionY": 3.7,
+		"PositionZ": 3.04
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
@@ -73,8 +73,8 @@
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 1,
 		"Mass": 25.0,
-		"Width": 0.4,
-		"Radius": 0.5,
+		"Width": 1.03,
+		"Radius": 1.285,
 		"SuspensionMaxCompression": 0.3,
 		"SuspensionMaxDroop": 0.1,
 		"SuspensionSpringStrength": 35000.0,
@@ -89,9 +89,9 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
-	    "PositionX": 1.05,
-		"PositionY": 2.0,
-		"PositionZ": -1.5
+	    "PositionX": 2.94,
+		"PositionY": 3.7,
+		"PositionZ": -3.04
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
@@ -106,8 +106,8 @@
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 3,
 		"Mass": 25.0,
-		"Width": 0.4,
-		"Radius": 0.5,
+		"Width": 1.03,
+		"Radius": 1.285,
 		"SuspensionMaxCompression": 0.3,
 		"SuspensionMaxDroop": 0.1,
 		"SuspensionSpringStrength": 35000.0,
@@ -121,9 +121,9 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
-	    "PositionX": -1.05,
-		"PositionY": 2.0,
-		"PositionZ": 1.5,
+	    "PositionX": -2.94,
+		"PositionY": 3.7,
+		"PositionZ": 3.04,
 		"RotationX": 0.0,
 		"RotationY": 3.14,
 		"RotationZ": 0.0
@@ -141,8 +141,8 @@
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 0,
 		"Mass": 25.0,
-		"Width": 0.4,
-		"Radius": 0.5,
+		"Width": 1.03,
+		"Radius": 1.285,
 		"SuspensionMaxCompression": 0.3,
 		"SuspensionMaxDroop": 0.1,
 		"SuspensionSpringStrength": 35000.0,
@@ -156,9 +156,9 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
-	    "PositionX": -1.05,
-		"PositionY": 2.0,
-		"PositionZ": -1.5,
+	    "PositionX": -2.94,
+		"PositionY": 3.7,
+		"PositionZ": -3.04,
 		"RotationX": 0.0,
 		"RotationY": 3.14,
 		"RotationZ": 0.0
@@ -176,8 +176,8 @@
 		"VehicleId": "PlayerVehicle",
 		"WheelId": 2,
 		"Mass": 25.0,
-		"Width": 0.4,
-		"Radius": 0.5,
+		"Width": 1.03,
+		"Radius": 1.285,
 		"SuspensionMaxCompression": 0.3,
 		"SuspensionMaxDroop": 0.1,
 		"SuspensionSpringStrength": 35000.0,
@@ -193,10 +193,7 @@
 	  "TransformComponent": {
 	    "PositionX": -4.0,
 		"PositionY": 20.0,
-		"PositionZ": 0.0,
-		"RotationX": 0.0,
-		"RotationY": 0.0,
-		"RotationZ": 0.0
+		"PositionZ": 0.0
 	  },
 	  "PhysicsMaterialComponent": {
 	    "StaticFriction": 0.5,
