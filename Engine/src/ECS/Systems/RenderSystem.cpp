@@ -402,7 +402,7 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
-	// Simple shader
+	// Loading Logo shader
 
 	if (!LoadingLogoVertexShader.Initialize(Device.Get(), L"loading_logo_vertex_shader.cso", PositionVertex::Layout, PositionVertex::LayoutSize))
 	{
