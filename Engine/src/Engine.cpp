@@ -8,6 +8,7 @@
 #include "ECS/Systems/SkyboxSystem.h"
 #include "ECS/Systems/PhysicsSystem.h"
 #include "ECS/Systems/TransformSystem.h"
+#include "ECS/Systems/VehiclePlayerControllerSystem.h"
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 {
@@ -84,6 +85,9 @@ void Engine::CreateSystems()
 
 	systemBasePtr = std::make_unique<SkyboxSystem>();
 	Systems.emplace_back(SystemHolder("Skybox System", systemBasePtr, true));
+
+	systemBasePtr = std::make_unique<VehiclePlayerControllerSystem>();
+	Systems.emplace_back(SystemHolder("Vehicle Player Controller System", systemBasePtr, true));
 
 	// Transform system should be last
 	systemBasePtr = std::make_unique<TransformSystem>();
