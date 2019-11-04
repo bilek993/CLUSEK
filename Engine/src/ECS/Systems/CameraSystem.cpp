@@ -61,11 +61,18 @@ void CameraSystem::Update(const float deltaTime)
 void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& cameraComponent,
 	TransformComponent& transformComponent) const
 {
-	const auto positionGamePadX = InputOutputData->GamePadState.thumbSticks.leftX * ConfigurationData->MaxCameraSpeed * deltaTime;
-	const auto positionGamePadY = InputOutputData->GamePadState.thumbSticks.leftY * ConfigurationData->MaxCameraSpeed * deltaTime;
+	auto cameraSpeed = ConfigurationData->MaxCameraSpeed / 5 * deltaTime;
+	if (InputOutputData->GamePadState.IsRightStickPressed())
+		cameraSpeed *= 5;
 
-	TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, positionGamePadX), transformComponent);
-	TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, positionGamePadY), transformComponent);
+	if (InputOutputData->GamePadState.dpad.up)
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, cameraSpeed), transformComponent);
+	if (InputOutputData->GamePadState.dpad.left)
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, -cameraSpeed), transformComponent);
+	if (InputOutputData->GamePadState.dpad.down)
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, -cameraSpeed), transformComponent);
+	if (InputOutputData->GamePadState.dpad.right)
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, cameraSpeed), transformComponent);
 
 	auto currentRotationX = 0.0f;
 	auto currentRotationY = 0.0f;
