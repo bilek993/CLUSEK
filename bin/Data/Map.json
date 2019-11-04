@@ -49,6 +49,9 @@
 		"CenterOfMassOffsetZ": 0.25,
 		"MaxHandBrakeTorque": 4000.0,
 		"DifferentialType": "LIMITED_SLIP_REAR"
+	  },
+	  "VehiclePlayerControllerComponent": {
+	    "Possessed": true
 	  }
 	}
   },
