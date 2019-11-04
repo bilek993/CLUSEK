@@ -210,6 +210,9 @@ Center of mass offset from default vehicle position on axis Y.
 * **CenterOfMassOffsetZ** (_optional_, _float_)<br/>
 Center of mass offset from default vehicle position on axis Z.
 
+* **MaxBrakeTorque** (_required_, _float_)<br/>
+Maximum brake torque that can be applied to all wheels. This value is specified in kilograms metres-squared per second-squared.
+
 * **MaxHandBrakeTorque** (_required_, _float_)<br/>
 Maximum torque that can be applied to rear wheels, when using handbrake. This value is specified in kilograms metres-squared per second-squared.
 

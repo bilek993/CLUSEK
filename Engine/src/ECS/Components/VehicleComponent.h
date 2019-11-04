@@ -15,6 +15,7 @@ struct VehicleComponent final
 	float CenterOfMassOffsetX = 0.0f;
 	float CenterOfMassOffsetY = 0.0f;
 	float CenterOfMassOffsetZ = 0.0f;
+	float MaxBrakeTorque;
 	float MaxHandBrakeTorque;
 	float MaxSteer = physx::PxPi * 0.3333f;
 	float AntiRollBarStiffness = 10000.0f;

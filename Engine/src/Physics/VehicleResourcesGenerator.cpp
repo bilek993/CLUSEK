@@ -158,6 +158,7 @@ physx::PxVehicleWheelsSimData* VehicleResourcesGenerator::CreateWheelsSimData(co
 		wheels[i].mMOI = 0.5f * vehicleComponent.Wheels[i]->Mass * vehicleComponent.Wheels[i]->Radius * vehicleComponent.Wheels[i]->Radius;
 		wheels[i].mRadius = vehicleComponent.Wheels[i]->Radius;
 		wheels[i].mWidth = vehicleComponent.Wheels[i]->Width;
+		wheels[i].mMaxBrakeTorque = vehicleComponent.MaxBrakeTorque;
 	}
 
 	wheels[physx::PxVehicleDrive4WWheelOrder::eREAR_LEFT].mMaxHandBrakeTorque = vehicleComponent.MaxHandBrakeTorque;

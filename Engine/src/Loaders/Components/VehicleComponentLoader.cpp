@@ -14,6 +14,7 @@ void VehicleComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	MAP_LOADER_BASIC_FIELD(CenterOfMassOffsetX, json, component, float);
 	MAP_LOADER_BASIC_FIELD(CenterOfMassOffsetY, json, component, float);
 	MAP_LOADER_BASIC_FIELD(CenterOfMassOffsetZ, json, component, float);
+	MAP_LOADER_BASIC_FIELD(MaxBrakeTorque, json, component, float);
 	MAP_LOADER_BASIC_FIELD(MaxHandBrakeTorque, json, component, float);
 	MAP_LOADER_BASIC_FIELD(MaxSteer, json, component, float);
 	MAP_LOADER_BASIC_FIELD(AntiRollBarStiffness, json, component, float);

@@ -47,7 +47,8 @@
 		"CenterOfMassOffsetX": 0.0,
 		"CenterOfMassOffsetY": -0.35,
 		"CenterOfMassOffsetZ": 0.25,
-		"MaxHandBrakeTorque": 4000.0,
+		"MaxBrakeTorque": 5750.0,
+		"MaxHandBrakeTorque": 10000.0,
 		"DifferentialType": "LIMITED_SLIP_REAR",
 		"PeakTorque": 1100.0,
 		"MaxOmega": 1400.0
