@@ -9,4 +9,6 @@ public:
 private:
 	void HandleGamepad(float& accelerate, float& brake, float& left, float& handbrake) const;
 	void HandleKeyboard(float& accelerate, float& brake, float& left, float& handbrake) const;
+
+	float WheelAngel = 0.0f;
 };

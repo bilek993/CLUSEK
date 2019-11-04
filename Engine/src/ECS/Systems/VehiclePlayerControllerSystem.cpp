@@ -16,14 +16,16 @@ void VehiclePlayerControllerSystem::Update(const float deltaTime)
 	else
 		HandleKeyboard(accelerate, brake, left, handbrake);
 
-	Registry->view<VehiclePlayerControllerComponent, VehicleComponent>().each([&accelerate, &brake, &left, &handbrake](VehiclePlayerControllerComponent &vehiclePlayerControllerComponent,
+	WheelAngel = std::clamp(WheelAngel + (left * deltaTime * 0.0075f), -1.0f, 1.0f);
+
+	Registry->view<VehiclePlayerControllerComponent, VehicleComponent>().each([this, &accelerate, &brake, &handbrake](VehiclePlayerControllerComponent &vehiclePlayerControllerComponent,
 		VehicleComponent &vehicleComponent)
 	{
 		if (vehiclePlayerControllerComponent.Possessed)
 		{
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL, accelerate);
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_BRAKE, brake);
-			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT, left);
+			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT, WheelAngel);
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_HANDBRAKE, handbrake);
 		}
 	});
