@@ -407,9 +407,6 @@ void PhysicsSystem::UpdateVehicles() const
 		vehicles.emplace_back(vehicleComponent.Vehicle);
 		transformComponents.emplace_back(&transformComponentVehicle);
 		vehicleComponents.emplace_back(&vehicleComponent);
-
-		vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL, 0.55f); // TODO: Debug purposes only. Remove this in future!
-		vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT, 0.25f); // TODO: Debug purposes only. Remove this in future!
 	});
 
 	const auto sweepResults = VehicleSceneQueryData->GetSweepResultBuffer(0);
