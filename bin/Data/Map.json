@@ -48,7 +48,9 @@
 		"CenterOfMassOffsetY": -0.35,
 		"CenterOfMassOffsetZ": 0.25,
 		"MaxHandBrakeTorque": 4000.0,
-		"DifferentialType": "LIMITED_SLIP_REAR"
+		"DifferentialType": "LIMITED_SLIP_REAR",
+		"PeakTorque": 1100.0,
+		"MaxOmega": 1400.0
 	  },
 	  "VehiclePlayerControllerComponent": {
 	    "Possessed": true
@@ -68,8 +70,8 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-        "StaticFriction": 0.1,
-        "DynamicFriction": 0.1,
+        "StaticFriction": 0.9,
+        "DynamicFriction": 0.9,
         "Restitution": 0.1
       },
 	  "WheelComponent": {
@@ -83,8 +85,7 @@
 		"SuspensionSpringStrength": 35000.0,
 		"SuspensionSpringDamperRate": 4500.0,
 		"SuspensionForceApplicationPoinOffset": -0.3,
-		"TireForceApplicationPoinOffset": -0.3,
-		"GearsSwitchTime": 0.5
+		"TireForceApplicationPoinOffset": -0.3
 	  }
 	}
   },
@@ -101,8 +102,8 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-        "StaticFriction": 0.1,
-        "DynamicFriction": 0.1,
+        "StaticFriction": 0.9,
+        "DynamicFriction": 0.9,
         "Restitution": 0.1
       },
 	  "WheelComponent": {
@@ -136,8 +137,8 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-        "StaticFriction": 0.1,
-        "DynamicFriction": 0.1,
+        "StaticFriction": 0.9,
+        "DynamicFriction": 0.9,
         "Restitution": 0.1
       },
 	  "WheelComponent": {
@@ -171,8 +172,8 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-        "StaticFriction": 0.1,
-        "DynamicFriction": 0.1,
+        "StaticFriction": 0.9,
+        "DynamicFriction": 0.9,
         "Restitution": 0.1
       },
 	  "WheelComponent": {
