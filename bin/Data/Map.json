@@ -50,8 +50,8 @@
 		"MaxBrakeTorque": 5500.0,
 		"MaxHandBrakeTorque": 10000.0,
 		"DifferentialType": "LIMITED_SLIP_REAR",
-		"PeakTorque": 1100.0,
-		"MaxOmega": 1400.0
+		"PeakTorque": 800.0,
+		"MaxOmega": 600.0
 	  },
 	  "VehiclePlayerControllerComponent": {
 	    "Possessed": true
