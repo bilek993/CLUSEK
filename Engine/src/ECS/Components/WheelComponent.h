@@ -4,6 +4,7 @@
 struct WheelComponent final
 {
 	std::string VehicleId;
+	bool FlipWheel = false;
 	int WheelId;
 	float Mass;
 	float Width;
