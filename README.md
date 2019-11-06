@@ -138,6 +138,9 @@ This component is required for wheels. It has to be assigned to the wheels with 
 * **VehicleId** (_required_, _std::string_)<br/>
 Vehicle identificator, that is used to associate this wheel with the vehicle. It has to identical to the same parameter in the vehicle component.
 
+* **Flip** (_required_, _bool_)<br/>
+Visually rotates wheel around Y axis by Pi constant. Usually should be set to true for wheel with id 1 and 3.
+
 * **WheelId** (_required_, _int_)<br/>
 A numeric value, that is used to connect a wheel to the correct position in a vehicle. This value is required to be in range 0-4. This game engine requires this value to be: 0 for front left, 1 for front right, 2 for rear left and 3 for rear right wheel.
 
