@@ -454,7 +454,7 @@ void PhysicsSystem::UpdateVehicles() const
 		for (auto w = 0; w < std::size(vehicleComponents[i]->Wheels); w++)
 		{
 			auto wheelLocalPose = wheelQueryResults[i * 4 + w].localPose;
-			if (vehicleComponents[i]->Wheels[w]->FlipWheel)
+			if (vehicleComponents[i]->Wheels[w]->Flip)
 				wheelLocalPose = wheelLocalPose.transform(physx::PxTransform(physx::PxQuat(physx::PxPi, physx::PxVec3(0.0f, 1.0f, 0.0f))));
 
 			physx::PxMat44 wheelMatrix(chassisGlobalPose);

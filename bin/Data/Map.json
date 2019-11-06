@@ -77,7 +77,7 @@
       },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
-		"FlipWheel": true,
+		"Flip": true,
 		"WheelId": 1,
 		"Mass": 25.0,
 		"Width": 1.03,
@@ -112,7 +112,7 @@
       },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
-		"FlipWheel": true,
+		"Flip": true,
 		"WheelId": 3,
 		"Mass": 25.0,
 		"Width": 1.03,
