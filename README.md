@@ -180,6 +180,12 @@ Suspension force application offset on Y axis.
 * **TireForceApplicationPoinOffset** (_optional_, _float_)<br/>
 Tire force application offset on Y axis.
 
+* **LatStiffXMultiplier** (_optional_, _float_)<br/>
+Describes tire lateral stiffness minimum normalized load for X axis.
+
+* **LatStiffYMultiplier** (_optional_, _float_)<br/>
+Describes tire lateral stiffness minimum normalized load for Y axis.
+
 
 
 ### Vehicle Component
