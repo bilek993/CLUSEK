@@ -21,4 +21,6 @@ void WheelComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	MAP_LOADER_BASIC_FIELD(CamberAngleAtMaxCompression, json, component, float);
 	MAP_LOADER_BASIC_FIELD(SuspensionForceApplicationPoinOffset, json, component, float);
 	MAP_LOADER_BASIC_FIELD(TireForceApplicationPoinOffset, json, component, float);
+	MAP_LOADER_BASIC_FIELD(LatStiffXMultiplier, json, component, float);
+	MAP_LOADER_BASIC_FIELD(LatStiffYMultiplier, json, component, float);
 }

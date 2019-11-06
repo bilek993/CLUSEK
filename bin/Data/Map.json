@@ -86,7 +86,9 @@
 		"SuspensionSpringStrength": 35000.0,
 		"SuspensionSpringDamperRate": 4500.0,
 		"SuspensionForceApplicationPoinOffset": -0.3,
-		"TireForceApplicationPoinOffset": -0.3
+		"TireForceApplicationPoinOffset": -0.3,
+		"LatStiffXMultiplier": 0.75,
+		"LatStiffYMultiplier": 0.75
 	  }
 	}
   },
@@ -118,7 +120,9 @@
 		"SuspensionSpringStrength": 35000.0,
 		"SuspensionSpringDamperRate": 4500.0,
 		"SuspensionForceApplicationPoinOffset": -0.3,
-		"TireForceApplicationPoinOffset": -0.3
+		"TireForceApplicationPoinOffset": -0.3,
+		"LatStiffXMultiplier": 0.75,
+		"LatStiffYMultiplier": 0.75
 	  }
 	}
   },
@@ -153,7 +157,9 @@
 		"SuspensionSpringStrength": 35000.0,
 		"SuspensionSpringDamperRate": 4500.0,
 		"SuspensionForceApplicationPoinOffset": -0.3,
-		"TireForceApplicationPoinOffset": -0.3
+		"TireForceApplicationPoinOffset": -0.3,
+		"LatStiffXMultiplier": 0.75,
+		"LatStiffYMultiplier": 0.75
 	  }
 	}
   },
@@ -188,7 +194,9 @@
 		"SuspensionSpringStrength": 35000.0,
 		"SuspensionSpringDamperRate": 4500.0,
 		"SuspensionForceApplicationPoinOffset": -0.3,
-		"TireForceApplicationPoinOffset": -0.3
+		"TireForceApplicationPoinOffset": -0.3,
+		"LatStiffXMultiplier": 0.75,
+		"LatStiffYMultiplier": 0.75
 	  }
 	}
   },

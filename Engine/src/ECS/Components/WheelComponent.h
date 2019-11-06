@@ -18,4 +18,6 @@ struct WheelComponent final
 	float CamberAngleAtMaxCompression = -0.01f;
 	float SuspensionForceApplicationPoinOffset = -0.3f;
 	float TireForceApplicationPoinOffset = -0.3f;
+	float LatStiffXMultiplier = 1.0f;
+	float LatStiffYMultiplier = 1.0f;
 };

@@ -170,7 +170,10 @@ physx::PxVehicleWheelsSimData* VehicleResourcesGenerator::CreateWheelsSimData(co
 	for (auto i = 0; i < wheelsCount; i++)
 	{
 		tires.emplace_back(physx::PxVehicleTireData());
+
 		tires[i].mType = vehicleComponent.Wheels[i]->TireType;
+		tires[i].mLatStiffX *= vehicleComponent.Wheels[i]->LatStiffXMultiplier;
+		tires[i].mLatStiffY *= vehicleComponent.Wheels[i]->LatStiffYMultiplier;
 	}
 
 	std::vector<physx::PxVehicleSuspensionData> suspensions;
