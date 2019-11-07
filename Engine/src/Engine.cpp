@@ -56,7 +56,7 @@ void Engine::Update()
 	UpdateInputOutputDevices();
 	renderSystem->RenderFrameBegin();
 	UpdateSystems(deltaTime);
-	DebugUI.Update(deltaTime, &Config, &DataFromIODevices, &Systems, RenderSystemId, &CurrentRenderSettings, &CurrentPostProcessingSettings);
+	DebugUI.Update(deltaTime, &Config, &DataFromIODevices, &Systems, RenderSystemId, &CurrentRenderSettings, &CurrentPostProcessingSettings, &Registry);
 	renderSystem->RenderFrameEnd();
 	HandleClosingWithButton();
 }
