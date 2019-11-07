@@ -15,6 +15,7 @@
 #include "Windows/GamePadWindow.h"
 #include "Windows/CameraSpeedWindow.h"
 #include "Windows/PostProcessingWindow.h"
+#include "Windows/VehicleDetailsWindow.h"
 
 class DebugUserInterface final
 {
@@ -52,4 +53,5 @@ private:
 	KeyboardInputWindow KeyboardInputWindowInstance;
 	GamePadInputWindow GamePadInputWindowInstance;
 	PostProcessingWindow PostProcessingWindowInstance;
+	VehicleDetailsWindow VehicleDetailsWindowInstance;
 };

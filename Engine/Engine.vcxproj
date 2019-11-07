@@ -83,6 +83,7 @@
     <ClCompile Include="src\Physics\VehicleSceneQueryData.cpp" />
     <ClCompile Include="src\Loaders\Components\VehiclePlayerControllerComponentLoader.cpp" />
     <ClCompile Include="src\ECS\Systems\VehiclePlayerControllerSystem.cpp" />
+    <ClCompile Include="src\GUI\Windows\VehicleDetailsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\RotationMode.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="src\ECS\Components\VehiclePlayerControllerComponent.h" />
     <ClInclude Include="src\Loaders\Components\VehiclePlayerControllerComponentLoader.h" />
     <ClInclude Include="src\ECS\Systems\VehiclePlayerControllerSystem.h" />
+    <ClInclude Include="src\GUI\Windows\VehicleDetailsWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

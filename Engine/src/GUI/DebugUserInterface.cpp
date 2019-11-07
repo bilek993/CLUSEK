@@ -53,6 +53,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	KeyboardInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
 	GamePadInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
 	PostProcessingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
+	VehicleDetailsWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings);
 
 	AfterUpdate();
 }
@@ -104,6 +105,14 @@ void DebugUserInterface::DrawMenuBar()
 			if (ImGui::MenuItem("Back Buffer settings", nullptr, BackBufferWindowInstance.GetIsEnabled()))
 			{
 				BackBufferWindowInstance.GetIsEnabled() = !BackBufferWindowInstance.GetIsEnabled();
+			}
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Physics"))
+		{
+			if (ImGui::MenuItem("Vehicle details", nullptr, VehicleDetailsWindowInstance.GetIsEnabled()))
+			{
+				VehicleDetailsWindowInstance.GetIsEnabled() = !VehicleDetailsWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}
