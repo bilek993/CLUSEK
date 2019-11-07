@@ -2,7 +2,7 @@
 
 void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRenderSettings* renderSettings,
 	std::vector<SystemHolder>* systems, const int renderSystemId, IOData* ioData,
-	PostProcessingSettings* postProcessingSettings)
+	PostProcessingSettings* postProcessingSettings, entt::registry *registry)
 {
 	if (!IsEnabled)
 		return;
@@ -14,6 +14,7 @@ void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRe
 	RenderSystemId = renderSystemId;
 	IoData = ioData;
 	CurrentPostProcessingSettings = postProcessingSettings;
+	Registry = registry;
 
 	Draw();
 }

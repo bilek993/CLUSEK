@@ -9,7 +9,8 @@ class BaseWindow
 public:
 	virtual ~BaseWindow() = default;
 	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings, 
-		std::vector<SystemHolder> *systems, int renderSystemId, IOData *ioData, PostProcessingSettings *postProcessingSettings);
+		std::vector<SystemHolder> *systems, int renderSystemId, IOData *ioData, PostProcessingSettings *postProcessingSettings,
+		entt::registry *registry);
 	bool& GetIsEnabled();
 
 protected:
@@ -24,4 +25,5 @@ protected:
 	int RenderSystemId = -1;
 	IOData *IoData = nullptr;
 	PostProcessingSettings *CurrentPostProcessingSettings = nullptr;
+	entt::registry *Registry = nullptr;
 };
