@@ -70,6 +70,9 @@ void VehicleDetailsWindow::DrawDetails()
 
 		ImGui::Text("Gearbox type: %s", driveDynData.getUseAutoGears() ? "automatic" : "manual");
 
+		if (driveDynData.getUseAutoGears())
+			ImGui::Text("Time since last automatic initialized gear change: %f", driveDynData.getAutoBoxSwitchTime());
+
 		ImGui::Separator();
 
 		ImGui::Text("Engine rotation speed: %f", driveDynData.getEngineRotationSpeed());
