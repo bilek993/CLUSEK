@@ -42,6 +42,22 @@ void VehicleDetailsWindow::DrawDetails() const
 	}
 	else
 	{
+		ImGui::Text("Acceleration");
+		ImGui::SameLine();
+		ImGui::ProgressBar(CurrentVehicleComponent->Vehicle->mDriveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL));
 		
+		ImGui::Text("Braking");
+		ImGui::SameLine();
+		ImGui::ProgressBar(CurrentVehicleComponent->Vehicle->mDriveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_BRAKE));
+
+		ImGui::Text("Handbrake");
+		ImGui::SameLine();
+		ImGui::ProgressBar(CurrentVehicleComponent->Vehicle->mDriveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_HANDBRAKE));
+
+		ImGui::Text("Steering");
+		ImGui::SameLine();
+		ImGui::ProgressBar((-CurrentVehicleComponent->Vehicle->mDriveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT) + 1) / 2);
+
+		ImGui::Separator();
 	}
 }
