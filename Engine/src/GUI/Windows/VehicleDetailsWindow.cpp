@@ -42,22 +42,32 @@ void VehicleDetailsWindow::DrawDetails() const
 	}
 	else
 	{
+		const auto& driveDynData = CurrentVehicleComponent->Vehicle->mDriveDynData;
+
 		ImGui::Text("Acceleration");
 		ImGui::SameLine();
-		ImGui::ProgressBar(CurrentVehicleComponent->Vehicle->mDriveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL));
+		ImGui::ProgressBar(driveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL));
 		
 		ImGui::Text("Braking");
 		ImGui::SameLine();
-		ImGui::ProgressBar(CurrentVehicleComponent->Vehicle->mDriveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_BRAKE));
+		ImGui::ProgressBar(driveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_BRAKE));
 
 		ImGui::Text("Handbrake");
 		ImGui::SameLine();
-		ImGui::ProgressBar(CurrentVehicleComponent->Vehicle->mDriveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_HANDBRAKE));
+		ImGui::ProgressBar(driveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_HANDBRAKE));
 
 		ImGui::Text("Steering");
 		ImGui::SameLine();
-		ImGui::ProgressBar((-CurrentVehicleComponent->Vehicle->mDriveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT) + 1) / 2);
+		ImGui::ProgressBar((-driveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT) + 1) / 2);
 
 		ImGui::Separator();
+
+		const auto currentGear = driveDynData.getCurrentGear() == 1 ? 'N' : driveDynData.getCurrentGear() - 1 + '0';
+		ImGui::Text("Current gear: %c", currentGear);
+
+		const auto targetGear = driveDynData.getTargetGear() == 1 ? 'N' : driveDynData.getTargetGear() - 1 + '0';
+		ImGui::Text("Target gear: %c", targetGear);
+
+		ImGui::Text("Gearbox type: %s", driveDynData.getUseAutoGears() ? "automatic" : "manual");
 	}
 }
