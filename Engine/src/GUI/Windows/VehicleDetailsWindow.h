@@ -16,5 +16,5 @@ private:
 	VehicleComponent* CurrentVehicleComponent = nullptr;
 
 	float TimeCounter = 0.0f;
-	float EngineRotationHistory[50];
+	float EngineRotationHistory[100] = {};
 };
