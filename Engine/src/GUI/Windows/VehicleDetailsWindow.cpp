@@ -32,7 +32,7 @@ void VehicleDetailsWindow::DrawCombo()
 	ImGui::Combo("Selected vehicle Id", &SelectedId, vehicleIds.c_str());
 }
 
-void VehicleDetailsWindow::DrawDetails() const
+void VehicleDetailsWindow::DrawDetails()
 {
 	ImGui::Separator();
 
@@ -73,5 +73,27 @@ void VehicleDetailsWindow::DrawDetails() const
 		ImGui::Separator();
 
 		ImGui::Text("Engine rotation speed: %f", driveDynData.getEngineRotationSpeed());
+		RecalculateGraph(driveDynData.getEngineRotationSpeed());
 	}
+}
+
+void VehicleDetailsWindow::RecalculateGraph(const float rotationSpeed)
+{
+	TimeCounter += DeltaTime;
+
+	if (TimeCounter > 100.0f)
+	{
+		TimeCounter = 0.0f;
+		AddToGraph(rotationSpeed);
+	}
+}
+
+void VehicleDetailsWindow::AddToGraph(const float rotationSpeed)
+{
+	for (auto i = 0; i < IM_ARRAYSIZE(EngineRotationHistory) - 1; i++)
+	{
+		EngineRotationHistory[i] = EngineRotationHistory[i + 1];
+	}
+
+	EngineRotationHistory[IM_ARRAYSIZE(EngineRotationHistory) - 1] = rotationSpeed;
 }

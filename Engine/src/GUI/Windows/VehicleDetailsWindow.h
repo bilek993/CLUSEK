@@ -8,8 +8,13 @@ protected:
 	void Draw() override;
 private:
 	void DrawCombo();
-	void DrawDetails() const;
+	void DrawDetails();
+	void RecalculateGraph(float rotationSpeed);
+	void AddToGraph(float rotationSpeed);
 
 	int SelectedId = -1;
 	VehicleComponent* CurrentVehicleComponent = nullptr;
+
+	float TimeCounter = 0.0f;
+	float EngineRotationHistory[50];
 };
