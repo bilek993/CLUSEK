@@ -4,17 +4,28 @@
 
 void VehicleDetailsWindow::Draw()
 {
-	auto vehicleView = Registry->view<VehicleComponent>();
-	std::string vehicleIds = "";
-
 	ImGui::Begin("Vehicle details", &IsEnabled);
 
-	vehicleView.each([&vehicleIds](VehicleComponent& vehicleComponent)
+	auto vehicleView = Registry->view<VehicleComponent>();
+
+	DrawCombo(vehicleView);
+	DrawDetails(vehicleView);
+
+	ImGui::End();
+}
+
+void VehicleDetailsWindow::DrawCombo(entt::basic_view<unsigned int, VehicleComponent> &view)
+{
+	std::string vehicleIds;
+
+	view.each([&vehicleIds](VehicleComponent& vehicleComponent)
 	{
 		vehicleIds += vehicleComponent.VehicleId + '\0';
 	});
 
 	ImGui::Combo("Selected vehicle Id", &SelectedId, vehicleIds.c_str());
+}
 
-	ImGui::End();
+void VehicleDetailsWindow::DrawDetails(entt::basic_view<unsigned int, VehicleComponent> &view)
+{
 }
