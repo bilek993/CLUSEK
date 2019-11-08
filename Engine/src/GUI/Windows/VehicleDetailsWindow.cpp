@@ -7,7 +7,8 @@ void VehicleDetailsWindow::Draw()
 	ImGui::Begin("Vehicle details", &IsEnabled);
 
 	DrawCombo();
-	DrawDetails();
+	DrawVehicleDetails();
+	DrawWheelsDetails();
 
 	ImGui::End();
 }
@@ -32,7 +33,7 @@ void VehicleDetailsWindow::DrawCombo()
 	ImGui::Combo("Selected vehicle Id", &SelectedId, vehicleIds.c_str());
 }
 
-void VehicleDetailsWindow::DrawDetails()
+void VehicleDetailsWindow::DrawVehicleDetails()
 {
 	ImGui::Separator();
 
@@ -85,6 +86,41 @@ void VehicleDetailsWindow::DrawDetails()
 							FLT_MAX, 
 							ImVec2(0, 100));
 	}
+}
+
+void VehicleDetailsWindow::DrawWheelsDetails() const
+{
+	if (CurrentVehicleComponent == nullptr)
+		return;
+
+	const auto wheelsCount = IM_ARRAYSIZE(CurrentVehicleComponent->Wheels);
+
+	std::vector<float> wheelRotationSpeed(wheelsCount);
+	std::vector<float> wheelRotationAngle(wheelsCount);
+
+	for (auto i = 0; i < wheelsCount; i++)
+	{
+		wheelRotationSpeed[i] = CurrentVehicleComponent->Vehicle->mWheelsDynData.getWheelRotationSpeed(i);
+		wheelRotationAngle[i] = CurrentVehicleComponent->Vehicle->mWheelsDynData.getWheelRotationAngle(i);
+	}
+
+	ImGui::Separator();
+
+	ImGui::PlotHistogram(	"Wheels rotation speed", 
+							wheelRotationSpeed.data(), 
+							wheelsCount,
+							0, 
+							nullptr, 
+							0, FLT_MAX, 
+							ImVec2(0, 100));
+
+	ImGui::PlotHistogram(	"Wheels rotation speed",
+							wheelRotationAngle.data(),
+							wheelsCount,
+							0,
+							nullptr,
+							0, FLT_MAX,
+							ImVec2(0, 100));
 }
 
 void VehicleDetailsWindow::RecalculateGraph(const float rotationSpeed)

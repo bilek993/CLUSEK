@@ -8,7 +8,8 @@ protected:
 	void Draw() override;
 private:
 	void DrawCombo();
-	void DrawDetails();
+	void DrawVehicleDetails();
+	void DrawWheelsDetails() const;
 	void RecalculateGraph(float rotationSpeed);
 	void AddToGraph(float rotationSpeed);
 
