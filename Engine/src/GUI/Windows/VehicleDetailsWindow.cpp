@@ -74,7 +74,13 @@ void VehicleDetailsWindow::DrawDetails()
 
 		ImGui::Text("Engine rotation speed: %f", driveDynData.getEngineRotationSpeed());
 		RecalculateGraph(driveDynData.getEngineRotationSpeed());
-		ImGui::PlotLines("", EngineRotationHistory, IM_ARRAYSIZE(EngineRotationHistory), 0, nullptr, 0.0f, FLT_MAX, ImVec2(350, 100));
+		ImGui::PlotLines(	"Engine rotation speed history", 
+							EngineRotationHistory, 
+							IM_ARRAYSIZE(EngineRotationHistory), 
+							0, nullptr, 
+							0.0f, 
+							FLT_MAX, 
+							ImVec2(0, 100));
 	}
 }
 
