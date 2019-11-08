@@ -11,4 +11,5 @@ private:
 	void DrawDetails(entt::basic_view<unsigned int, VehicleComponent> &view);
 
 	int SelectedId = -1;
+	VehicleComponent* CurrentVehicleComponent = nullptr;
 };

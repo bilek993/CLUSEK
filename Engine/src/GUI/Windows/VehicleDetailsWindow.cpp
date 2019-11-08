@@ -17,10 +17,18 @@ void VehicleDetailsWindow::Draw()
 void VehicleDetailsWindow::DrawCombo(entt::basic_view<unsigned int, VehicleComponent> &view)
 {
 	std::string vehicleIds;
+	auto counter = 0;
 
-	view.each([&vehicleIds](VehicleComponent& vehicleComponent)
+	CurrentVehicleComponent = nullptr;
+
+	view.each([this, &vehicleIds, &counter](VehicleComponent& vehicleComponent)
 	{
 		vehicleIds += vehicleComponent.VehicleId + '\0';
+
+		if (SelectedId == counter++)
+		{
+			CurrentVehicleComponent = &vehicleComponent;
+		}
 	});
 
 	ImGui::Combo("Selected vehicle Id", &SelectedId, vehicleIds.c_str());
@@ -28,4 +36,14 @@ void VehicleDetailsWindow::DrawCombo(entt::basic_view<unsigned int, VehicleCompo
 
 void VehicleDetailsWindow::DrawDetails(entt::basic_view<unsigned int, VehicleComponent> &view)
 {
+	ImGui::Separator();
+
+	if (CurrentVehicleComponent == nullptr)
+	{
+		ImGui::Text("No data!");
+	}
+	else
+	{
+		
+	}
 }
