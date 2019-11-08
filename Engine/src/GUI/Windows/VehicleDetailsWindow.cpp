@@ -69,5 +69,9 @@ void VehicleDetailsWindow::DrawDetails() const
 		ImGui::Text("Target gear: %c", targetGear);
 
 		ImGui::Text("Gearbox type: %s", driveDynData.getUseAutoGears() ? "automatic" : "manual");
+
+		ImGui::Separator();
+
+		ImGui::Text("Engine rotation speed: %f", driveDynData.getEngineRotationSpeed());
 	}
 }
