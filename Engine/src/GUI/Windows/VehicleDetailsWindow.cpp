@@ -114,7 +114,7 @@ void VehicleDetailsWindow::DrawWheelsDetails() const
 							0, FLT_MAX, 
 							ImVec2(0, 100));
 
-	ImGui::PlotHistogram(	"Wheels rotation speed",
+	ImGui::PlotHistogram(	"Wheels rotation angle",
 							wheelRotationAngle.data(),
 							wheelsCount,
 							0,
