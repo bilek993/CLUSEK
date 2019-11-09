@@ -241,5 +241,77 @@
 		"Depth": 2.0
 	  }
 	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 2.8,
+		"PositionY": -1.4,
+		"PositionZ": 12.0
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "HalfHeightCube",
+		"MaterialId": "Data/Textures/HalfHeightCube/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.1,
+	    "DynamicFriction": 0.1,
+	    "Restitution": 0.75
+	  },
+	  "RigidbodyStaticBoxComponent": {
+	    "Width": 2.0,
+		"Height": 1.0,
+		"Depth": 2.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 2.8,
+		"PositionY": -1.2,
+		"PositionZ": 25.0
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "HalfHeightCube",
+		"MaterialId": "Data/Textures/HalfHeightCube/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.1,
+	    "DynamicFriction": 0.1,
+	    "Restitution": 0.75
+	  },
+	  "RigidbodyStaticBoxComponent": {
+	    "Width": 2.0,
+		"Height": 1.0,
+		"Depth": 2.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": -2.8,
+		"PositionY": -1.05,
+		"PositionZ": 30.0
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "HalfHeightCube",
+		"MaterialId": "Data/Textures/HalfHeightCube/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.1,
+	    "DynamicFriction": 0.1,
+	    "Restitution": 0.75
+	  },
+	  "RigidbodyStaticBoxComponent": {
+	    "Width": 2.0,
+		"Height": 1.0,
+		"Depth": 2.0
+	  }
+	}
   }
 ]
