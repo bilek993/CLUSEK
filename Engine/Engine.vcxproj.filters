@@ -165,9 +165,6 @@
     <ClCompile Include="src\Renderer\IndexBuffer.cpp">
       <Filter>Source Files\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Timer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\ECS\Systems\CameraSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
@@ -351,6 +348,9 @@
     <ClCompile Include="src\GUI\Windows\VehicleDetailsWindow.cpp">
       <Filter>Source Files\GUI\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\Timer.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -397,9 +397,6 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\ConstantBuffer.h">
       <Filter>Header Files\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Timer.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\ECS\Systems\BaseSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
@@ -691,6 +688,9 @@
     </ClInclude>
     <ClInclude Include="src\GUI\Windows\VehicleDetailsWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\Timer.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

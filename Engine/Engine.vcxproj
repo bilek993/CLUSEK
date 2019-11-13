@@ -71,7 +71,7 @@
     <ClCompile Include="src\Source.cpp" />
     <ClCompile Include="src\Utils\SystemInfoUtil.cpp" />
     <ClCompile Include="src\Renderer\Shaders\VertexShader.cpp" />
-    <ClCompile Include="src\Timer.cpp" />
+    <ClCompile Include="src\Utils\Timer.cpp" />
     <ClCompile Include="src\Renderer\TransformLogic.cpp" />
     <ClCompile Include="src\Utils\StringUtil.cpp" />
     <ClCompile Include="src\GUI\Windows\SystemsManagerWindow.cpp" />
@@ -181,7 +181,7 @@
     <ClInclude Include="src\Renderer\Vertex\FatVertex.h" />
     <ClInclude Include="src\Renderer\Shaders\VertexShader.h" />
     <ClInclude Include="src\Renderer\VertexBuffer.h" />
-    <ClInclude Include="src\Timer.h" />
+    <ClInclude Include="src\Utils\Timer.h" />
     <ClInclude Include="src\ECS\Components\TransformComponent.h" />
     <ClInclude Include="src\Utils\SystemHolder.h" />
     <ClInclude Include="src\Utils\StringUtil.h" />
