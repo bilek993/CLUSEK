@@ -18,6 +18,8 @@
 #include "Windows/VehicleDetailsWindow.h"
 #include <entt.hpp>
 
+#define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
+
 class DebugUserInterface final
 {
 public:

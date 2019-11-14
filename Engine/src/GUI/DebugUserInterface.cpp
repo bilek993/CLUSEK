@@ -45,16 +45,16 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 
 	HandleMainDockingArea();
 
-	CameraSpeedWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
-	SystemsManagerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
-	FpsTimerWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
-	LightingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
-	BackBufferWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
-	MouseInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
-	KeyboardInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
-	GamePadInputWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
-	PostProcessingWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
-	VehicleDetailsWindowInstance.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry);
+	UPDATE_USER_INTERFACE(CameraSpeedWindowInstance);
+	UPDATE_USER_INTERFACE(SystemsManagerWindowInstance);
+	UPDATE_USER_INTERFACE(FpsTimerWindowInstance);
+	UPDATE_USER_INTERFACE(LightingWindowInstance);
+	UPDATE_USER_INTERFACE(BackBufferWindowInstance);
+	UPDATE_USER_INTERFACE(MouseInputWindowInstance);
+	UPDATE_USER_INTERFACE(KeyboardInputWindowInstance);
+	UPDATE_USER_INTERFACE(GamePadInputWindowInstance);
+	UPDATE_USER_INTERFACE(PostProcessingWindowInstance);
+	UPDATE_USER_INTERFACE(VehicleDetailsWindowInstance);
 
 	AfterUpdate();
 }
