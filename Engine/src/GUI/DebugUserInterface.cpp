@@ -229,7 +229,6 @@ void DebugUserInterface::HandleKeyboardEvents(const IOData *ioData)
 
 void DebugUserInterface::HandleMainDockingArea()
 {
-	auto dockingEnabled = true;
 	const auto windowFlags =	ImGuiWindowFlags_MenuBar | 
 								ImGuiWindowFlags_NoDocking | 
 								ImGuiWindowFlags_NoTitleBar | 
