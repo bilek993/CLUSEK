@@ -31,7 +31,7 @@ std::vector<AdapterData> AdapterReader::GetData()
 			Logger::Error("Failed to get adapter description");
 
 		adapters.push_back(data);
-		index++;
+		++index;
 	}
 
 	return adapters;
