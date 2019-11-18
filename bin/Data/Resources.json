@@ -3,7 +3,9 @@
 	"CivilianVehicle": "Data/Models/CivilianVehicle/CivilianVehicle.fbx",
 	"Wheel": "Data/Models/CivilianVehicle/Wheel.fbx",
 	
-	"HalfHeightCube": "Data/Models/HalfHeightCube/HalfHeightCube.fbx"
+	"HalfHeightCube": "Data/Models/HalfHeightCube/HalfHeightCube.fbx",
+	
+	"SimpleSquareGround": "Data/Models/SimpleSquareGround/SimpleSquareGround.fbx"
   },
   "Textures": {
     "CivilianVehicle_LightAlbedo": {
@@ -81,6 +83,10 @@
 	
 	"HalfHeightCube_Albedo": {
 	  "Path": "Data/Textures/HalfHeightCube/CubeAlbedo.png"
+	},
+	
+	"SimpleSquareGround_Albedo": {
+	  "Path": "Data/Textures/SimpleSquareGround/GroundAlbedo.png"
 	},
   
 	"Skybox": {
