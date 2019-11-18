@@ -205,22 +205,6 @@
   {
     "Tags": [],
 	"Components": {
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.1,
-	    "DynamicFriction": 0.1,
-	    "Restitution": 0.1
-	  },
-	  "RigidbodyStaticPlaneComponent": {
-	    "NormalX": 0.0,
-		"NormalY": 1.0,
-		"NormalZ": 0.0,
-		"Distance": 1.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
 	  "TransformComponent": {
 	    "PositionX": -2.8,
 		"PositionY": -1.4,
@@ -311,6 +295,30 @@
 	    "Width": 2.0,
 		"Height": 1.0,
 		"Depth": 2.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 0.0,
+		"PositionY": -2.2,
+		"PositionZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "SimpleSquareGround",
+		"MaterialId": "Data/Textures/SimpleSquareGround/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.1,
+	    "DynamicFriction": 0.1,
+	    "Restitution": 0.75
+	  },
+	  "RigidbodyStaticBoxComponent": {
+	    "Width": 268.0,
+		"Height": 2.08,
+		"Depth": 268.0
 	  }
 	}
   }
