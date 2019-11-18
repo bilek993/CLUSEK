@@ -38,6 +38,7 @@ HRESULT IndexBuffer::Initialize(ID3D11Device *device, const DWORD *data, const U
 	indexBufferDesc.MiscFlags = 0;
 
 	D3D11_SUBRESOURCE_DATA indexBufferData;
+	ZeroMemory(&indexBufferData, sizeof(D3D11_SUBRESOURCE_DATA));
 	indexBufferData.pSysMem = data;
 	return device->CreateBuffer(&indexBufferDesc, &indexBufferData, Buffer.GetAddressOf());;
 }
