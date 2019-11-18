@@ -17,6 +17,7 @@ void VehiclePlayerControllerSystem::Update(const float deltaTime)
 		HandleKeyboard(accelerate, brake, left, handbrake);
 
 	WheelAngel = std::clamp(WheelAngel + (left * deltaTime * 0.0075f), -1.0f, 1.0f);
+	WheelAngel -= (WheelAngel * deltaTime) / 2500;
 
 	Registry->view<VehiclePlayerControllerComponent, VehicleComponent>().each([this, &accelerate, &brake, &handbrake](VehiclePlayerControllerComponent &vehiclePlayerControllerComponent,
 		VehicleComponent &vehicleComponent)
