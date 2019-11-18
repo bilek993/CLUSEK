@@ -313,7 +313,7 @@
 	  "PhysicsMaterialComponent": {
 	    "StaticFriction": 0.1,
 	    "DynamicFriction": 0.1,
-	    "Restitution": 0.75
+	    "Restitution": 0.1
 	  },
 	  "RigidbodyStaticBoxComponent": {
 	    "Width": 268.0,
