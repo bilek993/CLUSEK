@@ -17,13 +17,21 @@ void VehiclePlayerControllerSystem::Update(const float deltaTime)
 		HandleKeyboard(accelerate, brake, left, handbrake);
 
 	WheelAngel = std::clamp(WheelAngel + (left * deltaTime * 0.0075f), -1.0f, 1.0f);
-	WheelAngel -= (WheelAngel * deltaTime) / 2500;
 
-	Registry->view<VehiclePlayerControllerComponent, VehicleComponent>().each([this, &accelerate, &brake, &handbrake](VehiclePlayerControllerComponent &vehiclePlayerControllerComponent,
+	Registry->view<VehiclePlayerControllerComponent, VehicleComponent>().each([this, &accelerate, &brake, &handbrake, &deltaTime](VehiclePlayerControllerComponent &vehiclePlayerControllerComponent,
 		VehicleComponent &vehicleComponent)
 	{
 		if (vehiclePlayerControllerComponent.Possessed)
 		{
+			const auto vehicleSpeed = (
+				vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(0) + 
+				vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(1) +
+				vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(2) + 
+				vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(3)
+				) / 4;
+
+			WheelAngel -= std::clamp((WheelAngel * deltaTime * vehicleSpeed) / 5000, -1.0f, 1.0f);
+
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL, accelerate);
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_BRAKE, brake);
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT, WheelAngel);
