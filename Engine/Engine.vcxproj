@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Windows\PhysicsStatisticsWindow.cpp" />
     <ClCompile Include="src\Physics\PhysicsFilterHelper.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticCylinderComponentLoader.cpp" />
@@ -86,6 +87,7 @@
     <ClCompile Include="src\GUI\Windows\VehicleDetailsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Windows\PhysicsStatisticsWindow.h" />
     <ClInclude Include="src\Renderer\RotationMode.h" />
     <ClInclude Include="src\Physics\PhysicsFilterHelper.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.h" />

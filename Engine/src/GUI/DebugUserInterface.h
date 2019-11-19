@@ -17,6 +17,7 @@
 #include "Windows/PostProcessingWindow.h"
 #include "Windows/VehicleDetailsWindow.h"
 #include <entt.hpp>
+#include "Windows/PhysicsStatisticsWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
 
@@ -58,4 +59,5 @@ private:
 	GamePadInputWindow GamePadInputWindowInstance;
 	PostProcessingWindow PostProcessingWindowInstance;
 	VehicleDetailsWindow VehicleDetailsWindowInstance;
+	PhysicsStatisticsWindow PhysicsStatisticsWindowInstance;
 };

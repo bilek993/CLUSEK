@@ -55,6 +55,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(GamePadInputWindowInstance);
 	UPDATE_USER_INTERFACE(PostProcessingWindowInstance);
 	UPDATE_USER_INTERFACE(VehicleDetailsWindowInstance);
+	UPDATE_USER_INTERFACE(PhysicsStatisticsWindowInstance);
 
 	AfterUpdate();
 }
@@ -114,6 +115,10 @@ void DebugUserInterface::DrawMenuBar()
 			if (ImGui::MenuItem("Vehicle details", nullptr, VehicleDetailsWindowInstance.GetIsEnabled()))
 			{
 				VehicleDetailsWindowInstance.GetIsEnabled() = !VehicleDetailsWindowInstance.GetIsEnabled();
+			}
+			if (ImGui::MenuItem("Physics statistics", nullptr, PhysicsStatisticsWindowInstance.GetIsEnabled()))
+			{
+				PhysicsStatisticsWindowInstance.GetIsEnabled() = !PhysicsStatisticsWindowInstance.GetIsEnabled();
 			}
 			ImGui::EndMenu();
 		}
