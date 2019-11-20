@@ -5,5 +5,7 @@ void PhysicsStatisticsWindow::Draw()
 {
 	ImGui::Begin("Physics statistics", &IsEnabled);
 
+	ImGui::Text("//TODO");
+
 	ImGui::End();
 }
