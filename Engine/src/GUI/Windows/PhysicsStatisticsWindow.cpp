@@ -29,7 +29,8 @@ PhysicsSystem* PhysicsStatisticsWindow::FindPhysicsSystem() const
 
 void PhysicsStatisticsWindow::DrawNotImplementedInfo() const
 {
-	ImGui::Text("DrawNotImplementedInfo()");
+	ImGui::Text("Physics System not found!");
+	ImGui::Text("Add at least one physics system to your project.");
 }
 
 void PhysicsStatisticsWindow::DrawStats() const
