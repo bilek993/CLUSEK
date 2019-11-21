@@ -5,7 +5,34 @@ void PhysicsStatisticsWindow::Draw()
 {
 	ImGui::Begin("Physics statistics", &IsEnabled);
 
-	ImGui::Text("//TODO");
+	const auto physicsSystem = FindPhysicsSystem();
+
+	if (!physicsSystem)
+		DrawNotImplementedInfo();
+	else
+		DrawStats();
 
 	ImGui::End();
+}
+
+PhysicsSystem* PhysicsStatisticsWindow::FindPhysicsSystem() const
+{
+	for (auto &system : *Systems)
+	{
+		const auto physicsSystem = dynamic_cast<PhysicsSystem*>(system.System.get());
+		if (physicsSystem)
+			return physicsSystem;
+	}
+
+	return nullptr;
+}
+
+void PhysicsStatisticsWindow::DrawNotImplementedInfo() const
+{
+	ImGui::Text("DrawNotImplementedInfo()");
+}
+
+void PhysicsStatisticsWindow::DrawStats() const
+{
+	ImGui::Text("DrawStats()");
 }
