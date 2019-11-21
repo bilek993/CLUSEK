@@ -5,7 +5,7 @@
 
 struct SystemHolder final
 {
-	SystemHolder(const std::string& name, std::unique_ptr<BaseSystem>& baseSystem, bool enabled)
+	SystemHolder(const std::string& name, std::unique_ptr<BaseSystem>& baseSystem, const bool enabled)
 		: Name(name),
 		  System(std::move(baseSystem)),
 		  Enabled(enabled) { }
