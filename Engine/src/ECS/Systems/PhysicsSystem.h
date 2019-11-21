@@ -15,6 +15,9 @@ class PhysicsSystem final : public BaseSystem
 public:
 	void Start() override;
 	void Update(float deltaTime) override;
+
+	physx::PxSimulationStatistics GetStatistics() const;
+
 	~PhysicsSystem() override;
 private:
 	void InitializeCore();

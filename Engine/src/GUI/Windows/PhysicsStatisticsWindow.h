@@ -11,5 +11,5 @@ private:
 	PhysicsSystem* FindPhysicsSystem() const;
 
 	void DrawNotImplementedInfo() const;
-	void DrawStats() const;
+	void DrawStats(const PhysicsSystem* physicsSystem) const;
 };

@@ -10,7 +10,7 @@ void PhysicsStatisticsWindow::Draw()
 	if (!physicsSystem)
 		DrawNotImplementedInfo();
 	else
-		DrawStats();
+		DrawStats(physicsSystem);
 
 	ImGui::End();
 }
@@ -33,7 +33,7 @@ void PhysicsStatisticsWindow::DrawNotImplementedInfo() const
 	ImGui::Text("Add at least one physics system to your project.");
 }
 
-void PhysicsStatisticsWindow::DrawStats() const
+void PhysicsStatisticsWindow::DrawStats(const PhysicsSystem* physicsSystem) const
 {
-	ImGui::Text("DrawStats()");
+	const auto statistics = physicsSystem->GetStatistics();
 }

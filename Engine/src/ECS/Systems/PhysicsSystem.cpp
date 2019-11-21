@@ -51,6 +51,13 @@ void PhysicsSystem::Update(const float deltaTime)
 	}
 }
 
+physx::PxSimulationStatistics PhysicsSystem::GetStatistics() const
+{
+	physx::PxSimulationStatistics statistics;
+	Scene->getSimulationStatistics(statistics);
+	return statistics;
+}
+
 PhysicsSystem::~PhysicsSystem()
 {
 	Registry->view<PhysicsMaterialComponent>().each([](PhysicsMaterialComponent &physicsMaterialComponent)
