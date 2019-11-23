@@ -51,6 +51,7 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, ClearColorGreen, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, ClearColorBlue, data, std::stof(value));
 
+			MAP_CONFIG_FIELD(key, DisableLoadingScreen, data, std::stof(value))
 			MAP_CONFIG_FIELD(key, PathToLoadingLogo, data, value);
 			MAP_CONFIG_FIELD(key, LogoScale, data, std::stof(value));
 

@@ -32,6 +32,7 @@ struct ConfigData final
 	float ClearColorBlue = 1.0f;
 
 	// Loading screen settings
+	int DisableLoadingScreen = 0;
 	std::string PathToLoadingLogo = "";
 	float LogoScale;
 

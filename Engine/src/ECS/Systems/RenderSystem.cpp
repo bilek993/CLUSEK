@@ -35,7 +35,8 @@ void RenderSystem::Start()
 	InitializeConstantBuffers();
 	InitializePostProcessing();
 
-	ShowLoadingScreen();
+	if (!ConfigurationData->DisableLoadingScreen)
+		ShowLoadingScreen();
 
 	ResourcesLoader::Load(Device.Get(), DeviceContext.Get(), ConfigurationData);
 
