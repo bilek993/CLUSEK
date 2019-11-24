@@ -6,6 +6,7 @@
 #include "ConstantBufferTypes/RadianceBuffer.h"
 #include "ConstantBuffer.h"
 #include "Generators/ResourcesGenerator.h"
+#include "../../IrradianceBuffer.h"
 
 bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const ConfigData* config,
 	ID3D11ShaderResourceView* const* skyResourceView)
@@ -101,11 +102,20 @@ bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* 
 		return false;
 	}
 
+	ConstantBuffer<IrradianceBuffer> constantBuffer;
+	const auto hr = constantBuffer.Initialize(device, context);
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'IrradianceBuffer' constant buffer.");
+
+	constantBuffer.Data.SampleDelta = 0.0125f; // TODO: Change this
+	constantBuffer.ApplyChanges();
+
 	IrradianceTexture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
 	ResourcesGenerator::CreateUnorderedAccessView(device, IrradianceTexture);
 
 	context->CSSetShader(irradianceComputeShader.GetShader(), nullptr, 0);
 	context->CSSetShaderResources(0, 1, skyResourceView);
+	context->CSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
 	context->CSSetUnorderedAccessViews(0, 1, IrradianceTexture.UnorderedAccessView.GetAddressOf(), nullptr);
 	context->CSSetSamplers(0, 1, SamplerState.GetAddressOf());
 	context->Dispatch(IrradianceTexture.Width / THREAD_COUNT, IrradianceTexture.Height / THREAD_COUNT, CUBE_SIZE);

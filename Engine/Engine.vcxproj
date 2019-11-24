@@ -87,6 +87,7 @@
     <ClCompile Include="src\GUI\Windows\VehicleDetailsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IrradianceBuffer.h" />
     <ClInclude Include="src\GUI\Windows\PhysicsStatisticsWindow.h" />
     <ClInclude Include="src\Renderer\RotationMode.h" />
     <ClInclude Include="src\Physics\PhysicsFilterHelper.h" />

@@ -698,6 +698,9 @@
     <ClInclude Include="src\GUI\Windows\PhysicsStatisticsWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
+    <ClInclude Include="IrradianceBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">

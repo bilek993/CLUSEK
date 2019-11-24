@@ -1,7 +1,11 @@
 #include "../Includes/sampling_helper.hlsli"
 
 static const float PI = 3.14159265359f;
-static const float SAMPLE_DELTA = 0.0125f;
+
+cbuffer IrradianceBuffer : register(b0)
+{
+    float SampleDelta;
+};
 
 TextureCube InputTexture : register(t0);
 RWTexture2DArray<float4> OutputTexture : register(u0);
@@ -21,9 +25,9 @@ void main(uint3 threadID : SV_DispatchThreadID)
     float3 irradiance = float3(0.0f, 0.0f, 0.0f);
     float nrSamples = 0.0f;
 
-    for (float phi = 0.0f; phi < 2.0f * PI; phi += SAMPLE_DELTA)
+    for (float phi = 0.0f; phi < 2.0f * PI; phi += SampleDelta)
     {
-        for (float theta = 0.0f; theta < 0.5f * PI; theta += SAMPLE_DELTA)
+        for (float theta = 0.0f; theta < 0.5f * PI; theta += SampleDelta)
         {
             float3 tangentSample = float3(sin(theta) * cos(phi), sin(theta) * sin(phi), cos(theta));
             float3 sampleVec = tangentSample.x * right + tangentSample.y * up + tangentSample.z * normal;
