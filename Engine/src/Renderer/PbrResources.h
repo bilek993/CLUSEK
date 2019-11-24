@@ -28,7 +28,8 @@ private:
 	bool LoadBrdfLutFile(ID3D11Device* device, ID3D11DeviceContext* context,
 		int textureSize);
 	bool GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context, 
-		ID3D11ShaderResourceView* const* skyResourceView, int textureSize);
+		ID3D11ShaderResourceView* const* skyResourceView, int textureSize,
+		float sampleDelta);
 	bool GenerateRadiance(ID3D11Device* device, ID3D11DeviceContext* context,
 		ID3D11ShaderResourceView* const* skyResourceView, int textureSize);
 	void CleanUp(ID3D11DeviceContext* context);

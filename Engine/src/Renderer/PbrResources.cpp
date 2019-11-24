@@ -17,7 +17,7 @@ bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context,
 		return false;
 	if (!LoadBrdfLutFile(device, context, config->BrdfLutTextureSize))
 		return false;
-	if (!GenerateIrradiance(device, context, skyResourceView, config->IrradianceTextureSize))
+	if (!GenerateIrradiance(device, context, skyResourceView, config->IrradianceTextureSize, config->IrradianceSampleDelta))
 		return false;
 	if (!GenerateRadiance(device, context, skyResourceView, config->RadianceTextureSize))
 		return false;
@@ -90,7 +90,8 @@ bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, ID3D11DeviceContext* con
 }
 
 bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* context,
-	ID3D11ShaderResourceView* const* skyResourceView, const int textureSize)
+	ID3D11ShaderResourceView* const* skyResourceView, const int textureSize,
+	float sampleDelta)
 {
 	Logger::Debug("Preparing to generate irradiance map...");
 
@@ -107,7 +108,7 @@ bool PbrResource::GenerateIrradiance(ID3D11Device* device, ID3D11DeviceContext* 
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'IrradianceBuffer' constant buffer.");
 
-	constantBuffer.Data.SampleDelta = 0.0125f; // TODO: Change this
+	constantBuffer.Data.SampleDelta = sampleDelta;
 	constantBuffer.ApplyChanges();
 
 	IrradianceTexture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, DXGI_FORMAT_R16G16B16A16_FLOAT, false);

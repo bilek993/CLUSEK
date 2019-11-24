@@ -59,6 +59,7 @@ struct ConfigData final
 	// PBR settings
 	int BrdfLutTextureSize = 128;
 	int IrradianceTextureSize = 32;
+	float IrradianceSampleDelta = 0.0125f;
 	int RadianceTextureSize = 1024;
 
 	// Physics settings
