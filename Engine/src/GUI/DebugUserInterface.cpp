@@ -86,7 +86,7 @@ void DebugUserInterface::DrawMenuBar()
 			}
 			ImGui::EndMenu();
 		}
-		if (ImGui::BeginMenu("Managers"))
+		if (ImGui::BeginMenu("ECS"))
 		{
 			if (ImGui::MenuItem("Systems manager", nullptr, SystemsManagerWindowInstance.GetIsEnabled()))
 			{
