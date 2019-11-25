@@ -43,7 +43,8 @@ private:
 
 	void DrawMenuBar();
 
-	void DrawMenuItem(const std::string& label, BaseWindow& window) const;
+	void DrawMenuItemForWindow(const std::string& label, BaseWindow& window) const;
+	void DrawMenuItemForFunction(const std::string& label, const std::function<void()>& function) const;
 
 	inline const static std::string DOCKSPACE_AREA_NAME = "MainDockspaceArea";
 

@@ -73,58 +73,64 @@ void DebugUserInterface::DrawMenuBar()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("Exit"))
+			DrawMenuItemForFunction("File", [this]
 			{
 				FunctionCloseEngine();
-			}
+			});
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Camera"))
 		{
-			DrawMenuItem("Camera speed", CameraSpeedWindowInstance);
+			DrawMenuItemForWindow("Camera speed", CameraSpeedWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("ECS"))
 		{
-			DrawMenuItem("Entity viewer", EntityViewerWindowInstance);
-			DrawMenuItem("Systems manager", SystemsManagerWindowInstance);
+			DrawMenuItemForWindow("Entity viewer", EntityViewerWindowInstance);
+			DrawMenuItemForWindow("Systems manager", SystemsManagerWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Renderer"))
 		{
-			DrawMenuItem("Post Processing settings", PostProcessingWindowInstance);
-			DrawMenuItem("Lighting settings", LightingWindowInstance);
-			DrawMenuItem("Back Buffer setting", BackBufferWindowInstance);
+			DrawMenuItemForWindow("Post Processing settings", PostProcessingWindowInstance);
+			DrawMenuItemForWindow("Lighting settings", LightingWindowInstance);
+			DrawMenuItemForWindow("Back Buffer setting", BackBufferWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Physics"))
 		{
-			DrawMenuItem("Vehicle details", VehicleDetailsWindowInstance);
-			DrawMenuItem("Physics statistics", PhysicsStatisticsWindowInstance);
+			DrawMenuItemForWindow("Vehicle details", VehicleDetailsWindowInstance);
+			DrawMenuItemForWindow("Physics statistics", PhysicsStatisticsWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("I/O Devices"))
 		{
-			DrawMenuItem("Mouse input", MouseInputWindowInstance);
-			DrawMenuItem("Keyboard input", KeyboardInputWindowInstance);
-			DrawMenuItem("GamePad input", GamePadInputWindowInstance);
+			DrawMenuItemForWindow("Mouse input", MouseInputWindowInstance);
+			DrawMenuItemForWindow("Keyboard input", KeyboardInputWindowInstance);
+			DrawMenuItemForWindow("GamePad input", GamePadInputWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Performance"))
 		{
-			DrawMenuItem("FPS Timer", FpsTimerWindowInstance);
+			DrawMenuItemForWindow("FPS Timer", FpsTimerWindowInstance);
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();
 	}
 }
 
-void DebugUserInterface::DrawMenuItem(const std::string& label, BaseWindow& window) const
+void DebugUserInterface::DrawMenuItemForWindow(const std::string& label, BaseWindow& window) const
 {
 	const auto isWindowEnabled = window.GetIsEnabled();
 
 	if (ImGui::MenuItem(label.c_str(), nullptr, isWindowEnabled))
 		window.SetIsEnabled(!isWindowEnabled);
+}
+
+void DebugUserInterface::DrawMenuItemForFunction(const std::string& label, const std::function<void()>& function) const
+{
+	if (ImGui::MenuItem("Exit"))
+		function();
 }
 
 DebugUserInterface::~DebugUserInterface()
