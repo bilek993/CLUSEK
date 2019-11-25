@@ -81,79 +81,50 @@ void DebugUserInterface::DrawMenuBar()
 		}
 		if (ImGui::BeginMenu("Camera"))
 		{
-			if (ImGui::MenuItem("Camera speed", nullptr, CameraSpeedWindowInstance.GetIsEnabled()))
-			{
-				CameraSpeedWindowInstance.GetIsEnabled() = !CameraSpeedWindowInstance.GetIsEnabled();
-			}
+			DrawMenuItem("Camera speed", CameraSpeedWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("ECS"))
 		{
-			if (ImGui::MenuItem("Entity viewer", nullptr, SystemsManagerWindowInstance.GetIsEnabled()))
-			{
-				EntityViewerWindowInstance.GetIsEnabled() = !EntityViewerWindowInstance.GetIsEnabled();
-			}
-			if (ImGui::MenuItem("Systems manager", nullptr, SystemsManagerWindowInstance.GetIsEnabled()))
-			{
-				SystemsManagerWindowInstance.GetIsEnabled() = !SystemsManagerWindowInstance.GetIsEnabled();
-			}
+			DrawMenuItem("Entity viewer", EntityViewerWindowInstance);
+			DrawMenuItem("Systems manager", SystemsManagerWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Renderer"))
 		{
-			if (ImGui::MenuItem("Post Processing settings", nullptr, PostProcessingWindowInstance.GetIsEnabled()))
-			{
-				PostProcessingWindowInstance.GetIsEnabled() = !PostProcessingWindowInstance.GetIsEnabled();
-			}
-			if (ImGui::MenuItem("Lighting settings", nullptr, LightingWindowInstance.GetIsEnabled()))
-			{
-				LightingWindowInstance.GetIsEnabled() = !LightingWindowInstance.GetIsEnabled();
-			}
-			if (ImGui::MenuItem("Back Buffer settings", nullptr, BackBufferWindowInstance.GetIsEnabled()))
-			{
-				BackBufferWindowInstance.GetIsEnabled() = !BackBufferWindowInstance.GetIsEnabled();
-			}
+			DrawMenuItem("Post Processing settings", PostProcessingWindowInstance);
+			DrawMenuItem("Lighting settings", LightingWindowInstance);
+			DrawMenuItem("Back Buffer setting", BackBufferWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Physics"))
 		{
-			if (ImGui::MenuItem("Vehicle details", nullptr, VehicleDetailsWindowInstance.GetIsEnabled()))
-			{
-				VehicleDetailsWindowInstance.GetIsEnabled() = !VehicleDetailsWindowInstance.GetIsEnabled();
-			}
-			if (ImGui::MenuItem("Physics statistics", nullptr, PhysicsStatisticsWindowInstance.GetIsEnabled()))
-			{
-				PhysicsStatisticsWindowInstance.GetIsEnabled() = !PhysicsStatisticsWindowInstance.GetIsEnabled();
-			}
+			DrawMenuItem("Vehicle details", VehicleDetailsWindowInstance);
+			DrawMenuItem("Physics statistics", PhysicsStatisticsWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("I/O Devices"))
 		{
-			if (ImGui::MenuItem("Mouse input", nullptr, MouseInputWindowInstance.GetIsEnabled()))
-			{
-				MouseInputWindowInstance.GetIsEnabled() = !MouseInputWindowInstance.GetIsEnabled();
-			}
-			if (ImGui::MenuItem("Keyboard input", nullptr, KeyboardInputWindowInstance.GetIsEnabled()))
-			{
-				KeyboardInputWindowInstance.GetIsEnabled() = !KeyboardInputWindowInstance.GetIsEnabled();
-			}
-			if (ImGui::MenuItem("GamePad input", nullptr, GamePadInputWindowInstance.GetIsEnabled()))
-			{
-				GamePadInputWindowInstance.GetIsEnabled() = !GamePadInputWindowInstance.GetIsEnabled();
-			}
+			DrawMenuItem("Mouse input", MouseInputWindowInstance);
+			DrawMenuItem("Keyboard input", KeyboardInputWindowInstance);
+			DrawMenuItem("GamePad input", GamePadInputWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Performance"))
 		{
-			if (ImGui::MenuItem("FPS Timer", nullptr, FpsTimerWindowInstance.GetIsEnabled()))
-			{
-				FpsTimerWindowInstance.GetIsEnabled() = !FpsTimerWindowInstance.GetIsEnabled();
-			}
+			DrawMenuItem("FPS Timer", FpsTimerWindowInstance);
 			ImGui::EndMenu();
 		}
-
 		ImGui::EndMainMenuBar();
 	}
+}
+
+void DebugUserInterface::DrawMenuItem(const std::string& label, BaseWindow& window) const
+{
+	const auto isWindowEnabled = window.GetIsEnabled();
+
+	if (ImGui::MenuItem(label.c_str(), nullptr, isWindowEnabled))
+		window.SetIsEnabled(!isWindowEnabled);
 }
 
 DebugUserInterface::~DebugUserInterface()

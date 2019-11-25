@@ -19,7 +19,12 @@ void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRe
 	Draw();
 }
 
-bool& BaseWindow::GetIsEnabled()
+bool BaseWindow::GetIsEnabled() const
 {
 	return IsEnabled;
+}
+
+void BaseWindow::SetIsEnabled(const bool value)
+{
+	IsEnabled = value;
 }

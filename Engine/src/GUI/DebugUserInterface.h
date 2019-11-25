@@ -43,6 +43,8 @@ private:
 
 	void DrawMenuBar();
 
+	void DrawMenuItem(const std::string& label, BaseWindow& window) const;
+
 	inline const static std::string DOCKSPACE_AREA_NAME = "MainDockspaceArea";
 
 	bool IsEnabled = false;

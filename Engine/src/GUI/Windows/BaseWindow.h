@@ -11,7 +11,9 @@ public:
 	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings, 
 		std::vector<SystemHolder> *systems, int renderSystemId, IOData *ioData, PostProcessingSettings *postProcessingSettings,
 		entt::registry *registry);
-	bool& GetIsEnabled();
+
+	bool GetIsEnabled() const;
+	void SetIsEnabled(bool value);
 
 protected:
 	virtual void Draw() = 0;
