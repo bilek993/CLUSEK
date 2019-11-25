@@ -11,5 +11,5 @@ private:
 
 	int FramesCounter = 0;
 	float TimeCounter = 0.0f;
-	float HistoricalFps[50];
+	float HistoricalFps[50] = {};
 };
