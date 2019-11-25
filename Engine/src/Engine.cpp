@@ -3,7 +3,6 @@
 #include "ECS/Systems/CameraSystem.h"
 #include "ECS/Systems/RenderSystem.h"
 #include "ECS/Components/ModelRenderComponent.h"
-#include "ECS/Systems/RotationSystem.h"
 #include "Loaders/MapLoader.h"
 #include "ECS/Systems/SkyboxSystem.h"
 #include "ECS/Systems/PhysicsSystem.h"
@@ -88,9 +87,6 @@ void Engine::CreateSystems()
 
 	systemBasePtr = std::make_unique<CameraSystem>();
 	Systems.emplace_back(SystemHolder("Camera System", systemBasePtr, true));
-
-	systemBasePtr = std::make_unique<RotationSystem>();
-	Systems.emplace_back(SystemHolder("Rotation System", systemBasePtr, false));
 
 	systemBasePtr = std::make_unique<SkyboxSystem>();
 	Systems.emplace_back(SystemHolder("Skybox System", systemBasePtr, true));
