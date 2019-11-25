@@ -18,6 +18,7 @@
 #include "Windows/VehicleDetailsWindow.h"
 #include <entt.hpp>
 #include "Windows/PhysicsStatisticsWindow.h"
+#include "Windows/EntityViewerWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
 
@@ -60,4 +61,5 @@ private:
 	PostProcessingWindow PostProcessingWindowInstance;
 	VehicleDetailsWindow VehicleDetailsWindowInstance;
 	PhysicsStatisticsWindow PhysicsStatisticsWindowInstance;
+	EntityViewerWindow EntityViewerWindowInstance;
 };

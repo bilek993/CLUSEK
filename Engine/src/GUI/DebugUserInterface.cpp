@@ -56,6 +56,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(PostProcessingWindowInstance);
 	UPDATE_USER_INTERFACE(VehicleDetailsWindowInstance);
 	UPDATE_USER_INTERFACE(PhysicsStatisticsWindowInstance);
+	UPDATE_USER_INTERFACE(EntityViewerWindowInstance);
 
 	AfterUpdate();
 }
@@ -88,6 +89,10 @@ void DebugUserInterface::DrawMenuBar()
 		}
 		if (ImGui::BeginMenu("ECS"))
 		{
+			if (ImGui::MenuItem("Entity viewer", nullptr, SystemsManagerWindowInstance.GetIsEnabled()))
+			{
+				EntityViewerWindowInstance.GetIsEnabled() = !EntityViewerWindowInstance.GetIsEnabled();
+			}
 			if (ImGui::MenuItem("Systems manager", nullptr, SystemsManagerWindowInstance.GetIsEnabled()))
 			{
 				SystemsManagerWindowInstance.GetIsEnabled() = !SystemsManagerWindowInstance.GetIsEnabled();
