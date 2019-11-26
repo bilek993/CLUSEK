@@ -1,6 +1,6 @@
 #include "EntityViewerWindow.h"
-#include <imgui.h>
 #include "../../ECS/Components/TransformComponent.h"
+#include "../../ECS/Components/CameraComponent.h"
 
 void EntityViewerWindow::Draw()
 {
@@ -20,6 +20,8 @@ void EntityViewerWindow::DrawList()
 
 	Registry->each([this, &counter](auto entity)
 	{
-		ImGui::Text("Entity %i", counter++);
+		ImGui::BulletText("Entity %i", counter++);
+
+		DrawComponent<CameraComponent>(entity, "Camera Component");
 	});
 }
