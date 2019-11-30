@@ -23,6 +23,9 @@ void PerSystemPerformanceWindow::CollectData()
 
 	for (auto& system : *Systems)
 	{
+		if (!system.Enabled)
+			continue;
+
 		SystemsPerformance.emplace_back(system.System->GetDeltaTime());
 		SystemNames.emplace_back(system.Name);
 	}
