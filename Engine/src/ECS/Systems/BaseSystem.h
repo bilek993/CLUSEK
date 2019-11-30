@@ -5,6 +5,7 @@
 #include "../../Window/RenderWindow.h"
 #include "../../Renderer/DynamicRenderSettings.h"
 #include "../../Renderer/PostProcessingSettings.h"
+#include "../../Utils/Timer.h"
 
 class BaseSystem
 {
@@ -16,6 +17,8 @@ public:
 
 	virtual void Start() = 0;
 	virtual void Update(float deltaTime) = 0;
+
+	float GetDeltaTimeAndRestart();
 protected:
 	entt::registry *Registry = nullptr;
 	RenderWindow *Window = nullptr;
@@ -24,4 +27,7 @@ protected:
 	IOData *InputOutputData = nullptr;
 	IODevices *InputOutputDevices = nullptr;
 	PostProcessingSettings *CurrentPostProcessingSettings = nullptr;
+
+private:
+	Timer PerformanceTimer{};
 };

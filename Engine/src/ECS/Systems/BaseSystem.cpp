@@ -12,3 +12,8 @@ void BaseSystem::Initialize(entt::registry* registry, RenderWindow* window, Conf
 	InputOutputDevices = ioDevices;
 	CurrentPostProcessingSettings = postProcessingSettings;
 }
+
+float BaseSystem::GetDeltaTimeAndRestart()
+{
+	return PerformanceTimer.GetDeltaTimeAndRestart();
+}
