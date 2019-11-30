@@ -57,6 +57,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(VehicleDetailsWindowInstance);
 	UPDATE_USER_INTERFACE(PhysicsStatisticsWindowInstance);
 	UPDATE_USER_INTERFACE(EntityViewerWindowInstance);
+	UPDATE_USER_INTERFACE(PerSystemPerformanceWindowInstance);
 
 	AfterUpdate();
 }
@@ -113,6 +114,7 @@ void DebugUserInterface::DrawMenuBar()
 		if (ImGui::BeginMenu("Performance"))
 		{
 			DrawMenuItemForWindow("FPS Timer", FpsTimerWindowInstance);
+			DrawMenuItemForWindow("Per System Performance Window", PerSystemPerformanceWindowInstance);
 			ImGui::EndMenu();
 		}
 		ImGui::EndMainMenuBar();

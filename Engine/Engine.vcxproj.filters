@@ -354,6 +354,9 @@
     <ClCompile Include="src\GUI\Windows\EntityViewerWindow.cpp">
       <Filter>Source Files\GUI\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\Windows\PerSystemPerformanceWindow.cpp">
+      <Filter>Source Files\GUI\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -699,6 +702,9 @@
       <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
     </ClInclude>
     <ClInclude Include="src\GUI\Windows\EntityViewerWindow.h">
+      <Filter>Header Files\GUI\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Windows\PerSystemPerformanceWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
   </ItemGroup>
