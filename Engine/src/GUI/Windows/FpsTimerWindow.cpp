@@ -35,9 +35,7 @@ void FpsTimerWindow::Calculate()
 void FpsTimerWindow::AddNewFps(const int fps)
 {
 	for (auto i = 0; i < IM_ARRAYSIZE(HistoricalFps) - 1; i++)
-	{
 		HistoricalFps[i] = HistoricalFps[i + 1];
-	}
 
 	HistoricalFps[IM_ARRAYSIZE(HistoricalFps) - 1] = fps;
 }
