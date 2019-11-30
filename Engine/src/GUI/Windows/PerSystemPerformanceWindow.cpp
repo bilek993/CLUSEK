@@ -7,6 +7,8 @@ void PerSystemPerformanceWindow::Draw()
 
 	ImGui::Begin("Per System Performance Window", &IsEnabled);
 
+	DrawDeltaTime();
+	ImGui::Separator();
 	DrawSystemNamesWithIds();
 	ImGui::Separator();
 	DrawHistogram();
@@ -24,6 +26,11 @@ void PerSystemPerformanceWindow::CollectData()
 		SystemsPerformance.emplace_back(system.System->GetDeltaTime());
 		SystemNames.emplace_back(system.Name);
 	}
+}
+
+void PerSystemPerformanceWindow::DrawDeltaTime() const
+{
+	ImGui::Text("Delta time: %f", DeltaTime);
 }
 
 void PerSystemPerformanceWindow::DrawSystemNamesWithIds()

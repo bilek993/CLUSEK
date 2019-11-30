@@ -8,6 +8,7 @@ protected:
 
 private:
 	void CollectData();
+	void DrawDeltaTime() const;
 	void DrawSystemNamesWithIds();
 	void DrawHistogram();
 
