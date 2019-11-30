@@ -11,4 +11,5 @@ private:
 	void DrawHistogram();
 
 	std::vector<float> SystemsPerformance;
+	std::vector<std::string> SystemNames;
 };

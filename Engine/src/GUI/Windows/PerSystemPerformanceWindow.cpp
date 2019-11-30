@@ -15,12 +15,23 @@ void PerSystemPerformanceWindow::Draw()
 void PerSystemPerformanceWindow::CollectData()
 {
 	SystemsPerformance.clear();
+	SystemNames.clear();
 
 	for (auto& system : *Systems)
+	{
 		SystemsPerformance.emplace_back(system.System->GetDeltaTime());
+		SystemNames.emplace_back(system.Name);
+	}
 }
 
 void PerSystemPerformanceWindow::DrawHistogram()
 {
-	ImGui::PlotHistogram("Histogram", SystemsPerformance.data(), SystemsPerformance.size(), 0, nullptr, 0.0f, 10.0f, ImVec2(0, 80));
+	ImGui::PlotHistogram(	"Current System Performance", 
+							SystemsPerformance.data(), 
+							SystemsPerformance.size(), 
+							0, 
+							nullptr, 
+							0.0f, 
+							DeltaTime, 
+							ImVec2(0, 100));
 }
