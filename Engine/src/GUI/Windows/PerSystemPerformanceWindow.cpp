@@ -7,6 +7,8 @@ void PerSystemPerformanceWindow::Draw()
 
 	ImGui::Begin("Per System Performance Window", &IsEnabled);
 
+	DrawSystemNamesWithIds();
+	ImGui::Separator();
 	DrawHistogram();
 
 	ImGui::End();
@@ -24,9 +26,15 @@ void PerSystemPerformanceWindow::CollectData()
 	}
 }
 
+void PerSystemPerformanceWindow::DrawSystemNamesWithIds()
+{
+	for (auto i = 0; i < SystemsPerformance.size(); i++)
+		ImGui::BulletText("[%d] %s - %f ms", i, SystemNames[i].c_str(), SystemsPerformance[i]);
+}
+
 void PerSystemPerformanceWindow::DrawHistogram()
 {
-	ImGui::PlotHistogram(	"Current System Performance", 
+	ImGui::PlotHistogram(	"Current Systems Performance", 
 							SystemsPerformance.data(), 
 							SystemsPerformance.size(), 
 							0, 

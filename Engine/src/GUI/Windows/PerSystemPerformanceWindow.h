@@ -8,6 +8,7 @@ protected:
 
 private:
 	void CollectData();
+	void DrawSystemNamesWithIds();
 	void DrawHistogram();
 
 	std::vector<float> SystemsPerformance;
