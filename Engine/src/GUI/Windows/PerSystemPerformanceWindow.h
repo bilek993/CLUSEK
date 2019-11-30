@@ -5,4 +5,10 @@ class PerSystemPerformanceWindow final : public BaseWindow
 {
 protected:
 	void Draw() override;
+
+private:
+	void CollectData();
+	void DrawHistogram();
+
+	std::vector<float> SystemsPerformance;
 };
