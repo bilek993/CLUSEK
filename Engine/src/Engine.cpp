@@ -142,7 +142,9 @@ void Engine::UpdateSystems(const float deltaTime)
 		if (!system.Enabled)
 			continue;
 
+		system.System->BeforeUpdate();
 		system.System->Update(deltaTime);
+		system.System->AfterUpdate();
 	}
 }
 

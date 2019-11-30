@@ -16,9 +16,12 @@ public:
 		DynamicRenderSettings *renderSettings, IOData *ioData, IODevices *ioDevices, PostProcessingSettings *postProcessingSettings);
 
 	virtual void Start() = 0;
-	virtual void Update(float deltaTime) = 0;
 
-	float GetDeltaTimeAndRestart();
+	void BeforeUpdate();
+	virtual void Update(float deltaTime) = 0;
+	void AfterUpdate();
+
+	float GetDeltaTime() const;
 protected:
 	entt::registry *Registry = nullptr;
 	RenderWindow *Window = nullptr;
@@ -30,4 +33,5 @@ protected:
 
 private:
 	Timer PerformanceTimer{};
+	float SystemDeltaTime = 0;
 };

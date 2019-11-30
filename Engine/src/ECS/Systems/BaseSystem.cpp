@@ -13,7 +13,17 @@ void BaseSystem::Initialize(entt::registry* registry, RenderWindow* window, Conf
 	CurrentPostProcessingSettings = postProcessingSettings;
 }
 
-float BaseSystem::GetDeltaTimeAndRestart()
+void BaseSystem::BeforeUpdate()
 {
-	return PerformanceTimer.GetDeltaTimeAndRestart();
+	PerformanceTimer.Restart();
+}
+
+void BaseSystem::AfterUpdate()
+{
+	SystemDeltaTime = PerformanceTimer.GetDeltaTimeAndRestart();
+}
+
+float BaseSystem::GetDeltaTime() const
+{
+	return SystemDeltaTime;
 }

@@ -7,7 +7,7 @@ void PerSystemPerformanceWindow::Draw()
 
 	for (auto& system : *Systems)
 	{
-		ImGui::Text("- %s %f", system.Name.c_str(), system.System->GetDeltaTimeAndRestart());
+		ImGui::Text("- %s %f", system.Name.c_str(), system.System->GetDeltaTime());
 	}
 
 	ImGui::End();
