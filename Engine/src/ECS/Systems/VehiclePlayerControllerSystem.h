@@ -7,8 +7,8 @@ public:
 	void Start() override;
 	void Update(float deltaTime) override;
 private:
-	void HandleGamepad(float& accelerate, float& brake, float& left, float& handbrake) const;
-	void HandleKeyboard(float& accelerate, float& brake, float& left, float& handbrake) const;
+	void HandleGamepad(float& accelerate, float& brake, float& left, float& handbrake, bool& changeToOrFromReverse) const;
+	void HandleKeyboard(float& accelerate, float& brake, float& left, float& handbrake, bool& changeToOrFromReverse) const;
 
 	float WheelAngel = 0.0f;
 };
