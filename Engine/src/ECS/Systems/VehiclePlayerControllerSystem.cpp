@@ -40,17 +40,24 @@ void VehiclePlayerControllerSystem::Update(const float deltaTime)
 
 			if (changeToOrFromReverse)
 			{
-				vehiclePlayerControllerComponent.Reverse = !vehiclePlayerControllerComponent.Reverse;
-
-				if (vehiclePlayerControllerComponent.Reverse)
+				if (std::abs(vehicleSpeed) < 1.0f)
 				{
-					vehicleComponent.Vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eREVERSE);
-					Logger::Debug("Changed gear to reverse.");
+					vehiclePlayerControllerComponent.Reverse = !vehiclePlayerControllerComponent.Reverse;
+
+					if (vehiclePlayerControllerComponent.Reverse)
+					{
+						vehicleComponent.Vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eREVERSE);
+						Logger::Debug("Changed gear to reverse.");
+					}
+					else
+					{
+						vehicleComponent.Vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eFIRST);
+						Logger::Debug("Changed gear to first.");
+					}
 				}
 				else
 				{
-					vehicleComponent.Vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eFIRST);
-					Logger::Debug("Changed gear to first.");
+					Logger::Debug("Stop vehicle before changing gear!");
 				}
 			}
 		}
