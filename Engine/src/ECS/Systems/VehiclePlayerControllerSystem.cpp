@@ -72,5 +72,5 @@ void VehiclePlayerControllerSystem::HandleKeyboard(float& accelerate, float& bra
 	brake = InputOutputData->KeyboardState.Down ? 1.0f : 0.0f;
 	left = InputOutputData->KeyboardState.Left ? 1.0f : InputOutputData->KeyboardState.Right ? -1.0f : 0.0f;
 	handbrake = InputOutputData->KeyboardState.Space ? 1.0f : 0.0f;
-	changeToOrFromReverse = InputOutputData->KeyboardTracker.pressed.RightShift || InputOutputData->KeyboardTracker.pressed.LeftShift;
+	changeToOrFromReverse = InputOutputData->KeyboardTracker.pressed.LeftControl || InputOutputData->KeyboardTracker.pressed.RightControl;
 }
