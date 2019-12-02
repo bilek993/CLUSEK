@@ -9,4 +9,5 @@ void VehiclePlayerControllerComponentLoader::Add(nlohmann::json& json, entt::reg
 	MAP_LOADER_BASIC_FIELD(Possessed, json, component, bool);
 	MAP_LOADER_BASIC_FIELD(SteeringSpeed, json, component, float);
 	MAP_LOADER_BASIC_FIELD(WheelReturningToNeutralPosition, json, component, float);
+	MAP_LOADER_BASIC_FIELD(Reverse, json, component, bool);
 }
