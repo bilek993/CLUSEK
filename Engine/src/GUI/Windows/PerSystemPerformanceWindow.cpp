@@ -33,7 +33,7 @@ void PerSystemPerformanceWindow::CollectData()
 
 void PerSystemPerformanceWindow::DrawDeltaTime() const
 {
-	ImGui::Text("Delta time: %f", DeltaTime);
+	ImGui::Text("Delta time: %f ms", DeltaTime);
 }
 
 void PerSystemPerformanceWindow::DrawSystemNamesWithIds()
