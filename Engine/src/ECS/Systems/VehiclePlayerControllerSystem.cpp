@@ -29,8 +29,8 @@ void VehiclePlayerControllerSystem::Update(const float deltaTime)
 				vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(3)
 				) / 4;
 
-			WheelAngel = std::clamp(WheelAngel + (left * deltaTime * vehiclePlayerControllerComponent.SteeringSpeed), -1.0f, 1.0f);
-			WheelAngel -= std::clamp((WheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition, -1.0f, 1.0f);
+			WheelAngel = WheelAngel + left * deltaTime * vehiclePlayerControllerComponent.SteeringSpeed;
+			WheelAngel -= (WheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition;
 			WheelAngel = std::clamp(WheelAngel, -1.0f, 1.0f);
 
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL, accelerate);
