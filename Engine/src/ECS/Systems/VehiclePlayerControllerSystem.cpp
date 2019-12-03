@@ -1,6 +1,4 @@
 #include "VehiclePlayerControllerSystem.h"
-#include "../Components/VehicleComponent.h"
-#include "../Components/VehiclePlayerControllerComponent.h"
 #include "PxPhysicsAPI.h"
 
 void VehiclePlayerControllerSystem::Start()
@@ -22,44 +20,16 @@ void VehiclePlayerControllerSystem::Update(const float deltaTime)
 	{
 		if (vehiclePlayerControllerComponent.Possessed)
 		{
-			const auto vehicleSpeed = (
-				vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(0) + 
-				vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(1) +
-				vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(2) + 
-				vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(3)
-				) / 4;
+			const auto vehicleSpeed = CalculateVehicleSpeed(vehicleComponent);
 
-			WheelAngel = WheelAngel + left * deltaTime * vehiclePlayerControllerComponent.SteeringSpeed;
-			WheelAngel -= (WheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition;
-			WheelAngel = std::clamp(WheelAngel, -1.0f, 1.0f);
+			CalculateAndSetWheelAngle(deltaTime, left, vehicleSpeed, vehiclePlayerControllerComponent);
 
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL, accelerate);
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_BRAKE, brake);
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT, WheelAngel);
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_HANDBRAKE, handbrake);
 
-			if (changeToOrFromReverse)
-			{
-				if (std::abs(vehicleSpeed) < vehiclePlayerControllerComponent.MinimalSpeedForGearChangeFromOrToReverse)
-				{
-					vehiclePlayerControllerComponent.Reverse = !vehiclePlayerControllerComponent.Reverse;
-
-					if (vehiclePlayerControllerComponent.Reverse)
-					{
-						vehicleComponent.Vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eREVERSE);
-						Logger::Debug("Changed gear to reverse.");
-					}
-					else
-					{
-						vehicleComponent.Vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eFIRST);
-						Logger::Debug("Changed gear to first.");
-					}
-				}
-				else
-				{
-					Logger::Debug("Stop vehicle before changing gear!");
-				}
-			}
+			HandleChangingFromOrToReverse(vehicleSpeed, changeToOrFromReverse, vehiclePlayerControllerComponent, vehicleComponent);
 		}
 	});
 }
@@ -80,4 +50,49 @@ void VehiclePlayerControllerSystem::HandleKeyboard(float& accelerate, float& bra
 	left = InputOutputData->KeyboardState.Left ? 1.0f : InputOutputData->KeyboardState.Right ? -1.0f : 0.0f;
 	handbrake = InputOutputData->KeyboardState.Space ? 1.0f : 0.0f;
 	changeToOrFromReverse = InputOutputData->KeyboardTracker.pressed.LeftControl || InputOutputData->KeyboardTracker.pressed.RightControl;
+}
+
+float VehiclePlayerControllerSystem::CalculateVehicleSpeed(const VehicleComponent& vehicleComponent) const
+{
+	return (
+		vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(0) +
+		vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(1) +
+		vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(2) +
+		vehicleComponent.Vehicle->mWheelsDynData.getWheelRotationSpeed(3)
+		) / 4;
+}
+
+void VehiclePlayerControllerSystem::CalculateAndSetWheelAngle(const float deltaTime, const float left, const float vehicleSpeed,
+	const VehiclePlayerControllerComponent& vehiclePlayerControllerComponent)
+{
+	WheelAngel = WheelAngel + left * deltaTime * vehiclePlayerControllerComponent.SteeringSpeed;
+	WheelAngel -= (WheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition;
+	WheelAngel = std::clamp(WheelAngel, -1.0f, 1.0f);
+}
+
+void VehiclePlayerControllerSystem::HandleChangingFromOrToReverse(const float vehicleSpeed, const bool changeToOrFromReverse,
+	VehiclePlayerControllerComponent& vehiclePlayerControllerComponent, VehicleComponent &vehicleComponent) const
+{
+	if (!changeToOrFromReverse)
+		return;
+
+	if (std::abs(vehicleSpeed) < vehiclePlayerControllerComponent.MinimalSpeedForGearChangeFromOrToReverse)
+	{
+		vehiclePlayerControllerComponent.Reverse = !vehiclePlayerControllerComponent.Reverse;
+
+		if (vehiclePlayerControllerComponent.Reverse)
+		{
+			vehicleComponent.Vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eREVERSE);
+			Logger::Debug("Changed gear to reverse.");
+		}
+		else
+		{
+			vehicleComponent.Vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eFIRST);
+			Logger::Debug("Changed gear to first.");
+		}
+	}
+	else
+	{
+		Logger::Debug("Stop vehicle before changing gear!");
+	}
 }
