@@ -40,7 +40,7 @@ void VehiclePlayerControllerSystem::Update(const float deltaTime)
 
 			if (changeToOrFromReverse)
 			{
-				if (std::abs(vehicleSpeed) < 1.0f)
+				if (std::abs(vehicleSpeed) < vehiclePlayerControllerComponent.MinimalSpeedForGearChangeFromOrToReverse)
 				{
 					vehiclePlayerControllerComponent.Reverse = !vehiclePlayerControllerComponent.Reverse;
 
