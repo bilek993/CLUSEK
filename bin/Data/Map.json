@@ -302,6 +302,20 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
+	    "PositionX": -30.0,
+		"PositionY": -0.1,
+		"PositionZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "SmoothCylinder",
+		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
 	    "PositionX": 0.0,
 		"PositionY": -2.2,
 		"PositionZ": 0.0
