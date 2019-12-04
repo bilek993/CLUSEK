@@ -304,11 +304,24 @@
 	  "TransformComponent": {
 	    "PositionX": -30.0,
 		"PositionY": -0.1,
-		"PositionZ": 0.0
+		"PositionZ": 0.0,
+		"RotationX": 0.0,
+		"RotationY": 0.0,
+		"RotationZ": 1.57
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.8,
+	    "DynamicFriction": 0.8,
+	    "Restitution": 0.1
+	  },
+	  "RigidbodyDynamicCylinderComponent": {
+	    "Width": 2.0,
+		"Radius": 1.0,
+		"Density": 1.0
 	  }
 	}
   },
