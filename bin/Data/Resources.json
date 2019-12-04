@@ -5,6 +5,8 @@
 	
 	"HalfHeightCube": "Data/Models/HalfHeightCube/HalfHeightCube.fbx",
 	
+	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx",
+	
 	"SimpleSquareGround": "Data/Models/SimpleSquareGround/SimpleSquareGround.fbx"
   },
   "Textures": {
@@ -87,6 +89,10 @@
 	
 	"SimpleSquareGround_Albedo": {
 	  "Path": "Data/Textures/SimpleSquareGround/GroundAlbedo.png"
+	},
+	
+	"SmoothCylinder_Albedo": {
+	  "Path": "Data/Textures/SmoothCylinder/SmoothCylinderAlbedo.png"
 	},
   
 	"Skybox": {
