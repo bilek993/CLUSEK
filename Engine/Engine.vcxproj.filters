@@ -662,9 +662,6 @@
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticCylinderComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\Components\RigidbodyDynamicCylinderComponent.h">
-      <Filter>Header Files\Loaders\Components</Filter>
-    </ClInclude>
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
@@ -706,6 +703,9 @@
     </ClInclude>
     <ClInclude Include="src\GUI\Windows\PerSystemPerformanceWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Components\RigidbodyDynamicCylinderComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
