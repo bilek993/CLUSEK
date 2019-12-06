@@ -20,13 +20,32 @@ void PerSystemPerformanceWindow::CollectData()
 {
 	SystemsPerformance.clear();
 	SystemNames.clear();
+	SystemsWorstPerformance.clear();
 
 	for (auto& system : *Systems)
 	{
 		if (!system.Enabled)
 			continue;
 
-		SystemsPerformance.emplace_back(system.System->GetDeltaTime());
+		const auto systemDelta = system.System->GetDeltaTime();
+
+		if (SystemsHighestValue.find(system.Name) == SystemsHighestValue.end())
+		{
+			SystemsHighestValue.emplace(system.Name, systemDelta);
+
+			SystemsWorstPerformance.emplace_back(systemDelta);
+		}
+		else
+		{
+			auto& currentHighestValue = SystemsHighestValue[system.Name];
+
+			if (currentHighestValue < systemDelta)
+				currentHighestValue = systemDelta;
+
+			SystemsWorstPerformance.emplace_back(currentHighestValue);
+		}
+
+		SystemsPerformance.emplace_back(systemDelta);
 		SystemNames.emplace_back(system.Name);
 	}
 }
@@ -39,7 +58,7 @@ void PerSystemPerformanceWindow::DrawDeltaTime() const
 void PerSystemPerformanceWindow::DrawSystemNamesWithIds()
 {
 	for (auto i = 0; i < SystemsPerformance.size(); i++)
-		ImGui::BulletText("[%d] %s - %f ms", i, SystemNames[i].c_str(), SystemsPerformance[i]);
+		ImGui::BulletText("[%d] %s - %f ms (max: %f ms)", i, SystemNames[i].c_str(), SystemsPerformance[i], SystemsWorstPerformance[i]);
 }
 
 void PerSystemPerformanceWindow::DrawHistogram()
