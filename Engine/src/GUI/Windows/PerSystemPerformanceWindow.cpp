@@ -52,13 +52,13 @@ void PerSystemPerformanceWindow::CollectData()
 
 void PerSystemPerformanceWindow::DrawDeltaTime() const
 {
-	ImGui::Text("Delta time: %f ms", DeltaTime);
+	ImGui::Text("Delta time: %.2f ms", DeltaTime);
 }
 
 void PerSystemPerformanceWindow::DrawSystemNamesWithIds()
 {
 	for (auto i = 0; i < SystemsPerformance.size(); i++)
-		ImGui::BulletText("[%d] %s - %f ms (max: %f ms)", i, SystemNames[i].c_str(), SystemsPerformance[i], SystemsWorstPerformance[i]);
+		ImGui::BulletText("[%d] %s - %.2f ms (max: %.2f ms)", i, SystemNames[i].c_str(), SystemsPerformance[i], SystemsWorstPerformance[i]);
 }
 
 void PerSystemPerformanceWindow::DrawHistogram()
