@@ -12,6 +12,7 @@ private:
 	void DrawDeltaTime() const;
 	void DrawSystemNamesWithIds();
 	void DrawHistogram();
+	void DrawResetButton();
 
 	std::vector<float> SystemsPerformance;
 	std::vector<float> SystemsWorstPerformance;

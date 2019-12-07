@@ -9,6 +9,7 @@ void PerSystemPerformanceWindow::Draw()
 
 	DrawDeltaTime();
 	ImGui::Separator();
+	DrawResetButton();
 	DrawSystemNamesWithIds();
 	ImGui::Separator();
 	DrawHistogram();
@@ -71,4 +72,10 @@ void PerSystemPerformanceWindow::DrawHistogram()
 							0.0f, 
 							DeltaTime, 
 							ImVec2(0, 100));
+}
+
+void PerSystemPerformanceWindow::DrawResetButton()
+{
+	if (ImGui::Button("Reset max values"))
+		SystemsHighestValue.clear();
 }
