@@ -180,11 +180,11 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 
 	if (use8BitFormat)
 	{
-		Logger::Warning("Consider using 16 bit format for cubemaps. Use 8 bit format only when encountering  problems with 16 bit.");
+		Logger::Warning("You are using compatible mode for lat long converter! Consider switching to normal mode for better visual effects.");
 		textureFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 	}
 
-	auto texture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, textureFormat, true);
+	auto texture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, textureFormat, !use8BitFormat);
 	ResourcesGenerator::CreateUnorderedAccessView(device, texture);
 
 	context->CSSetShader(latlongToCubemapComputeShader.GetShader(), nullptr, 0);
