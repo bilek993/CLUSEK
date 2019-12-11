@@ -97,7 +97,7 @@
   
 	"Skybox": {
 	  "Path": "Data/Textures/Environment/Skybox.dds",
-	  "ConvertLatLongToCubeMap": true
+	  "ConvertLatLongToCubeMap": "YES"
 	}
   }
 }

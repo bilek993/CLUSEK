@@ -37,7 +37,7 @@ void ResourcesLoader::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* co
 		auto value = it.value();
 
 		const auto path = value["Path"].get<std::string>();
-		const auto convertLatLongToCubeMap = value["ConvertLatLongToCubeMap"].is_null() ? false : value["ConvertLatLongToCubeMap"].get<bool>();
+		const auto convertLatLongToCubeMap = value["ConvertLatLongToCubeMap"].is_null() ? "NO" : value["ConvertLatLongToCubeMap"].get<std::string>();
 
 		MaterialLoader::LoadResource(device, context, path, id, convertLatLongToCubeMap, config);
 	}

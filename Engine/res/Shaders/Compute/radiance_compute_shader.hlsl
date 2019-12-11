@@ -89,5 +89,4 @@ void main(uint3 threadID : SV_DispatchThreadID)
         copyTextures(threadID, normal);
     else
         calculateRadiance(threadID, normal, inputWidth, inputHeight);
-
 }

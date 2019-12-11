@@ -12,7 +12,7 @@
 std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
 
 void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, 
-	const std::string& resourceId, const bool convertLatLongToCubeMap, const ConfigData* config)
+	const std::string& resourceId, const std::string& convertLatLongToCubeMap, const ConfigData* config)
 {
 	Logger::Debug("Preparing to load resource '" + resourceId + "' from path '" + path + "'...");
 	auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
@@ -22,8 +22,9 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 		Logger::Debug("Adding resource '" + resourceId + "' into memory...");
 		LoadTextureToMaterial(device, *resource, path);
 
-		if (convertLatLongToCubeMap)
-			resource = ConvertLatLongToCubeMap(device, context, resource->GetAddressOf(), config->CubemapGeneratedSize);
+		if (convertLatLongToCubeMap == "YES" || convertLatLongToCubeMap == "COMPATIBLE")
+			resource = ConvertLatLongToCubeMap(device, context, resource->GetAddressOf(),
+				config->CubemapGeneratedSize, convertLatLongToCubeMap == "COMPATIBLE");
 
 		TextureResources[resourceId] = resource;
 	}
@@ -166,7 +167,7 @@ void MaterialLoader::SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::Com
 }
 
 std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::ConvertLatLongToCubeMap(ID3D11Device* device, 
-	ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView, const int textureSize)
+	ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView, const int textureSize, const bool use8BitFormat)
 {
 	CreateSamplerStateIfNeeded(device);
 
@@ -175,7 +176,15 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 	if (!latlongToCubemapComputeShader.Initialize(device, L"latlong_to_cubemap_compute_shader.cso"))
 		Logger::Error("RadianceComputeShader not initialized due to critical problem!");
 
-	auto texture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
+	auto textureFormat = DXGI_FORMAT_R16G16B16A16_FLOAT;
+
+	if (use8BitFormat)
+	{
+		Logger::Warning("Consider using 16 bit format for cubemaps. Use 8 bit format only when encountering  problems with 16 bit.");
+		textureFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
+	}
+
+	auto texture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, textureFormat, true);
 	ResourcesGenerator::CreateUnorderedAccessView(device, texture);
 
 	context->CSSetShader(latlongToCubemapComputeShader.GetShader(), nullptr, 0);
