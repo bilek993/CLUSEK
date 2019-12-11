@@ -167,7 +167,7 @@ void MaterialLoader::SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::Com
 }
 
 std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::ConvertLatLongToCubeMap(ID3D11Device* device, 
-	ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView, const int textureSize, const bool use8BitFormat)
+	ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView, const int textureSize, const bool compatibleMode)
 {
 	CreateSamplerStateIfNeeded(device);
 
@@ -178,13 +178,13 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 
 	auto textureFormat = DXGI_FORMAT_R16G16B16A16_FLOAT;
 
-	if (use8BitFormat)
+	if (compatibleMode)
 	{
 		Logger::Warning("You are using compatible mode for lat long converter! Consider switching to normal mode for better visual effects.");
 		textureFormat = DXGI_FORMAT_R8G8B8A8_UNORM;
 	}
 
-	auto texture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, textureFormat, !use8BitFormat);
+	auto texture = ResourcesGenerator::CreateCubeTexture(device, textureSize, textureSize, textureFormat, !compatibleMode);
 	ResourcesGenerator::CreateUnorderedAccessView(device, texture);
 
 	context->CSSetShader(latlongToCubemapComputeShader.GetShader(), nullptr, 0);

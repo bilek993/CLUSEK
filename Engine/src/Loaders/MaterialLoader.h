@@ -40,6 +40,6 @@ private:
 	static void SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, FallbackColor fallbackColor);
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> ConvertLatLongToCubeMap(ID3D11Device* device, 
-		ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView, int textureSize, bool use8BitFormat);
+		ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView, int textureSize, bool compatibleMode);
 	static void CreateSamplerStateIfNeeded(ID3D11Device* device);
 };
