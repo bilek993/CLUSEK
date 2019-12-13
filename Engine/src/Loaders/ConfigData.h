@@ -53,6 +53,9 @@ struct ConfigData final
 	float DirectionalLightDirectionY = 0.5f;
 	float DirectionalLightDirectionZ = -1.0f;
 
+	// Shadows settings
+	int ShadowsEnabled = 1;
+
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;
 

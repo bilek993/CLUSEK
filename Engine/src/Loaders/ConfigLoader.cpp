@@ -70,6 +70,8 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, DirectionalLightDirectionY, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, DirectionalLightDirectionZ, data, std::stof(value));
 
+			MAP_CONFIG_FIELD(key, ShadowsEnabled, data, std::stoi(value));
+
 			MAP_CONFIG_FIELD(key, CubemapGeneratedSize, data, std::stoi(value));
 
 			MAP_CONFIG_FIELD(key, BrdfLutTextureSize, data, std::stoi(value));

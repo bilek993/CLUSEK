@@ -51,7 +51,9 @@ void RenderSystem::Update(const float deltaTime)
 {
 	auto& mainCameraComponent = GetMainCamera();
 
-	RenderShadows();
+	if (ConfigurationData->ShadowsEnabled)
+		RenderShadows();
+
 	RenderScene(mainCameraComponent);
 
 	PerformPostProcessing();
