@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\RenderDepthStencil.cpp" />
     <ClCompile Include="src\GUI\Windows\PerSystemPerformanceWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\EntityViewerWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\PhysicsStatisticsWindow.cpp" />
@@ -88,6 +89,7 @@
     <ClCompile Include="src\GUI\Windows\VehicleDetailsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\RenderDepthStencil.h" />
     <ClInclude Include="src\GUI\Windows\PerSystemPerformanceWindow.h" />
     <ClInclude Include="src\GUI\Windows\EntityViewerWindow.h" />
     <ClInclude Include="IrradianceBuffer.h" />
