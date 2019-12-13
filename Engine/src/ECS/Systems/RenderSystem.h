@@ -17,6 +17,7 @@
 #include "../../Renderer/ConstantBufferTypes/CameraBuffer.h"
 #include "../../Renderer/PbrResources.h"
 #include "../../Renderer/PostProcessing/MultisamplingPostProcessing.h"
+#include "../../Renderer/RenderDepthStencil.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -87,9 +88,7 @@ private:
 
 	PbrResource PbrResourceInstance{};
 
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilBuffer;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilState;
+	RenderDepthStencil SceneRenderDepthStencil;
 
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;

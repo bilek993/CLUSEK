@@ -61,13 +61,13 @@ void RenderSystem::Update(const float deltaTime)
 
 void RenderSystem::RenderFrameBegin() const
 {
-	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), DepthStencilView.Get());
+	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
 	DeviceContext->ClearRenderTargetView(IntermediateRenderTexture.GetRenderTargetViewPointer(), CurrentRenderSettings->ClearColor);
 	DeviceContext->ClearRenderTargetView(BackBufferRenderTargetView.Get(), CurrentRenderSettings->ClearColor);
 
-	DeviceContext->ClearDepthStencilView(DepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-	DeviceContext->OMSetDepthStencilState(DepthStencilState.Get(), 0);
+	DeviceContext->ClearDepthStencilView(SceneRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	DeviceContext->OMSetDepthStencilState(SceneRenderDepthStencil.GetDepthStencilStatePointer(), 0);
 
 	DeviceContext->PSSetSamplers(0, 1, DefaultWrapSamplerState.GetAddressOf());
 	DeviceContext->PSSetSamplers(1, 1, DefaultClampSamplerState.GetAddressOf());
@@ -187,52 +187,17 @@ bool RenderSystem::InitializeDirectX()
 
 	// Depth stencil initialization
 
-	D3D11_TEXTURE2D_DESC depthStencilTextureDesc;
-	ZeroMemory(&depthStencilTextureDesc, sizeof(D3D11_TEXTURE2D_DESC));
-
-	depthStencilTextureDesc.Width = WindowWidth;
-	depthStencilTextureDesc.Height = WindowHeight;
-	depthStencilTextureDesc.MipLevels = 1;
-	depthStencilTextureDesc.ArraySize = 1;
-	depthStencilTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-	depthStencilTextureDesc.SampleDesc.Count = ConfigurationData->MultisamplesCount;
-	depthStencilTextureDesc.SampleDesc.Quality = ConfigurationData->MultisamplesQuality;
-	depthStencilTextureDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthStencilTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-	depthStencilTextureDesc.CPUAccessFlags = 0;
-	depthStencilTextureDesc.MiscFlags = 0;
-
-	hr = Device->CreateTexture2D(&depthStencilTextureDesc, nullptr, DepthStencilBuffer.GetAddressOf());
-	if (FAILED(hr))
+	if (!SceneRenderDepthStencil.Initialize(Device.Get(), 
+											WindowWidth, 
+											WindowHeight, 
+											ConfigurationData->MultisamplesCount,
+											ConfigurationData->MultisamplesQuality))
 	{
-		Logger::Error("Error creating depth stencil buffer!");
+		Logger::Error("Error creating scene render depth stencil!");
 		return false;
 	}
 
-	hr = Device->CreateDepthStencilView(DepthStencilBuffer.Get(), nullptr, DepthStencilView.GetAddressOf());
-	if (FAILED(hr))
-	{
-		Logger::Error("Error creating depth stencil view!");
-		return false;
-	}
-
-	Logger::Debug("Successfully created depth stencil buffer and view.");
-
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
-	ZeroMemory(&depthStencilDesc, sizeof(D3D11_DEPTH_STENCIL_DESC));
-
-	depthStencilDesc.DepthEnable = true;
-	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-
-	hr = Device->CreateDepthStencilState(&depthStencilDesc, DepthStencilState.GetAddressOf());
-	if (FAILED(hr))
-	{
-		Logger::Error("Error creating depth stencil state!");
-		return false;
-	}
-
-	Logger::Debug("Successfully created depth stencil state.");
+	Logger::Debug("Successfully created render depth stencil.");
 
 	// Viewport initialization
 
