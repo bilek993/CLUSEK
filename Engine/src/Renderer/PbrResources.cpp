@@ -6,7 +6,7 @@
 #include "ConstantBufferTypes/RadianceBuffer.h"
 #include "ConstantBuffer.h"
 #include "Generators/ResourcesGenerator.h"
-#include "../../IrradianceBuffer.h"
+#include "ConstantBufferTypes/IrradianceBuffer.h"
 
 bool PbrResource::Initialize(ID3D11Device* device, ID3D11DeviceContext* context, const ConfigData* config,
 	ID3D11ShaderResourceView* const* skyResourceView)
