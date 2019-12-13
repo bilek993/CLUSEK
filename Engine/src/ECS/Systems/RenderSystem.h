@@ -47,6 +47,10 @@ private:
 
 	CameraComponent& GetMainCamera() const;
 	TransformComponent& GetMainCameraTransform() const;
+
+	void RenderShadows();
+	void RenderScene(const CameraComponent &cameraComponent);
+
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
 

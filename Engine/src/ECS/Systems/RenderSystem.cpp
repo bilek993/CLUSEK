@@ -51,8 +51,8 @@ void RenderSystem::Update(const float deltaTime)
 {
 	auto& mainCameraComponent = GetMainCamera();
 
-	RenderSkyBoxComponents(mainCameraComponent);
-	RenderModelRenderComponents(mainCameraComponent);
+	RenderShadows();
+	RenderScene(mainCameraComponent);
 
 	PerformPostProcessing();
 }
@@ -579,6 +579,15 @@ TransformComponent& RenderSystem::GetMainCameraTransform() const
 	return view.raw<TransformComponent>()[0];
 }
 
+void RenderSystem::RenderShadows()
+{
+}
+
+void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
+{
+	RenderSkyBoxComponents(cameraComponent);
+	RenderModelRenderComponents(cameraComponent);
+}
 
 void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)
 {
