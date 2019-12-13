@@ -85,7 +85,7 @@ private:
 	ConstantBuffer<CameraBuffer> CameraBufferInstance;
 	ConstantBuffer<SimplePerObjectBuffer> SimplePerObjectBufferInstance;
 
-	PbrResource PbrResourceInstance;
+	PbrResource PbrResourceInstance{};
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilBuffer;
