@@ -32,6 +32,10 @@ void Logger::Free()
 	FreeConsole();
 
 	Fp = nullptr;
+
+	IsEnabled = false;
+	Destination = "";
+	Level = 0;
 }
 
 void Logger::SetLevel(const int level)
