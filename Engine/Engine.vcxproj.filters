@@ -698,9 +698,6 @@
     <ClInclude Include="src\GUI\Windows\PhysicsStatisticsWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="IrradianceBuffer.h">
-      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
-    </ClInclude>
     <ClInclude Include="src\GUI\Windows\EntityViewerWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
@@ -712,6 +709,9 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\RenderDepthStencil.h">
       <Filter>Header Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\IrradianceBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

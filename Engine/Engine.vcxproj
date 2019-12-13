@@ -92,7 +92,7 @@
     <ClInclude Include="src\Renderer\RenderDepthStencil.h" />
     <ClInclude Include="src\GUI\Windows\PerSystemPerformanceWindow.h" />
     <ClInclude Include="src\GUI\Windows\EntityViewerWindow.h" />
-    <ClInclude Include="IrradianceBuffer.h" />
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\IrradianceBuffer.h" />
     <ClInclude Include="src\GUI\Windows\PhysicsStatisticsWindow.h" />
     <ClInclude Include="src\Renderer\RotationMode.h" />
     <ClInclude Include="src\Physics\PhysicsFilterHelper.h" />
