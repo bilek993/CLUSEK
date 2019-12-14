@@ -14,3 +14,7 @@ They shouldn't unless you use dark environment texture. This situation mainly oc
   "ConvertLatLongToCubeMap": "COMPATIBLE"
 }
 ```
+
+**I'm trying to compile source code with a newer Visual Studio compiler, but it fails. How can I solve this?**
+
+It's hard to tell. Other compilers are highly not recommended but might work. The best way is to navigating to 'Error List' and solving errors one by one. A known problem is missing memory include. To solve this add ``#include <memory>`` at the top of the files when compiler tells it's needed for smart pointers.
