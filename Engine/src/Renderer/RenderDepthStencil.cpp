@@ -6,7 +6,8 @@ bool RenderDepthStencil::Initialize(ID3D11Device* device,
 									const int height, 
 									const int multisamplesCount,
                                     const int multisamplesQuality,
-									const bool useShaderResourceView)
+									const bool useShaderResourceView,
+									const bool useDepthStencilState)
 {
 	Logger::Debug("Preparing to initialize render depth stencil...");
 
@@ -22,8 +23,11 @@ bool RenderDepthStencil::Initialize(ID3D11Device* device,
 			return false;
 	}
 
-	if (!InitializeDepthStencilState(device))
-		return false;
+	if (useDepthStencilState)
+	{
+		if (!InitializeDepthStencilState(device))
+			return false;
+	}
 
 	Logger::Debug("Render depth stencil created without problems!");
 

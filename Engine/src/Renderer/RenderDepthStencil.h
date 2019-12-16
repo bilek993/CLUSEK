@@ -10,7 +10,8 @@ public:
 					int height, 
 					int multisamplesCount, 
 					int multisamplesQuality,
-					bool useShaderResource);
+					bool useShaderResourceView,
+					bool useDepthStencilState);
 
 	ID3D11Texture2D* GetDepthStencilTextureBufferPointer() const;
 	ID3D11DepthStencilView* GetDepthStencilViewPointer() const;
