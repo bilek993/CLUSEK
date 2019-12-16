@@ -8,7 +8,9 @@ public:
 	bool Initialize(ID3D11Device* device,
 					int width,
 					int height,
-					DXGI_FORMAT format,
+					DXGI_FORMAT formatTexture,
+					DXGI_FORMAT formatDepthStencilView, // Set to DXGI_FORMAT_UNKNOWN if not required
+					DXGI_FORMAT formatShaderResourceView, // Set to DXGI_FORMAT_UNKNOWN if not required
 					int multisamplesCount,
 					int multisamplesQuality,
 					bool useShaderResourceView,
@@ -26,8 +28,8 @@ private:
 												int multisamplesCount,
 												int multisamplesQuality,
 												bool useShaderResourceView);
-	bool InitializeDepthStencilView(ID3D11Device* device);
-	bool InitializeShaderResourceView(ID3D11Device* device, DXGI_FORMAT format);
+	bool InitializeDepthStencilView(ID3D11Device* device, DXGI_FORMAT format, bool multisamplingEnabled);
+	bool InitializeShaderResourceView(ID3D11Device* device, DXGI_FORMAT format, bool multisamplingEnabled);
 	bool InitializeDepthStencilState(ID3D11Device* device);
 
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilTextureBuffer;
