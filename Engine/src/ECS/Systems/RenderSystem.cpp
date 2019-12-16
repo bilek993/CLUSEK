@@ -191,7 +191,8 @@ bool RenderSystem::InitializeDirectX()
 											WindowWidth, 
 											WindowHeight, 
 											ConfigurationData->MultisamplesCount,
-											ConfigurationData->MultisamplesQuality))
+											ConfigurationData->MultisamplesQuality,
+											false))
 	{
 		Logger::Error("Error creating scene render depth stencil!");
 		return false;

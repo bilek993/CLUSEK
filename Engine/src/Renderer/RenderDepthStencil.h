@@ -9,7 +9,8 @@ public:
 					int width, 
 					int height, 
 					int multisamplesCount, 
-					int multisamplesQuality);
+					int multisamplesQuality,
+					bool useShaderResource);
 
 	ID3D11Texture2D* GetDepthStencilTextureBufferPointer() const;
 	ID3D11DepthStencilView* GetDepthStencilViewPointer() const;
@@ -19,11 +20,14 @@ private:
 												int width, 
 												int height, 
 												int multisamplesCount,
-												int multisamplesQuality);
+												int multisamplesQuality,
+												bool useShaderResourceView);
 	bool InitializeDepthStencilView(ID3D11Device* device);
+	bool InitializeShaderResourceView(ID3D11Device* device);
 	bool InitializeDepthStencilState(ID3D11Device* device);
 
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> DepthStencilTextureBuffer;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> DepthStencilView;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ShaderResourceView;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> DepthStencilState;
 };
