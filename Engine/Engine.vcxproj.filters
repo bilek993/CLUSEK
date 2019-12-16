@@ -130,6 +130,9 @@
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{3dfb8b99-6446-499f-b787-95aa5991653e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\Surface\Shadow">
+      <UniqueIdentifier>{7378d996-bdca-4210-849d-8d9a5a688394}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -713,6 +716,9 @@
     <ClInclude Include="src\Renderer\ConstantBufferTypes\IrradianceBuffer.h">
       <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\ShadowBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">
@@ -768,6 +774,12 @@
     </FxCompile>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\ShadowMatrix\shadow_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\Shadow</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\ShadowMatrix\shadow_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\Shadow</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

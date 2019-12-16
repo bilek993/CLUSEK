@@ -223,6 +223,9 @@ bool RenderSystem::InitializeDirectX()
 
 	Logger::Debug("Successfully created shadow render depth stencil.");
 
+	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	Logger::Debug("Initialial clearing shadow render depth stencil...");
+
 	// Viewport initialization
 
 	D3D11_VIEWPORT viewport;
@@ -408,6 +411,20 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
+	// Shadow shader
+
+	if (!ShadowVertexShader.Initialize(Device.Get(), L"shadow_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
+	{
+		Logger::Error("ShadowVertexShader not initialized due to critical problem!");
+		return false;
+	}
+
+	if (!ShadowPixelShader.Initialize(Device.Get(), L"shadow_pixel_shader.cso"))
+	{
+		Logger::Error("ShadowPixelShader not initialized due to critical problem!");
+		return false;
+	}
+
 	// Generic code
 
 	Logger::Debug("All shaders successfully initialized.");
@@ -464,6 +481,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = SimplePerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'SimplePerObjectBufferInstance' constant buffer.");
+
+	hr = ShadowBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'ShadowBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
@@ -572,12 +593,40 @@ TransformComponent& RenderSystem::GetMainCameraTransform() const
 
 void RenderSystem::RenderShadows()
 {
+	DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencil.GetDepthStencilViewPointer());
+	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	RenderSceneForShadows();
 }
 
 void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 {
+	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
+
 	RenderSkyBoxComponents(cameraComponent);
 	RenderModelRenderComponents(cameraComponent);
+}
+
+void RenderSystem::RenderSceneForShadows()
+{
+	UINT offset = 0;
+	ChangeShader(ShadowVertexShader, ShadowPixelShader);
+
+	DeviceContext->VSSetConstantBuffers(0, 1, ShadowBufferInstance.GetAddressOf());
+
+	Registry->view<ModelRenderComponent>().each([this, &offset](ModelRenderComponent &modelRenderComponent)
+	{
+		// ShadowBufferInstance.Data.WorldLightMatrix = ...; <- Change this
+		ShadowBufferInstance.ApplyChanges();
+
+		for (const auto& mesh : *modelRenderComponent.Meshes)
+		{
+			if (mesh.Material.Alpha < 1.0f)
+				continue;
+
+			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
+		}
+	});
 }
 
 void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)

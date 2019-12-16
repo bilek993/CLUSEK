@@ -18,6 +18,7 @@
 #include "../../Renderer/PbrResources.h"
 #include "../../Renderer/PostProcessing/MultisamplingPostProcessing.h"
 #include "../../Renderer/RenderDepthStencil.h"
+#include "../../Renderer/ConstantBufferTypes/ShadowBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -52,6 +53,8 @@ private:
 	void RenderShadows();
 	void RenderScene(const CameraComponent &cameraComponent);
 
+	void RenderSceneForShadows();
+
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
 
@@ -81,10 +84,14 @@ private:
 	VertexShader LoadingLogoVertexShader;
 	PixelShader LoadingLogoPixelShader;
 
+	VertexShader ShadowVertexShader;
+	PixelShader ShadowPixelShader;
+
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;
 	ConstantBuffer<CameraBuffer> CameraBufferInstance;
 	ConstantBuffer<SimplePerObjectBuffer> SimplePerObjectBufferInstance;
+	ConstantBuffer<ShadowBuffer> ShadowBufferInstance;
 
 	PbrResource PbrResourceInstance{};
 
