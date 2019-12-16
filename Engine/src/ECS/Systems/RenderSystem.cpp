@@ -185,7 +185,7 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
-	// Depth stencil initialization
+	// Depth scene render stencil initialization
 
 	if (!SceneRenderDepthStencil.Initialize(Device.Get(),
 											WindowWidth,
@@ -202,7 +202,26 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
-	Logger::Debug("Successfully created render depth stencil.");
+	Logger::Debug("Successfully created scene render depth stencil.");
+
+	// Depth shadow render stencil initialization
+
+	if (!ShadowRenderDepthStencil.Initialize(	Device.Get(),
+												WindowWidth,
+												WindowHeight,
+												DXGI_FORMAT_R32_TYPELESS,
+												DXGI_FORMAT_D32_FLOAT,
+												DXGI_FORMAT_R32_FLOAT,
+												1,
+												0,
+												true,
+												false))
+	{
+		Logger::Error("Error creating shadow render depth stencil!");
+		return false;
+	}
+
+	Logger::Debug("Successfully created shadow render depth stencil.");
 
 	// Viewport initialization
 
