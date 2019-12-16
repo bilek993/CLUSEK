@@ -207,8 +207,8 @@ bool RenderSystem::InitializeDirectX()
 	// Depth shadow render stencil initialization
 
 	if (!ShadowRenderDepthStencil.Initialize(	Device.Get(),
-												1024,
-												1024,
+												ConfigurationData->ShadowsWidth,
+												ConfigurationData->ShadowsHeight,
 												DXGI_FORMAT_R32_TYPELESS,
 												DXGI_FORMAT_D32_FLOAT,
 												DXGI_FORMAT_R32_FLOAT,
