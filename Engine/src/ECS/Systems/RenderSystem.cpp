@@ -187,9 +187,10 @@ bool RenderSystem::InitializeDirectX()
 
 	// Depth stencil initialization
 
-	if (!SceneRenderDepthStencil.Initialize(Device.Get(), 
-											WindowWidth, 
-											WindowHeight, 
+	if (!SceneRenderDepthStencil.Initialize(Device.Get(),
+											WindowWidth,
+											WindowHeight,
+											DXGI_FORMAT_D24_UNORM_S8_UINT,
 											ConfigurationData->MultisamplesCount,
 											ConfigurationData->MultisamplesQuality,
 											false,

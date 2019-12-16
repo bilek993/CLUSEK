@@ -2,8 +2,9 @@
 #include "../Utils/Logger.h"
 
 bool RenderDepthStencil::Initialize(ID3D11Device* device, 
-									const int width, 
-									const int height, 
+									const int width,
+									const int height,
+									const DXGI_FORMAT format,
 									const int multisamplesCount,
                                     const int multisamplesQuality,
 									const bool useShaderResourceView,
@@ -11,7 +12,13 @@ bool RenderDepthStencil::Initialize(ID3D11Device* device,
 {
 	Logger::Debug("Preparing to initialize render depth stencil...");
 
-	if (!InitializeDepthStencilTextureBuffer(device, width, height, multisamplesCount, multisamplesQuality, useShaderResourceView))
+	if (!InitializeDepthStencilTextureBuffer(	device,
+												width,
+												height,
+												format,
+												multisamplesCount,
+												multisamplesQuality,
+												useShaderResourceView))
 		return false;
 
 	if (!InitializeDepthStencilView(device))
@@ -19,7 +26,7 @@ bool RenderDepthStencil::Initialize(ID3D11Device* device,
 
 	if (useShaderResourceView)
 	{
-		if (!InitializeShaderResourceView(device))
+		if (!InitializeShaderResourceView(device, format))
 			return false;
 	}
 
@@ -44,6 +51,11 @@ ID3D11DepthStencilView* RenderDepthStencil::GetDepthStencilViewPointer() const
 	return DepthStencilView.Get();
 }
 
+ID3D11ShaderResourceView* const* RenderDepthStencil::GetAddressOfShaderResourceView() const
+{
+	return ShaderResourceView.GetAddressOf();
+}
+
 ID3D11DepthStencilState* RenderDepthStencil::GetDepthStencilStatePointer() const
 {
 	return DepthStencilState.Get();
@@ -51,23 +63,24 @@ ID3D11DepthStencilState* RenderDepthStencil::GetDepthStencilStatePointer() const
 
 bool RenderDepthStencil::InitializeDepthStencilTextureBuffer(	ID3D11Device* device, 
 																const int width, 
-																const int height, 
+																const int height,
+																const DXGI_FORMAT format,
 																const int multisamplesCount,
 																const int multisamplesQuality,
-																const bool useShaderResource)
+																const bool useShaderResourceView)
 {
 	D3D11_TEXTURE2D_DESC depthStencilTextureDesc;
 	ZeroMemory(&depthStencilTextureDesc, sizeof(D3D11_TEXTURE2D_DESC));
 
 	unsigned int bindFlags = D3D11_BIND_DEPTH_STENCIL;
-	if (useShaderResource)
+	if (useShaderResourceView)
 		bindFlags |= D3D11_BIND_SHADER_RESOURCE;
 
 	depthStencilTextureDesc.Width = width;
 	depthStencilTextureDesc.Height = height;
 	depthStencilTextureDesc.MipLevels = 1;
 	depthStencilTextureDesc.ArraySize = 1;
-	depthStencilTextureDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	depthStencilTextureDesc.Format = format;
 	depthStencilTextureDesc.SampleDesc.Count = multisamplesCount;
 	depthStencilTextureDesc.SampleDesc.Quality = multisamplesQuality;
 	depthStencilTextureDesc.Usage = D3D11_USAGE_DEFAULT;
@@ -97,12 +110,12 @@ bool RenderDepthStencil::InitializeDepthStencilView(ID3D11Device* device)
 	return true;
 }
 
-bool RenderDepthStencil::InitializeShaderResourceView(ID3D11Device* device)
+bool RenderDepthStencil::InitializeShaderResourceView(ID3D11Device* device, const DXGI_FORMAT format)
 {
 	D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc;
 	ZeroMemory(&shaderResourceViewDesc, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
 
-	shaderResourceViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+	shaderResourceViewDesc.Format = format;
 	shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
 	shaderResourceViewDesc.Texture2D.MipLevels = 1;
