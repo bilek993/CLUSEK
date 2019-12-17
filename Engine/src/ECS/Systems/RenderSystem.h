@@ -30,7 +30,7 @@ public:
 
 	ID3D11Device* GetPointerToDevice() const;
 	ID3D11DeviceContext* GetPointerToDeviceContext() const;
-	ID3D11ShaderResourceView* GetPointerToShadowShaderResourceView() const;
+	ID3D11ShaderResourceView* GetPointerToRemappedShadowShaderResourceView() const;
 private:
 	bool InitializeDirectX();
 	bool InitializeShaders();

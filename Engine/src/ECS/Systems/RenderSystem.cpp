@@ -89,7 +89,7 @@ ID3D11DeviceContext* RenderSystem::GetPointerToDeviceContext() const
 	return DeviceContext.Get();
 }
 
-ID3D11ShaderResourceView* RenderSystem::GetPointerToShadowShaderResourceView() const
+ID3D11ShaderResourceView* RenderSystem::GetPointerToRemappedShadowShaderResourceView() const
 {
 	const auto outputTexture = ShadowRemapperPostProcessingInstance->Process(ShadowRenderDepthStencil.GetAddressOfShaderResourceView());
 	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetView.GetAddressOf(), nullptr); // Quick fix
