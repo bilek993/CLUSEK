@@ -18,6 +18,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <ClCompile Include="src\GUI\Windows\ShadowPreviewerWindow.cpp" />
     <ClCompile Include="src\Renderer\RenderDepthStencil.cpp" />
     <ClCompile Include="src\GUI\Windows\PerSystemPerformanceWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\EntityViewerWindow.cpp" />
@@ -96,6 +97,7 @@
     <ClCompile Include="src\GUI\Windows\VehicleDetailsWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Windows\ShadowPreviewerWindow.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\ShadowBuffer.h" />
     <ClInclude Include="src\Renderer\RenderDepthStencil.h" />
     <ClInclude Include="src\GUI\Windows\PerSystemPerformanceWindow.h" />

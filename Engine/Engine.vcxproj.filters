@@ -363,6 +363,9 @@
     <ClCompile Include="src\Renderer\RenderDepthStencil.cpp">
       <Filter>Source Files\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\Windows\ShadowPreviewerWindow.cpp">
+      <Filter>Source Files\GUI\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -718,6 +721,9 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\ConstantBufferTypes\ShadowBuffer.h">
       <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Windows\ShadowPreviewerWindow.h">
+      <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

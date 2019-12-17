@@ -58,6 +58,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(PhysicsStatisticsWindowInstance);
 	UPDATE_USER_INTERFACE(EntityViewerWindowInstance);
 	UPDATE_USER_INTERFACE(PerSystemPerformanceWindowInstance);
+	UPDATE_USER_INTERFACE(ShadowPreviewerWindowInstance);
 
 	AfterUpdate();
 }
@@ -95,6 +96,7 @@ void DebugUserInterface::DrawMenuBar()
 		{
 			DrawMenuItemForWindow("Post Processing settings", PostProcessingWindowInstance);
 			DrawMenuItemForWindow("Lighting settings", LightingWindowInstance);
+			DrawMenuItemForWindow("Shadow Previewer", ShadowPreviewerWindowInstance);
 			DrawMenuItemForWindow("Back Buffer setting", BackBufferWindowInstance);
 			ImGui::EndMenu();
 		}

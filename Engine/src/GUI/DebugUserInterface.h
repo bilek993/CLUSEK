@@ -20,6 +20,7 @@
 #include "Windows/PhysicsStatisticsWindow.h"
 #include "Windows/EntityViewerWindow.h"
 #include "Windows/PerSystemPerformanceWindow.h"
+#include "Windows/ShadowPreviewerWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
 
@@ -67,4 +68,5 @@ private:
 	PhysicsStatisticsWindow PhysicsStatisticsWindowInstance;
 	EntityViewerWindow EntityViewerWindowInstance;
 	PerSystemPerformanceWindow PerSystemPerformanceWindowInstance;
+	ShadowPreviewerWindow ShadowPreviewerWindowInstance;
 };
