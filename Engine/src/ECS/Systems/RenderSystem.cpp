@@ -89,6 +89,11 @@ ID3D11DeviceContext* RenderSystem::GetPointerToDeviceContext() const
 	return DeviceContext.Get();
 }
 
+ID3D11ShaderResourceView* RenderSystem::GetPointerToShadowShaderResourceView() const
+{
+	return ShadowRenderDepthStencil.GetShaderResourceViewPointer();
+}
+
 bool RenderSystem::InitializeDirectX()
 {
 	// Adapters selection and initialization

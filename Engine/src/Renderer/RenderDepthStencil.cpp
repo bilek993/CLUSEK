@@ -60,6 +60,11 @@ ID3D11ShaderResourceView* const* RenderDepthStencil::GetAddressOfShaderResourceV
 	return ShaderResourceView.GetAddressOf();
 }
 
+ID3D11ShaderResourceView* RenderDepthStencil::GetShaderResourceViewPointer() const
+{
+	return ShaderResourceView.Get();
+}
+
 ID3D11DepthStencilState* RenderDepthStencil::GetDepthStencilStatePointer() const
 {
 	return DepthStencilState.Get();

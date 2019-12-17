@@ -19,6 +19,7 @@ public:
 	ID3D11Texture2D* GetDepthStencilTextureBufferPointer() const;
 	ID3D11DepthStencilView* GetDepthStencilViewPointer() const;
 	ID3D11ShaderResourceView* const* GetAddressOfShaderResourceView() const;
+	ID3D11ShaderResourceView* GetShaderResourceViewPointer() const;
 	ID3D11DepthStencilState* GetDepthStencilStatePointer() const;
 private:
 	bool InitializeDepthStencilTextureBuffer(	ID3D11Device* device,
