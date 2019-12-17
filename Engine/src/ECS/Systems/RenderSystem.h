@@ -69,6 +69,8 @@ private:
 	std::unique_ptr<MultisamplingPostProcessing> MultisamplingPostProcessingInstance;
 	std::unique_ptr<CopyToBackBufferPostProcessing> CopyToBackBufferPostProcessingInstance;
 
+	std::unique_ptr<ReusablePostProcessing> ShadowRemapperPostProcessingInstance;
+
 	Microsoft::WRL::ComPtr<ID3D11Device> Device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> DeviceContext;
 	Microsoft::WRL::ComPtr<IDXGISwapChain> SwapChain;

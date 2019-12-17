@@ -787,6 +787,9 @@
     <FxCompile Include="res\Shaders\Surface\ShadowMatrix\shadow_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\Surface\Shadow</Filter>
     </FxCompile>
+    <FxCompile Include="res\Shaders\PostProcessing\shadow_remapper_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\Includes\normal_utils.hlsli">

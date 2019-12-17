@@ -95,6 +95,12 @@
     <ClCompile Include="src\Loaders\Components\VehiclePlayerControllerComponentLoader.cpp" />
     <ClCompile Include="src\ECS\Systems\VehiclePlayerControllerSystem.cpp" />
     <ClCompile Include="src\GUI\Windows\VehicleDetailsWindow.cpp" />
+    <FxCompile Include="res\Shaders\PostProcessing\shadow_remapper_pixel_shader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GUI\Windows\ShadowPreviewerWindow.h" />
