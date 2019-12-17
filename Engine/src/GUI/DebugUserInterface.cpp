@@ -34,12 +34,14 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	std::vector<SystemHolder> *systems, const int renderSystemId, DynamicRenderSettings *dynamicRenderSettings, 
 	PostProcessingSettings *postProcessingSettings, entt::registry *registry)
 {
+	const auto renderSystem = dynamic_cast<RenderSystem*>((*systems)[renderSystemId].System.get());
+
 	BeforeUpdate();
 
 	HandleKeyboardEvents(ioData);
 	if (!IsEnabled)
 	{
-		AfterUpdate();
+		AfterUpdate(renderSystem);
 		return;
 	}
 
@@ -60,11 +62,13 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(PerSystemPerformanceWindowInstance);
 	UPDATE_USER_INTERFACE(ShadowPreviewerWindowInstance);
 
-	AfterUpdate();
+	AfterUpdate(renderSystem);
 }
 
-void DebugUserInterface::AfterUpdate() const
+void DebugUserInterface::AfterUpdate(RenderSystem *renderSystem) const
 {
+	renderSystem->PrepareForGuiRender();
+
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 }

@@ -59,6 +59,11 @@ void RenderSystem::Update(const float deltaTime)
 	PerformPostProcessing();
 }
 
+void RenderSystem::PrepareForGuiRender()
+{
+	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetView.GetAddressOf(), nullptr);
+}
+
 void RenderSystem::RenderFrameBegin() const
 {
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
@@ -92,8 +97,6 @@ ID3D11DeviceContext* RenderSystem::GetPointerToDeviceContext() const
 ID3D11ShaderResourceView* RenderSystem::GetPointerToRemappedShadowShaderResourceView() const
 {
 	const auto outputTexture = ShadowRemapperPostProcessingInstance->Process(ShadowRenderDepthStencil.GetAddressOfShaderResourceView());
-	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetView.GetAddressOf(), nullptr); // Quick fix
-
 	return outputTexture.Get();
 }
 
