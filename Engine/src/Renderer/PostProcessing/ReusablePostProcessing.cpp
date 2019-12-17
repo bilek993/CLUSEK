@@ -2,7 +2,7 @@
 #include "../../Utils/StringUtil.h"
 
 ReusablePostProcessing::ReusablePostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device,
-	const int windowWidth, const int windowHeight, DXGI_FORMAT renderTargetFormat, const std::string& name,
+	const int windowWidth, const int windowHeight, const DXGI_FORMAT renderTargetFormat, const std::string& name,
 	const std::string& pixelShaderFilename) : BasePostProcessing(deviceContext, device)
 {
 	Logger::Debug("Preparing new post processing effect...");
@@ -15,7 +15,7 @@ ReusablePostProcessing::ReusablePostProcessing(ID3D11DeviceContext* deviceContex
 	if (!PixelShaderInstance.Initialize(Device, StringUtil::StringToWide(pixelShaderFilename)))
 		Logger::Error("'" + pixelShaderFilename + "' not initialized due to critical problem!");
 
-	if (!OutputRenderTexture.Initialize(device, windowWidth, windowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT,
+	if (!OutputRenderTexture.Initialize(device, windowWidth, windowHeight, renderTargetFormat,
 		1, 0))
 		Logger::Error("OutputRenderTexture not initialized due to critical problem!");
 }
