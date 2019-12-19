@@ -107,6 +107,9 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;
 
+	D3D11_VIEWPORT SceneViewport{};
+	D3D11_VIEWPORT ShadowViewport{};
+
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultWrapSamplerState;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultClampSamplerState;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> BrdfSamplerState;

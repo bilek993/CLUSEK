@@ -237,20 +237,30 @@ bool RenderSystem::InitializeDirectX()
 	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	Logger::Debug("Initialial clearing shadow render depth stencil...");
 
-	// Viewport initialization
+	// Scene viewport initialization
 
-	D3D11_VIEWPORT viewport;
-	ZeroMemory(&viewport, sizeof(D3D11_VIEWPORT));
+	SceneViewport.TopLeftX = 0;
+	SceneViewport.TopLeftY = 0;
+	SceneViewport.Width = static_cast<float>(WindowWidth);
+	SceneViewport.Height = static_cast<float>(WindowHeight);
+	SceneViewport.MinDepth = 0.0f;
+	SceneViewport.MaxDepth = 1.0f;
 
-	viewport.TopLeftX = 0;
-	viewport.TopLeftY = 0;
-	viewport.Width = static_cast<float>(WindowWidth);
-	viewport.Height = static_cast<float>(WindowHeight);
-	viewport.MinDepth = 0.0f;
-	viewport.MaxDepth = 1.0f;
+	Logger::Debug("Scene viewport is created successfully.");
 
-	DeviceContext->RSSetViewports(1, &viewport);
-	Logger::Debug("Viewport is set successfully.");
+	// Shadow viewport initialization
+
+	ShadowViewport.TopLeftX = 0;
+	ShadowViewport.TopLeftY = 0;
+	ShadowViewport.Width = static_cast<float>(ConfigurationData->ShadowsHeight);
+	ShadowViewport.Height = static_cast<float>(ConfigurationData->ShadowsWidth);
+	ShadowViewport.MinDepth = 0.0f;
+	ShadowViewport.MaxDepth = 1.0f;
+
+	Logger::Debug("Shadow viewport is created successfully.");
+
+	DeviceContext->RSSetViewports(1, &SceneViewport);
+	Logger::Debug("Default viewport has been set.");
 
 	// Rasterization initialization
 
@@ -612,6 +622,7 @@ TransformComponent& RenderSystem::GetMainCameraTransform() const
 
 void RenderSystem::RenderShadows()
 {
+	DeviceContext->RSSetViewports(1, &ShadowViewport);
 	DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencil.GetDepthStencilViewPointer());
 	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
@@ -620,6 +631,7 @@ void RenderSystem::RenderShadows()
 
 void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 {
+	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
 	RenderSkyBoxComponents(cameraComponent);
