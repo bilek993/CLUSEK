@@ -61,6 +61,7 @@ void RenderSystem::Update(const float deltaTime)
 
 void RenderSystem::PrepareForGuiRender()
 {
+	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetView.GetAddressOf(), nullptr);
 }
 
@@ -96,6 +97,7 @@ ID3D11DeviceContext* RenderSystem::GetPointerToDeviceContext() const
 
 ID3D11ShaderResourceView* RenderSystem::GetPointerToRemappedShadowShaderResourceView() const
 {
+	DeviceContext->RSSetViewports(1, &ShadowViewport);
 	const auto outputTexture = ShadowRemapperPostProcessingInstance->Process(ShadowRenderDepthStencil.GetAddressOfShaderResourceView());
 	return outputTexture.Get();
 }
