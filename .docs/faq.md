@@ -1,5 +1,9 @@
 ## FAQ
 
+**Should I build CLUSEK from source code or download binary version?**
+
+If you want to redesign how the engine works, then you download source code. If you are interested in adding own models and redefining scene, then you can download binary version and when you exceed limits of this version, you can always download source code and use it that way.
+
 **When I try to run this, it freezes at the loading screen. How can I solve this?**
 
 It looks like the TDR mechanism kicks in and disconnect your adapter. This mechanism is provided by GPU manufacturer drivers to the OS. More about it you can read [here](https://docs.nvidia.com/gameworks/content/developertools/desktop/timeout_detection_recovery.htm). The simplest way to fix it is to change `IrradianceSampleDelta` in configuration file from the default value to `0.0125` to `0.05` or even higher.
