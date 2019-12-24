@@ -1,7 +1,7 @@
 #include "MultisamplingPostProcessing.h"
 
 MultisamplingPostProcessing::MultisamplingPostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device,
-	int windowWidth, int windowHeight, DXGI_FORMAT renderTargetFormat) : BasePostProcessing(deviceContext, device)
+	const int windowWidth, const int windowHeight, const DXGI_FORMAT renderTargetFormat) : BasePostProcessing(deviceContext, device)
 {
 	Logger::Debug("Preparing 'Multisampling' post processing effect...");
 
@@ -11,7 +11,7 @@ MultisamplingPostProcessing::MultisamplingPostProcessing(ID3D11DeviceContext* de
 	if (!MultisamplingPixelShader.Initialize(Device, L"multisampling_pixel_shader.cso"))
 		Logger::Error("MultisamplingPixelShader not initialized due to critical problem!");
 
-	if (!OutputRenderTexture.Initialize(device, windowWidth, windowHeight, DXGI_FORMAT_R32G32B32A32_FLOAT,
+	if (!OutputRenderTexture.Initialize(device, windowWidth, windowHeight, renderTargetFormat,
 		1, 0))
 		Logger::Error("OutputRenderTexture not initialized due to critical problem!");
 }
