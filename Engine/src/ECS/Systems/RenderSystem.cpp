@@ -526,9 +526,13 @@ void RenderSystem::InitializePostProcessing()
 
 	// Custom post processing
 
-	ShadowRemapperPostProcessingInstance = std::make_unique<ReusablePostProcessing>(DeviceContext.Get(),
-		Device.Get(), ConfigurationData->ShadowsWidth, ConfigurationData->ShadowsHeight, DXGI_FORMAT_R32G32B32A32_FLOAT,
-		"Shadow Remapper", "shadow_remapper_pixel_shader.cso");
+	ShadowRemapperPostProcessingInstance = std::make_unique<ShadowRemapperPostProcessing>(	DeviceContext.Get(),
+																							Device.Get(), 
+																							ConfigurationData->ShadowsWidth, 
+																							ConfigurationData->ShadowsHeight,
+																							DXGI_FORMAT_R32G32B32A32_FLOAT,
+																							ConfigurationData->MainCameraNearZ, 
+																							ConfigurationData->MainCameraFarZ);
 }
 
 void RenderSystem::ShowLoadingScreen()

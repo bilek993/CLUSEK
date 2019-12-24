@@ -19,6 +19,7 @@
 #include "../../Renderer/PostProcessing/MultisamplingPostProcessing.h"
 #include "../../Renderer/RenderDepthStencil.h"
 #include "../../Renderer/ConstantBufferTypes/ShadowBuffer.h"
+#include "../../Renderer/PostProcessing/ShadowRemapperPostProcessing.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -72,7 +73,7 @@ private:
 	std::unique_ptr<MultisamplingPostProcessing> MultisamplingPostProcessingInstance;
 	std::unique_ptr<CopyToBackBufferPostProcessing> CopyToBackBufferPostProcessingInstance;
 
-	std::unique_ptr<ReusablePostProcessing> ShadowRemapperPostProcessingInstance;
+	std::unique_ptr<ShadowRemapperPostProcessing> ShadowRemapperPostProcessingInstance;
 
 	Microsoft::WRL::ComPtr<ID3D11Device> Device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> DeviceContext;
