@@ -7,8 +7,8 @@ protected:
 	void Draw() override;
 
 private:
-	void DrawPreview() const;
 	void DrawSettings();
+	void DrawPreview() const;
 
 	float ImageScale = 0.5f;
 };

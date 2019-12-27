@@ -6,10 +6,17 @@ void ShadowPreviewerWindow::Draw()
 {
 	ImGui::Begin("Shadow previewer", &IsEnabled);
 
-	DrawPreview();
 	DrawSettings();
+	ImGui::Separator();
+	DrawPreview();
 
 	ImGui::End();
+}
+
+void ShadowPreviewerWindow::DrawSettings()
+{
+	ImGui::Text("Settings:");
+	ImGui::SliderFloat("Image scale", &ImageScale, 0.1f, 10.0f);
 }
 
 void ShadowPreviewerWindow::DrawPreview() const
@@ -18,11 +25,4 @@ void ShadowPreviewerWindow::DrawPreview() const
 
 	ImGui::Text("Preview:");
 	ImGui::Image(static_cast<void*>(renderSystem->GetPointerToRemappedShadowShaderResourceView()), ImVec2(Config->ShadowsWidth * ImageScale, Config->ShadowsHeight * ImageScale));
-	ImGui::Separator();
-}
-
-void ShadowPreviewerWindow::DrawSettings()
-{
-	ImGui::Text("Settings:");
-	ImGui::SliderFloat("Image scale", &ImageScale, 0.1f, 10.0f);
 }
