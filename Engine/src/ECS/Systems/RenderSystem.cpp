@@ -532,7 +532,8 @@ void RenderSystem::InitializePostProcessing()
 																							ConfigurationData->ShadowsHeight,
 																							DXGI_FORMAT_R32G32B32A32_FLOAT,
 																							ConfigurationData->MainCameraNearZ, 
-																							ConfigurationData->MainCameraFarZ);
+																							ConfigurationData->MainCameraFarZ,
+																							2.0f);
 }
 
 void RenderSystem::ShowLoadingScreen()

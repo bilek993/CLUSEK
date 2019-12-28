@@ -2,7 +2,7 @@
 
 ShadowRemapperPostProcessing::ShadowRemapperPostProcessing(ID3D11DeviceContext* deviceContext, ID3D11Device* device,
 	const int width, const int height, const DXGI_FORMAT renderTargetFormat,
-	const float cameraNearZ, const float cameraFarZ) : BasePostProcessing(deviceContext, device)
+	const float cameraNearZ, const float cameraFarZ, const float bias) : BasePostProcessing(deviceContext, device)
 {
 	Logger::Debug("Preparing 'ShadowRemapper' post processing effect...");
 
@@ -16,7 +16,7 @@ ShadowRemapperPostProcessing::ShadowRemapperPostProcessing(ID3D11DeviceContext* 
 	if (FAILED(hr))
 		Logger::Error("ShadowRemapperConstantBuffer not initialized due to critical problem!");
 
-	SetValuesInConstantBuffer(cameraNearZ, cameraFarZ);
+	SetValuesInConstantBuffer(cameraNearZ, cameraFarZ, bias);
 
 	if (!OutputRenderTexture.Initialize(device, width, height, renderTargetFormat,
 		1, 0))
@@ -39,9 +39,10 @@ Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ShadowRemapperPostProcessing::P
 	return OutputRenderTexture.GetShaderResourceView();
 }
 
-void ShadowRemapperPostProcessing::SetValuesInConstantBuffer(const float cameraNearZ, const float cameraFarZ)
+void ShadowRemapperPostProcessing::SetValuesInConstantBuffer(const float cameraNearZ, const float cameraFarZ, const float bias)
 {
 	ShadowRemapperConstantBuffer.Data.NearZ = cameraNearZ;
 	ShadowRemapperConstantBuffer.Data.FarZ = cameraFarZ;
+	ShadowRemapperConstantBuffer.Data.Bias = bias;
 	ShadowRemapperConstantBuffer.ApplyChanges();
 }
