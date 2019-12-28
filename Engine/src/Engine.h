@@ -33,8 +33,8 @@ private:
 	std::vector<SystemHolder> Systems;
 	int RenderSystemId = 0;
 
-	PostProcessingSettings CurrentPostProcessingSettings;
-	DynamicRenderSettings CurrentRenderSettings;
+	PostProcessingSettings CurrentPostProcessingSettings{};
+	DynamicRenderSettings CurrentRenderSettings{};
 
 	DebugUserInterface DebugUI;
 
