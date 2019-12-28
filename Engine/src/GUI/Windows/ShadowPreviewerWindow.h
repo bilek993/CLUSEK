@@ -11,4 +11,5 @@ private:
 	void DrawPreview() const;
 
 	float ImageScale = 0.5f;
+	float Bias = 2.0f;
 };

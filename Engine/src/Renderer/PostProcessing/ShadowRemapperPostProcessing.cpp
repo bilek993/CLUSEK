@@ -39,6 +39,12 @@ Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> ShadowRemapperPostProcessing::P
 	return OutputRenderTexture.GetShaderResourceView();
 }
 
+void ShadowRemapperPostProcessing::UpdateBias(const float bias)
+{
+	ShadowRemapperConstantBuffer.Data.Bias = bias;
+	ShadowRemapperConstantBuffer.ApplyChanges();
+}
+
 void ShadowRemapperPostProcessing::SetValuesInConstantBuffer(const float cameraNearZ, const float cameraFarZ, const float bias)
 {
 	ShadowRemapperConstantBuffer.Data.NearZ = cameraNearZ;

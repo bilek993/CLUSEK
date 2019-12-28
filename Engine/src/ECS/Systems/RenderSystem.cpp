@@ -95,10 +95,13 @@ ID3D11DeviceContext* RenderSystem::GetPointerToDeviceContext() const
 	return DeviceContext.Get();
 }
 
-ID3D11ShaderResourceView* RenderSystem::GetPointerToRemappedShadowShaderResourceView() const
+ID3D11ShaderResourceView* RenderSystem::GetPointerToRemappedShadowShaderResourceView(const float bias) const
 {
 	DeviceContext->RSSetViewports(1, &ShadowViewport);
+
+	ShadowRemapperPostProcessingInstance->UpdateBias(bias);
 	const auto outputTexture = ShadowRemapperPostProcessingInstance->Process(ShadowRenderDepthStencil.GetAddressOfShaderResourceView());
+
 	return outputTexture.Get();
 }
 

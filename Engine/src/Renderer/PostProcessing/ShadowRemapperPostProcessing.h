@@ -11,6 +11,8 @@ public:
 		DXGI_FORMAT renderTargetFormat, float cameraNearZ, float cameraFarZ, float bias);
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> Process(ID3D11ShaderResourceView* const* inputResource) const;
+	
+	void UpdateBias(float bias);
 
 private:
 	void SetValuesInConstantBuffer(float cameraNearZ, float cameraFarZ, float bias);
