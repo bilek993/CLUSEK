@@ -118,6 +118,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultClampSamplerState;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> BrdfSamplerState;
 
+	ID3D11ShaderResourceView* NullShaderResourceView = nullptr;
+
 	inline static const float BACKGROUND_COLOR[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 };
 

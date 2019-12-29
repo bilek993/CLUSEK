@@ -769,6 +769,8 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 		DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 	});
+
+	DeviceContext->PSSetShaderResources(8, 1, &NullShaderResourceView);
 }
 
 void RenderSystem::PerformPostProcessing() const
