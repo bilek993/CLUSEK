@@ -51,6 +51,8 @@ float4 main(PS_INPUT input) : SV_TARGET
     input.LightSpacePosition.x = input.LightSpacePosition.x / 2 + 0.5f;
     input.LightSpacePosition.y = input.LightSpacePosition.y / -2 + 0.5f;
     
+    input.LightSpacePosition.z -= 0.005;
+    
     float shadowMapDepth = ShadowMap.Sample(DefaultSampler, input.LightSpacePosition.xy);
     if (shadowMapDepth < input.LightSpacePosition.z)
         albedoColor *= 0.01f;
