@@ -46,7 +46,9 @@ void RenderSystem::Start()
 	if (!InitializePbrResources())
 		Logger::Error("PBR resources initialization failed!");
 
-	ShadowCameraInstance.UpdateLightDirection(1, -1, 0.5f);
+	ShadowCameraInstance.UpdateLightDirection(	CurrentRenderSettings->DirectionalLightDirection.x, 
+												CurrentRenderSettings->DirectionalLightDirection.y, 
+												CurrentRenderSettings->DirectionalLightDirection.z);
 	ShadowCameraInstance.UpdateShadowMapLocation();
 }
 
@@ -638,6 +640,11 @@ void RenderSystem::RenderShadows()
 	DeviceContext->RSSetViewports(1, &ShadowViewport);
 	DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencil.GetDepthStencilViewPointer());
 	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+	ShadowCameraInstance.UpdateLightDirection(	CurrentRenderSettings->DirectionalLightDirection.x,
+												CurrentRenderSettings->DirectionalLightDirection.y,
+												CurrentRenderSettings->DirectionalLightDirection.z);
+	ShadowCameraInstance.UpdateShadowMapLocation();
 
 	RenderSceneForShadows();
 }
