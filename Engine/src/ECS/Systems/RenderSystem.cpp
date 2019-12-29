@@ -45,11 +45,6 @@ void RenderSystem::Start()
 
 	if (!InitializePbrResources())
 		Logger::Error("PBR resources initialization failed!");
-
-	ShadowCameraInstance.UpdateLightDirection(	CurrentRenderSettings->DirectionalLightDirection.x, 
-												CurrentRenderSettings->DirectionalLightDirection.y, 
-												CurrentRenderSettings->DirectionalLightDirection.z);
-	ShadowCameraInstance.UpdateShadowMapLocation();
 }
 
 void RenderSystem::Update(const float deltaTime)

@@ -1,6 +1,5 @@
 #include "ShadowCamera.h"
 #include <cmath>
-#include "../Utils/Logger.h"
 
 ShadowCamera::ShadowCamera()
 {
