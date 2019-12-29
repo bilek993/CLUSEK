@@ -20,6 +20,7 @@
 #include "../../Renderer/RenderDepthStencil.h"
 #include "../../Renderer/ConstantBufferTypes/ShadowBuffer.h"
 #include "../../Renderer/PostProcessing/ShadowRemapperPostProcessing.h"
+#include "../../Renderer/ShadowCamera.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -93,6 +94,8 @@ private:
 
 	VertexShader ShadowVertexShader;
 	PixelShader ShadowPixelShader;
+
+	ShadowCamera ShadowCameraInstance;
 
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;

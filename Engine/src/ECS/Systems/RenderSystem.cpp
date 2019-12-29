@@ -45,6 +45,9 @@ void RenderSystem::Start()
 
 	if (!InitializePbrResources())
 		Logger::Error("PBR resources initialization failed!");
+
+	ShadowCameraInstance.UpdateLightDirection(1, -1, 0.5f);
+	ShadowCameraInstance.UpdateShadowMapLocation();
 }
 
 void RenderSystem::Update(const float deltaTime)
@@ -657,22 +660,7 @@ void RenderSystem::RenderSceneForShadows()
 
 	Registry->view<ModelRenderComponent>().each([this, &offset](ModelRenderComponent &modelRenderComponent)
 	{
-		// START OF TMP CODE
-		DirectX::XMFLOAT3 eyePositionFloats(0, 0, 0);
-		DirectX::XMVECTOR eyePositionVector = XMLoadFloat3(&eyePositionFloats);
-
-		DirectX::XMFLOAT3 lightDirectionFloats(1, -1, 0.5f);
-		DirectX::XMVECTOR lightDirectionVector = XMLoadFloat3(&lightDirectionFloats);
-
-		DirectX::XMFLOAT3 upFloats(0, 1, 0);
-		DirectX::XMVECTOR upVector = XMLoadFloat3(&upFloats);
-
-		const auto shadowCameraProjectionMatrix = DirectX::XMMatrixOrthographicOffCenterLH(-100.0f, 100.0f, -100.0f, 100.0f, -100.0f, 100.0f);
-		const auto shadowCameraViewMatrix = DirectX::XMMatrixLookAtLH(eyePositionVector, lightDirectionVector, upVector);
-
-		// END OF TMP CODE
-
-		ShadowBufferInstance.Data.WorldLightMatrix = DirectX::XMMatrixTranspose(modelRenderComponent.WorldMatrix * (shadowCameraViewMatrix * shadowCameraProjectionMatrix));
+		ShadowBufferInstance.Data.WorldLightMatrix = DirectX::XMMatrixTranspose(modelRenderComponent.WorldMatrix * ShadowCameraInstance.CalculateCameraMatrix());
 		ShadowBufferInstance.ApplyChanges();
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)

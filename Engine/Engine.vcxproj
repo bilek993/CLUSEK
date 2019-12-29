@@ -18,6 +18,7 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <ClCompile Include="src\Renderer\ShadowCamera.cpp" />
     <ClCompile Include="src\Renderer\PostProcessing\ShadowRemapperPostProcessing.cpp" />
     <ClCompile Include="src\GUI\Windows\ShadowPreviewerWindow.cpp" />
     <ClCompile Include="src\Renderer\RenderDepthStencil.cpp" />
@@ -104,6 +105,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ShadowCamera.h" />
     <ClInclude Include="src\Renderer\PostProcessing\ShadowRemapperPostProcessing.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\ShadowRemapperBuffer.h" />
     <ClInclude Include="src\GUI\Windows\ShadowPreviewerWindow.h" />
