@@ -700,11 +700,16 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 	UINT offset = 0;
 	ChangeShader(UberVertexShader, UberPixelShader);
 
-	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset, &mainCameraTransform](ModelRenderComponent &modelRenderComponent)
+	const auto lightSpaceMatrix = XMMatrixTranspose(ShadowCameraInstance.CalculateCameraMatrix());
+
+	DeviceContext->PSSetShaderResources(8, 1, ShadowRenderDepthStencil.GetAddressOfShaderResourceView());
+
+	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset, &mainCameraTransform, &lightSpaceMatrix](ModelRenderComponent &modelRenderComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
 		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
+		FatPerObjectBufferInstance.Data.LightSpaceMatrix = lightSpaceMatrix;
 		FatPerObjectBufferInstance.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());

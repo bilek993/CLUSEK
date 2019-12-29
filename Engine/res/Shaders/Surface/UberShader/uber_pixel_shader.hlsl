@@ -18,6 +18,7 @@ struct PS_INPUT
 {
     float4 Position : SV_POSITION;
     float3 WorldPosition : WORLD_POSITION;
+    float4 LightSpacePosition : LIGHTSPACE_POSITION;
     float2 TextureCoord : TEXCOORD;
     float3x3 TBN : TBN;
 };
@@ -30,6 +31,7 @@ Texture2D EmissionTexture : register(t4);
 TextureCube IrradianceTexture : register(t5);
 TextureCube RadianceTexture : register(t6);
 Texture2D BrdfLut : register(t7);
+Texture2D ShadowMap : register(t8);
 SamplerState DefaultSampler : register(s0);
 SamplerState BrdfSampler : register(s2);
 
@@ -44,6 +46,14 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 calculatedNormal = calculateNormal(normalColor, input.TBN);
     float roughness = 1 - metalicSmoothnessColor.a;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
+    
+    input.LightSpacePosition.xyz /= input.LightSpacePosition.w;
+    input.LightSpacePosition.x = input.LightSpacePosition.x / 2 + 0.5f;
+    input.LightSpacePosition.y = input.LightSpacePosition.y / -2 + 0.5f;
+    
+    float shadowMapDepth = ShadowMap.Sample(DefaultSampler, input.LightSpacePosition.xy);
+    if (shadowMapDepth < input.LightSpacePosition.z)
+        albedoColor *= 0.01f;
 
     float3 finalColor = pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
