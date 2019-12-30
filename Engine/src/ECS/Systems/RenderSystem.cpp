@@ -649,8 +649,10 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
+	const auto lightSpaceMatrix = XMMatrixTranspose(ShadowCameraInstance.CalculateCameraMatrix());
+
 	RenderSkyBoxComponents(cameraComponent);
-	RenderModelRenderComponents(cameraComponent);
+	RenderModelRenderComponents(cameraComponent, lightSpaceMatrix);
 }
 
 void RenderSystem::RenderSceneForShadows()
@@ -693,14 +695,12 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 	});
 }
 
-void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent)
+void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent, const DirectX::XMMATRIX& lightSpaceMatrix)
 {
 	auto& mainCameraTransform = GetMainCameraTransform();
 
 	UINT offset = 0;
 	ChangeShader(UberVertexShader, UberPixelShader);
-
-	const auto lightSpaceMatrix = XMMatrixTranspose(ShadowCameraInstance.CalculateCameraMatrix());
 
 	DeviceContext->PSSetShaderResources(8, 1, ShadowRenderDepthStencil.GetAddressOfShaderResourceView());
 

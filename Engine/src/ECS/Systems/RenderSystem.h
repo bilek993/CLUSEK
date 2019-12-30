@@ -62,7 +62,7 @@ private:
 	void RenderSceneForShadows();
 
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
-	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
+	void RenderModelRenderComponents(const CameraComponent &cameraComponent, const DirectX::XMMATRIX& lightSpaceMatrix);
 
 	void PerformPostProcessing() const;
 
