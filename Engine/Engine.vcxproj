@@ -349,6 +349,7 @@
     <None Include="res\Shaders\Includes\pbr.hlsli" />
     <None Include="res\Shaders\Includes\normal_utils.hlsli" />
     <None Include="res\Shaders\Includes\sampling_helper.hlsli" />
+    <None Include="res\Shaders\Includes\shadow_utils.hlsli" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine.rc" />

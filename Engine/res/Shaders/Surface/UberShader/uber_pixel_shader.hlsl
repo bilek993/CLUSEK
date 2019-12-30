@@ -1,5 +1,6 @@
 #include "../../Includes/normal_utils.hlsli"
 #include "../../Includes/pbr.hlsli"
+#include "../../Includes/shadow_utils.hlsli"
 
 cbuffer LightAndAlphaBuffer : register(b0)
 {
@@ -47,15 +48,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float roughness = 1 - metalicSmoothnessColor.a;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
     
-    input.LightSpacePosition.xyz /= input.LightSpacePosition.w;
-    input.LightSpacePosition.x = input.LightSpacePosition.x / 2 + 0.5f;
-    input.LightSpacePosition.y = input.LightSpacePosition.y / -2 + 0.5f;
-    
-    input.LightSpacePosition.z -= 0.005;
-    
-    float shadowMapDepth = ShadowMap.Sample(DefaultSampler, input.LightSpacePosition.xy);
-    if (shadowMapDepth < input.LightSpacePosition.z)
-        albedoColor *= 0.01f;
+    albedoColor *= CalculateShadows(ShadowMap, DefaultSampler, input.LightSpacePosition, 0.01f);
 
     float3 finalColor = pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
