@@ -50,7 +50,7 @@ int getTextureMipMapLevels(TextureCube input)
 float3 pbr(float3 albedo, float3 normal, float metallic, float roughness, float occlusion,
           TextureCube irradianceTexture, TextureCube radianceTexture, Texture2D brdfLut, 
           SamplerState defaultSampler, SamplerState brdfSampler, float3 lightDirection, 
-          float3 lightColor, float3 cameraPosition, float3 pixelPosition)
+          float3 lightColor, float3 cameraPosition, float3 pixelPosition, float shadowMultiplier)
 {
     lightDirection *= -1;
 
@@ -88,5 +88,5 @@ float3 pbr(float3 albedo, float3 normal, float metallic, float roughness, float 
 
     float3 ambientLighting = (kD * diffuse + specularColor) * occlusion;
 
-    return ambientLighting + directLighting;
+    return ambientLighting + (directLighting * shadowMultiplier);
 }

@@ -9,7 +9,7 @@ float CalculateShadows(Texture2D shadowMap, SamplerState shadowSampler, float4 l
         lightSpacePosition.z < 0.0f  || lightSpacePosition.z > 1.0f)
         return 1.0f;
     
-    float bias = clamp(0.01f * (1.0f - dot(normal, directionalLightDirection)), 0.0f, 0.01f);
+    float bias = clamp(0.001f * (1.0f - dot(normal, directionalLightDirection)), 0.0f, 0.01f);
     lightSpacePosition.z -= bias;
     
     float shadowMapDepth = shadowMap.Sample(shadowSampler, lightSpacePosition.xy);

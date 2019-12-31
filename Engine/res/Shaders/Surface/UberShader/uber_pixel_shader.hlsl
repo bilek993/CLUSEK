@@ -49,11 +49,11 @@ float4 main(PS_INPUT input) : SV_TARGET
     float roughness = 1 - metalicSmoothnessColor.a;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
     
-    albedoColor *= CalculateShadows(ShadowMap, DefaultSampler, input.LightSpacePosition, input.Normal, DirectionalLightDirection, 0.01f);
+    float shadowMultiplier = CalculateShadows(ShadowMap, DefaultSampler, input.LightSpacePosition, input.Normal, DirectionalLightDirection, 0.01f);
 
     float3 finalColor = pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
-                            DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition);
+                            DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, shadowMultiplier);
 
     return float4(finalColor + emissionColor, Alpha);
 }
