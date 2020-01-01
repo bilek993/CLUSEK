@@ -155,17 +155,17 @@ bool RenderSystem::InitializeDirectX()
 	// Creating device and swap chain
 
 	auto hr = D3D11CreateDeviceAndSwapChain(adapters[ConfigurationData->SelectedAdapterId].Adapter,
-		D3D_DRIVER_TYPE_UNKNOWN,
-		nullptr,
-		softwareLayers,
-		nullptr,
-		0,
-		D3D11_SDK_VERSION,
-		&scd,
-		SwapChain.GetAddressOf(),
-		Device.GetAddressOf(),
-		nullptr,
-		DeviceContext.GetAddressOf());
+											D3D_DRIVER_TYPE_UNKNOWN,
+											nullptr,
+											softwareLayers,
+											nullptr,
+											0,
+											D3D11_SDK_VERSION,
+											&scd,
+											SwapChain.GetAddressOf(),
+											Device.GetAddressOf(),
+											nullptr,
+											DeviceContext.GetAddressOf());
 
 	if (FAILED(hr))
 	{
@@ -222,25 +222,29 @@ bool RenderSystem::InitializeDirectX()
 
 	// Depth shadow render stencil initialization
 
-	if (!ShadowRenderDepthStencil.Initialize(	Device.Get(),
-												ConfigurationData->ShadowsTextureSize,
-												ConfigurationData->ShadowsTextureSize,
-												DXGI_FORMAT_R32_TYPELESS,
-												DXGI_FORMAT_D32_FLOAT,
-												DXGI_FORMAT_R32_FLOAT,
-												1,
-												0,
-												true,
-												false))
+	if (ConfigurationData->ShadowsEnabled)
 	{
-		Logger::Error("Error creating shadow render depth stencil!");
-		return false;
+		if (!ShadowRenderDepthStencil.Initialize(	Device.Get(),
+													ConfigurationData->ShadowsTextureSize,
+													ConfigurationData->ShadowsTextureSize,
+													DXGI_FORMAT_R32_TYPELESS,
+													DXGI_FORMAT_D32_FLOAT,
+													DXGI_FORMAT_R32_FLOAT,
+													1,
+													0,
+													true,
+													false))
+		{
+			Logger::Error("Error creating shadow render depth stencil!");
+			return false;
+		}
+	
+
+		Logger::Debug("Successfully created shadow render depth stencil.");
+
+		DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+		Logger::Debug("Initialial clearing shadow render depth stencil...");
 	}
-
-	Logger::Debug("Successfully created shadow render depth stencil.");
-
-	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-	Logger::Debug("Initialial clearing shadow render depth stencil...");
 
 	// Scene viewport initialization
 
@@ -255,14 +259,19 @@ bool RenderSystem::InitializeDirectX()
 
 	// Shadow viewport initialization
 
-	ShadowViewport.TopLeftX = 0;
-	ShadowViewport.TopLeftY = 0;
-	ShadowViewport.Width = static_cast<float>(ConfigurationData->ShadowsTextureSize);
-	ShadowViewport.Height = static_cast<float>(ConfigurationData->ShadowsTextureSize);
-	ShadowViewport.MinDepth = 0.0f;
-	ShadowViewport.MaxDepth = 1.0f;
+	if (ConfigurationData->ShadowsEnabled)
+	{
+		ShadowViewport.TopLeftX = 0;
+		ShadowViewport.TopLeftY = 0;
+		ShadowViewport.Width = static_cast<float>(ConfigurationData->ShadowsTextureSize);
+		ShadowViewport.Height = static_cast<float>(ConfigurationData->ShadowsTextureSize);
+		ShadowViewport.MinDepth = 0.0f;
+		ShadowViewport.MaxDepth = 1.0f;
 
-	Logger::Debug("Shadow viewport is created successfully.");
+		Logger::Debug("Shadow viewport is created successfully.");
+	}
+
+	// Set default viewport
 
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	Logger::Debug("Default viewport has been set.");
@@ -529,14 +538,17 @@ void RenderSystem::InitializePostProcessing()
 
 	// Custom post processing
 
-	ShadowRemapperPostProcessingInstance = std::make_unique<ShadowRemapperPostProcessing>(	DeviceContext.Get(),
-																							Device.Get(), 
-																							ConfigurationData->ShadowsTextureSize,
-																							ConfigurationData->ShadowsTextureSize,
-																							DXGI_FORMAT_R32G32B32A32_FLOAT,
-																							ConfigurationData->MainCameraNearZ, 
-																							ConfigurationData->MainCameraFarZ,
-																							2.0f);
+	if (ConfigurationData->ShadowsEnabled)
+	{
+		ShadowRemapperPostProcessingInstance = std::make_unique<ShadowRemapperPostProcessing>(	DeviceContext.Get(),
+																								Device.Get(), 
+																								ConfigurationData->ShadowsTextureSize,
+																								ConfigurationData->ShadowsTextureSize,
+																								DXGI_FORMAT_R32G32B32A32_FLOAT,
+																								ConfigurationData->MainCameraNearZ, 
+																								ConfigurationData->MainCameraFarZ,
+																								2.0f);
+	}
 }
 
 void RenderSystem::ShowLoadingScreen()
