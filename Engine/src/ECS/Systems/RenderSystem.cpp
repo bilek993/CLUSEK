@@ -201,7 +201,7 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
-	// Depth scene render stencil initialization
+	// Scene render depth stencil initialization
 
 	if (!SceneRenderDepthStencil.Initialize(Device.Get(),
 											WindowWidth,
@@ -220,7 +220,7 @@ bool RenderSystem::InitializeDirectX()
 
 	Logger::Debug("Successfully created scene render depth stencil.");
 
-	// Depth shadow render stencil initialization
+	// Render shadow depth stencil initialization
 
 	if (ConfigurationData->ShadowsEnabled)
 	{
