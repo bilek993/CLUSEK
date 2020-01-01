@@ -55,8 +55,7 @@ struct ConfigData final
 
 	// Shadows settings
 	int ShadowsEnabled = 1;
-	int ShadowsWidth = 512;
-	int ShadowsHeight = 512;
+	int ShadowsTextureSize = 512;
 	float ShadowAlphaThreshold = 0.95f;
 
 	// Loaders settings

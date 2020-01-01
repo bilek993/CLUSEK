@@ -223,8 +223,8 @@ bool RenderSystem::InitializeDirectX()
 	// Depth shadow render stencil initialization
 
 	if (!ShadowRenderDepthStencil.Initialize(	Device.Get(),
-												ConfigurationData->ShadowsWidth,
-												ConfigurationData->ShadowsHeight,
+												ConfigurationData->ShadowsTextureSize,
+												ConfigurationData->ShadowsTextureSize,
 												DXGI_FORMAT_R32_TYPELESS,
 												DXGI_FORMAT_D32_FLOAT,
 												DXGI_FORMAT_R32_FLOAT,
@@ -257,8 +257,8 @@ bool RenderSystem::InitializeDirectX()
 
 	ShadowViewport.TopLeftX = 0;
 	ShadowViewport.TopLeftY = 0;
-	ShadowViewport.Width = static_cast<float>(ConfigurationData->ShadowsHeight);
-	ShadowViewport.Height = static_cast<float>(ConfigurationData->ShadowsWidth);
+	ShadowViewport.Width = static_cast<float>(ConfigurationData->ShadowsTextureSize);
+	ShadowViewport.Height = static_cast<float>(ConfigurationData->ShadowsTextureSize);
 	ShadowViewport.MinDepth = 0.0f;
 	ShadowViewport.MaxDepth = 1.0f;
 
@@ -531,8 +531,8 @@ void RenderSystem::InitializePostProcessing()
 
 	ShadowRemapperPostProcessingInstance = std::make_unique<ShadowRemapperPostProcessing>(	DeviceContext.Get(),
 																							Device.Get(), 
-																							ConfigurationData->ShadowsWidth, 
-																							ConfigurationData->ShadowsHeight,
+																							ConfigurationData->ShadowsTextureSize,
+																							ConfigurationData->ShadowsTextureSize,
 																							DXGI_FORMAT_R32G32B32A32_FLOAT,
 																							ConfigurationData->MainCameraNearZ, 
 																							ConfigurationData->MainCameraFarZ,

@@ -26,5 +26,5 @@ void ShadowPreviewerWindow::DrawPreview() const
 
 	ImGui::Text("Preview:");
 	ImGui::Image(static_cast<void*>(renderSystem->GetPointerToRemappedShadowShaderResourceView(Bias)), 
-		ImVec2(Config->ShadowsWidth * ImageScale, Config->ShadowsHeight * ImageScale));
+		ImVec2(Config->ShadowsTextureSize * ImageScale, Config->ShadowsTextureSize * ImageScale));
 }
