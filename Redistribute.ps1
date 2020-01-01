@@ -31,4 +31,4 @@ Invoke-Expression "& '$MsBuildPath' /t:build /p:configuration=Release /verbosity
 
 Write-Host "Packing..."
 $EngineVersion = Get-Date -Format '1.0.yy.MM.dd'
-compress-archive -path ('./bin/*.dll', './bin/*.exe', './bin/*.cso', './bin/Data/') -destinationpath "CLUSEK-$EngineVersion.zip" -compressionlevel optimal
+compress-archive -path ('./bin/*.dll', './bin/*.exe', './bin/*.cso', './bin/Data/', './LICENSE') -destinationpath "CLUSEK-$EngineVersion.zip" -compressionlevel optimal
