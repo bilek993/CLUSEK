@@ -57,6 +57,7 @@ struct ConfigData final
 	int ShadowsEnabled = 1;
 	int ShadowsWidth = 512;
 	int ShadowsHeight = 512;
+	float ShadowAlphaThreshold = 0.95f;
 
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;

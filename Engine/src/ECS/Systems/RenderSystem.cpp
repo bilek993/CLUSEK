@@ -669,7 +669,7 @@ void RenderSystem::RenderSceneForShadows()
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
-			if (mesh.Material.Alpha < 1.0f)
+			if (mesh.Material.Alpha < ConfigurationData->ShadowAlphaThreshold)
 				continue;
 
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
