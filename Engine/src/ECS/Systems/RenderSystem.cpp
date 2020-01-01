@@ -448,16 +448,18 @@ bool RenderSystem::InitializeShaders()
 
 	// Shadow shader
 
-	if (!ShadowVertexShader.Initialize(Device.Get(), L"shadow_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
-	{
-		Logger::Error("ShadowVertexShader not initialized due to critical problem!");
-		return false;
-	}
+	if (ConfigurationData->ShadowsEnabled) {
+		if (!ShadowVertexShader.Initialize(Device.Get(), L"shadow_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
+		{
+			Logger::Error("ShadowVertexShader not initialized due to critical problem!");
+			return false;
+		}
 
-	if (!ShadowPixelShader.Initialize(Device.Get(), L"shadow_pixel_shader.cso"))
-	{
-		Logger::Error("ShadowPixelShader not initialized due to critical problem!");
-		return false;
+		if (!ShadowPixelShader.Initialize(Device.Get(), L"shadow_pixel_shader.cso"))
+		{
+			Logger::Error("ShadowPixelShader not initialized due to critical problem!");
+			return false;
+		}
 	}
 
 	// Generic code
