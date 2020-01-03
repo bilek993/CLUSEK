@@ -2,9 +2,25 @@ static const float SHADOW_BIAS = 0.002f;
 static const float SHADOW_MIN_BIAS = 0.0f;
 static const float SHADOW_MAX_BIAS = 0.01f;
 
-float2 calculateOffset(int u, int v, int shadowResolution)
+float2 CalculateOffset(int u, int v, int shadowResolution)
 {
     return float2(u * 1.0f / shadowResolution, v * 1.0f / shadowResolution);
+}
+
+float PerformPCF(Texture2D shadowMap, SamplerComparisonState shadowSampler, float4 lightSpacePosition)
+{
+    float sum = 0.0f;
+    
+    for (float y = -1.5; y <= 1.5; y += 1.0)
+    {
+        for (float x = -1.5; x <= 1.5; x += 1.0)
+        {
+            sum += shadowMap.SampleCmpLevelZero(shadowSampler, lightSpacePosition.xy + CalculateOffset(x, y, 1024), lightSpacePosition.z);
+        }
+
+    }
+    
+    return sum / 16.0f;
 }
 
 float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler, float4 lightSpacePosition, float3 normal, float3 directionalLightDirection, float shadowMultiplier)
@@ -16,16 +32,5 @@ float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler
     float bias = clamp(SHADOW_BIAS * (1.0f - dot(normal, directionalLightDirection)), SHADOW_MIN_BIAS, SHADOW_MAX_BIAS);
     lightSpacePosition.z -= bias;
     
-    float sum = 0;
-    
-    for (float y = -1.5; y <= 1.5; y += 1.0)
-    {
-        for (float x = -1.5; x <= 1.5; x += 1.0)
-        {
-            sum += shadowMap.SampleCmpLevelZero(shadowSampler, lightSpacePosition.xy + calculateOffset(x, y, 1024), lightSpacePosition.z);
-        }
-
-    }
-    
-    return sum / 16.0;
+    return PerformPCF(shadowMap, shadowSampler, lightSpacePosition);
 }
