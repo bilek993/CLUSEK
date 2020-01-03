@@ -36,6 +36,7 @@ Texture2D BrdfLut : register(t7);
 Texture2D ShadowMap : register(t8);
 SamplerState DefaultSampler : register(s0);
 SamplerState BrdfSampler : register(s2);
+SamplerState ShadowSampler : register(s3);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
@@ -49,7 +50,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float roughness = 1 - metalicSmoothnessColor.a;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
     
-    float shadowMultiplier = CalculateShadows(ShadowMap, DefaultSampler, input.LightSpacePosition, input.Normal, DirectionalLightDirection, 0.01f);
+    float shadowMultiplier = CalculateShadows(ShadowMap, ShadowSampler, input.LightSpacePosition, input.Normal, DirectionalLightDirection, 0.01f);
 
     float3 finalColor = pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,

@@ -6,11 +6,6 @@ float CalculateShadows(Texture2D shadowMap, SamplerState shadowSampler, float4 l
     lightSpacePosition.x = lightSpacePosition.x / 2 + 0.5f;
     lightSpacePosition.y = lightSpacePosition.y / -2 + 0.5f;
     
-    if (lightSpacePosition.x < -1.0f || lightSpacePosition.x > 1.0f ||
-        lightSpacePosition.y < -1.0f || lightSpacePosition.y > 1.0f ||
-        lightSpacePosition.z < 0.0f  || lightSpacePosition.z > 1.0f)
-        return 1.0f;
-    
     float bias = clamp(SHADOW_BIAS * (1.0f - dot(normal, directionalLightDirection)), 0.0f, 0.01f);
     lightSpacePosition.z -= bias;
     

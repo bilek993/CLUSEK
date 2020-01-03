@@ -117,6 +117,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultWrapSamplerState;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultClampSamplerState;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> BrdfSamplerState;
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> ShadowSamplerState;
 
 	ID3D11ShaderResourceView* NullShaderResourceView = nullptr;
 

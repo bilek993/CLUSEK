@@ -78,6 +78,7 @@ void RenderSystem::RenderFrameBegin() const
 	DeviceContext->PSSetSamplers(0, 1, DefaultWrapSamplerState.GetAddressOf());
 	DeviceContext->PSSetSamplers(1, 1, DefaultClampSamplerState.GetAddressOf());
 	DeviceContext->PSSetSamplers(2, 1, BrdfSamplerState.GetAddressOf());
+	DeviceContext->PSSetSamplers(3, 1, ShadowSamplerState.GetAddressOf());
 }
 
 void RenderSystem::RenderFrameEnd() const
@@ -393,6 +394,32 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 	Logger::Debug("BRDF sampler state is set successfully.");
+
+	// Shadow sampler state initialization
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.BorderColor[0] = D3D11_FLOAT32_MAX;
+	samplerDesc.BorderColor[1] = 0.0f;
+	samplerDesc.BorderColor[2] = 0.0f;
+	samplerDesc.BorderColor[3] = 0.0f;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = 0;
+
+	hr = Device->CreateSamplerState(&samplerDesc, ShadowSamplerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating shadow sampler state!");
+		return false;
+	}
+	Logger::Debug("Shadow sampler state is set successfully.");
 
 	// Topology initialization
 
