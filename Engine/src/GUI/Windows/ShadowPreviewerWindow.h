@@ -9,6 +9,7 @@ protected:
 private:
 	void DrawSettings();
 	void DrawPreview() const;
+	void DrawWarning() const;
 
 	float ImageScale = 0.5f;
 	float Bias = 2.0f;

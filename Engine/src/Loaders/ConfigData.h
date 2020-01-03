@@ -55,6 +55,7 @@ struct ConfigData final
 
 	// Shadows settings
 	int ShadowsEnabled = 1;
+	int EnableRealtimeShadowPreview = 0;
 	int ShadowsTextureSize = 512;
 	float ShadowAlphaThreshold = 0.95f;
 

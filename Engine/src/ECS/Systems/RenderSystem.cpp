@@ -567,7 +567,7 @@ void RenderSystem::InitializePostProcessing()
 
 	// Custom post processing
 
-	if (ConfigurationData->ShadowsEnabled)
+	if (ConfigurationData->ShadowsEnabled && ConfigurationData->EnableRealtimeShadowPreview)
 	{
 		ShadowRemapperPostProcessingInstance = std::make_unique<ShadowRemapperPostProcessing>(	DeviceContext.Get(),
 																								Device.Get(), 

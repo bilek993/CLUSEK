@@ -6,9 +6,16 @@ void ShadowPreviewerWindow::Draw()
 {
 	ImGui::Begin("Shadow previewer", &IsEnabled);
 
-	DrawSettings();
-	ImGui::Separator();
-	DrawPreview();
+	if (Config->ShadowsEnabled && Config->EnableRealtimeShadowPreview)
+	{
+		DrawSettings();
+		ImGui::Separator();
+		DrawPreview();
+	}
+	else
+	{
+		DrawWarning();
+	}
 
 	ImGui::End();
 }
@@ -27,4 +34,13 @@ void ShadowPreviewerWindow::DrawPreview() const
 	ImGui::Text("Preview:");
 	ImGui::Image(static_cast<void*>(renderSystem->GetPointerToRemappedShadowShaderResourceView(Bias)), 
 		ImVec2(Config->ShadowsTextureSize * ImageScale, Config->ShadowsTextureSize * ImageScale));
+}
+
+void ShadowPreviewerWindow::DrawWarning() const
+{
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x / 2) - 31);
+	ImGui::Text("WARNING!");
+	ImGui::Separator();
+	ImGui::Text("Preview not available!");
+	ImGui::Text("Please enable shadows and realtime shadow preview to enable this preview window.");
 }
