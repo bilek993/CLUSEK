@@ -1,4 +1,6 @@
-static const float SHADOW_BIAS = 0.001f;
+static const float SHADOW_BIAS = 0.002f;
+static const float SHADOW_MIN_BIAS = 0.0f;
+static const float SHADOW_MAX_BIAS = 0.01f;
 
 float2 calculateOffset(int u, int v, int shadowResolution)
 {
@@ -11,7 +13,7 @@ float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler
     lightSpacePosition.x = lightSpacePosition.x / 2 + 0.5f;
     lightSpacePosition.y = lightSpacePosition.y / -2 + 0.5f;
     
-    float bias = clamp(SHADOW_BIAS * (1.0f - dot(normal, directionalLightDirection)), 0.0f, 0.01f);
+    float bias = clamp(SHADOW_BIAS * (1.0f - dot(normal, directionalLightDirection)), SHADOW_MIN_BIAS, SHADOW_MAX_BIAS);
     lightSpacePosition.z -= bias;
     
     float sum = 0;
