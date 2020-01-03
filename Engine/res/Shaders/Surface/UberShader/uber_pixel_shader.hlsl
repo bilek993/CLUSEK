@@ -36,7 +36,7 @@ Texture2D BrdfLut : register(t7);
 Texture2D ShadowMap : register(t8);
 SamplerState DefaultSampler : register(s0);
 SamplerState BrdfSampler : register(s2);
-SamplerState ShadowSampler : register(s3);
+SamplerComparisonState ShadowSampler : register(s3);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
