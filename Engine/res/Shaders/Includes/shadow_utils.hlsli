@@ -7,11 +7,8 @@ float2 CalculateOffset(int u, int v, float shadowMapWidth, float shadowMapHeight
     return float2(u * 1.0f / shadowMapWidth, v * 1.0f / shadowMapHeight);
 }
 
-float PerformPCF(Texture2D shadowMap, SamplerComparisonState shadowSampler, float4 lightSpacePosition)
+float PerformPCF(Texture2D shadowMap, float shadowMapWidth, float shadowMapHeight, SamplerComparisonState shadowSampler, float4 lightSpacePosition)
 {
-    float shadowMapWidth, shadowMapHeight;
-    shadowMap.GetDimensions(shadowMapWidth, shadowMapHeight);
-    
     float sum = 0.0f;
     
     for (float y = -1.5; y <= 1.5; y += 1.0)
@@ -28,6 +25,12 @@ float PerformPCF(Texture2D shadowMap, SamplerComparisonState shadowSampler, floa
 
 float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler, float4 lightSpacePosition, float3 normal, float3 directionalLightDirection)
 {
+    float shadowMapWidth, shadowMapHeight;
+    shadowMap.GetDimensions(shadowMapWidth, shadowMapHeight);
+    
+    if (shadowMapWidth < 1.0f || shadowMapHeight < 1.0f)
+        return 1.0f;
+    
     lightSpacePosition.xyz /= lightSpacePosition.w;
     lightSpacePosition.x = lightSpacePosition.x / 2 + 0.5f;
     lightSpacePosition.y = lightSpacePosition.y / -2 + 0.5f;
@@ -38,5 +41,5 @@ float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler
     float bias = clamp(SHADOW_BIAS * (1.0f - dot(normal, directionalLightDirection)), SHADOW_MIN_BIAS, SHADOW_MAX_BIAS);
     lightSpacePosition.z -= bias;
     
-    return PerformPCF(shadowMap, shadowSampler, lightSpacePosition);
+    return PerformPCF(shadowMap, shadowMapWidth, shadowMapHeight, shadowSampler, lightSpacePosition);
 }
