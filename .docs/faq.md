@@ -22,3 +22,11 @@ They shouldn't unless you use dark environment texture. This situation mainly oc
 **I'm trying to compile source code with a newer Visual Studio compiler, but it fails. How can I solve this?**
 
 It's hard to tell. Other compilers are highly not recommended but might work. The best way is to navigating to 'Error List' and solving errors one by one. A known problem is missing memory include. To solve this add ``#include <memory>`` at the top of the files when compiler tells it's needed for smart pointers.
+
+**I would like to add new component. Should I do something special?**
+
+Yes, besides adding a new structure in `ECS/Components` folder and filter, you should do one more thing. In `EntityViewerWindow` class in `DrawList` method, you should also define your component. It is needed for GUI Editor. Below is the example of declaring a new component.
+
+```
+DrawComponent<NewComponent>(entity, "New Component Name");
+```
