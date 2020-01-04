@@ -17,7 +17,6 @@ float PerformPCF(Texture2D shadowMap, float shadowMapWidth, float shadowMapHeigh
         {
             sum += shadowMap.SampleCmpLevelZero(shadowSampler, lightSpacePosition.xy + CalculateOffset(x, y, shadowMapWidth, shadowMapHeight), lightSpacePosition.z);
         }
-
     }
     
     return sum / 16.0f;
