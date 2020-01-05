@@ -680,7 +680,8 @@ void RenderSystem::RenderShadows()
 	ShadowCameraInstance.UpdateLightDirection(	CurrentRenderSettings->DirectionalLightDirection.x,
 												CurrentRenderSettings->DirectionalLightDirection.y,
 												CurrentRenderSettings->DirectionalLightDirection.z);
-	ShadowCameraInstance.UpdateShadowMapLocation();
+	auto& mainCamera = GetMainCamera();
+	ShadowCameraInstance.UpdateShadowMapLocation(mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
 
 	RenderSceneForShadows();
 }
