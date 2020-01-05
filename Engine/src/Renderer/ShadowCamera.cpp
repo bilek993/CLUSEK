@@ -79,5 +79,25 @@ void ShadowCamera::CalculateFrustumPoints(std::array<DirectX::XMVECTOR, 8>& poin
 
 DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMVECTOR, 8>& points) const
 {
-	return DirectX::XMMatrixOrthographicOffCenterLH(-100.0f, 100.0f, -100.0f, 100.0f, -100.0f, 100.0f);
+	auto viewLeft = FLT_MAX;
+	auto viewRight = -FLT_MAX;
+	auto viewBottom = FLT_MAX;
+	auto viewTop = -FLT_MAX;
+
+	for (auto& point : points)
+	{
+		DirectX::XMFLOAT4 pointValues{};
+		XMStoreFloat4(&pointValues, point);
+
+		if (pointValues.x < viewLeft)
+			viewLeft = pointValues.x;
+		if (pointValues.x > viewRight)
+			viewRight = pointValues.x;
+		if (pointValues.y < viewBottom)
+			viewBottom = pointValues.x;
+		if (pointValues.y > viewTop)
+			viewTop = pointValues.x;
+	}
+
+	return DirectX::XMMatrixOrthographicOffCenterLH(viewLeft, viewRight, viewBottom, viewTop, -100.0f, 100.0f);
 }
