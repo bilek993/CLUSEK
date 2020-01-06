@@ -57,11 +57,11 @@ std::array<DirectX::XMVECTOR, 8> ShadowCamera::GenerateGenericPoints() const
 void ShadowCamera::CalculateFrustumPoints(std::array<DirectX::XMVECTOR, 8>& points,
 	const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const
 {
-	const auto invertedCameraMatrix = XMMatrixInverse(nullptr, (projectionMatrix * viewMatrix));
+	const auto calculatedMatrix = XMMatrixInverse(nullptr, viewMatrix * projectionMatrix) * ViewMatrix;
 
 	for (auto& point : points)
 	{
-		point = XMVector4Transform(point, invertedCameraMatrix);
+		point = XMVector4Transform(point, calculatedMatrix);
 
 		DirectX::XMFLOAT4 pointValues{};
 		XMStoreFloat4(&pointValues, point);
