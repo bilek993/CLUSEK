@@ -93,10 +93,10 @@ DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMV
 			viewLeft = pointValues.x;
 		if (pointValues.x > viewRight)
 			viewRight = pointValues.x;
-		if (pointValues.y < viewBottom)
-			viewBottom = pointValues.x;
-		if (pointValues.y > viewTop)
-			viewTop = pointValues.x;
+		if (pointValues.z < viewBottom)
+			viewBottom = pointValues.z;
+		if (pointValues.z > viewTop)
+			viewTop = pointValues.z;
 	}
 
 	return DirectX::XMMatrixOrthographicOffCenterLH(viewLeft, viewRight, viewBottom, viewTop, -100.0f, 100.0f);
