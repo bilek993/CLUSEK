@@ -58,6 +58,8 @@ struct ConfigData final
 	int EnableRealtimeShadowPreview = 0;
 	int ShadowsTextureSize = 512;
 	float ShadowAlphaThreshold = 0.95f;
+	float ShadowCameraNearZ = -100.0f;
+	float ShadowCameraFarZ = 100.0f;
 
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;

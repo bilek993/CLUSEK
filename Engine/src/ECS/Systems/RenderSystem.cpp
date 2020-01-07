@@ -43,6 +43,8 @@ void RenderSystem::Start()
 	InitializeSkyboxComponent();
 	InitializeModelRenderComponent();
 
+	ShadowCameraInstance.UpdateNearAndFarZ(ConfigurationData->ShadowCameraNearZ, ConfigurationData->ShadowCameraFarZ);
+
 	if (!InitializePbrResources())
 		Logger::Error("PBR resources initialization failed!");
 }

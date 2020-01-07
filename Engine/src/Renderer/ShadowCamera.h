@@ -7,6 +7,8 @@ class ShadowCamera final
 public:
 	ShadowCamera();
 
+	void UpdateNearAndFarZ(float nearZ, float farZ);
+
 	void UpdateLightDirection(float lightDirectionX, float lightDirectionY, float lightDirectionZ);
 	void UpdateShadowMapLocation(const DirectX::XMMATRIX& cameraViewMatrix, const DirectX::XMMATRIX& cameraProjectionMatrix);
 
@@ -19,6 +21,9 @@ private:
 
 	DirectX::XMFLOAT3 LightDirection{};
 	DirectX::XMMATRIX ViewMatrix{};
+
+	float NearZ = 0.0f;
+	float FarZ = 0.0f;
 
 	std::array<DirectX::XMVECTOR, 8> GenerateGenericPoints() const;
 	void CalculateFrustumPoints(std::array<DirectX::XMVECTOR, 8>& points,

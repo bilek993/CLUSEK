@@ -10,6 +10,12 @@ ShadowCamera::ShadowCamera()
 	EyeVector = XMLoadFloat3(&eyeFloats);
 }
 
+void ShadowCamera::UpdateNearAndFarZ(float nearZ, float farZ)
+{
+	NearZ = nearZ;
+	FarZ = farZ;
+}
+
 void ShadowCamera::UpdateLightDirection(const float lightDirectionX, const float lightDirectionY, const float lightDirectionZ)
 {
 	if (std::fabs(LightDirection.x - lightDirectionX) < 0.01f &&
@@ -99,5 +105,5 @@ DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMV
 			viewTop = pointValues.y;
 	}
 
-	return DirectX::XMMatrixOrthographicOffCenterLH(viewLeft, viewRight, viewBottom, viewTop, -100.0f, 100.0f);
+	return DirectX::XMMatrixOrthographicOffCenterLH(viewLeft, viewRight, viewBottom, viewTop, NearZ, FarZ);
 }
