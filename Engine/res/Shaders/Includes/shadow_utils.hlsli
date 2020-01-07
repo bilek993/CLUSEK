@@ -1,6 +1,4 @@
-static const float SHADOW_BIAS = 0.002f;
-static const float SHADOW_MIN_BIAS = 0.0f;
-static const float SHADOW_MAX_BIAS = 0.01f;
+static const float SHADOW_BIAS = 0.0075f;
 
 float2 CalculateOffset(int u, int v, float shadowMapWidth, float shadowMapHeight)
 {
@@ -22,7 +20,7 @@ float PerformPCF(Texture2D shadowMap, float shadowMapWidth, float shadowMapHeigh
     return sum / 16.0f;
 }
 
-float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler, float4 lightSpacePosition, float3 normal, float3 directionalLightDirection)
+float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler, float4 lightSpacePosition)
 {
     float shadowMapWidth, shadowMapHeight;
     shadowMap.GetDimensions(shadowMapWidth, shadowMapHeight);
@@ -37,8 +35,7 @@ float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler
     if (lightSpacePosition.z > 1.0f || lightSpacePosition.z < 0.0f)
         return 1.0f;
     
-    float bias = clamp(SHADOW_BIAS * (1.0f - dot(normal, directionalLightDirection)), SHADOW_MIN_BIAS, SHADOW_MAX_BIAS);
-    lightSpacePosition.z -= bias;
+    lightSpacePosition.z -= SHADOW_BIAS;
     
     return PerformPCF(shadowMap, shadowMapWidth, shadowMapHeight, shadowSampler, lightSpacePosition);
 }

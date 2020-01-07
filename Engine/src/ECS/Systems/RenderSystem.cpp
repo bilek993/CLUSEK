@@ -752,7 +752,6 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
 		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
 		FatPerObjectBufferInstance.Data.LightSpaceMatrix = lightSpaceMatrix;
-		FatPerObjectBufferInstance.Data.InvertedWorldMatrix = XMMatrixInverse(nullptr, modelRenderComponent.WorldMatrix);
 		FatPerObjectBufferInstance.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());

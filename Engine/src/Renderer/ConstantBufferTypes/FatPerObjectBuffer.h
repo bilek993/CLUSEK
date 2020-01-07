@@ -6,5 +6,4 @@ struct FatPerObjectBuffer final
 	DirectX::XMMATRIX WorldViewProjectionMat;
 	DirectX::XMMATRIX WorldMatrix;
 	DirectX::XMMATRIX LightSpaceMatrix;
-	DirectX::XMMATRIX InvertedWorldMatrix;
 };
