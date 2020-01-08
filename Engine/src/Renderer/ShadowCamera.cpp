@@ -105,5 +105,45 @@ DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMV
 			viewTop = pointValues.y;
 	}
 
+	// TODO: MOVE THIS BIG PART TO FUNCTION
+	const auto longestDiagonalVector = DirectX::XMVector3Length(DirectX::XMVectorSubtract(points[3], points[4]));
+	const auto longestDiagonal = DirectX::XMVectorGetX(longestDiagonalVector);
+
+	DirectX::XMFLOAT2 offsetFloats{};
+	const auto offsetVector = DirectX::XMVectorScale(
+		DirectX::XMVectorSubtract(
+			longestDiagonalVector, 
+			DirectX::XMVectorSubtract(
+				DirectX::XMVectorSet(viewRight, viewTop, 0.0f, 0.0f), 
+				DirectX::XMVectorSet(viewLeft, viewBottom, 0.0f, 0.0f)
+			)
+		), 0.5f
+	);
+	XMStoreFloat2(&offsetFloats, offsetVector);
+
+	viewRight += offsetFloats.x;
+	viewTop += offsetFloats.y;
+
+	viewLeft -= offsetFloats.x;
+	viewBottom -= offsetFloats.y;
+
+	const auto worldUnitsPerTexel = longestDiagonal / 4096; // TODO: Change this to texture resolution
+
+	viewRight /= worldUnitsPerTexel;
+	viewRight = std::floor(viewRight);
+	viewRight *= worldUnitsPerTexel;
+
+	viewTop /= worldUnitsPerTexel;
+	viewTop = std::floor(viewTop);
+	viewTop *= worldUnitsPerTexel;
+
+	viewLeft /= worldUnitsPerTexel;
+	viewLeft = std::floor(viewLeft);
+	viewLeft *= worldUnitsPerTexel;
+
+	viewBottom /= worldUnitsPerTexel;
+	viewBottom = std::floor(viewBottom);
+	viewBottom *= worldUnitsPerTexel;
+
 	return DirectX::XMMatrixOrthographicOffCenterLH(viewLeft, viewRight, viewBottom, viewTop, NearZ, FarZ);
 }
