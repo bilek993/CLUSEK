@@ -105,7 +105,7 @@ DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMV
 			viewTop = pointValues.y;
 	}
 
-	StabilizeCamera(&viewLeft, &viewRight, &viewBottom, &viewBottom, points);
+	StabilizeCamera(&viewLeft, &viewRight, &viewBottom, &viewTop, points);
 
 	return DirectX::XMMatrixOrthographicOffCenterLH(viewLeft, viewRight, viewBottom, viewTop, NearZ, FarZ);
 }
