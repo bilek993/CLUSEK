@@ -28,6 +28,8 @@ private:
 	float NearZ = 0.0f;
 	float FarZ = 0.0f;
 
+	inline static const DirectX::XMVECTOR LONGEST_DIAGONAL_CALCULATION_EPSILON = DirectX::XMVectorSet(4.0f, 4.0f, 4.0f, 4.0f);
+
 	DirectX::XMVECTOR LongestDiagonalVector{};
 	float LongestDiagonal = 0.0f;
 
