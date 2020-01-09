@@ -29,4 +29,6 @@ private:
 	void CalculateFrustumPoints(std::array<DirectX::XMVECTOR, 8>& points,
 		const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const;
 	DirectX::XMMATRIX GenerateProjectionMatrix(std::array<DirectX::XMVECTOR, 8>& points) const;
+
+	void StabilizeCamera(float* viewLeft, float* viewRight, float* viewBottom, float* viewTop, const std::array<DirectX::XMVECTOR, 8>& points) const;
 };
