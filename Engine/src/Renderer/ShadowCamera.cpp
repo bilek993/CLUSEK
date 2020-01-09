@@ -1,5 +1,6 @@
 #include "ShadowCamera.h"
 #include <cmath>
+#include "../Utils/Logger.h"
 
 ShadowCamera::ShadowCamera()
 {
@@ -88,7 +89,7 @@ void ShadowCamera::CalculateFrustumPoints(std::array<DirectX::XMVECTOR, 8>& poin
 	}
 }
 
-DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMVECTOR, 8>& points) const
+DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMVECTOR, 8>& points)
 {
 	auto viewLeft = FLT_MAX;
 	auto viewRight = -FLT_MAX;
@@ -116,7 +117,7 @@ DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMV
 }
 
 void ShadowCamera::StabilizeCamera(float* viewLeft, float* viewRight, float* viewBottom, float* viewTop, 
-	const std::array<DirectX::XMVECTOR, 8>& points) const
+	const std::array<DirectX::XMVECTOR, 8>& points)
 {
 	// Checks if all view points are not nullptr
 	assert(viewLeft);
@@ -124,13 +125,18 @@ void ShadowCamera::StabilizeCamera(float* viewLeft, float* viewRight, float* vie
 	assert(viewBottom);
 	assert(viewTop);
 
-	const auto longestDiagonalVector = DirectX::XMVector3Length(DirectX::XMVectorSubtract(points[3], points[4]));
-	const auto longestDiagonal = DirectX::XMVectorGetX(longestDiagonalVector);
+	const auto calculatedDiagonalVector = DirectX::XMVector3Length(DirectX::XMVectorSubtract(points[3], points[4]));
+	if (!DirectX::XMVector3NearEqual(calculatedDiagonalVector, LongestDiagonalVector, DirectX::XMVectorSet(5.0f, 5.0f, 5.0f, 5.0f)))
+	{
+		Logger::Debug("Preparing to recalculate shadow camera longest diagonal...");
+		LongestDiagonalVector = calculatedDiagonalVector;
+		LongestDiagonal = DirectX::XMVectorGetX(LongestDiagonalVector);
+	}
 
 	DirectX::XMFLOAT2 offsetFloats{};
 	const auto offsetVector = DirectX::XMVectorScale(
 		DirectX::XMVectorSubtract(
-			longestDiagonalVector,
+			LongestDiagonalVector,
 			DirectX::XMVectorSubtract(
 				DirectX::XMVectorSet(*viewRight, *viewTop, 0.0f, 0.0f),
 				DirectX::XMVectorSet(*viewLeft, *viewBottom, 0.0f, 0.0f)
@@ -145,7 +151,7 @@ void ShadowCamera::StabilizeCamera(float* viewLeft, float* viewRight, float* vie
 	*viewLeft -= offsetFloats.x;
 	*viewBottom -= offsetFloats.y;
 
-	const auto worldUnitsPerTexel = longestDiagonal / ShadowResolution;
+	const auto worldUnitsPerTexel = LongestDiagonal / ShadowResolution;
 
 	*viewRight /= worldUnitsPerTexel;
 	*viewRight = std::floor(*viewRight);

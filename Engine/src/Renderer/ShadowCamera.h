@@ -28,10 +28,13 @@ private:
 	float NearZ = 0.0f;
 	float FarZ = 0.0f;
 
+	DirectX::XMVECTOR LongestDiagonalVector{};
+	float LongestDiagonal = 0.0f;
+
 	std::array<DirectX::XMVECTOR, 8> GenerateGenericPoints() const;
 	void CalculateFrustumPoints(std::array<DirectX::XMVECTOR, 8>& points,
 		const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const;
-	DirectX::XMMATRIX GenerateProjectionMatrix(std::array<DirectX::XMVECTOR, 8>& points) const;
+	DirectX::XMMATRIX GenerateProjectionMatrix(std::array<DirectX::XMVECTOR, 8>& points);
 
-	void StabilizeCamera(float* viewLeft, float* viewRight, float* viewBottom, float* viewTop, const std::array<DirectX::XMVECTOR, 8>& points) const;
+	void StabilizeCamera(float* viewLeft, float* viewRight, float* viewBottom, float* viewTop, const std::array<DirectX::XMVECTOR, 8>& points);
 };
