@@ -7,6 +7,7 @@ class ShadowCamera final
 public:
 	ShadowCamera();
 
+	void UpdateShadowResolution(int resolution);
 	void UpdateNearAndFarZ(float nearZ, float farZ);
 
 	void UpdateLightDirection(float lightDirectionX, float lightDirectionY, float lightDirectionZ);
@@ -21,6 +22,8 @@ private:
 
 	DirectX::XMFLOAT3 LightDirection{};
 	DirectX::XMMATRIX ViewMatrix{};
+
+	int ShadowResolution = 1024;
 
 	float NearZ = 0.0f;
 	float FarZ = 0.0f;

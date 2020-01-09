@@ -43,6 +43,7 @@ void RenderSystem::Start()
 	InitializeSkyboxComponent();
 	InitializeModelRenderComponent();
 
+	ShadowCameraInstance.UpdateShadowResolution(ConfigurationData->ShadowsTextureSize);
 	ShadowCameraInstance.UpdateNearAndFarZ(ConfigurationData->ShadowCameraNearZ, ConfigurationData->ShadowCameraFarZ);
 
 	if (!InitializePbrResources())

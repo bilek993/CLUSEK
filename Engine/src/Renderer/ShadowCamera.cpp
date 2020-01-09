@@ -10,7 +10,12 @@ ShadowCamera::ShadowCamera()
 	EyeVector = XMLoadFloat3(&eyeFloats);
 }
 
-void ShadowCamera::UpdateNearAndFarZ(float nearZ, float farZ)
+void ShadowCamera::UpdateShadowResolution(const int resolution)
+{
+	ShadowResolution = resolution;
+}
+
+void ShadowCamera::UpdateNearAndFarZ(const float nearZ, const float farZ)
 {
 	NearZ = nearZ;
 	FarZ = farZ;
@@ -140,7 +145,7 @@ void ShadowCamera::StabilizeCamera(float* viewLeft, float* viewRight, float* vie
 	*viewLeft -= offsetFloats.x;
 	*viewBottom -= offsetFloats.y;
 
-	const auto worldUnitsPerTexel = longestDiagonal / 4096; // TODO: Change this to texture resolution
+	const auto worldUnitsPerTexel = longestDiagonal / ShadowResolution;
 
 	*viewRight /= worldUnitsPerTexel;
 	*viewRight = std::floor(*viewRight);
