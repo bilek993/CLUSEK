@@ -81,7 +81,7 @@ void DebugUserInterface::DrawMenuBar()
 		if (ImGui::BeginMenu("File"))
 		{
 			DrawMenuItemForWindow("Edit configuration", ConfigurationWindowInstance);
-			DrawMenuItemForFunction("File", [this]
+			DrawMenuItemForFunction("Exit", [this]
 			{
 				FunctionCloseEngine();
 			});
@@ -139,7 +139,7 @@ void DebugUserInterface::DrawMenuItemForWindow(const std::string& label, BaseWin
 
 void DebugUserInterface::DrawMenuItemForFunction(const std::string& label, const std::function<void()>& function) const
 {
-	if (ImGui::MenuItem("Exit"))
+	if (ImGui::MenuItem(label.c_str()))
 		function();
 }
 
