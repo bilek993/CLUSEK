@@ -5,4 +5,10 @@ class ConfigurationWindow final : public BaseWindow
 {
 protected:
 	void Draw() override;
+
+private:
+	bool RestartRequired = false;
+
+	void DrawSaveButton();
+	void DrawInfoRestart() const;
 };
