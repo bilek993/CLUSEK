@@ -22,6 +22,7 @@
 #include "Windows/PerSystemPerformanceWindow.h"
 #include "Windows/ShadowPreviewerWindow.h"
 #include "../ECS/Systems/RenderSystem.h"
+#include "Windows/ConfigurationWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
 
@@ -56,6 +57,7 @@ private:
 
 	std::function<void()> FunctionCloseEngine;
 
+	ConfigurationWindow ConfigurationWindowInstance;
 	CameraSpeedWindow CameraSpeedWindowInstance;
 	SystemsManagerWindow SystemsManagerWindowInstance;
 	FpsTimerWindow FpsTimerWindowInstance;

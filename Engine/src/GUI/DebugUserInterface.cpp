@@ -47,6 +47,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 
 	HandleMainDockingArea();
 
+	UPDATE_USER_INTERFACE(ConfigurationWindowInstance);
 	UPDATE_USER_INTERFACE(CameraSpeedWindowInstance);
 	UPDATE_USER_INTERFACE(SystemsManagerWindowInstance);
 	UPDATE_USER_INTERFACE(FpsTimerWindowInstance);
@@ -79,6 +80,7 @@ void DebugUserInterface::DrawMenuBar()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
+			DrawMenuItemForWindow("Edit configuration", ConfigurationWindowInstance);
 			DrawMenuItemForFunction("File", [this]
 			{
 				FunctionCloseEngine();
