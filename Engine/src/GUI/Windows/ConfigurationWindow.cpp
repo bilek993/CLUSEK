@@ -12,12 +12,23 @@ void ConfigurationWindow::Draw()
 	ImGui::End();
 }
 
-void ConfigurationWindow::DrawTextInput() const
+void ConfigurationWindow::DrawTextInput()
 {
+	const auto callback = [](ImGuiInputTextCallbackData *data) 
+	{
+		const auto textPointer = static_cast<std::string*>(data->UserData);
+		textPointer->resize(data->BufTextLen);
+		data->Buf = const_cast<char*>(textPointer->c_str());
+		return 0;
+	};
+
 	ImGui::InputTextMultiline(	"##ConfigurationInput", 
 								const_cast<char*>(ConfigurationText.c_str()), 
 								ConfigurationText.capacity() + 1,
-								ImVec2(0, 0));
+								ImVec2(0, 0),
+								ImGuiInputTextFlags_CallbackResize,
+								callback,
+								&ConfigurationText);
 }
 
 void ConfigurationWindow::DrawSaveButton()

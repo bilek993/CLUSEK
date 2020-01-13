@@ -10,7 +10,7 @@ private:
 	std::string ConfigurationText{};
 	bool RestartRequired = false;
 
-	void DrawTextInput() const;
+	void DrawTextInput();
 	void DrawSaveButton();
 	void DrawInfoRestart() const;
 };
