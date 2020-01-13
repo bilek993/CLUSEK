@@ -1,15 +1,42 @@
 #include "ConfigurationWindow.h"
 #include <imgui.h>
+#include <fstream>
 
 void ConfigurationWindow::Draw()
 {
 	ImGui::Begin("Configuration", &IsEnabled);
+
+	if (!ConfigLoaded)
+		LoadConfiguration();
 
 	DrawTextInput();
 	DrawSaveButton();
 	DrawInfoRestart();
 
 	ImGui::End();
+}
+
+void ConfigurationWindow::LoadConfiguration()
+{
+	ConfigLoaded = true;
+
+	std::ifstream cfgFile(ConfigFilePath);
+	if (cfgFile.is_open())
+	{
+		std::string line;
+
+		while (getline(cfgFile, line))
+		{
+			ConfigurationText += line;
+			ConfigurationText += "\r\n";
+		}
+	}
+	else
+	{
+		Logger::Error("Cannot find configuration file!");
+	}
+
+	cfgFile.close();
 }
 
 void ConfigurationWindow::DrawTextInput()

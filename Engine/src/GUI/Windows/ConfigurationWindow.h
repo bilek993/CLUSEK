@@ -7,8 +7,13 @@ protected:
 	void Draw() override;
 
 private:
+	inline static std::string ConfigFilePath = "Data/EngineSettings.cfg";
+
 	std::string ConfigurationText{};
 	bool RestartRequired = false;
+	bool ConfigLoaded = false;
+
+	void LoadConfiguration();
 
 	void DrawTextInput();
 	void DrawSaveButton();
