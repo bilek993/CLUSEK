@@ -28,13 +28,24 @@ void ConfigurationWindow::LoadConfiguration()
 		while (getline(cfgFile, line))
 		{
 			ConfigurationText += line;
-			ConfigurationText += "\r\n";
+			ConfigurationText += "\n";
 		}
 	}
 	else
 	{
 		Logger::Error("Cannot find configuration file!");
 	}
+
+	cfgFile.close();
+}
+
+void ConfigurationWindow::SaveConfiguration() const
+{
+	std::ofstream cfgFile(ConfigFilePath);
+	if (cfgFile.is_open())
+		cfgFile << ConfigurationText;
+	else
+		Logger::Error("Error creating configuration file!");
 
 	cfgFile.close();
 }
@@ -63,6 +74,7 @@ void ConfigurationWindow::DrawSaveButton()
 	if (ImGui::Button("Save"))
 	{
 		RestartRequired = true;
+		SaveConfiguration();
 	}
 }
 

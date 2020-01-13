@@ -14,6 +14,7 @@ private:
 	bool ConfigLoaded = false;
 
 	void LoadConfiguration();
+	void SaveConfiguration() const;
 
 	void DrawTextInput();
 	void DrawSaveButton();
