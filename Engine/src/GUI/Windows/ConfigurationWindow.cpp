@@ -5,10 +5,19 @@ void ConfigurationWindow::Draw()
 {
 	ImGui::Begin("Configuration", &IsEnabled);
 
+	DrawTextInput();
 	DrawSaveButton();
 	DrawInfoRestart();
 
 	ImGui::End();
+}
+
+void ConfigurationWindow::DrawTextInput() const
+{
+	ImGui::InputTextMultiline(	"##ConfigurationInput", 
+								const_cast<char*>(ConfigurationText.c_str()), 
+								ConfigurationText.capacity() + 1,
+								ImVec2(0, 0));
 }
 
 void ConfigurationWindow::DrawSaveButton()

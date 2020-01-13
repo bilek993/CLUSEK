@@ -7,8 +7,10 @@ protected:
 	void Draw() override;
 
 private:
+	std::string ConfigurationText{};
 	bool RestartRequired = false;
 
+	void DrawTextInput() const;
 	void DrawSaveButton();
 	void DrawInfoRestart() const;
 };
