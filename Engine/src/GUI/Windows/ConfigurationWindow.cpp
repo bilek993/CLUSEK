@@ -25,7 +25,7 @@ void ConfigurationWindow::DrawTextInput()
 	ImGui::InputTextMultiline(	"##ConfigurationInput", 
 								const_cast<char*>(ConfigurationText.c_str()), 
 								ConfigurationText.capacity() + 1,
-								ImVec2(0, 0),
+								ImVec2(-FLT_MIN, 350.0f),
 								ImGuiInputTextFlags_CallbackResize,
 								callback,
 								&ConfigurationText);
