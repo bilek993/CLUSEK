@@ -62,23 +62,23 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string path, con
 		Mesh newMesh;
 		newMesh.Name = mesh->mName.C_Str();
 
-		ModelLoaderMutex.lock();
+		DeviceMutex.lock();
 		auto hr = newMesh.RenderIndexBuffer.Initialize(device, indices.data(), indices.size());
 		if (FAILED(hr))
 			continue;
 		hr = newMesh.RenderVertexBuffer.Initialize(device, vertices.data(), vertices.size());
 		if (FAILED(hr))
 			continue;
-		ModelLoaderMutex.unlock();
+		DeviceMutex.unlock();
 
 		loadedMeshes->emplace_back(newMesh);
 
 		Logger::Debug("Mesh '" + newMesh.Name + "' added into the model!");
 	}
 
-	ModelLoaderMutex.lock();
+	ResourcesMapMutex.lock();
 	MeshesResources[resourceId] = loadedMeshes;
-	ModelLoaderMutex.unlock();
+	ResourcesMapMutex.unlock();
 }
 
 std::shared_ptr<std::vector<Mesh>> ModelLoader::GetResource(const std::string& resourceId)

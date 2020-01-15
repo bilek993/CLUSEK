@@ -11,6 +11,8 @@ public:
 	static std::shared_ptr<std::vector<Mesh>> GetResource(const std::string& resourceId);
 
 private:
-	static inline std::mutex ModelLoaderMutex{};
+	static inline std::mutex DeviceMutex{};
+	static inline std::mutex ResourcesMapMutex{};
+
 	static std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> MeshesResources;
 };
