@@ -62,14 +62,12 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string path, con
 		Mesh newMesh;
 		newMesh.Name = mesh->mName.C_Str();
 
-		DeviceMutex.lock();
 		auto hr = newMesh.RenderIndexBuffer.Initialize(device, indices.data(), indices.size());
 		if (FAILED(hr))
 			continue;
 		hr = newMesh.RenderVertexBuffer.Initialize(device, vertices.data(), vertices.size());
 		if (FAILED(hr))
 			continue;
-		DeviceMutex.unlock();
 
 		loadedMeshes->emplace_back(newMesh);
 
