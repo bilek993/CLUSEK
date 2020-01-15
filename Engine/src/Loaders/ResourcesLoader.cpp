@@ -3,6 +3,7 @@
 #include "MaterialLoader.h"
 #include "ModelLoader.h"
 #include <fstream>
+#include <future>
 
 void ResourcesLoader::Load(ID3D11Device* device, ID3D11DeviceContext* context, const ConfigData* config)
 {
@@ -18,11 +19,13 @@ void ResourcesLoader::Load(ID3D11Device* device, ID3D11DeviceContext* context, c
 
 void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& json)
 {
+	std::vector<std::future<void>> asyncFutures;
+
 	for (auto it = json.begin(); it != json.end(); ++it)
 	{
 		const auto key = static_cast<std::string>(it.key());
 		const auto value = it.value().get<std::string>();
-		ModelLoader::LoadResource(device, value, key);
+		asyncFutures.emplace_back(std::async(std::launch::async, ModelLoader::LoadResource, device, value, key));
 	}
 
 	Logger::Debug("Loaded " + std::to_string(json.size()) + " model files.");

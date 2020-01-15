@@ -5,7 +5,7 @@
 
 std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> ModelLoader::MeshesResources;
 
-void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, const std::string& resourceId)
+void ModelLoader::LoadResource(ID3D11Device *device, const std::string path, const std::string resourceId)
 {
 	Logger::Debug("Preparing to load mesh from: '" + path + "'...");
 
@@ -61,18 +61,24 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, co
 
 		Mesh newMesh;
 		newMesh.Name = mesh->mName.C_Str();
+
+		ModelLoaderMutex.lock();
 		auto hr = newMesh.RenderIndexBuffer.Initialize(device, indices.data(), indices.size());
 		if (FAILED(hr))
 			continue;
 		hr = newMesh.RenderVertexBuffer.Initialize(device, vertices.data(), vertices.size());
 		if (FAILED(hr))
 			continue;
+		ModelLoaderMutex.unlock();
+
 		loadedMeshes->emplace_back(newMesh);
 
 		Logger::Debug("Mesh '" + newMesh.Name + "' added into the model!");
 	}
 
+	ModelLoaderMutex.lock();
 	MeshesResources[resourceId] = loadedMeshes;
+	ModelLoaderMutex.unlock();
 }
 
 std::shared_ptr<std::vector<Mesh>> ModelLoader::GetResource(const std::string& resourceId)
