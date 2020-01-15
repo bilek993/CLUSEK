@@ -44,7 +44,7 @@ void ResourcesLoader::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* co
 		const auto path = value["Path"].get<std::string>();
 		const auto convertLatLongToCubeMap = value["ConvertLatLongToCubeMap"].is_null() ? "NO" : value["ConvertLatLongToCubeMap"].get<std::string>();
 
-		asyncFutures.emplace_back(std::async(MaterialLoader::LoadResource, device, context, path, id, convertLatLongToCubeMap, config));
+		asyncFutures.emplace_back(std::async(std::launch::async, MaterialLoader::LoadResource, device, context, path, id, convertLatLongToCubeMap, config));
 	}
 
 	Logger::Debug("Loaded " + std::to_string(json.size()) + " texture files.");
