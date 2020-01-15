@@ -10,8 +10,9 @@
 class MaterialLoader final
 {
 public:
-	static void LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, std::string path, std::string resourceId, 
-		std::string convertLatLongToCubeMap, const ConfigData* config);
+	static void LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, const std::string
+	                         & resourceId,
+	                         const std::string& convertLatLongToCubeMap, const ConfigData* config);
 	static void SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId, 
 		const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId, 
 		const std::string& occlusionTextureId, const std::string& emissionTextureId, float alpha);

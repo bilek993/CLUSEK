@@ -5,7 +5,7 @@
 
 std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> ModelLoader::MeshesResources;
 
-void ModelLoader::LoadResource(ID3D11Device *device, const std::string path, const std::string resourceId)
+void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, const std::string& resourceId)
 {
 	Logger::Debug("Preparing to load mesh from: '" + path + "'...");
 
