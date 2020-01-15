@@ -23,8 +23,15 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 		LoadTextureToMaterial(device, *resource, path);
 
 		if (convertLatLongToCubeMap == "YES" || convertLatLongToCubeMap == "COMPATIBLE")
-			resource = ConvertLatLongToCubeMap(device, context, resource->GetAddressOf(),
-				config->CubemapGeneratedSize, convertLatLongToCubeMap == "COMPATIBLE");
+		{
+			LatLongConverterMutex.lock();
+			resource = ConvertLatLongToCubeMap(	device, 
+												context, 
+												resource->GetAddressOf(),
+												config->CubemapGeneratedSize, 
+												convertLatLongToCubeMap == "COMPATIBLE");
+			LatLongConverterMutex.unlock();
+		}
 
 		ResourcesMapMutex.lock();
 		TextureResources[resourceId] = resource;
