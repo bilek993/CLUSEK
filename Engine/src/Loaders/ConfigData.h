@@ -63,6 +63,8 @@ struct ConfigData final
 
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;
+	int EnableAsyncModelLoading = 1;
+	int EnableAsyncTextureLoading = 1;
 
 	// PBR settings
 	int BrdfLutTextureSize = 128;

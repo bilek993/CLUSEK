@@ -78,6 +78,8 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, ShadowCameraFarZ, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, CubemapGeneratedSize, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, EnableAsyncModelLoading, data, std::stoi(value));
+			MAP_CONFIG_FIELD(key, EnableAsyncTextureLoading, data, std::stoi(value));
 
 			MAP_CONFIG_FIELD(key, BrdfLutTextureSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, IrradianceTextureSize, data, std::stoi(value));
