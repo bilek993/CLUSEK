@@ -13,11 +13,11 @@ void ResourcesLoader::Load(ID3D11Device* device, ID3D11DeviceContext* context, c
 	std::ifstream inputFile(config->PathToResources);
 	inputFile >> jsonObject;
 
-	LoadModels(device, jsonObject["Models"]);
+	LoadModels(device, jsonObject["Models"], config);
 	LoadTextures(device, context, jsonObject["Textures"], config);
 }
 
-void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& json)
+void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& json, const ConfigData* config)
 {
 	std::vector<std::future<void>> asyncFutures;
 
@@ -25,7 +25,11 @@ void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& jso
 	{
 		const auto key = static_cast<std::string>(it.key());
 		const auto value = it.value().get<std::string>();
-		asyncFutures.emplace_back(std::async(std::launch::async, ModelLoader::LoadResource, device, value, key));
+
+		if (config->EnableAsyncModelLoading)
+			asyncFutures.emplace_back(std::async(std::launch::async, ModelLoader::LoadResource, device, value, key));
+		else
+			ModelLoader::LoadResource(device, value, key);
 	}
 
 	Logger::Debug("Loaded " + std::to_string(json.size()) + " model files.");
@@ -44,7 +48,10 @@ void ResourcesLoader::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* co
 		const auto path = value["Path"].get<std::string>();
 		const auto convertLatLongToCubeMap = value["ConvertLatLongToCubeMap"].is_null() ? "NO" : value["ConvertLatLongToCubeMap"].get<std::string>();
 
-		asyncFutures.emplace_back(std::async(std::launch::async, MaterialLoader::LoadResource, device, context, path, id, convertLatLongToCubeMap, config));
+		if (config->EnableAsyncTextureLoading)
+			asyncFutures.emplace_back(std::async(std::launch::async, MaterialLoader::LoadResource, device, context, path, id, convertLatLongToCubeMap, config));
+		else
+			MaterialLoader::LoadResource(device, context, path, id, convertLatLongToCubeMap, config);
 	}
 
 	Logger::Debug("Loaded " + std::to_string(json.size()) + " texture files.");
