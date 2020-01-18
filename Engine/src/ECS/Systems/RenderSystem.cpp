@@ -237,7 +237,7 @@ bool RenderSystem::InitializeDirectX()
 													0,
 													true,
 													false,
-													1))
+													4))
 		{
 			Logger::Error("Error creating shadow render depth stencil!");
 			return false;
@@ -648,7 +648,11 @@ void RenderSystem::InitializeShadowCameras()
 															ConfigurationData->WindowWidth,
 															ConfigurationData->WindowHeight,
 															ConfigurationData->MainCameraNearZ,
-															{ 10.0,10.0,10.0,10.0 });
+															{ 
+																ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd0,
+																ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd1,
+																ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd2,
+																ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd3 });
 }
 
 void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const
