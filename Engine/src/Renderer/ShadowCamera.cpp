@@ -16,10 +16,9 @@ void ShadowCamera::UpdateShadowResolution(const int resolution)
 	ShadowResolution = resolution;
 }
 
-void ShadowCamera::UpdateNearAndFarZ(const float nearZ, const float farZ)
+void ShadowCamera::UpdateNearZShift(const float shift)
 {
-	NearZ = nearZ;
-	FarZ = farZ;
+	ShiftNearZ = shift;
 }
 
 void ShadowCamera::UpdateMainCameraProjectionMatrix(const int level, 
@@ -111,6 +110,8 @@ DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMV
 	auto viewRight = -FLT_MAX;
 	auto viewBottom = FLT_MAX;
 	auto viewTop = -FLT_MAX;
+	auto viewNearZ = FLT_MAX;
+	auto viewFarZ = -FLT_MAX;
 
 	for (auto& point : points)
 	{
@@ -125,11 +126,15 @@ DirectX::XMMATRIX ShadowCamera::GenerateProjectionMatrix(std::array<DirectX::XMV
 			viewBottom = pointValues.y;
 		if (pointValues.y > viewTop)
 			viewTop = pointValues.y;
+		if (pointValues.z < viewNearZ)
+			viewNearZ = pointValues.z;
+		if (pointValues.z > viewFarZ)
+			viewFarZ = pointValues.z;
 	}
 
 	StabilizeCamera(&viewLeft, &viewRight, &viewBottom, &viewTop, points);
 
-	return DirectX::XMMatrixOrthographicOffCenterLH(viewLeft, viewRight, viewBottom, viewTop, NearZ, FarZ);
+	return DirectX::XMMatrixOrthographicOffCenterLH(viewLeft, viewRight, viewBottom, viewTop, viewNearZ - ShiftNearZ, viewFarZ);
 }
 
 void ShadowCamera::StabilizeCamera(float* viewLeft, float* viewRight, float* viewBottom, float* viewTop, 

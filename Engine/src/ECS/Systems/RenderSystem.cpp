@@ -642,7 +642,7 @@ void RenderSystem::InitializeModelRenderComponent()
 void RenderSystem::InitializeShadowCameras()
 {
 	ShadowCameraInstance.UpdateShadowResolution(ConfigurationData->ShadowsTextureSize);
-	ShadowCameraInstance.UpdateNearAndFarZ(ConfigurationData->ShadowCameraNearZ, ConfigurationData->ShadowCameraFarZ);
+	ShadowCameraInstance.UpdateNearZShift(ConfigurationData->ShadowCameraShiftNearZ);
 	ShadowCameraInstance.UpdateMainCameraProjectionMatrix(	0,
 															ConfigurationData->MainCameraFov,
 															ConfigurationData->WindowWidth,

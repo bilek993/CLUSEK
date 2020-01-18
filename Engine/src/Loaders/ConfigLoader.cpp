@@ -74,8 +74,7 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, EnableRealtimeShadowPreview, data, std::stoi(value))
 			MAP_CONFIG_FIELD(key, ShadowsTextureSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, ShadowAlphaThreshold, data, std::stof(value));
-			MAP_CONFIG_FIELD(key, ShadowCameraNearZ, data, std::stof(value));
-			MAP_CONFIG_FIELD(key, ShadowCameraFarZ, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, ShadowCameraShiftNearZ, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, CascadeEnd0, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, CascadeEnd1, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, CascadeEnd2, data, std::stof(value));
