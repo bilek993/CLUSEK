@@ -45,6 +45,12 @@ void RenderSystem::Start()
 
 	ShadowCameraInstance.UpdateShadowResolution(ConfigurationData->ShadowsTextureSize);
 	ShadowCameraInstance.UpdateNearAndFarZ(ConfigurationData->ShadowCameraNearZ, ConfigurationData->ShadowCameraFarZ);
+	ShadowCameraInstance.UpdateMainCameraProjectionMatrix(	0, 
+															ConfigurationData->MainCameraFov,
+															ConfigurationData->WindowWidth,
+															ConfigurationData->WindowHeight,
+															ConfigurationData->MainCameraNearZ,
+															{10.0,10.0,10.0,10.0});
 
 	if (!InitializePbrResources())
 		Logger::Error("PBR resources initialization failed!");
@@ -686,7 +692,7 @@ void RenderSystem::RenderShadows()
 												CurrentRenderSettings->DirectionalLightDirection.y,
 												CurrentRenderSettings->DirectionalLightDirection.z);
 	auto& mainCamera = GetMainCamera();
-	ShadowCameraInstance.UpdateShadowMapLocation(mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
+	ShadowCameraInstance.UpdateShadowMapLocation(mainCamera.ViewMatrix);
 
 	RenderSceneForShadows();
 }

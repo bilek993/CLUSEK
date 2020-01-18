@@ -9,14 +9,22 @@ public:
 
 	void UpdateShadowResolution(int resolution);
 	void UpdateNearAndFarZ(float nearZ, float farZ);
+	void UpdateMainCameraProjectionMatrix(	int level, 
+											int mainCameraFov,
+											int windowWidth,
+											int windowHeight,
+											float mainCameraNearZ,
+											const std::array<float, 4>& cascadeEnds);
 
 	void UpdateLightDirection(float lightDirectionX, float lightDirectionY, float lightDirectionZ);
-	void UpdateShadowMapLocation(const DirectX::XMMATRIX& cameraViewMatrix, const DirectX::XMMATRIX& cameraProjectionMatrix);
+	void UpdateShadowMapLocation(const DirectX::XMMATRIX& cameraViewMatrix);
 
 	DirectX::XMMATRIX CalculateCameraMatrix() const;
 private:
 	DirectX::XMVECTOR UpVector{};
 	DirectX::XMVECTOR EyeVector{};
+
+	DirectX::XMMATRIX MainCameraProjectionMatrix{};
 
 	DirectX::XMMATRIX ProjectionMatrix{};
 

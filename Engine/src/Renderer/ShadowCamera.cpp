@@ -22,6 +22,23 @@ void ShadowCamera::UpdateNearAndFarZ(const float nearZ, const float farZ)
 	FarZ = farZ;
 }
 
+void ShadowCamera::UpdateMainCameraProjectionMatrix(const int level, 
+													const int mainCameraFov,
+													const int windowWidth,
+													const int windowHeight,
+													const float mainCameraNearZ,
+													const std::array<float, 4>& cascadeEnds)
+{
+	if (level > 4)
+		Logger::Error("Cascade level out of range!");
+
+	const auto fovRadians = (mainCameraFov / 360.0f) * DirectX::XM_2PI;
+	const auto nearZ = level == 0 ? mainCameraNearZ : cascadeEnds[level - 1];
+
+	MainCameraProjectionMatrix = DirectX::XMMatrixPerspectiveFovLH(fovRadians, 
+		static_cast<float>(windowWidth) / static_cast<float>(windowHeight), nearZ, cascadeEnds[level]);
+}
+
 void ShadowCamera::UpdateLightDirection(const float lightDirectionX, const float lightDirectionY, const float lightDirectionZ)
 {
 	if (std::fabs(LightDirection.x - lightDirectionX) < 0.01f &&
@@ -37,10 +54,10 @@ void ShadowCamera::UpdateLightDirection(const float lightDirectionX, const float
 	ViewMatrix = DirectX::XMMatrixLookAtLH(EyeVector, lightDirectionVector, UpVector);
 }
 
-void ShadowCamera::UpdateShadowMapLocation(const DirectX::XMMATRIX& cameraViewMatrix, const DirectX::XMMATRIX& cameraProjectionMatrix)
+void ShadowCamera::UpdateShadowMapLocation(const DirectX::XMMATRIX& cameraViewMatrix)
 {
 	auto frustumPoints = GenerateGenericPoints();
-	CalculateFrustumPoints(frustumPoints, cameraViewMatrix, cameraProjectionMatrix);
+	CalculateFrustumPoints(frustumPoints, cameraViewMatrix, MainCameraProjectionMatrix);
 
 	ProjectionMatrix = GenerateProjectionMatrix(frustumPoints);
 }

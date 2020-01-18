@@ -45,7 +45,6 @@ void CameraSystem::Update(const float deltaTime)
 
 	auto &cameraComponent = view.raw<CameraComponent>()[0];
 	auto &transformComponent = view.raw<TransformComponent>()[0];
-
 	
 	if (InputOutputData->GamePadState.IsConnected())
 	{
