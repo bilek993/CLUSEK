@@ -60,6 +60,10 @@ struct ConfigData final
 	float ShadowAlphaThreshold = 0.95f;
 	float ShadowCameraNearZ = -100.0f;
 	float ShadowCameraFarZ = 100.0f;
+	float CascadeEnd0 = 0.25f;
+	float CascadeEnd1 = 0.5f;
+	float CascadeEnd2 = 0.75f;
+	float CascadeEnd3 = 1.0f;
 
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;
