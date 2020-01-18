@@ -57,7 +57,7 @@ void ShadowCamera::UpdateLightDirection(const float lightDirectionX, const float
 void ShadowCamera::UpdateShadowMapLocation(const DirectX::XMMATRIX& cameraViewMatrix)
 {
 	auto frustumPoints = GenerateGenericPoints();
-	CalculateFrustumPoints(frustumPoints, cameraViewMatrix, MainCameraProjectionMatrix);
+	CalculateFrustumPoints(frustumPoints, cameraViewMatrix);
 
 	ProjectionMatrix = GenerateProjectionMatrix(frustumPoints);
 }
@@ -83,10 +83,9 @@ std::array<DirectX::XMVECTOR, 8> ShadowCamera::GenerateGenericPoints() const
 	return vectorPoints;
 }
 
-void ShadowCamera::CalculateFrustumPoints(std::array<DirectX::XMVECTOR, 8>& points,
-	const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const
+void ShadowCamera::CalculateFrustumPoints(std::array<DirectX::XMVECTOR, 8>& points, const DirectX::XMMATRIX& viewMatrix) const
 {
-	const auto calculatedMatrix = XMMatrixInverse(nullptr, viewMatrix * projectionMatrix) * ViewMatrix;
+	const auto calculatedMatrix = XMMatrixInverse(nullptr, viewMatrix * MainCameraProjectionMatrix) * ViewMatrix;
 
 	for (auto& point : points)
 	{
