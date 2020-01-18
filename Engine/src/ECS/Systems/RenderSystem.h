@@ -47,6 +47,7 @@ private:
 	void ShowLoadingScreen();
 	void InitializeSkyboxComponent();
 	void InitializeModelRenderComponent();
+	void InitializeShadowCameras();
 
 	void ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
 

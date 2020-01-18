@@ -42,15 +42,7 @@ void RenderSystem::Start()
 
 	InitializeSkyboxComponent();
 	InitializeModelRenderComponent();
-
-	ShadowCameraInstance.UpdateShadowResolution(ConfigurationData->ShadowsTextureSize);
-	ShadowCameraInstance.UpdateNearAndFarZ(ConfigurationData->ShadowCameraNearZ, ConfigurationData->ShadowCameraFarZ);
-	ShadowCameraInstance.UpdateMainCameraProjectionMatrix(	0, 
-															ConfigurationData->MainCameraFov,
-															ConfigurationData->WindowWidth,
-															ConfigurationData->WindowHeight,
-															ConfigurationData->MainCameraNearZ,
-															{10.0,10.0,10.0,10.0});
+	InitializeShadowCameras();
 
 	if (!InitializePbrResources())
 		Logger::Error("PBR resources initialization failed!");
@@ -645,6 +637,18 @@ void RenderSystem::InitializeModelRenderComponent()
 		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
 		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
 	});
+}
+
+void RenderSystem::InitializeShadowCameras()
+{
+	ShadowCameraInstance.UpdateShadowResolution(ConfigurationData->ShadowsTextureSize);
+	ShadowCameraInstance.UpdateNearAndFarZ(ConfigurationData->ShadowCameraNearZ, ConfigurationData->ShadowCameraFarZ);
+	ShadowCameraInstance.UpdateMainCameraProjectionMatrix(	0,
+															ConfigurationData->MainCameraFov,
+															ConfigurationData->WindowWidth,
+															ConfigurationData->WindowHeight,
+															ConfigurationData->MainCameraNearZ,
+															{ 10.0,10.0,10.0,10.0 });
 }
 
 void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const
