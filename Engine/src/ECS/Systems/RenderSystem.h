@@ -96,7 +96,7 @@ private:
 	VertexShader ShadowVertexShader;
 	PixelShader ShadowPixelShader;
 
-	ShadowCamera ShadowCameraInstance;
+	std::array<ShadowCamera, 4> ShadowCameras;
 
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;

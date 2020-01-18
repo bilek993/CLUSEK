@@ -641,18 +641,21 @@ void RenderSystem::InitializeModelRenderComponent()
 
 void RenderSystem::InitializeShadowCameras()
 {
-	ShadowCameraInstance.UpdateShadowResolution(ConfigurationData->ShadowsTextureSize);
-	ShadowCameraInstance.UpdateNearZShift(ConfigurationData->ShadowCameraShiftNearZ);
-	ShadowCameraInstance.UpdateMainCameraProjectionMatrix(	0,
+	for (auto i = 0; i < ShadowCameras.size(); i++)
+	{
+		ShadowCameras[i].UpdateShadowResolution(ConfigurationData->ShadowsTextureSize);
+		ShadowCameras[i].UpdateNearZShift(ConfigurationData->ShadowCameraShiftNearZ);
+		ShadowCameras[i].UpdateMainCameraProjectionMatrix(	i,
 															ConfigurationData->MainCameraFov,
 															ConfigurationData->WindowWidth,
 															ConfigurationData->WindowHeight,
 															ConfigurationData->MainCameraNearZ,
-															{ 
+															{
 																ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd0,
 																ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd1,
 																ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd2,
 																ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd3 });
+	}
 }
 
 void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const
@@ -696,11 +699,15 @@ void RenderSystem::RenderShadows()
 	DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencil.GetDepthStencilViewPointer());
 	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	ShadowCameraInstance.UpdateLightDirection(	CurrentRenderSettings->DirectionalLightDirection.x,
-												CurrentRenderSettings->DirectionalLightDirection.y,
-												CurrentRenderSettings->DirectionalLightDirection.z);
 	auto& mainCamera = GetMainCamera();
-	ShadowCameraInstance.UpdateShadowMapLocation(mainCamera.ViewMatrix);
+
+	for (auto& camera : ShadowCameras)
+	{
+		camera.UpdateLightDirection(	CurrentRenderSettings->DirectionalLightDirection.x,
+													CurrentRenderSettings->DirectionalLightDirection.y,
+													CurrentRenderSettings->DirectionalLightDirection.z);
+		camera.UpdateShadowMapLocation(mainCamera.ViewMatrix);
+	}
 
 	RenderSceneForShadows();
 }
@@ -710,7 +717,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
-	const auto lightSpaceMatrix = XMMatrixTranspose(ShadowCameraInstance.CalculateCameraMatrix());
+	const auto lightSpaceMatrix = XMMatrixTranspose(ShadowCameras[0].CalculateCameraMatrix()); // TODO: Change this
 
 	RenderSkyBoxComponents(cameraComponent);
 	RenderModelRenderComponents(cameraComponent, lightSpaceMatrix);
@@ -725,7 +732,7 @@ void RenderSystem::RenderSceneForShadows()
 
 	Registry->view<ModelRenderComponent>().each([this, &offset](ModelRenderComponent &modelRenderComponent)
 	{
-		ShadowBufferInstance.Data.WorldLightMatrix = DirectX::XMMatrixTranspose(modelRenderComponent.WorldMatrix * ShadowCameraInstance.CalculateCameraMatrix());
+		ShadowBufferInstance.Data.WorldLightMatrix = DirectX::XMMatrixTranspose(modelRenderComponent.WorldMatrix * ShadowCameras[0].CalculateCameraMatrix()); // TODO: Change this
 		ShadowBufferInstance.ApplyChanges();
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
