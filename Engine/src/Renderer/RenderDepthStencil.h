@@ -14,7 +14,8 @@ public:
 					int multisamplesCount,
 					int multisamplesQuality,
 					bool useShaderResourceView,
-					bool useDepthStencilState);
+					bool useDepthStencilState,
+					int numberOfTextures);
 
 	ID3D11Texture2D* GetDepthStencilTextureBufferPointer() const;
 	ID3D11DepthStencilView* GetDepthStencilViewPointer() const;
@@ -28,7 +29,8 @@ private:
 												DXGI_FORMAT format,
 												int multisamplesCount,
 												int multisamplesQuality,
-												bool useShaderResourceView);
+												bool useShaderResourceView,
+												int numberOfTextures);
 	bool InitializeDepthStencilView(ID3D11Device* device, DXGI_FORMAT format, bool multisamplingEnabled);
 	bool InitializeShaderResourceView(ID3D11Device* device, DXGI_FORMAT format, bool multisamplingEnabled);
 	bool InitializeDepthStencilState(ID3D11Device* device);

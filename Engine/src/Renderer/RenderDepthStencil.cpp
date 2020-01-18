@@ -10,7 +10,8 @@ bool RenderDepthStencil::Initialize(ID3D11Device* device,
 									const int multisamplesCount,
                                     const int multisamplesQuality,
 									const bool useShaderResourceView,
-									const bool useDepthStencilState)
+									const bool useDepthStencilState,
+									const int numberOfTextures)
 {
 	Logger::Debug("Preparing to initialize render depth stencil...");
 
@@ -22,7 +23,8 @@ bool RenderDepthStencil::Initialize(ID3D11Device* device,
 												formatTexture,
 												multisamplesCount,
 												multisamplesQuality,
-												useShaderResourceView))
+												useShaderResourceView,
+												numberOfTextures))
 		return false;
 
 	if (!InitializeDepthStencilView(device, formatDepthStencilView, isMultisamplingEnabled))
@@ -76,7 +78,8 @@ bool RenderDepthStencil::InitializeDepthStencilTextureBuffer(	ID3D11Device* devi
 																const DXGI_FORMAT format,
 																const int multisamplesCount,
 																const int multisamplesQuality,
-																const bool useShaderResourceView)
+																const bool useShaderResourceView,
+																const int numberOfTextures)
 {
 	D3D11_TEXTURE2D_DESC depthStencilTextureDesc;
 	ZeroMemory(&depthStencilTextureDesc, sizeof(D3D11_TEXTURE2D_DESC));
@@ -88,7 +91,7 @@ bool RenderDepthStencil::InitializeDepthStencilTextureBuffer(	ID3D11Device* devi
 	depthStencilTextureDesc.Width = width;
 	depthStencilTextureDesc.Height = height;
 	depthStencilTextureDesc.MipLevels = 1;
-	depthStencilTextureDesc.ArraySize = 1;
+	depthStencilTextureDesc.ArraySize = numberOfTextures;
 	depthStencilTextureDesc.Format = format;
 	depthStencilTextureDesc.SampleDesc.Count = multisamplesCount;
 	depthStencilTextureDesc.SampleDesc.Quality = multisamplesQuality;
