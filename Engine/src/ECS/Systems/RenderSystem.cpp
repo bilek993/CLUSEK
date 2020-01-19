@@ -214,8 +214,7 @@ bool RenderSystem::InitializeDirectX()
 											ConfigurationData->MultisamplesCount,
 											ConfigurationData->MultisamplesQuality,
 											false,
-											true,
-											1))
+											true))
 	{
 		Logger::Error("Error creating scene render depth stencil!");
 		return false;
@@ -236,8 +235,7 @@ bool RenderSystem::InitializeDirectX()
 													1,
 													0,
 													true,
-													false,
-													4))
+													false))
 		{
 			Logger::Error("Error creating shadow render depth stencil!");
 			return false;
