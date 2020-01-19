@@ -106,6 +106,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\CascadeLevelsBuffer.h" />
     <ClInclude Include="src\GUI\Windows\ConfigurationWindow.h" />
     <ClInclude Include="src\Renderer\ShadowCamera.h" />
     <ClInclude Include="src\Renderer\PostProcessing\ShadowRemapperPostProcessing.h" />

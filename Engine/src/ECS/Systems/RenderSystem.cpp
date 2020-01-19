@@ -554,6 +554,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = ShadowBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'ShadowBufferInstance' constant buffer.");
+
+	hr = CascadeLevelsBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'CascadeLevelsBuffer' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
@@ -801,6 +805,14 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 		CameraBufferInstance.ApplyChanges();
 
 		DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
+
+		CascadeLevelsBufferInstance.Data.CascadeEnds[0] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd0;
+		CascadeLevelsBufferInstance.Data.CascadeEnds[1] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd1;
+		CascadeLevelsBufferInstance.Data.CascadeEnds[2] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd2;
+		CascadeLevelsBufferInstance.Data.CascadeEnds[3] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd3;
+		CascadeLevelsBufferInstance.ApplyChanges();
+
+		DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{

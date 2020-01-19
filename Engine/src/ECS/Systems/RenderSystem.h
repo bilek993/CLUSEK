@@ -21,6 +21,7 @@
 #include "../../Renderer/ConstantBufferTypes/ShadowBuffer.h"
 #include "../../Renderer/PostProcessing/ShadowRemapperPostProcessing.h"
 #include "../../Renderer/ShadowCamera.h"
+#include "../../Renderer/ConstantBufferTypes/CascadeLevelsBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -106,6 +107,7 @@ private:
 	ConstantBuffer<CameraBuffer> CameraBufferInstance;
 	ConstantBuffer<SimplePerObjectBuffer> SimplePerObjectBufferInstance;
 	ConstantBuffer<ShadowBuffer> ShadowBufferInstance;
+	ConstantBuffer<CascadeLevelsBuffer> CascadeLevelsBufferInstance;
 
 	PbrResource PbrResourceInstance{};
 
