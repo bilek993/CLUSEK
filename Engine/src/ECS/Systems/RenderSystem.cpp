@@ -102,7 +102,7 @@ ID3D11ShaderResourceView* RenderSystem::GetPointerToRemappedShadowShaderResource
 	DeviceContext->RSSetViewports(1, &ShadowViewport);
 
 	ShadowRemapperPostProcessingInstance->UpdateBias(bias);
-	const auto outputTexture = ShadowRemapperPostProcessingInstance->Process(ShadowRenderDepthStencil.GetAddressOfShaderResourceView());
+	const auto outputTexture = ShadowRemapperPostProcessingInstance->Process(ShadowRenderDepthStencils[0].GetAddressOfShaderResourceView()); // TODO: Change this
 
 	return outputTexture.Get();
 }
@@ -226,26 +226,30 @@ bool RenderSystem::InitializeDirectX()
 
 	if (ConfigurationData->ShadowsEnabled)
 	{
-		if (!ShadowRenderDepthStencil.Initialize(	Device.Get(),
-													ConfigurationData->ShadowsTextureSize,
-													ConfigurationData->ShadowsTextureSize,
-													DXGI_FORMAT_R32_TYPELESS,
-													DXGI_FORMAT_D32_FLOAT,
-													DXGI_FORMAT_R32_FLOAT,
-													1,
-													0,
-													true,
-													false))
+		for (auto i = 0; i < 4; i++)
 		{
-			Logger::Error("Error creating shadow render depth stencil!");
-			return false;
+			if (!ShadowRenderDepthStencils[i].Initialize(	Device.Get(),
+															ConfigurationData->ShadowsTextureSize,
+															ConfigurationData->ShadowsTextureSize,
+															DXGI_FORMAT_R32_TYPELESS,
+															DXGI_FORMAT_D32_FLOAT,
+															DXGI_FORMAT_R32_FLOAT,
+															1,
+															0,
+															true,
+															false))
+			{
+				Logger::Error("Error creating shadow render depth stencil!");
+				return false;
+			}
+
+			DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencils[i].GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+			Logger::Debug("Initialial clearing shadow render depth stencil...");
 		}
 	
 
 		Logger::Debug("Successfully created shadow render depth stencil.");
 
-		DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-		Logger::Debug("Initialial clearing shadow render depth stencil...");
 	}
 
 	// Scene viewport initialization
@@ -694,8 +698,8 @@ TransformComponent& RenderSystem::GetMainCameraTransform() const
 void RenderSystem::RenderShadows()
 {
 	DeviceContext->RSSetViewports(1, &ShadowViewport);
-	DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencil.GetDepthStencilViewPointer());
-	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencil.GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencils[0].GetDepthStencilViewPointer()); // TODO: Change this
+	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencils[0].GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0); // TODO: Change this
 
 	auto& mainCamera = GetMainCamera();
 
@@ -768,7 +772,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 	UINT offset = 0;
 	ChangeShader(UberVertexShader, UberPixelShader);
 
-	DeviceContext->PSSetShaderResources(8, 1, ShadowRenderDepthStencil.GetAddressOfShaderResourceView());
+	DeviceContext->PSSetShaderResources(8, 1, ShadowRenderDepthStencils[0].GetAddressOfShaderResourceView()); // Change this
 
 	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset, &mainCameraTransform, &lightSpaceMatrix](ModelRenderComponent &modelRenderComponent)
 	{

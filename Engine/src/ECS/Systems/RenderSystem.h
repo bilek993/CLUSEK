@@ -107,7 +107,7 @@ private:
 	PbrResource PbrResourceInstance{};
 
 	RenderDepthStencil SceneRenderDepthStencil{};
-	RenderDepthStencil ShadowRenderDepthStencil{};
+	std::array<RenderDepthStencil, 4> ShadowRenderDepthStencils{};
 
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;
