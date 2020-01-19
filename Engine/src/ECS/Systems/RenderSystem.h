@@ -65,6 +65,8 @@ private:
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent, const DirectX::XMMATRIX& lightSpaceMatrix);
 
+	void SetShadowResourcesForShadowCascades(int firstCascadeId);
+
 	void PerformPostProcessing() const;
 
 	int WindowWidth = 0;

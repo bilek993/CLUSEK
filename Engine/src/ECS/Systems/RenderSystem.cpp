@@ -717,6 +717,8 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
+	SetShadowResourcesForShadowCascades(8);
+
 	const auto lightSpaceMatrix = XMMatrixTranspose(ShadowCameras[0].CalculateCameraMatrix()); // TODO: Change this
 
 	RenderSkyBoxComponents(cameraComponent);
@@ -775,8 +777,6 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 	UINT offset = 0;
 	ChangeShader(UberVertexShader, UberPixelShader);
-
-	DeviceContext->PSSetShaderResources(8, 1, ShadowRenderDepthStencils[0].GetAddressOfShaderResourceView()); // Change this
 
 	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset, &mainCameraTransform, &lightSpaceMatrix](ModelRenderComponent &modelRenderComponent)
 	{
@@ -845,6 +845,12 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 	});
 
 	DeviceContext->PSSetShaderResources(8, 1, &NullShaderResourceView);
+}
+
+void RenderSystem::SetShadowResourcesForShadowCascades(const int firstCascadeId)
+{
+	for (auto i = 0; i < ShadowRenderDepthStencils.size(); i++)
+		DeviceContext->PSSetShaderResources(firstCascadeId + i, 1, ShadowRenderDepthStencils[i].GetAddressOfShaderResourceView());
 }
 
 void RenderSystem::PerformPostProcessing() const
