@@ -719,10 +719,8 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 
 	SetShadowResourcesForShadowCascades(8);
 
-	const auto lightSpaceMatrix = XMMatrixTranspose(ShadowCameras[0].CalculateCameraMatrix()); // TODO: Change this
-
 	RenderSkyBoxComponents(cameraComponent);
-	RenderModelRenderComponents(cameraComponent, lightSpaceMatrix);
+	RenderModelRenderComponents(cameraComponent);
 
 	ClearShadowResourcesForShadowCascades(8);
 }
@@ -773,19 +771,20 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 	});
 }
 
-void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent, const DirectX::XMMATRIX& lightSpaceMatrix)
+void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent)
 {
 	auto& mainCameraTransform = GetMainCameraTransform();
 
 	UINT offset = 0;
 	ChangeShader(UberVertexShader, UberPixelShader);
 
-	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset, &mainCameraTransform, &lightSpaceMatrix](ModelRenderComponent &modelRenderComponent)
+	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset, &mainCameraTransform](ModelRenderComponent &modelRenderComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
 		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
-		FatPerObjectBufferInstance.Data.LightSpaceMatrix = lightSpaceMatrix;
+		for (auto i = 0; i < 4; i++)
+			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
 		FatPerObjectBufferInstance.ApplyChanges();
 
 		DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());

@@ -19,7 +19,7 @@ struct PS_INPUT
 {
     float4 Position : SV_POSITION;
     float3 WorldPosition : WORLD_POSITION;
-    float4 LightSpacePosition : LIGHTSPACE_POSITION;
+    float4 LightSpacePosition[4] : LIGHTSPACE_POSITION;
     float2 TextureCoord : TEXCOORD;
     float3x3 TBN : TBN;
 };
@@ -52,7 +52,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float roughness = 1 - metalicSmoothnessColor.a;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
     
-    float shadowMultiplier = CalculateShadows(ShadowMapCascade0, ShadowSampler, input.LightSpacePosition);
+    float shadowMultiplier = CalculateShadows(ShadowMapCascade0, ShadowSampler, input.LightSpacePosition[0]);
 
     float3 finalColor = pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
