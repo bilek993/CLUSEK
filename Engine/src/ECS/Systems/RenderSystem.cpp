@@ -723,6 +723,8 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 
 	RenderSkyBoxComponents(cameraComponent);
 	RenderModelRenderComponents(cameraComponent, lightSpaceMatrix);
+
+	ClearShadowResourcesForShadowCascades(8);
 }
 
 void RenderSystem::RenderSceneForShadows()
@@ -843,14 +845,18 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 		DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 	});
-
-	DeviceContext->PSSetShaderResources(8, 1, &NullShaderResourceView);
 }
 
 void RenderSystem::SetShadowResourcesForShadowCascades(const int firstCascadeId)
 {
 	for (auto i = 0; i < ShadowRenderDepthStencils.size(); i++)
 		DeviceContext->PSSetShaderResources(firstCascadeId + i, 1, ShadowRenderDepthStencils[i].GetAddressOfShaderResourceView());
+}
+
+void RenderSystem::ClearShadowResourcesForShadowCascades(const int firstCascadeId)
+{
+	for (auto i = 0; i < ShadowRenderDepthStencils.size(); i++)
+		DeviceContext->PSSetShaderResources(firstCascadeId + i, 1, &NullShaderResourceView);
 }
 
 void RenderSystem::PerformPostProcessing() const

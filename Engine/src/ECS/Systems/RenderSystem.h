@@ -66,6 +66,7 @@ private:
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent, const DirectX::XMMATRIX& lightSpaceMatrix);
 
 	void SetShadowResourcesForShadowCascades(int firstCascadeId);
+	void ClearShadowResourcesForShadowCascades(int firstCascadeId);
 
 	void PerformPostProcessing() const;
 
