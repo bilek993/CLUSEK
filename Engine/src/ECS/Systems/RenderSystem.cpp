@@ -698,16 +698,14 @@ TransformComponent& RenderSystem::GetMainCameraTransform() const
 void RenderSystem::RenderShadows()
 {
 	DeviceContext->RSSetViewports(1, &ShadowViewport);
-	DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencils[0].GetDepthStencilViewPointer()); // TODO: Change this
-	DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencils[0].GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0); // TODO: Change this
 
 	auto& mainCamera = GetMainCamera();
 
 	for (auto& camera : ShadowCameras)
 	{
 		camera.UpdateLightDirection(	CurrentRenderSettings->DirectionalLightDirection.x,
-													CurrentRenderSettings->DirectionalLightDirection.y,
-													CurrentRenderSettings->DirectionalLightDirection.z);
+										CurrentRenderSettings->DirectionalLightDirection.y,
+										CurrentRenderSettings->DirectionalLightDirection.z);
 		camera.UpdateShadowMapLocation(mainCamera.ViewMatrix);
 	}
 
@@ -732,19 +730,25 @@ void RenderSystem::RenderSceneForShadows()
 
 	DeviceContext->VSSetConstantBuffers(0, 1, ShadowBufferInstance.GetAddressOf());
 
-	Registry->view<ModelRenderComponent>().each([this, &offset](ModelRenderComponent &modelRenderComponent)
+	for (auto i = 0; i < 4; i++)
 	{
-		ShadowBufferInstance.Data.WorldLightMatrix = DirectX::XMMatrixTranspose(modelRenderComponent.WorldMatrix * ShadowCameras[0].CalculateCameraMatrix()); // TODO: Change this
-		ShadowBufferInstance.ApplyChanges();
+		DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencils[i].GetDepthStencilViewPointer());
+		DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencils[i].GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-		for (const auto& mesh : *modelRenderComponent.Meshes)
+		Registry->view<ModelRenderComponent>().each([this, &offset, i](ModelRenderComponent &modelRenderComponent)
 		{
-			if (mesh.Material.Alpha < ConfigurationData->ShadowAlphaThreshold)
-				continue;
+			ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
+			ShadowBufferInstance.ApplyChanges();
 
-			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
-		}
-	});
+			for (const auto& mesh : *modelRenderComponent.Meshes)
+			{
+				if (mesh.Material.Alpha < ConfigurationData->ShadowAlphaThreshold)
+					continue;
+
+				Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
+			}
+		});
+	}
 }
 
 void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)
