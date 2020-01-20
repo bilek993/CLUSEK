@@ -63,6 +63,10 @@ struct ConfigData final
 	float CascadeEnd1 = 0.5f;
 	float CascadeEnd2 = 0.75f;
 	float CascadeEnd3 = 1.0f;
+	float CascadeBias0 = 0.01f;
+	float CascadeBias1 = 0.01f;
+	float CascadeBias2 = 0.01f;
+	float CascadeBias3 = 0.01f;
 
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;

@@ -79,6 +79,10 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, CascadeEnd1, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, CascadeEnd2, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, CascadeEnd3, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, CascadeBias0, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, CascadeBias1, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, CascadeBias2, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, CascadeBias3, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, CubemapGeneratedSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, EnableAsyncModelLoading, data, std::stoi(value));
