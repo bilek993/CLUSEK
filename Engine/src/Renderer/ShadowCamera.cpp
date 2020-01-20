@@ -26,9 +26,9 @@ void ShadowCamera::UpdateMainCameraProjectionMatrix(const int level,
 													const int windowWidth,
 													const int windowHeight,
 													const float mainCameraNearZ,
-													const std::array<float, 4>& cascadeEnds)
+													const std::array<float, SHADOW_CASCADES_COUNT>& cascadeEnds)
 {
-	if (level > 4)
+	if (level > SHADOW_CASCADES_COUNT)
 		Logger::Error("Cascade level out of range!");
 
 	const auto fovRadians = (mainCameraFov / 360.0f) * DirectX::XM_2PI;

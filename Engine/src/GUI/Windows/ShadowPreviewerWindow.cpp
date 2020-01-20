@@ -1,6 +1,5 @@
 #include "ShadowPreviewerWindow.h"
 #include <imgui.h>
-#include "../../ECS/Systems/RenderSystem.h"
 
 void ShadowPreviewerWindow::Draw()
 {
@@ -23,7 +22,7 @@ void ShadowPreviewerWindow::Draw()
 void ShadowPreviewerWindow::DrawSettings()
 {
 	ImGui::Text("Settings:");
-	ImGui::SliderInt("Cascade level", &CascadeLevel, 0, 3);
+	ImGui::SliderInt("Cascade level", &CascadeLevel, 0, ShadowCamera::SHADOW_CASCADES_COUNT - 1);
 	ImGui::SliderFloat("Image scale", &ImageScale, 0.1f, 10.0f);
 	ImGui::SliderFloat("Bias", &Bias, 0.1f, 10000.0f);
 }

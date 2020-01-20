@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseWindow.h"
+#include "../../ECS/Systems/RenderSystem.h"
 
 class ShadowPreviewerWindow final : public BaseWindow
 {
@@ -11,7 +12,7 @@ private:
 	void DrawPreview() const;
 	void DrawWarning() const;
 
-	int CascadeLevel = 0;
+	int CascadeLevel = ShadowCamera::SHADOW_CASCADES_COUNT - 1;
 	float ImageScale = 0.5f;
 	float Bias = 2.0f;
 };

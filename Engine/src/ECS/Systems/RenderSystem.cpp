@@ -736,7 +736,7 @@ void RenderSystem::RenderSceneForShadows()
 
 	DeviceContext->VSSetConstantBuffers(0, 1, ShadowBufferInstance.GetAddressOf());
 
-	for (auto i = 0; i < 4; i++)
+	for (auto i = 0; i < ShadowCamera::SHADOW_CASCADES_COUNT; i++)
 	{
 		DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencils[i].GetDepthStencilViewPointer());
 		DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencils[i].GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);

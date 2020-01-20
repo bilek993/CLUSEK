@@ -7,6 +7,8 @@ class ShadowCamera final
 public:
 	ShadowCamera();
 
+	inline static const int SHADOW_CASCADES_COUNT = 4;
+
 	void UpdateShadowResolution(int resolution);
 	void UpdateNearZShift(float shift);
 	void UpdateMainCameraProjectionMatrix(	int level, 
@@ -14,7 +16,7 @@ public:
 											int windowWidth,
 											int windowHeight,
 											float mainCameraNearZ,
-											const std::array<float, 4>& cascadeEnds);
+											const std::array<float, SHADOW_CASCADES_COUNT>& cascadeEnds);
 
 	void UpdateLightDirection(float lightDirectionX, float lightDirectionY, float lightDirectionZ);
 	void UpdateShadowMapLocation(const DirectX::XMMATRIX& cameraViewMatrix);

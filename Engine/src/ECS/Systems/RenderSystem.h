@@ -100,7 +100,7 @@ private:
 	VertexShader ShadowVertexShader;
 	PixelShader ShadowPixelShader;
 
-	std::array<ShadowCamera, 4> ShadowCameras;
+	std::array<ShadowCamera, ShadowCamera::SHADOW_CASCADES_COUNT> ShadowCameras;
 
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
 	ConstantBuffer<LightAndAlphaBuffer> LightAndAlphaBufferInstance;
@@ -112,7 +112,7 @@ private:
 	PbrResource PbrResourceInstance{};
 
 	RenderDepthStencil SceneRenderDepthStencil{};
-	std::array<RenderDepthStencil, 4> ShadowRenderDepthStencils{};
+	std::array<RenderDepthStencil, ShadowCamera::SHADOW_CASCADES_COUNT> ShadowRenderDepthStencils{};
 
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;
