@@ -24,7 +24,7 @@ struct PS_INPUT
 {
     float4 Position : SV_POSITION;
     float3 WorldPosition : WORLD_POSITION;
-    float4 LightSpacePosition[4] : LIGHTSPACE_POSITION;
+    float4 LightSpacePosition[CASCADES_COUNT] : LIGHTSPACE_POSITION;
     float2 TextureCoord : TEXCOORD;
     float3x3 TBN : TBN;
 };

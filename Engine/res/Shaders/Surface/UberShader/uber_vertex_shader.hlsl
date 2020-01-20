@@ -1,10 +1,11 @@
 #include "../../Includes/normal_utils.hlsli"
+#include "../../Includes/shadow_utils.hlsli"
 
 cbuffer FatPerObjectBuffer : register(b0)
 {
     float4x4 WorldViewProjectionMat;
     float4x4 WorldMatrix;
-    float4x4 LightSpaceMatrix[4];
+    float4x4 LightSpaceMatrix[CASCADES_COUNT];
 };
 
 struct VS_INPUT

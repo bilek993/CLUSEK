@@ -1,3 +1,4 @@
+static const int CASCADES_COUNT = 4;
 static const float SHADOW_BIAS = 0.0025f;
 
 float2 CalculateOffset(int u, int v, float shadowMapWidth, float shadowMapHeight)
