@@ -1,5 +1,4 @@
 static const int CASCADES_COUNT = 4;
-static const float SHADOW_BIAS = 0.0025f;
 
 float2 CalculateOffset(int u, int v, float shadowMapWidth, float shadowMapHeight)
 {
@@ -21,7 +20,7 @@ float PerformPCF(Texture2D shadowMap, float shadowMapWidth, float shadowMapHeigh
     return sum / 16.0f;
 }
 
-float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler, float4 lightSpacePosition)
+float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler, float4 lightSpacePosition, float bias)
 {
     float shadowMapWidth, shadowMapHeight;
     shadowMap.GetDimensions(shadowMapWidth, shadowMapHeight);
@@ -36,7 +35,7 @@ float CalculateShadows(Texture2D shadowMap, SamplerComparisonState shadowSampler
     if (lightSpacePosition.z > 1.0f || lightSpacePosition.z < 0.0f)
         return 1.0f;
     
-    lightSpacePosition.z -= SHADOW_BIAS;
+    lightSpacePosition.z -= bias;
     
     return PerformPCF(shadowMap, shadowMapWidth, shadowMapHeight, shadowSampler, lightSpacePosition);
 }

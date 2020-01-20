@@ -810,6 +810,10 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 		CascadeLevelsBufferInstance.Data.CascadeEnds[1] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd1;
 		CascadeLevelsBufferInstance.Data.CascadeEnds[2] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd2;
 		CascadeLevelsBufferInstance.Data.CascadeEnds[3] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd3;
+		CascadeLevelsBufferInstance.Data.Biases[0] = 0.0025f;
+		CascadeLevelsBufferInstance.Data.Biases[1] = 0.0025f;
+		CascadeLevelsBufferInstance.Data.Biases[2] = 0.0025f;
+		CascadeLevelsBufferInstance.Data.Biases[3] = 0.0025f;
 		CascadeLevelsBufferInstance.ApplyChanges();
 
 		DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
