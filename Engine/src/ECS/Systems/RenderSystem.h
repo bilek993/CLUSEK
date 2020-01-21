@@ -67,7 +67,9 @@ private:
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
 
 	void SetShadowResourcesForShadowCascades(int firstCascadeId);
-	void ClearShadowResourcesForShadowCascades(int firstCascadeId);
+	void ClearShadowResourcesForShadowCascades(int firstCascadeId) const;
+
+	void ConfigureCascadeConstantBuffer();
 
 	void PerformPostProcessing() const;
 

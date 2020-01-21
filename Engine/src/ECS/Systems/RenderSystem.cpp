@@ -44,6 +44,8 @@ void RenderSystem::Start()
 	InitializeModelRenderComponent();
 	InitializeShadowCameras();
 
+	ConfigureCascadeConstantBuffer();
+
 	if (!InitializePbrResources())
 		Logger::Error("PBR resources initialization failed!");
 }
@@ -762,13 +764,14 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 	UINT offset = 0;
 	ChangeShader(SkyVertexShader, SkyPixelShader);
 
+	DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
+
 	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
 	{
 		SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(skyboxComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
 		SimplePerObjectBufferInstance.ApplyChanges();
 
-		DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
 		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
 
 		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
@@ -782,6 +785,16 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 	UINT offset = 0;
 	ChangeShader(UberVertexShader, UberPixelShader);
 
+	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
+
+	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
+
+	DeviceContext->PSSetShaderResources(5, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
+	DeviceContext->PSSetShaderResources(6, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
+	DeviceContext->PSSetShaderResources(7, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
+
 	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset, &mainCameraTransform](ModelRenderComponent &modelRenderComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
@@ -791,32 +804,14 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
 		FatPerObjectBufferInstance.ApplyChanges();
 
-		DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
-
 		LightAndAlphaBufferInstance.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
 		LightAndAlphaBufferInstance.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
 		LightAndAlphaBufferInstance.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
 		LightAndAlphaBufferInstance.Data.Alpha = 1.0f;
 		LightAndAlphaBufferInstance.ApplyChanges();
 
-		DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
-
 		CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransform);
 		CameraBufferInstance.ApplyChanges();
-
-		DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
-
-		CascadeLevelsBufferInstance.Data.CascadeEnds[0] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd0;
-		CascadeLevelsBufferInstance.Data.CascadeEnds[1] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd1;
-		CascadeLevelsBufferInstance.Data.CascadeEnds[2] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd2;
-		CascadeLevelsBufferInstance.Data.CascadeEnds[3] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd3;
-		CascadeLevelsBufferInstance.Data.Biases[0] = ConfigurationData->CascadeBias0;
-		CascadeLevelsBufferInstance.Data.Biases[1] = ConfigurationData->CascadeBias1;
-		CascadeLevelsBufferInstance.Data.Biases[2] = ConfigurationData->CascadeBias2;
-		CascadeLevelsBufferInstance.Data.Biases[3] = ConfigurationData->CascadeBias3;
-		CascadeLevelsBufferInstance.ApplyChanges();
-
-		DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
@@ -828,9 +823,6 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 			DeviceContext->PSSetShaderResources(2, 1, mesh.Material.MetalicSmoothnessTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(4, 1, mesh.Material.EmissionTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(5, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
-			DeviceContext->PSSetShaderResources(6, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
-			DeviceContext->PSSetShaderResources(7, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
@@ -844,16 +836,12 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 
 			LightAndAlphaBufferInstance.Data.Alpha = mesh.Material.Alpha;
 			LightAndAlphaBufferInstance.ApplyChanges();
-			DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
 
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(2, 1, mesh.Material.MetalicSmoothnessTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(4, 1, mesh.Material.EmissionTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(5, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
-			DeviceContext->PSSetShaderResources(6, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
-			DeviceContext->PSSetShaderResources(7, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
@@ -868,10 +856,23 @@ void RenderSystem::SetShadowResourcesForShadowCascades(const int firstCascadeId)
 		DeviceContext->PSSetShaderResources(firstCascadeId + i, 1, ShadowRenderDepthStencils[i].GetAddressOfShaderResourceView());
 }
 
-void RenderSystem::ClearShadowResourcesForShadowCascades(const int firstCascadeId)
+void RenderSystem::ClearShadowResourcesForShadowCascades(const int firstCascadeId) const
 {
 	for (auto i = 0; i < ShadowRenderDepthStencils.size(); i++)
 		DeviceContext->PSSetShaderResources(firstCascadeId + i, 1, &NullShaderResourceView);
+}
+
+void RenderSystem::ConfigureCascadeConstantBuffer()
+{
+	CascadeLevelsBufferInstance.Data.CascadeEnds[0] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd0;
+	CascadeLevelsBufferInstance.Data.CascadeEnds[1] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd1;
+	CascadeLevelsBufferInstance.Data.CascadeEnds[2] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd2;
+	CascadeLevelsBufferInstance.Data.CascadeEnds[3] = ConfigurationData->MainCameraFarZ * ConfigurationData->CascadeEnd3;
+	CascadeLevelsBufferInstance.Data.Biases[0] = ConfigurationData->CascadeBias0;
+	CascadeLevelsBufferInstance.Data.Biases[1] = ConfigurationData->CascadeBias1;
+	CascadeLevelsBufferInstance.Data.Biases[2] = ConfigurationData->CascadeBias2;
+	CascadeLevelsBufferInstance.Data.Biases[3] = ConfigurationData->CascadeBias3;
+	CascadeLevelsBufferInstance.ApplyChanges();
 }
 
 void RenderSystem::PerformPostProcessing() const
