@@ -14,6 +14,7 @@
 #include "../../ECS/Components/TransformComponent.h"
 #include "../../ECS/Components/VehicleComponent.h"
 #include "../../ECS/Components/VehiclePlayerControllerComponent.h"
+#include "../../ECS/Components/TerrainComponent.h"
 
 void EntityViewerWindow::Draw()
 {
@@ -51,5 +52,6 @@ void EntityViewerWindow::DrawList()
 		DrawComponent<VehicleComponent>(entity, "Vehicle Component");
 		DrawComponent<VehiclePlayerControllerComponent>(entity, "Vehicle Player Controller Component");
 		DrawComponent<WheelComponent>(entity, "Wheel Component");
+		DrawComponent<TerrainComponent>(entity, "Terrain Component");
 	});
 }

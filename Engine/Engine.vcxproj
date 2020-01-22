@@ -230,6 +230,7 @@
     <ClInclude Include="src\Loaders\Components\VehiclePlayerControllerComponentLoader.h" />
     <ClInclude Include="src\ECS\Systems\VehiclePlayerControllerSystem.h" />
     <ClInclude Include="src\GUI\Windows\VehicleDetailsWindow.h" />
+    <ClInclude Include="src\ECS\Components\TerrainComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">
