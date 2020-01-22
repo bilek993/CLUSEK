@@ -146,7 +146,7 @@ void ShadowCamera::StabilizeCamera(float* viewLeft, float* viewRight, float* vie
 	assert(viewBottom);
 	assert(viewTop);
 
-	const auto calculatedDiagonalVector = DirectX::XMVector3Length(DirectX::XMVectorSubtract(points[3], points[4]));
+	const auto calculatedDiagonalVector = DirectX::XMVector3Length(DirectX::XMVectorSubtract(points[4], points[7]));
 	if (!DirectX::XMVector3NearEqual(calculatedDiagonalVector, LongestDiagonalVector, LONGEST_DIAGONAL_CALCULATION_EPSILON))
 	{
 		Logger::Debug("Preparing to recalculate shadow camera longest diagonal...");
