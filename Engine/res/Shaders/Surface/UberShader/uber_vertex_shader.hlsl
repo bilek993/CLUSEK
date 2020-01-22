@@ -23,6 +23,7 @@ struct VS_OUTPUT
     float4 LightSpacePosition[CASCADES_COUNT] : LIGHTSPACE_POSITION;
     float2 TextureCoord : TEXCOORD;
     float3x3 TBN : TBN;
+    float CameraDistanceZ : CAMERA_DISTANCE_Z;
 };
 
 VS_OUTPUT main(VS_INPUT input)
@@ -32,6 +33,7 @@ VS_OUTPUT main(VS_INPUT input)
     output.WorldPosition = mul(float4(input.Position, 1.0f), WorldMatrix).xyz;
     output.TextureCoord = input.TextureCoord;
     output.TBN = calculateTBN(mul(float4(input.Normal, 0.0f), WorldMatrix).xyz, (mul(float4(input.Tangent, 0.0f), WorldMatrix).xyz));
+    output.CameraDistanceZ = output.Position.z;
     
     for (int i = 0; i < CASCADES_COUNT; i++)
         output.LightSpacePosition[i] = mul(float4(output.WorldPosition, 1.0f), LightSpaceMatrix[i]);

@@ -28,6 +28,7 @@ struct PS_INPUT
     float4 LightSpacePosition[CASCADES_COUNT] : LIGHTSPACE_POSITION;
     float2 TextureCoord : TEXCOORD;
     float3x3 TBN : TBN;
+    float CameraDistanceZ : CAMERA_DISTANCE_Z;
 };
 
 Texture2D AlbedoTexture : register(t0);
@@ -60,13 +61,13 @@ float4 main(PS_INPUT input) : SV_TARGET
     
     float shadowMultiplier = 1.0f;
     
-    if (input.Position.z * input.Position.w < CascadeEnds[0])
+    if (input.CameraDistanceZ < CascadeEnds[0])
         shadowMultiplier = CalculateShadows(ShadowMapCascade0, ShadowSampler, input.LightSpacePosition[0], Biases[0]);
-    else if (input.Position.z * input.Position.w < CascadeEnds[1])
+    else if (input.CameraDistanceZ < CascadeEnds[1])
         shadowMultiplier = CalculateShadows(ShadowMapCascade1, ShadowSampler, input.LightSpacePosition[1], Biases[1]);
-    else if (input.Position.z * input.Position.w < CascadeEnds[2])
+    else if (input.CameraDistanceZ < CascadeEnds[2])
         shadowMultiplier = CalculateShadows(ShadowMapCascade2, ShadowSampler, input.LightSpacePosition[2], Biases[2]);
-    else if (input.Position.z * input.Position.w < CascadeEnds[3])
+    else if (input.CameraDistanceZ < CascadeEnds[3])
         shadowMultiplier = CalculateShadows(ShadowMapCascade3, ShadowSampler, input.LightSpacePosition[3], Biases[3]);
 
     float3 finalColor = pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
