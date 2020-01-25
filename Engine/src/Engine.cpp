@@ -8,6 +8,7 @@
 #include "ECS/Systems/PhysicsSystem.h"
 #include "ECS/Systems/TransformSystem.h"
 #include "ECS/Systems/VehiclePlayerControllerSystem.h"
+#include "ECS/Systems/TerrainSystem.h"
 
 bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 {
@@ -81,6 +82,9 @@ void Engine::CreateSystems()
 	// Render system should be first
 	systemBasePtr = std::make_unique<RenderSystem>();
 	Systems.emplace_back(SystemHolder("Render System", systemBasePtr, true));
+
+	systemBasePtr = std::make_unique<TerrainSystem>();
+	Systems.emplace_back(SystemHolder("Terrain System", systemBasePtr, true));
 
 	systemBasePtr = std::make_unique<PhysicsSystem>();
 	Systems.emplace_back(SystemHolder("Physics System", systemBasePtr, true));
