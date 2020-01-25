@@ -7,4 +7,5 @@ void TerrainComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	auto &component = registry.assign<TerrainComponent>(entity);
 
 	MAP_LOADER_BASIC_FIELD(PathToHeightmap, json, component, std::string);
+	MAP_LOADER_BASIC_FIELD(MaxHeight, json, component, float);
 }

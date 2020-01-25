@@ -6,6 +6,7 @@
 struct TerrainComponent final
 {
 	std::string PathToHeightmap;
+	float MaxHeight = 500.0f;
 	VertexBuffer<FatVertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
 };

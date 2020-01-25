@@ -43,7 +43,7 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 		for (auto x = 0; x < width; x += numberOfChannels)
 		{
 			const auto pixelOffset = data + ((y * width) + x) * numberOfChannels;
-			const auto terrainHeight = static_cast<float>(pixelOffset[0]) / 65025.0f * 1000.0f;
+			const auto terrainHeight = static_cast<float>(pixelOffset[0]) / std::numeric_limits<stbi_us>::max() * 1000.0f;
 
 			FatVertex vertex{};
 			vertex.Position = DirectX::XMFLOAT3(x, terrainHeight, y);
