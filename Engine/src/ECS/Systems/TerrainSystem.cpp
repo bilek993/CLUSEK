@@ -25,6 +25,7 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 	if (data == nullptr)
 	{
 		Logger::Error("Couldn't open heightmap file!");
+		Logger::Debug("Clearing memory after heightmap...");
 		stbi_image_free(data);
 		return;
 	}
@@ -34,6 +35,8 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 
 	std::vector<FatVertex> vertices;
 	std::vector<DWORD> indices;
+
+	Logger::Debug("Calculating vertices buffer for terrain...");
 
 	for (auto y = 0; y < height; y++)
 	{
@@ -52,14 +55,28 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 		}
 	}
 
-	// TODO: Add generating indices
+	Logger::Debug("Calculating indieces buffer for terrain...");
+
+	for (auto y = 0; y < height; y++)
+	{
+		for (auto x = 0; x < width; x++)
+		{
+			indices.emplace_back((y * height) + x);
+			indices.emplace_back((y * height) + (x + 1));
+			indices.emplace_back(((y + 1) * height) + x);
+			indices.emplace_back(((y + 1) * height) + (x + 1));
+		}
+	}
+
+	Logger::Debug("Preparing to create vertex buffer and index buffer...");
 
 	auto hr = terrainComponent.RenderVertexBuffer.Initialize(DirectXDevice, vertices.data(), vertices.size());
 	if (FAILED(hr))
 		Logger::Error("Couldn't create terrain vertex buffer.");
-	/*hr = terrainComponent.RenderIndexBuffer.Initialize(DirectXDevice, indices.data(), indices.size());
+	hr = terrainComponent.RenderIndexBuffer.Initialize(DirectXDevice, indices.data(), indices.size());
 	if (FAILED(hr))
-		Logger::Error("Couldn't create terrain index buffer.");*/
+		Logger::Error("Couldn't create terrain index buffer.");
 
+	Logger::Debug("Clearing memory after heightmap...");
 	stbi_image_free(data);
 }
