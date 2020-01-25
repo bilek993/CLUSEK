@@ -57,9 +57,9 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 
 	Logger::Debug("Calculating indieces buffer for terrain...");
 
-	for (auto y = 0; y < height; y++)
+	for (auto y = 0; y < height - 1; y++)
 	{
-		for (auto x = 0; x < width; x++)
+		for (auto x = 0; x < width - 1; x++)
 		{
 			indices.emplace_back((y * height) + x);
 			indices.emplace_back((y * height) + (x + 1));
