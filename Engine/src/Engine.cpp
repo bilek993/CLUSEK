@@ -118,8 +118,15 @@ void Engine::InitializeSystems()
 {
 	for (auto& system : Systems)
 	{
-		system.System->Initialize(&Registry, &Window, &Config, &CurrentRenderSettings, 
-			&DataFromIODevices, &InputOutputDevices, &CurrentPostProcessingSettings);
+		system.System->Initialize(	&Registry, 
+									&Window,
+									&Config, 
+									&CurrentRenderSettings, 
+									&DataFromIODevices,
+									&InputOutputDevices, 
+									&CurrentPostProcessingSettings,
+									dynamic_cast<RenderSystem*>(Systems[RenderSystemId].System.get())->GetPointerToDevice(), 
+									dynamic_cast<RenderSystem*>(Systems[RenderSystemId].System.get())->GetPointerToDeviceContext());
 		system.System->Start();
 	}
 }

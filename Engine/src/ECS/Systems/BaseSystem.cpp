@@ -2,7 +2,8 @@
 #include "../../Renderer/PostProcessingSettings.h"
 
 void BaseSystem::Initialize(entt::registry* registry, RenderWindow* window, ConfigData* configData,
-	DynamicRenderSettings *renderSettings, IOData* ioData, IODevices* ioDevices, PostProcessingSettings *postProcessingSettings)
+	DynamicRenderSettings *renderSettings, IOData* ioData, IODevices* ioDevices, PostProcessingSettings *postProcessingSettings,
+	ID3D11Device *directXDevice, ID3D11DeviceContext *directXDeviceContext)
 {
 	Registry = registry;
 	Window = window;
@@ -11,6 +12,8 @@ void BaseSystem::Initialize(entt::registry* registry, RenderWindow* window, Conf
 	InputOutputData = ioData;
 	InputOutputDevices = ioDevices;
 	CurrentPostProcessingSettings = postProcessingSettings;
+	DirectXDevice = directXDevice;
+	DirectXDeviceContext = directXDeviceContext
 }
 
 void BaseSystem::BeforeUpdate()
