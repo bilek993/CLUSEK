@@ -13,7 +13,7 @@ void BaseSystem::Initialize(entt::registry* registry, RenderWindow* window, Conf
 	InputOutputDevices = ioDevices;
 	CurrentPostProcessingSettings = postProcessingSettings;
 	DirectXDevice = directXDevice;
-	DirectXDeviceContext = directXDeviceContext
+	DirectXDeviceContext = directXDeviceContext;
 }
 
 void BaseSystem::BeforeUpdate()
