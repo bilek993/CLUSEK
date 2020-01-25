@@ -21,7 +21,7 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 	auto height = 0;
 	auto numberOfChannels = 0;
 
-	const auto data = stbi_load(terrainComponent.PathToHeightmap.c_str(), &width, &height, &numberOfChannels, 1);
+	const auto data = stbi_load_16(terrainComponent.PathToHeightmap.c_str(), &width, &height, &numberOfChannels, 1);
 	if (data == nullptr)
 	{
 		Logger::Error("Couldn't open heightmap file!");
@@ -43,7 +43,7 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 		for (auto x = 0; x < width; x += numberOfChannels)
 		{
 			const auto pixelOffset = data + ((y * width) + x) * numberOfChannels;
-			const auto terrainHeight = static_cast<float>(pixelOffset[0]);
+			const auto terrainHeight = static_cast<float>(pixelOffset[0]) / 65025.0f * 1000.0f;
 
 			FatVertex vertex{};
 			vertex.Position = DirectX::XMFLOAT3(x, terrainHeight, y);
