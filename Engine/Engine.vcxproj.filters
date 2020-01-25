@@ -378,6 +378,9 @@
     <ClCompile Include="src\ECS\Systems\TerrainSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="src\Loaders\Components\TerrainComponentLoader.cpp">
+      <Filter>Source Files\Loaders\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -757,6 +760,9 @@
     </ClInclude>
     <ClInclude Include="src\ECS\Systems\TerrainSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\Components\TerrainComponentLoader.h">
+      <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

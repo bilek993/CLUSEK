@@ -2,5 +2,5 @@
 
 struct TerrainComponent final
 {
-	
+	std::string PathToHeightmap;
 };

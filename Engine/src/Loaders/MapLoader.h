@@ -19,6 +19,7 @@
 #include "Components/WheelComponentLoader.h"
 #include "Components/VehicleComponentLoader.h"
 #include "Components/VehiclePlayerControllerComponentLoader.h"
+#include "Components/TerrainComponentLoader.h"
 
 #define MAP_LOADER_TAGS(INPUT_TAG, EXPECTED_TAG, HASHED_TAG, REGISTRY, ENTITY) if (strcmp(INPUT_TAG, EXPECTED_TAG) == 0) REGISTRY.assign<entt::tag<HASHED_TAG>>(ENTITY);
 #define MAP_COMPONENT_LOADERS(JSON, COMPONENT_ID, REGISTRY, ENTITY) if (JSON.key() == #COMPONENT_ID) COMPONENT_ID##LoaderInstance.Add(JSON.value(), REGISTRY, ENTITY);
@@ -49,4 +50,5 @@ private:
 	inline static VehicleComponentLoader VehicleComponentLoaderInstance;
 	inline static WheelComponentLoader WheelComponentLoaderInstance;
 	inline static VehiclePlayerControllerComponentLoader VehiclePlayerControllerComponentLoaderInstance;
+	inline static TerrainComponentLoader TerrainComponentLoaderInstance;
 };
