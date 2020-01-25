@@ -726,6 +726,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 	SetShadowResourcesForShadowCascades(8);
 
 	RenderSkyBoxComponents(cameraComponent);
+	RenderTerrain(cameraComponent);
 	RenderModelRenderComponents(cameraComponent);
 
 	ClearShadowResourcesForShadowCascades(8);
@@ -776,6 +777,15 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 
 		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
 	});
+}
+
+void RenderSystem::RenderTerrain(const CameraComponent& cameraComponent) const
+{
+	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP); // TODO: Change this
+
+	// TODO: Implement logic here
+
+	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
 void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent)
