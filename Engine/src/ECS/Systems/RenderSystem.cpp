@@ -781,7 +781,7 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 
 void RenderSystem::RenderTerrain(const CameraComponent& cameraComponent) const
 {
-	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP); // TODO: Change this
+	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
 
 	// TODO: Implement logic here
 

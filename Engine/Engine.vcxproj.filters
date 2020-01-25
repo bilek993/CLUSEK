@@ -133,6 +133,9 @@
     <Filter Include="Resource Files\Shaders\Surface\Shadow">
       <UniqueIdentifier>{7378d996-bdca-4210-849d-8d9a5a688394}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\Surface\Terrain">
+      <UniqueIdentifier>{2db36c71-392f-4e59-8960-d03014e811b3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -828,6 +831,18 @@
     </FxCompile>
     <FxCompile Include="res\Shaders\PostProcessing\shadow_remapper_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\Terrain\terrain_domain_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\Terrain</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\Terrain\terrain_hull_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\Terrain</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\Terrain\terrain_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\Terrain</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\Terrain\terrain_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\Terrain</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
