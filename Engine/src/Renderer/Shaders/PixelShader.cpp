@@ -15,7 +15,7 @@ bool PixelShader::Initialize(ID3D11Device* device, const std::wstring& shaderPat
 	hr = device->CreatePixelShader(ShaderBuffer->GetBufferPointer(), ShaderBuffer->GetBufferSize(), nullptr, Shader.GetAddressOf());
 	if (FAILED(hr))
 	{
-		Logger::Error("Failed to create vertex shader!");
+		Logger::Error("Failed to create pixel shader!");
 		return false;
 	}
 

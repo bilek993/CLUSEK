@@ -11,6 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\Shaders\DomainShader.cpp" />
+    <ClCompile Include="src\Renderer\Shaders\HullShader.cpp" />
     <ClCompile Include="src\ECS\Systems\TerrainSystem.cpp" />
     <ClCompile Include="src\Loaders\Components\TerrainComponentLoader.cpp" />
     <FxCompile Include="res\Shaders\Surface\ShadowMatrix\shadow_pixel_shader.hlsl">
@@ -132,6 +134,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Shaders\DomainShader.h" />
+    <ClInclude Include="src\Renderer\Shaders\HullShader.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\CascadeLevelsBuffer.h" />
     <ClInclude Include="src\GUI\Windows\ConfigurationWindow.h" />
     <ClInclude Include="src\Renderer\ShadowCamera.h" />

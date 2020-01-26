@@ -384,6 +384,12 @@
     <ClCompile Include="src\Loaders\Components\TerrainComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\Shaders\HullShader.cpp">
+      <Filter>Source Files\Renderer\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\Shaders\DomainShader.cpp">
+      <Filter>Source Files\Renderer\Shaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -766,6 +772,12 @@
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\TerrainComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Shaders\HullShader.h">
+      <Filter>Header Files\Renderer\Shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\Shaders\DomainShader.h">
+      <Filter>Header Files\Renderer\Shaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
