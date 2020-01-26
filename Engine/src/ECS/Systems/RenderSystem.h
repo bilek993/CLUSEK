@@ -68,7 +68,7 @@ private:
 	void RenderSceneForShadows();
 
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
-	void RenderTerrain(const CameraComponent &cameraComponent) const;
+	void RenderTerrain(const CameraComponent &cameraComponent);
 	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
 
 	void SetShadowResourcesForShadowCascades(int firstCascadeId);

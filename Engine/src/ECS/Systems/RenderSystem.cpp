@@ -14,6 +14,7 @@
 #include "../../Renderer/TransformLogic.h"
 #include "../../Renderer/Generators/QuadGenerator.h"
 #include "../../Renderer/ModelViewLogic.h"
+#include "../Components/TerrainComponent.h"
 
 void RenderSystem::Start()
 {
@@ -817,13 +818,25 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 	});
 }
 
-void RenderSystem::RenderTerrain(const CameraComponent& cameraComponent) const
+void RenderSystem::RenderTerrain(const CameraComponent& cameraComponent)
 {
 	UINT offset = 0;
 	ChangeBasicShaders(TerrainVertexShader, TerrainPixelShader);
 
 	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
 	ChangeTessellationShaders(TerrainHullShader, TerrainDomainShader);
+
+	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+
+	Registry->view<TerrainComponent>().each([this, &offset, &cameraComponent](TerrainComponent &terrainComponent)
+	{
+		const auto tmpWorldMatrix = DirectX::XMMatrixIdentity(); // TODO: Change this in future
+		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
+			XMMatrixTranspose(tmpWorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix)); // TODO: Set other parameters in constant buffer
+		FatPerObjectBufferInstance.ApplyChanges();
+
+		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
+	});
 
 	ResetTessellationShaders();
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
