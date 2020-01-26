@@ -22,6 +22,8 @@
 #include "../../Renderer/PostProcessing/ShadowRemapperPostProcessing.h"
 #include "../../Renderer/ShadowCamera.h"
 #include "../../Renderer/ConstantBufferTypes/CascadeLevelsBuffer.h"
+#include "../../Renderer/Shaders/HullShader.h"
+#include "../../Renderer/Shaders/DomainShader.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -50,7 +52,8 @@ private:
 	void InitializeModelRenderComponent();
 	void InitializeShadowCameras();
 
-	void ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
+	void ChangeBasicShaders(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
+	void ChangeTessellationShaders(const HullShader& hullShader, const DomainShader& domainShader) const;
 
 	template <class T>
 	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const;

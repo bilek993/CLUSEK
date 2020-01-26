@@ -598,7 +598,7 @@ void RenderSystem::ShowLoadingScreen()
 	RenderFrameBegin();
 	DeviceContext->ClearRenderTargetView(IntermediateRenderTexture.GetRenderTargetViewPointer(), BACKGROUND_COLOR);
 
-	ChangeShader(LoadingLogoVertexShader, LoadingLogoPixelShader);
+	ChangeBasicShaders(LoadingLogoVertexShader, LoadingLogoPixelShader);
 
 	const auto ratio = static_cast<float>(ConfigurationData->WindowWidth) / static_cast<float>(ConfigurationData->WindowHeight);
 	Logger::Debug("Screen ratio: " + std::to_string(ratio) + ".");
@@ -666,11 +666,17 @@ void RenderSystem::InitializeShadowCameras()
 	}
 }
 
-void RenderSystem::ChangeShader(const VertexShader& vertexShader, const PixelShader& pixelShader) const
+void RenderSystem::ChangeBasicShaders(const VertexShader& vertexShader, const PixelShader& pixelShader) const
 {
 	DeviceContext->IASetInputLayout(vertexShader.GetInputLayout());
 	DeviceContext->VSSetShader(vertexShader.GetShader(), nullptr, 0);
 	DeviceContext->PSSetShader(pixelShader.GetShader(), nullptr, 0);
+}
+
+void RenderSystem::ChangeTessellationShaders(const HullShader& hullShader, const DomainShader& domainShader) const
+{
+	DeviceContext->HSSetShader(hullShader.GetShader(), nullptr, 0);
+	DeviceContext->DSSetShader(domainShader.GetShader(), nullptr, 0);
 }
 
 CameraComponent& RenderSystem::GetMainCamera() const
@@ -735,7 +741,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 void RenderSystem::RenderSceneForShadows()
 {
 	UINT offset = 0;
-	ChangeShader(ShadowVertexShader, ShadowPixelShader);
+	ChangeBasicShaders(ShadowVertexShader, ShadowPixelShader);
 
 	DeviceContext->VSSetConstantBuffers(0, 1, ShadowBufferInstance.GetAddressOf());
 
@@ -763,7 +769,7 @@ void RenderSystem::RenderSceneForShadows()
 void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)
 {
 	UINT offset = 0;
-	ChangeShader(SkyVertexShader, SkyPixelShader);
+	ChangeBasicShaders(SkyVertexShader, SkyPixelShader);
 
 	DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
 
@@ -793,7 +799,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 	auto& mainCameraTransform = GetMainCameraTransform();
 
 	UINT offset = 0;
-	ChangeShader(UberVertexShader, UberPixelShader);
+	ChangeBasicShaders(UberVertexShader, UberPixelShader);
 
 	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
