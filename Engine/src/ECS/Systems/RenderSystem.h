@@ -54,6 +54,7 @@ private:
 
 	void ChangeBasicShaders(const VertexShader& vertexShader, const PixelShader& pixelShader) const;
 	void ChangeTessellationShaders(const HullShader& hullShader, const DomainShader& domainShader) const;
+	void ResetTessellationShaders() const;
 
 	template <class T>
 	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const;
@@ -102,6 +103,11 @@ private:
 
 	VertexShader LoadingLogoVertexShader;
 	PixelShader LoadingLogoPixelShader;
+
+	VertexShader TerrainVertexShader;
+	PixelShader TerrainPixelShader;
+	HullShader TerrainHullShader;
+	DomainShader TerrainDomainShader;
 
 	VertexShader ShadowVertexShader;
 	PixelShader ShadowPixelShader;

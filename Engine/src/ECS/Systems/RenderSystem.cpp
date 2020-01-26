@@ -480,6 +480,32 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
+	// Terrain shader
+
+	if (!TerrainVertexShader.Initialize(Device.Get(), L"terrain_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
+	{
+		Logger::Error("TerrainVertexShader not initialized due to critical problem!");
+		return false;
+	}
+
+	if (!TerrainPixelShader.Initialize(Device.Get(), L"terrain_pixel_shader.cso"))
+	{
+		Logger::Error("TerrainPixelShader not initialized due to critical problem!");
+		return false;
+	}
+
+	if (!TerrainHullShader.Initialize(Device.Get(), L"terrain_hull_shader.cso"))
+	{
+		Logger::Error("TerrainHullShader not initialized due to critical problem!");
+		return false;
+	}
+
+	if (!TerrainDomainShader.Initialize(Device.Get(), L"terrain_domain_shader.cso"))
+	{
+		Logger::Error("TerrainDomainShader not initialized due to critical problem!");
+		return false;
+	}
+
 	// Shadow shader
 
 	if (ConfigurationData->ShadowsEnabled) {
@@ -679,6 +705,12 @@ void RenderSystem::ChangeTessellationShaders(const HullShader& hullShader, const
 	DeviceContext->DSSetShader(domainShader.GetShader(), nullptr, 0);
 }
 
+void RenderSystem::ResetTessellationShaders() const
+{
+	DeviceContext->HSSetShader(nullptr, nullptr, 0);
+	DeviceContext->DSSetShader(nullptr, nullptr, 0);
+}
+
 CameraComponent& RenderSystem::GetMainCamera() const
 {
 	auto view = Registry->view<CameraComponent, entt::tag<Tags::MAIN_CAMERA>>();
@@ -787,10 +819,13 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 
 void RenderSystem::RenderTerrain(const CameraComponent& cameraComponent) const
 {
+	UINT offset = 0;
+	ChangeBasicShaders(TerrainVertexShader, TerrainPixelShader);
+
 	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
+	ChangeTessellationShaders(TerrainHullShader, TerrainDomainShader);
 
-	// TODO: Implement logic here
-
+	ResetTessellationShaders();
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
