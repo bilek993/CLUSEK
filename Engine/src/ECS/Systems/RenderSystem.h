@@ -126,7 +126,9 @@ private:
 	RenderDepthStencil SceneRenderDepthStencil{};
 	std::array<RenderDepthStencil, ShadowCamera::SHADOW_CASCADES_COUNT> ShadowRenderDepthStencils{};
 
-	Microsoft::WRL::ComPtr<ID3D11RasterizerState> RasterizerState;
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> MainRasterizerState;
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> SolidRasterizerState;
+
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;
 
 	D3D11_VIEWPORT SceneViewport{};

@@ -65,6 +65,7 @@ void RenderSystem::Update(const float deltaTime)
 
 void RenderSystem::PrepareForGuiRender()
 {
+	DeviceContext->RSSetState(SolidRasterizerState.Get());
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, BackBufferRenderTargetView.GetAddressOf(), nullptr);
 }
@@ -285,7 +286,7 @@ bool RenderSystem::InitializeDirectX()
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	Logger::Debug("Default viewport has been set.");
 
-	// Rasterization initialization
+	// Main rasterizer initialization
 
 	D3D11_RASTERIZER_DESC rasterizerDesc;
 	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
@@ -302,14 +303,30 @@ bool RenderSystem::InitializeDirectX()
 	else if (ConfigurationData->CullMode == "NONE")
 		rasterizerDesc.CullMode = D3D11_CULL_NONE;
 
-	hr = Device->CreateRasterizerState(&rasterizerDesc, RasterizerState.GetAddressOf());
+	hr = Device->CreateRasterizerState(&rasterizerDesc, MainRasterizerState.GetAddressOf());
 	if (FAILED(hr))
 	{
-		Logger::Error("Error creating rasterizer state!");
+		Logger::Error("Error creating main rasterizer state!");
 		return false;
 	}
-	DeviceContext->RSSetState(RasterizerState.Get());
-	Logger::Debug("Rasterizer state is set successfully.");
+
+	// Post processing rasterizer initialization
+	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
+
+	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+	rasterizerDesc.CullMode = D3D11_CULL_BACK;
+
+	hr = Device->CreateRasterizerState(&rasterizerDesc, SolidRasterizerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating solid rasterizer state!");
+		return false;
+	}
+
+	// Setting initial rasterizer state
+
+	DeviceContext->RSSetState(SolidRasterizerState.Get());
+	Logger::Debug("Initial rasterizer state is set successfully.");
 
 	// Blend state initialization
 
@@ -759,6 +776,7 @@ void RenderSystem::RenderShadows()
 
 void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 {
+	DeviceContext->RSSetState(MainRasterizerState.Get());
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
@@ -941,6 +959,8 @@ void RenderSystem::ConfigureCascadeConstantBuffer()
 
 void RenderSystem::PerformPostProcessing() const
 {
+	DeviceContext->RSSetState(SolidRasterizerState.Get());
+
 	auto currentInput = IntermediateRenderTexture.GetShaderResourceView();
 
 	if (ConfigurationData->MultisamplesCount > 1)
