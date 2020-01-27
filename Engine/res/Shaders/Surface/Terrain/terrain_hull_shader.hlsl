@@ -22,7 +22,7 @@ struct PatchTess
 
 [domain("quad")]
 [partitioning("fractional_even")]
-[outputtopology("triangle_cw")]
+[outputtopology("triangle_ccw")]
 [outputcontrolpoints(4)]
 [patchconstantfunc("ConstantHS")]
 HS_OUTPUT main(InputPatch<HS_INPUT, 4> patches, uint i : SV_OutputControlPointID, uint patchId : SV_PrimitiveID)
@@ -40,13 +40,13 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
 {
     PatchTess constantOutput;
     
-    constantOutput.EdgeTess[0] = 0.0f;
-    constantOutput.EdgeTess[1] = 0.0f;
-    constantOutput.EdgeTess[2] = 0.0f;
-    constantOutput.EdgeTess[3] = 0.0f;
+    constantOutput.EdgeTess[0] = 1.0f;
+    constantOutput.EdgeTess[1] = 1.0f;
+    constantOutput.EdgeTess[2] = 1.0f;
+    constantOutput.EdgeTess[3] = 1.0f;
     
-    constantOutput.InsideTess[0] = 0.0f;
-    constantOutput.InsideTess[1] = 0.0f;
+    constantOutput.InsideTess[0] = 1.0f;
+    constantOutput.InsideTess[1] = 1.0f;
     
     return constantOutput;
 }
