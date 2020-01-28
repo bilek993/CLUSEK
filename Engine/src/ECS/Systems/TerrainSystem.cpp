@@ -46,7 +46,7 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 			const auto terrainHeight = static_cast<float>(pixelOffset[0]) / std::numeric_limits<stbi_us>::max() * terrainComponent.MaxHeight;
 
 			PositionAndUvVertex vertex{};
-			vertex.Position = DirectX::XMFLOAT3(x, terrainHeight, y);
+			vertex.Position = DirectX::XMFLOAT3(x * terrainComponent.ScaleXZ, terrainHeight, y * terrainComponent.ScaleXZ);
 			// vertex.TextureCoord // TODO: Add texture coord
 
 			vertices.emplace_back(vertex);

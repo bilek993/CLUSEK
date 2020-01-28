@@ -9,6 +9,7 @@ struct TerrainComponent final
 	std::string PathToHeightmap;
 	std::string MaterialId;
 	int QualityDivider = 1;
+	float ScaleXZ = 1.0f;
 	float MaxHeight = 500.0f;
 	VertexBuffer<PositionAndUvVertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
