@@ -779,6 +779,9 @@
     <ClInclude Include="src\Renderer\Shaders\DomainShader.h">
       <Filter>Header Files\Renderer\Shaders</Filter>
     </ClInclude>
+    <ClInclude Include="TerrainShaderMaterial.h">
+      <Filter>Header Files\Renderer\Materials</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">

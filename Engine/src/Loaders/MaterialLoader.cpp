@@ -62,6 +62,18 @@ void MaterialLoader::SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMa
 	material.SkyMap = GetTextureById(device, albedoTextureId, DefaultAlbedo);
 }
 
+void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, TerrainShaderMaterial& material,
+	const std::string& pathToMaterial)
+{
+	nlohmann::json jsonObject;
+	std::ifstream inputFile(pathToMaterial);
+	inputFile >> jsonObject;
+
+	auto heightmapJsonInfo = jsonObject["Heightmap"];
+
+	material.Heightmap = GetTextureById(device, heightmapJsonInfo, DefaultAlbedo);
+}
+
 void MaterialLoader::GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path,
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& resourceView)
 {

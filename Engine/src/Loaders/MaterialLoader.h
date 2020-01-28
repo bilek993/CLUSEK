@@ -6,6 +6,7 @@
 #include "../Renderer/Shaders/ComputeShader.h"
 #include "ConfigData.h"
 #include <mutex>
+#include "../../TerrainShaderMaterial.h"
 
 class MaterialLoader final
 {
@@ -17,6 +18,7 @@ public:
 		const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId, 
 		const std::string& occlusionTextureId, const std::string& emissionTextureId, float alpha);
 	static void SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material, const std::string& albedoTextureId);
+	static void SetResourceForTerrainMaterial(ID3D11Device* device, TerrainShaderMaterial& material, const std::string& pathToMaterial);
 	static void GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& resourceView);
 	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
 private:

@@ -682,6 +682,14 @@ void RenderSystem::InitializeSkyboxComponent()
 	});
 }
 
+void RenderSystem::InitializeTerrainComponent()
+{
+	Registry->view<SkyboxComponent>().each([this](TerrainComponent &terrainComponent)
+	{
+		MaterialLoader::SetResourceForTerrainMaterial(Device.Get(), terrainComponent.Material, skyboxComponent.SkyboxTextureId);
+	});
+}
+
 void RenderSystem::InitializeModelRenderComponent()
 {
 	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
