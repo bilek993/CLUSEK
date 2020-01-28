@@ -33,7 +33,7 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 	if (numberOfChannels != 1)
 		Logger::Warning("Number of channels for heigtmap is equal to" + std::to_string(numberOfChannels) + ". It might be very problematic!");
 
-	std::vector<FatVertex> vertices;
+	std::vector<PositionAndUvVertex> vertices;
 	std::vector<DWORD> indices;
 
 	Logger::Debug("Calculating vertices buffer for terrain...");
@@ -45,8 +45,9 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 			const auto pixelOffset = data + ((y * width) + x) * numberOfChannels;
 			const auto terrainHeight = static_cast<float>(pixelOffset[0]) / std::numeric_limits<stbi_us>::max() * terrainComponent.MaxHeight;
 
-			FatVertex vertex{}; // TODO: Change this vertex to dedicated vertex type
+			PositionAndUvVertex vertex{};
 			vertex.Position = DirectX::XMFLOAT3(x, terrainHeight, y);
+			// vertex.TextureCoord // TODO: Add texture coord
 
 			vertices.emplace_back(vertex);
 		}

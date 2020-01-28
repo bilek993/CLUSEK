@@ -134,6 +134,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Vertex\PositionAndUvVertex.h" />
     <ClInclude Include="src\Renderer\Shaders\DomainShader.h" />
     <ClInclude Include="src\Renderer\Shaders\HullShader.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\CascadeLevelsBuffer.h" />

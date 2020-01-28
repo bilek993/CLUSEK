@@ -2,16 +2,12 @@ struct HS_INPUT
 {
     float3 Position : POSITION;
     float2 TextureCoord : TEXCOORD;
-    float3 Normal : NORMAL;
-    float3 Tangent : TANGENT;
 };
 
 struct HS_OUTPUT
 {
     float3 Position : POSITION;
     float2 TextureCoord : TEXCOORD;
-    float3 Normal : NORMAL;
-    float3 Tangent : TANGENT;
 };
 
 struct PatchTess
@@ -30,8 +26,6 @@ HS_OUTPUT main(InputPatch<HS_INPUT, 4> patches, uint i : SV_OutputControlPointID
     HS_OUTPUT output;
     output.Position = patches[i].Position;
     output.TextureCoord = patches[i].TextureCoord;
-    output.Normal = patches[i].Normal;
-    output.Tangent = patches[i].Tangent;
 
     return output;
 }

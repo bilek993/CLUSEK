@@ -501,7 +501,7 @@ bool RenderSystem::InitializeShaders()
 
 	// Terrain shader
 
-	if (!TerrainVertexShader.Initialize(Device.Get(), L"terrain_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
+	if (!TerrainVertexShader.Initialize(Device.Get(), L"terrain_vertex_shader.cso", PositionAndUvVertex::Layout, PositionAndUvVertex::LayoutSize))
 	{
 		Logger::Error("TerrainVertexShader not initialized due to critical problem!");
 		return false;

@@ -1,8 +1,8 @@
 #pragma once
-#include "../../Renderer/Vertex/FatVertex.h"
 #include "../../Renderer/VertexBuffer.h"
 #include "../../Renderer/IndexBuffer.h"
 #include "../../Renderer/Materials/TerrainShaderMaterial.h"
+#include "../../Renderer/Vertex/PositionAndUvVertex.h"
 
 struct TerrainComponent final
 {
@@ -10,7 +10,7 @@ struct TerrainComponent final
 	std::string MaterialId;
 	int QualityDivider = 1;
 	float MaxHeight = 500.0f;
-	VertexBuffer<FatVertex> RenderVertexBuffer;
+	VertexBuffer<PositionAndUvVertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
 	TerrainShaderMaterial Material;
 };

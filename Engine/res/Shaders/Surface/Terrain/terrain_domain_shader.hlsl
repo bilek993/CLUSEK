@@ -11,16 +11,12 @@ struct DS_INPUT
 {
     float3 Position : POSITION;
     float2 TextureCoord : TEXCOORD;
-    float3 Normal : NORMAL;
-    float3 Tangent : TANGENT;
 };
 
 struct DS_OUTPUT
 {
     float4 Position : SV_POSITION;
     float2 TextureCoord : TEXCOORD;
-    float3 Normal : NORMAL;
-    float3 Tangent : TANGENT;
 };
 
 struct PatchTess
@@ -37,8 +33,6 @@ DS_OUTPUT main(PatchTess patchTess, float2 uv : SV_DomainLocation, const OutputP
     DS_OUTPUT output;
     output.Position = mul(float4(p, 1.0f), WorldViewProjectionMat);
     output.TextureCoord = quad[0].TextureCoord;
-    output.Normal = quad[0].Normal;
-    output.Tangent = quad[0].Tangent;
 
     return output;
 }
