@@ -779,7 +779,7 @@
     <ClInclude Include="src\Renderer\Shaders\DomainShader.h">
       <Filter>Header Files\Renderer\Shaders</Filter>
     </ClInclude>
-    <ClInclude Include="TerrainShaderMaterial.h">
+    <ClInclude Include="src\Renderer\Materials\TerrainShaderMaterial.h">
       <Filter>Header Files\Renderer\Materials</Filter>
     </ClInclude>
   </ItemGroup>

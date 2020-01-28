@@ -263,7 +263,7 @@
     <ClInclude Include="src\ECS\Components\TerrainComponent.h" />
     <ClInclude Include="src\ECS\Systems\TerrainSystem.h" />
     <ClInclude Include="src\Loaders\Components\TerrainComponentLoader.h" />
-    <ClInclude Include="TerrainShaderMaterial.h" />
+    <ClInclude Include="src\Renderer\Materials\TerrainShaderMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

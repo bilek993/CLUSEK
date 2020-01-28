@@ -6,7 +6,7 @@
 #include "../Renderer/Shaders/ComputeShader.h"
 #include "ConfigData.h"
 #include <mutex>
-#include "../../TerrainShaderMaterial.h"
+#include "../Renderer/Materials/TerrainShaderMaterial.h"
 
 class MaterialLoader final
 {

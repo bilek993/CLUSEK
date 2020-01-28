@@ -42,6 +42,7 @@ void RenderSystem::Start()
 	ResourcesLoader::Load(Device.Get(), DeviceContext.Get(), ConfigurationData);
 
 	InitializeSkyboxComponent();
+	InitializeTerrainComponent();
 	InitializeModelRenderComponent();
 	InitializeShadowCameras();
 
@@ -684,9 +685,9 @@ void RenderSystem::InitializeSkyboxComponent()
 
 void RenderSystem::InitializeTerrainComponent()
 {
-	Registry->view<SkyboxComponent>().each([this](TerrainComponent &terrainComponent)
+	Registry->view<TerrainComponent>().each([this](TerrainComponent &terrainComponent)
 	{
-		MaterialLoader::SetResourceForTerrainMaterial(Device.Get(), terrainComponent.Material, skyboxComponent.SkyboxTextureId);
+		MaterialLoader::SetResourceForTerrainMaterial(Device.Get(), terrainComponent.Material, terrainComponent.MaterialId);
 	});
 }
 
