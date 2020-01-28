@@ -38,9 +38,9 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 
 	Logger::Debug("Calculating vertices buffer for terrain...");
 
-	for (auto y = 0; y < height; y++)
+	for (auto y = 0; y < height; y += terrainComponent.QualityDivider)
 	{
-		for (auto x = 0; x < width; x += numberOfChannels)
+		for (auto x = 0; x < width; x += terrainComponent.QualityDivider)
 		{
 			const auto pixelOffset = data + ((y * width) + x) * numberOfChannels;
 			const auto terrainHeight = static_cast<float>(pixelOffset[0]) / std::numeric_limits<stbi_us>::max() * terrainComponent.MaxHeight;
@@ -54,14 +54,16 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 
 	Logger::Debug("Calculating indieces buffer for terrain...");
 
-	for (auto y = 0; y < height - 1; y++)
+	for (auto y = 0; y < (height / terrainComponent.QualityDivider) - 1; y++)
 	{
-		for (auto x = 0; x < width - 1; x++)
+		const auto scaledWidth = (width / terrainComponent.QualityDivider);
+
+		for (auto x = 0; x < scaledWidth - 1; x++)
 		{
-			indices.emplace_back((y * width) + x);
-			indices.emplace_back((y * width) + (x + 1));
-			indices.emplace_back(((y + 1) * width) + x);
-			indices.emplace_back(((y + 1) * width) + (x + 1));
+			indices.emplace_back((y * scaledWidth) + x);
+			indices.emplace_back((y * scaledWidth) + (x + 1));
+			indices.emplace_back(((y + 1) * scaledWidth) + x);
+			indices.emplace_back(((y + 1) * scaledWidth) + (x + 1));
 		}
 	}
 
