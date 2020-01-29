@@ -120,9 +120,7 @@ void Engine::InitializeSystems()
 									&CurrentRenderSettings, 
 									&DataFromIODevices,
 									&InputOutputDevices, 
-									&CurrentPostProcessingSettings,
-									dynamic_cast<RenderSystem*>(Systems[RenderSystemId].System.get())->GetPointerToDevice(), 
-									dynamic_cast<RenderSystem*>(Systems[RenderSystemId].System.get())->GetPointerToDeviceContext());
+									&CurrentPostProcessingSettings);
 		system.System->Start();
 	}
 }

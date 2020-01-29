@@ -13,8 +13,7 @@ public:
 	virtual ~BaseSystem() = default;
 
 	void Initialize(entt::registry *registry, RenderWindow *window, ConfigData *configData,
-		DynamicRenderSettings *renderSettings, IOData *ioData, IODevices *ioDevices, PostProcessingSettings *postProcessingSettings,
-		ID3D11Device *directXDevice, ID3D11DeviceContext *directXDeviceContext);
+		DynamicRenderSettings *renderSettings, IOData *ioData, IODevices *ioDevices, PostProcessingSettings *postProcessingSettings);
 
 	virtual void Start() = 0;
 
@@ -31,8 +30,6 @@ protected:
 	IOData *InputOutputData = nullptr;
 	IODevices *InputOutputDevices = nullptr;
 	PostProcessingSettings *CurrentPostProcessingSettings = nullptr;
-	ID3D11Device *DirectXDevice = nullptr;
-	ID3D11DeviceContext *DirectXDeviceContext = nullptr;;
 
 private:
 	Timer PerformanceTimer{};
