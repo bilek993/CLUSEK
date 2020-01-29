@@ -378,9 +378,6 @@
     <ClCompile Include="src\GUI\Windows\ConfigurationWindow.cpp">
       <Filter>Source Files\GUI\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\ECS\Systems\TerrainSystem.cpp">
-      <Filter>Source Files\ECS\Systems</Filter>
-    </ClCompile>
     <ClCompile Include="src\Loaders\Components\TerrainComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
@@ -389,6 +386,9 @@
     </ClCompile>
     <ClCompile Include="src\Renderer\Shaders\DomainShader.cpp">
       <Filter>Source Files\Renderer\Shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Renderer\TerrainUtil.cpp">
+      <Filter>Source Files\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -767,9 +767,6 @@
     <ClInclude Include="src\ECS\Components\TerrainComponent.h">
       <Filter>Header Files\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\ECS\Systems\TerrainSystem.h">
-      <Filter>Header Files\ECS\Systems</Filter>
-    </ClInclude>
     <ClInclude Include="src\Loaders\Components\TerrainComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
     </ClInclude>
@@ -784,6 +781,9 @@
     </ClInclude>
     <ClInclude Include="src\Renderer\Vertex\PositionAndUvVertex.h">
       <Filter>Header Files\Renderer\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\TerrainUtil.h">
+      <Filter>Header Files\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

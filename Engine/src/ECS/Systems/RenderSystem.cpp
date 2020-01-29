@@ -15,6 +15,7 @@
 #include "../../Renderer/Generators/QuadGenerator.h"
 #include "../../Renderer/ModelViewLogic.h"
 #include "../Components/TerrainComponent.h"
+#include "../../Renderer/TerrainUtil.h"
 
 void RenderSystem::Start()
 {
@@ -688,6 +689,7 @@ void RenderSystem::InitializeTerrainComponent()
 	Registry->view<TerrainComponent>().each([this](TerrainComponent &terrainComponent)
 	{
 		MaterialLoader::SetResourceForTerrainMaterial(Device.Get(), terrainComponent.Material, terrainComponent.MaterialId);
+		TerrainUtil::GenerateTerrainMesh(terrainComponent, Device.Get());
 	});
 }
 

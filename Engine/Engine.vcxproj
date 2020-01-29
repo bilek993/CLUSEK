@@ -13,8 +13,8 @@
   <ItemGroup>
     <ClCompile Include="src\Renderer\Shaders\DomainShader.cpp" />
     <ClCompile Include="src\Renderer\Shaders\HullShader.cpp" />
-    <ClCompile Include="src\ECS\Systems\TerrainSystem.cpp" />
     <ClCompile Include="src\Loaders\Components\TerrainComponentLoader.cpp" />
+    <ClCompile Include="src\Renderer\TerrainUtil.cpp" />
     <FxCompile Include="res\Shaders\Surface\ShadowMatrix\shadow_pixel_shader.hlsl">
       <FileType>CppCode</FileType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -262,9 +262,9 @@
     <ClInclude Include="src\ECS\Systems\VehiclePlayerControllerSystem.h" />
     <ClInclude Include="src\GUI\Windows\VehicleDetailsWindow.h" />
     <ClInclude Include="src\ECS\Components\TerrainComponent.h" />
-    <ClInclude Include="src\ECS\Systems\TerrainSystem.h" />
     <ClInclude Include="src\Loaders\Components\TerrainComponentLoader.h" />
     <ClInclude Include="src\Renderer\Materials\TerrainShaderMaterial.h" />
+    <ClInclude Include="src\Renderer\TerrainUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

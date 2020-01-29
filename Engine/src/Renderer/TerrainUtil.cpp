@@ -1,21 +1,9 @@
-#include "TerrainSystem.h"
+#include "TerrainUtil.h"
 #include "stb_image.h"
+#include <vector>
 
-void TerrainSystem::Start()
-{
-	Logger::Debug("Preparing terrain system...");
 
-	Registry->view<TerrainComponent>().each([this](TerrainComponent &terrainComponent)
-	{
-		GenerateTerrainMesh(terrainComponent);
-	});
-}
-
-void TerrainSystem::Update(float deltaTime)
-{
-}
-
-void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) const
+void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device)
 {
 	auto width = 0;
 	auto height = 0;
@@ -70,10 +58,10 @@ void TerrainSystem::GenerateTerrainMesh(TerrainComponent& terrainComponent) cons
 
 	Logger::Debug("Preparing to create vertex buffer and index buffer...");
 
-	auto hr = terrainComponent.RenderVertexBuffer.Initialize(DirectXDevice, vertices.data(), vertices.size());
+	auto hr = terrainComponent.RenderVertexBuffer.Initialize(device, vertices.data(), vertices.size());
 	if (FAILED(hr))
 		Logger::Error("Couldn't create terrain vertex buffer.");
-	hr = terrainComponent.RenderIndexBuffer.Initialize(DirectXDevice, indices.data(), indices.size());
+	hr = terrainComponent.RenderIndexBuffer.Initialize(device, indices.data(), indices.size());
 	if (FAILED(hr))
 		Logger::Error("Couldn't create terrain index buffer.");
 
