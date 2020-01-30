@@ -1,7 +1,7 @@
 #pragma once
 #include "../ECS/Components/TerrainComponent.h"
 #include <vector>
-#include "stb_image.h"
+#include <stb_image.h>
 
 class TerrainUtil final
 {

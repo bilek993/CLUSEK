@@ -1,3 +1,4 @@
+#define STB_IMAGE_IMPLEMENTATION // Required here due to STB IMAGE library implementation
 #include "TerrainUtil.h"
 
 void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device)
