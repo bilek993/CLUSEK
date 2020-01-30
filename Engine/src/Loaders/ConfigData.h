@@ -68,6 +68,9 @@ struct ConfigData final
 	float CascadeBias2 = 0.01f;
 	float CascadeBias3 = 0.01f;
 
+	// Terrain settings
+	int EnableAsyncTerrainGeneration = 1;
+
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;
 	int EnableAsyncModelLoading = 1;
