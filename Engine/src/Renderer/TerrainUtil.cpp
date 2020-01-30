@@ -62,12 +62,13 @@ std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, 
 		}
 	}
 
+	Logger::Debug("Vertices buffer calculated!");
 	return vertices;
 }
 
 std::vector<DWORD> TerrainUtil::GenerateIndices(const int width, const int height, const int qualityDivider)
 {
-	Logger::Debug("Calculating indieces buffer for terrain...");
+	Logger::Debug("Calculating indices buffer for terrain...");
 	std::vector<DWORD> indices;
 
 	for (auto y = 0; y < (height / qualityDivider) - 1; y++)
@@ -83,5 +84,6 @@ std::vector<DWORD> TerrainUtil::GenerateIndices(const int width, const int heigh
 		}
 	}
 
+	Logger::Debug("Indices buffer calculated!");
 	return indices;
 }
