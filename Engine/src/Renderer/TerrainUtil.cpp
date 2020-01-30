@@ -39,12 +39,12 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 		Logger::Debug("Preparing async mechanism for terrain utility...");
 
 		auto futureVerticies = std::async(std::launch::async, GenerateVertices,	width,
-																								height,
-																								numberOfChannels, 
-																								terrainComponent.QualityDivider,
-																								terrainComponent.ScaleXZ,
-																								terrainComponent.MaxHeight,
-																								data);
+																						height,
+																						numberOfChannels, 
+																						terrainComponent.QualityDivider,
+																						terrainComponent.ScaleXZ,
+																						terrainComponent.MaxHeight,
+																						data);
 		auto futureIndies = std::async(std::launch::async, GenerateIndices, width, height, terrainComponent.QualityDivider);
 
 		vertices = futureVerticies.get();
@@ -79,7 +79,7 @@ std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, 
 
 			PositionAndUvVertex vertex{};
 			vertex.Position = DirectX::XMFLOAT3(x * scaleXZ, terrainHeight, y * scaleXZ);
-			// vertex.TextureCoord // TODO: Add texture coord
+			vertex.TextureCoord = DirectX::XMFLOAT2(static_cast<float>(x) / static_cast<float>(width), static_cast<float>(y) / static_cast<float>(height));
 
 			vertices.emplace_back(vertex);
 		}
