@@ -6,7 +6,7 @@
 class TerrainUtil final
 {
 public:
-	static void GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device);
+	static void GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device, bool async);
 
 private:
 	static std::vector<PositionAndUvVertex> GenerateVertices(int width, int height, int numberOfChannels, 

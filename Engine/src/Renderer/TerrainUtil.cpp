@@ -1,7 +1,8 @@
 #define STB_IMAGE_IMPLEMENTATION // Required here due to STB IMAGE library implementation
 #include "TerrainUtil.h"
+#include <future>
 
-void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device)
+void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device, const bool async)
 {
 	auto width = 0;
 	auto height = 0;
@@ -19,14 +20,36 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 	if (numberOfChannels != 1)
 		Logger::Warning("Number of channels for heigtmap is equal to" + std::to_string(numberOfChannels) + ". It might be very problematic!");
 
-	std::vector<PositionAndUvVertex> vertices = GenerateVertices(	width, 
-																	height, 
-																	numberOfChannels, 
-																	terrainComponent.QualityDivider,
-																	terrainComponent.ScaleXZ,
-																	terrainComponent.MaxHeight,
-																	data);
-	std::vector<DWORD> indices = GenerateIndices(width, height, terrainComponent.QualityDivider);
+	std::vector<PositionAndUvVertex> vertices;
+	std::vector<DWORD> indices;
+
+	if (!async)
+	{
+		vertices = GenerateVertices(width,
+									height,
+									numberOfChannels,
+									terrainComponent.QualityDivider,
+									terrainComponent.ScaleXZ,
+									terrainComponent.MaxHeight,
+									data);
+		indices = GenerateIndices(width, height, terrainComponent.QualityDivider);
+	}
+	else
+	{
+		Logger::Debug("Preparing async mechanism for terrain utility...");
+
+		auto futureVerticies = std::async(std::launch::async, GenerateVertices,	width,
+																								height,
+																								numberOfChannels, 
+																								terrainComponent.QualityDivider,
+																								terrainComponent.ScaleXZ,
+																								terrainComponent.MaxHeight,
+																								data);
+		auto futureIndies = std::async(std::launch::async, GenerateIndices, width, height, terrainComponent.QualityDivider);
+
+		vertices = futureVerticies.get();
+		indices = futureIndies.get();
+	}
 
 	Logger::Debug("Preparing to create vertex buffer and index buffer...");
 

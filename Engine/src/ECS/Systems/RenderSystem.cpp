@@ -689,7 +689,7 @@ void RenderSystem::InitializeTerrainComponent()
 	Registry->view<TerrainComponent>().each([this](TerrainComponent &terrainComponent)
 	{
 		MaterialLoader::SetResourceForTerrainMaterial(Device.Get(), terrainComponent.Material, terrainComponent.MaterialId);
-		TerrainUtil::GenerateTerrainMesh(terrainComponent, Device.Get());
+		TerrainUtil::GenerateTerrainMesh(terrainComponent, Device.Get(), ConfigurationData->EnableAsyncTerrainGeneration);
 	});
 }
 
