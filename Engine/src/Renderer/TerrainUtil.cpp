@@ -78,7 +78,7 @@ std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, 
 			const auto terrainHeight = static_cast<float>(pixelOffset[0]) / std::numeric_limits<stbi_us>::max() * maxHeight;
 
 			PositionAndUvVertex vertex{};
-			vertex.Position = DirectX::XMFLOAT3(x * scaleXZ, terrainHeight, y * scaleXZ);
+			vertex.Position = DirectX::XMFLOAT3(y * scaleXZ, terrainHeight, x * scaleXZ);
 			vertex.TextureCoord = DirectX::XMFLOAT2(static_cast<float>(x) / static_cast<float>(width), static_cast<float>(y) / static_cast<float>(height));
 
 			vertices.emplace_back(vertex);
