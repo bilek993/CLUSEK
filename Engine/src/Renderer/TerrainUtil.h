@@ -10,6 +10,12 @@ public:
 
 private:
 	static std::vector<PositionAndUvVertex> GenerateVertices(int width, int height, int numberOfChannels, 
-		int qualityDivider, float scaleXZ, float maxHeight, const stbi_us* data);
+		int qualityDivider, float scaleXZ, float maxHeight, stbi_us* data);
 	static std::vector<DWORD> GenerateIndices(int width, int height, int qualityDivider);
+
+	static void CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, int width, int numberOfChannels, 
+		float maxHeight, int currentX, int currentY, int nextX, int nextY);
+
+	static stbi_us* CalculateOffset(stbi_us* data, int x, int y, int width, int numberOfChannels);
+	static float GetHeight(const stbi_us* offsetData, float maxHeight);
 };

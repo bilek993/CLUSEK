@@ -2,6 +2,7 @@ struct HS_INPUT
 {
     float3 Position : POSITION;
     float2 TextureCoord : TEXCOORD;
+    float2 BoundsY : BOUNDS_Y;
 };
 
 struct HS_OUTPUT

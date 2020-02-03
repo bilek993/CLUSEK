@@ -65,7 +65,7 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 }
 
 std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, const int height, const int numberOfChannels,
-	const int qualityDivider, const float scaleXZ, const float maxHeight, const stbi_us* data)
+	const int qualityDivider, const float scaleXZ, const float maxHeight, stbi_us* data)
 {
 	Logger::Debug("Calculating vertices buffer for terrain...");
 	std::vector<PositionAndUvVertex> vertices;
@@ -74,12 +74,15 @@ std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, 
 	{
 		for (auto x = 0; x < width; x += qualityDivider)
 		{
-			const auto pixelOffset = data + ((y * width) + x) * numberOfChannels;
-			const auto terrainHeight = static_cast<float>(pixelOffset[0]) / std::numeric_limits<stbi_us>::max() * maxHeight;
+			const auto pixelOffset = CalculateOffset(data, x, y, width, numberOfChannels);
+			const auto terrainHeight = GetHeight(pixelOffset, maxHeight);
 
 			PositionAndUvVertex vertex{};
 			vertex.Position = DirectX::XMFLOAT3(y * scaleXZ, terrainHeight, x * scaleXZ);
 			vertex.TextureCoord = DirectX::XMFLOAT2(static_cast<float>(x) / static_cast<float>(width), static_cast<float>(y) / static_cast<float>(height));
+
+			if (y < height - 1 && x < width - 1)
+				CalculateBoundsY(&vertex, data, width, numberOfChannels, maxHeight, x, y, x + qualityDivider, y + qualityDivider);
 
 			vertices.emplace_back(vertex);
 		}
@@ -109,4 +112,35 @@ std::vector<DWORD> TerrainUtil::GenerateIndices(const int width, const int heigh
 
 	Logger::Debug("Indices buffer calculated!");
 	return indices;
+}
+
+void TerrainUtil::CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, const int width, const int numberOfChannels, 
+	const float maxHeight, const int currentX, const int currentY, const int nextX, const int nextY)
+{
+	auto min = std::numeric_limits<float>::max();
+	auto max = -std::numeric_limits<float>::max();
+
+	for (auto y = currentY; y < nextY; y++)
+	{
+		for (auto x = currentX; x < nextX; x++)
+		{
+			const auto pixelOffset = CalculateOffset(data, x, y, width, numberOfChannels);
+			const auto terrainHeight = GetHeight(pixelOffset, maxHeight);
+
+			min = std::min(min, terrainHeight);
+			max = std::max(max, terrainHeight);
+		}
+	}
+
+	vertex->BoundsY = DirectX::XMFLOAT2(min, max);
+}
+
+stbi_us* TerrainUtil::CalculateOffset(stbi_us* data, const int x, const int y, const int width, const int numberOfChannels)
+{
+	return data + ((y * width) + x) * numberOfChannels;;
+}
+
+float TerrainUtil::GetHeight(const stbi_us* offsetData, const float maxHeight)
+{
+	return static_cast<float>(offsetData[0]) / std::numeric_limits<stbi_us>::max() * maxHeight;;
 }
