@@ -7,4 +7,5 @@ struct CameraComponent final
 	DirectX::XMMATRIX ProjectionMatrix;
 	float MaxRotationY;
 	float MinRotationY;
+	DirectX::XMVECTOR FrustumPlanes[6]{};
 };

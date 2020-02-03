@@ -46,6 +46,12 @@ void CameraSystem::Update(const float deltaTime)
 	auto &cameraComponent = view.raw<CameraComponent>()[0];
 	auto &transformComponent = view.raw<TransformComponent>()[0];
 	
+	HandleMovement(deltaTime, cameraComponent, transformComponent);
+	HandleFrustumCalculation(cameraComponent);
+}
+
+void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const
+{
 	if (InputOutputData->GamePadState.IsConnected())
 	{
 		GamepadMovement(deltaTime, cameraComponent, transformComponent);
@@ -55,6 +61,11 @@ void CameraSystem::Update(const float deltaTime)
 		KeyboardMovement(deltaTime, cameraComponent, transformComponent);
 		MouseMovement(deltaTime, cameraComponent, transformComponent);
 	}
+}
+
+void CameraSystem::HandleFrustumCalculation(CameraComponent& cameraComponent) const
+{
+	// TODO: Add code here
 }
 
 void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& cameraComponent,
