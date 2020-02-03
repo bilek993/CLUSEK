@@ -24,6 +24,7 @@
 #include "../../Renderer/ConstantBufferTypes/CascadeLevelsBuffer.h"
 #include "../../Renderer/Shaders/HullShader.h"
 #include "../../Renderer/Shaders/DomainShader.h"
+#include "../../Renderer/ConstantBufferTypes/TerrainBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -121,6 +122,7 @@ private:
 	ConstantBuffer<SimplePerObjectBuffer> SimplePerObjectBufferInstance;
 	ConstantBuffer<ShadowBuffer> ShadowBufferInstance;
 	ConstantBuffer<CascadeLevelsBuffer> CascadeLevelsBufferInstance;
+	ConstantBuffer<TerrainBuffer> TerrainBufferInstance;
 
 	PbrResource PbrResourceInstance{};
 

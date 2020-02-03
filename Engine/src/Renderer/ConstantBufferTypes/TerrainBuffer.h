@@ -3,5 +3,5 @@
 
 struct TerrainBuffer final
 {
-	DirectX::XMFLOAT4 FrustumPlanes[6];
+	DirectX::XMVECTOR FrustumPlanes[6];
 };

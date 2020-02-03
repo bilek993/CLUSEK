@@ -606,6 +606,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = CascadeLevelsBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'CascadeLevelsBuffer' constant buffer.");
+
+	hr = TerrainBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'TerrainBuffer' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
@@ -855,7 +859,11 @@ void RenderSystem::RenderTerrain(const CameraComponent& cameraComponent)
 	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
 	ChangeTessellationShaders(TerrainHullShader, TerrainDomainShader);
 
+	for (auto i = 0; i < 6; i++)
+		TerrainBufferInstance.Data.FrustumPlanes[i] = cameraComponent.FrustumPlanes[i];
+
 	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
 
 	Registry->view<TerrainComponent>().each([this, &offset, &cameraComponent](TerrainComponent &terrainComponent)
 	{
