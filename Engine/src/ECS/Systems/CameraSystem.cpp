@@ -30,6 +30,8 @@ void CameraSystem::Start()
 		ConfigurationData->MainCameraNearZ, ConfigurationData->MainCameraFarZ);
 
 	ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
+
+	CalculateFrustumPlanes(cameraComponent);
 }
 
 void CameraSystem::Update(const float deltaTime)
@@ -47,7 +49,6 @@ void CameraSystem::Update(const float deltaTime)
 	auto &transformComponent = view.raw<TransformComponent>()[0];
 	
 	HandleMovement(deltaTime, cameraComponent, transformComponent);
-	HandleFrustumCalculation(cameraComponent);
 }
 
 void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const
@@ -63,9 +64,47 @@ void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& camera
 	}
 }
 
-void CameraSystem::HandleFrustumCalculation(CameraComponent& cameraComponent) const
+void CameraSystem::CalculateFrustumPlanes(CameraComponent& cameraComponent) const
 {
-	// TODO: Add code here
+	Logger::Debug("Preparing to calculate frustum planes...");
+
+	const auto viewProjectionMatrix = cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix;
+
+	DirectX::XMFLOAT4X4 viewProjectionMatrixFloats{};
+	XMStoreFloat4x4(&viewProjectionMatrixFloats, viewProjectionMatrix);
+
+	cameraComponent.FrustumPlanes[0] = DirectX::XMVectorSet(viewProjectionMatrixFloats._14 + viewProjectionMatrixFloats._11,
+															viewProjectionMatrixFloats._24 + viewProjectionMatrixFloats._21,
+															viewProjectionMatrixFloats._34 + viewProjectionMatrixFloats._31,
+															viewProjectionMatrixFloats._44 + viewProjectionMatrixFloats._41);
+
+	cameraComponent.FrustumPlanes[1] = DirectX::XMVectorSet(viewProjectionMatrixFloats._14 - viewProjectionMatrixFloats._11,
+															viewProjectionMatrixFloats._24 - viewProjectionMatrixFloats._21,
+															viewProjectionMatrixFloats._34 - viewProjectionMatrixFloats._31,
+															viewProjectionMatrixFloats._44 - viewProjectionMatrixFloats._41);
+
+	cameraComponent.FrustumPlanes[2] = DirectX::XMVectorSet(viewProjectionMatrixFloats._14 - viewProjectionMatrixFloats._12,
+															viewProjectionMatrixFloats._24 - viewProjectionMatrixFloats._22,
+															viewProjectionMatrixFloats._34 - viewProjectionMatrixFloats._32,
+															viewProjectionMatrixFloats._44 - viewProjectionMatrixFloats._42);
+
+	cameraComponent.FrustumPlanes[3] = DirectX::XMVectorSet(viewProjectionMatrixFloats._14 + viewProjectionMatrixFloats._12,
+															viewProjectionMatrixFloats._24 + viewProjectionMatrixFloats._22,
+															viewProjectionMatrixFloats._34 + viewProjectionMatrixFloats._32,
+															viewProjectionMatrixFloats._44 + viewProjectionMatrixFloats._42);
+
+	cameraComponent.FrustumPlanes[4] = DirectX::XMVectorSet(viewProjectionMatrixFloats._13,
+															viewProjectionMatrixFloats._23,
+															viewProjectionMatrixFloats._33,
+															viewProjectionMatrixFloats._43);
+
+	cameraComponent.FrustumPlanes[5] = DirectX::XMVectorSet(viewProjectionMatrixFloats._14 - viewProjectionMatrixFloats._13,
+															viewProjectionMatrixFloats._24 - viewProjectionMatrixFloats._23,
+															viewProjectionMatrixFloats._34 - viewProjectionMatrixFloats._33,
+															viewProjectionMatrixFloats._44 - viewProjectionMatrixFloats._43);
+
+	for (auto& currentPlane : cameraComponent.FrustumPlanes)
+		currentPlane = DirectX::XMVector4Normalize(currentPlane);
 }
 
 void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& cameraComponent,

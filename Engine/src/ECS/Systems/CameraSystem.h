@@ -10,7 +10,7 @@ public:
 	void Update(float deltaTime) override;
 private:
 	void HandleMovement(float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const;
-	void HandleFrustumCalculation(CameraComponent& cameraComponent) const;
+	void CalculateFrustumPlanes(CameraComponent& cameraComponent) const;
 
 	void GamepadMovement(float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const;
 	void KeyboardMovement(float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const;
