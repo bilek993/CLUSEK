@@ -56,11 +56,12 @@ void RenderSystem::Start()
 void RenderSystem::Update(const float deltaTime)
 {
 	auto& mainCameraComponent = GetMainCamera();
+	auto& mainCameraTransform = GetMainCameraTransform();
 
 	if (ConfigurationData->ShadowsEnabled)
 		RenderShadows();
 
-	RenderScene(mainCameraComponent);
+	RenderScene(mainCameraComponent, mainCameraTransform);
 
 	PerformPostProcessing();
 }
@@ -789,7 +790,7 @@ void RenderSystem::RenderShadows()
 	RenderSceneForShadows();
 }
 
-void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
+void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const TransformComponent &mainCameraTransformComponent)
 {
 	DeviceContext->RSSetState(MainRasterizerState.Get());
 	DeviceContext->RSSetViewports(1, &SceneViewport);
@@ -798,8 +799,8 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent)
 	SetShadowResourcesForShadowCascades(8);
 
 	RenderSkyBoxComponents(cameraComponent);
-	RenderTerrain(cameraComponent);
-	RenderModelRenderComponents(cameraComponent);
+	RenderTerrain(cameraComponent, mainCameraTransformComponent);
+	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent);
 
 	ClearShadowResourcesForShadowCascades(8);
 }
@@ -851,7 +852,7 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 	});
 }
 
-void RenderSystem::RenderTerrain(const CameraComponent& cameraComponent)
+void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent)
 {
 	UINT offset = 0;
 	ChangeBasicShaders(TerrainVertexShader, TerrainPixelShader);
@@ -860,16 +861,19 @@ void RenderSystem::RenderTerrain(const CameraComponent& cameraComponent)
 	ChangeTessellationShaders(TerrainHullShader, TerrainDomainShader);
 
 	for (auto i = 0; i < 6; i++)
-		TerrainBufferInstance.Data.FrustumPlanes[i] = cameraComponent.FrustumPlanes[i];
+		TerrainBufferInstance.Data.FrustumPlanes[i] = mainCameraComponent.FrustumPlanes[i];
+
+	CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
 
 	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
+	DeviceContext->HSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
 
-	Registry->view<TerrainComponent>().each([this, &offset, &cameraComponent](TerrainComponent &terrainComponent)
+	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
 		const auto tmpWorldMatrix = DirectX::XMMatrixIdentity(); // TODO: Change this in future
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(tmpWorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix)); // TODO: Set other parameters in constant buffer
+			XMMatrixTranspose(tmpWorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix)); // TODO: Set other parameters in constant buffer
 		FatPerObjectBufferInstance.ApplyChanges();
 
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
@@ -879,10 +883,8 @@ void RenderSystem::RenderTerrain(const CameraComponent& cameraComponent)
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComponent)
+void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent)
 {
-	auto& mainCameraTransform = GetMainCameraTransform();
-
 	UINT offset = 0;
 	ChangeBasicShaders(UberVertexShader, UberPixelShader);
 
@@ -896,10 +898,10 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 	DeviceContext->PSSetShaderResources(6, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
 	DeviceContext->PSSetShaderResources(7, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 
-	Registry->view<ModelRenderComponent>().each([this, &cameraComponent, &offset, &mainCameraTransform](ModelRenderComponent &modelRenderComponent)
+	Registry->view<ModelRenderComponent>().each([this, &mainCameraComponent, &offset, &mainCameraTransformComponent](ModelRenderComponent &modelRenderComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
+			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
 		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
 		for (auto i = 0; i < 4; i++)
 			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
@@ -911,7 +913,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent& cameraComp
 		LightAndAlphaBufferInstance.Data.Alpha = 1.0f;
 		LightAndAlphaBufferInstance.ApplyChanges();
 
-		CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransform);
+		CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
 		CameraBufferInstance.ApplyChanges();
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)

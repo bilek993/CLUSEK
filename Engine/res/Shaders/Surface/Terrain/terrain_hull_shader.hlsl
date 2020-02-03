@@ -1,6 +1,14 @@
+static const float MIN_TESSELATION = 0;
+static const float MAX_TESSELATION = 6;
+
 cbuffer TerrainBuffer : register(b0)
 {
     float4 FrustumPlanes[6];
+}
+
+cbuffer CameraBuffer : register(b1)
+{
+    float3 CameraPosition;
 }
 
 struct HS_INPUT
@@ -45,6 +53,14 @@ bool IsVisibileByCamera(float3 center, float3 extents)
     return true;
 }
 
+float CalculateTesselationFactor(float3 patchPosition)
+{
+    float distanceFromCamera = distance(patchPosition, CameraPosition);
+    float shift = saturate((distanceFromCamera - MIN_TESSELATION) / (MAX_TESSELATION - MIN_TESSELATION));
+    
+    return pow(2, (lerp(MAX_TESSELATION, MIN_TESSELATION, shift)));
+}
+
 PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveID)
 {
     PatchTess constantOutput;
@@ -60,13 +76,23 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
     
     if (IsVisibileByCamera(boxCenter, boxExtents))
     {
-        constantOutput.EdgeTess[0] = 1.0f;
-        constantOutput.EdgeTess[1] = 1.0f;
-        constantOutput.EdgeTess[2] = 1.0f;
-        constantOutput.EdgeTess[3] = 1.0f;
+        float edges[4];
+        edges[0] = 0.5f * (patch[0].Position + patch[2].Position);
+        edges[0] = 0.5f * (patch[0].Position + patch[1].Position);
+        edges[0] = 0.5f * (patch[1].Position + patch[3].Position);
+        edges[0] = 0.5f * (patch[2].Position + patch[3].Position);
+        
+        float center = 0.25f * (patch[0].Position + patch[1].Position + patch[2].Position + patch[3].Position);
+        
+        constantOutput.EdgeTess[0] = CalculateTesselationFactor(edges[0]);
+        constantOutput.EdgeTess[1] = CalculateTesselationFactor(edges[1]);
+        constantOutput.EdgeTess[2] = CalculateTesselationFactor(edges[2]);
+        constantOutput.EdgeTess[3] = CalculateTesselationFactor(edges[3]);
     
-        constantOutput.InsideTess[0] = 1.0f;
-        constantOutput.InsideTess[1] = 1.0f;
+        constantOutput.InsideTess[0] = CalculateTesselationFactor(center);
+        constantOutput.InsideTess[1] = constantOutput.InsideTess[0];
+        
+        return constantOutput;
     }
     else
     {
@@ -77,9 +103,9 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
     
         constantOutput.InsideTess[0] = 0.0f;
         constantOutput.InsideTess[1] = 0.0f;
+        
+        return constantOutput;
     }
-    
-    return constantOutput;
 }
 
 [domain("quad")]

@@ -65,13 +65,13 @@ private:
 	TransformComponent& GetMainCameraTransform() const;
 
 	void RenderShadows();
-	void RenderScene(const CameraComponent &cameraComponent);
+	void RenderScene(const CameraComponent &cameraComponent, const TransformComponent &mainCameraTransformComponent);
 
 	void RenderSceneForShadows();
 
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
-	void RenderTerrain(const CameraComponent &cameraComponent);
-	void RenderModelRenderComponents(const CameraComponent &cameraComponent);
+	void RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
+	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 
 	void SetShadowResourcesForShadowCascades(int firstCascadeId);
 	void ClearShadowResourcesForShadowCascades(int firstCascadeId) const;
