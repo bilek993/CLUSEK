@@ -31,7 +31,7 @@ HS_OUTPUT main(InputPatch<HS_INPUT, 4> patches, uint i : SV_OutputControlPointID
     return output;
 }
 
-PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveID) // TODO: Add logic in this constant function
+PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveID)
 {
     PatchTess constantOutput;
     
