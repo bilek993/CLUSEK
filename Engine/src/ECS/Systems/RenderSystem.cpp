@@ -863,7 +863,10 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	for (auto i = 0; i < 6; i++)
 		TerrainBufferInstance.Data.FrustumPlanes[i] = mainCameraComponent.FrustumPlanes[i];
 
+	TerrainBufferInstance.ApplyChanges();
+
 	CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
+	CameraBufferInstance.ApplyChanges();
 
 	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
