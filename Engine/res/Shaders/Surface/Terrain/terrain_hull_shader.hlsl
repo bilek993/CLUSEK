@@ -71,8 +71,8 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
     float minY = patch[0].BoundsY.x;
     float maxY = patch[0].BoundsY.y;
     
-    float3 vMin = float3(patch[2].Position.x, minY, patch[2].Position.z);
-    float3 vMax = float3(patch[1].Position.x, maxY, patch[1].Position.z);
+    float3 vMin = float3(patch[0].Position.x, minY, patch[0].Position.z);
+    float3 vMax = float3(patch[3].Position.x, maxY, patch[3].Position.z);
     
     float3 boxCenter = 0.5f * (vMin + vMax);
     float3 boxExtents = 0.5f * (vMax - vMin);
