@@ -1,6 +1,9 @@
 static const float MIN_TESSELATION = 0;
 static const float MAX_TESSELATION = 6;
 
+static const float MIN_DISTANCE = 10.0F;
+static const float MAX_DISTANCE = 3000.0F;
+
 cbuffer TerrainBuffer : register(b0)
 {
     float4 FrustumPlanes[6];
@@ -56,7 +59,7 @@ bool IsNotVisibileByCamera(float3 center, float3 extents)
 float CalculateTesselationFactor(float3 patchPosition)
 {
     float distanceFromCamera = distance(patchPosition, CameraPosition);
-    float shift = saturate((distanceFromCamera - MIN_TESSELATION) / (MAX_TESSELATION - MIN_TESSELATION));
+    float shift = saturate((distanceFromCamera - MIN_DISTANCE) / (MAX_DISTANCE - MIN_DISTANCE));
     
     return pow(2, (lerp(MAX_TESSELATION, MIN_TESSELATION, shift)));
 }
@@ -96,12 +99,12 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
         
         float center = 0.25f * (patch[0].Position + patch[1].Position + patch[2].Position + patch[3].Position);
         
-        constantOutput.EdgeTess[0] = CalculateTesselationFactor(edges[0]);
-        constantOutput.EdgeTess[1] = CalculateTesselationFactor(edges[1]);
-        constantOutput.EdgeTess[2] = CalculateTesselationFactor(edges[2]);
-        constantOutput.EdgeTess[3] = CalculateTesselationFactor(edges[3]);
+        constantOutput.EdgeTess[0] = CalculateTesselationFactor(patch[0].Position);
+        constantOutput.EdgeTess[1] = CalculateTesselationFactor(patch[0].Position);
+        constantOutput.EdgeTess[2] = CalculateTesselationFactor(patch[0].Position);
+        constantOutput.EdgeTess[3] = CalculateTesselationFactor(patch[0].Position);
     
-        constantOutput.InsideTess[0] = CalculateTesselationFactor(center);
+        constantOutput.InsideTess[0] = CalculateTesselationFactor(patch[0].Position);
         constantOutput.InsideTess[1] = constantOutput.InsideTess[0];
         
         return constantOutput;
