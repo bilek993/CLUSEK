@@ -30,8 +30,6 @@ void CameraSystem::Start()
 		ConfigurationData->MainCameraNearZ, ConfigurationData->MainCameraFarZ);
 
 	ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
-
-	CalculateFrustumPlanes(cameraComponent);
 }
 
 void CameraSystem::Update(const float deltaTime)
@@ -49,6 +47,8 @@ void CameraSystem::Update(const float deltaTime)
 	auto &transformComponent = view.raw<TransformComponent>()[0];
 	
 	HandleMovement(deltaTime, cameraComponent, transformComponent);
+
+	CalculateFrustumPlanes(cameraComponent);
 }
 
 void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const
