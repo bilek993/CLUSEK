@@ -90,9 +90,9 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
     {
         float edges[4];
         edges[0] = 0.5f * (patch[0].Position + patch[2].Position);
-        edges[0] = 0.5f * (patch[0].Position + patch[1].Position);
-        edges[0] = 0.5f * (patch[1].Position + patch[3].Position);
-        edges[0] = 0.5f * (patch[2].Position + patch[3].Position);
+        edges[1] = 0.5f * (patch[0].Position + patch[1].Position);
+        edges[2] = 0.5f * (patch[1].Position + patch[3].Position);
+        edges[3] = 0.5f * (patch[2].Position + patch[3].Position);
         
         float center = 0.25f * (patch[0].Position + patch[1].Position + patch[2].Position + patch[3].Position);
         
