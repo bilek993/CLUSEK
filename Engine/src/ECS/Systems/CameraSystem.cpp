@@ -66,8 +66,6 @@ void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& camera
 
 void CameraSystem::CalculateFrustumPlanes(CameraComponent& cameraComponent) const
 {
-	Logger::Debug("Preparing to calculate frustum planes...");
-
 	const auto viewProjectionMatrix = cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix;
 
 	DirectX::XMFLOAT4X4 viewProjectionMatrixFloats{};
