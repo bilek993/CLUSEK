@@ -40,17 +40,17 @@ bool AabbBehindPlaneTest(float3 center, float3 extents, float4 plane)
     return (s + r) < 0.0f;
 }
 
-bool IsVisibileByCamera(float3 center, float3 extents)
+bool IsNotVisibileByCamera(float3 center, float3 extents)
 {
     for (int i = 0; i < 6; i++)
     {
         if (AabbBehindPlaneTest(center, extents, FrustumPlanes[i]))
         {
-            return false;
+            return true;
         }
     }
     
-    return true;
+    return false;
 }
 
 float CalculateTesselationFactor(float3 patchPosition)
@@ -74,7 +74,19 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
     float3 boxCenter = 0.5f * (vMin + vMax);
     float3 boxExtents = 0.5f * (vMax - vMin);
     
-    if (IsVisibileByCamera(boxCenter, boxExtents))
+    if (IsNotVisibileByCamera(boxCenter, boxExtents))
+    {
+        constantOutput.EdgeTess[0] = 0.0f;
+        constantOutput.EdgeTess[1] = 0.0f;
+        constantOutput.EdgeTess[2] = 0.0f;
+        constantOutput.EdgeTess[3] = 0.0f;
+    
+        constantOutput.InsideTess[0] = 0.0f;
+        constantOutput.InsideTess[1] = 0.0f;
+        
+        return constantOutput;
+    }
+    else
     {
         float edges[4];
         edges[0] = 0.5f * (patch[0].Position + patch[2].Position);
@@ -91,18 +103,6 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
     
         constantOutput.InsideTess[0] = CalculateTesselationFactor(center);
         constantOutput.InsideTess[1] = constantOutput.InsideTess[0];
-        
-        return constantOutput;
-    }
-    else
-    {
-        constantOutput.EdgeTess[0] = 0.0f;
-        constantOutput.EdgeTess[1] = 0.0f;
-        constantOutput.EdgeTess[2] = 0.0f;
-        constantOutput.EdgeTess[3] = 0.0f;
-    
-        constantOutput.InsideTess[0] = 0.0f;
-        constantOutput.InsideTess[1] = 0.0f;
         
         return constantOutput;
     }
