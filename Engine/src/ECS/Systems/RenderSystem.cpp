@@ -27,6 +27,7 @@ void RenderSystem::Start()
 
 	InitializeLightSettings();
 	InitializeClearColorSettings();
+	InitializeTerrainTessellationSettings();
 
 	if (!InitializeDirectX())
 		Logger::Error("DirectX initialization failed!");
@@ -580,6 +581,14 @@ void RenderSystem::InitializeClearColorSettings() const
 	CurrentRenderSettings->ClearColor[2] = ConfigurationData->ClearColorBlue;
 }
 
+void RenderSystem::InitializeTerrainTessellationSettings() const
+{
+	CurrentRenderSettings->MinTerrainTessellationFactor = ConfigurationData->MinTerrainTessellationFactor;
+	CurrentRenderSettings->MaxTerrainTessellationFactor = ConfigurationData->MaxTerrainTessellationFactor;
+	CurrentRenderSettings->MinTerrainTessellationDistance = ConfigurationData->MinTerrainTessellationDistance;
+	CurrentRenderSettings->MaxTerrainTessellationDistance = ConfigurationData->MaxTerrainTessellationDistance;
+}
+
 void RenderSystem::InitializeConstantBuffers()
 {
 	Logger::Debug("Preparing to initialize constant buffers...");
@@ -872,10 +881,10 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
 	CameraBufferInstance.ApplyChanges();
 
-	TerrainSettingsBufferInstance.Data.MinTessellationFactor = 0;
-	TerrainSettingsBufferInstance.Data.MaxTessellationFactor = 6;
-	TerrainSettingsBufferInstance.Data.MinTessellationDistance = 10.0f;
-	TerrainSettingsBufferInstance.Data.MaxTessellationDistance = 3000.0f;
+	TerrainSettingsBufferInstance.Data.MinTessellationFactor = CurrentRenderSettings->MinTerrainTessellationFactor;
+	TerrainSettingsBufferInstance.Data.MaxTessellationFactor = CurrentRenderSettings->MaxTerrainTessellationFactor;
+	TerrainSettingsBufferInstance.Data.MinTessellationDistance = CurrentRenderSettings->MinTerrainTessellationDistance;
+	TerrainSettingsBufferInstance.Data.MaxTessellationDistance = CurrentRenderSettings->MaxTerrainTessellationDistance;
 	TerrainSettingsBufferInstance.ApplyChanges();
 
 	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());

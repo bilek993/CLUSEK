@@ -47,6 +47,7 @@ private:
 	bool InitializePbrResources();
 	void InitializeLightSettings() const;
 	void InitializeClearColorSettings() const;
+	void InitializeTerrainTessellationSettings() const;
 	void InitializeConstantBuffers();
 	void InitializePostProcessing();
 	void ShowLoadingScreen();
