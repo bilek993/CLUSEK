@@ -583,6 +583,12 @@ void RenderSystem::InitializeClearColorSettings() const
 
 void RenderSystem::InitializeTerrainTessellationSettings() const
 {
+	if (ConfigurationData->MaxTerrainTessellationFactor > 6)
+		Logger::Warning("MaxTerrainTessellationFactor shouldn't be above 6!");
+
+	if (ConfigurationData->MinTerrainTessellationFactor < 0)
+		Logger::Warning("MinTerrainTessellationFactor shouldn't be bellow 0!");
+
 	CurrentRenderSettings->MinTerrainTessellationFactor = ConfigurationData->MinTerrainTessellationFactor;
 	CurrentRenderSettings->MaxTerrainTessellationFactor = ConfigurationData->MaxTerrainTessellationFactor;
 	CurrentRenderSettings->MinTerrainTessellationDistance = ConfigurationData->MinTerrainTessellationDistance;
