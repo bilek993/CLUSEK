@@ -70,6 +70,10 @@ struct ConfigData final
 
 	// Terrain settings
 	int EnableAsyncTerrainGeneration = 1;
+	float MinTessellationFactor = 0.0f;
+	float MaxTessellationFactor = 6.0f;
+	float MinTessellationDistance = 0.0f;
+	float MaxTessellationDistance = 1000.0f;
 
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;
