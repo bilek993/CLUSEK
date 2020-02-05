@@ -15,6 +15,7 @@
     <ClCompile Include="src\Renderer\Shaders\HullShader.cpp" />
     <ClCompile Include="src\Loaders\Components\TerrainComponentLoader.cpp" />
     <ClCompile Include="src\Renderer\TerrainUtil.cpp" />
+    <ClCompile Include="src\GUI\Windows\TerrainTessellationWindow.cpp" />
     <FxCompile Include="res\Shaders\Surface\ShadowMatrix\shadow_pixel_shader.hlsl">
       <FileType>CppCode</FileType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -267,6 +268,7 @@
     <ClInclude Include="src\Renderer\TerrainUtil.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainSettingsBuffer.h" />
+    <ClInclude Include="src\GUI\Windows\TerrainTessellationWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

@@ -23,6 +23,7 @@
 #include "Windows/ShadowPreviewerWindow.h"
 #include "../ECS/Systems/RenderSystem.h"
 #include "Windows/ConfigurationWindow.h"
+#include "Windows/TerrainTessellationWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
 
@@ -72,4 +73,5 @@ private:
 	EntityViewerWindow EntityViewerWindowInstance;
 	PerSystemPerformanceWindow PerSystemPerformanceWindowInstance;
 	ShadowPreviewerWindow ShadowPreviewerWindowInstance;
+	TerrainTessellationWindow TerrainTessellationWindowInstance;
 };

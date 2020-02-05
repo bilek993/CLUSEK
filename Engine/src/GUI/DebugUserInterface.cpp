@@ -62,6 +62,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(EntityViewerWindowInstance);
 	UPDATE_USER_INTERFACE(PerSystemPerformanceWindowInstance);
 	UPDATE_USER_INTERFACE(ShadowPreviewerWindowInstance);
+	UPDATE_USER_INTERFACE(TerrainTessellationWindowInstance);
 
 	AfterUpdate(renderSystem);
 }
@@ -104,6 +105,7 @@ void DebugUserInterface::DrawMenuBar()
 			DrawMenuItemForWindow("Lighting settings", LightingWindowInstance);
 			DrawMenuItemForWindow("Shadow Previewer", ShadowPreviewerWindowInstance);
 			DrawMenuItemForWindow("Back Buffer setting", BackBufferWindowInstance);
+			DrawMenuItemForWindow("Terrain tessellation settings", TerrainTessellationWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Physics"))
