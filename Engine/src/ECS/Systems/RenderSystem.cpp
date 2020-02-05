@@ -88,6 +88,9 @@ void RenderSystem::RenderFrameBegin() const
 	DeviceContext->PSSetSamplers(1, 1, DefaultClampSamplerState.GetAddressOf());
 	DeviceContext->PSSetSamplers(2, 1, BrdfSamplerState.GetAddressOf());
 	DeviceContext->PSSetSamplers(3, 1, ShadowSamplerState.GetAddressOf());
+
+	DeviceContext->DSSetSamplers(0, 1, DefaultWrapSamplerState.GetAddressOf());
+	DeviceContext->DSSetSamplers(1, 1, DefaultClampSamplerState.GetAddressOf());
 }
 
 void RenderSystem::RenderFrameEnd() const
@@ -904,6 +907,8 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(tmpWorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix)); // TODO: Set other parameters in constant buffer
 		FatPerObjectBufferInstance.ApplyChanges();
+
+		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
 
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 	});
