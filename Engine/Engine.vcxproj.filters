@@ -788,6 +788,9 @@
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainBuffer.h">
       <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainSettingsBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">

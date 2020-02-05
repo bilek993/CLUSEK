@@ -1,9 +1,3 @@
-static const float MIN_TESSELATION = 0;
-static const float MAX_TESSELATION = 6;
-
-static const float MIN_DISTANCE = 10.0F;
-static const float MAX_DISTANCE = 3000.0F;
-
 cbuffer TerrainBuffer : register(b0)
 {
     float4 FrustumPlanes[6];
@@ -12,6 +6,15 @@ cbuffer TerrainBuffer : register(b0)
 cbuffer CameraBuffer : register(b1)
 {
     float3 CameraPosition;
+}
+
+cbuffer CameraBuffer : register(b2)
+{
+    float MinTessellationFactor;
+    float MaxTessellationFactor;
+
+    float MinTessellationDistance;
+    float MaxTessellationDistance;
 }
 
 struct HS_INPUT
@@ -59,9 +62,9 @@ bool IsNotVisibileByCamera(float3 center, float3 extents)
 float CalculateTesselationFactor(float3 patchPosition)
 {
     float distanceFromCamera = distance(patchPosition, CameraPosition);
-    float shift = saturate((distanceFromCamera - MIN_DISTANCE) / (MAX_DISTANCE - MIN_DISTANCE));
+    float shift = saturate((distanceFromCamera - MinTessellationDistance) / (MaxTessellationDistance - MinTessellationDistance));
     
-    return pow(2, (lerp(MAX_TESSELATION, MIN_TESSELATION, shift)));
+    return pow(2, (lerp(MaxTessellationFactor, MinTessellationFactor, shift)));
 }
 
 PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveID)

@@ -266,6 +266,7 @@
     <ClInclude Include="src\Renderer\Materials\TerrainShaderMaterial.h" />
     <ClInclude Include="src\Renderer\TerrainUtil.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainBuffer.h" />
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainSettingsBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

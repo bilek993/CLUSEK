@@ -611,6 +611,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = TerrainBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'TerrainBuffer' constant buffer.");
+
+	hr = TerrainSettingsBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'TerrainSettingsBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
@@ -868,9 +872,16 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
 	CameraBufferInstance.ApplyChanges();
 
+	TerrainSettingsBufferInstance.Data.MinTessellationFactor = 0;
+	TerrainSettingsBufferInstance.Data.MaxTessellationFactor = 6;
+	TerrainSettingsBufferInstance.Data.MinTessellationDistance = 10.0f;
+	TerrainSettingsBufferInstance.Data.MaxTessellationDistance = 3000.0f;
+	TerrainSettingsBufferInstance.ApplyChanges();
+
 	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
 	DeviceContext->HSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
+	DeviceContext->HSSetConstantBuffers(2, 1, TerrainSettingsBufferInstance.GetAddressOf());
 
 	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
