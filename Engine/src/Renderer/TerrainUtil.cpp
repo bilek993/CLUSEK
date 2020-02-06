@@ -142,5 +142,5 @@ stbi_us* TerrainUtil::CalculateOffset(stbi_us* data, const int x, const int y, c
 
 float TerrainUtil::GetHeight(const stbi_us* offsetData, const float maxHeight)
 {
-	return static_cast<float>(offsetData[0]) / std::numeric_limits<stbi_us>::max() * maxHeight;;
+	return static_cast<float>(offsetData[0]) / std::numeric_limits<stbi_us>::max() * maxHeight;
 }
