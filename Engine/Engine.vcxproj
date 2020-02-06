@@ -269,6 +269,7 @@
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainSettingsBuffer.h" />
     <ClInclude Include="src\GUI\Windows\TerrainTessellationWindow.h" />
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainHeightSamplingBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

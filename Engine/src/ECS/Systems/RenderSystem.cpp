@@ -633,6 +633,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = TerrainSettingsBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'TerrainSettingsBufferInstance' constant buffer.");
+
+	hr = TerrainHeightSamplingBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'TerrainHeightSamplingBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
@@ -896,10 +900,12 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	TerrainSettingsBufferInstance.Data.MaxTessellationDistance = CurrentRenderSettings->MaxTerrainTessellationDistance;
 	TerrainSettingsBufferInstance.ApplyChanges();
 
-	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
 	DeviceContext->HSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
 	DeviceContext->HSSetConstantBuffers(2, 1, TerrainSettingsBufferInstance.GetAddressOf());
+
+	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+	DeviceContext->DSSetConstantBuffers(1, 1, TerrainHeightSamplingBufferInstance.GetAddressOf());
 
 	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
@@ -907,6 +913,9 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(tmpWorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix)); // TODO: Set other parameters in constant buffer
 		FatPerObjectBufferInstance.ApplyChanges();
+
+		TerrainHeightSamplingBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
+		TerrainHeightSamplingBufferInstance.ApplyChanges();
 
 		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
 

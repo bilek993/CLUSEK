@@ -8,7 +8,7 @@ cbuffer CameraBuffer : register(b1)
     float3 CameraPosition;
 }
 
-cbuffer CameraBuffer : register(b2)
+cbuffer TerrainSettingsBuffer: register(b2)
 {
     float MinTessellationFactor;
     float MaxTessellationFactor;
