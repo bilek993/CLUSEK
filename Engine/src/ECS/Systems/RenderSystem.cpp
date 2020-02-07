@@ -900,6 +900,8 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	TerrainSettingsBufferInstance.Data.MaxTessellationDistance = CurrentRenderSettings->MaxTerrainTessellationDistance;
 	TerrainSettingsBufferInstance.ApplyChanges();
 
+	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+
 	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
 	DeviceContext->HSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
 	DeviceContext->HSSetConstantBuffers(2, 1, TerrainSettingsBufferInstance.GetAddressOf());
@@ -911,6 +913,7 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(terrainComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix)); // TODO: Set other parameters in constant buffer
+		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(terrainComponent.WorldMatrix);
 		FatPerObjectBufferInstance.ApplyChanges();
 
 		TerrainHeightSamplingBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;

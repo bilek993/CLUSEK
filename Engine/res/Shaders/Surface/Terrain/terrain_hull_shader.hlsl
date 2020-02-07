@@ -20,6 +20,7 @@ cbuffer TerrainSettingsBuffer: register(b2)
 struct HS_INPUT
 {
     float3 Position : POSITION;
+    float3 WorldPosition : WORLD_POSITION;
     float2 TextureCoord : TEXCOORD;
     float2 BoundsY : BOUNDS_Y;
 };
@@ -74,8 +75,8 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
     float minY = patch[0].BoundsY.x;
     float maxY = patch[0].BoundsY.y;
     
-    float3 vMin = float3(patch[0].Position.x, minY, patch[0].Position.z);
-    float3 vMax = float3(patch[3].Position.x, maxY, patch[3].Position.z);
+    float3 vMin = float3(patch[0].WorldPosition.x, minY, patch[0].WorldPosition.z);
+    float3 vMax = float3(patch[3].WorldPosition.x, maxY, patch[3].WorldPosition.z);
     
     float3 boxCenter = 0.5f * (vMin + vMax);
     float3 boxExtents = 0.5f * (vMax - vMin);
@@ -95,12 +96,12 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
     else
     {
         float3 edges[4];
-        edges[0] = 0.5f * (patch[0].Position + patch[2].Position);
-        edges[1] = 0.5f * (patch[0].Position + patch[1].Position);
-        edges[2] = 0.5f * (patch[1].Position + patch[3].Position);
-        edges[3] = 0.5f * (patch[2].Position + patch[3].Position);
+        edges[0] = 0.5f * (patch[0].WorldPosition + patch[2].WorldPosition);
+        edges[1] = 0.5f * (patch[0].WorldPosition + patch[1].WorldPosition);
+        edges[2] = 0.5f * (patch[1].WorldPosition + patch[3].WorldPosition);
+        edges[3] = 0.5f * (patch[2].WorldPosition + patch[3].WorldPosition);
         
-        float3 center = 0.25f * (patch[0].Position + patch[1].Position + patch[2].Position + patch[3].Position);
+        float3 center = 0.25f * (patch[0].WorldPosition + patch[1].WorldPosition + patch[2].WorldPosition + patch[3].WorldPosition);
         
         constantOutput.EdgeTess[0] = CalculateTesselationFactor(edges[0]);
         constantOutput.EdgeTess[1] = CalculateTesselationFactor(edges[1]);
