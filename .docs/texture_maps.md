@@ -25,3 +25,11 @@ Occlusion maps helps recreate indirect lighting without time-consuming, real-tim
 | Red      |
 |----------|
 | Lighting |
+
+### Height maps
+
+This map provides information about terrain height in every point of it. This game engine supports a single-channel texture for this purpose and multi-channel texture will throw a warning in the log system. It is also recommended to use 16 bit textures instead of 8 bit for better quality. This table describes the usage of channels if used in multi-channel mode:
+
+| Red    |
+|--------|
+| Height |
