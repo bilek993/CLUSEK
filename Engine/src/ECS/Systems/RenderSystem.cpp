@@ -909,9 +909,8 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
-		const auto tmpWorldMatrix = DirectX::XMMatrixIdentity(); // TODO: Change this in future
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(tmpWorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix)); // TODO: Set other parameters in constant buffer
+			XMMatrixTranspose(terrainComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix)); // TODO: Set other parameters in constant buffer
 		FatPerObjectBufferInstance.ApplyChanges();
 
 		TerrainHeightSamplingBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
