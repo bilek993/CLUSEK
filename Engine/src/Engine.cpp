@@ -76,27 +76,16 @@ void Engine::InitializeScene()
 
 void Engine::CreateSystems()
 {
-	std::unique_ptr<BaseSystem> systemBasePtr;
-
 	// Render system should be first
-	systemBasePtr = std::make_unique<RenderSystem>();
-	Systems.emplace_back(SystemHolder("Render System", systemBasePtr, true));
+	RegisterNewSystem<RenderSystem>("Render System");
 
-	systemBasePtr = std::make_unique<PhysicsSystem>();
-	Systems.emplace_back(SystemHolder("Physics System", systemBasePtr, true));
-
-	systemBasePtr = std::make_unique<CameraSystem>();
-	Systems.emplace_back(SystemHolder("Camera System", systemBasePtr, true));
-
-	systemBasePtr = std::make_unique<SkyboxSystem>();
-	Systems.emplace_back(SystemHolder("Skybox System", systemBasePtr, true));
-
-	systemBasePtr = std::make_unique<VehiclePlayerControllerSystem>();
-	Systems.emplace_back(SystemHolder("Vehicle Player Controller System", systemBasePtr, true));
+	RegisterNewSystem<PhysicsSystem>("Physics System");
+	RegisterNewSystem<CameraSystem>("Camera System");
+	RegisterNewSystem<SkyboxSystem>("Skybox System");
+	RegisterNewSystem<VehiclePlayerControllerSystem>("Vehicle Player Controller System");
 
 	// Transform system should be last
-	systemBasePtr = std::make_unique<TransformSystem>();
-	Systems.emplace_back(SystemHolder("Transform System", systemBasePtr, true));
+	RegisterNewSystem<TransformSystem>("Transform System");
 
 	for (auto i = 0; i < Systems.size(); i++)
 	{

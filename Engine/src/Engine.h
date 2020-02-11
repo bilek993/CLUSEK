@@ -17,12 +17,18 @@ public:
 	void Update();
 private:
 	void InitializeScene();
+
 	void CreateSystems();
 	void InitializeSystems();
 	void InitializeUserInterface();
+
 	void UpdateInputOutputDevices();
 	void UpdateSystems(float deltaTime);
+
 	void HandleClosingWithButton() const;
+
+	template <class T>
+	void RegisterNewSystem(const std::string& name, bool enabled = true);
 
 	RenderWindow Window;
 	ConfigData Config;
@@ -41,3 +47,10 @@ private:
 	IODevices InputOutputDevices;
 	IOData DataFromIODevices = IOData();
 };
+
+template <class T>
+void Engine::RegisterNewSystem(const std::string& name, const bool enabled)
+{
+	std::unique_ptr<BaseSystem> basePointer = std::make_unique<T>();
+	Systems.emplace_back(SystemHolder(name, basePointer, enabled));
+}
