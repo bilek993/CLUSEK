@@ -98,6 +98,10 @@
 	"Skybox": {
 	  "Path": "Data/Textures/Environment/Skybox.dds",
 	  "ConvertLatLongToCubeMap": "YES"
+	},
+	
+	"TerrainHeightmap": {
+	  "Path": "Data/Textures/Terrain/TerrainHeightmap.png"
 	}
   }
 }

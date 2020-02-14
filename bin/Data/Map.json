@@ -888,5 +888,22 @@
 		"Depth": 268.0
 	  }
 	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 0.0,
+		"PositionY": 0.0,
+		"PositionZ": 0.0
+	  },
+	  "TerrainComponent": {
+	    "PathToHeightmap": "Data/Textures/Terrain/TerrainHeightmap.png",
+		"ScaleXZ": 2.0,
+		"QualityDivider": 64,
+		"MaterialId": "Data/Textures/Terrain/material.json",
+		"MaxHeight": 800.0
+	  }
+	}
   }
 ]
