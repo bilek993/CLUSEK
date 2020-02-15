@@ -1,4 +1,4 @@
-float3 getSamplingVector(uint3 ThreadID, float outputWidth, float outputHeight, float outputDepth)
+float3 GetSamplingVector(uint3 ThreadID, float outputWidth, float outputHeight, float outputDepth)
 {
     float2 st = ThreadID.xy / float2(outputWidth, outputHeight);
     float2 uv = 2.0 * float2(st.x, 1.0 - st.y) - 1.0;

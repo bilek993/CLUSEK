@@ -55,7 +55,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float occlusionColor = OcclusionTexture.Sample(DefaultSampler, input.TextureCoord).r;
     float3 emissionColor = EmissionTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
 
-    float3 calculatedNormal = calculateNormal(normalColor, input.TBN);
+    float3 calculatedNormal = CalculateNormal(normalColor, input.TBN);
     float roughness = 1 - metalicSmoothnessColor.a;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
     
@@ -70,7 +70,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     else if (input.CameraDistanceZ < CascadeEnds[3])
         shadowMultiplier = CalculateShadows(ShadowMapCascade3, ShadowSampler, input.LightSpacePosition[3], Biases[3]);
 
-    float3 finalColor = pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
+    float3 finalColor = Pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
                             DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, shadowMultiplier);
 

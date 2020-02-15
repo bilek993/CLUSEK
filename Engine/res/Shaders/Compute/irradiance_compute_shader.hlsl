@@ -16,7 +16,7 @@ void main(uint3 threadID : SV_DispatchThreadID)
 {
     float outputWidth, outputHeight, outputDepth;
     OutputTexture.GetDimensions(outputWidth, outputHeight, outputDepth);
-    float3 normal = getSamplingVector(threadID, outputWidth, outputHeight, outputDepth);
+    float3 normal = GetSamplingVector(threadID, outputWidth, outputHeight, outputDepth);
 
     float3 up = float3(0.0f, 1.0f, 0.0f);
     float3 right = cross(up, normal);

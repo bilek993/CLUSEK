@@ -11,7 +11,7 @@ void main(uint3 threadID : SV_DispatchThreadID)
 {
     float outputWidth, outputHeight, outputDepth;
     OutputTexture.GetDimensions(outputWidth, outputHeight, outputDepth);
-    float3 normal = getSamplingVector(threadID, outputWidth, outputHeight, outputDepth);
+    float3 normal = GetSamplingVector(threadID, outputWidth, outputHeight, outputDepth);
 
     float phi = atan2(normal.z, normal.x);
     float theta = acos(normal.y);
