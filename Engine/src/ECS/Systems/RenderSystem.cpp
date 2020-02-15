@@ -926,7 +926,7 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		TerrainHeightSamplingBufferInstance.ApplyChanges();
 
 		TerrainNormalBufferInstance.Data.WorldCellSpace = terrainComponent.ScaleXZ;
-		TerrainNormalBufferInstance.Data.TexelSpace = 2.0;
+		TerrainNormalBufferInstance.Data.TexelSpace = terrainComponent.TexelSize;
 		TerrainNormalBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
 		TerrainNormalBufferInstance.ApplyChanges();
 
