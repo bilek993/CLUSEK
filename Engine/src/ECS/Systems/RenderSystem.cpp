@@ -637,6 +637,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = TerrainHeightSamplingBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'TerrainHeightSamplingBufferInstance' constant buffer.");
+
+	hr = TerrainNormalBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'TerrainNormalBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
@@ -909,6 +913,8 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 	DeviceContext->DSSetConstantBuffers(1, 1, TerrainHeightSamplingBufferInstance.GetAddressOf());
 
+	DeviceContext->PSSetConstantBuffers(0, 1, TerrainNormalBufferInstance.GetAddressOf());
+
 	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
@@ -919,8 +925,12 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		TerrainHeightSamplingBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
 		TerrainHeightSamplingBufferInstance.ApplyChanges();
 
-		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
+		TerrainNormalBufferInstance.Data.WorldCellSpace = terrainComponent.ScaleXZ;
+		TerrainNormalBufferInstance.Data.TexelSpace = 2.0;
+		TerrainNormalBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
+		TerrainNormalBufferInstance.ApplyChanges();
 
+		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
 		DeviceContext->PSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
 
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);

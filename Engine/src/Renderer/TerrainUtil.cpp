@@ -20,6 +20,8 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 	if (numberOfChannels != 1)
 		Logger::Warning("Number of channels for heigtmap is equal to" + std::to_string(numberOfChannels) + ". It might be very problematic!");
 
+	terrainComponent.TexelSize = 1.0f / ((width + height) / 2.0f);
+
 	std::vector<PositionAndUvVertex> vertices;
 	std::vector<DWORD> indices;
 
