@@ -15,6 +15,7 @@ struct PS_INPUT
 };
 
 Texture2D HeightmapTexture : register(t0);
+Texture2D SplatmapTexture : register(t1);
 SamplerState ClampSampler : register(s1);
 
 float4 main(PS_INPUT input) : SV_TARGET
@@ -30,7 +31,7 @@ float4 main(PS_INPUT input) : SV_TARGET
                                 bitangent, 
                                 normal);
     
-    float color = max(dot(normalize(float3(-0.8f, 0.8f, -0.695f)), normal), 0.15f);
+    float sunColorMultiplier = max(dot(normalize(float3(-0.8f, 0.8f, -0.695f)), normal), 0.15f);
     
-    return float4(color.rrr, 1.0f);
+    return float4(SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb * sunColorMultiplier, 1.0f);
 }

@@ -931,7 +931,9 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		TerrainNormalBufferInstance.ApplyChanges();
 
 		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
+
 		DeviceContext->PSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
+		DeviceContext->PSSetShaderResources(1, 1, terrainComponent.Material.Splatmap->GetAddressOf());
 
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 	});
