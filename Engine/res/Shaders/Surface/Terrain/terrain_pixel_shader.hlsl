@@ -39,10 +39,10 @@ float4 main(PS_INPUT input) : SV_TARGET
     float4 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord);
     
     float3 color = float3(0.0f, 0.0f, 0.0f);
+    color = lerp(color, AlphaAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.a);
     color = lerp(color, RedAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.r);
     color = lerp(color, GreenAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.g);
     color = lerp(color, BlueAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.b);
-    color = lerp(color, AlphaAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.a);
     
     float sunColorMultiplier = max(dot(normalize(float3(-0.8f, 0.8f, -0.695f)), normal), 0.15f);
     
