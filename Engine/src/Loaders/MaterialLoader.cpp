@@ -69,9 +69,11 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 	std::ifstream inputFile(pathToMaterial);
 	inputFile >> jsonObject;
 
-	auto heightmapJsonInfo = jsonObject["Heightmap"];
+	const auto heightmapJsonInfo = jsonObject["Heightmap"];
+	const auto splatmapJsonInfo = jsonObject["Splatmap"];
 
 	material.Heightmap = GetTextureById(device, heightmapJsonInfo, DefaultAlbedo);
+	material.Splatmap = GetTextureById(device, splatmapJsonInfo, DefaultAlbedo);
 }
 
 void MaterialLoader::GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path,

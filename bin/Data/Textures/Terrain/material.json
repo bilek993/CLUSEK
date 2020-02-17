@@ -1,3 +1,4 @@
 {
-  "Heightmap": "TerrainHeightmap"
+  "Heightmap": "TerrainHeightmap",
+  "Splatmap": "TerrainSplatmap"
 }
