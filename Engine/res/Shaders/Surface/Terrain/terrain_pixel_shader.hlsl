@@ -20,6 +20,7 @@ Texture2D RedAlbedoTexture : register(t2);
 Texture2D GreenAlbedoTexture : register(t3);
 Texture2D BlueAlbedoTexture : register(t4);
 Texture2D AlphaAlbedoTexture : register(t5);
+SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);
 
 float4 main(PS_INPUT input) : SV_TARGET
@@ -35,7 +36,15 @@ float4 main(PS_INPUT input) : SV_TARGET
                                 bitangent, 
                                 normal);
     
+    float4 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord);
+    
+    float3 color = float3(0.0f, 0.0f, 0.0f);
+    color = lerp(color, RedAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.r);
+    color = lerp(color, GreenAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.g);
+    color = lerp(color, BlueAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.b);
+    color = lerp(color, AlphaAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.a);
+    
     float sunColorMultiplier = max(dot(normalize(float3(-0.8f, 0.8f, -0.695f)), normal), 0.15f);
     
-    return float4(SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb * sunColorMultiplier, 1.0f);
+    return float4(color * sunColorMultiplier, 1.0f);
 }
