@@ -16,6 +16,10 @@ struct PS_INPUT
 
 Texture2D HeightmapTexture : register(t0);
 Texture2D SplatmapTexture : register(t1);
+Texture2D RedAlbedoTexture : register(t2);
+Texture2D GreenAlbedoTexture : register(t3);
+Texture2D BlueAlbedoTexture : register(t4);
+Texture2D AlphaAlbedoTexture : register(t5);
 SamplerState ClampSampler : register(s1);
 
 float4 main(PS_INPUT input) : SV_TARGET
