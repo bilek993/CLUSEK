@@ -934,10 +934,10 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 		DeviceContext->PSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
 		DeviceContext->PSSetShaderResources(1, 1, terrainComponent.Material.Splatmap->GetAddressOf());
-		DeviceContext->PSSetShaderResources(2, 1, terrainComponent.Material.RedAlbedo->GetAddressOf());
-		DeviceContext->PSSetShaderResources(3, 1, terrainComponent.Material.GreenAlbedo->GetAddressOf());
-		DeviceContext->PSSetShaderResources(4, 1, terrainComponent.Material.BlueAlbedo->GetAddressOf());
-		DeviceContext->PSSetShaderResources(5, 1, terrainComponent.Material.AlphaAlbedo->GetAddressOf());
+		DeviceContext->PSSetShaderResources(2, 1, terrainComponent.Material.BaseAlbedo->GetAddressOf());
+		DeviceContext->PSSetShaderResources(3, 1, terrainComponent.Material.RedAlbedo->GetAddressOf());
+		DeviceContext->PSSetShaderResources(4, 1, terrainComponent.Material.GreenAlbedo->GetAddressOf());
+		DeviceContext->PSSetShaderResources(5, 1, terrainComponent.Material.BlueAlbedo->GetAddressOf());
 
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 	});

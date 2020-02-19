@@ -72,18 +72,18 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 	auto heightmapJsonInfo = jsonObject["Heightmap"];
 	auto splatmapJsonInfo = jsonObject["Splatmap"];
 
+	auto baseAlbedoJsonInfo = jsonObject["BaseAlbedo"];
 	auto redAlbedoJsonInfo = jsonObject["RedAlbedo"];
 	auto greenAlbedoJsonInfo = jsonObject["GreenAlbedo"];
 	auto blueAlbedoJsonInfo = jsonObject["BlueAlbedo"];
-	auto alphaAlbedoJsonInfo = jsonObject["AlphaAlbedo"];
 
 	material.Heightmap = GetTextureById(device, heightmapJsonInfo, DefaultAlbedo);
 	material.Splatmap = GetTextureById(device, splatmapJsonInfo, DefaultAlbedo);
 
+	material.BaseAlbedo = GetTextureById(device, baseAlbedoJsonInfo, DefaultAlbedo);
 	material.RedAlbedo = GetTextureById(device, redAlbedoJsonInfo, DefaultAlbedo);
 	material.GreenAlbedo = GetTextureById(device, greenAlbedoJsonInfo, DefaultAlbedo);
 	material.BlueAlbedo = GetTextureById(device, blueAlbedoJsonInfo, DefaultAlbedo);
-	material.AlphaAlbedo = GetTextureById(device, alphaAlbedoJsonInfo, DefaultAlbedo);
 }
 
 void MaterialLoader::GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path,
