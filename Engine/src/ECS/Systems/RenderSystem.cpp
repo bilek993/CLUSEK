@@ -830,13 +830,13 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
-	SetShadowResourcesForShadowCascades(8);
+	SetShadowResourcesForShadowCascades(21);
 
 	RenderSkyBoxComponents(cameraComponent);
 	RenderTerrain(cameraComponent, mainCameraTransformComponent);
 	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent);
 
-	ClearShadowResourcesForShadowCascades(8);
+	ClearShadowResourcesForShadowCascades(21);
 }
 
 void RenderSystem::RenderSceneForShadows()
