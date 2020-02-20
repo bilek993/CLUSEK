@@ -82,18 +82,18 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 	auto greenAlbedoJsonInfo = jsonObject["GreenAlbedo"];
 	auto blueAlbedoJsonInfo = jsonObject["BlueAlbedo"];
 
-	material.Heightmap = GetTextureById(device, heightmapJsonInfo, DefaultAlbedo);
-	material.Splatmap = GetTextureById(device, splatmapJsonInfo, DefaultAlbedo);
+	material.Heightmap = GetTextureById(device, heightmapJsonInfo.is_null() ? "" : heightmapJsonInfo.get<std::string>(), DefaultAlbedo);
+	material.Splatmap = GetTextureById(device, splatmapJsonInfo.is_null() ? "" : splatmapJsonInfo.get<std::string>(), DefaultAlbedo);
 
-	material.BaseTextureScale = baseTextureScaleJsonInfo.get<float>();
-	material.RedTextureScale = redTextureScaleJsonInfo.get<float>();
-	material.GreenTextureScale = greenTextureScaleJsonInfo.get<float>();
-	material.BlueTextureScale = blueTextureScaleJsonInfo.get<float>();
+	material.BaseTextureScale = baseTextureScaleJsonInfo.is_null() ? 1.0 : baseTextureScaleJsonInfo.get<float>();
+	material.RedTextureScale = redTextureScaleJsonInfo.is_null() ? 1.0 : redTextureScaleJsonInfo.get<float>();
+	material.GreenTextureScale = greenTextureScaleJsonInfo.is_null() ? 1.0 : greenTextureScaleJsonInfo.get<float>();
+	material.BlueTextureScale = blueTextureScaleJsonInfo.is_null() ? 1.0 : blueTextureScaleJsonInfo.get<float>();
 
-	material.BaseAlbedo = GetTextureById(device, baseAlbedoJsonInfo, DefaultAlbedo);
-	material.RedAlbedo = GetTextureById(device, redAlbedoJsonInfo, DefaultAlbedo);
-	material.GreenAlbedo = GetTextureById(device, greenAlbedoJsonInfo, DefaultAlbedo);
-	material.BlueAlbedo = GetTextureById(device, blueAlbedoJsonInfo, DefaultAlbedo);
+	material.BaseAlbedo = GetTextureById(device, baseAlbedoJsonInfo.is_null() ? "" : baseAlbedoJsonInfo.get<std::string>(), DefaultAlbedo);
+	material.RedAlbedo = GetTextureById(device, redAlbedoJsonInfo.is_null() ? "" : redAlbedoJsonInfo.get<std::string>(), DefaultAlbedo);
+	material.GreenAlbedo = GetTextureById(device, greenAlbedoJsonInfo.is_null() ? "" : greenAlbedoJsonInfo.get<std::string>(), DefaultAlbedo);
+	material.BlueAlbedo = GetTextureById(device, blueAlbedoJsonInfo.is_null() ? "" : blueAlbedoJsonInfo.get<std::string>(), DefaultAlbedo);
 }
 
 void MaterialLoader::GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path,
