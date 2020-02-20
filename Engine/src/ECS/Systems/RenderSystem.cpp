@@ -641,6 +641,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = TerrainNormalBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'TerrainNormalBufferInstance' constant buffer.");
+
+	hr = TerrainUvBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'TerrainUvBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
