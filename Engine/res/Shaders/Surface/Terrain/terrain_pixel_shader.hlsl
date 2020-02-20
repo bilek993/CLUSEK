@@ -51,7 +51,7 @@ Texture2D BrdfLut : register(t20);
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);
 
-float3 CalculateColor(PS_INPUT input, float3 splatId)
+float3 CalculateAlbedoColor(PS_INPUT input, float3 splatId)
 {
     float3 color = BaseAlbedoTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).rgb;
     color = lerp(color, RedAlbedoTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).rgb, splatId.r);
@@ -76,9 +76,9 @@ float4 main(PS_INPUT input) : SV_TARGET
     
     float3 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb;
     
-    float3 color = CalculateColor(input, splatId);
+    float3 albedoColor = CalculateAlbedoColor(input, splatId);
     
     float sunColorMultiplier = max(dot(normalize(float3(-0.8f, 0.8f, -0.695f)), normal), 0.15f);
     
-    return float4(color * sunColorMultiplier, 1.0f);
+    return float4(albedoColor * sunColorMultiplier, 1.0f);
 }
