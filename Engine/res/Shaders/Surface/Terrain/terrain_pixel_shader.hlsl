@@ -7,6 +7,14 @@ cbuffer TerrainNormalBuffer : register(b0)
     float MaxHeight;
 }
 
+cbuffer TerrainUvBuffer : register(b1)
+{
+    float BaseTextureScale;
+    float RedTextureScale;
+    float GreenTextureScale;
+    float BlueTextureScale;
+}
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
@@ -37,10 +45,10 @@ float4 main(PS_INPUT input) : SV_TARGET
     
     float4 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord);
     
-    float3 color = BaseAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb;
-    color = lerp(color, RedAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.r);
-    color = lerp(color, GreenAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.g);
-    color = lerp(color, BlueAlbedoTexture.Sample(WrapSampler, input.TextureCoord).rgb, splatId.b);
+    float3 color = BaseAlbedoTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).rgb;
+    color = lerp(color, RedAlbedoTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).rgb, splatId.r);
+    color = lerp(color, GreenAlbedoTexture.Sample(WrapSampler, input.TextureCoord * GreenTextureScale).rgb, splatId.g);
+    color = lerp(color, BlueAlbedoTexture.Sample(WrapSampler, input.TextureCoord * BlueTextureScale).rgb, splatId.b);
     
     float sunColorMultiplier = max(dot(normalize(float3(-0.8f, 0.8f, -0.695f)), normal), 0.15f);
     

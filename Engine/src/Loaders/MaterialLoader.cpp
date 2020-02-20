@@ -72,6 +72,11 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 	auto heightmapJsonInfo = jsonObject["Heightmap"];
 	auto splatmapJsonInfo = jsonObject["Splatmap"];
 
+	auto baseTextureScaleJsonInfo = jsonObject["BaseTextureScale"];
+	auto redTextureScaleJsonInfo = jsonObject["RedTextureScale"];
+	auto greenTextureScaleJsonInfo = jsonObject["GreenTextureScale"];
+	auto blueTextureScaleJsonInfo = jsonObject["BlueTextureScale"];
+
 	auto baseAlbedoJsonInfo = jsonObject["BaseAlbedo"];
 	auto redAlbedoJsonInfo = jsonObject["RedAlbedo"];
 	auto greenAlbedoJsonInfo = jsonObject["GreenAlbedo"];
@@ -79,6 +84,11 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 
 	material.Heightmap = GetTextureById(device, heightmapJsonInfo, DefaultAlbedo);
 	material.Splatmap = GetTextureById(device, splatmapJsonInfo, DefaultAlbedo);
+
+	material.BaseTextureScale = baseTextureScaleJsonInfo.get<float>();
+	material.RedTextureScale = redTextureScaleJsonInfo.get<float>();
+	material.GreenTextureScale = greenTextureScaleJsonInfo.get<float>();
+	material.BlueTextureScale = blueTextureScaleJsonInfo.get<float>();
 
 	material.BaseAlbedo = GetTextureById(device, baseAlbedoJsonInfo, DefaultAlbedo);
 	material.RedAlbedo = GetTextureById(device, redAlbedoJsonInfo, DefaultAlbedo);

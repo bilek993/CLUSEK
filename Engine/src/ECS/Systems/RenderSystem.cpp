@@ -918,6 +918,7 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	DeviceContext->DSSetConstantBuffers(1, 1, TerrainHeightSamplingBufferInstance.GetAddressOf());
 
 	DeviceContext->PSSetConstantBuffers(0, 1, TerrainNormalBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(1, 1, TerrainUvBufferInstance.GetAddressOf());
 
 	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
@@ -933,6 +934,12 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		TerrainNormalBufferInstance.Data.TexelSpace = terrainComponent.TexelSize;
 		TerrainNormalBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
 		TerrainNormalBufferInstance.ApplyChanges();
+
+		TerrainUvBufferInstance.Data.BaseTextureScale = terrainComponent.Material.BaseTextureScale;
+		TerrainUvBufferInstance.Data.RedTextureScale = terrainComponent.Material.RedTextureScale;
+		TerrainUvBufferInstance.Data.GreenTextureScale = terrainComponent.Material.GreenTextureScale;
+		TerrainUvBufferInstance.Data.BlueTextureScale = terrainComponent.Material.BlueTextureScale;
+		TerrainUvBufferInstance.ApplyChanges();
 
 		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
 
