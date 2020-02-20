@@ -82,6 +82,21 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 	auto greenAlbedoTextureJsonInfo = jsonObject["GreenAlbedoTexture"];
 	auto blueAlbedoTextureJsonInfo = jsonObject["BlueAlbedoTexture"];
 
+	auto baseNormalTextureJsonInfo = jsonObject["BaseNormalTexture"];
+	auto redNormalTextureJsonInfo = jsonObject["RedNormalTexture"];
+	auto greenNormalTextureJsonInfo = jsonObject["GreenNormalTexture"];
+	auto blueNormalTextureJsonInfo = jsonObject["BlueNormalTexture"];
+
+	auto baseMetalicSmoothnessTextureJsonInfo = jsonObject["BaseMetalicSmoothnessTexture"];
+	auto redMetalicSmoothnessTextureJsonInfo = jsonObject["RedMetalicSmoothnessTexture"];
+	auto greenMetalicSmoothnessTextureJsonInfo = jsonObject["GreenMetalicSmoothnessTexture"];
+	auto blueMetalicSmoothnessTextureJsonInfo = jsonObject["BlueMetalicSmoothnessTexture"];
+
+	auto baseOcclusionTextureJsonInfo = jsonObject["BaseOcclusionTexture"];
+	auto redOcclusionTextureJsonInfo = jsonObject["RedOcclusionTexture"];
+	auto greenOcclusionTextureJsonInfo = jsonObject["GreenOcclusionTexture"];
+	auto blueOcclusionTextureJsonInfo = jsonObject["BlueOcclusionTexture"];
+
 	material.Heightmap = GetTextureById(device, heightmapJsonInfo.is_null() ? "" : heightmapJsonInfo.get<std::string>(), DefaultAlbedo);
 	material.Splatmap = GetTextureById(device, splatmapJsonInfo.is_null() ? "" : splatmapJsonInfo.get<std::string>(), DefaultAlbedo);
 
@@ -94,6 +109,21 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 	material.RedAlbedoTexture = GetTextureById(device, redAlbedoTextureJsonInfo.is_null() ? "" : redAlbedoTextureJsonInfo.get<std::string>(), DefaultAlbedo);
 	material.GreenAlbedoTexture = GetTextureById(device, greenAlbedoTextureJsonInfo.is_null() ? "" : greenAlbedoTextureJsonInfo.get<std::string>(), DefaultAlbedo);
 	material.BlueAlbedoTexture = GetTextureById(device, blueAlbedoTextureJsonInfo.is_null() ? "" : blueAlbedoTextureJsonInfo.get<std::string>(), DefaultAlbedo);
+
+	material.BaseNormalTexture = GetTextureById(device, baseNormalTextureJsonInfo.is_null() ? "" : baseNormalTextureJsonInfo.get<std::string>(), DefaultNormal);
+	material.RedNormalTexture = GetTextureById(device, redNormalTextureJsonInfo.is_null() ? "" : redNormalTextureJsonInfo.get<std::string>(), DefaultNormal);
+	material.GreenNormalTexture = GetTextureById(device, greenNormalTextureJsonInfo.is_null() ? "" : greenNormalTextureJsonInfo.get<std::string>(), DefaultNormal);
+	material.BlueNormalTexture = GetTextureById(device, blueNormalTextureJsonInfo.is_null() ? "" : blueNormalTextureJsonInfo.get<std::string>(), DefaultNormal);
+
+	material.BaseMetalicSmoothnessTexture = GetTextureById(device, baseMetalicSmoothnessTextureJsonInfo.is_null() ? "" : baseMetalicSmoothnessTextureJsonInfo.get<std::string>(), DefaultMetalicSmoothness);
+	material.RedMetalicSmoothnessTexture = GetTextureById(device, redMetalicSmoothnessTextureJsonInfo.is_null() ? "" : redMetalicSmoothnessTextureJsonInfo.get<std::string>(), DefaultMetalicSmoothness);
+	material.GreenMetalicSmoothnessTexture = GetTextureById(device, greenMetalicSmoothnessTextureJsonInfo.is_null() ? "" : greenMetalicSmoothnessTextureJsonInfo.get<std::string>(), DefaultMetalicSmoothness);
+	material.BlueMetalicSmoothnessTexture = GetTextureById(device, blueMetalicSmoothnessTextureJsonInfo.is_null() ? "" : blueMetalicSmoothnessTextureJsonInfo.get<std::string>(), DefaultMetalicSmoothness);
+
+	material.BaseOcclusionTexture = GetTextureById(device, baseOcclusionTextureJsonInfo.is_null() ? "" : baseOcclusionTextureJsonInfo.get<std::string>(), DefaultOcclusion);
+	material.RedOcclusionTexture = GetTextureById(device, redOcclusionTextureJsonInfo.is_null() ? "" : redOcclusionTextureJsonInfo.get<std::string>(), DefaultOcclusion);
+	material.GreenOcclusionTexture = GetTextureById(device, greenOcclusionTextureJsonInfo.is_null() ? "" : greenOcclusionTextureJsonInfo.get<std::string>(), DefaultOcclusion);
+	material.BlueOcclusionTexture = GetTextureById(device, blueOcclusionTextureJsonInfo.is_null() ? "" : blueOcclusionTextureJsonInfo.get<std::string>(), DefaultOcclusion);
 }
 
 void MaterialLoader::GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path,
