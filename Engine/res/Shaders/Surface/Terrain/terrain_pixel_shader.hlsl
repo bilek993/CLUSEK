@@ -23,10 +23,31 @@ struct PS_INPUT
 
 Texture2D HeightmapTexture : register(t0);
 Texture2D SplatmapTexture : register(t1);
+
 Texture2D BaseAlbedoTexture : register(t2);
 Texture2D RedAlbedoTexture : register(t3);
 Texture2D GreenAlbedoTexture : register(t4);
 Texture2D BlueAlbedoTexture : register(t5);
+
+Texture2D BaseNormalTexture : register(t6);
+Texture2D RedNormalTexture : register(t7);
+Texture2D GreenNormalTexture : register(t8);
+Texture2D BlueNormalTexture : register(t9);
+
+Texture2D BaseMetalicSmoothnessTexture : register(t10);
+Texture2D RedMetalicSmoothnessTexture : register(t11);
+Texture2D GreenMetalicSmoothnessTexture : register(t12);
+Texture2D BlueMetalicSmoothnessTexture : register(t13);
+
+Texture2D BaseOcclusionTexture : register(t14);
+Texture2D RedOcclusionTexture : register(t15);
+Texture2D GreenOcclusionTexture : register(t16);
+Texture2D BlueOcclusionTexture : register(t17);
+
+TextureCube IrradianceTexture : register(t18);
+TextureCube RadianceTexture : register(t19);
+Texture2D BrdfLut : register(t20);
+
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);
 
