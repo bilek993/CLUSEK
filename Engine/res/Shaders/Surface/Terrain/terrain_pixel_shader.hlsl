@@ -71,22 +71,22 @@ float3 CalculateNormalColor(PS_INPUT input, float3 splatId)
     return color;
 }
 
-float3 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
+float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
 {
-    float3 color = BaseMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).rgb;
-    color = lerp(color, RedMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).rgb, splatId.r);
-    color = lerp(color, GreenMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * GreenTextureScale).rgb, splatId.g);
-    color = lerp(color, BlueMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * BlueTextureScale).rgb, splatId.b);
+    float2 color = BaseMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).ra;
+    color = lerp(color, RedMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).ra, splatId.r);
+    color = lerp(color, GreenMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * GreenTextureScale).ra, splatId.g);
+    color = lerp(color, BlueMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * BlueTextureScale).ra, splatId.b);
     
     return color;
 }
 
-float3 CalculateOcclusionColor(PS_INPUT input, float3 splatId)
+float CalculateOcclusionColor(PS_INPUT input, float3 splatId)
 {
-    float3 color = BaseOcclusionTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).rgb;
-    color = lerp(color, RedOcclusionTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).rgb, splatId.r);
-    color = lerp(color, GreenOcclusionTexture.Sample(WrapSampler, input.TextureCoord * GreenTextureScale).rgb, splatId.g);
-    color = lerp(color, BlueOcclusionTexture.Sample(WrapSampler, input.TextureCoord * BlueTextureScale).rgb, splatId.b);
+    float color = BaseOcclusionTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).r;
+    color = lerp(color, RedOcclusionTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).r, splatId.r);
+    color = lerp(color, GreenOcclusionTexture.Sample(WrapSampler, input.TextureCoord * GreenTextureScale).r, splatId.g);
+    color = lerp(color, BlueOcclusionTexture.Sample(WrapSampler, input.TextureCoord * BlueTextureScale).r, splatId.b);
     
     return color;
 }
