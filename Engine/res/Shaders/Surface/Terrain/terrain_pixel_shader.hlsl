@@ -104,6 +104,8 @@ float4 main(PS_INPUT input) : SV_TARGET
                                 bitangent, 
                                 normal);
     
+    float3x3 TBN = CalculateTBN(tangent, bitangent, normal);
+    
     float3 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb;
     
     float3 albedoColor = CalculateAlbedoColor(input, splatId);
