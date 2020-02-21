@@ -14,7 +14,10 @@ void ResourcesLoader::Load(ID3D11Device* device, ID3D11DeviceContext* context, c
 	inputFile >> jsonObject;
 
 	LoadModels(device, jsonObject["Models"], config);
+	Logger::Debug("Loaded all model files.");
+
 	LoadTextures(device, context, jsonObject["Textures"], config);
+	Logger::Debug("Loaded all texture files.");
 }
 
 void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& json, const ConfigData* config)
@@ -31,8 +34,6 @@ void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& jso
 		else
 			ModelLoader::LoadResource(device, value, key);
 	}
-
-	Logger::Debug("Loaded " + std::to_string(json.size()) + " model files.");
 }
 
 void ResourcesLoader::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* context, const nlohmann::json& json,
@@ -53,7 +54,5 @@ void ResourcesLoader::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* co
 		else
 			MaterialLoader::LoadResource(device, context, path, id, convertLatLongToCubeMap, config);
 	}
-
-	Logger::Debug("Loaded " + std::to_string(json.size()) + " texture files.");
 }
 
