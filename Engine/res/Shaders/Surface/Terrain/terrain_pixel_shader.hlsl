@@ -113,6 +113,10 @@ float4 main(PS_INPUT input) : SV_TARGET
     float2 metalicSmoothnessColor = CalculateMetalicSmoothnessColor(input, splatId);
     float occlusionColor = CalculateOcclusionColor(input, splatId);
     
+    float3 calculatedNormal = CalculateNormal(normalColor, TBN);
+    float roughness = 1 - metalicSmoothnessColor.y;
+    //float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
+    
     float sunColorMultiplier = max(dot(normalize(float3(-0.8f, 0.8f, -0.695f)), normal), 0.15f);
     
     return float4(albedoColor * sunColorMultiplier, 1.0f);
