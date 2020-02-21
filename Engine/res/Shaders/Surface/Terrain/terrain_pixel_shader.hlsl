@@ -107,6 +107,9 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb;
     
     float3 albedoColor = CalculateAlbedoColor(input, splatId);
+    float3 normalColor = CalculateNormalColor(input, splatId);
+    float2 metalicSmoothnessColor = CalculateMetalicSmoothnessColor(input, splatId);
+    float occlusionColor = CalculateOcclusionColor(input, splatId);
     
     float sunColorMultiplier = max(dot(normalize(float3(-0.8f, 0.8f, -0.695f)), normal), 0.15f);
     
