@@ -830,11 +830,14 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
+	UpdateLightAndAlphaBuffer();
+	UpdateCameraBuffer(mainCameraTransformComponent);
+
 	SetShadowResourcesForShadowCascades(21);
 
 	RenderSkyBoxComponents(cameraComponent);
 	RenderTerrain(cameraComponent, mainCameraTransformComponent);
-	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent);
+	RenderModelRenderComponents(cameraComponent);
 
 	ClearShadowResourcesForShadowCascades(21);
 }
@@ -898,9 +901,6 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		TerrainBufferInstance.Data.FrustumPlanes[i] = mainCameraComponent.FrustumPlanes[i];
 
 	TerrainBufferInstance.ApplyChanges();
-
-	CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
-	CameraBufferInstance.ApplyChanges();
 
 	TerrainSettingsBufferInstance.Data.MinTessellationFactor = CurrentRenderSettings->MinTerrainTessellationFactor;
 	TerrainSettingsBufferInstance.Data.MaxTessellationFactor = CurrentRenderSettings->MaxTerrainTessellationFactor;
@@ -977,7 +977,7 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent)
+void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCameraComponent)
 {
 	UINT offset = 0;
 	ChangeBasicShaders(UberVertexShader, UberPixelShader);
@@ -992,7 +992,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	DeviceContext->PSSetShaderResources(6, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
 	DeviceContext->PSSetShaderResources(7, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 
-	Registry->view<ModelRenderComponent>().each([this, &mainCameraComponent, &offset, &mainCameraTransformComponent](ModelRenderComponent &modelRenderComponent)
+	Registry->view<ModelRenderComponent>().each([this, &mainCameraComponent, &offset](ModelRenderComponent &modelRenderComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
@@ -1001,19 +1001,13 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
 		FatPerObjectBufferInstance.ApplyChanges();
 
-		LightAndAlphaBufferInstance.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
-		LightAndAlphaBufferInstance.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
-		LightAndAlphaBufferInstance.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
-		LightAndAlphaBufferInstance.Data.Alpha = 1.0f;
-		LightAndAlphaBufferInstance.ApplyChanges();
-
-		CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
-		CameraBufferInstance.ApplyChanges();
-
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
 			if (mesh.Material.Alpha < 1.0f)
 				continue;
+
+			LightAndAlphaBufferInstance.Data.Alpha = mesh.Material.Alpha;
+			LightAndAlphaBufferInstance.ApplyChanges();
 
 			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
 			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
@@ -1070,6 +1064,20 @@ void RenderSystem::ConfigureCascadeConstantBuffer()
 	CascadeLevelsBufferInstance.Data.Biases[2] = ConfigurationData->CascadeBias2;
 	CascadeLevelsBufferInstance.Data.Biases[3] = ConfigurationData->CascadeBias3;
 	CascadeLevelsBufferInstance.ApplyChanges();
+}
+
+void RenderSystem::UpdateLightAndAlphaBuffer()
+{
+	LightAndAlphaBufferInstance.Data.DirectionalLightColor = CurrentRenderSettings->DirectionalLightColor;
+	LightAndAlphaBufferInstance.Data.DirectionalLightStrength = CurrentRenderSettings->DirectionalLightStrength;
+	LightAndAlphaBufferInstance.Data.DirectionalLightDirection = CurrentRenderSettings->DirectionalLightDirection;
+	LightAndAlphaBufferInstance.ApplyChanges();
+}
+
+void RenderSystem::UpdateCameraBuffer(const TransformComponent &mainCameraTransformComponent)
+{
+	CameraBufferInstance.Data.CameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
+	CameraBufferInstance.ApplyChanges();
 }
 
 void RenderSystem::PerformPostProcessing() const

@@ -76,12 +76,15 @@ private:
 
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
-	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
+	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent);
 
 	void SetShadowResourcesForShadowCascades(int firstCascadeId);
 	void ClearShadowResourcesForShadowCascades(int firstCascadeId) const;
 
 	void ConfigureCascadeConstantBuffer();
+
+	void UpdateLightAndAlphaBuffer();
+	void UpdateCameraBuffer(const TransformComponent &mainCameraTransformComponent);
 
 	void PerformPostProcessing() const;
 
