@@ -1,4 +1,23 @@
 {
   "Heightmap": "TerrainHeightmap",
-  "Splatmap": "TerrainSplatmap"
+  "Splatmap": "TerrainSplatmap",
+  
+  "BaseTextureScale": 150.0,
+  "RedTextureScale": 150.0,
+  "GreenTextureScale": 150.0,
+  "BlueTextureScale": 150.0,
+  
+  "BaseAlbedoTexture": "TerrainMudAlbedo",
+  "BaseNormalTexture": "TerrainMudNormal",
+  "BaseMetalicSmoothnessTexture": "TerrainMudMetalness",
+  "BaseOcclusionTexture": "TerrainMudOcclusion",
+  
+  "RedAlbedoTexture": "TerrainRockAlbedo",
+  "RedNormalTexture": "TerrainRockNormal",
+  "RedMetalicSmoothnessTexture": "TerrainRockMetalness",
+  "RedOcclusionTexture": "TerrainRockOcclusion",
+  
+  "GreenAlbedoTexture": "TerrainLightGrassAlbedo",
+  
+  "BlueAlbedoTexture": "TerrainGrassAlbedo"
 }
