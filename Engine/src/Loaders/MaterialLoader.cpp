@@ -229,7 +229,7 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 															D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 
 															0, 
 															0, 
-															DirectX::WIC_LOADER_FORCE_SRGB, 
+															DirectX::WIC_LOADER_DEFAULT, 
 															nullptr, 
 															textureResource.GetAddressOf());
 		if (FAILED(hr))
