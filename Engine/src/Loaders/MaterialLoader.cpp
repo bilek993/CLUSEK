@@ -209,13 +209,29 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 {
 	if (StringUtil::FindExtension(path) == "DDS")
 	{
-		const auto hr = DirectX::CreateDDSTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, textureResource.GetAddressOf());
+		const auto hr = DirectX::CreateDDSTextureFromFileEx(device, 
+															StringUtil::StringToWide(path).data(), 
+															0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 
+															0, 
+															0, 
+															false, 
+															nullptr, 
+															textureResource.GetAddressOf(), 
+															nullptr);
 		if (FAILED(hr))
 			Logger::Error("Couldn't load texture from file!");
 	}
 	else
 	{
-		const auto hr = DirectX::CreateWICTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, textureResource.GetAddressOf());
+		const auto hr = DirectX::CreateWICTextureFromFileEx(device, 
+															StringUtil::StringToWide(path).data(), 
+															0, 
+															D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 
+															0, 
+															0, 
+															DirectX::WIC_LOADER_FORCE_SRGB, 
+															nullptr, 
+															textureResource.GetAddressOf());
 		if (FAILED(hr))
 			Logger::Error("Couldn't load texture from file!");
 	}
