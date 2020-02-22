@@ -1,4 +1,5 @@
 #include "../../Includes/normal_utils.hlsli"
+#include "../../Includes/pbr.hlsli"
 
 cbuffer TerrainNormalBuffer : register(b0)
 {
@@ -31,6 +32,7 @@ cbuffer CameraBuffer : register(b3)
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
+    float3 WorldPosition : WORLD_POSITION;
     float2 TextureCoord : TEXCOORD;
 };
 
@@ -63,6 +65,7 @@ Texture2D BrdfLut : register(t20);
 
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);
+SamplerState BrdfSampler : register(s2);
 
 float3 CalculateAlbedoColor(PS_INPUT input, float3 splatId)
 {
@@ -128,9 +131,11 @@ float4 main(PS_INPUT input) : SV_TARGET
     
     float3 calculatedNormal = CalculateNormal(normalColor, TBN);
     float roughness = 1 - metalicSmoothnessColor.y;
-    //float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
+    float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
     
-    float sunColorMultiplier = max(dot(normalize(float3(-0.8f, 0.8f, -0.695f)), normal), 0.15f);
+    float3 finalColor = Pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
+                            IrradianceTexture, RadianceTexture, BrdfLut, WrapSampler, BrdfSampler,
+                            DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, 1.0f); // TODO: Add shadows value
     
-    return float4(albedoColor * sunColorMultiplier, 1.0f);
+    return float4(finalColor, Alpha);
 }

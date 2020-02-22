@@ -21,6 +21,7 @@ struct DS_INPUT
 struct DS_OUTPUT
 {
     float4 Position : SV_POSITION;
+    float3 WorldPosition : WORLD_POSITION;
     float2 TextureCoord : TEXCOORD;
 };
 
@@ -43,6 +44,7 @@ DS_OUTPUT main(PatchTess patchTess, float2 uv : SV_DomainLocation, const OutputP
     
     DS_OUTPUT output;
     output.Position = mul(float4(position, 1.0f), WorldViewProjectionMat);
+    output.WorldPosition = mul(float4(position, 1.0f), WorldMatrix).xyz;
     output.TextureCoord = coord;
 
     return output;
