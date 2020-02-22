@@ -15,6 +15,19 @@ cbuffer TerrainUvBuffer : register(b1)
     float BlueTextureScale;
 }
 
+cbuffer LightAndAlphaBuffer : register(b2)
+{
+    float3 DirectionalLightColor;
+    float DirectionalLightStrength;
+    float3 DirectionalLightDirection;
+    float Alpha;
+}
+
+cbuffer CameraBuffer : register(b3)
+{
+    float3 CameraPosition;
+}
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;

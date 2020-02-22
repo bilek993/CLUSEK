@@ -902,6 +902,9 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 	TerrainBufferInstance.ApplyChanges();
 
+	LightAndAlphaBufferInstance.Data.Alpha = 1.0;
+	LightAndAlphaBufferInstance.ApplyChanges();
+
 	TerrainSettingsBufferInstance.Data.MinTessellationFactor = CurrentRenderSettings->MinTerrainTessellationFactor;
 	TerrainSettingsBufferInstance.Data.MaxTessellationFactor = CurrentRenderSettings->MaxTerrainTessellationFactor;
 	TerrainSettingsBufferInstance.Data.MinTessellationDistance = CurrentRenderSettings->MinTerrainTessellationDistance;
@@ -919,6 +922,8 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 	DeviceContext->PSSetConstantBuffers(0, 1, TerrainNormalBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(1, 1, TerrainUvBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(2, 1, LightAndAlphaBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(3, 1, CameraBufferInstance.GetAddressOf());
 
 	DeviceContext->PSSetShaderResources(18, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
 	DeviceContext->PSSetShaderResources(19, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
