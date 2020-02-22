@@ -18,6 +18,12 @@
   "RedOcclusionTexture": "TerrainRockOcclusion",
   
   "GreenAlbedoTexture": "TerrainLightGrassAlbedo",
+  "GreenNormalTexture": "TerrainGrassNormal",
+  "GreenMetalicSmoothnessTexture": "TerrainGrassMetalness",
+  "GreenOcclusionTexture": "TerrainGrassOcclusion",
   
-  "BlueAlbedoTexture": "TerrainGrassAlbedo"
+  "BlueAlbedoTexture": "TerrainGrassAlbedo",
+  "BlueNormalTexture": "TerrainGrassNormal",
+  "BlueMetalicSmoothnessTexture": "TerrainGrassMetalness",
+  "BlueOcclusionTexture": "TerrainGrassOcclusion"
 }
