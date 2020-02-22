@@ -12,7 +12,7 @@
 std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
 
 void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, 
-	const std::string& resourceId, const std::string& convertLatLongToCubeMap, const ConfigData* config)
+	const std::string& resourceId, const std::string& convertLatLongToCubeMap, const std::string& srgbMode, const ConfigData* config)
 {
 	Logger::Debug("Preparing to load resource '" + resourceId + "' from path '" + path + "'...");
 	auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
@@ -20,7 +20,7 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 	if (!path.empty())
 	{
 		Logger::Debug("Adding resource '" + resourceId + "' into memory...");
-		LoadTextureToMaterial(device, *resource, path);
+		LoadTextureToMaterial(device, *resource, path, srgbMode == "FORCED");
 
 		if (convertLatLongToCubeMap == "YES" || convertLatLongToCubeMap == "COMPATIBLE")
 		{
@@ -205,7 +205,7 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 }
 
 void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
-	const std::string& path)
+	const std::string& path, bool forceSrgb)
 {
 	if (StringUtil::FindExtension(path) == "DDS")
 	{
@@ -214,7 +214,7 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 															0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 
 															0, 
 															0, 
-															false, 
+															forceSrgb, 
 															nullptr, 
 															textureResource.GetAddressOf(), 
 															nullptr);
@@ -229,7 +229,7 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 															D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 
 															0, 
 															0, 
-															DirectX::WIC_LOADER_DEFAULT, 
+															forceSrgb ? DirectX::WIC_LOADER_FORCE_SRGB : DirectX::WIC_LOADER_DEFAULT, 
 															nullptr, 
 															textureResource.GetAddressOf());
 		if (FAILED(hr))

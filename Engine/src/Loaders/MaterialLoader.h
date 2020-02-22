@@ -12,8 +12,7 @@ class MaterialLoader final
 {
 public:
 	static void LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, const std::string
-	                         & resourceId,
-	                         const std::string& convertLatLongToCubeMap, const ConfigData* config);
+	                         & resourceId, const std::string& convertLatLongToCubeMap, const std::string& srgbMode, const ConfigData* config);
 	static void SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId, 
 		const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId, 
 		const std::string& occlusionTextureId, const std::string& emissionTextureId, float alpha);
@@ -43,7 +42,8 @@ private:
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> GetTextureById(ID3D11Device* device, const std::string& id, 
 		FallbackColor fallbackColor);
-	static void LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, const std::string& path);
+	static void LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
+		const std::string& path, bool forceSrgb);
 	static void SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, FallbackColor fallbackColor);
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> ConvertLatLongToCubeMap(ID3D11Device* device, 
