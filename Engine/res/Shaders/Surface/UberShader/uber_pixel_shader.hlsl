@@ -43,6 +43,7 @@ Texture2D ShadowMapCascade0 : register(t21);
 Texture2D ShadowMapCascade1 : register(t22);
 Texture2D ShadowMapCascade2 : register(t23);
 Texture2D ShadowMapCascade3 : register(t24);
+
 SamplerState DefaultSampler : register(s0);
 SamplerState BrdfSampler : register(s2);
 SamplerComparisonState ShadowSampler : register(s3);

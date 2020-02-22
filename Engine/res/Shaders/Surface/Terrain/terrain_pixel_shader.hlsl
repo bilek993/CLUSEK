@@ -1,5 +1,6 @@
 #include "../../Includes/normal_utils.hlsli"
 #include "../../Includes/pbr.hlsli"
+#include "../../Includes/shadow_utils.hlsli"
 
 cbuffer TerrainNormalBuffer : register(b0)
 {
@@ -29,11 +30,19 @@ cbuffer CameraBuffer : register(b3)
     float3 CameraPosition;
 }
 
+cbuffer CascadeLevelsBuffer : register(b4)
+{
+    float4 CascadeEnds;
+    float4 Biases;
+}
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
     float3 WorldPosition : WORLD_POSITION;
+    float4 LightSpacePosition[CASCADES_COUNT] : LIGHTSPACE_POSITION;
     float2 TextureCoord : TEXCOORD;
+    float CameraDistanceZ : CAMERA_DISTANCE_Z;
 };
 
 Texture2D HeightmapTexture : register(t0);
@@ -63,9 +72,15 @@ TextureCube IrradianceTexture : register(t18);
 TextureCube RadianceTexture : register(t19);
 Texture2D BrdfLut : register(t20);
 
+Texture2D ShadowMapCascade0 : register(t21);
+Texture2D ShadowMapCascade1 : register(t22);
+Texture2D ShadowMapCascade2 : register(t23);
+Texture2D ShadowMapCascade3 : register(t24);
+
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);
 SamplerState BrdfSampler : register(s2);
+SamplerComparisonState ShadowSampler : register(s3);
 
 float3 CalculateAlbedoColor(PS_INPUT input, float3 splatId)
 {
@@ -133,9 +148,20 @@ float4 main(PS_INPUT input) : SV_TARGET
     float roughness = 1 - metalicSmoothnessColor.y;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
     
+    float shadowMultiplier = 1.0f;
+    
+    if (input.CameraDistanceZ < CascadeEnds[0])
+        shadowMultiplier = CalculateShadows(ShadowMapCascade0, ShadowSampler, input.LightSpacePosition[0], Biases[0]);
+    else if (input.CameraDistanceZ < CascadeEnds[1])
+        shadowMultiplier = CalculateShadows(ShadowMapCascade1, ShadowSampler, input.LightSpacePosition[1], Biases[1]);
+    else if (input.CameraDistanceZ < CascadeEnds[2])
+        shadowMultiplier = CalculateShadows(ShadowMapCascade2, ShadowSampler, input.LightSpacePosition[2], Biases[2]);
+    else if (input.CameraDistanceZ < CascadeEnds[3])
+        shadowMultiplier = CalculateShadows(ShadowMapCascade3, ShadowSampler, input.LightSpacePosition[3], Biases[3]);
+    
     float3 finalColor = Pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, WrapSampler, BrdfSampler,
-                            DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, 1.0f); // TODO: Add shadows value
+                            DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, shadowMultiplier);
     
     return float4(finalColor, Alpha);
 }

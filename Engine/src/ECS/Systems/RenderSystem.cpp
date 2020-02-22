@@ -924,6 +924,7 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	DeviceContext->PSSetConstantBuffers(1, 1, TerrainUvBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(2, 1, LightAndAlphaBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(3, 1, CameraBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(4, 1, CascadeLevelsBufferInstance.GetAddressOf());
 
 	DeviceContext->PSSetShaderResources(18, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
 	DeviceContext->PSSetShaderResources(19, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
@@ -932,8 +933,10 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(terrainComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix)); // TODO: Set other parameters in constant buffer
+			XMMatrixTranspose(terrainComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
 		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(terrainComponent.WorldMatrix);
+		for (auto i = 0; i < 4; i++)
+			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
 		FatPerObjectBufferInstance.ApplyChanges();
 
 		TerrainHeightSamplingBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;

@@ -22,7 +22,9 @@ struct DS_OUTPUT
 {
     float4 Position : SV_POSITION;
     float3 WorldPosition : WORLD_POSITION;
+    float4 LightSpacePosition[CASCADES_COUNT] : LIGHTSPACE_POSITION;
     float2 TextureCoord : TEXCOORD;
+    float CameraDistanceZ : CAMERA_DISTANCE_Z;
 };
 
 struct PatchTess
@@ -46,6 +48,10 @@ DS_OUTPUT main(PatchTess patchTess, float2 uv : SV_DomainLocation, const OutputP
     output.Position = mul(float4(position, 1.0f), WorldViewProjectionMat);
     output.WorldPosition = mul(float4(position, 1.0f), WorldMatrix).xyz;
     output.TextureCoord = coord;
+    output.CameraDistanceZ = output.Position.z;
+    
+    for (int i = 0; i < CASCADES_COUNT; i++)
+        output.LightSpacePosition[i] = mul(float4(output.WorldPosition, 1.0f), LightSpaceMatrix[i]);
 
     return output;
 }
