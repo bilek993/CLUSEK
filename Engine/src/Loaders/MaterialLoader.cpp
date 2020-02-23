@@ -207,13 +207,15 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 }
 
 void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
-	const std::string& path, bool forceSrgb)
+	const std::string& path, const bool forceSrgb)
 {
 	if (StringUtil::FindExtension(path) == "DDS")
 	{
 		const auto hr = DirectX::CreateDDSTextureFromFileEx(device, 
 															StringUtil::StringToWide(path).data(), 
-															0, D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 
+															0, 
+															D3D11_USAGE_DEFAULT,
+															D3D11_BIND_SHADER_RESOURCE, 
 															0, 
 															0, 
 															forceSrgb, 
@@ -228,7 +230,8 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 		const auto hr = DirectX::CreateWICTextureFromFileEx(device, 
 															StringUtil::StringToWide(path).data(), 
 															0, 
-															D3D11_USAGE_DEFAULT, D3D11_BIND_SHADER_RESOURCE, 
+															D3D11_USAGE_DEFAULT, 
+															D3D11_BIND_SHADER_RESOURCE, 
 															0, 
 															0, 
 															forceSrgb ? DirectX::WIC_LOADER_FORCE_SRGB : DirectX::WIC_LOADER_DEFAULT, 
