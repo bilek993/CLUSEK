@@ -23,9 +23,7 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 	if (!path.empty())
 	{
 		Logger::Debug("Adding resource '" + resourceId + "' into memory...");
-		LoadTextureToMaterial(device, *resource, path, forceSrgb, generateMipMaps);
-
-		HandleTextureMipMapGeneration(context, *resource, resourceId, generateMipMaps);
+		LoadTextureToMaterial(device, context, *resource, path, forceSrgb, generateMipMaps);
 
 		if (convertLatLongToCubeMap == "YES" || convertLatLongToCubeMap == "COMPATIBLE")
 		{
@@ -209,7 +207,7 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 	return outputTexture;
 }
 
-void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
+void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, ID3D11DeviceContext* context, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource,
 	const std::string& path, const bool forceSrgb, const bool generateMipMaps)
 {
 	const auto miscFlags = generateMipMaps ? D3D11_RESOURCE_MISC_GENERATE_MIPS : 0;
@@ -219,7 +217,8 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 
 	if (StringUtil::FindExtension(path) == "DDS")
 	{
-		const auto hr = DirectX::CreateDDSTextureFromFileEx(device, 
+		const auto hr = DirectX::CreateDDSTextureFromFileEx(device,
+															generateMipMaps ? context : nullptr,
 															StringUtil::StringToWide(path).data(), 
 															0, 
 															D3D11_USAGE_DEFAULT,
@@ -235,7 +234,8 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 	}
 	else
 	{
-		const auto hr = DirectX::CreateWICTextureFromFileEx(device, 
+		const auto hr = DirectX::CreateWICTextureFromFileEx(device,
+															generateMipMaps ? context : nullptr,
 															StringUtil::StringToWide(path).data(), 
 															0, 
 															D3D11_USAGE_DEFAULT, 
@@ -266,24 +266,6 @@ void MaterialLoader::SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::Com
 	hr = device->CreateShaderResourceView(texture, &srvDesc, textureResource.GetAddressOf());
 	if (FAILED(hr))
 		Logger::Error("Creating error texture failed!");
-}
-
-void MaterialLoader::HandleTextureMipMapGeneration(ID3D11DeviceContext* context, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
-	const std::string& resourceId, const bool generateMipMaps)
-{
-	if (!generateMipMaps)
-	{
-		Logger::Debug("Skipping generating mip map for '" + resourceId + "'.");
-	}
-
-	Logger::Debug("Preparing to lock for generating mip maps for '" + resourceId + "'...");
-	MipMapGenerateMutex.lock();
-	Logger::Debug("Locked mip map generation for '" + resourceId + "'!");
-
-	context->GenerateMips(textureResource.Get());
-
-	MipMapGenerateMutex.unlock();
-	Logger::Debug("Unlocked mip map generation '" + resourceId + "'!");
 }
 
 std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::ConvertLatLongToCubeMap(ID3D11Device* device, 

@@ -35,7 +35,6 @@ private:
 
 	static inline std::mutex ResourcesMapMutex{};
 	static inline std::mutex LatLongConverterMutex{};
-	static inline std::mutex MipMapGenerateMutex{};
 
 	static std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> TextureResources;
 
@@ -43,12 +42,9 @@ private:
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> GetTextureById(ID3D11Device* device, const std::string& id, 
 		FallbackColor fallbackColor);
-	static void LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
+	static void LoadTextureToMaterial(ID3D11Device* device, ID3D11DeviceContext* context, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
 		const std::string& path, bool forceSrgb, bool generateMipMaps);
 	static void SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, FallbackColor fallbackColor);
-
-	static void HandleTextureMipMapGeneration(ID3D11DeviceContext* context, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
-		const std::string& resourceId, bool generateMipMaps);
 
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> ConvertLatLongToCubeMap(ID3D11Device* device, 
 		ID3D11DeviceContext* context, ID3D11ShaderResourceView* const* inputResourceView, int textureSize, bool compatibleMode);
