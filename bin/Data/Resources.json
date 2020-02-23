@@ -113,10 +113,12 @@
 	},
 	
 	"TerrainHeightmap": {
-	  "Path": "Data/Textures/Terrain/TerrainHeightmap.png"
+	  "Path": "Data/Textures/Terrain/TerrainHeightmap.png",
+	  "MipMaps": "SKIP"
 	},
 	"TerrainSplatmap": {
-	  "Path": "Data/Textures/Terrain/TerrainSplatmap.png"
+	  "Path": "Data/Textures/Terrain/TerrainSplatmap.png",
+	  "MipMaps": "SKIP"
 	},
 	"TerrainRockAlbedo": {
 	  "Path": "Data/Textures/Terrain/Rock/TerrainRockAlbedo.png",
