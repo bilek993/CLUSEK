@@ -215,6 +215,13 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, ID3D11DeviceCon
 	if (generateMipMaps)
 		bindFlags |= D3D11_BIND_RENDER_TARGET;
 
+	if (generateMipMaps)
+	{
+		Logger::Debug("Preparing to lock mutex for loading texture and mip map generation...");
+		MipMapTextureCreationMutex.lock();
+		Logger::Debug("Mutex locked for mip map creation...");
+	}
+
 	if (StringUtil::FindExtension(path) == "DDS")
 	{
 		const auto hr = DirectX::CreateDDSTextureFromFileEx(device,
@@ -247,6 +254,12 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, ID3D11DeviceCon
 															textureResource.GetAddressOf());
 		if (FAILED(hr))
 			Logger::Error("Couldn't load texture from file!");
+	}
+
+	if (generateMipMaps)
+	{
+		MipMapTextureCreationMutex.unlock();
+		Logger::Debug("Mutex unlocked for mip map creation...");
 	}
 }
 
