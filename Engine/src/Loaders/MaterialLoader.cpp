@@ -22,7 +22,7 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 		Logger::Debug("Adding resource '" + resourceId + "' into memory...");
 		LoadTextureToMaterial(device, *resource, path, srgbMode == "FORCED");
 
-		HandleTextureMipMapGeneration(context, *resource, mipMaps == "GENERATE");
+		HandleTextureMipMapGeneration(context, *resource, resourceId, mipMaps == "GENERATE");
 
 		if (convertLatLongToCubeMap == "YES" || convertLatLongToCubeMap == "COMPATIBLE")
 		{
@@ -258,21 +258,21 @@ void MaterialLoader::SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::Com
 }
 
 void MaterialLoader::HandleTextureMipMapGeneration(ID3D11DeviceContext* context, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
-	const bool generateMipMaps)
+	const std::string& resourceId, const bool generateMipMaps)
 {
 	if (!generateMipMaps)
 	{
-		Logger::Debug("Skipping generating mip map for current resource.");
+		Logger::Debug("Skipping generating mip map for '" + resourceId + "'.");
 	}
 
-	Logger::Debug("Preparing to lock for generating mip maps...");
+	Logger::Debug("Preparing to lock for generating mip maps for '" + resourceId + "'...");
 	MipMapGenerateMutex.lock();
-	Logger::Debug("Locked mip map generation!");
+	Logger::Debug("Locked mip map generation for '" + resourceId + "'!");
 
 	context->GenerateMips(textureResource.Get());
 
 	MipMapGenerateMutex.unlock();
-	Logger::Debug("Unlocked mip map generation!");
+	Logger::Debug("Unlocked mip map generation '" + resourceId + "'!");
 }
 
 std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::ConvertLatLongToCubeMap(ID3D11Device* device, 
