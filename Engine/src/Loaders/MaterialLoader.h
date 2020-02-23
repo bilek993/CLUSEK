@@ -44,7 +44,7 @@ private:
 	static std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> GetTextureById(ID3D11Device* device, const std::string& id, 
 		FallbackColor fallbackColor);
 	static void LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
-		const std::string& path, bool forceSrgb);
+		const std::string& path, bool forceSrgb, bool generateMipMaps);
 	static void SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, FallbackColor fallbackColor);
 
 	static void HandleTextureMipMapGeneration(ID3D11DeviceContext* context, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 

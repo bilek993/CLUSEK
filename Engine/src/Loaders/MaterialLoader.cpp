@@ -17,12 +17,15 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 	Logger::Debug("Preparing to load resource '" + resourceId + "' from path '" + path + "'...");
 	auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
 
+	const auto generateMipMaps = mipMaps == "GENERATE";
+	const auto forceSrgb = srgbMode == "FORCED";
+
 	if (!path.empty())
 	{
 		Logger::Debug("Adding resource '" + resourceId + "' into memory...");
-		LoadTextureToMaterial(device, *resource, path, srgbMode == "FORCED");
+		LoadTextureToMaterial(device, *resource, path, forceSrgb, generateMipMaps);
 
-		HandleTextureMipMapGeneration(context, *resource, resourceId, mipMaps == "GENERATE");
+		HandleTextureMipMapGeneration(context, *resource, resourceId, generateMipMaps);
 
 		if (convertLatLongToCubeMap == "YES" || convertLatLongToCubeMap == "COMPATIBLE")
 		{
@@ -207,17 +210,22 @@ std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader
 }
 
 void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
-	const std::string& path, const bool forceSrgb)
+	const std::string& path, const bool forceSrgb, const bool generateMipMaps)
 {
+	const auto miscFlags = generateMipMaps ? D3D11_RESOURCE_MISC_GENERATE_MIPS : 0;
+	UINT bindFlags = D3D11_BIND_SHADER_RESOURCE;
+	if (generateMipMaps)
+		bindFlags |= D3D11_BIND_RENDER_TARGET;
+
 	if (StringUtil::FindExtension(path) == "DDS")
 	{
 		const auto hr = DirectX::CreateDDSTextureFromFileEx(device, 
 															StringUtil::StringToWide(path).data(), 
 															0, 
 															D3D11_USAGE_DEFAULT,
-															D3D11_BIND_SHADER_RESOURCE, 
+															bindFlags,
 															0, 
-															0, 
+															miscFlags,
 															forceSrgb, 
 															nullptr, 
 															textureResource.GetAddressOf(), 
@@ -231,9 +239,9 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, Microsoft::WRL:
 															StringUtil::StringToWide(path).data(), 
 															0, 
 															D3D11_USAGE_DEFAULT, 
-															D3D11_BIND_SHADER_RESOURCE, 
+															bindFlags, 
 															0, 
-															0, 
+															miscFlags, 
 															forceSrgb ? DirectX::WIC_LOADER_FORCE_SRGB : DirectX::WIC_LOADER_DEFAULT, 
 															nullptr, 
 															textureResource.GetAddressOf());
