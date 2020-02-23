@@ -49,11 +49,32 @@ void ResourcesLoader::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* co
 		const auto path = value["Path"].get<std::string>();
 		const auto convertLatLongToCubeMap = value["ConvertLatLongToCubeMap"].is_null() ? "NO" : value["ConvertLatLongToCubeMap"].get<std::string>();
 		const auto srgbMode = value["SRGBMode"].is_null() ? "DEFAULT" : value["SRGBMode"].get<std::string>();
+		const auto mipMaps = value["MipMaps"].is_null() ? "GENERATE" : value["MipMaps"].get<std::string>();
 
 		if (config->EnableAsyncTextureLoading)
-			asyncFutures.emplace_back(std::async(std::launch::async, MaterialLoader::LoadResource, device, context, path, id, convertLatLongToCubeMap, srgbMode, config));
+		{
+			asyncFutures.emplace_back(	std::async(std::launch::async, 
+										MaterialLoader::LoadResource, 
+										device, 
+										context, 
+										path, 
+										id, 
+										convertLatLongToCubeMap, 
+										srgbMode, 
+										mipMaps, 
+										config));
+		}
 		else
-			MaterialLoader::LoadResource(device, context, path, id, convertLatLongToCubeMap, srgbMode, config);
+		{
+			MaterialLoader::LoadResource(	device, 
+											context, 
+											path, 
+											id, 
+											convertLatLongToCubeMap, 
+											srgbMode, 
+											mipMaps, 
+											config);
+		}
 	}
 }
 

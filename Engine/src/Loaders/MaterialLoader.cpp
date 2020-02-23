@@ -11,8 +11,8 @@
 // This variable cannot be inlined due to stupid compiler error in VS 2017
 std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> MaterialLoader::TextureResources;
 
-void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, 
-	const std::string& resourceId, const std::string& convertLatLongToCubeMap, const std::string& srgbMode, const ConfigData* config)
+void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, const std::string& resourceId, 
+	const std::string& convertLatLongToCubeMap, const std::string& srgbMode, const std::string& mipMaps, const ConfigData* config)
 {
 	Logger::Debug("Preparing to load resource '" + resourceId + "' from path '" + path + "'...");
 	auto resource = std::make_shared<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>();
@@ -21,6 +21,8 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 	{
 		Logger::Debug("Adding resource '" + resourceId + "' into memory...");
 		LoadTextureToMaterial(device, *resource, path, srgbMode == "FORCED");
+
+		HandleTextureMipMapGeneration(context, *resource, mipMaps == "GENERATE");
 
 		if (convertLatLongToCubeMap == "YES" || convertLatLongToCubeMap == "COMPATIBLE")
 		{
@@ -253,6 +255,24 @@ void MaterialLoader::SetDefaultTexture(ID3D11Device* device, Microsoft::WRL::Com
 	hr = device->CreateShaderResourceView(texture, &srvDesc, textureResource.GetAddressOf());
 	if (FAILED(hr))
 		Logger::Error("Creating error texture failed!");
+}
+
+void MaterialLoader::HandleTextureMipMapGeneration(ID3D11DeviceContext* context, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& textureResource, 
+	const bool generateMipMaps)
+{
+	if (!generateMipMaps)
+	{
+		Logger::Debug("Skipping generating mip map for current resource.");
+	}
+
+	Logger::Debug("Preparing to lock for generating mip maps...");
+	MipMapGenerateMutex.lock();
+	Logger::Debug("Locked mip map generation!");
+
+	context->GenerateMips(textureResource.Get());
+
+	MipMapGenerateMutex.unlock();
+	Logger::Debug("Unlocked mip map generation!");
 }
 
 std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> MaterialLoader::ConvertLatLongToCubeMap(ID3D11Device* device, 
