@@ -19,20 +19,21 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 
 	const auto generateMipMaps = mipMaps == "GENERATE";
 	const auto forceSrgb = srgbMode == "FORCED";
+	const auto compatibleMode = convertLatLongToCubeMap == "COMPATIBLE";
 
 	if (!path.empty())
 	{
 		Logger::Debug("Adding resource '" + resourceId + "' into memory...");
 		LoadTextureToMaterial(device, context, *resource, path, forceSrgb, generateMipMaps);
 
-		if (convertLatLongToCubeMap == "YES" || convertLatLongToCubeMap == "COMPATIBLE")
+		if (convertLatLongToCubeMap == "YES" || compatibleMode)
 		{
 			LatLongConverterMutex.lock();
 			resource = ConvertLatLongToCubeMap(	device, 
 												context, 
 												resource->GetAddressOf(),
 												config->CubemapGeneratedSize, 
-												convertLatLongToCubeMap == "COMPATIBLE");
+												compatibleMode);
 			LatLongConverterMutex.unlock();
 		}
 
