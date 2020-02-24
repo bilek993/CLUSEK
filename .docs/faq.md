@@ -19,6 +19,25 @@ They shouldn't unless you use dark environment texture. This situation mainly oc
 }
 ```
 
+**My sRGB texture is rendered incorrectly. Does CLUSEK support sRGB textures?**
+
+Yes, the CLUSEK game engine fully supports sRGB textures and automatically imports them correctly. To determine if texture file is sRGB it uses metadata as follow:
+
+* For PNG, it is indicated by `/sRGB/RenderingIntent` set to 1;
+* For JPG, it is indicated by `/app1/ifd/exif/{ushort=40961}` set to 1;
+* For TIFF is is indicated by `/ifd/exif/{ushort=40961}` set to 1.
+
+For more informatio you can follow [Microsoft documenation for WIC Texture Loader](https://github.com/Microsoft/DirectXTK/wiki/WICTextureLoader). 
+
+If you would like to use sRGB format without declaring it in the texture file, you can force loading it in sRGB mode by modifying the resources file. Set parameter `SRGBMode` to `FORCED`. It will always load this texture in sRGB mode, no matter what is set in metadata of the texture file. Below you can see an example of importing texture with `FORCED` mode.
+
+```
+"ExampleAlbedo": {
+  "Path": "Data/Textures/Example/ExampleAlbedo.png",
+  "SRGBMode": "FORCED"
+}
+```
+
 **I'm trying to compile source code with a newer Visual Studio compiler, but it fails. How can I solve this?**
 
 It's hard to tell. Other compilers are highly not recommended but might work. The best way is to navigating to 'Error List' and solving errors one by one. A known problem is missing memory include. To solve this add ``#include <memory>`` at the top of the files when compiler tells it's needed for smart pointers.
