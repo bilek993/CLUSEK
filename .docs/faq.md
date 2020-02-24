@@ -38,6 +38,23 @@ If you would like to use sRGB format without declaring it in the texture file, y
 }
 ```
 
+**How can I enable mipmaps generation?**
+
+Mip maps generation is enabled by default. You don't have to do anything to enable it.
+
+**Why would I disable mipmap generation and how can I do this?**
+
+Mipmaps use GPU resources, so in some cases, it might be a good idea to skip generating mipmaps. Also, it's worth noting, that loading textures with mipmaps generation is not possible asynchronous. So loading times will be much higher.
+
+Mipmaps generation can be skipped by setting the `SKIP` value for the `MipMaps` parameter in resources file. In the example below, you can see how it works for example texture.
+
+```
+"ExampleNormalTexture": {
+  "Path": "Data/Textures/Example/ExampleNormalTexture.png",
+  "MipMaps": "SKIP"
+}
+```
+
 **I'm trying to compile source code with a newer Visual Studio compiler, but it fails. How can I solve this?**
 
 It's hard to tell. Other compilers are highly not recommended but might work. The best way is to navigating to 'Error List' and solving errors one by one. A known problem is missing memory include. To solve this add ``#include <memory>`` at the top of the files when compiler tells it's needed for smart pointers.
