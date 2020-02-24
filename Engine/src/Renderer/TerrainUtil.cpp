@@ -23,7 +23,8 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 	terrainComponent.TexelSize = 1.0f / ((width + height) / 2.0f);
 
 	std::vector<PositionAndUvVertex> vertices;
-	std::vector<DWORD> indices;
+	std::vector<DWORD> renderIndices;
+	std::vector<DWORD> shadowIndices;
 
 	if (!async)
 	{
@@ -34,7 +35,8 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 									terrainComponent.ScaleXZ,
 									terrainComponent.MaxHeight,
 									data);
-		indices = GenerateIndices(width, height, terrainComponent.QualityDivider);
+		renderIndices = GenerateRenderIndices(width, height, terrainComponent.QualityDivider);
+		shadowIndices = GenerateShadowIndices(width, height, terrainComponent.QualityDivider);
 	}
 	else
 	{
@@ -47,10 +49,12 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 																						terrainComponent.ScaleXZ,
 																						terrainComponent.MaxHeight,
 																						data);
-		auto futureIndies = std::async(std::launch::async, GenerateIndices, width, height, terrainComponent.QualityDivider);
+		auto futureRenderIndies = std::async(std::launch::async, GenerateRenderIndices, width, height, terrainComponent.QualityDivider);
+		auto futureShadowIndices = std::async(std::launch::async, GenerateShadowIndices, width, height, terrainComponent.QualityDivider);
 
 		vertices = futureVerticies.get();
-		indices = futureIndies.get();
+		renderIndices = futureRenderIndies.get();
+		shadowIndices = futureShadowIndices.get();
 	}
 
 	Logger::Debug("Preparing to create vertex buffer and index buffer...");
@@ -58,9 +62,14 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 	auto hr = terrainComponent.RenderVertexBuffer.Initialize(device, vertices.data(), vertices.size());
 	if (FAILED(hr))
 		Logger::Error("Couldn't create terrain vertex buffer.");
-	hr = terrainComponent.RenderIndexBuffer.Initialize(device, indices.data(), indices.size());
+
+	hr = terrainComponent.RenderIndexBuffer.Initialize(device, renderIndices.data(), renderIndices.size());
 	if (FAILED(hr))
 		Logger::Error("Couldn't create terrain index buffer.");
+
+	hr = terrainComponent.ShadowIndexBuffer.Initialize(device, shadowIndices.data(), shadowIndices.size());
+	if (FAILED(hr))
+		Logger::Error("Couldn't create terrain shadow index buffer.");
 
 	Logger::Debug("Clearing memory after heightmap...");
 	stbi_image_free(data);
@@ -94,9 +103,9 @@ std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, 
 	return vertices;
 }
 
-std::vector<DWORD> TerrainUtil::GenerateIndices(const int width, const int height, const int qualityDivider)
+std::vector<DWORD> TerrainUtil::GenerateRenderIndices(const int width, const int height, const int qualityDivider)
 {
-	Logger::Debug("Calculating indices buffer for terrain...");
+	Logger::Debug("Calculating indices buffer (rendering) for terrain...");
 	std::vector<DWORD> indices;
 
 	for (auto y = 0; y < (height / qualityDivider) - 1; y++)
@@ -112,7 +121,32 @@ std::vector<DWORD> TerrainUtil::GenerateIndices(const int width, const int heigh
 		}
 	}
 
-	Logger::Debug("Indices buffer calculated!");
+	Logger::Debug("Indices buffer (rendering) calculated!");
+	return indices;
+}
+
+std::vector<DWORD> TerrainUtil::GenerateShadowIndices(const int width, const int height, const int qualityDivider)
+{
+	Logger::Debug("Calculating indices buffer (shadows) for terrain...");
+	std::vector<DWORD> indices;
+
+	for (auto y = 0; y < (height / qualityDivider) - 1; y++)
+	{
+		const auto scaledWidth = (width / qualityDivider);
+
+		for (auto x = 0; x < scaledWidth - 1; x++)
+		{
+			indices.emplace_back((y * scaledWidth) + x);
+			indices.emplace_back((y * scaledWidth) + (x + 1));
+			indices.emplace_back(((y + 1) * scaledWidth) + x);
+
+			indices.emplace_back(((y + 1) * scaledWidth) + (x + 1));
+			indices.emplace_back(((y + 1) * scaledWidth) + x);
+			indices.emplace_back((y * scaledWidth) + (x + 1));
+		}
+	}
+
+	Logger::Debug("Indices buffer (shadows) calculated!");
 	return indices;
 }
 

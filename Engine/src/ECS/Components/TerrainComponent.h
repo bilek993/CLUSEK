@@ -14,6 +14,7 @@ struct TerrainComponent final
 	float TexelSize = 0.1f;
 	VertexBuffer<PositionAndUvVertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
+	IndexBuffer ShadowIndexBuffer;
 	TerrainShaderMaterial Material;
 	DirectX::XMMATRIX WorldMatrix;
 };

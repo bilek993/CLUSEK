@@ -867,6 +867,14 @@ void RenderSystem::RenderSceneForShadows()
 				Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 			}
 		});
+
+		Registry->view<TerrainComponent>().each([this, &offset, i](TerrainComponent &terrainComponent)
+		{
+			ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(terrainComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
+			ShadowBufferInstance.ApplyChanges();
+
+			Draw(terrainComponent.RenderVertexBuffer, terrainComponent.ShadowIndexBuffer, offset);
+		});
 	}
 }
 
