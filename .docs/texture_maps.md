@@ -33,3 +33,11 @@ This map provides information about terrain height in every point of it. This ga
 | Red    |
 |--------|
 | Height |
+
+### Splat maps
+
+This texture is used to control the blending of detail textures on a terrain. Each channel represents different mask for detail textures. Only 3 channels are used (RGB) for better performance, because splat map texturing is very costly to render.
+
+| Red | Green | Blue |
+|-----|-------|------|
+| Red | Green | Blue |
