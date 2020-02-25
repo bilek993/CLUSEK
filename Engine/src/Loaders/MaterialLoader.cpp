@@ -28,13 +28,13 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 
 		if (convertLatLongToCubeMap == "YES" || compatibleMode)
 		{
-			LatLongConverterMutex.lock();
+			ContextMutex.lock();
 			resource = ConvertLatLongToCubeMap(	device, 
 												context, 
 												resource->GetAddressOf(),
 												config->CubemapGeneratedSize, 
 												compatibleMode);
-			LatLongConverterMutex.unlock();
+			ContextMutex.unlock();
 		}
 
 		ResourcesMapMutex.lock();
@@ -219,7 +219,7 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, ID3D11DeviceCon
 	if (generateMipMaps)
 	{
 		Logger::Debug("Preparing to lock mutex for loading texture and mip map generation...");
-		MipMapTextureCreationMutex.lock();
+		ContextMutex.lock();
 		Logger::Debug("Mutex locked for mip map creation...");
 	}
 
@@ -259,7 +259,7 @@ void MaterialLoader::LoadTextureToMaterial(ID3D11Device* device, ID3D11DeviceCon
 
 	if (generateMipMaps)
 	{
-		MipMapTextureCreationMutex.unlock();
+		ContextMutex.unlock();
 		Logger::Debug("Mutex unlocked for mip map creation...");
 	}
 }

@@ -34,8 +34,7 @@ private:
 	};
 
 	static inline std::mutex ResourcesMapMutex{};
-	static inline std::mutex LatLongConverterMutex{};
-	static inline std::mutex MipMapTextureCreationMutex{};
+	static inline std::mutex ContextMutex{};
 
 	static std::unordered_map<std::string, std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>>> TextureResources;
 
