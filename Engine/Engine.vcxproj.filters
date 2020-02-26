@@ -130,10 +130,10 @@
     <Filter Include="Source Files\Physics">
       <UniqueIdentifier>{3dfb8b99-6446-499f-b787-95aa5991653e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\Surface\Shadow">
+    <Filter Include="Resource Files\Shaders\Surface\ShadowShader">
       <UniqueIdentifier>{7378d996-bdca-4210-849d-8d9a5a688394}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\Surface\Terrain">
+    <Filter Include="Resource Files\Shaders\Surface\TerrainShader">
       <UniqueIdentifier>{2db36c71-392f-4e59-8960-d03014e811b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -862,26 +862,26 @@
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\ShadowMatrix\shadow_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\Shadow</Filter>
-    </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\ShadowMatrix\shadow_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\Shadow</Filter>
-    </FxCompile>
     <FxCompile Include="res\Shaders\PostProcessing\shadow_remapper_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\Terrain\terrain_domain_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\Terrain</Filter>
+    <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\ShadowShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\Terrain\terrain_hull_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\Terrain</Filter>
+    <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\ShadowShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\Terrain\terrain_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\Terrain</Filter>
+    <FxCompile Include="res\Shaders\Surface\TerrainShader\terrain_domain_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\TerrainShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\Terrain\terrain_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\Terrain</Filter>
+    <FxCompile Include="res\Shaders\Surface\TerrainShader\terrain_hull_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\TerrainShader</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\TerrainShader\terrain_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\TerrainShader</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\TerrainShader\terrain_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\TerrainShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
