@@ -70,10 +70,10 @@ private:
 	CameraComponent& GetMainCamera() const;
 	TransformComponent& GetMainCameraTransform() const;
 
-	void RenderShadows();
+	void RenderShadows(const CameraComponent &mainCameraComponent);
 	void RenderScene(const CameraComponent &cameraComponent, const TransformComponent &mainCameraTransformComponent);
 
-	void RenderSceneForShadows();
+	void RenderSceneForShadows(const CameraComponent &mainCameraComponent);
 
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);

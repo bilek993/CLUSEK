@@ -59,8 +59,10 @@ void RenderSystem::Update(const float deltaTime)
 	auto& mainCameraComponent = GetMainCamera();
 	auto& mainCameraTransform = GetMainCameraTransform();
 
+	UpdateCameraBuffer(mainCameraTransform);
+
 	if (ConfigurationData->ShadowsEnabled)
-		RenderShadows();
+		RenderShadows(mainCameraComponent);
 
 	RenderScene(mainCameraComponent, mainCameraTransform);
 
@@ -829,7 +831,7 @@ TransformComponent& RenderSystem::GetMainCameraTransform() const
 	return view.raw<TransformComponent>()[0];
 }
 
-void RenderSystem::RenderShadows()
+void RenderSystem::RenderShadows(const CameraComponent &mainCameraComponent)
 {
 	DeviceContext->RSSetViewports(1, &ShadowViewport);
 
@@ -843,7 +845,7 @@ void RenderSystem::RenderShadows()
 		camera.UpdateShadowMapLocation(mainCamera.ViewMatrix);
 	}
 
-	RenderSceneForShadows();
+	RenderSceneForShadows(mainCameraComponent);
 }
 
 void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const TransformComponent &mainCameraTransformComponent)
@@ -853,7 +855,6 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
 	UpdateLightAndAlphaBuffer();
-	UpdateCameraBuffer(mainCameraTransformComponent);
 
 	SetShadowResourcesForShadowCascades(21);
 
@@ -864,17 +865,36 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	ClearShadowResourcesForShadowCascades(21);
 }
 
-void RenderSystem::RenderSceneForShadows()
+void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraComponent)
 {
 	UINT offset = 0;
-	ChangeBasicShaders(ShadowVertexShader, ShadowPixelShader);
+
+	// Model Render Component - CB
 
 	DeviceContext->VSSetConstantBuffers(0, 1, ShadowBufferInstance.GetAddressOf());
+
+	// Terrain Component - CB
+
+	DeviceContext->VSSetConstantBuffers(1, 1, WorldMatrixBufferInstance.GetAddressOf());
+
+	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
+	DeviceContext->HSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
+	DeviceContext->HSSetConstantBuffers(2, 1, TerrainSettingsBufferInstance.GetAddressOf());
+
+	DeviceContext->DSSetConstantBuffers(0, 1, ShadowBufferInstance.GetAddressOf());
+	DeviceContext->DSSetConstantBuffers(1, 1, TerrainHeightSamplingBufferInstance.GetAddressOf());
+
+	for (auto i = 0; i < 6; i++)
+		TerrainBufferInstance.Data.FrustumPlanes[i] = mainCameraComponent.FrustumPlanes[i];
+
+	TerrainBufferInstance.ApplyChanges();
 
 	for (auto i = 0; i < ShadowCamera::SHADOW_CASCADES_COUNT; i++)
 	{
 		DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencils[i].GetDepthStencilViewPointer());
 		DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencils[i].GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+
+		ChangeBasicShaders(ShadowVertexShader, ShadowPixelShader);
 
 		Registry->view<ModelRenderComponent>().each([this, &offset, i](ModelRenderComponent &modelRenderComponent)
 		{
@@ -890,13 +910,27 @@ void RenderSystem::RenderSceneForShadows()
 			}
 		});
 
+		DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
+
+		ChangeBasicShaders(ShadowTerrainVertexShader, ShadowPixelShader);
+		ChangeTessellationShaders(ShadowTerrainHullShader, ShadowTerrainDomainShader);
+
 		Registry->view<TerrainComponent>().each([this, &offset, i](TerrainComponent &terrainComponent)
 		{
+			WorldMatrixBufferInstance.Data.WorldMatrix = XMMatrixTranspose(terrainComponent.WorldMatrix);
+			WorldMatrixBufferInstance.ApplyChanges();
+
 			ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(terrainComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
 			ShadowBufferInstance.ApplyChanges();
 
-			Draw(terrainComponent.RenderVertexBuffer, terrainComponent.ShadowIndexBuffer, offset);
+			TerrainHeightSamplingBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
+			TerrainHeightSamplingBufferInstance.ApplyChanges();
+
+			Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 		});
+
+		ResetTessellationShaders();
+		DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	}
 }
 

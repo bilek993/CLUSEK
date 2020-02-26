@@ -1,7 +1,7 @@
 #include "../../Includes/normal_utils.hlsli"
 #include "../../Includes/shadow_utils.hlsli"
 
-cbuffer WorldMatrixBuffer : register(b0)
+cbuffer WorldMatrixBuffer : register(b1)
 {
     float4x4 WorldMatrix;
 };
