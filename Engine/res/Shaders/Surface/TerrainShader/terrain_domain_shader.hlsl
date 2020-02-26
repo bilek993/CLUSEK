@@ -1,8 +1,10 @@
 #include "../../Includes/shadow_utils.hlsli"
 
-cbuffer ShadowBuffer : register(b0)
+cbuffer FatPerObjectBuffer : register(b0)
 {
-    float4x4 WorldLightMatrix;
+    float4x4 WorldViewProjectionMat;
+    float4x4 WorldMatrix;
+    float4x4 LightSpaceMatrix[CASCADES_COUNT];
 };
 
 cbuffer TerrainHeightSamplingBuffer : register(b1)
@@ -19,6 +21,10 @@ struct DS_INPUT
 struct DS_OUTPUT
 {
     float4 Position : SV_POSITION;
+    float3 WorldPosition : WORLD_POSITION;
+    float4 LightSpacePosition[CASCADES_COUNT] : LIGHTSPACE_POSITION;
+    float2 TextureCoord : TEXCOORD;
+    float CameraDistanceZ : CAMERA_DISTANCE_Z;
 };
 
 struct PatchTess
@@ -39,7 +45,13 @@ DS_OUTPUT main(PatchTess patchTess, float2 uv : SV_DomainLocation, const OutputP
     position.y = HeightmapTexture.SampleLevel(ClampSampler, coord, 0).r * MaxHeight;
     
     DS_OUTPUT output;
-    output.Position = mul(float4(position, 1.0f), WorldLightMatrix);
+    output.Position = mul(float4(position, 1.0f), WorldViewProjectionMat);
+    output.WorldPosition = mul(float4(position, 1.0f), WorldMatrix).xyz;
+    output.TextureCoord = coord;
+    output.CameraDistanceZ = output.Position.z;
+    
+    for (int i = 0; i < CASCADES_COUNT; i++)
+        output.LightSpacePosition[i] = mul(float4(output.WorldPosition, 1.0f), LightSpaceMatrix[i]);
 
     return output;
 }
