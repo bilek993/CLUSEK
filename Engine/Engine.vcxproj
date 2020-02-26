@@ -133,6 +133,19 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_terrain_domain_shader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Domain</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_terrain_hull_shader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Hull</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_terrain_vertex_shader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer\Vertex\PositionAndUvVertex.h" />
@@ -272,6 +285,7 @@
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainHeightSamplingBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainNormalBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainUvBuffer.h" />
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\WorldMatrixBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

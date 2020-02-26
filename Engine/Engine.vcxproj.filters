@@ -806,6 +806,9 @@
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainUvBuffer.h">
       <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\WorldMatrixBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">
@@ -882,6 +885,15 @@
     </FxCompile>
     <FxCompile Include="res\Shaders\Surface\TerrainShader\terrain_vertex_shader.hlsl">
       <Filter>Resource Files\Shaders\Surface\TerrainShader</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_terrain_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\ShadowShader</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_terrain_domain_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\ShadowShader</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_terrain_hull_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\ShadowShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
