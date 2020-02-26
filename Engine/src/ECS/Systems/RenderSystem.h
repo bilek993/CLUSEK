@@ -29,6 +29,7 @@
 #include "../../Renderer/ConstantBufferTypes/TerrainHeightSamplingBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/TerrainNormalBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/TerrainUvBuffer.h"
+#include "../../Renderer/ConstantBufferTypes/WorldMatrixBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -122,6 +123,10 @@ private:
 	VertexShader ShadowVertexShader;
 	PixelShader ShadowPixelShader;
 
+	VertexShader ShadowTerrainVertexShader;
+	HullShader ShadowTerrainHullShader;
+	DomainShader ShadowTerrainDomainShader;
+
 	std::array<ShadowCamera, ShadowCamera::SHADOW_CASCADES_COUNT> ShadowCameras;
 
 	ConstantBuffer<FatPerObjectBuffer> FatPerObjectBufferInstance;
@@ -135,6 +140,7 @@ private:
 	ConstantBuffer<TerrainHeightSamplingBuffer> TerrainHeightSamplingBufferInstance;
 	ConstantBuffer<TerrainNormalBuffer> TerrainNormalBufferInstance;
 	ConstantBuffer<TerrainUvBuffer> TerrainUvBufferInstance;
+	ConstantBuffer<WorldMatrixBuffer> WorldMatrixBufferInstance;
 
 	PbrResource PbrResourceInstance{};
 

@@ -531,7 +531,7 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
-	// Shadow shader
+	// Shadow shaders
 
 	if (ConfigurationData->ShadowsEnabled) {
 		if (!ShadowVertexShader.Initialize(Device.Get(), L"shadow_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
@@ -543,6 +543,24 @@ bool RenderSystem::InitializeShaders()
 		if (!ShadowPixelShader.Initialize(Device.Get(), L"shadow_pixel_shader.cso"))
 		{
 			Logger::Error("ShadowPixelShader not initialized due to critical problem!");
+			return false;
+		}
+
+		if (!ShadowTerrainVertexShader.Initialize(Device.Get(), L"shadow_terrain_vertex_shader.cso", PositionAndUvVertex::Layout, PositionAndUvVertex::LayoutSize))
+		{
+			Logger::Error("ShadowTerrainVertexShader not initialized due to critical problem!");
+			return false;
+		}
+
+		if (!ShadowTerrainHullShader.Initialize(Device.Get(), L"shadow_terrain_hull_shader.cso"))
+		{
+			Logger::Error("ShadowTerrainHullShader not initialized due to critical problem!");
+			return false;
+		}
+
+		if (!ShadowTerrainDomainShader.Initialize(Device.Get(), L"shadow_terrain_domain_shader.cso"))
+		{
+			Logger::Error("ShadowTerrainDomainShader not initialized due to critical problem!");
 			return false;
 		}
 	}
@@ -645,6 +663,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = TerrainUvBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'TerrainUvBufferInstance' constant buffer.");
+
+	hr = WorldMatrixBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'WorldMatrixBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
