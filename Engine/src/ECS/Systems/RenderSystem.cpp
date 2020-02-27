@@ -884,11 +884,6 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 	DeviceContext->DSSetConstantBuffers(0, 1, ShadowBufferInstance.GetAddressOf());
 	DeviceContext->DSSetConstantBuffers(1, 1, TerrainHeightSamplingBufferInstance.GetAddressOf());
 
-	for (auto i = 0; i < 6; i++)
-		TerrainBufferInstance.Data.FrustumPlanes[i] = mainCameraComponent.FrustumPlanes[i];
-
-	TerrainBufferInstance.ApplyChanges();
-
 	for (auto i = 0; i < ShadowCamera::SHADOW_CASCADES_COUNT; i++)
 	{
 		DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencils[i].GetDepthStencilViewPointer());
@@ -914,6 +909,11 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 
 		ChangeBasicShaders(ShadowTerrainVertexShader, ShadowPixelShader);
 		ChangeTessellationShaders(ShadowTerrainHullShader, ShadowTerrainDomainShader);
+
+		const auto shadowCameraFrustumPlanes = ShadowCameras[i].GetFrustumPlanes();
+		for (auto j = 0; j < 6; j++)
+			TerrainBufferInstance.Data.FrustumPlanes[j] = shadowCameraFrustumPlanes[j];
+		TerrainBufferInstance.ApplyChanges();
 
 		Registry->view<TerrainComponent>().each([this, &offset, i](TerrainComponent &terrainComponent)
 		{

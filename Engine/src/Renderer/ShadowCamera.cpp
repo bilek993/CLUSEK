@@ -1,6 +1,7 @@
 #include "ShadowCamera.h"
 #include <cmath>
 #include "../Utils/Logger.h"
+#include "FrustumUtil.h"
 
 ShadowCamera::ShadowCamera()
 {
@@ -59,11 +60,17 @@ void ShadowCamera::UpdateShadowMapLocation(const DirectX::XMMATRIX& cameraViewMa
 	CalculateFrustumPoints(frustumPoints, cameraViewMatrix);
 
 	ProjectionMatrix = GenerateProjectionMatrix(frustumPoints);
+	FrustumPlanes = FrustumUtil::CalculateFrustumPlanes(CalculateCameraMatrix());
 }
 
 DirectX::XMMATRIX ShadowCamera::CalculateCameraMatrix() const
 {
 	return ViewMatrix * ProjectionMatrix;
+}
+
+std::array<DirectX::XMVECTOR, 6>& ShadowCamera::GetFrustumPlanes()
+{
+	return FrustumPlanes;
 }
 
 std::array<DirectX::XMVECTOR, 8> ShadowCamera::GenerateGenericPoints() const

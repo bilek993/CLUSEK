@@ -22,6 +22,8 @@ public:
 	void UpdateShadowMapLocation(const DirectX::XMMATRIX& cameraViewMatrix);
 
 	DirectX::XMMATRIX CalculateCameraMatrix() const;
+
+	std::array<DirectX::XMVECTOR, 6>& GetFrustumPlanes();
 private:
 	DirectX::XMVECTOR UpVector{};
 	DirectX::XMVECTOR EyeVector{};
@@ -32,6 +34,8 @@ private:
 
 	DirectX::XMFLOAT3 LightDirection{};
 	DirectX::XMMATRIX ViewMatrix{};
+
+	std::array<DirectX::XMVECTOR, 6> FrustumPlanes{};
 
 	int ShadowResolution = 1024;
 
