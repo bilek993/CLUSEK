@@ -1,5 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
+#include <array>
 
 struct CameraComponent final
 {
@@ -13,5 +14,5 @@ struct CameraComponent final
 	// 3 - Bottom Frustum Plane
 	// 4 - Near Frustum Plane
 	// 5 - Far Frustum Plane
-	DirectX::XMVECTOR FrustumPlanes[6]{};
+	std::array<DirectX::XMVECTOR,6> FrustumPlanes{};
 };
