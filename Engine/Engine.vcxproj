@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\FrustumUtil.cpp" />
     <ClCompile Include="src\Renderer\Shaders\DomainShader.cpp" />
     <ClCompile Include="src\Renderer\Shaders\HullShader.cpp" />
     <ClCompile Include="src\Loaders\Components\TerrainComponentLoader.cpp" />
@@ -153,6 +154,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\FrustumUtil.h" />
     <ClInclude Include="src\Renderer\Vertex\PositionAndUvVertex.h" />
     <ClInclude Include="src\Renderer\Shaders\DomainShader.h" />
     <ClInclude Include="src\Renderer\Shaders\HullShader.h" />
