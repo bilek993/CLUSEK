@@ -11,8 +11,7 @@ public:
 private:
 	static std::vector<PositionAndUvVertex> GenerateVertices(int width, int height, int numberOfChannels, 
 		int qualityDivider, float scaleXZ, float maxHeight, stbi_us* data);
-	static std::vector<DWORD> GenerateRenderIndices(int width, int height, int qualityDivider);
-	static std::vector<DWORD> GenerateShadowIndices(int width, int height, int qualityDivider);
+	static std::vector<DWORD> GenerateIndices(int width, int height, int qualityDivider);
 
 	static void CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, int width, int numberOfChannels, 
 		float maxHeight, int currentX, int currentY, int nextX, int nextY);
