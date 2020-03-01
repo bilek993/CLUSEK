@@ -154,6 +154,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ECS\Components\RigidbodyStaticHeightFieldsComponent.h" />
     <ClInclude Include="src\Renderer\FrustumUtil.h" />
     <ClInclude Include="src\Renderer\Vertex\PositionAndUvVertex.h" />
     <ClInclude Include="src\Renderer\Shaders\DomainShader.h" />

@@ -15,6 +15,7 @@
 #include "../../ECS/Components/VehicleComponent.h"
 #include "../../ECS/Components/VehiclePlayerControllerComponent.h"
 #include "../../ECS/Components/TerrainComponent.h"
+#include "../../ECS/Components/RigidbodyStaticHeightFieldsComponent.h"
 
 void EntityViewerWindow::Draw()
 {
@@ -47,6 +48,7 @@ void EntityViewerWindow::DrawList()
 		DrawComponent<RigidbodyStaticCylinderComponent>(entity, "Rigidbody Static Cylinder Component");
 		DrawComponent<RigidbodyStaticPlaneComponent>(entity, "Rigidbody Static Plane Component");
 		DrawComponent<RigidbodyStaticSphereComponent>(entity, "Rigidbody Static Sphere Component");
+		DrawComponent<RigidbodyStaticHeightFieldsComponent>(entity, "Rigidbody Static Height Fields Component");
 		DrawComponent<SkyboxComponent>(entity, "Skybox Component");
 		DrawComponent<TransformComponent>(entity, "Transform Component");
 		DrawComponent<VehicleComponent>(entity, "Vehicle Component");
