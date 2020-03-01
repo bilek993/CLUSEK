@@ -2,5 +2,5 @@
 
 struct RigidbodyStaticHeightFieldsComponent final
 {
-	
+	int ExampleValue;
 };
