@@ -32,6 +32,7 @@ private:
 	void InitializeRigidbodyDynamicCapsuleComponents();
 	void InitializeRigidbodyStaticCylinderComponents();
 	void InitializeRigidbodyDynamicCylinderComponents();
+	void InitializeRigidbodyStaticHeightFields();
 	void InitializeVehiclesAndWheels();
 
 	void SetFiltersForComponent(physx::PxRigidActor& actor, const std::string& type) const;

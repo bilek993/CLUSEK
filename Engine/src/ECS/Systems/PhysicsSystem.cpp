@@ -35,6 +35,7 @@ void PhysicsSystem::Start()
 	InitializeRigidbodyDynamicCapsuleComponents();
 	InitializeRigidbodyStaticCylinderComponents();
 	InitializeRigidbodyDynamicCylinderComponents();
+	InitializeRigidbodyStaticHeightFields();
 	InitializeVehiclesAndWheels();
 }
 
@@ -127,6 +128,9 @@ void PhysicsSystem::InitializeCore()
 	Dispatcher = physx::PxDefaultCpuDispatcherCreate(numberOfThreads);
 	sceneDesc.cpuDispatcher = Dispatcher;
 	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+
+	PxRegisterHeightFields(*Physics);
+
 	Scene = Physics->createScene(sceneDesc);
 
 	Cooking = PxCreateCooking(PX_PHYSICS_VERSION, *Foundation, physx::PxCookingParams(physx::PxTolerancesScale()));
@@ -368,6 +372,13 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 
 		Scene->addActor(*rigidbodyDynamicCylinderComponent.Body);
 	});
+}
+
+void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
+{
+	Logger::Debug("Preparing to initialize rigidbody static height fields...");
+
+	
 }
 
 void PhysicsSystem::InitializeVehiclesAndWheels()
