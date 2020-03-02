@@ -111,7 +111,7 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 	desc.nbColumns = width;
 	desc.nbRows = height;
 	desc.samples.data = heightFieldSample;
-	desc.samples.stride = sizeof(heightFieldSample);
+	desc.samples.stride = sizeof(physx::PxHeightFieldSample);
 
 	heightField = cooking->createHeightField(desc, physics->getPhysicsInsertionCallback());
 
