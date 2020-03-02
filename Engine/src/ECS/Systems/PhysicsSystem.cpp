@@ -391,7 +391,8 @@ void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
 	Logger::Debug("Preparing to initialize rigidbody static height fields...");
 
 	Registry->view<TransformComponent, PhysicsMaterialComponent, TerrainComponent, RigidbodyStaticHeightFieldsComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, TerrainComponent &terrainComponent, RigidbodyStaticHeightFieldsComponent &rigidbodyStaticHeightFieldsComponent)
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, TerrainComponent &terrainComponent, 
+			RigidbodyStaticHeightFieldsComponent &rigidbodyStaticHeightFieldsComponent)
 	{
 		const auto geometry = TerrainUtil::GenerateTerrainForPhysx(	rigidbodyStaticHeightFieldsComponent.HeightFieldSample, 
 																	rigidbodyStaticHeightFieldsComponent.HeightField,
@@ -402,7 +403,7 @@ void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
 																	physx::PxHeightFieldFormat::eS16_TM);
 
 		const auto transform = CalculatePxTransform(transformComponent);
-		auto actor = Physics->createRigidStatic(transform);
+		const auto actor = Physics->createRigidStatic(transform);
 
 		rigidbodyStaticHeightFieldsComponent.Shape = physx::PxRigidActorExt::createExclusiveShape(*actor, geometry, *physicsMaterialComponent.Material);
 

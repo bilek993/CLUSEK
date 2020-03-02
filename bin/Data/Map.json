@@ -903,6 +903,13 @@
 		"QualityDivider": 64,
 		"MaterialId": "Data/Textures/Terrain/material.json",
 		"MaxHeight": 800.0
+	  },
+	  "PhysicsMaterialComponent": {
+	    "StaticFriction": 0.8,
+	    "DynamicFriction": 0.8,
+	    "Restitution": 0.1
+	  },
+	  "RigidbodyStaticHeightFieldsComponent": {
 	  }
 	}
   }
