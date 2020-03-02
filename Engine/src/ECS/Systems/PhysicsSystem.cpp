@@ -84,6 +84,7 @@ PhysicsSystem::~PhysicsSystem()
 	{
 		Allocator.deallocate(rigidbodyStaticHeightFieldsComponent.HeightFieldSample);
 		PX_RELEASE(rigidbodyStaticHeightFieldsComponent.HeightField);
+		PX_RELEASE(rigidbodyStaticHeightFieldsComponent.Shape);
 	});
 
 	Registry->view<VehicleComponent>().each([](VehicleComponent &vehicleComponent)
