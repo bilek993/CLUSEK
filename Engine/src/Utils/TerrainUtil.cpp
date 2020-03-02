@@ -1,6 +1,9 @@
 #define STB_IMAGE_IMPLEMENTATION // Required here due to STB IMAGE library implementation
 #include "TerrainUtil.h"
 #include <future>
+#include <geometry/PxHeightFieldDesc.h>
+#include <PxPhysics.h>
+#include <extensions/PxRigidActorExt.h>
 
 void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device, const bool async)
 {
@@ -65,6 +68,55 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 
 	Logger::Debug("Clearing memory after heightmap...");
 	stbi_image_free(data);
+}
+
+void TerrainUtil::GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFieldSample, physx::PxHeightField* heightField,
+	physx::PxCooking* cooking, physx::PxPhysics* physics, physx::PxDefaultAllocator* allocator, const TerrainComponent& terrainComponent, 
+	const physx::PxHeightFieldFormat::Enum format)
+{
+	auto width = 0;
+	auto height = 0;
+	auto numberOfChannels = 0;
+
+	const auto data = stbi_load_16(terrainComponent.PathToHeightmap.c_str(), &width, &height, &numberOfChannels, 1);
+	if (data == nullptr)
+	{
+		Logger::Error("Couldn't open heightmap file!");
+		Logger::Debug("Clearing memory after heightmap...");
+		stbi_image_free(data);
+		return;
+	}
+
+	if (numberOfChannels != 1)
+		Logger::Warning("Number of channels for heigtmap is equal to" + std::to_string(numberOfChannels) + ". It might be very problematic!");
+
+	heightFieldSample = static_cast<physx::PxHeightFieldSample*>(allocator->allocate(sizeof(physx::PxHeightFieldSample) * (width * height), nullptr, nullptr, 0));
+
+	for (auto y = 0; y < height; y++)
+	{
+		for (auto x = 0; x < width; x++)
+		{
+			const auto pixelOffset = CalculateOffset(data, x, y, width, numberOfChannels);
+			const auto terrainHeight = GetHeight(pixelOffset, terrainComponent.MaxHeight);
+
+			heightFieldSample[x + (y * width)].height = static_cast<physx::PxI16>(terrainHeight);
+			heightFieldSample[x + (y * width)].setTessFlag();
+			heightFieldSample[x + (y * width)].materialIndex0 = 1;
+			heightFieldSample[x + (y * width)].materialIndex1 = 1;
+		}
+	}
+
+	physx::PxHeightFieldDesc desc;
+	desc.format = format;
+	desc.nbColumns = width;
+	desc.nbRows = height;
+	desc.samples.data = heightFieldSample;
+	desc.samples.stride = sizeof(heightFieldSample);
+
+	heightField = cooking->createHeightField(desc, physics->getPhysicsInsertionCallback());
+
+	physx::PxHeightFieldGeometry geometry(heightField, physx::PxMeshGeometryFlags(), 1.0f, 
+		terrainComponent.ScaleXZ, terrainComponent.ScaleXZ);
 }
 
 std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, const int height, const int numberOfChannels,

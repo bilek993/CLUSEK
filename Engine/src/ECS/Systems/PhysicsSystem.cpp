@@ -18,6 +18,9 @@
 #include "../Components/VehicleComponent.h"
 #include "../../Physics/VehicleResourcesGenerator.h"
 #include "../../Physics/PhysicsFilterHelper.h"
+#include "../Components/RigidbodyStaticHeightFieldsComponent.h"
+#include "../Components/TerrainComponent.h"
+#include "../../Utils/TerrainUtil.h"
 
 void PhysicsSystem::Start()
 {
@@ -73,6 +76,13 @@ PhysicsSystem::~PhysicsSystem()
 
 	for (auto actor : actors)
 		PX_RELEASE(actor);
+
+	Registry->view<RigidbodyStaticHeightFieldsComponent>().each(
+		[this](RigidbodyStaticHeightFieldsComponent &rigidbodyStaticHeightFieldsComponent)
+	{
+		Allocator.deallocate(rigidbodyStaticHeightFieldsComponent.HeightFieldSample);
+		PX_RELEASE(rigidbodyStaticHeightFieldsComponent.HeightField);
+	});
 
 	Registry->view<VehicleComponent>().each([](VehicleComponent &vehicleComponent)
 	{
@@ -378,7 +388,17 @@ void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
 {
 	Logger::Debug("Preparing to initialize rigidbody static height fields...");
 
-	
+	Registry->view<TransformComponent, PhysicsMaterialComponent, TerrainComponent, RigidbodyStaticHeightFieldsComponent>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, TerrainComponent &terrainComponent, RigidbodyStaticHeightFieldsComponent &rigidbodyStaticHeightFieldsComponent)
+	{
+		TerrainUtil::GenerateTerrainForPhysx(	rigidbodyStaticHeightFieldsComponent.HeightFieldSample, 
+												rigidbodyStaticHeightFieldsComponent.HeightField,
+												Cooking, 
+												Physics, 
+												&Allocator, 
+												terrainComponent, 
+												physx::PxHeightFieldFormat::eS16_TM);
+	});
 }
 
 void PhysicsSystem::InitializeVehiclesAndWheels()

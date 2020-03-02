@@ -16,7 +16,7 @@
     <ClCompile Include="src\Renderer\Shaders\DomainShader.cpp" />
     <ClCompile Include="src\Renderer\Shaders\HullShader.cpp" />
     <ClCompile Include="src\Loaders\Components\TerrainComponentLoader.cpp" />
-    <ClCompile Include="src\Renderer\TerrainUtil.cpp" />
+    <ClCompile Include="src\Utils\TerrainUtil.cpp" />
     <ClCompile Include="src\GUI\Windows\TerrainTessellationWindow.cpp" />
     <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_pixel_shader.hlsl">
       <FileType>CppCode</FileType>
@@ -288,7 +288,7 @@
     <ClInclude Include="src\ECS\Components\TerrainComponent.h" />
     <ClInclude Include="src\Loaders\Components\TerrainComponentLoader.h" />
     <ClInclude Include="src\Renderer\Materials\TerrainShaderMaterial.h" />
-    <ClInclude Include="src\Renderer\TerrainUtil.h" />
+    <ClInclude Include="src\Utils\TerrainUtil.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainSettingsBuffer.h" />
     <ClInclude Include="src\GUI\Windows\TerrainTessellationWindow.h" />

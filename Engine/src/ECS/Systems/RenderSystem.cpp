@@ -15,7 +15,7 @@
 #include "../../Renderer/Generators/QuadGenerator.h"
 #include "../../Renderer/ModelViewLogic.h"
 #include "../Components/TerrainComponent.h"
-#include "../../Renderer/TerrainUtil.h"
+#include "../../Utils/TerrainUtil.h"
 
 void RenderSystem::Start()
 {

@@ -2,11 +2,18 @@
 #include "../ECS/Components/TerrainComponent.h"
 #include <vector>
 #include <stb_image.h>
+#include <geometry/PxHeightFieldSample.h>
+#include <geometry/PxHeightField.h>
+#include <extensions/PxDefaultAllocator.h>
+#include <cooking/PxCooking.h>
 
 class TerrainUtil final
 {
 public:
 	static void GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device, bool async);
+	static void GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFieldSample, physx::PxHeightField* heightField,
+		physx::PxCooking* cooking, physx::PxPhysics* physics, physx::PxDefaultAllocator* allocator, const TerrainComponent& terrainComponent, 
+		physx::PxHeightFieldFormat::Enum format);
 
 private:
 	static std::vector<PositionAndUvVertex> GenerateVertices(int width, int height, int numberOfChannels, 
