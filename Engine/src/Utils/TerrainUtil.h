@@ -6,12 +6,13 @@
 #include <geometry/PxHeightField.h>
 #include <extensions/PxDefaultAllocator.h>
 #include <cooking/PxCooking.h>
+#include <geometry/PxHeightFieldGeometry.h>
 
 class TerrainUtil final
 {
 public:
 	static void GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device, bool async);
-	static void GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFieldSample, physx::PxHeightField* heightField,
+	static physx::PxHeightFieldGeometry GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFieldSample, physx::PxHeightField* heightField,
 		physx::PxCooking* cooking, physx::PxPhysics* physics, physx::PxDefaultAllocator* allocator, const TerrainComponent& terrainComponent, 
 		physx::PxHeightFieldFormat::Enum format);
 

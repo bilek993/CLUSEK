@@ -29,6 +29,7 @@ void PhysicsSystem::Start()
 	InitializeCore();
 
 	InitializePhysicsMaterialComponents();
+
 	InitializeRigidbodyStaticPlaneComponents();
 	InitializeRigidbodyStaticBoxComponents();
 	InitializeRigidbodyDynamicBoxComponents();
@@ -39,6 +40,7 @@ void PhysicsSystem::Start()
 	InitializeRigidbodyStaticCylinderComponents();
 	InitializeRigidbodyDynamicCylinderComponents();
 	InitializeRigidbodyStaticHeightFields();
+
 	InitializeVehiclesAndWheels();
 }
 
@@ -391,13 +393,20 @@ void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
 	Registry->view<TransformComponent, PhysicsMaterialComponent, TerrainComponent, RigidbodyStaticHeightFieldsComponent>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, TerrainComponent &terrainComponent, RigidbodyStaticHeightFieldsComponent &rigidbodyStaticHeightFieldsComponent)
 	{
-		TerrainUtil::GenerateTerrainForPhysx(	rigidbodyStaticHeightFieldsComponent.HeightFieldSample, 
-												rigidbodyStaticHeightFieldsComponent.HeightField,
-												Cooking, 
-												Physics, 
-												&Allocator, 
-												terrainComponent, 
-												physx::PxHeightFieldFormat::eS16_TM);
+		const auto geometry = TerrainUtil::GenerateTerrainForPhysx(	rigidbodyStaticHeightFieldsComponent.HeightFieldSample, 
+																	rigidbodyStaticHeightFieldsComponent.HeightField,
+																	Cooking, 
+																	Physics, 
+																	&Allocator, 
+																	terrainComponent, 
+																	physx::PxHeightFieldFormat::eS16_TM);
+
+		const auto transform = CalculatePxTransform(transformComponent);
+		auto actor = Physics->createRigidStatic(transform);
+
+		rigidbodyStaticHeightFieldsComponent.Shape = physx::PxRigidActorExt::createExclusiveShape(*actor, geometry, *physicsMaterialComponent.Material);
+
+		Scene->addActor(*actor);
 	});
 }
 

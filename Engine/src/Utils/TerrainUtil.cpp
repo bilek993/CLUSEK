@@ -70,7 +70,7 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 	stbi_image_free(data);
 }
 
-void TerrainUtil::GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFieldSample, physx::PxHeightField* heightField,
+physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFieldSample, physx::PxHeightField* heightField,
 	physx::PxCooking* cooking, physx::PxPhysics* physics, physx::PxDefaultAllocator* allocator, const TerrainComponent& terrainComponent, 
 	const physx::PxHeightFieldFormat::Enum format)
 {
@@ -84,7 +84,7 @@ void TerrainUtil::GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFiel
 		Logger::Error("Couldn't open heightmap file!");
 		Logger::Debug("Clearing memory after heightmap...");
 		stbi_image_free(data);
-		return;
+		return physx::PxHeightFieldGeometry();
 	}
 
 	if (numberOfChannels != 1)
@@ -117,6 +117,8 @@ void TerrainUtil::GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFiel
 
 	physx::PxHeightFieldGeometry geometry(heightField, physx::PxMeshGeometryFlags(), 1.0f, 
 		terrainComponent.ScaleXZ, terrainComponent.ScaleXZ);
+
+	return geometry;
 }
 
 std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, const int height, const int numberOfChannels,
