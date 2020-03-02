@@ -407,6 +407,9 @@ void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
 
 		rigidbodyStaticHeightFieldsComponent.Shape = physx::PxRigidActorExt::createExclusiveShape(*actor, geometry, *physicsMaterialComponent.Material);
 
+		SetFiltersForComponent(	*actor,
+								physicsMaterialComponent.SurfaceFilterType);
+
 		Scene->addActor(*actor);
 	});
 }
