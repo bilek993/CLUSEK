@@ -101,8 +101,8 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 
 			heightFieldSample[x + (y * width)].height = static_cast<physx::PxI16>(terrainHeight);
 			heightFieldSample[x + (y * width)].setTessFlag();
-			heightFieldSample[x + (y * width)].materialIndex0 = 1;
-			heightFieldSample[x + (y * width)].materialIndex1 = 1;
+			heightFieldSample[x + (y * width)].materialIndex0 = 0;
+			heightFieldSample[x + (y * width)].materialIndex1 = 0;
 		}
 	}
 
