@@ -407,7 +407,7 @@ void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
 
 		rigidbodyStaticHeightFieldsComponent.Shape = physx::PxRigidActorExt::createExclusiveShape(*actor, geometry, *physicsMaterialComponent.Material);
 
-		SetFiltersForComponent(	*actor,
+		SetFiltersForComponent(	*rigidbodyStaticHeightFieldsComponent.Shape,
 								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*actor);
@@ -429,6 +429,14 @@ void PhysicsSystem::SetFiltersForComponent(physx::PxRigidActor& actor, const std
 
 	PhysicsFilterHelper::SetSurfaceFilter(filterData, type);
 	PhysicsFilterHelper::SetQueryFilterDataForShape(actor, filterData);
+}
+
+void PhysicsSystem::SetFiltersForComponent(physx::PxShape& shape, const std::string& type) const
+{
+	physx::PxFilterData filterData;
+
+	PhysicsFilterHelper::SetSurfaceFilter(filterData, type);
+	shape.setQueryFilterData(filterData);
 }
 
 void PhysicsSystem::UpdateSimulation() const

@@ -36,6 +36,7 @@ private:
 	void InitializeVehiclesAndWheels();
 
 	void SetFiltersForComponent(physx::PxRigidActor& actor, const std::string& type) const;
+	void SetFiltersForComponent(physx::PxShape& shape, const std::string& type) const;
 
 	void UpdateSimulation() const;
 	void UpdateMatrices() const;
