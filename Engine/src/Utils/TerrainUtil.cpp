@@ -97,9 +97,8 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 		for (auto x = 0; x < width; x++)
 		{
 			const auto pixelOffset = CalculateOffset(data, x, y, width, numberOfChannels);
-			const auto terrainHeight = GetHeight(pixelOffset, terrainComponent.MaxHeight);
 
-			heightFieldSample[x + (y * width)].height = static_cast<physx::PxI16>(terrainHeight);
+			heightFieldSample[x + (y * width)].height = *pixelOffset;
 			heightFieldSample[x + (y * width)].setTessFlag();
 			heightFieldSample[x + (y * width)].materialIndex0 = 0;
 			heightFieldSample[x + (y * width)].materialIndex1 = 0;
@@ -115,7 +114,9 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 
 	heightField = cooking->createHeightField(desc, physics->getPhysicsInsertionCallback());
 
-	physx::PxHeightFieldGeometry geometry(heightField, physx::PxMeshGeometryFlags(), 1.0f, 
+	const auto heightScale = terrainComponent.MaxHeight / static_cast<float>(std::numeric_limits<stbi_us>::max());
+
+	physx::PxHeightFieldGeometry geometry(heightField, physx::PxMeshGeometryFlags(), heightScale,
 		terrainComponent.ScaleXZ, terrainComponent.ScaleXZ);
 
 	return geometry;
