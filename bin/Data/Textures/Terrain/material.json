@@ -2,10 +2,10 @@
   "Heightmap": "TerrainHeightmap",
   "Splatmap": "TerrainSplatmap",
   
-  "BaseTextureScale": 150.0,
+  "BaseTextureScale": 220.0,
   "RedTextureScale": 150.0,
-  "GreenTextureScale": 150.0,
-  "BlueTextureScale": 150.0,
+  "GreenTextureScale": 220.0,
+  "BlueTextureScale": 220.0,
   
   "BaseAlbedoTexture": "TerrainMudAlbedo",
   "BaseNormalTexture": "TerrainMudNormal",
