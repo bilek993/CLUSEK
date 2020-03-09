@@ -892,11 +892,18 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 
 		Registry->view<ModelRenderComponent>().each([this, &offset, i](ModelRenderComponent &modelRenderComponent)
 		{
-			ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
-			ShadowBufferInstance.ApplyChanges();
+			auto shadowBufferInstanceSet = false;
 
 			for (const auto& mesh : *modelRenderComponent.Meshes)
 			{
+				if (!shadowBufferInstanceSet)
+				{
+					shadowBufferInstanceSet = true;
+
+					ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
+					ShadowBufferInstance.ApplyChanges();
+				}
+
 				if (mesh.Material.Alpha < ConfigurationData->ShadowAlphaThreshold)
 					continue;
 
