@@ -30,6 +30,7 @@
 #include "../../Renderer/ConstantBufferTypes/TerrainNormalBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/TerrainUvBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/WorldMatrixBuffer.h"
+#include "../../Renderer/TransparencyRenderType.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -77,7 +78,7 @@ private:
 
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
-	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent);
+	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent, TransparencyRenderType renderMode);
 
 	void SetShadowResourcesForShadowCascades(int firstCascadeId);
 	void ClearShadowResourcesForShadowCascades(int firstCascadeId) const;

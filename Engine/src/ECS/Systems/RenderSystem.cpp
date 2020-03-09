@@ -858,9 +858,10 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 
 	SetShadowResourcesForShadowCascades(21);
 
-	RenderSkyBoxComponents(cameraComponent);
+	RenderModelRenderComponents(cameraComponent, Solid);
 	RenderTerrain(cameraComponent, mainCameraTransformComponent);
-	RenderModelRenderComponents(cameraComponent);
+	RenderSkyBoxComponents(cameraComponent);
+	RenderModelRenderComponents(cameraComponent, Transparent);
 
 	ClearShadowResourcesForShadowCascades(21);
 }
@@ -1049,7 +1050,7 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCameraComponent)
+void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransparencyRenderType renderMode)
 {
 	UINT offset = 0;
 	ChangeBasicShaders(UberVertexShader, UberPixelShader);
@@ -1064,7 +1065,10 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	DeviceContext->PSSetShaderResources(6, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
 	DeviceContext->PSSetShaderResources(7, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 
-	Registry->view<ModelRenderComponent>().each([this, &mainCameraComponent, &offset](ModelRenderComponent &modelRenderComponent)
+	if (renderMode == Transparent)
+		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
+
+	Registry->view<ModelRenderComponent>().each([this, &mainCameraComponent, &offset, renderMode](ModelRenderComponent &modelRenderComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
@@ -1075,7 +1079,10 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
-			if (mesh.Material.Alpha < 1.0f)
+			if (renderMode == Solid && mesh.Material.Alpha < 1.0f)
+				continue;
+
+			if (renderMode == Transparent && mesh.Material.Alpha >= 1.0f)
 				continue;
 
 			LightAndAlphaBufferInstance.Data.Alpha = mesh.Material.Alpha;
@@ -1089,28 +1096,10 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 
 			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
-
-		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
-
-		for (const auto& mesh : *modelRenderComponent.Meshes)
-		{
-			if (mesh.Material.Alpha >= 1.0f)
-				continue;
-
-			LightAndAlphaBufferInstance.Data.Alpha = mesh.Material.Alpha;
-			LightAndAlphaBufferInstance.ApplyChanges();
-
-			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(2, 1, mesh.Material.MetalicSmoothnessTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(4, 1, mesh.Material.EmissionTexture->GetAddressOf());
-
-			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
-		}
-
-		DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 	});
+
+	if (renderMode == Transparent)
+		DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 }
 
 void RenderSystem::SetShadowResourcesForShadowCascades(const int firstCascadeId)
