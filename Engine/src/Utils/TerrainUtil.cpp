@@ -64,7 +64,7 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 
 physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFieldSample, physx::PxHeightField* heightField,
 	physx::PxCooking* cooking, physx::PxPhysics* physics, physx::PxDefaultAllocator* allocator, const TerrainComponent& terrainComponent, 
-	const physx::PxHeightFieldFormat::Enum format)
+	const physx::PxHeightFieldFormat::Enum format, const bool async)
 {
 	auto width = 0;
 	auto height = 0;
@@ -76,17 +76,20 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 
 	heightFieldSample = static_cast<physx::PxHeightFieldSample*>(allocator->allocate(sizeof(physx::PxHeightFieldSample) * (width * height), nullptr, nullptr, 0));
 
-	for (auto y = 0; y < height; y++)
+	if (async)
 	{
-		for (auto x = 0; x < width; x++)
-		{
-			const auto pixelOffset = CalculateOffset(data, x, y, width, numberOfChannels);
-
-			heightFieldSample[x + (y * width)].height = *pixelOffset;
-			heightFieldSample[x + (y * width)].setTessFlag();
-			heightFieldSample[x + (y * width)].materialIndex0 = 0;
-			heightFieldSample[x + (y * width)].materialIndex1 = 0;
-		}
+		
+	}
+	else
+	{
+		CalculatePartOfHeightField(	0, 
+									width, 
+									0, 
+									height, 
+									width, 
+									numberOfChannels, 
+									data, 
+									heightFieldSample);
 	}
 
 	physx::PxHeightFieldDesc desc;
@@ -172,6 +175,23 @@ std::vector<DWORD> TerrainUtil::GenerateIndices(const int width, const int heigh
 
 	Logger::Debug("Indices buffer (rendering) calculated!");
 	return indices;
+}
+
+void TerrainUtil::CalculatePartOfHeightField(const int startX, const int endX, const int startY, const int endY,
+                                             const int width, const int numberOfChannels, stbi_us* data, physx::PxHeightFieldSample* heightFieldSample)
+{
+	for (auto y = startY; y < endY; y++)
+	{
+		for (auto x = startX; x < endX; x++)
+		{
+			const auto pixelOffset = CalculateOffset(data, x, y, width, numberOfChannels);
+
+			heightFieldSample[x + (y * width)].height = *pixelOffset;
+			heightFieldSample[x + (y * width)].setTessFlag();
+			heightFieldSample[x + (y * width)].materialIndex0 = 0;
+			heightFieldSample[x + (y * width)].materialIndex1 = 0;
+		}
+	}
 }
 
 void TerrainUtil::CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, const int width, const int numberOfChannels, 

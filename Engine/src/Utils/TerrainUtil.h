@@ -14,7 +14,7 @@ public:
 	static void GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device, bool async);
 	static physx::PxHeightFieldGeometry GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFieldSample, physx::PxHeightField* heightField,
 		physx::PxCooking* cooking, physx::PxPhysics* physics, physx::PxDefaultAllocator* allocator, const TerrainComponent& terrainComponent, 
-		physx::PxHeightFieldFormat::Enum format);
+		physx::PxHeightFieldFormat::Enum format, const bool async);
 
 private:
 	static stbi_us* OpenFile(const std::string& path, int *width, int *height, int *numberOfChannels);
@@ -22,6 +22,9 @@ private:
 	static std::vector<PositionAndUvVertex> GenerateVertices(int width, int height, int numberOfChannels, 
 		int qualityDivider, float scaleXZ, float maxHeight, stbi_us* data);
 	static std::vector<DWORD> GenerateIndices(int width, int height, int qualityDivider);
+
+	static void CalculatePartOfHeightField(int startX, int endX, int startY, int endY, int width,
+		int numberOfChannels, stbi_us* data, physx::PxHeightFieldSample* heightFieldSample);
 
 	static void CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, int width, int numberOfChannels, 
 		float maxHeight, int currentX, int currentY, int nextX, int nextY);

@@ -400,7 +400,8 @@ void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
 																	Physics, 
 																	&Allocator, 
 																	terrainComponent, 
-																	physx::PxHeightFieldFormat::eS16_TM);
+																	physx::PxHeightFieldFormat::eS16_TM,
+																	ConfigurationData->EnableAsyncTerrainGeneration);
 
 		const auto transform = CalculatePxTransform(transformComponent);
 		const auto actor = Physics->createRigidStatic(transform);
