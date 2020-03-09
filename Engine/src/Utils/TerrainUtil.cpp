@@ -78,7 +78,27 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 
 	if (async)
 	{
-		
+		std::vector<std::future<void>> asyncFutures;
+
+		const auto numberOfThreads = std::thread::hardware_concurrency();
+		const auto asyncStep = height / numberOfThreads;
+
+		for (auto i = 0; i < height; i += asyncStep)
+		{
+			const auto start = i;
+			const auto end = i + asyncStep >= height ? height : i + asyncStep;
+
+			asyncFutures.emplace_back(std::async(	std::launch::async,
+													CalculatePartOfHeightField,
+													0,
+													width,
+													start,
+													end,
+													width,
+													numberOfChannels,
+													data,
+													heightFieldSample));
+		}
 	}
 	else
 	{

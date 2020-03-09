@@ -14,7 +14,7 @@ public:
 	static void GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device, bool async);
 	static physx::PxHeightFieldGeometry GenerateTerrainForPhysx(physx::PxHeightFieldSample* heightFieldSample, physx::PxHeightField* heightField,
 		physx::PxCooking* cooking, physx::PxPhysics* physics, physx::PxDefaultAllocator* allocator, const TerrainComponent& terrainComponent, 
-		physx::PxHeightFieldFormat::Enum format, const bool async);
+		physx::PxHeightFieldFormat::Enum format, bool async);
 
 private:
 	static stbi_us* OpenFile(const std::string& path, int *width, int *height, int *numberOfChannels);
