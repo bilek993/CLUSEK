@@ -11,17 +11,9 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 	auto height = 0;
 	auto numberOfChannels = 0;
 
-	const auto data = stbi_load_16(terrainComponent.PathToHeightmap.c_str(), &width, &height, &numberOfChannels, 1);
+	const auto data = OpenFile(terrainComponent.PathToHeightmap, &width, &height, &numberOfChannels);
 	if (data == nullptr)
-	{
-		Logger::Error("Couldn't open heightmap file!");
-		Logger::Debug("Clearing memory after heightmap...");
-		stbi_image_free(data);
 		return;
-	}
-
-	if (numberOfChannels != 1)
-		Logger::Warning("Number of channels for heigtmap is equal to" + std::to_string(numberOfChannels) + ". It might be very problematic!");
 
 	terrainComponent.TexelSize = 1.0f / ((width + height) / 2.0f);
 
@@ -78,17 +70,9 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 	auto height = 0;
 	auto numberOfChannels = 0;
 
-	const auto data = stbi_load_16(terrainComponent.PathToHeightmap.c_str(), &width, &height, &numberOfChannels, 1);
+	const auto data = OpenFile(terrainComponent.PathToHeightmap, &width, &height, &numberOfChannels);
 	if (data == nullptr)
-	{
-		Logger::Error("Couldn't open heightmap file!");
-		Logger::Debug("Clearing memory after heightmap...");
-		stbi_image_free(data);
 		return physx::PxHeightFieldGeometry();
-	}
-
-	if (numberOfChannels != 1)
-		Logger::Warning("Number of channels for heigtmap is equal to" + std::to_string(numberOfChannels) + ". It might be very problematic!");
 
 	heightFieldSample = static_cast<physx::PxHeightFieldSample*>(allocator->allocate(sizeof(physx::PxHeightFieldSample) * (width * height), nullptr, nullptr, 0));
 
@@ -120,6 +104,24 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 		terrainComponent.ScaleXZ, terrainComponent.ScaleXZ);
 
 	return geometry;
+}
+
+stbi_us* TerrainUtil::OpenFile(const std::string& path, int* width, int* height, int* numberOfChannels)
+{
+	const auto data = stbi_load_16(path.c_str(), width, height, numberOfChannels, 1);
+
+	if (data == nullptr)
+	{
+		Logger::Error("Couldn't open heightmap file!");
+		Logger::Debug("Clearing memory after heightmap...");
+		stbi_image_free(data);
+		return nullptr;
+	}
+
+	if (*numberOfChannels != 1)
+		Logger::Warning("Number of channels for heigtmap is equal to" + std::to_string(*numberOfChannels) + ". It might be very problematic!");
+
+	return data;
 }
 
 std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, const int height, const int numberOfChannels,

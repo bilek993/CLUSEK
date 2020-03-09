@@ -17,6 +17,8 @@ public:
 		physx::PxHeightFieldFormat::Enum format);
 
 private:
+	static stbi_us* OpenFile(const std::string& path, int *width, int *height, int *numberOfChannels);
+
 	static std::vector<PositionAndUvVertex> GenerateVertices(int width, int height, int numberOfChannels, 
 		int qualityDivider, float scaleXZ, float maxHeight, stbi_us* data);
 	static std::vector<DWORD> GenerateIndices(int width, int height, int qualityDivider);
