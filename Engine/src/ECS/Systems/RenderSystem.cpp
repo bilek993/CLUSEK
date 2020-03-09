@@ -1068,12 +1068,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 
 	Registry->view<ModelRenderComponent>().each([this, &mainCameraComponent, &offset, renderMode](ModelRenderComponent &modelRenderComponent)
 	{
-		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(modelRenderComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
-		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
-		for (auto i = 0; i < 4; i++)
-			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
-		FatPerObjectBufferInstance.ApplyChanges();
+		auto fatPerObjectBufferSet = false;
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
@@ -1082,6 +1077,18 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 
 			if (renderMode == Transparent && mesh.Material.Alpha >= 1.0f)
 				continue;
+
+			if (!fatPerObjectBufferSet)
+			{
+				fatPerObjectBufferSet = true;
+
+				FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
+					XMMatrixTranspose(modelRenderComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
+				FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
+				for (auto i = 0; i < 4; i++)
+					FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
+				FatPerObjectBufferInstance.ApplyChanges();
+			}
 
 			LightAndAlphaBufferInstance.Data.Alpha = mesh.Material.Alpha;
 			LightAndAlphaBufferInstance.ApplyChanges();
