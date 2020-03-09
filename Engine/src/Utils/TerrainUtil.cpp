@@ -78,6 +78,8 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 
 	if (async)
 	{
+		Logger::Debug("Preparing async 'HeightField' generation.");
+
 		std::vector<std::future<void>> asyncFutures;
 
 		const auto numberOfThreads = std::thread::hardware_concurrency();
@@ -102,6 +104,8 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 	}
 	else
 	{
+		Logger::Debug("Preparing single threaded 'HeightField' generation.");
+
 		CalculatePartOfHeightField(	0, 
 									width, 
 									0, 
@@ -200,6 +204,9 @@ std::vector<DWORD> TerrainUtil::GenerateIndices(const int width, const int heigh
 void TerrainUtil::CalculatePartOfHeightField(const int startX, const int endX, const int startY, const int endY,
                                              const int width, const int numberOfChannels, stbi_us* data, physx::PxHeightFieldSample* heightFieldSample)
 {
+	Logger::Debug("Generating 'HeightField' for part (x:" + std::to_string(startX) + "-" + 
+		std::to_string(endX) + ", y:" + std::to_string(startY) + "-" + std::to_string(endY) + ").");
+
 	for (auto y = startY; y < endY; y++)
 	{
 		for (auto x = startX; x < endX; x++)
