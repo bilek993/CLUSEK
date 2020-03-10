@@ -68,14 +68,14 @@ Texture2D RedOcclusionTexture : register(t15);
 Texture2D GreenOcclusionTexture : register(t16);
 Texture2D BlueOcclusionTexture : register(t17);
 
-TextureCube IrradianceTexture : register(t18);
-TextureCube RadianceTexture : register(t19);
-Texture2D BrdfLut : register(t20);
+Texture2D ShadowMapCascade0 : register(t18);
+Texture2D ShadowMapCascade1 : register(t19);
+Texture2D ShadowMapCascade2 : register(t20);
+Texture2D ShadowMapCascade3 : register(t21);
 
-Texture2D ShadowMapCascade0 : register(t21);
-Texture2D ShadowMapCascade1 : register(t22);
-Texture2D ShadowMapCascade2 : register(t23);
-Texture2D ShadowMapCascade3 : register(t24);
+TextureCube IrradianceTexture : register(t22);
+TextureCube RadianceTexture : register(t23);
+Texture2D BrdfLut : register(t24);
 
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);

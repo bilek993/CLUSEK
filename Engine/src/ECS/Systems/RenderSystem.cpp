@@ -856,7 +856,8 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 
 	UpdateLightAndAlphaBuffer();
 
-	SetShadowResourcesForShadowCascades(21);
+	SetShadowResourcesForShadowCascades(18);
+	SetPbrResources();
 
 	RenderModelRenderComponents(cameraComponent, Solid);
 	RenderTerrain(cameraComponent, mainCameraTransformComponent);
@@ -996,10 +997,6 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	DeviceContext->PSSetConstantBuffers(3, 1, CameraBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(4, 1, CascadeLevelsBufferInstance.GetAddressOf());
 
-	DeviceContext->PSSetShaderResources(18, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
-	DeviceContext->PSSetShaderResources(19, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
-	DeviceContext->PSSetShaderResources(20, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
-
 	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
@@ -1066,10 +1063,6 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
 
-	DeviceContext->PSSetShaderResources(5, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
-	DeviceContext->PSSetShaderResources(6, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
-	DeviceContext->PSSetShaderResources(7, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
-
 	if (renderMode == Transparent)
 		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
 
@@ -1118,6 +1111,13 @@ void RenderSystem::SetShadowResourcesForShadowCascades(const int firstCascadeId)
 {
 	for (auto i = 0; i < ShadowRenderDepthStencils.size(); i++)
 		DeviceContext->PSSetShaderResources(firstCascadeId + i, 1, ShadowRenderDepthStencils[i].GetAddressOfShaderResourceView());
+}
+
+void RenderSystem::SetPbrResources()
+{
+	DeviceContext->PSSetShaderResources(22, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
+	DeviceContext->PSSetShaderResources(23, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
+	DeviceContext->PSSetShaderResources(24, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 }
 
 void RenderSystem::ConfigureCascadeConstantBuffer()
