@@ -399,6 +399,9 @@
     <ClCompile Include="src\Utils\TerrainUtil.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\ProfilerAnnotations.cpp">
+      <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -825,6 +828,9 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Renderer\TransparencyRenderType.h">
+      <Filter>Header Files\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\ProfilerAnnotations.h">
       <Filter>Header Files\Renderer</Filter>
     </ClInclude>
   </ItemGroup>

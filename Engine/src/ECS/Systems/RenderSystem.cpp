@@ -188,6 +188,10 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
+	// Initialize profiler
+
+	Profiler = std::make_unique<ProfilerAnnotations>(DeviceContext.Get());
+
 	// Back buffer initialization
 
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> backBuffer;

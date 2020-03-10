@@ -31,6 +31,7 @@
 #include "../../Renderer/ConstantBufferTypes/TerrainUvBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/WorldMatrixBuffer.h"
 #include "../../Renderer/TransparencyRenderType.h"
+#include "../../Renderer/ProfilerAnnotations.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -89,6 +90,8 @@ private:
 	void UpdateCameraBuffer(const TransformComponent &mainCameraTransformComponent);
 
 	void PerformPostProcessing() const;
+
+	std::unique_ptr<ProfilerAnnotations> Profiler;
 
 	int WindowWidth = 0;
 	int WindowHeight = 0;

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\ProfilerAnnotations.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticHeightFieldsComponentLoader.cpp" />
     <ClCompile Include="src\Renderer\FrustumUtil.cpp" />
     <ClCompile Include="src\Renderer\Shaders\DomainShader.cpp" />
@@ -155,6 +156,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ProfilerAnnotations.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticHeightFieldsComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\RigidbodyStaticHeightFieldsComponent.h" />
     <ClInclude Include="src\Renderer\FrustumUtil.h" />
