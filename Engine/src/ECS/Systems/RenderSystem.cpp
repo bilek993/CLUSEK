@@ -837,6 +837,8 @@ TransformComponent& RenderSystem::GetMainCameraTransform() const
 
 void RenderSystem::RenderShadows(const CameraComponent &mainCameraComponent)
 {
+	Profiler->BeginEvent("Shadows");
+
 	DeviceContext->RSSetViewports(1, &ShadowViewport);
 
 	auto& mainCamera = GetMainCamera();
@@ -850,10 +852,14 @@ void RenderSystem::RenderShadows(const CameraComponent &mainCameraComponent)
 	}
 
 	RenderSceneForShadows(mainCameraComponent);
+
+	Profiler->EndEvent();
 }
 
 void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const TransformComponent &mainCameraTransformComponent)
 {
+	Profiler->BeginEvent("Scene");
+
 	DeviceContext->RSSetState(MainRasterizerState.Get());
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
@@ -867,6 +873,8 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	RenderTerrain(cameraComponent, mainCameraTransformComponent);
 	RenderSkyBoxComponents(cameraComponent);
 	RenderModelRenderComponents(cameraComponent, Transparent);
+
+	Profiler->EndEvent();
 }
 
 void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraComponent)
@@ -890,6 +898,8 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 
 	for (auto i = 0; i < ShadowCamera::SHADOW_CASCADES_COUNT; i++)
 	{
+		Profiler->BeginEvent("Cascade " + std::to_string(i));
+
 		DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencils[i].GetDepthStencilViewPointer());
 		DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencils[i].GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
@@ -942,11 +952,15 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 
 		ResetTessellationShaders();
 		DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+		Profiler->EndEvent();
 	}
 }
 
 void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent)
 {
+	Profiler->BeginEvent("Skybox");
+
 	UINT offset = 0;
 	ChangeBasicShaders(SkyVertexShader, SkyPixelShader);
 
@@ -962,10 +976,14 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 
 		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
 	});
+
+	Profiler->EndEvent();
 }
 
 void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent)
 {
+	Profiler->BeginEvent("Terrain");
+
 	UINT offset = 0;
 	ChangeBasicShaders(TerrainVertexShader, TerrainPixelShader);
 
@@ -1054,10 +1072,14 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 	ResetTessellationShaders();
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	Profiler->EndEvent();
 }
 
 void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransparencyRenderType renderMode)
 {
+	Profiler->BeginEvent(std::string(renderMode == Solid ? "Solid" : "Non-soild") + " Model");
+
 	UINT offset = 0;
 	ChangeBasicShaders(UberVertexShader, UberPixelShader);
 
@@ -1109,6 +1131,8 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 
 	if (renderMode == Transparent)
 		DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
+
+	Profiler->EndEvent();
 }
 
 void RenderSystem::SetShadowResourcesForShadowCascades(const int firstCascadeId)
@@ -1153,15 +1177,27 @@ void RenderSystem::UpdateCameraBuffer(const TransformComponent &mainCameraTransf
 
 void RenderSystem::PerformPostProcessing() const
 {
+	Profiler->BeginEvent("PostProcessing");
+
 	DeviceContext->RSSetState(SolidRasterizerState.Get());
 
 	auto currentInput = IntermediateRenderTexture.GetShaderResourceView();
 
+	Profiler->BeginEvent("Multisampling");
 	if (ConfigurationData->MultisamplesCount > 1)
 		currentInput = MultisamplingPostProcessingInstance->Process(currentInput.GetAddressOf());
+	Profiler->EndEvent();
 
 	for (auto& postProcessingEffect : CurrentPostProcessingSettings->List)
+	{
+		Profiler->BeginEvent(postProcessingEffect->GetName());
 		currentInput = postProcessingEffect->Process(currentInput.GetAddressOf());
+		Profiler->EndEvent();
+	}
 
+	Profiler->BeginEvent("Copy To Back Buffer");
 	CopyToBackBufferPostProcessingInstance->Process(currentInput.GetAddressOf());
+	Profiler->EndEvent();
+
+	Profiler->EndEvent();
 }
