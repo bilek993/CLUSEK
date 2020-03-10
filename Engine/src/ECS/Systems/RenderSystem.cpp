@@ -190,7 +190,11 @@ bool RenderSystem::InitializeDirectX()
 
 	// Initialize profiler
 
-	Profiler = std::make_unique<ProfilerAnnotations>(DeviceContext.Get());
+#ifdef _DEBUG
+	Profiler = std::make_unique<ProfilerAnnotations>(DeviceContext.Get(), true);
+#else
+	Profiler = std::make_unique<ProfilerAnnotations>(DeviceContext.Get(), false);
+#endif
 
 	// Back buffer initialization
 

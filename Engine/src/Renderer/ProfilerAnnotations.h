@@ -6,11 +6,12 @@
 class ProfilerAnnotations final
 {
 public:
-	explicit ProfilerAnnotations(ID3D11DeviceContext* context);
+	explicit ProfilerAnnotations(ID3D11DeviceContext* context, bool enabled);
 
 	void BeginEvent(const std::string& name) const;
 	void EndEvent() const;
 
 private:
 	Microsoft::WRL::ComPtr<ID3DUserDefinedAnnotation> UserDefineAnnotationHandler;
+	bool Enabled;
 };
