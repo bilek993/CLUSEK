@@ -337,6 +337,8 @@ void TerrainUtil::CleanUpResourcesAfterOptimization(TerrainComponent& terrainCom
 {
 	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
 	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
+	context->CSSetUnorderedAccessViews(1, 1, nullView, nullptr);
+	context->CSSetUnorderedAccessViews(2, 1, nullView, nullptr);
 
 	terrainComponent.Material.OptimizedOcclusionTexture.UnorderedAccessView.Reset();
 	terrainComponent.Material.OptimizedMetalicTexture.UnorderedAccessView.Reset();
