@@ -16,7 +16,11 @@ public:
 		physx::PxCooking* cooking, physx::PxPhysics* physics, physx::PxDefaultAllocator* allocator, const TerrainComponent& terrainComponent, 
 		physx::PxHeightFieldFormat::Enum format, bool async);
 
+	static void OptimizeTerrain(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context);
+
 private:
+	inline static const int THREAD_COUNT = 32;
+
 	static stbi_us* OpenFile(const std::string& path, int *width, int *height, int *numberOfChannels);
 
 	static std::vector<PositionAndUvVertex> GenerateVertices(int width, int height, int numberOfChannels, 
@@ -31,4 +35,12 @@ private:
 
 	static stbi_us* CalculateOffset(stbi_us* data, int x, int y, int width, int numberOfChannels);
 	static float GetHeight(const stbi_us* offsetData, float maxHeight);
+
+	static void InitializeOptimizationTextures(TerrainComponent& terrainComponent, int width, int height, ID3D11Device* device);
+	static bool CalculateOptimizedTexturesSize(TerrainComponent& terrainComponent, int* width, int* height);
+	static void ComputeTexturesOptimization(TerrainComponent& terrainComponent, int width, int height, ComputeShader& computeShader, ID3D11DeviceContext* context);
+	static void GenerateMipMapsForOptimizedTextures(TerrainComponent& terrainComponent, ID3D11DeviceContext* context);
+	static void CleanUpResourcesAfterOptimization(TerrainComponent& terrainComponent, ID3D11DeviceContext* context);
+
+	static D3D11_TEXTURE2D_DESC GetDescriptor(ID3D11ShaderResourceView* shaderResourceView);
 };

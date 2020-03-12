@@ -4,6 +4,7 @@
 #include <geometry/PxHeightFieldDesc.h>
 #include <PxPhysics.h>
 #include <extensions/PxRigidActorExt.h>
+#include "../Renderer/Generators/ResourcesGenerator.h"
 
 void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device, const bool async)
 {
@@ -133,6 +134,32 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 	return geometry;
 }
 
+void TerrainUtil::OptimizeTerrain(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context)
+{
+	Logger::Debug("Preparing to optimize terrain materials");
+
+	ComputeShader optimizerComputeShader;
+	if (!optimizerComputeShader.Initialize(device, L"terrain_material_optimizer_compute_shader.cso"))
+	{
+		Logger::Error("OptimizerComputeShader not initialized due to critical problem!");
+		return;
+	}
+
+	int width, height;
+	if (!CalculateOptimizedTexturesSize(terrainComponent, &width, &height))
+	{
+		Logger::Error("Incorrect terrain textures! Terrain textures should be the same size!");
+		return;
+	}
+
+	InitializeOptimizationTextures(terrainComponent, width, height, device);
+
+	ComputeTexturesOptimization(terrainComponent, width, height, optimizerComputeShader, context);
+
+	GenerateMipMapsForOptimizedTextures(terrainComponent, context);
+	CleanUpResourcesAfterOptimization(terrainComponent, context);
+}
+
 stbi_us* TerrainUtil::OpenFile(const std::string& path, int* width, int* height, int* numberOfChannels)
 {
 	const auto data = stbi_load_16(path.c_str(), width, height, numberOfChannels, 1);
@@ -250,4 +277,81 @@ stbi_us* TerrainUtil::CalculateOffset(stbi_us* data, const int x, const int y, c
 float TerrainUtil::GetHeight(const stbi_us* offsetData, const float maxHeight)
 {
 	return static_cast<float>(offsetData[0]) / std::numeric_limits<stbi_us>::max() * maxHeight;
+}
+
+void TerrainUtil::InitializeOptimizationTextures(TerrainComponent& terrainComponent, const int width, const int height, ID3D11Device* device)
+{
+	terrainComponent.Material.OptimizedOcclusionTexture = ResourcesGenerator::CreateFlatTexture(device, width, height, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
+	ResourcesGenerator::CreateUnorderedAccessView(device, terrainComponent.Material.OptimizedOcclusionTexture);
+
+	terrainComponent.Material.OptimizedMetalicTexture = ResourcesGenerator::CreateFlatTexture(device, width, height, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
+	ResourcesGenerator::CreateUnorderedAccessView(device, terrainComponent.Material.OptimizedMetalicTexture);
+
+	terrainComponent.Material.OptimizedSmoothnessTexture = ResourcesGenerator::CreateFlatTexture(device, width, height, DXGI_FORMAT_R16G16B16A16_FLOAT, true);
+	ResourcesGenerator::CreateUnorderedAccessView(device, terrainComponent.Material.OptimizedSmoothnessTexture);
+}
+
+bool TerrainUtil::CalculateOptimizedTexturesSize(TerrainComponent& terrainComponent, int* width, int* height)
+{
+	const D3D11_TEXTURE2D_DESC listOfDesc[] = {
+		GetDescriptor(terrainComponent.Material.BaseOcclusionTexture->Get()),
+		GetDescriptor(terrainComponent.Material.RedOcclusionTexture->Get()),
+		GetDescriptor(terrainComponent.Material.GreenOcclusionTexture->Get()),
+		GetDescriptor(terrainComponent.Material.BlueOcclusionTexture->Get()),
+
+		GetDescriptor(terrainComponent.Material.BaseMetalicSmoothnessTexture->Get()),
+		GetDescriptor(terrainComponent.Material.RedMetalicSmoothnessTexture->Get()),
+		GetDescriptor(terrainComponent.Material.GreenMetalicSmoothnessTexture->Get()),
+		GetDescriptor(terrainComponent.Material.BlueMetalicSmoothnessTexture->Get()),
+	};
+
+	*width = listOfDesc[0].Width;
+	*height = listOfDesc[0].Height;
+
+	for (auto i = 1; i < 8; i++)
+	{
+		if (*width != listOfDesc[i].Width || *height != listOfDesc[i].Height)
+			return false;
+	}
+
+	return true;
+}
+
+void TerrainUtil::ComputeTexturesOptimization(TerrainComponent& terrainComponent, const int width, const int height, ComputeShader& computeShader, ID3D11DeviceContext* context)
+{
+	context->CSSetShader(computeShader.GetShader(), nullptr, 0);
+	context->CSSetUnorderedAccessViews(0, 1, terrainComponent.Material.OptimizedOcclusionTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+	context->CSSetUnorderedAccessViews(1, 1, terrainComponent.Material.OptimizedMetalicTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+	context->CSSetUnorderedAccessViews(2, 1, terrainComponent.Material.OptimizedSmoothnessTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+	context->Dispatch(width / THREAD_COUNT, height / THREAD_COUNT, 1);
+}
+
+void TerrainUtil::GenerateMipMapsForOptimizedTextures(TerrainComponent& terrainComponent, ID3D11DeviceContext* context)
+{
+	context->GenerateMips(terrainComponent.Material.OptimizedOcclusionTexture.ShaderResourceView.Get());
+	context->GenerateMips(terrainComponent.Material.OptimizedMetalicTexture.ShaderResourceView.Get());
+	context->GenerateMips(terrainComponent.Material.OptimizedSmoothnessTexture.ShaderResourceView.Get());
+}
+
+void TerrainUtil::CleanUpResourcesAfterOptimization(TerrainComponent& terrainComponent, ID3D11DeviceContext* context)
+{
+	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
+	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
+
+	terrainComponent.Material.OptimizedOcclusionTexture.UnorderedAccessView.Reset();
+	terrainComponent.Material.OptimizedMetalicTexture.UnorderedAccessView.Reset();
+	terrainComponent.Material.OptimizedSmoothnessTexture.UnorderedAccessView.Reset();
+}
+
+D3D11_TEXTURE2D_DESC TerrainUtil::GetDescriptor(ID3D11ShaderResourceView* shaderResourceView)
+{
+	ID3D11Resource* resource;
+	ID3D11Texture2D* texture;
+	D3D11_TEXTURE2D_DESC descriptor;
+
+	shaderResourceView->GetResource(&resource);
+	resource->QueryInterface<ID3D11Texture2D>(&texture);
+	texture->GetDesc(&descriptor);
+
+	return descriptor;
 }

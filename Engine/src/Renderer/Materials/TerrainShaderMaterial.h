@@ -1,6 +1,7 @@
 #pragma once
 #include <wrl/client.h>
 #include <memory>
+#include "../ComputeTexture.h"
 
 struct TerrainShaderMaterial final
 {
@@ -31,4 +32,8 @@ struct TerrainShaderMaterial final
 	std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> RedOcclusionTexture;
 	std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> GreenOcclusionTexture;
 	std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> BlueOcclusionTexture;
+
+	ComputeTexture OptimizedOcclusionTexture;
+	ComputeTexture OptimizedMetalicTexture;
+	ComputeTexture OptimizedSmoothnessTexture;
 };

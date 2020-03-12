@@ -58,24 +58,18 @@ Texture2D RedNormalTexture : register(t7);
 Texture2D GreenNormalTexture : register(t8);
 Texture2D BlueNormalTexture : register(t9);
 
-Texture2D BaseMetalicSmoothnessTexture : register(t10);
-Texture2D RedMetalicSmoothnessTexture : register(t11);
-Texture2D GreenMetalicSmoothnessTexture : register(t12);
-Texture2D BlueMetalicSmoothnessTexture : register(t13);
+Texture2D OptimizedOcclusionTexture : register(t10);
+Texture2D OptimizedMetalicTexture : register(t11);
+Texture2D OptimizedSmoothnessTexture : register(t12);
 
-Texture2D BaseOcclusionTexture : register(t14);
-Texture2D RedOcclusionTexture : register(t15);
-Texture2D GreenOcclusionTexture : register(t16);
-Texture2D BlueOcclusionTexture : register(t17);
+Texture2D ShadowMapCascade0 : register(t13);
+Texture2D ShadowMapCascade1 : register(t14);
+Texture2D ShadowMapCascade2 : register(t15);
+Texture2D ShadowMapCascade3 : register(t16);
 
-Texture2D ShadowMapCascade0 : register(t18);
-Texture2D ShadowMapCascade1 : register(t19);
-Texture2D ShadowMapCascade2 : register(t20);
-Texture2D ShadowMapCascade3 : register(t21);
-
-TextureCube IrradianceTexture : register(t22);
-TextureCube RadianceTexture : register(t23);
-Texture2D BrdfLut : register(t24);
+TextureCube IrradianceTexture : register(t17);
+TextureCube RadianceTexture : register(t18);
+Texture2D BrdfLut : register(t19);
 
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);
@@ -104,20 +98,25 @@ float3 CalculateNormalColor(PS_INPUT input, float3 splatId)
 
 float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
 {
-    float2 color = BaseMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).ra;
-    color = lerp(color, RedMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).ra, splatId.r);
-    color = lerp(color, GreenMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * GreenTextureScale).ra, splatId.g);
-    color = lerp(color, BlueMetalicSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * BlueTextureScale).ra, splatId.b);
+    float4 sampledMetalic = OptimizedMetalicTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale);
+    float4 sampledSmoothness = OptimizedSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale);
+    
+    float2 color = float2(sampledMetalic.a, sampledSmoothness.a);
+    color = lerp(color, float2(sampledMetalic.r, sampledSmoothness.r), splatId.r);
+    color = lerp(color, float2(sampledMetalic.g, sampledSmoothness.g), splatId.g);
+    color = lerp(color, float2(sampledMetalic.b, sampledSmoothness.b), splatId.b);
     
     return color;
 }
 
 float CalculateOcclusionColor(PS_INPUT input, float3 splatId)
 {
-    float color = BaseOcclusionTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).r;
-    color = lerp(color, RedOcclusionTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).r, splatId.r);
-    color = lerp(color, GreenOcclusionTexture.Sample(WrapSampler, input.TextureCoord * GreenTextureScale).r, splatId.g);
-    color = lerp(color, BlueOcclusionTexture.Sample(WrapSampler, input.TextureCoord * BlueTextureScale).r, splatId.b);
+    float4 sampledOcclusion = OptimizedOcclusionTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale);
+    
+    float color = sampledOcclusion.a;
+    color = lerp(color, sampledOcclusion.r, splatId.r);
+    color = lerp(color, sampledOcclusion.g, splatId.g);
+    color = lerp(color, sampledOcclusion.b, splatId.b);
     
     return color;
 }
