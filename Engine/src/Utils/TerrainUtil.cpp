@@ -320,9 +320,21 @@ bool TerrainUtil::CalculateOptimizedTexturesSize(TerrainComponent& terrainCompon
 void TerrainUtil::ComputeTexturesOptimization(TerrainComponent& terrainComponent, const int width, const int height, ComputeShader& computeShader, ID3D11DeviceContext* context)
 {
 	context->CSSetShader(computeShader.GetShader(), nullptr, 0);
+
+	context->CSSetShaderResources(0, 1, terrainComponent.Material.BaseMetalicSmoothnessTexture->GetAddressOf());
+	context->CSSetShaderResources(1, 1, terrainComponent.Material.RedMetalicSmoothnessTexture->GetAddressOf());
+	context->CSSetShaderResources(2, 1, terrainComponent.Material.GreenMetalicSmoothnessTexture->GetAddressOf());
+	context->CSSetShaderResources(3, 1, terrainComponent.Material.BlueMetalicSmoothnessTexture->GetAddressOf());
+
+	context->CSSetShaderResources(4, 1, terrainComponent.Material.BaseOcclusionTexture->GetAddressOf());
+	context->CSSetShaderResources(5, 1, terrainComponent.Material.RedOcclusionTexture->GetAddressOf());
+	context->CSSetShaderResources(6, 1, terrainComponent.Material.GreenOcclusionTexture->GetAddressOf());
+	context->CSSetShaderResources(7, 1, terrainComponent.Material.BlueOcclusionTexture->GetAddressOf());
+
 	context->CSSetUnorderedAccessViews(0, 1, terrainComponent.Material.OptimizedOcclusionTexture.UnorderedAccessView.GetAddressOf(), nullptr);
 	context->CSSetUnorderedAccessViews(1, 1, terrainComponent.Material.OptimizedMetalicTexture.UnorderedAccessView.GetAddressOf(), nullptr);
 	context->CSSetUnorderedAccessViews(2, 1, terrainComponent.Material.OptimizedSmoothnessTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+
 	context->Dispatch(width / THREAD_COUNT, height / THREAD_COUNT, 1);
 }
 
