@@ -17,18 +17,18 @@ RWTexture2D<float4> OutputSmoothnessTexture : register(u2);
 [numthreads(32, 32, 1)]
 void main(uint2 threadID : SV_DispatchThreadID)
 {
-    OutputOcclusionTexture[threadID] = float4(  BaseOcclusionTexture.Load(int3(threadID.xy, 0)).r, 
-                                                RedOcclusionTexture.Load(int3(threadID.xy, 0)).r,
+    OutputOcclusionTexture[threadID] = float4(  RedOcclusionTexture.Load(int3(threadID.xy, 0)).r,
                                                 GreenOcclusionTexture.Load(int3(threadID.xy, 0)).r,
-                                                BlueOcclusionTexture.Load(int3(threadID.xy, 0)).r);
+                                                BlueOcclusionTexture.Load(int3(threadID.xy, 0)).r,
+                                                BaseOcclusionTexture.Load(int3(threadID.xy, 0)).r);
     
-    OutputMetalicTexture[threadID] = float4(    BaseMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).r,
-                                                RedMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).r,
+    OutputMetalicTexture[threadID] = float4(    RedMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).r,
                                                 GreenMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).r,
-                                                BlueMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).r);
+                                                BlueMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).r,
+                                                BaseMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).r);
     
-    OutputSmoothnessTexture[threadID] = float4( BaseMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a,
-                                                RedMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a,
+    OutputSmoothnessTexture[threadID] = float4( RedMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a,
                                                 GreenMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a,
-                                                BlueMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a);
+                                                BlueMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a, 
+                                                BaseMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a,);
 }
