@@ -39,8 +39,8 @@ Texture2D EmissionTexture : register(t4);
 
 Texture2D ShadowMapCascade0 : register(t13);
 Texture2D ShadowMapCascade1 : register(t14);
-Texture2D ShadowMapCascade2 : register(t25);
-Texture2D ShadowMapCascade3 : register(t26);
+Texture2D ShadowMapCascade2 : register(t15);
+Texture2D ShadowMapCascade3 : register(t16);
 
 TextureCube IrradianceTexture : register(t17);
 TextureCube RadianceTexture : register(t18);
