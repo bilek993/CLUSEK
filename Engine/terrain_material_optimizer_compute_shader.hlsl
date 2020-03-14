@@ -29,6 +29,6 @@ void main(uint2 threadID : SV_DispatchThreadID)
     
     OutputSmoothnessTexture[threadID] = float4( RedMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a,
                                                 GreenMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a,
-                                                BlueMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a, 
-                                                BaseMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a,);
+                                                BlueMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a,
+                                                BaseMetalicSmoothnessTexture.Load(int3(threadID.xy, 0)).a);
 }
