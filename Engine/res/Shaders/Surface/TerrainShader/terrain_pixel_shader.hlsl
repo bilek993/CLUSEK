@@ -2,19 +2,12 @@
 #include "../../Includes/pbr.hlsli"
 #include "../../Includes/shadow_utils.hlsli"
 
-cbuffer TerrainNormalBuffer : register(b0)
-{
-    float WorldCellSpace;
-    float TexelSpace;
-    float MaxHeight;
-}
-
-cbuffer TerrainUvBuffer : register(b1)
+cbuffer TerrainUvBuffer : register(b0)
 {
     float TexturesScale;
 }
 
-cbuffer LightAndAlphaBuffer : register(b2)
+cbuffer LightAndAlphaBuffer : register(b1)
 {
     float3 DirectionalLightColor;
     float DirectionalLightStrength;
@@ -22,12 +15,12 @@ cbuffer LightAndAlphaBuffer : register(b2)
     float Alpha;
 }
 
-cbuffer CameraBuffer : register(b3)
+cbuffer CameraBuffer : register(b2)
 {
     float3 CameraPosition;
 }
 
-cbuffer CascadeLevelsBuffer : register(b4)
+cbuffer CascadeLevelsBuffer : register(b3)
 {
     float4 CascadeEnds;
     float4 Biases;
@@ -60,15 +53,16 @@ Texture2D OptimizedMetalicTexture : register(t11);
 Texture2D OptimizedSmoothnessTexture : register(t12);
 
 texture2D CalculatedNormalTexture : register(t13);
+texture2D CalculatedTangentTexture : register(t14);
 
-Texture2D ShadowMapCascade0 : register(t14);
-Texture2D ShadowMapCascade1 : register(t15);
-Texture2D ShadowMapCascade2 : register(t16);
-Texture2D ShadowMapCascade3 : register(t17);
+Texture2D ShadowMapCascade0 : register(t15);
+Texture2D ShadowMapCascade1 : register(t16);
+Texture2D ShadowMapCascade2 : register(t17);
+Texture2D ShadowMapCascade3 : register(t18);
 
-TextureCube IrradianceTexture : register(t18);
-TextureCube RadianceTexture : register(t19);
-Texture2D BrdfLut : register(t20);
+TextureCube IrradianceTexture : register(t19);
+TextureCube RadianceTexture : register(t20);
+Texture2D BrdfLut : register(t21);
 
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);
@@ -122,17 +116,10 @@ float CalculateOcclusionColor(PS_INPUT input, float3 splatId)
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    float3 tangent, bitangent, normal;
-    CalculateNormalForTerrain(  input.TextureCoord, 
-                                HeightmapTexture, 
-                                ClampSampler, 
-                                WorldCellSpace, 
-                                TexelSpace, 
-                                MaxHeight, 
-                                tangent, 
-                                bitangent, 
-                                normal);
-    
+    float3 normal = float3(0, 0, 0);
+    float3 tangent = float3(0, 0, 0);
+    float3 bitangent = cross(normal, tangent);
+
     float3x3 TBN = CalculateTBN(tangent, bitangent, normal);
     
     float3 splatId = SplatmapTexture.SampleLevel(ClampSampler, input.TextureCoord, 0).rgb;

@@ -7,6 +7,8 @@
 #include <extensions/PxDefaultAllocator.h>
 #include <cooking/PxCooking.h>
 #include <geometry/PxHeightFieldGeometry.h>
+#include "../Renderer/ConstantBufferTypes/TerrainNormalBuffer.h"
+#include "../Renderer/ConstantBuffer.h"
 
 class TerrainUtil final
 {
@@ -17,7 +19,8 @@ public:
 		physx::PxHeightFieldFormat::Enum format, bool async);
 
 	static void OptimizeTerrain(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context);
-	static void GenerateNormals(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context);
+	static void GenerateNormals(TerrainComponent& terrainComponent, ConstantBuffer<TerrainNormalBuffer>& terrainNormalBuffer, 
+		ID3D11Device* device, ID3D11DeviceContext* context);
 
 private:
 	inline static const int THREAD_COUNT = 32;

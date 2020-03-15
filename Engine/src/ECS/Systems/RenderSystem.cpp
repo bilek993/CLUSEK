@@ -762,7 +762,7 @@ void RenderSystem::InitializeTerrainComponent()
 		MaterialLoader::SetResourceForTerrainMaterial(Device.Get(), terrainComponent.Material, terrainComponent.MaterialId);
 		TerrainUtil::GenerateTerrainMesh(terrainComponent, Device.Get(), ConfigurationData->EnableAsyncTerrainGeneration);
 		TerrainUtil::OptimizeTerrain(terrainComponent, Device.Get(), DeviceContext.Get());
-		TerrainUtil::GenerateNormals(terrainComponent, Device.Get(), DeviceContext.Get());
+		TerrainUtil::GenerateNormals(terrainComponent, TerrainNormalBufferInstance, Device.Get(), DeviceContext.Get());
 	});
 }
 
@@ -872,7 +872,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 
 	UpdateLightAndAlphaBuffer();
 
-	SetShadowResourcesForShadowCascades(14);
+	SetShadowResourcesForShadowCascades(15);
 	SetPbrResources();
 
 	RenderModelRenderComponents(cameraComponent, Solid);
@@ -880,7 +880,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	RenderSkyBoxComponents(cameraComponent);
 	RenderModelRenderComponents(cameraComponent, Transparent);
 
-	ClearShadowResourcesForShadowCascades(14);
+	ClearShadowResourcesForShadowCascades(15);
 
 	Profiler->EndEvent();
 }
@@ -1021,11 +1021,10 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 	DeviceContext->DSSetConstantBuffers(1, 1, TerrainHeightSamplingBufferInstance.GetAddressOf());
 
-	DeviceContext->PSSetConstantBuffers(0, 1, TerrainNormalBufferInstance.GetAddressOf());
-	DeviceContext->PSSetConstantBuffers(1, 1, TerrainUvBufferInstance.GetAddressOf());
-	DeviceContext->PSSetConstantBuffers(2, 1, LightAndAlphaBufferInstance.GetAddressOf());
-	DeviceContext->PSSetConstantBuffers(3, 1, CameraBufferInstance.GetAddressOf());
-	DeviceContext->PSSetConstantBuffers(4, 1, CascadeLevelsBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(0, 1, TerrainUvBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(1, 1, LightAndAlphaBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(2, 1, CameraBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(3, 1, CascadeLevelsBufferInstance.GetAddressOf());
 
 	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
@@ -1038,11 +1037,6 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 		TerrainHeightSamplingBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
 		TerrainHeightSamplingBufferInstance.ApplyChanges();
-
-		TerrainNormalBufferInstance.Data.WorldCellSpace = terrainComponent.ScaleXZ;
-		TerrainNormalBufferInstance.Data.TexelSpace = terrainComponent.TexelSize;
-		TerrainNormalBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
-		TerrainNormalBufferInstance.ApplyChanges();
 
 		TerrainUvBufferInstance.Data.TexturesScale = terrainComponent.Material.TexturesScale;
 		TerrainUvBufferInstance.ApplyChanges();
@@ -1067,6 +1061,7 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		DeviceContext->PSSetShaderResources(12, 1, terrainComponent.Material.OptimizedSmoothnessTexture.ShaderResourceView.GetAddressOf());
 
 		DeviceContext->PSSetShaderResources(13, 1, terrainComponent.Material.CalculatedNormalTexture.ShaderResourceView.GetAddressOf());
+		DeviceContext->PSSetShaderResources(14, 1, terrainComponent.Material.CalculatedTangentTexture.ShaderResourceView.GetAddressOf());
 
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 	});
@@ -1150,9 +1145,9 @@ void RenderSystem::ClearShadowResourcesForShadowCascades(int firstCascadeId) con
 
 void RenderSystem::SetPbrResources()
 {
-	DeviceContext->PSSetShaderResources(18, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
-	DeviceContext->PSSetShaderResources(19, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
-	DeviceContext->PSSetShaderResources(20, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
+	DeviceContext->PSSetShaderResources(19, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
+	DeviceContext->PSSetShaderResources(20, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
+	DeviceContext->PSSetShaderResources(21, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 }
 
 void RenderSystem::ConfigureCascadeConstantBuffer()

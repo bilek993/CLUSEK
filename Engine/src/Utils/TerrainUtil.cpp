@@ -160,7 +160,8 @@ void TerrainUtil::OptimizeTerrain(TerrainComponent& terrainComponent, ID3D11Devi
 	CleanUpResourcesAfterOptimization(terrainComponent, context);
 }
 
-void TerrainUtil::GenerateNormals(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context)
+void TerrainUtil::GenerateNormals(TerrainComponent& terrainComponent, ConstantBuffer<TerrainNormalBuffer>& terrainNormalBuffer, 
+	ID3D11Device* device, ID3D11DeviceContext* context)
 {
 	const auto heightMapDescriptor = GetDescriptor(terrainComponent.Material.Heightmap->Get());
 	const auto width = heightMapDescriptor.Width;
@@ -169,6 +170,9 @@ void TerrainUtil::GenerateNormals(TerrainComponent& terrainComponent, ID3D11Devi
 	terrainComponent.Material.CalculatedNormalTexture = ResourcesGenerator::CreateFlatTexture(device, width, height, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
 	ResourcesGenerator::CreateUnorderedAccessView(device, terrainComponent.Material.CalculatedNormalTexture);
 
+	terrainComponent.Material.CalculatedTangentTexture = ResourcesGenerator::CreateFlatTexture(device, width, height, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
+	ResourcesGenerator::CreateUnorderedAccessView(device, terrainComponent.Material.CalculatedTangentTexture);
+
 	ComputeShader normalGeneratorComputeShader;
 	if (!normalGeneratorComputeShader.Initialize(device, L"terrain_normal_generator_compute_shader.cso"))
 	{
@@ -176,15 +180,27 @@ void TerrainUtil::GenerateNormals(TerrainComponent& terrainComponent, ID3D11Devi
 		return;
 	}
 
+	terrainNormalBuffer.Data.WorldCellSpace = terrainComponent.ScaleXZ;
+	terrainNormalBuffer.Data.MaxHeight = terrainComponent.MaxHeight;
+	terrainNormalBuffer.ApplyChanges();
+
 	context->CSSetShader(normalGeneratorComputeShader.GetShader(), nullptr, 0);
+
+	context->CSSetConstantBuffers(0, 1, terrainNormalBuffer.GetAddressOf());
+
+	context->CSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
+
 	context->CSSetUnorderedAccessViews(0, 1, terrainComponent.Material.CalculatedNormalTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+	context->CSSetUnorderedAccessViews(1, 1, terrainComponent.Material.CalculatedTangentTexture.UnorderedAccessView.GetAddressOf(), nullptr);
 
 	context->Dispatch(width / THREAD_COUNT, height / THREAD_COUNT, 1);
 
 	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
 	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
+	context->CSSetUnorderedAccessViews(1, 1, nullView, nullptr);
 
 	terrainComponent.Material.CalculatedNormalTexture.UnorderedAccessView.Reset();
+	terrainComponent.Material.CalculatedTangentTexture.UnorderedAccessView.Reset();
 }
 
 stbi_us* TerrainUtil::OpenFile(const std::string& path, int* width, int* height, int* numberOfChannels)

@@ -35,4 +35,5 @@ struct TerrainShaderMaterial final
 	ComputeTexture OptimizedSmoothnessTexture;
 
 	ComputeTexture CalculatedNormalTexture;
+	ComputeTexture CalculatedTangentTexture;
 };
