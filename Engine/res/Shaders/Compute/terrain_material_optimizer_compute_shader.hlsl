@@ -1,5 +1,3 @@
-#pragma once
-
 Texture2D BaseMetalicSmoothnessTexture : register(t0);
 Texture2D RedMetalicSmoothnessTexture : register(t1);
 Texture2D GreenMetalicSmoothnessTexture : register(t2);
