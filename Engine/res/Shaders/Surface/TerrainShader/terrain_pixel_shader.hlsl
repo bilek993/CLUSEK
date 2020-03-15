@@ -11,10 +11,7 @@ cbuffer TerrainNormalBuffer : register(b0)
 
 cbuffer TerrainUvBuffer : register(b1)
 {
-    float BaseTextureScale;
-    float RedTextureScale;
-    float GreenTextureScale;
-    float BlueTextureScale;
+    float TexturesScale;
 }
 
 cbuffer LightAndAlphaBuffer : register(b2)
@@ -78,28 +75,28 @@ SamplerComparisonState ShadowSampler : register(s3);
 
 float3 CalculateAlbedoColor(PS_INPUT input, float3 splatId)
 {
-    float3 color = BaseAlbedoTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).rgb;
-    color = lerp(color, RedAlbedoTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).rgb, splatId.r);
-    color = lerp(color, GreenAlbedoTexture.Sample(WrapSampler, input.TextureCoord * GreenTextureScale).rgb, splatId.g);
-    color = lerp(color, BlueAlbedoTexture.Sample(WrapSampler, input.TextureCoord * BlueTextureScale).rgb, splatId.b);
+    float3 color = BaseAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb;
+    color = lerp(color, RedAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.r);
+    color = lerp(color, GreenAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.g);
+    color = lerp(color, BlueAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.b);
     
     return color;
 }
 
 float3 CalculateNormalColor(PS_INPUT input, float3 splatId)
 {
-    float3 color = BaseNormalTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale).rgb;
-    color = lerp(color, RedNormalTexture.Sample(WrapSampler, input.TextureCoord * RedTextureScale).rgb, splatId.r);
-    color = lerp(color, GreenNormalTexture.Sample(WrapSampler, input.TextureCoord * GreenTextureScale).rgb, splatId.g);
-    color = lerp(color, BlueNormalTexture.Sample(WrapSampler, input.TextureCoord * BlueTextureScale).rgb, splatId.b);
+    float3 color = BaseNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb;
+    color = lerp(color, RedNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.r);
+    color = lerp(color, GreenNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.g);
+    color = lerp(color, BlueNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.b);
     
     return color;
 }
 
 float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
 {
-    float4 sampledMetalic = OptimizedMetalicTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale);
-    float4 sampledSmoothness = OptimizedSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale);
+    float4 sampledMetalic = OptimizedMetalicTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale);
+    float4 sampledSmoothness = OptimizedSmoothnessTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale);
     
     float2 color = float2(sampledMetalic.a, sampledSmoothness.a);
     color = lerp(color, float2(sampledMetalic.r, sampledSmoothness.r), splatId.r);
@@ -111,7 +108,7 @@ float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
 
 float CalculateOcclusionColor(PS_INPUT input, float3 splatId)
 {
-    float4 sampledOcclusion = OptimizedOcclusionTexture.Sample(WrapSampler, input.TextureCoord * BaseTextureScale);
+    float4 sampledOcclusion = OptimizedOcclusionTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale);
     
     float color = sampledOcclusion.a;
     color = lerp(color, sampledOcclusion.r, splatId.r);

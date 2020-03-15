@@ -1043,10 +1043,7 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		TerrainNormalBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
 		TerrainNormalBufferInstance.ApplyChanges();
 
-		TerrainUvBufferInstance.Data.BaseTextureScale = terrainComponent.Material.BaseTextureScale;
-		TerrainUvBufferInstance.Data.RedTextureScale = terrainComponent.Material.RedTextureScale;
-		TerrainUvBufferInstance.Data.GreenTextureScale = terrainComponent.Material.GreenTextureScale;
-		TerrainUvBufferInstance.Data.BlueTextureScale = terrainComponent.Material.BlueTextureScale;
+		TerrainUvBufferInstance.Data.TexturesScale = terrainComponent.Material.TexturesScale;
 		TerrainUvBufferInstance.ApplyChanges();
 
 		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());

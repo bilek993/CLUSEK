@@ -76,10 +76,7 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 	auto heightmapJsonInfo = jsonObject["Heightmap"];
 	auto splatmapJsonInfo = jsonObject["Splatmap"];
 
-	auto baseTextureScaleJsonInfo = jsonObject["BaseTextureScale"];
-	auto redTextureScaleJsonInfo = jsonObject["RedTextureScale"];
-	auto greenTextureScaleJsonInfo = jsonObject["GreenTextureScale"];
-	auto blueTextureScaleJsonInfo = jsonObject["BlueTextureScale"];
+	auto texturesScaleJsonInfo = jsonObject["TexturesScale"];
 
 	auto baseAlbedoTextureJsonInfo = jsonObject["BaseAlbedoTexture"];
 	auto redAlbedoTextureJsonInfo = jsonObject["RedAlbedoTexture"];
@@ -104,10 +101,7 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 	material.Heightmap = GetTextureById(device, heightmapJsonInfo.is_null() ? "" : heightmapJsonInfo.get<std::string>(), DefaultAlbedo);
 	material.Splatmap = GetTextureById(device, splatmapJsonInfo.is_null() ? "" : splatmapJsonInfo.get<std::string>(), DefaultAlbedo);
 
-	material.BaseTextureScale = baseTextureScaleJsonInfo.is_null() ? 1.0 : baseTextureScaleJsonInfo.get<float>();
-	material.RedTextureScale = redTextureScaleJsonInfo.is_null() ? 1.0 : redTextureScaleJsonInfo.get<float>();
-	material.GreenTextureScale = greenTextureScaleJsonInfo.is_null() ? 1.0 : greenTextureScaleJsonInfo.get<float>();
-	material.BlueTextureScale = blueTextureScaleJsonInfo.is_null() ? 1.0 : blueTextureScaleJsonInfo.get<float>();
+	material.TexturesScale = texturesScaleJsonInfo.is_null() ? 1.0 : texturesScaleJsonInfo.get<float>();
 
 	material.BaseAlbedoTexture = GetTextureById(device, baseAlbedoTextureJsonInfo.is_null() ? "" : baseAlbedoTextureJsonInfo.get<std::string>(), DefaultAlbedo);
 	material.RedAlbedoTexture = GetTextureById(device, redAlbedoTextureJsonInfo.is_null() ? "" : redAlbedoTextureJsonInfo.get<std::string>(), DefaultAlbedo);

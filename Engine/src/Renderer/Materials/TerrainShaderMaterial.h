@@ -8,10 +8,7 @@ struct TerrainShaderMaterial final
 	std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> Heightmap;
 	std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> Splatmap;
 
-	float BaseTextureScale;
-	float RedTextureScale;
-	float GreenTextureScale;
-	float BlueTextureScale;
+	float TexturesScale;
 
 	std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> BaseAlbedoTexture;
 	std::shared_ptr<Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>> RedAlbedoTexture;
