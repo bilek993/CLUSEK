@@ -52,8 +52,8 @@ Texture2D OptimizedOcclusionTexture : register(t10);
 Texture2D OptimizedMetalicTexture : register(t11);
 Texture2D OptimizedSmoothnessTexture : register(t12);
 
-texture2D CalculatedNormalTexture : register(t13);
-texture2D CalculatedTangentTexture : register(t14);
+Texture2D CalculatedNormalTexture : register(t13);
+Texture2D CalculatedTangentTexture : register(t14);
 
 Texture2D ShadowMapCascade0 : register(t15);
 Texture2D ShadowMapCascade1 : register(t16);
@@ -116,13 +116,13 @@ float CalculateOcclusionColor(PS_INPUT input, float3 splatId)
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    float3 normal = float3(0, 0, 0);
-    float3 tangent = float3(0, 0, 0);
+    float3 normal = CalculatedNormalTexture.Sample(ClampSampler, input.TextureCoord).rgb;
+    float3 tangent = CalculatedTangentTexture.Sample(ClampSampler, input.TextureCoord).rgb;
     float3 bitangent = cross(normal, tangent);
 
     float3x3 TBN = CalculateTBN(tangent, bitangent, normal);
     
-    float3 splatId = SplatmapTexture.SampleLevel(ClampSampler, input.TextureCoord, 0).rgb;
+    float3 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb;
     
     float3 albedoColor = CalculateAlbedoColor(input, splatId);
     float3 normalColor = CalculateNormalColor(input, splatId);
