@@ -84,7 +84,7 @@ bool PbrResource::LoadBrdfLutFile(ID3D11Device* device, ID3D11DeviceContext* con
 
 	context->CSSetShader(brdfLutComputeShader.GetShader(), nullptr, 0);
 	context->CSSetUnorderedAccessViews(0, 1, BrdfLutTexture.UnorderedAccessView.GetAddressOf(), nullptr);
-	context->Dispatch(BrdfLutTexture.Width / THREAD_COUNT, BrdfLutTexture.Height / THREAD_COUNT, CUBE_SIZE);
+	context->Dispatch(BrdfLutTexture.Width / THREAD_COUNT, BrdfLutTexture.Height / THREAD_COUNT, 1);
 
 	return true;
 }
