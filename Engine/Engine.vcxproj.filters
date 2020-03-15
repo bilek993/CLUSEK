@@ -919,7 +919,10 @@
     <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_terrain_hull_shader.hlsl">
       <Filter>Resource Files\Shaders\Surface\ShadowShader</Filter>
     </FxCompile>
-    <FxCompile Include="terrain_material_optimizer_compute_shader.hlsl">
+    <FxCompile Include="res\Shaders\Compute\terrain_material_optimizer_compute_shader.hlsl">
+      <Filter>Resource Files\Shaders\Compute</Filter>
+    </FxCompile>
+    <FxCompile Include="res\Shaders\Compute\terrain_normal_generator_compute_shader.hlsl">
       <Filter>Resource Files\Shaders\Compute</Filter>
     </FxCompile>
   </ItemGroup>
