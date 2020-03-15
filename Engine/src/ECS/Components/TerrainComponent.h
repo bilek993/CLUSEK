@@ -11,7 +11,6 @@ struct TerrainComponent final
 	int QualityDivider = 1;
 	float ScaleXZ = 1.0f;
 	float MaxHeight = 500.0f;
-	float TexelSize = 0.1f;
 	VertexBuffer<PositionAndUvVertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
 	TerrainShaderMaterial Material;

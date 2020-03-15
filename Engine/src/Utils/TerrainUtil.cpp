@@ -16,8 +16,6 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 	if (data == nullptr)
 		return;
 
-	terrainComponent.TexelSize = 1.0f / ((width + height) / 2.0f);
-
 	std::vector<PositionAndUvVertex> vertices;
 	std::vector<DWORD> indices;
 
