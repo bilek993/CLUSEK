@@ -33,4 +33,6 @@ struct TerrainShaderMaterial final
 	ComputeTexture OptimizedOcclusionTexture;
 	ComputeTexture OptimizedMetalicTexture;
 	ComputeTexture OptimizedSmoothnessTexture;
+
+	ComputeTexture CalculatedNormalTexture;
 };

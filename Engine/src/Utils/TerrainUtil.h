@@ -17,6 +17,7 @@ public:
 		physx::PxHeightFieldFormat::Enum format, bool async);
 
 	static void OptimizeTerrain(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context);
+	static void GenerateNormals(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context);
 
 private:
 	inline static const int THREAD_COUNT = 32;

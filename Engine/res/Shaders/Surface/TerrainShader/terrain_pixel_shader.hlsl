@@ -59,14 +59,16 @@ Texture2D OptimizedOcclusionTexture : register(t10);
 Texture2D OptimizedMetalicTexture : register(t11);
 Texture2D OptimizedSmoothnessTexture : register(t12);
 
-Texture2D ShadowMapCascade0 : register(t13);
-Texture2D ShadowMapCascade1 : register(t14);
-Texture2D ShadowMapCascade2 : register(t15);
-Texture2D ShadowMapCascade3 : register(t16);
+texture2D CalculatedNormalTexture : register(t13);
 
-TextureCube IrradianceTexture : register(t17);
-TextureCube RadianceTexture : register(t18);
-Texture2D BrdfLut : register(t19);
+Texture2D ShadowMapCascade0 : register(t14);
+Texture2D ShadowMapCascade1 : register(t15);
+Texture2D ShadowMapCascade2 : register(t16);
+Texture2D ShadowMapCascade3 : register(t17);
+
+TextureCube IrradianceTexture : register(t18);
+TextureCube RadianceTexture : register(t19);
+Texture2D BrdfLut : register(t20);
 
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);

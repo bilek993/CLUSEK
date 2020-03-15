@@ -762,6 +762,7 @@ void RenderSystem::InitializeTerrainComponent()
 		MaterialLoader::SetResourceForTerrainMaterial(Device.Get(), terrainComponent.Material, terrainComponent.MaterialId);
 		TerrainUtil::GenerateTerrainMesh(terrainComponent, Device.Get(), ConfigurationData->EnableAsyncTerrainGeneration);
 		TerrainUtil::OptimizeTerrain(terrainComponent, Device.Get(), DeviceContext.Get());
+		TerrainUtil::GenerateNormals(terrainComponent, Device.Get(), DeviceContext.Get());
 	});
 }
 
@@ -871,7 +872,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 
 	UpdateLightAndAlphaBuffer();
 
-	SetShadowResourcesForShadowCascades(13);
+	SetShadowResourcesForShadowCascades(14);
 	SetPbrResources();
 
 	RenderModelRenderComponents(cameraComponent, Solid);
@@ -879,7 +880,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	RenderSkyBoxComponents(cameraComponent);
 	RenderModelRenderComponents(cameraComponent, Transparent);
 
-	ClearShadowResourcesForShadowCascades(13);
+	ClearShadowResourcesForShadowCascades(14);
 
 	Profiler->EndEvent();
 }
@@ -1065,6 +1066,8 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 		DeviceContext->PSSetShaderResources(11, 1, terrainComponent.Material.OptimizedMetalicTexture.ShaderResourceView.GetAddressOf());
 		DeviceContext->PSSetShaderResources(12, 1, terrainComponent.Material.OptimizedSmoothnessTexture.ShaderResourceView.GetAddressOf());
 
+		DeviceContext->PSSetShaderResources(13, 1, terrainComponent.Material.CalculatedNormalTexture.ShaderResourceView.GetAddressOf());
+
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 	});
 
@@ -1147,9 +1150,9 @@ void RenderSystem::ClearShadowResourcesForShadowCascades(int firstCascadeId) con
 
 void RenderSystem::SetPbrResources()
 {
-	DeviceContext->PSSetShaderResources(17, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
-	DeviceContext->PSSetShaderResources(18, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
-	DeviceContext->PSSetShaderResources(19, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
+	DeviceContext->PSSetShaderResources(18, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
+	DeviceContext->PSSetShaderResources(19, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
+	DeviceContext->PSSetShaderResources(20, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 }
 
 void RenderSystem::ConfigureCascadeConstantBuffer()

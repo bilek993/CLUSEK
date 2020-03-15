@@ -160,6 +160,33 @@ void TerrainUtil::OptimizeTerrain(TerrainComponent& terrainComponent, ID3D11Devi
 	CleanUpResourcesAfterOptimization(terrainComponent, context);
 }
 
+void TerrainUtil::GenerateNormals(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context)
+{
+	const auto heightMapDescriptor = GetDescriptor(terrainComponent.Material.Heightmap->Get());
+	const auto width = heightMapDescriptor.Width;
+	const auto height = heightMapDescriptor.Height;
+
+	terrainComponent.Material.CalculatedNormalTexture = ResourcesGenerator::CreateFlatTexture(device, width, height, DXGI_FORMAT_R16G16B16A16_FLOAT, false);
+	ResourcesGenerator::CreateUnorderedAccessView(device, terrainComponent.Material.CalculatedNormalTexture);
+
+	ComputeShader normalGeneratorComputeShader;
+	if (!normalGeneratorComputeShader.Initialize(device, L"terrain_normal_generator_compute_shader.cso"))
+	{
+		Logger::Error("TerrainNormalGeneratorComputeShader not initialized due to critical problem!");
+		return;
+	}
+
+	context->CSSetShader(normalGeneratorComputeShader.GetShader(), nullptr, 0);
+	context->CSSetUnorderedAccessViews(0, 1, terrainComponent.Material.CalculatedNormalTexture.UnorderedAccessView.GetAddressOf(), nullptr);
+
+	context->Dispatch(width / THREAD_COUNT, height / THREAD_COUNT, 1);
+
+	ID3D11UnorderedAccessView* const nullView[] = { nullptr };
+	context->CSSetUnorderedAccessViews(0, 1, nullView, nullptr);
+
+	terrainComponent.Material.CalculatedNormalTexture.UnorderedAccessView.Reset();
+}
+
 stbi_us* TerrainUtil::OpenFile(const std::string& path, int* width, int* height, int* numberOfChannels)
 {
 	const auto data = stbi_load_16(path.c_str(), width, height, numberOfChannels, 1);
