@@ -2,6 +2,8 @@
 #include "../../Includes/pbr.hlsli"
 #include "../../Includes/shadow_utils.hlsli"
 
+static const float SAMPLING_THRESHOLD = 0.01f;
+
 cbuffer TerrainUvBuffer : register(b0)
 {
     float TexturesScale;
@@ -71,9 +73,12 @@ SamplerComparisonState ShadowSampler : register(s3);
 float3 CalculateAlbedoColor(PS_INPUT input, float3 splatId)
 {
     float3 color = BaseAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb;
-    color = lerp(color, RedAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.r);
-    color = lerp(color, GreenAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.g);
-    color = lerp(color, BlueAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.b);
+    if (splatId.r > SAMPLING_THRESHOLD)
+        color = lerp(color, RedAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.r);
+    if (splatId.g > SAMPLING_THRESHOLD)
+        color = lerp(color, GreenAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.g);
+    if (splatId.b > SAMPLING_THRESHOLD)
+        color = lerp(color, BlueAlbedoTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.b);
     
     return color;
 }
@@ -81,9 +86,12 @@ float3 CalculateAlbedoColor(PS_INPUT input, float3 splatId)
 float3 CalculateNormalColor(PS_INPUT input, float3 splatId)
 {
     float3 color = BaseNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb;
-    color = lerp(color, RedNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.r);
-    color = lerp(color, GreenNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.g);
-    color = lerp(color, BlueNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.b);
+    if (splatId.r > SAMPLING_THRESHOLD)
+        color = lerp(color, RedNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.r);
+    if (splatId.g > SAMPLING_THRESHOLD)
+        color = lerp(color, GreenNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.g);
+    if (splatId.b > SAMPLING_THRESHOLD)
+        color = lerp(color, BlueNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.b);
     
     return color;
 }
