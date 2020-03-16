@@ -35,34 +35,33 @@ struct PS_INPUT
     float CameraDistanceZ : CAMERA_DISTANCE_Z;
 };
 
-Texture2D HeightmapTexture : register(t0);
-Texture2D SplatmapTexture : register(t1);
+Texture2D SplatmapTexture : register(t0);
 
-Texture2D BaseAlbedoTexture : register(t2);
-Texture2D RedAlbedoTexture : register(t3);
-Texture2D GreenAlbedoTexture : register(t4);
-Texture2D BlueAlbedoTexture : register(t5);
+Texture2D BaseAlbedoTexture : register(t1);
+Texture2D RedAlbedoTexture : register(t2);
+Texture2D GreenAlbedoTexture : register(t3);
+Texture2D BlueAlbedoTexture : register(t4);
 
-Texture2D BaseNormalTexture : register(t6);
-Texture2D RedNormalTexture : register(t7);
-Texture2D GreenNormalTexture : register(t8);
-Texture2D BlueNormalTexture : register(t9);
+Texture2D BaseNormalTexture : register(t5);
+Texture2D RedNormalTexture : register(t6);
+Texture2D GreenNormalTexture : register(t7);
+Texture2D BlueNormalTexture : register(t8);
 
-Texture2D OptimizedOcclusionTexture : register(t10);
-Texture2D OptimizedMetalicTexture : register(t11);
-Texture2D OptimizedSmoothnessTexture : register(t12);
+Texture2D OptimizedOcclusionTexture : register(t9);
+Texture2D OptimizedMetalicTexture : register(t10);
+Texture2D OptimizedSmoothnessTexture : register(t11);
 
-Texture2D CalculatedNormalTexture : register(t13);
-Texture2D CalculatedTangentTexture : register(t14);
+Texture2D CalculatedNormalTexture : register(t12);
+Texture2D CalculatedTangentTexture : register(t13);
 
-Texture2D ShadowMapCascade0 : register(t15);
-Texture2D ShadowMapCascade1 : register(t16);
-Texture2D ShadowMapCascade2 : register(t17);
-Texture2D ShadowMapCascade3 : register(t18);
+Texture2D ShadowMapCascade0 : register(t14);
+Texture2D ShadowMapCascade1 : register(t15);
+Texture2D ShadowMapCascade2 : register(t16);
+Texture2D ShadowMapCascade3 : register(t17);
 
-TextureCube IrradianceTexture : register(t19);
-TextureCube RadianceTexture : register(t20);
-Texture2D BrdfLut : register(t21);
+TextureCube IrradianceTexture : register(t18);
+TextureCube RadianceTexture : register(t19);
+Texture2D BrdfLut : register(t20);
 
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);

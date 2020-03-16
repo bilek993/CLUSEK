@@ -893,7 +893,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 
 	UpdateLightAndAlphaBuffer();
 
-	SetShadowResourcesForShadowCascades(15);
+	SetShadowResourcesForShadowCascades(14);
 	SetPbrResources();
 
 	RenderModelRenderComponents(cameraComponent, Solid);
@@ -901,7 +901,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	RenderSkyBoxComponents(cameraComponent);
 	RenderModelRenderComponents(cameraComponent, Transparent);
 
-	ClearShadowResourcesForShadowCascades(15);
+	ClearShadowResourcesForShadowCascades(14);
 
 	Profiler->EndEvent();
 }
@@ -1064,25 +1064,24 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
 
-		DeviceContext->PSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
-		DeviceContext->PSSetShaderResources(1, 1, terrainComponent.Material.Splatmap->GetAddressOf());
+		DeviceContext->PSSetShaderResources(0, 1, terrainComponent.Material.Splatmap->GetAddressOf());
 
-		DeviceContext->PSSetShaderResources(2, 1, terrainComponent.Material.BaseAlbedoTexture->GetAddressOf());
-		DeviceContext->PSSetShaderResources(3, 1, terrainComponent.Material.RedAlbedoTexture->GetAddressOf());
-		DeviceContext->PSSetShaderResources(4, 1, terrainComponent.Material.GreenAlbedoTexture->GetAddressOf());
-		DeviceContext->PSSetShaderResources(5, 1, terrainComponent.Material.BlueAlbedoTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(1, 1, terrainComponent.Material.BaseAlbedoTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(2, 1, terrainComponent.Material.RedAlbedoTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(3, 1, terrainComponent.Material.GreenAlbedoTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(4, 1, terrainComponent.Material.BlueAlbedoTexture->GetAddressOf());
 
-		DeviceContext->PSSetShaderResources(6, 1, terrainComponent.Material.BaseNormalTexture->GetAddressOf());
-		DeviceContext->PSSetShaderResources(7, 1, terrainComponent.Material.RedNormalTexture->GetAddressOf());
-		DeviceContext->PSSetShaderResources(8, 1, terrainComponent.Material.GreenNormalTexture->GetAddressOf());
-		DeviceContext->PSSetShaderResources(9, 1, terrainComponent.Material.BlueNormalTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(5, 1, terrainComponent.Material.BaseNormalTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(6, 1, terrainComponent.Material.RedNormalTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(7, 1, terrainComponent.Material.GreenNormalTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(8, 1, terrainComponent.Material.BlueNormalTexture->GetAddressOf());
 
-		DeviceContext->PSSetShaderResources(10, 1, terrainComponent.Material.OptimizedOcclusionTexture.ShaderResourceView.GetAddressOf());
-		DeviceContext->PSSetShaderResources(11, 1, terrainComponent.Material.OptimizedMetalicTexture.ShaderResourceView.GetAddressOf());
-		DeviceContext->PSSetShaderResources(12, 1, terrainComponent.Material.OptimizedSmoothnessTexture.ShaderResourceView.GetAddressOf());
+		DeviceContext->PSSetShaderResources(9, 1, terrainComponent.Material.OptimizedOcclusionTexture.ShaderResourceView.GetAddressOf());
+		DeviceContext->PSSetShaderResources(10, 1, terrainComponent.Material.OptimizedMetalicTexture.ShaderResourceView.GetAddressOf());
+		DeviceContext->PSSetShaderResources(11, 1, terrainComponent.Material.OptimizedSmoothnessTexture.ShaderResourceView.GetAddressOf());
 
-		DeviceContext->PSSetShaderResources(13, 1, terrainComponent.Material.CalculatedNormalTexture.ShaderResourceView.GetAddressOf());
-		DeviceContext->PSSetShaderResources(14, 1, terrainComponent.Material.CalculatedTangentTexture.ShaderResourceView.GetAddressOf());
+		DeviceContext->PSSetShaderResources(12, 1, terrainComponent.Material.CalculatedNormalTexture.ShaderResourceView.GetAddressOf());
+		DeviceContext->PSSetShaderResources(13, 1, terrainComponent.Material.CalculatedTangentTexture.ShaderResourceView.GetAddressOf());
 
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 	});
@@ -1166,9 +1165,9 @@ void RenderSystem::ClearShadowResourcesForShadowCascades(int firstCascadeId) con
 
 void RenderSystem::SetPbrResources()
 {
-	DeviceContext->PSSetShaderResources(19, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
-	DeviceContext->PSSetShaderResources(20, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
-	DeviceContext->PSSetShaderResources(21, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
+	DeviceContext->PSSetShaderResources(18, 1, PbrResourceInstance.GetAddressOfIrradianceResourceTexture());
+	DeviceContext->PSSetShaderResources(19, 1, PbrResourceInstance.GetAddressOfRadianceResourceTexture());
+	DeviceContext->PSSetShaderResources(20, 1, PbrResourceInstance.GetAddressOfBrdfLutResourceTexture());
 }
 
 void RenderSystem::ConfigureCascadeConstantBuffer()

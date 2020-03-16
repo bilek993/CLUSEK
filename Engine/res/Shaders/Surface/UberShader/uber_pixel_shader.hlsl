@@ -37,14 +37,14 @@ Texture2D MetalicSmoothnessTexture : register(t2);
 Texture2D OcclusionTexture : register(t3);
 Texture2D EmissionTexture : register(t4);
 
-Texture2D ShadowMapCascade0 : register(t15);
-Texture2D ShadowMapCascade1 : register(t16);
-Texture2D ShadowMapCascade2 : register(t17);
-Texture2D ShadowMapCascade3 : register(t18);
+Texture2D ShadowMapCascade0 : register(t14);
+Texture2D ShadowMapCascade1 : register(t15);
+Texture2D ShadowMapCascade2 : register(t16);
+Texture2D ShadowMapCascade3 : register(t17);
 
-TextureCube IrradianceTexture : register(t19);
-TextureCube RadianceTexture : register(t20);
-Texture2D BrdfLut : register(t21);
+TextureCube IrradianceTexture : register(t18);
+TextureCube RadianceTexture : register(t19);
+Texture2D BrdfLut : register(t20);
 
 SamplerState DefaultSampler : register(s0);
 SamplerState BrdfSampler : register(s2);
