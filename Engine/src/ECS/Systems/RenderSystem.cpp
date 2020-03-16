@@ -91,8 +91,7 @@ void RenderSystem::RenderFrameBegin() const
 	DeviceContext->PSSetSamplers(2, 1, BrdfSamplerState.GetAddressOf());
 	DeviceContext->PSSetSamplers(3, 1, ShadowSamplerState.GetAddressOf());
 
-	DeviceContext->DSSetSamplers(0, 1, DefaultWrapSamplerState.GetAddressOf());
-	DeviceContext->DSSetSamplers(1, 1, DefaultClampSamplerState.GetAddressOf());
+	DeviceContext->DSSetSamplers(0, 1, TerrainSamplerState.GetAddressOf());
 }
 
 void RenderSystem::RenderFrameEnd() const
@@ -462,6 +461,28 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 	Logger::Debug("Shadow sampler state is set successfully.");
+
+	// Terrain sampler state initialization
+
+	ZeroMemory(&samplerDesc, sizeof(D3D11_SAMPLER_DESC));
+
+	samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MaxAnisotropy = 1;
+	samplerDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+	samplerDesc.MinLOD = 0;
+	samplerDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
+	hr = Device->CreateSamplerState(&samplerDesc, TerrainSamplerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating terrain sampler state!");
+		return false;
+	}
+	Logger::Debug("Terrain sampler state is set successfully.");
 
 	// Topology initialization
 
