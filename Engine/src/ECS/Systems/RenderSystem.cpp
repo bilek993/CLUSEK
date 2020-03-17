@@ -935,12 +935,17 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 
 		ChangeBasicShaders(ShadowVertexShader, ShadowPixelShader);
 
-		Registry->view<ModelRenderComponent>().each([this, &offset, i](ModelRenderComponent &modelRenderComponent)
+		const auto shadowCameraFrustumPlanes = FrustumUtil::CalculateFrustumPlanes(ShadowCameras[i].CalculateCameraMatrix());
+
+		Registry->view<ModelRenderComponent>().each([this, &offset, &shadowCameraFrustumPlanes, i](ModelRenderComponent &modelRenderComponent)
 		{
 			auto shadowBufferInstanceSet = false;
 
 			for (const auto& mesh : *modelRenderComponent.Meshes)
 			{
+				if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, modelRenderComponent.WorldMatrix), shadowCameraFrustumPlanes))
+					continue;
+
 				if (!shadowBufferInstanceSet)
 				{
 					shadowBufferInstanceSet = true;
