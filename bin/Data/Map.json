@@ -206,102 +206,6 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
-	    "PositionX": -2.8,
-		"PositionY": -1.4,
-		"PositionZ": 12.0
-	  },
-	  "ModelRenderComponent": {
-	    "ModelId": "HalfHeightCube",
-		"MaterialId": "Data/Textures/HalfHeightCube/material.json"
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.1,
-	    "DynamicFriction": 0.1,
-	    "Restitution": 0.75
-	  },
-	  "RigidbodyStaticBoxComponent": {
-	    "Width": 2.0,
-		"Height": 1.0,
-		"Depth": 2.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": 2.8,
-		"PositionY": -1.4,
-		"PositionZ": 12.0
-	  },
-	  "ModelRenderComponent": {
-	    "ModelId": "HalfHeightCube",
-		"MaterialId": "Data/Textures/HalfHeightCube/material.json"
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.1,
-	    "DynamicFriction": 0.1,
-	    "Restitution": 0.75
-	  },
-	  "RigidbodyStaticBoxComponent": {
-	    "Width": 2.0,
-		"Height": 1.0,
-		"Depth": 2.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": 2.8,
-		"PositionY": -1.2,
-		"PositionZ": 25.0
-	  },
-	  "ModelRenderComponent": {
-	    "ModelId": "HalfHeightCube",
-		"MaterialId": "Data/Textures/HalfHeightCube/material.json"
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.1,
-	    "DynamicFriction": 0.1,
-	    "Restitution": 0.75
-	  },
-	  "RigidbodyStaticBoxComponent": {
-	    "Width": 2.0,
-		"Height": 1.0,
-		"Depth": 2.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": -2.8,
-		"PositionY": -1.05,
-		"PositionZ": 30.0
-	  },
-	  "ModelRenderComponent": {
-	    "ModelId": "HalfHeightCube",
-		"MaterialId": "Data/Textures/HalfHeightCube/material.json"
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.1,
-	    "DynamicFriction": 0.1,
-	    "Restitution": 0.75
-	  },
-	  "RigidbodyStaticBoxComponent": {
-	    "Width": 2.0,
-		"Height": 1.0,
-		"Depth": 2.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
 	    "PositionX": -30.0,
 		"PositionY": -0.1,
 		"PositionZ": 0.0,
@@ -869,33 +773,9 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
-	    "PositionX": 0.0,
-		"PositionY": -2.2,
-		"PositionZ": 0.0
-	  },
-	  "ModelRenderComponent": {
-	    "ModelId": "SimpleSquareGround",
-		"MaterialId": "Data/Textures/SimpleSquareGround/material.json"
-	  },
-	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.1,
-	    "DynamicFriction": 0.1,
-	    "Restitution": 0.1
-	  },
-	  "RigidbodyStaticBoxComponent": {
-	    "Width": 268.0,
-		"Height": 2.08,
-		"Depth": 268.0
-	  }
-	}
-  },
-  {
-    "Tags": [],
-	"Components": {
-	  "TransformComponent": {
-	    "PositionX": 0.0,
-		"PositionY": 0.0,
-		"PositionZ": 0.0
+	    "PositionX": -1800.0,
+		"PositionY": -73.0,
+		"PositionZ": -1800.0
 	  },
 	  "TerrainComponent": {
 	    "PathToHeightmap": "Data/Textures/Terrain/TerrainHeightmap.png",
