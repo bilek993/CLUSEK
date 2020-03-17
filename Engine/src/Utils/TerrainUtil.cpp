@@ -134,7 +134,7 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 
 void TerrainUtil::OptimizeTerrain(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context)
 {
-	Logger::Debug("Preparing to optimize terrain materials");
+	Logger::Debug("Preparing to optimize terrain materials.");
 
 	ComputeShader optimizerComputeShader;
 	if (!optimizerComputeShader.Initialize(device, L"terrain_material_optimizer_compute_shader.cso"))
@@ -156,11 +156,15 @@ void TerrainUtil::OptimizeTerrain(TerrainComponent& terrainComponent, ID3D11Devi
 
 	GenerateMipMapsForOptimizedTextures(terrainComponent, context);
 	CleanUpResourcesAfterOptimization(terrainComponent, context);
+
+	Logger::Debug("Optimized terrain materials!");
 }
 
 void TerrainUtil::GenerateNormals(TerrainComponent& terrainComponent, ConstantBuffer<TerrainNormalBuffer>& terrainNormalBuffer, 
 	ID3D11Device* device, ID3D11DeviceContext* context)
 {
+	Logger::Debug("Preparing to generate normals and tangents for the terrain.");
+
 	const auto heightMapDescriptor = GetDescriptor(terrainComponent.Material.Heightmap->Get());
 	const auto width = heightMapDescriptor.Width;
 	const auto height = heightMapDescriptor.Height;
@@ -199,6 +203,8 @@ void TerrainUtil::GenerateNormals(TerrainComponent& terrainComponent, ConstantBu
 
 	terrainComponent.Material.CalculatedNormalTexture.UnorderedAccessView.Reset();
 	terrainComponent.Material.CalculatedTangentTexture.UnorderedAccessView.Reset();
+
+	Logger::Debug("Normals and tangents generation finished!");
 }
 
 stbi_us* TerrainUtil::OpenFile(const std::string& path, int* width, int* height, int* numberOfChannels)
