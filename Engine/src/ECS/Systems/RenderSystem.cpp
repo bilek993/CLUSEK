@@ -16,6 +16,7 @@
 #include "../../Renderer/ModelViewLogic.h"
 #include "../Components/TerrainComponent.h"
 #include "../../Utils/TerrainUtil.h"
+#include "../../Renderer/FrustumUtil.h"
 
 void RenderSystem::Start()
 {
@@ -1118,6 +1119,9 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 				continue;
 
 			if (renderMode == Transparent && mesh.Material.Alpha >= 1.0f)
+				continue;
+
+			if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, modelRenderComponent.WorldMatrix), mainCameraComponent.FrustumPlanes))
 				continue;
 
 			if (!fatPerObjectBufferSet)

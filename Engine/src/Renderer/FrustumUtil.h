@@ -19,4 +19,6 @@ public:
 	static std::array<DirectX::XMFLOAT3, 8> CalculateAABB(const std::vector<FatVertex>& vertices);
 	static std::array<DirectX::XMFLOAT3, 8> RecalculateAABBForWorld(const std::array<DirectX::XMFLOAT3, 8>& points, 
 		const DirectX::XMMATRIX& worldMatrix);
+
+	static bool Test(const std::array<DirectX::XMFLOAT3, 8>& points, const std::array<DirectX::XMVECTOR, 6>& cameraFrustumPlanes);
 };

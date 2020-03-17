@@ -130,3 +130,28 @@ std::array<DirectX::XMFLOAT3, 8> FrustumUtil::RecalculateAABBForWorld(const std:
 
 	return newPoints;
 }
+
+bool FrustumUtil::Test(const std::array<DirectX::XMFLOAT3, 8>& points, const std::array<DirectX::XMVECTOR, 6>& cameraFrustumPlanes)
+{
+	for (auto& plane : cameraFrustumPlanes)
+	{
+		auto isAnyPointInside = false;
+
+		for (auto& point : points)
+		{
+			auto pointFloat4 = DirectX::XMFLOAT4(point.x, point.y, point.z, 1.0f);
+			const auto pointVector = XMLoadFloat4(&pointFloat4);
+
+			if (DirectX::XMVectorGetX(DirectX::XMVector4Dot(pointVector, plane)) > 0.0f)
+			{
+				isAnyPointInside = true;
+				break;
+			}
+		}
+
+		if (!isAnyPointInside)
+			return false;
+	}
+
+	return true;
+}
