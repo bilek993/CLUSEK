@@ -2,6 +2,7 @@
 #include <assimp/Importer.hpp>
 #include <assimp/postprocess.h>
 #include <assimp/scene.h>
+#include "../Renderer/FrustumUtil.h"
 
 std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> ModelLoader::MeshesResources;
 
@@ -61,6 +62,7 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, co
 
 		Mesh newMesh;
 		newMesh.Name = mesh->mName.C_Str();
+		newMesh.FrustumPoints = FrustumUtil::CalculateAABB(vertices);
 
 		auto hr = newMesh.RenderIndexBuffer.Initialize(device, indices.data(), indices.size());
 		if (FAILED(hr))
