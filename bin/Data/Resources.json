@@ -3,11 +3,7 @@
 	"CivilianVehicle": "Data/Models/CivilianVehicle/CivilianVehicle.fbx",
 	"Wheel": "Data/Models/CivilianVehicle/Wheel.fbx",
 	
-	"HalfHeightCube": "Data/Models/HalfHeightCube/HalfHeightCube.fbx",
-	
-	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx",
-	
-	"SimpleSquareGround": "Data/Models/SimpleSquareGround/SimpleSquareGround.fbx"
+	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx"
   },
   
   "Textures": {
@@ -89,16 +85,6 @@
 	},
 	"CivilianVehicle_WheelAo": {
 	  "Path": "Data/Textures/CivilianVehicle/WheelAo.png"
-	},
-	
-	"HalfHeightCube_Albedo": {
-	  "Path": "Data/Textures/HalfHeightCube/CubeAlbedo.png",
-	  "SRGBMode": "FORCED"
-	},
-	
-	"SimpleSquareGround_Albedo": {
-	  "Path": "Data/Textures/SimpleSquareGround/GroundAlbedo.png",
-	  "SRGBMode": "FORCED"
 	},
 	
 	"SmoothCylinder_Albedo": {
