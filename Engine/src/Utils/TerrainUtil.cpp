@@ -406,12 +406,12 @@ void TerrainUtil::CleanUpResourcesAfterOptimization(TerrainComponent& terrainCom
 
 D3D11_TEXTURE2D_DESC TerrainUtil::GetDescriptor(ID3D11ShaderResourceView* shaderResourceView)
 {
-	ID3D11Resource* resource;
-	ID3D11Texture2D* texture;
+	Microsoft::WRL::ComPtr<ID3D11Resource> resource;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 	D3D11_TEXTURE2D_DESC descriptor;
 
-	shaderResourceView->GetResource(&resource);
-	resource->QueryInterface<ID3D11Texture2D>(&texture);
+	shaderResourceView->GetResource(resource.GetAddressOf());
+	resource->QueryInterface<ID3D11Texture2D>(texture.GetAddressOf());
 	texture->GetDesc(&descriptor);
 
 	return descriptor;
