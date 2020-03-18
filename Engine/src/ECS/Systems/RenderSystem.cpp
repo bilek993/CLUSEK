@@ -51,7 +51,7 @@ void RenderSystem::Start()
 	InitializeModelRenderComponent();
 	InitializeShadowCameras();
 
-	Logger::Debug("Finished components initialization in rederer.");
+	Logger::Debug("Finished components initialization in renderer.");
 
 	ConfigureCascadeConstantBuffer();
 
