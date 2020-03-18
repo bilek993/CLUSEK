@@ -44,10 +44,14 @@ void RenderSystem::Start()
 
 	ResourcesLoader::Load(Device.Get(), DeviceContext.Get(), ConfigurationData);
 
+	Logger::Debug("Preparing to initialize components in renderer...");
+
 	InitializeSkyboxComponent();
 	InitializeTerrainComponent();
 	InitializeModelRenderComponent();
 	InitializeShadowCameras();
+
+	Logger::Debug("Finished components initialization in rederer.");
 
 	ConfigureCascadeConstantBuffer();
 

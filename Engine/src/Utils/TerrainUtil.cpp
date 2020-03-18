@@ -65,6 +65,8 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 	physx::PxCooking* cooking, physx::PxPhysics* physics, physx::PxDefaultAllocator* allocator, const TerrainComponent& terrainComponent, 
 	const physx::PxHeightFieldFormat::Enum format, const bool async)
 {
+	Logger::Debug("Preparing resources for PhysX terrain generation...");
+
 	auto width = 0;
 	auto height = 0;
 	auto numberOfChannels = 0;
@@ -115,6 +117,8 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 									heightFieldSample);
 	}
 
+	Logger::Debug("Finalizing PhysX terrain generation...");
+
 	physx::PxHeightFieldDesc desc;
 	desc.format = format;
 	desc.nbColumns = width;
@@ -128,6 +132,8 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 
 	physx::PxHeightFieldGeometry geometry(heightField, physx::PxMeshGeometryFlags(), heightScale,
 		terrainComponent.ScaleXZ, terrainComponent.ScaleXZ);
+
+	Logger::Debug("Terrain generation for PhysX finished...");
 
 	return geometry;
 }
