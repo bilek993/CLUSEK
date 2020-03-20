@@ -24,6 +24,7 @@
 #include "../ECS/Systems/RenderSystem.h"
 #include "Windows/ConfigurationWindow.h"
 #include "Windows/TerrainTessellationWindow.h"
+#include "Windows/FogWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
 
@@ -74,4 +75,5 @@ private:
 	PerSystemPerformanceWindow PerSystemPerformanceWindowInstance;
 	ShadowPreviewerWindow ShadowPreviewerWindowInstance;
 	TerrainTessellationWindow TerrainTessellationWindowInstance;
+	FogWindow FogWindowInstance;
 };
