@@ -32,6 +32,7 @@
 #include "../../Renderer/ConstantBufferTypes/WorldMatrixBuffer.h"
 #include "../../Renderer/TransparencyRenderType.h"
 #include "../../Renderer/ProfilerAnnotations.h"
+#include "../../Renderer/ConstantBufferTypes/FogBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -147,6 +148,7 @@ private:
 	ConstantBuffer<TerrainNormalBuffer> TerrainNormalBufferInstance;
 	ConstantBuffer<TerrainUvBuffer> TerrainUvBufferInstance;
 	ConstantBuffer<WorldMatrixBuffer> WorldMatrixBufferInstance;
+	ConstantBuffer<FogBuffer> FogBufferInstance;
 
 	PbrResource PbrResourceInstance{};
 

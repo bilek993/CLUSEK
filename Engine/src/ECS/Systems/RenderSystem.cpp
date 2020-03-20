@@ -703,6 +703,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = WorldMatrixBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'WorldMatrixBufferInstance' constant buffer.");
+
+	hr = FogBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'FogBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
