@@ -1186,7 +1186,7 @@ void RenderSystem::SetShadowResourcesForShadowCascades(const int firstCascadeId)
 		DeviceContext->PSSetShaderResources(firstCascadeId + i, 1, ShadowRenderDepthStencils[i].GetAddressOfShaderResourceView());
 }
 
-void RenderSystem::ClearShadowResourcesForShadowCascades(int firstCascadeId) const
+void RenderSystem::ClearShadowResourcesForShadowCascades(const int firstCascadeId) const
 {
 	for (auto i = 0; i < ShadowRenderDepthStencils.size(); i++)
 		DeviceContext->PSSetShaderResources(firstCascadeId + i, 1, &NullShaderResourceView);
