@@ -1,6 +1,7 @@
 #include "../../Includes/normal_utils.hlsli"
 #include "../../Includes/pbr.hlsli"
 #include "../../Includes/shadow_utils.hlsli"
+#include "../../Includes/fog.hlsli"
 
 static const float SAMPLING_THRESHOLD = 0.01f;
 
@@ -154,6 +155,8 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 finalColor = Pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, WrapSampler, BrdfSampler,
                             DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, shadowMultiplier);
+    
+    finalColor = CalculateFog(finalColor, input.CameraDistanceZ);
     
     return float4(finalColor, Alpha);
 }

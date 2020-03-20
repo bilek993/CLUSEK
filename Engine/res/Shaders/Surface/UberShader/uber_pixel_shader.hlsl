@@ -1,6 +1,7 @@
 #include "../../Includes/normal_utils.hlsli"
 #include "../../Includes/pbr.hlsli"
 #include "../../Includes/shadow_utils.hlsli"
+#include "../../Includes/fog.hlsli"
 
 cbuffer LightAndAlphaBuffer : register(b0)
 {
@@ -76,6 +77,8 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 finalColor = Pbr(albedoColor, calculatedNormal, metalicSmoothnessColor.r, roughness, occlusionColor,
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
                             DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, shadowMultiplier);
+    
+    finalColor = CalculateFog(finalColor + emissionColor, input.CameraDistanceZ);
 
-    return float4(finalColor + emissionColor, Alpha);
+    return float4(finalColor, Alpha);
 }
