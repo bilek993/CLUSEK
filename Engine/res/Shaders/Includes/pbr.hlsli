@@ -9,7 +9,7 @@ float DistributionGGX(float3 normal, float3 halfway, float roughness)
     float cosHalfway = max(dot(normal, halfway), 0.0f);
     float cosHalfwaySquare = cosHalfway * cosHalfway;
 
-    float denominator = (cosHalfwaySquare * (alphaSquare - 1.0f)) +1.0f;
+    float denominator = (cosHalfwaySquare * (alphaSquare - 1.0f)) + 1.0f;
     denominator = PI * denominator * denominator;
 
     return alphaSquare / denominator;
@@ -64,7 +64,7 @@ float3 Pbr(float3 albedo, float3 normal, float metallic, float roughness, float 
     float cosLight = max(dot(normal, lightDirection), 0.0f);
 
     float NDF = DistributionGGX(normal, halfwayDirection, roughness);
-    float G = GeometrySmith(normal,roughness, cosView, cosLight);
+    float G = GeometrySmith(normal, roughness, cosView, cosLight);
     float3 F = FresnelSchlick(max(dot(halfwayDirection, viewDirection), 0.0f), F0);
 
     float3 nominator = NDF * G * F;
