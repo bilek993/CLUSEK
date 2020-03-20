@@ -14,4 +14,8 @@ struct DynamicRenderSettings final
 
 	float MinTerrainTessellationDistance;
 	float MaxTerrainTessellationDistance;
+
+	DirectX::XMFLOAT3 FogColor;
+	float FogDensity;
+	float SkyConstantValue;
 };

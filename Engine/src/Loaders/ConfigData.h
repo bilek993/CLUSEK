@@ -53,6 +53,13 @@ struct ConfigData final
 	float DirectionalLightDirectionY = 0.5f;
 	float DirectionalLightDirectionZ = -1.0f;
 
+	// Fog settings
+	float FogColorRed = 0.3f;
+	float FogColorGreen = 0.6f;
+	float FogColorBlue = 0.7f;
+	float FogDensity = 0.0002f;
+	float SkyConstantValue = 3000.0f;
+
 	// Shadows settings
 	int ShadowsEnabled = 1;
 	int EnableRealtimeShadowPreview = 0;

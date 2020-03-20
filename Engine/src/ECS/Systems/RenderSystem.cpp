@@ -26,6 +26,7 @@ void RenderSystem::Start()
 	WindowWidth = ConfigurationData->WindowWidth;
 	WindowHeight = ConfigurationData->WindowHeight;
 
+	InitializeFogSettings();
 	InitializeLightSettings();
 	InitializeClearColorSettings();
 	InitializeTerrainTessellationSettings();
@@ -622,6 +623,14 @@ bool RenderSystem::InitializePbrResources()
 		ConfigurationData, view.raw()[0].Material.SkyMap->GetAddressOf());
 }
 
+void RenderSystem::InitializeFogSettings() const
+{
+	CurrentRenderSettings->FogColor =
+		DirectX::XMFLOAT3(ConfigurationData->FogColorRed, ConfigurationData->FogColorGreen, ConfigurationData->FogColorBlue);
+	CurrentRenderSettings->SkyConstantValue = ConfigurationData->FogDensity;
+	CurrentRenderSettings->SkyConstantValue = ConfigurationData->SkyConstantValue;
+}
+
 void RenderSystem::InitializeLightSettings() const
 {
 	CurrentRenderSettings->DirectionalLightColor =
@@ -900,6 +909,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
+	UpdateFogBuffer();
 	UpdateLightAndAlphaBuffer();
 
 	SetShadowResourcesForShadowCascades(14);
@@ -1196,6 +1206,13 @@ void RenderSystem::ConfigureCascadeConstantBuffer()
 	CascadeLevelsBufferInstance.Data.Biases[2] = ConfigurationData->CascadeBias2;
 	CascadeLevelsBufferInstance.Data.Biases[3] = ConfigurationData->CascadeBias3;
 	CascadeLevelsBufferInstance.ApplyChanges();
+}
+
+void RenderSystem::UpdateFogBuffer()
+{
+	FogBufferInstance.Data.FogColor = CurrentRenderSettings->FogColor;
+	FogBufferInstance.Data.FogDensity = CurrentRenderSettings->FogDensity;
+	FogBufferInstance.Data.SkyConstantValue = CurrentRenderSettings->SkyConstantValue;
 }
 
 void RenderSystem::UpdateLightAndAlphaBuffer()

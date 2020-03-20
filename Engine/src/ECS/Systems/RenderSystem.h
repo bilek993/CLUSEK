@@ -52,6 +52,7 @@ private:
 	bool InitializeDirectX();
 	bool InitializeShaders();
 	bool InitializePbrResources();
+	void InitializeFogSettings() const;
 	void InitializeLightSettings() const;
 	void InitializeClearColorSettings() const;
 	void InitializeTerrainTessellationSettings() const;
@@ -89,6 +90,7 @@ private:
 
 	void ConfigureCascadeConstantBuffer();
 
+	void UpdateFogBuffer();
 	void UpdateLightAndAlphaBuffer();
 	void UpdateCameraBuffer(const TransformComponent &mainCameraTransformComponent);
 

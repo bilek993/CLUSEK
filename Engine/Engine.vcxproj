@@ -168,6 +168,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\FogBuffer.h" />
     <ClInclude Include="src\Renderer\ProfilerAnnotations.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticHeightFieldsComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\RigidbodyStaticHeightFieldsComponent.h" />
