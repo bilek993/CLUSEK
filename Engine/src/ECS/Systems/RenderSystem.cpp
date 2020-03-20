@@ -627,7 +627,7 @@ void RenderSystem::InitializeFogSettings() const
 {
 	CurrentRenderSettings->FogColor =
 		DirectX::XMFLOAT3(ConfigurationData->FogColorRed, ConfigurationData->FogColorGreen, ConfigurationData->FogColorBlue);
-	CurrentRenderSettings->SkyConstantValue = ConfigurationData->FogDensity;
+	CurrentRenderSettings->FogDensity = ConfigurationData->FogDensity;
 	CurrentRenderSettings->SkyConstantValue = ConfigurationData->SkyConstantValue;
 }
 
@@ -1017,6 +1017,8 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 
 	DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
 
+	DeviceContext->PSSetConstantBuffers(0, 1, FogBufferInstance.GetAddressOf());
+
 	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
 	{
 		SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
@@ -1068,6 +1070,7 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	DeviceContext->PSSetConstantBuffers(1, 1, LightAndAlphaBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(2, 1, CameraBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(3, 1, CascadeLevelsBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(4, 1, FogBufferInstance.GetAddressOf());
 
 	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
 	{
@@ -1126,6 +1129,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 
 	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(3, 1, FogBufferInstance.GetAddressOf());
 
 	if (renderMode == Transparent)
 		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
@@ -1213,6 +1217,7 @@ void RenderSystem::UpdateFogBuffer()
 	FogBufferInstance.Data.FogColor = CurrentRenderSettings->FogColor;
 	FogBufferInstance.Data.FogDensity = CurrentRenderSettings->FogDensity;
 	FogBufferInstance.Data.SkyConstantValue = CurrentRenderSettings->SkyConstantValue;
+	FogBufferInstance.ApplyChanges();
 }
 
 void RenderSystem::UpdateLightAndAlphaBuffer()

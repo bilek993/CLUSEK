@@ -29,6 +29,13 @@ cbuffer CascadeLevelsBuffer : register(b3)
     float4 Biases;
 }
 
+cbuffer FogBuffer : register(b4)
+{
+    float3 FogColor;
+    float FogDensity;
+    float SkyConstantValue;
+}
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
@@ -156,7 +163,7 @@ float4 main(PS_INPUT input) : SV_TARGET
                             IrradianceTexture, RadianceTexture, BrdfLut, WrapSampler, BrdfSampler,
                             DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, shadowMultiplier);
     
-    finalColor = CalculateFog(finalColor, input.CameraDistanceZ);
+    finalColor = CalculateFog(finalColor, input.CameraDistanceZ, FogDensity, FogColor);
     
     return float4(finalColor, Alpha);
 }
