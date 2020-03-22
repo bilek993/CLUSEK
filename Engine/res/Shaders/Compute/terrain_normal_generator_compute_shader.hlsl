@@ -21,23 +21,39 @@ void main(uint2 threadID : SV_DispatchThreadID)
     float2 bottomTexel = threadID + float2(0, 1);
     
     if (leftTexel.x < 0)
-        leftTexel.x += 1;
+        leftTexel.x = 0;
     if (rightTexel.x >= outputWidth)
-        rightTexel.x -= 1;
+        rightTexel.x -= outputWidth - 1;
     if (topTexel.y < 0)
-        topTexel.y += 1;
+        topTexel.y = 0;
     if (bottomTexel.y >= outputWidth)
-        bottomTexel.y -= 1;
+        bottomTexel.y = outputWidth - 1;
     
     float leftY = HeightmapTexture.Load(int3(leftTexel, 0)).r * MaxHeight;
     float rightY = HeightmapTexture.Load(int3(rightTexel, 0)).r * MaxHeight;
     float topY = HeightmapTexture.Load(int3(topTexel, 0)).r * MaxHeight;
     float bottomY = HeightmapTexture.Load(int3(bottomTexel, 0)).r * MaxHeight;
+    float centerY = HeightmapTexture.Load(int3(threadID, 0)).r * MaxHeight;
     
-    float3 tangent = normalize(float3(2.0f * WorldCellSpace, rightY - leftY, 0.0f));
-    float3 bitangent = normalize(float3(0.0f, bottomY - topY, -2.0f * WorldCellSpace));
-    float3 normal = cross(tangent, bitangent);
+    float3 center = float3(threadID.x * WorldCellSpace, centerY, threadID.y * WorldCellSpace);
+    float3 left = float3(leftTexel.x * WorldCellSpace, leftY, leftTexel.y * WorldCellSpace);
+    float3 right = float3(rightTexel.x * WorldCellSpace, rightY, rightTexel.y * WorldCellSpace);
+    float3 top = float3(topTexel.x * WorldCellSpace, topY, topTexel.y * WorldCellSpace);
+    float3 bottom = float3(bottomTexel.x * WorldCellSpace, bottomY, bottomTexel.y * WorldCellSpace);
     
-    OutputNormalTexture[threadID] = float4(normal, 1.0f);
-    OutputTangentTexture[threadID] = float4(tangent, 1.0f);
+    float3 v1 = normalize(left - center);
+    float3 v2 = normalize(right - center);
+    float3 v3 = normalize(top - center);
+    float3 v4 = normalize(bottom - center);
+    
+    float3 normal = float3(0, 0, 0);
+    normal += cross(v1, v3);
+    normal += cross(v3, v2);
+    normal += cross(v2, v4);
+    normal += cross(v4, v1);
+    normal /= 4;
+    normal *= -1;
+    
+    OutputNormalTexture[threadID] = float4(normal, 0.0f);
+    OutputTangentTexture[threadID] = float4(0,0,0,0);
 }
