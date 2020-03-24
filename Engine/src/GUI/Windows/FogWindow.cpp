@@ -11,6 +11,7 @@ void FogWindow::Draw()
 		ImGuiColorEditFlags_PickerHueBar |
 		ImGuiColorEditFlags_NoInputs);
 	ImGui::DragFloat("Fog density", &RenderSettings->FogDensity, 0.0001f, 0.0f, 0.0f, "%.5f");
+	ImGui::DragFloat("Fog minimal distance", &RenderSettings->FogMinDistance, 0.1f);
 	ImGui::DragFloat("Sky constant value", &RenderSettings->SkyConstantValue, 1.0f);
 	ImGui::End();
 }
