@@ -1216,6 +1216,7 @@ void RenderSystem::UpdateFogBuffer()
 {
 	FogBufferInstance.Data.FogColor = CurrentRenderSettings->FogColor;
 	FogBufferInstance.Data.FogDensity = CurrentRenderSettings->FogDensity;
+	FogBufferInstance.Data.MinDistance = 250.0f;
 	FogBufferInstance.Data.SkyConstantValue = CurrentRenderSettings->SkyConstantValue;
 	FogBufferInstance.ApplyChanges();
 }

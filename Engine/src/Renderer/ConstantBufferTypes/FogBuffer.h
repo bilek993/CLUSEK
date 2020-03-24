@@ -5,5 +5,6 @@ struct FogBuffer final
 {
 	DirectX::XMFLOAT3 FogColor;
 	float FogDensity;
+	float MinDistance;
 	float SkyConstantValue;
 };
