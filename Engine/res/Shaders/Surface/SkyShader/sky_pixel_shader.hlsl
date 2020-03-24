@@ -4,7 +4,7 @@ cbuffer FogBuffer : register(b0)
 {
     float3 FogColor;
     float FogDensity;
-    float MinDistance;
+    float FogMinDistance;
     float SkyConstantValue;
 }
 
@@ -20,7 +20,7 @@ SamplerState Sampler : register(s0);
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 output = SkyMap.Sample(Sampler, input.TextureCoord).rgb;
-    output = CalculateFog(output, SkyConstantValue, FogDensity, MinDistance, FogColor);;
+    output = CalculateFog(output, SkyConstantValue, FogDensity, FogMinDistance, FogColor);;
     
     return float4(output, 1.0f);
 }

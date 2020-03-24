@@ -17,5 +17,6 @@ struct DynamicRenderSettings final
 
 	DirectX::XMFLOAT3 FogColor;
 	float FogDensity;
+	float FogMinDistance;
 	float SkyConstantValue;
 };

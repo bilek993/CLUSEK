@@ -26,7 +26,7 @@ cbuffer FogBuffer : register(b3)
 {
     float3 FogColor;
     float FogDensity;
-    float MinDistance;
+    float FogMinDistance;
     float SkyConstantValue;
 }
 
@@ -86,7 +86,7 @@ float4 main(PS_INPUT input) : SV_TARGET
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
                             DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, shadowMultiplier);
     
-    finalColor = CalculateFog(finalColor + emissionColor, input.CameraDistanceZ, FogDensity, MinDistance, FogColor);
+    finalColor = CalculateFog(finalColor + emissionColor, input.CameraDistanceZ, FogDensity, FogMinDistance, FogColor);
 
     return float4(finalColor, Alpha);
 }
