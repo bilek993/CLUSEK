@@ -1019,6 +1019,7 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 	DeviceContext->VSSetConstantBuffers(0, 1, SimplePerObjectBufferInstance.GetAddressOf());
 
 	DeviceContext->PSSetConstantBuffers(0, 1, FogBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(1, 1, LightAndAlphaBufferInstance.GetAddressOf());
 
 	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
 	{
@@ -1217,6 +1218,7 @@ void RenderSystem::UpdateFogBuffer()
 {
 	FogBufferInstance.Data.FogColor = CurrentRenderSettings->FogColor;
 	FogBufferInstance.Data.FogDensity = CurrentRenderSettings->FogDensity;
+	FogBufferInstance.Data.FogLightColor = DirectX::XMFLOAT3(1.0f, 0.9f, 0.7f);
 	FogBufferInstance.Data.FogMinDistance = CurrentRenderSettings->FogMinDistance;
 	FogBufferInstance.Data.SkyConstantValue = CurrentRenderSettings->SkyConstantValue;
 	FogBufferInstance.ApplyChanges();
