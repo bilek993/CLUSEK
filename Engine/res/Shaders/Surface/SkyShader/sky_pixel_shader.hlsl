@@ -31,7 +31,7 @@ float4 main(PS_INPUT input) : SV_TARGET
 {
     float3 output = SkyMap.Sample(Sampler, input.TextureCoord).rgb;
     output = CalculateFog(output, SkyConstantValue, normalize(-input.TextureCoord), DirectionalLightDirection,
-                          FogDensity, FogMinDistance, FogLightPower, FogColor, FogLightColor);;
+                          FogDensity, FogLightPower, FogMinDistance, FogColor, FogLightColor);;
     
     return float4(output, 1.0f);
 }
