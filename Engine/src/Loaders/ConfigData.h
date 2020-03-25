@@ -58,6 +58,9 @@ struct ConfigData final
 	float FogColorGreen = 0.6f;
 	float FogColorBlue = 0.7f;
 	float FogDensity = 0.0002f;
+	float FogLightColorRed = 1.0f;
+	float FogLightColorGreen = 0.9f;
+	float FogLightColorBlue = 0.7f;
 	float FogMinDistance = 0.0f;
 	float SkyConstantValue = 3000.0f;
 

@@ -628,6 +628,8 @@ void RenderSystem::InitializeFogSettings() const
 	CurrentRenderSettings->FogColor =
 		DirectX::XMFLOAT3(ConfigurationData->FogColorRed, ConfigurationData->FogColorGreen, ConfigurationData->FogColorBlue);
 	CurrentRenderSettings->FogDensity = ConfigurationData->FogDensity;
+	CurrentRenderSettings->FogLightColor =
+		DirectX::XMFLOAT3(ConfigurationData->FogLightColorRed, ConfigurationData->FogLightColorGreen, ConfigurationData->FogLightColorBlue);
 	CurrentRenderSettings->FogMinDistance = ConfigurationData->FogMinDistance;
 	CurrentRenderSettings->SkyConstantValue = ConfigurationData->SkyConstantValue;
 }
@@ -1218,7 +1220,7 @@ void RenderSystem::UpdateFogBuffer()
 {
 	FogBufferInstance.Data.FogColor = CurrentRenderSettings->FogColor;
 	FogBufferInstance.Data.FogDensity = CurrentRenderSettings->FogDensity;
-	FogBufferInstance.Data.FogLightColor = DirectX::XMFLOAT3(1.0f, 0.9f, 0.7f);
+	FogBufferInstance.Data.FogLightColor = CurrentRenderSettings->FogLightColor;
 	FogBufferInstance.Data.FogMinDistance = CurrentRenderSettings->FogMinDistance;
 	FogBufferInstance.Data.SkyConstantValue = CurrentRenderSettings->SkyConstantValue;
 	FogBufferInstance.ApplyChanges();

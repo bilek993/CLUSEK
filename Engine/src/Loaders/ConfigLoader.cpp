@@ -66,6 +66,9 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, FogColorGreen, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, FogColorBlue, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, FogDensity, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, FogLightColorRed, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, FogLightColorGreen, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, FogLightColorBlue, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, FogMinDistance, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, SkyConstantValue, data, std::stof(value));
 
