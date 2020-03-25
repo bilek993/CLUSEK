@@ -630,7 +630,7 @@ void RenderSystem::InitializeFogSettings() const
 	CurrentRenderSettings->FogDensity = ConfigurationData->FogDensity;
 	CurrentRenderSettings->FogLightColor =
 		DirectX::XMFLOAT3(ConfigurationData->FogLightColorRed, ConfigurationData->FogLightColorGreen, ConfigurationData->FogLightColorBlue);
-	CurrentRenderSettings->FogLightPower = 30.0f;
+	CurrentRenderSettings->FogLightPower = ConfigurationData->FogLightPower;
 	CurrentRenderSettings->FogMinDistance = ConfigurationData->FogMinDistance;
 	CurrentRenderSettings->SkyConstantValue = ConfigurationData->SkyConstantValue;
 }
