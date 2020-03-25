@@ -21,6 +21,7 @@ void FogWindow::Draw()
 						ImGuiColorEditFlags_PickerHueBar |
 						ImGuiColorEditFlags_NoInputs);
 
+	ImGui::DragFloat("Fog light power", &RenderSettings->FogLightPower, 0.1f);
 	ImGui::DragFloat("Fog minimal distance", &RenderSettings->FogMinDistance, 0.1f);
 	ImGui::DragFloat("Sky constant value", &RenderSettings->SkyConstantValue, 1.0f);
 
