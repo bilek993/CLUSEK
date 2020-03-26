@@ -783,6 +783,15 @@ void RenderSystem::ShowLoadingScreen()
 	UINT offset = 0;
 	Draw(vertexBuffer, indexBuffer, offset);
 
+	auto loadingSpriteBatch = std::make_unique<DirectX::SpriteBatch>(DeviceContext.Get());
+	const auto loadingSpriteFont = std::make_unique<DirectX::SpriteFont>(Device.Get(), L"Data/Fonts/Raleway.spritefont");
+
+	loadingSpriteBatch->Begin();
+	loadingSpriteFont->DrawString(	loadingSpriteBatch.get(), 
+									L"Loading...", 
+									DirectX::XMFLOAT2(ConfigurationData->WindowWidth - 115.0f, ConfigurationData->WindowHeight - 42.0f));
+	loadingSpriteBatch->End();
+
 	PerformPostProcessing(true);
 	RenderFrameEnd();
 

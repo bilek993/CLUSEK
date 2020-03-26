@@ -2,6 +2,8 @@
 #include "BaseSystem.h"
 #include <wrl/client.h>
 #include <d3d11.h>
+#include <SpriteBatch.h>
+#include <SpriteFont.h>
 #include "../../Renderer/Shaders/VertexShader.h"
 #include "../../Renderer/Shaders/PixelShader.h"
 #include "../../Renderer/ConstantBuffer.h"
