@@ -17,6 +17,7 @@
 #include "../Components/TerrainComponent.h"
 #include "../../Utils/TerrainUtil.h"
 #include "../../Renderer/FrustumUtil.h"
+#include "../../Utils/StringUtil.h"
 
 void RenderSystem::Start()
 {
@@ -784,12 +785,12 @@ void RenderSystem::ShowLoadingScreen()
 	Draw(vertexBuffer, indexBuffer, offset);
 
 	auto loadingSpriteBatch = std::make_unique<DirectX::SpriteBatch>(DeviceContext.Get());
-	const auto loadingSpriteFont = std::make_unique<DirectX::SpriteFont>(Device.Get(), L"Data/Fonts/Raleway.spritefont");
+	const auto loadingSpriteFont = std::make_unique<DirectX::SpriteFont>(Device.Get(), StringUtil::StringToWide(ConfigurationData->PathToLoadingFont).c_str());
 
 	loadingSpriteBatch->Begin();
 	loadingSpriteFont->DrawString(	loadingSpriteBatch.get(), 
 									L"Loading...", 
-									DirectX::XMFLOAT2(ConfigurationData->WindowWidth - 115.0f, ConfigurationData->WindowHeight - 42.0f));
+									DirectX::XMFLOAT2(ConfigurationData->WindowWidth - ConfigurationData->LoadingOffsetX, ConfigurationData->WindowHeight - ConfigurationData->LoadingOffsetY));
 	loadingSpriteBatch->End();
 
 	PerformPostProcessing(true);
