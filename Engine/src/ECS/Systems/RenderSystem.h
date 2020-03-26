@@ -94,7 +94,7 @@ private:
 	void UpdateLightAndAlphaBuffer();
 	void UpdateCameraBuffer(const TransformComponent &mainCameraTransformComponent);
 
-	void PerformPostProcessing() const;
+	void PerformPostProcessing(bool minimal = false) const;
 
 	std::unique_ptr<ProfilerAnnotations> Profiler;
 

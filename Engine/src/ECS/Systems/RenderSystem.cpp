@@ -783,7 +783,7 @@ void RenderSystem::ShowLoadingScreen()
 	UINT offset = 0;
 	Draw(vertexBuffer, indexBuffer, offset);
 
-	PerformPostProcessing();
+	PerformPostProcessing(true);
 	RenderFrameEnd();
 
 	Logger::Debug("Showed loading screen!");
@@ -1242,7 +1242,7 @@ void RenderSystem::UpdateCameraBuffer(const TransformComponent &mainCameraTransf
 	CameraBufferInstance.ApplyChanges();
 }
 
-void RenderSystem::PerformPostProcessing() const
+void RenderSystem::PerformPostProcessing(const bool minimal) const
 {
 	Profiler->BeginEvent("PostProcessing");
 
@@ -1255,11 +1255,14 @@ void RenderSystem::PerformPostProcessing() const
 		currentInput = MultisamplingPostProcessingInstance->Process(currentInput.GetAddressOf());
 	Profiler->EndEvent();
 
-	for (auto& postProcessingEffect : CurrentPostProcessingSettings->List)
+	if (!minimal)
 	{
-		Profiler->BeginEvent(postProcessingEffect->GetName());
-		currentInput = postProcessingEffect->Process(currentInput.GetAddressOf());
-		Profiler->EndEvent();
+		for (auto& postProcessingEffect : CurrentPostProcessingSettings->List)
+		{
+			Profiler->BeginEvent(postProcessingEffect->GetName());
+			currentInput = postProcessingEffect->Process(currentInput.GetAddressOf());
+			Profiler->EndEvent();
+		}
 	}
 
 	Profiler->BeginEvent("Copy To Back Buffer");
