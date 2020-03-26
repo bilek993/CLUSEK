@@ -10,8 +10,8 @@ struct ConfigData final
 	// Window settings
 	std::string WindowClassName = "EngineClassName";
 	std::string WindowTitle = "";
-	int WindowWidth = 640;
-	int WindowHeight = 480;
+	int WindowWidth = 1920;
+	int WindowHeight = 1080;
 
 	// ImGui
 	int EnableImGuiOnStart = 0;
