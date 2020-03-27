@@ -7,3 +7,4 @@
 * [Nlohmann JSON](https://github.com/nlohmann/json/tree/ffe0e3d70f110bb1ca16f34d7d07a2f0e0974ea6)
 * [PhysX](https://github.com/NVIDIAGameWorks/PhysX/tree/ae80dede0546d652040ae6260a810e53e20a06fa)
 * [STB Image](https://github.com/nothings/stb/tree/f67165c2bb2af3060ecae7d20d6f731173485ad0)
+* [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo/tree/9198ffdcf3edb804fa5f2a147c2539bd3a9477bd)
