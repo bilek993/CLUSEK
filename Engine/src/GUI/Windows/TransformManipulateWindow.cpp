@@ -26,6 +26,11 @@ void TransformManipulateWindow::DrawCombo()
 	ImGui::Combo("Selected entity Id", &SelectedId, listIds.c_str());
 }
 
-void TransformManipulateWindow::DrawDetails()
+void TransformManipulateWindow::DrawDetails() const
 {
+	if (CurrentWorldMatrix == nullptr)
+		return;
+
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, *CurrentWorldMatrix);
 }
