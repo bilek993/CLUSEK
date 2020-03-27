@@ -1,4 +1,5 @@
 #include "DebugUserInterface.h"
+#include <ImGuizmo.h>
 #include "../Utils/Logger.h"
 #include "Windows/SystemsManagerWindow.h"
 #include "../Renderer/PostProcessingSettings.h"
@@ -28,6 +29,7 @@ void DebugUserInterface::BeforeUpdate() const
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+	ImGuizmo::BeginFrame();
 }
 
 void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, IOData *ioData, 
@@ -64,6 +66,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(ShadowPreviewerWindowInstance);
 	UPDATE_USER_INTERFACE(TerrainTessellationWindowInstance);
 	UPDATE_USER_INTERFACE(FogWindowInstance);
+	UPDATE_USER_INTERFACE(TransformManipulateWindowInstance);
 
 	AfterUpdate(renderSystem);
 }
@@ -98,6 +101,7 @@ void DebugUserInterface::DrawMenuBar()
 		{
 			DrawMenuItemForWindow("Entity viewer", EntityViewerWindowInstance);
 			DrawMenuItemForWindow("Systems manager", SystemsManagerWindowInstance);
+			DrawMenuItemForWindow("Transform manipulation", TransformManipulateWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Renderer"))
