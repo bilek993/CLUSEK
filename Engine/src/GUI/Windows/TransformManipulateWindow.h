@@ -20,7 +20,6 @@ void TransformManipulateWindow::ListComponent(int& counter, std::string& list)
 {
 	Registry->view<T>().each([this, &counter, &list](T& component)
 	{
-		counter++;
-		list += "Transformable entity " + std::to_string(counter) + '\0';
+		list += "Transformable entity " + std::to_string(counter++) + '\0';
 	});
 }
