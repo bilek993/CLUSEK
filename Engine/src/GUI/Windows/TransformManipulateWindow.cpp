@@ -1,6 +1,4 @@
 #include "TransformManipulateWindow.h"
-#include <imgui.h>
-#include <ImGuizmo.h>
 #include "../../ECS/Components/ModelRenderComponent.h"
 #include "../../ECS/Components/SkyboxComponent.h"
 #include "../../ECS/Components/TerrainComponent.h"
@@ -28,7 +26,7 @@ void TransformManipulateWindow::DrawCombo()
 	ImGui::Combo("Selected entity Id", &SelectedId, listIds.c_str());
 }
 
-void TransformManipulateWindow::DrawDetails() const
+void TransformManipulateWindow::DrawDetails()
 {
 	if (CurrentWorldMatrix == nullptr)
 		return;
@@ -53,9 +51,15 @@ void TransformManipulateWindow::DrawDetails() const
 
 	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, &worldMatrixFloats._11);
 
+	if (ImGui::RadioButton("Translate", CurrentGizmoOperation == ImGuizmo::TRANSLATE))
+		CurrentGizmoOperation = ImGuizmo::TRANSLATE;
+	ImGui::SameLine();
+	if (ImGui::RadioButton("Rotation", CurrentGizmoOperation == ImGuizmo::ROTATE))
+		CurrentGizmoOperation = ImGuizmo::ROTATE;
+
 	auto& io = ImGui::GetIO();
 	ImGuizmo::SetRect(0, 0, io.DisplaySize.x, io.DisplaySize.y);
-	Manipulate(&viewMatrixFloats._11, &projectionMatrixFloats._11, ImGuizmo::TRANSLATE, ImGuizmo::WORLD, &worldMatrixFloats._11);
+	Manipulate(&viewMatrixFloats._11, &projectionMatrixFloats._11, CurrentGizmoOperation, ImGuizmo::WORLD, &worldMatrixFloats._11);
 
 	*CurrentWorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
 }
