@@ -54,7 +54,7 @@ void TransformManipulateWindow::DrawDetails()
 	if (ImGui::RadioButton("Translate", CurrentGizmoOperation == ImGuizmo::TRANSLATE))
 		CurrentGizmoOperation = ImGuizmo::TRANSLATE;
 	ImGui::SameLine();
-	if (ImGui::RadioButton("Rotation", CurrentGizmoOperation == ImGuizmo::ROTATE))
+	if (ImGui::RadioButton("Rotate", CurrentGizmoOperation == ImGuizmo::ROTATE))
 		CurrentGizmoOperation = ImGuizmo::ROTATE;
 
 	auto& io = ImGui::GetIO();
