@@ -106,6 +106,34 @@ void RenderSystem::RenderFrameEnd() const
 	SwapChain->Present(SyncIntervals, 0);
 }
 
+CameraComponent& RenderSystem::GetMainCamera() const
+{
+	auto view = Registry->view<CameraComponent, entt::tag<Tags::MAIN_CAMERA>>();
+	if (view.size() != 1)
+	{
+		if (view.size() > 1)
+			Logger::Error("More than one main render camera found!");
+		else
+			Logger::Error("Main render camera not found!");
+	}
+
+	return view.raw<CameraComponent>()[0];
+}
+
+TransformComponent& RenderSystem::GetMainCameraTransform() const
+{
+	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
+	if (view.size() != 1)
+	{
+		if (view.size() > 1)
+			Logger::Error("More than one main render camera found!");
+		else
+			Logger::Error("Main render camera not found!");
+	}
+
+	return view.raw<TransformComponent>()[0];
+}
+
 ID3D11Device* RenderSystem::GetPointerToDevice() const
 {
 	return Device.Get();
@@ -864,34 +892,6 @@ void RenderSystem::ResetTessellationShaders() const
 {
 	DeviceContext->HSSetShader(nullptr, nullptr, 0);
 	DeviceContext->DSSetShader(nullptr, nullptr, 0);
-}
-
-CameraComponent& RenderSystem::GetMainCamera() const
-{
-	auto view = Registry->view<CameraComponent, entt::tag<Tags::MAIN_CAMERA>>();
-	if (view.size() != 1)
-	{
-		if (view.size() > 1)
-			Logger::Error("More than one main render camera found!");
-		else
-			Logger::Error("Main render camera not found!");
-	}
-
-	return view.raw<CameraComponent>()[0];
-}
-
-TransformComponent& RenderSystem::GetMainCameraTransform() const
-{
-	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
-	if (view.size() != 1)
-	{
-		if (view.size() > 1)
-			Logger::Error("More than one main render camera found!");
-		else
-			Logger::Error("Main render camera not found!");
-	}
-
-	return view.raw<TransformComponent>()[0];
 }
 
 void RenderSystem::RenderShadows(const CameraComponent &mainCameraComponent)

@@ -47,6 +47,9 @@ public:
 	void RenderFrameBegin() const;
 	void RenderFrameEnd() const;
 
+	CameraComponent& GetMainCamera() const;
+	TransformComponent& GetMainCameraTransform() const;
+
 	ID3D11Device* GetPointerToDevice() const;
 	ID3D11DeviceContext* GetPointerToDeviceContext() const;
 	ID3D11ShaderResourceView* GetPointerToRemappedShadowShaderResourceView(float bias, int cascadeLevel) const;
@@ -72,9 +75,6 @@ private:
 
 	template <class T>
 	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const;
-
-	CameraComponent& GetMainCamera() const;
-	TransformComponent& GetMainCameraTransform() const;
 
 	void RenderShadows(const CameraComponent &mainCameraComponent);
 	void RenderScene(const CameraComponent &cameraComponent, const TransformComponent &mainCameraTransformComponent);
