@@ -9,7 +9,10 @@ CLUSEK
 
 ## Gallery
 
-TODO: ADD IMAGES
+<img src=".docs/showreel_picture_0.jpg" >
+<img src=".docs/showreel_picture_1.jpg" >
+<img src=".docs/showreel_picture_2.jpg" >
+<img src=".docs/showreel_picture_3.jpg" >
 
 
 
