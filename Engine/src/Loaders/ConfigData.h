@@ -35,6 +35,7 @@ struct ConfigData final
 	int DisableLoadingScreen = 0;
 	std::string PathToLoadingLogo = "";
 	float LogoScale;
+	int DisableLoadingText = 0;
 	std::string PathToLoadingFont = "";
 	float LoadingOffsetX = 0.0f;
 	float LoadingOffsetY = 0.0f;

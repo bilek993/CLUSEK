@@ -812,14 +812,17 @@ void RenderSystem::ShowLoadingScreen()
 	UINT offset = 0;
 	Draw(vertexBuffer, indexBuffer, offset);
 
-	auto loadingSpriteBatch = std::make_unique<DirectX::SpriteBatch>(DeviceContext.Get());
-	const auto loadingSpriteFont = std::make_unique<DirectX::SpriteFont>(Device.Get(), StringUtil::StringToWide(ConfigurationData->PathToLoadingFont).c_str());
+	if (!ConfigurationData->DisableLoadingText)
+	{
+		auto loadingSpriteBatch = std::make_unique<DirectX::SpriteBatch>(DeviceContext.Get());
+		const auto loadingSpriteFont = std::make_unique<DirectX::SpriteFont>(Device.Get(), StringUtil::StringToWide(ConfigurationData->PathToLoadingFont).c_str());
 
-	loadingSpriteBatch->Begin();
-	loadingSpriteFont->DrawString(	loadingSpriteBatch.get(), 
-									L"Loading...", 
-									DirectX::XMFLOAT2(ConfigurationData->WindowWidth - ConfigurationData->LoadingOffsetX, ConfigurationData->WindowHeight - ConfigurationData->LoadingOffsetY));
-	loadingSpriteBatch->End();
+		loadingSpriteBatch->Begin();
+		loadingSpriteFont->DrawString(	loadingSpriteBatch.get(), 
+										L"Loading...", 
+										DirectX::XMFLOAT2(ConfigurationData->WindowWidth - ConfigurationData->LoadingOffsetX, ConfigurationData->WindowHeight - ConfigurationData->LoadingOffsetY));
+		loadingSpriteBatch->End();
+	}
 
 	PerformPostProcessing(true);
 	RenderFrameEnd();
