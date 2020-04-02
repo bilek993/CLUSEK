@@ -66,7 +66,7 @@ physx::PxVehicleDrivableSurfaceToTireFrictionPairs* VehicleResourcesGenerator::C
 	const float tireFrictionMultipliers[numberOfSurfaceTypes][numberOfTireTypes] =
 	{
 		//NORMAL,	WORN
-		{1.0f,		0.1f} //TARMAC
+		{1.0f,		0.75f} //TARMAC
 	};
 
 	physx::PxVehicleDrivableSurfaceType surfaceTypes[1];
