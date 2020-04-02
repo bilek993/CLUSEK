@@ -814,6 +814,8 @@ void RenderSystem::ShowLoadingScreen()
 
 	if (!ConfigurationData->DisableLoadingText)
 	{
+		Logger::Debug("Preparing loading text...");
+
 		auto loadingSpriteBatch = std::make_unique<DirectX::SpriteBatch>(DeviceContext.Get());
 		const auto loadingSpriteFont = std::make_unique<DirectX::SpriteFont>(Device.Get(), StringUtil::StringToWide(ConfigurationData->PathToLoadingFont).c_str());
 
