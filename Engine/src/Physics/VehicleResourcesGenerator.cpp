@@ -73,7 +73,7 @@ physx::PxVehicleDrivableSurfaceToTireFrictionPairs* VehicleResourcesGenerator::C
 	surfaceTypes[0].mType = 0; //TARMAC
 
 	const physx::PxMaterial* surfaceMaterials[1];
-	surfaceMaterials[0] = physics.createMaterial(0.1f, 0.1f, 0.01f);
+	surfaceMaterials[0] = physics.createMaterial(0.6f, 0.6f, 0.01f); // TODO: Move this to parameter
 
 	auto surfaceTirePairs =	physx::PxVehicleDrivableSurfaceToTireFrictionPairs::allocate(numberOfTireTypes, numberOfSurfaceTypes);
 
