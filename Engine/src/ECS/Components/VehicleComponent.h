@@ -22,6 +22,7 @@ struct VehicleComponent final
 	std::string DifferentialType = "LIMITED_SLIP_4W";
 	float PeakTorque = 500.0f;
 	float MaxOmega = 600.0f;
+	float EngineMomentOfInertia = 1.0f;
 	float GearsSwitchTime = 0.85f;
 	std::string ClutchAccuracyMode = "BEST_POSSIBLE";
 	float ClutchStrength = 10.0f;

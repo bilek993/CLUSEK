@@ -111,6 +111,9 @@ Maximum available torque in kilograms metres-squared per second-squared.
 * **MaxOmega** (_optional_, _float_)<br/>
 Maximum rotation speed of the engine in radians per second.
 
+* **EngineMomentOfInertia** (_optional_, _float_)<br/>
+Moment of inertia of the engine around the axis of rotation.
+
 * **GearsSwitchTime** (_optional_, _float_)<br/>
 Time to switch gear in seconds.
 

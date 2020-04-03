@@ -270,6 +270,7 @@ physx::PxVehicleDriveSimData4W VehicleResourcesGenerator::CreateDriveSimData(con
 	physx::PxVehicleEngineData engine;
 	engine.mPeakTorque = vehicleComponent.PeakTorque;
 	engine.mMaxOmega = vehicleComponent.MaxOmega;
+	engine.mMOI = vehicleComponent.EngineMomentOfInertia;
 	driveSimData.setEngineData(engine);
 
 	physx::PxVehicleGearsData gears;

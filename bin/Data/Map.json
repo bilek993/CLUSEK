@@ -52,6 +52,7 @@
 		"DifferentialType": "LIMITED_SLIP_REAR",
 		"PeakTorque": 800.0,
 		"MaxOmega": 1000.0,
+		"EngineMomentOfInertia": 3.5,
 		"GearsSwitchTime": 0.3
 	  },
 	  "VehiclePlayerControllerComponent": {

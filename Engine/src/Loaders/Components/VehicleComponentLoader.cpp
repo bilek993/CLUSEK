@@ -21,6 +21,7 @@ void VehicleComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	MAP_LOADER_BASIC_FIELD(DifferentialType, json, component, std::string);
 	MAP_LOADER_BASIC_FIELD(PeakTorque, json, component, float);
 	MAP_LOADER_BASIC_FIELD(MaxOmega, json, component, float);
+	MAP_LOADER_BASIC_FIELD(EngineMomentOfInertia, json, component, float);
 	MAP_LOADER_BASIC_FIELD(GearsSwitchTime, json, component, float);
 	MAP_LOADER_BASIC_FIELD(ClutchAccuracyMode, json, component, std::string);
 	MAP_LOADER_BASIC_FIELD(ClutchStrength, json, component, float);
