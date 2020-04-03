@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\PhysicsFilterShader.cpp" />
     <ClCompile Include="src\GUI\Windows\FogWindow.cpp" />
     <ClCompile Include="src\Renderer\ProfilerAnnotations.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticHeightFieldsComponentLoader.cpp" />
@@ -170,6 +171,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Physics\PhysicsFilterShader.h" />
     <ClInclude Include="src\GUI\Windows\FogWindow.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\FogBuffer.h" />
     <ClInclude Include="src\Renderer\ProfilerAnnotations.h" />
