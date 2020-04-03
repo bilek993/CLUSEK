@@ -105,10 +105,18 @@ physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx
 
 	const auto vehicleActor = physics->createRigidDynamic(physx::PxTransform(physx::PxIdentity));
 
+	physx::PxFilterData wheelFilterData;
+	PhysicsFilterHelper::SetSimulationFilter(wheelFilterData, CollisionWheel, CollisionWheelAgainst);
+
+	physx::PxFilterData wheelQueryFilterData;
+	PhysicsFilterHelper::SetSurfaceFilter(wheelQueryFilterData, Undrivable);
+
 	for (auto i = 0; i < wheelsCount; i++)
 	{
 		physx::PxConvexMeshGeometry geometry(wheelMeshes[i]);
 		auto wheelShape = physx::PxRigidActorExt::createExclusiveShape(*vehicleActor, geometry, *vehicleComponent.WheelsMaterials[i]->Material);
+		wheelShape->setQueryFilterData(wheelQueryFilterData);
+		wheelShape->setSimulationFilterData(wheelFilterData);
 		wheelShape->setLocalPose(physx::PxTransform(physx::PxIdentity));
 	}
 

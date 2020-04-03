@@ -427,18 +427,28 @@ void PhysicsSystem::InitializeVehiclesAndWheels()
 
 void PhysicsSystem::SetFiltersForComponent(physx::PxRigidActor& actor, const std::string& type) const
 {
+	physx::PxFilterData queryFilterData;
+
+	PhysicsFilterHelper::SetSurfaceFilter(queryFilterData, type);
+	PhysicsFilterHelper::SetQueryFilterDataForActor(actor, queryFilterData);
+
 	physx::PxFilterData filterData;
 
-	PhysicsFilterHelper::SetSurfaceFilter(filterData, type);
-	PhysicsFilterHelper::SetQueryFilterDataForShape(actor, filterData);
+	PhysicsFilterHelper::SetSimulationFilter(filterData, CollisionVehicleObstacle, CollisionVehicleObstacleAgainst);
+	PhysicsFilterHelper::SetSimulationFilterDataForActor(actor, filterData);
 }
 
 void PhysicsSystem::SetFiltersForComponent(physx::PxShape& shape, const std::string& type) const
 {
+	physx::PxFilterData queryFilterData;
+
+	PhysicsFilterHelper::SetSurfaceFilter(queryFilterData, type);
+	shape.setQueryFilterData(queryFilterData);
+
 	physx::PxFilterData filterData;
 
-	PhysicsFilterHelper::SetSurfaceFilter(filterData, type);
-	shape.setQueryFilterData(filterData);
+	PhysicsFilterHelper::SetSimulationFilter(filterData, CollisionVehicleObstacle, CollisionVehicleObstacleAgainst);
+	shape.setSimulationFilterData(filterData);
 }
 
 void PhysicsSystem::UpdateSimulation() const

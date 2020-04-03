@@ -1,7 +1,7 @@
 #include "PhysicsFilterHelper.h"
 #include <vector>
 
-void PhysicsFilterHelper::SetQueryFilterDataForShape(physx::PxRigidActor& actor, const physx::PxFilterData& filterData)
+void PhysicsFilterHelper::SetQueryFilterDataForActor(physx::PxRigidActor& actor, const physx::PxFilterData& filterData)
 {
 	const auto numberOfShapes = actor.getNbShapes();
 
@@ -11,6 +11,19 @@ void PhysicsFilterHelper::SetQueryFilterDataForShape(physx::PxRigidActor& actor,
 	for (auto& shape : shapes)
 	{
 		shape->setQueryFilterData(filterData);
+	}
+}
+
+void PhysicsFilterHelper::SetSimulationFilterDataForActor(physx::PxRigidActor& actor, const physx::PxFilterData& filterData)
+{
+	const auto numberOfShapes = actor.getNbShapes();
+
+	std::vector<physx::PxShape*> shapes(numberOfShapes);
+	actor.getShapes(shapes.data(), numberOfShapes);
+
+	for (auto& shape : shapes)
+	{
+		shape->setSimulationFilterData(filterData);
 	}
 }
 
@@ -25,4 +38,11 @@ void PhysicsFilterHelper::SetSurfaceFilter(physx::PxFilterData& filterData, cons
 		filterData.word3 = Drivable;
 	else if (type == "Undrivable")
 		filterData.word3 = Undrivable;
+}
+
+void PhysicsFilterHelper::SetSimulationFilter(physx::PxFilterData& filterData, const CollisionFilterTypes collide,
+	const CollisionFilterTypes collideAgainst)
+{
+	filterData.word0 = collide;
+	filterData.word1 = collideAgainst;
 }
