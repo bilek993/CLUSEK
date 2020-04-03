@@ -51,7 +51,7 @@
 		"MaxHandBrakeTorque": 10000.0,
 		"DifferentialType": "LIMITED_SLIP_REAR",
 		"PeakTorque": 800.0,
-		"MaxOmega": 600.0,
+		"MaxOmega": 1000.0,
 		"GearsSwitchTime": 0.3
 	  },
 	  "VehiclePlayerControllerComponent": {
@@ -85,7 +85,7 @@
 		"Radius": 1.285,
 		"SuspensionMaxCompression": 0.3,
 		"SuspensionMaxDroop": 0.1,
-		"SuspensionSpringStrength": 35000.0,
+		"SuspensionSpringStrength": 3500.0,
 		"SuspensionSpringDamperRate": 4500.0,
 		"SuspensionForceApplicationPoinOffset": -0.3,
 		"TireForceApplicationPoinOffset": -0.3
@@ -118,7 +118,7 @@
 		"Radius": 1.285,
 		"SuspensionMaxCompression": 0.3,
 		"SuspensionMaxDroop": 0.1,
-		"SuspensionSpringStrength": 35000.0,
+		"SuspensionSpringStrength": 3500.0,
 		"SuspensionSpringDamperRate": 4500.0,
 		"SuspensionForceApplicationPoinOffset": -0.3,
 		"TireForceApplicationPoinOffset": -0.3
@@ -153,11 +153,10 @@
 		"Radius": 1.285,
 		"SuspensionMaxCompression": 0.3,
 		"SuspensionMaxDroop": 0.1,
-		"SuspensionSpringStrength": 35000.0,
+		"SuspensionSpringStrength": 3500.0,
 		"SuspensionSpringDamperRate": 4500.0,
 		"SuspensionForceApplicationPoinOffset": -0.3,
-		"TireForceApplicationPoinOffset": -0.3,
-		"LatStiffXMultiplier": 0.75
+		"TireForceApplicationPoinOffset": -0.3
 	  }
 	}
   },
@@ -189,7 +188,7 @@
 		"Radius": 1.285,
 		"SuspensionMaxCompression": 0.3,
 		"SuspensionMaxDroop": 0.1,
-		"SuspensionSpringStrength": 35000.0,
+		"SuspensionSpringStrength": 3500.0,
 		"SuspensionSpringDamperRate": 4500.0,
 		"SuspensionForceApplicationPoinOffset": -0.3,
 		"TireForceApplicationPoinOffset": -0.3
