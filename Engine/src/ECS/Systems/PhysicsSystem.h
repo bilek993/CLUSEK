@@ -2,13 +2,10 @@
 #include "BaseSystem.h"
 #include "../../Physics/PhysicsErrorCallback.h"
 #include "PxPhysicsAPI.h"
-#include "../../Physics/PhysicsUnitConversion.h"
 #include "../../Renderer/TransformLogic.h"
 #include "../../Physics/VehicleSceneQueryData.h"
 
 #define PX_RELEASE(x) if(x) { x->release(); x = nullptr; }
-
-struct TransformComponent;
 
 class PhysicsSystem final : public BaseSystem
 {

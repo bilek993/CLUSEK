@@ -21,6 +21,7 @@
 #include "../Components/RigidbodyStaticHeightFieldsComponent.h"
 #include "../Components/TerrainComponent.h"
 #include "../../Utils/TerrainUtil.h"
+#include "../../Physics/PhysicsFilterShader.h"
 
 void PhysicsSystem::Start()
 {
@@ -139,7 +140,7 @@ void PhysicsSystem::InitializeCore()
 	sceneDesc.gravity = physx::PxVec3(ConfigurationData->GravityX, ConfigurationData->GravityY, ConfigurationData->GravityZ);
 	Dispatcher = physx::PxDefaultCpuDispatcherCreate(numberOfThreads);
 	sceneDesc.cpuDispatcher = Dispatcher;
-	sceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+	sceneDesc.filterShader = PhysicsFilterShader::Filter;
 
 	PxRegisterHeightFields(*Physics);
 

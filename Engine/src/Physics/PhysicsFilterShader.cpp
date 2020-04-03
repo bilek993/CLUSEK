@@ -1,6 +1,6 @@
 #include "PhysicsFilterShader.h"
 
-physx::PxFilterFlags PhysicsFilterShader::VehicleFilterShader(physx::PxFilterObjectAttributes attributes0,
+physx::PxFilterFlags PhysicsFilterShader::Filter(physx::PxFilterObjectAttributes attributes0,
 	const physx::PxFilterData filterData0, physx::PxFilterObjectAttributes attributes1, const physx::PxFilterData filterData1,
 	physx::PxPairFlags& pairFlags, const void* constantBlock, physx::PxU32 constantBlockSize)
 {
