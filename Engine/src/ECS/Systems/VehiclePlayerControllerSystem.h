@@ -9,8 +9,10 @@ public:
 	void Start() override;
 	void Update(float deltaTime) override;
 private:
-	void HandleGamepad(float& accelerate, float& brake, float& left, float& handbrake, bool& changeToOrFromReverse) const;
-	void HandleKeyboard(float& accelerate, float& brake, float& left, float& handbrake, bool& changeToOrFromReverse) const;
+	void HandleGamepad(float& accelerate, float& brake, float& left, float& handbrake, 
+		bool& changeToOrFromReverse, bool& gearUp, bool& gearDown) const;
+	void HandleKeyboard(float& accelerate, float& brake, float& left, float& handbrake, 
+		bool& changeToOrFromReverse, bool& gearUp, bool& gearDown) const;
 
 	float CalculateVehicleSpeed(const VehicleComponent &vehicleComponent) const;
 	void CalculateAndSetWheelAngle(float deltaTime, float left, float vehicleSpeed,
