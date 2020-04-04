@@ -53,7 +53,7 @@
 		"PeakTorque": 1500.0,
 		"MaxOmega": 1000.0,
 		"EngineMomentOfInertia": 3.5,
-		"GearsSwitchTime": 0.3
+		"GearsSwitchTime": 0.5
 	  },
 	  "VehiclePlayerControllerComponent": {
 	    "Possessed": true
