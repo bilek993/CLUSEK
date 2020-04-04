@@ -22,6 +22,16 @@ void VehiclePlayerControllerSystem::Update(const float deltaTime)
 		{
 			const auto vehicleSpeed = CalculateVehicleSpeed(vehicleComponent);
 
+			if (vehicleComponent.Vehicle->mDriveDynData.mUseAutoGears)
+			{
+				gearUp = false;
+				gearDown = false;
+			}
+			else
+			{
+				changeToOrFromReverse = false;
+			}
+
 			CalculateAndSetWheelAngle(deltaTime, left, vehicleSpeed, vehiclePlayerControllerComponent);
 
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL, accelerate);
