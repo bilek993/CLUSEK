@@ -117,6 +117,9 @@ Moment of inertia of the engine around the axis of rotation.
 * **GearsSwitchTime** (_optional_, _float_)<br/>
 Time to switch gear in seconds.
 
+* **GearboxType** (_optional_, _std::string_)<br/>
+Type of used vehicle. Supported gearbox types: AUTOMATIC, MANUAL.
+
 * **ClutchAccuracyMode** (_optional_, _std::string_)<br/>
 Accuracy of clutch, when calculating rotations. Accuracy of clutch can be set to BEST_POSSIBLE or ESTIMATE, but second mode should be used only, if first mode doesn't deliver enought performace.
 
