@@ -637,6 +637,6 @@ void PhysicsSystem::CreateVehicle()
 
 		vehicle->setToRestState();
 		vehicle->mDriveDynData.forceGearChange(physx::PxVehicleGearsData::eFIRST);
-		vehicle->mDriveDynData.setUseAutoGears(true);
+		vehicle->mDriveDynData.setUseAutoGears(vehicleComponent.GearboxType == "AUTOMATIC");
 	});
 }

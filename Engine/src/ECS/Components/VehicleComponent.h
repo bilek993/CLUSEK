@@ -24,6 +24,7 @@ struct VehicleComponent final
 	float MaxOmega = 600.0f;
 	float EngineMomentOfInertia = 1.0f;
 	float GearsSwitchTime = 0.85f;
+	std::string GearboxType = "AUTOMATIC";
 	std::string ClutchAccuracyMode = "BEST_POSSIBLE";
 	float ClutchStrength = 10.0f;
 	float AckermannAccuracy = 1.0f;
