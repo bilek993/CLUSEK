@@ -5,6 +5,11 @@ This project supports gamepad (Xbox Controller) and keyboard/mouse mapping. For 
 ### Gamepad
 
 <div>
+    <img src="xbox_buttons/xboxControllerBack.png" style="vertical-align: middle;" width="32"> 
+    <span style="vertical-align: middle;">- Close the engine</span>
+</div>
+
+<div>
     <img src="xbox_buttons/xboxControllerRightTrigger.png" style="vertical-align: middle;" width="32"> 
     <span style="vertical-align: middle;">- Accelerate vehicle</span>
 </div>
@@ -55,6 +60,8 @@ This project supports gamepad (Xbox Controller) and keyboard/mouse mapping. For 
 </div>
 
 ### Keyboard & Mouse
+
+<kbd>ESC</kbd> - Close the engine
 
 <kbd>↑</kbd> - Accelerate vehicle
 
