@@ -27,6 +27,7 @@ The latest official version of this game engine can always be found [here](https
 * [Source Code](.docs/source_code.md)
 * [Dependencies](.docs/external_dependencies.md)
 * [Requirements](.docs/requirements.md)
+* [Controls](.docs/controls.md)
 * [Coding standards](.docs/coding_standards.md)
 * [Configuration files](.docs/configuration_files.md)
 * [Fonts](.docs/fonts.md)
