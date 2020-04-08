@@ -117,10 +117,14 @@ struct ConfigData final
 	int VehicleMaxHitPointsPerWheel = 8;
 	int VehicleHitsPerQuery = 8;
 	float VehicleSweepWidthScale = 1.0f;
-	float VehicleSweepRadiusScale = 1.01f;
+	float VehicleSweepRadiusScale = 1.0f;
+	float DefaultPhysicsMaterialStaticFriction = 0.75f;
+	float DefaultPhysicsMaterialDynamicFriction = 0.75f;
+	float DefaultPhysicsMaterialRestitution = 0.25f;
 
 	// Files responsible for world description
 	std::string PathToResources = "";
 	std::string PathToMap = "";
 	std::string PathToPostProcessing = "";
+	std::string PathToPhysicsMaterials = "";
 };

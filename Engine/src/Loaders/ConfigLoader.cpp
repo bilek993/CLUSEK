@@ -129,10 +129,14 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, VehicleHitsPerQuery, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, VehicleSweepWidthScale, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, VehicleSweepRadiusScale, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DefaultPhysicsMaterialStaticFriction, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DefaultPhysicsMaterialDynamicFriction, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, DefaultPhysicsMaterialRestitution, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, PathToResources, data, value);
 			MAP_CONFIG_FIELD(key, PathToMap, data, value);
 			MAP_CONFIG_FIELD(key, PathToPostProcessing, data, value);
+			MAP_CONFIG_FIELD(key, PathToPhysicsMaterials, data, value);
 		}
 
 		Logger::Debug("Configuration has been successfully loaded!");
