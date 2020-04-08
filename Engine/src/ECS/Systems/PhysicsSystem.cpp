@@ -170,13 +170,13 @@ void PhysicsSystem::InitializeCore()
 															Allocator);
 
 	BatchQuery = VehicleSceneQueryData::SetUpBatchedSceneQuery(0, *VehicleSceneQueryData, Scene);
-
-	FrictionPairs = VehicleResourcesGenerator::CreateFrictionPairs(*Physics);
 }
 
 void PhysicsSystem::InitializePhysicsMaterialComponents()
 {
 	Logger::Debug("Preparing to initialize physics material...");
+
+	MaterialManager = std::make_unique<PhysicsMaterialManager>(Physics);
 
 	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
 	{
@@ -184,6 +184,8 @@ void PhysicsSystem::InitializePhysicsMaterialComponents()
 																	physicsMaterialComponent.DynamicFriction, 
 																	physicsMaterialComponent.Restitution);
 	});
+
+	FrictionPairs = VehicleResourcesGenerator::CreateFrictionPairs(*Physics);
 }
 
 void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()

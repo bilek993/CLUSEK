@@ -4,6 +4,7 @@
 #include "PxPhysicsAPI.h"
 #include "../../Renderer/TransformLogic.h"
 #include "../../Physics/VehicleSceneQueryData.h"
+#include "../../Physics/PhysicsMaterialManager.h"
 
 #define PX_RELEASE(x) if(x) { x->release(); x = nullptr; }
 
@@ -48,6 +49,8 @@ private:
 	void AssociateWheelsWithVehicles();
 	void VerifyWheelsForEachVehicle() const;
 	void CreateVehicle();
+
+	std::unique_ptr<PhysicsMaterialManager> MaterialManager;
 
 	physx::PxDefaultAllocator Allocator;
 	PhysicsErrorCallback ErrorCallback;
