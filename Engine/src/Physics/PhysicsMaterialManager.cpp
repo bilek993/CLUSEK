@@ -1,11 +1,12 @@
 #include "PhysicsMaterialManager.h"
 #include "../Utils/Logger.h"
 
-PhysicsMaterialManager::PhysicsMaterialManager(physx::PxPhysics* physics)
+PhysicsMaterialManager::PhysicsMaterialManager(physx::PxPhysics* physics, const float defaultStaticFriction, const float defaultDynamicFriction,
+	const float defaultRestitution)
 {
 	Logger::Debug("Physics material manager initialization...");
 
-	DefaultMaterial = physics->createMaterial(0.8f, 0.8f, 0.1f);
+	DefaultMaterial = physics->createMaterial(defaultStaticFriction, defaultDynamicFriction, defaultRestitution);
 }
 
 void PhysicsMaterialManager::AddMaterial(physx::PxPhysics* physics, const float staticFriction, const float dynamicFriction,

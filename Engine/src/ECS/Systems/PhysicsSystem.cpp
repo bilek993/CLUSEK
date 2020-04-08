@@ -176,7 +176,10 @@ void PhysicsSystem::InitializePhysicsMaterialComponents()
 {
 	Logger::Debug("Preparing to initialize physics material...");
 
-	MaterialManager = std::make_unique<PhysicsMaterialManager>(Physics);
+	MaterialManager = std::make_unique<PhysicsMaterialManager>(	Physics,
+																ConfigurationData->DefaultPhysicsMaterialStaticFriction,
+																ConfigurationData->DefaultPhysicsMaterialDynamicFriction,
+																ConfigurationData->DefaultPhysicsMaterialRestitution);
 
 	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
 	{

@@ -6,7 +6,8 @@
 class PhysicsMaterialManager final
 {
 public:
-	PhysicsMaterialManager(physx::PxPhysics* physics);
+	PhysicsMaterialManager(physx::PxPhysics* physics, float defaultStaticFriction, float defaultDynamicFriction,
+		float defaultRestitution);
 
 	void AddMaterial(physx::PxPhysics* physics, float staticFriction, float dynamicFriction, 
 		float restitution, const std::string& name);
