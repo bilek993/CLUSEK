@@ -3,6 +3,8 @@
 
 PhysicsMaterialManager::PhysicsMaterialManager(physx::PxPhysics* physics)
 {
+	Logger::Debug("Physics material manager initialization...");
+
 	DefaultMaterial = physics->createMaterial(0.8f, 0.8f, 0.1f);
 }
 
