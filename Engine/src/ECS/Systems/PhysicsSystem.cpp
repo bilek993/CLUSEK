@@ -186,9 +186,8 @@ void PhysicsSystem::InitializePhysicsMaterialComponents()
 
 	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
 	{
-		physicsMaterialComponent.Material = Physics->createMaterial(physicsMaterialComponent.StaticFriction, 
-																	physicsMaterialComponent.DynamicFriction, 
-																	physicsMaterialComponent.Restitution);
+		physicsMaterialComponent.Material = MaterialManager->GetMaterialByName(physicsMaterialComponent.Name);
+		Logger::Debug("Paired material '" + physicsMaterialComponent.Name + "' with proper component.");
 	});
 
 	FrictionPairs = VehicleResourcesGenerator::CreateFrictionPairs(*Physics);

@@ -34,9 +34,7 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-        "StaticFriction": 0.1,
-        "DynamicFriction": 0.1,
-        "Restitution": 0.1
+        "Name": "BaseMaterial"
       },
 	  "VehicleComponent": {
 		"VehicleId": "PlayerVehicle",
@@ -73,9 +71,7 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-        "StaticFriction": 0.1,
-        "DynamicFriction": 0.1,
-        "Restitution": 0.1
+        "Name": "BaseMaterial"
       },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
@@ -106,9 +102,7 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-        "StaticFriction": 0.1,
-        "DynamicFriction": 0.1,
-        "Restitution": 0.1
+        "Name": "BaseMaterial"
       },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
@@ -142,9 +136,7 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-        "StaticFriction": 0.1,
-        "DynamicFriction": 0.1,
-        "Restitution": 0.1
+        "Name": "BaseMaterial"
       },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
@@ -177,9 +169,7 @@
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-        "StaticFriction": 0.1,
-        "DynamicFriction": 0.1,
-        "Restitution": 0.1
+        "Name": "BaseMaterial"
       },
 	  "WheelComponent": {
 		"VehicleId": "PlayerVehicle",
@@ -212,9 +202,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -239,9 +227,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -266,9 +252,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -293,9 +277,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -320,9 +302,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -347,9 +327,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -374,9 +352,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -401,9 +377,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -428,9 +402,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -455,9 +427,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -482,9 +452,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -509,9 +477,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -536,9 +502,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -563,9 +527,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -590,9 +552,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -617,9 +577,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -644,9 +602,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -671,9 +627,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -698,9 +652,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -725,9 +677,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -752,9 +702,7 @@
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "BaseMaterial"
 	  },
 	  "RigidbodyDynamicCylinderComponent": {
 	    "Width": 2.0,
@@ -779,9 +727,7 @@
 		"MaxHeight": 800.0
 	  },
 	  "PhysicsMaterialComponent": {
-	    "StaticFriction": 0.8,
-	    "DynamicFriction": 0.8,
-	    "Restitution": 0.1
+	    "Name": "TerrainMaterial"
 	  },
 	  "RigidbodyStaticHeightFieldsComponent": {
 	  }

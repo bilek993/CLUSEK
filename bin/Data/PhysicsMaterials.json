@@ -1,8 +1,14 @@
 [
   {
-    "Name": "BasePxMaterial",
-	"StaticFriction": 0.75,
-	"DynamicFriction": 0.75,
+    "Name": "BaseMaterial",
+	"StaticFriction": 0.8,
+	"DynamicFriction": 0.8,
 	"Restitution": 0.15
+  },
+  {
+    "Name": "TerrainMaterial",
+	"StaticFriction": 0.7,
+	"DynamicFriction": 0.75,
+	"Restitution": 0.1
   }
 ]
