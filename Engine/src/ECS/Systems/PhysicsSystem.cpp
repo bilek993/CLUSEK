@@ -187,7 +187,7 @@ void PhysicsSystem::InitializePhysicsMaterialComponents()
 		Logger::Debug("Paired material '" + physicsMaterialComponent.Name + "' with proper component.");
 	});
 
-	FrictionPairs = VehicleResourcesGenerator::CreateFrictionPairs(*Physics);
+	FrictionPairs = VehicleResourcesGenerator::CreateFrictionPairs(*Physics, MaterialManager.get());
 }
 
 void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()

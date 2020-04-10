@@ -58,32 +58,28 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 }
 
 physx::PxVehicleDrivableSurfaceToTireFrictionPairs* VehicleResourcesGenerator::CreateFrictionPairs(
-	physx::PxPhysics& physics)
+	physx::PxPhysics& physics, PhysicsMaterialManager* physicsMaterialManager)
 {
-	const auto numberOfSurfaceTypes = 1;
-	const auto numberOfTireTypes = 2;
+	const auto tireTypesCount = 1; // Currently one on tire type is supported
+	const auto surfaceTypesCount = physicsMaterialManager->GetMaterialCount();
 
-	const float tireFrictionMultipliers[numberOfSurfaceTypes][numberOfTireTypes] =
+	std::vector<physx::PxVehicleDrivableSurfaceType> surfaceTypes;
+	for (auto i = 0; i < physicsMaterialManager->GetMaterialCount(); i++)
 	{
-		//NORMAL,	WORN
-		{1.0f,		0.75f} //TARMAC
-	};
+		physx::PxVehicleDrivableSurfaceType drivableSurfaceType;
+		drivableSurfaceType.mType = i;
+		surfaceTypes.emplace_back(drivableSurfaceType);
+	}
 
-	physx::PxVehicleDrivableSurfaceType surfaceTypes[1];
-	surfaceTypes[0].mType = 0; //TARMAC
+	auto surfaceTirePairs =	physx::PxVehicleDrivableSurfaceToTireFrictionPairs::allocate(tireTypesCount, surfaceTypesCount);
 
-	const physx::PxMaterial* surfaceMaterials[1];
-	surfaceMaterials[0] = physics.createMaterial(0.6f, 0.6f, 0.1f);
+	surfaceTirePairs->setup(tireTypesCount, surfaceTypesCount, const_cast<const physx::PxMaterial**>(physicsMaterialManager->GetPointerToAllMaterials()), surfaceTypes.data());
 
-	auto surfaceTirePairs =	physx::PxVehicleDrivableSurfaceToTireFrictionPairs::allocate(numberOfTireTypes, numberOfSurfaceTypes);
-
-	surfaceTirePairs->setup(numberOfTireTypes, numberOfSurfaceTypes, surfaceMaterials, surfaceTypes);
-
-	for (auto i = 0; i < numberOfSurfaceTypes; i++)
+	for (auto surfaceId = 0; surfaceId < surfaceTypesCount; surfaceId++)
 	{
-		for (auto j = 0; j < numberOfTireTypes; j++)
+		for (auto tireId = 0; tireId < tireTypesCount; tireId++)
 		{
-			surfaceTirePairs->setTypePairFriction(i, j, tireFrictionMultipliers[i][j]);
+			surfaceTirePairs->setTypePairFriction(surfaceId, tireId, physicsMaterialManager->GetTireFrictionById(surfaceId));
 		}
 	}
 

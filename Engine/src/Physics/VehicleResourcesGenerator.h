@@ -2,6 +2,7 @@
 #include <PxPhysicsAPI.h>
 #include "../ECS/Components/VehicleComponent.h"
 #include <vector>
+#include "PhysicsMaterialManager.h"
 
 class VehicleResourcesGenerator final
 {
@@ -10,7 +11,8 @@ public:
 		const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
 		const TransformComponent& vehicleTransformComponent);
 
-	static physx::PxVehicleDrivableSurfaceToTireFrictionPairs* CreateFrictionPairs(physx::PxPhysics& physics);
+	static physx::PxVehicleDrivableSurfaceToTireFrictionPairs* CreateFrictionPairs(
+		physx::PxPhysics& physics, PhysicsMaterialManager* physicsMaterialManager);
 
 private:
 	static physx::PxRigidDynamic* Create4WheelVehicleActor(physx::PxPhysics* physics, const physx::PxCooking* cooking,
