@@ -147,7 +147,7 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 {
 	if (pathToMaterial.empty())
 	{
-		Logger::Error("Incorrect path to material passed! Path cannot to material file cannot be empty.");
+		Logger::Error("Incorrect path to material passed! Path to material file cannot be empty.");
 		return;
 	}
 
