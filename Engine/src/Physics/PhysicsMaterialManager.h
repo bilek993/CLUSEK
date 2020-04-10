@@ -18,9 +18,11 @@ public:
 	physx::PxMaterial* GetMaterialById(int id) const;
 	physx::PxMaterial** GetPointerToAllMaterials();
 
+	void ReleaseAllMaterials();
+
 private:
 	physx::PxMaterial* DefaultMaterial = nullptr;
 
-	std::vector<physx::PxMaterial*> PhysicsMaterial;
-	std::vector<std::string> PhysicsMaterialName;
+	std::vector<physx::PxMaterial*> PhysicsMaterials;
+	std::vector<std::string> PhysicsMaterialNames;
 };

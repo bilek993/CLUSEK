@@ -68,10 +68,7 @@ physx::PxSimulationStatistics PhysicsSystem::GetStatistics() const
 
 PhysicsSystem::~PhysicsSystem()
 {
-	Registry->view<PhysicsMaterialComponent>().each([](PhysicsMaterialComponent &physicsMaterialComponent)
-	{
-		PX_RELEASE(physicsMaterialComponent.Material);
-	});
+	MaterialManager->ReleaseAllMaterials();
 
 	const auto numberOfActors = Scene->getNbActors(physx::PxActorTypeFlag::eRIGID_DYNAMIC | physx::PxActorTypeFlag::eRIGID_STATIC);
 	std::vector<physx::PxRigidActor*> actors(numberOfActors);
