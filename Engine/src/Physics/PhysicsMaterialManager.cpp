@@ -2,8 +2,8 @@
 #include "../Utils/Logger.h"
 #include "../ECS/Systems/PhysicsSystem.h"
 
-PhysicsMaterialManager::PhysicsMaterialManager(physx::PxPhysics* physics, const float defaultStaticFriction, const float defaultDynamicFriction,
-	const float defaultRestitution)
+PhysicsMaterialManager::PhysicsMaterialManager(	physx::PxPhysics* physics, const float defaultStaticFriction, const float defaultDynamicFriction,
+												const float defaultRestitution)
 {
 	Logger::Debug("Physics material manager initialization...");
 
@@ -11,7 +11,7 @@ PhysicsMaterialManager::PhysicsMaterialManager(physx::PxPhysics* physics, const 
 }
 
 void PhysicsMaterialManager::AddMaterial(physx::PxPhysics* physics, const float staticFriction, const float dynamicFriction,
-                                         const float restitution, const std::string& name)
+                                         const float tireFriction, const float restitution, const std::string& name)
 {
 	Logger::Debug("Adding new physics material (" + name + ").");
 
@@ -20,6 +20,7 @@ void PhysicsMaterialManager::AddMaterial(physx::PxPhysics* physics, const float 
 													restitution);
 
 	PhysicsMaterials.emplace_back(material);
+	PhysicsTireFrictions.emplace_back(tireFriction);
 	PhysicsMaterialNames.emplace_back(name);
 }
 
@@ -59,6 +60,11 @@ physx::PxMaterial* PhysicsMaterialManager::GetMaterialById(const int id) const
 physx::PxMaterial** PhysicsMaterialManager::GetPointerToAllMaterials()
 {
 	return PhysicsMaterials.data();
+}
+
+float PhysicsMaterialManager::GetTireFrictionById(const int id) const
+{
+	return PhysicsTireFrictions[id];
 }
 
 void PhysicsMaterialManager::ReleaseAllMaterials()

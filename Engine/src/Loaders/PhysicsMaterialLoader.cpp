@@ -33,8 +33,9 @@ void PhysicsMaterialLoader::ParseMaterial(nlohmann::json& jsonObject, PhysicsMat
 	const auto name = jsonObject["Name"].get<std::string>();
 	const auto staticFriction = jsonObject["StaticFriction"].is_null() ? DEFAULT_STATIC_FRICTION : jsonObject["StaticFriction"].get<float>();
 	const auto dynamicFriction = jsonObject["DynamicFriction"].is_null() ? DEFAULT_STATIC_FRICTION : jsonObject["DynamicFriction"].get<float>();
+	const auto tireFriction = jsonObject["TireFriction"].is_null() ? DEFAULT_TIRE_FRICTION : jsonObject["TireFriction"].get<float>();
 	const auto restitution = jsonObject["Restitution"].is_null() ? DEFAULT_STATIC_FRICTION : jsonObject["Restitution"].get<float>();
 
-	physicsMaterialMaterialManager->AddMaterial(physics, staticFriction, dynamicFriction, restitution, name);
+	physicsMaterialMaterialManager->AddMaterial(physics, staticFriction, dynamicFriction, tireFriction, restitution, name);
 	Logger::Debug("Added new physics material named: '" + name + "'");
 }
