@@ -1,0 +1,8 @@
+[
+  {
+    "Name": "BasePxMaterial",
+	"StaticFriction": 0.75,
+	"DynamicFriction": 0.75,
+	"Restitution": 0.15
+  }
+]

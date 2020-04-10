@@ -22,6 +22,7 @@
 #include "../Components/TerrainComponent.h"
 #include "../../Utils/TerrainUtil.h"
 #include "../../Physics/PhysicsFilterShader.h"
+#include "../../Loaders/PhysicsMaterialLoader.h"
 
 void PhysicsSystem::Start()
 {
@@ -180,6 +181,8 @@ void PhysicsSystem::InitializePhysicsMaterialComponents()
 																ConfigurationData->DefaultPhysicsMaterialStaticFriction,
 																ConfigurationData->DefaultPhysicsMaterialDynamicFriction,
 																ConfigurationData->DefaultPhysicsMaterialRestitution);
+
+	PhysicsMaterialLoader::Load(ConfigurationData->PathToPhysicsMaterials, MaterialManager.get(), Physics);
 
 	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
 	{

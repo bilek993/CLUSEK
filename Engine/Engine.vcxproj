@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Loaders\PhysicsMaterialLoader.cpp" />
     <ClCompile Include="src\Physics\PhysicsMaterialManager.cpp" />
     <ClCompile Include="src\Physics\PhysicsFilterShader.cpp" />
     <ClCompile Include="src\GUI\Windows\FogWindow.cpp" />
@@ -172,6 +173,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Loaders\PhysicsMaterialLoader.h" />
     <ClInclude Include="src\Physics\PhysicsMaterialManager.h" />
     <ClInclude Include="src\Physics\CollisionFilterTypes.h" />
     <ClInclude Include="src\Physics\PhysicsFilterShader.h" />

@@ -414,6 +414,9 @@
     <ClCompile Include="src\Physics\PhysicsMaterialManager.cpp">
       <Filter>Source Files\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Loaders\PhysicsMaterialLoader.cpp">
+      <Filter>Source Files\Loaders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -862,6 +865,9 @@
     </ClInclude>
     <ClInclude Include="src\Physics\PhysicsMaterialManager.h">
       <Filter>Header Files\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\PhysicsMaterialLoader.h">
+      <Filter>Header Files\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
