@@ -3,11 +3,14 @@
 #include "../Renderer/TransformLogic.h"
 #include "PhysicsUnitConversion.h"
 #include "PhysicsFilterHelper.h"
+#include "../Utils/Logger.h"
 
 physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::PxPhysics* physics,
 	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
 	const TransformComponent& vehicleTransformComponent)
 {
+	Logger::Debug("Preparing to create vehicle...");
+
 	const auto wheelsCount = std::size(vehicleComponent.Wheels);
 
 	const physx::PxVec3 vehicleMomentOfInertia(
@@ -60,13 +63,15 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 physx::PxVehicleDrivableSurfaceToTireFrictionPairs* VehicleResourcesGenerator::CreateFrictionPairs(
 	physx::PxPhysics& physics, PhysicsMaterialManager* physicsMaterialManager)
 {
+	Logger::Debug("Preparing to create friction pairs...");
+
 	const auto tireTypesCount = 1; // Currently one on tire type is supported
 	const auto surfaceTypesCount = physicsMaterialManager->GetMaterialCount();
 
 	std::vector<physx::PxVehicleDrivableSurfaceType> surfaceTypes;
 	for (auto i = 0; i < physicsMaterialManager->GetMaterialCount(); i++)
 	{
-		physx::PxVehicleDrivableSurfaceType drivableSurfaceType;
+		physx::PxVehicleDrivableSurfaceType drivableSurfaceType{};
 		drivableSurfaceType.mType = i;
 		surfaceTypes.emplace_back(drivableSurfaceType);
 	}
