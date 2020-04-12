@@ -37,7 +37,7 @@ private:
 	static void CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, int width, int numberOfChannels, 
 		float maxHeight, int currentX, int currentY, int nextX, int nextY);
 
-	static stbi_us* CalculateOffset(stbi_us* data, int x, int y, int width, int numberOfChannels);
+	static stbi_us* CalculateOffset(stbi_us* data, int x, int y, int width);
 	static float GetHeight(const stbi_us* offsetData, float maxHeight);
 
 	static void InitializeOptimizationTextures(TerrainComponent& terrainComponent, int width, int height, ID3D11Device* device);

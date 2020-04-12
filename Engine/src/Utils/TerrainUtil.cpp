@@ -241,7 +241,7 @@ std::vector<PositionAndUvVertex> TerrainUtil::GenerateVertices(const int width, 
 	{
 		for (auto x = 0; x < width; x += qualityDivider)
 		{
-			const auto pixelOffset = CalculateOffset(data, x, y, width, numberOfChannels);
+			const auto pixelOffset = CalculateOffset(data, x, y, width);
 			const auto terrainHeight = GetHeight(pixelOffset, maxHeight);
 
 			PositionAndUvVertex vertex{};
@@ -291,7 +291,7 @@ void TerrainUtil::CalculatePartOfHeightField(const int startX, const int endX, c
 	{
 		for (auto x = startX; x < endX; x++)
 		{
-			const auto pixelOffset = CalculateOffset(data, x, y, width, numberOfChannels);
+			const auto pixelOffset = CalculateOffset(data, x, y, width);
 
 			heightFieldSample[x + (y * width)].height = *pixelOffset;
 			heightFieldSample[x + (y * width)].setTessFlag();
@@ -311,7 +311,7 @@ void TerrainUtil::CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, c
 	{
 		for (auto x = currentX; x < nextX; x++)
 		{
-			const auto pixelOffset = CalculateOffset(data, x, y, width, numberOfChannels);
+			const auto pixelOffset = CalculateOffset(data, x, y, width);
 			const auto terrainHeight = GetHeight(pixelOffset, maxHeight);
 
 			min = std::min(min, terrainHeight);
@@ -322,9 +322,9 @@ void TerrainUtil::CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, c
 	vertex->BoundsY = DirectX::XMFLOAT2(min, max);
 }
 
-stbi_us* TerrainUtil::CalculateOffset(stbi_us* data, const int x, const int y, const int width, const int numberOfChannels)
+stbi_us* TerrainUtil::CalculateOffset(stbi_us* data, const int x, const int y, const int width)
 {
-	return data + ((y * width) + x) * numberOfChannels;
+	return data + ((y * width) + x);
 }
 
 float TerrainUtil::GetHeight(const stbi_us* offsetData, const float maxHeight)
