@@ -34,7 +34,7 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 	{
 		Logger::Debug("Preparing async mechanism for terrain utility...");
 
-		auto futureVerticies = std::async(std::launch::async, GenerateVertices,	width,
+		auto futureVertices = std::async(std::launch::async, GenerateVertices,	width,
 																						height,
 																						numberOfChannels, 
 																						terrainComponent.QualityDivider,
@@ -43,7 +43,7 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 																						data);
 		auto futureRenderIndies = std::async(std::launch::async, GenerateIndices, width, height, terrainComponent.QualityDivider);
 
-		vertices = futureVerticies.get();
+		vertices = futureVertices.get();
 		indices = futureRenderIndies.get();
 	}
 
@@ -324,7 +324,7 @@ void TerrainUtil::CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, c
 
 stbi_us* TerrainUtil::CalculateOffset(stbi_us* data, const int x, const int y, const int width, const int numberOfChannels)
 {
-	return data + ((y * width) + x) * numberOfChannels;;
+	return data + ((y * width) + x) * numberOfChannels;
 }
 
 float TerrainUtil::GetHeight(const stbi_us* offsetData, const float maxHeight)
