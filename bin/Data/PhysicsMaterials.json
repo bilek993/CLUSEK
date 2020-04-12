@@ -3,14 +3,14 @@
     "Name": "BaseMaterial",
 	"StaticFriction": 0.8,
 	"DynamicFriction": 0.8,
-	"TireFriction": 0.8,
+	"TireFriction": 0.9,
 	"Restitution": 0.125
   },
   {
     "Name": "TerrainMaterial",
 	"StaticFriction": 0.725,
 	"DynamicFriction": 0.725,
-	"TireFriction": 0.725,
+	"TireFriction": 0.825,
 	"Restitution": 0.1
   }
 ]
