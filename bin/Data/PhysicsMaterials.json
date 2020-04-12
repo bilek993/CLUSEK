@@ -8,9 +8,9 @@
   },
   {
     "Name": "TerrainMaterial",
-	"StaticFriction": 0.65,
-	"DynamicFriction": 0.65,
-	"TireFriction": 0.65,
+	"StaticFriction": 0.725,
+	"DynamicFriction": 0.725,
+	"TireFriction": 0.725,
 	"Restitution": 0.1
   }
 ]
