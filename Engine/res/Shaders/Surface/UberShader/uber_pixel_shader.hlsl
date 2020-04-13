@@ -70,7 +70,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 emissionColor = EmissionTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
 
     float3 calculatedNormal = CalculateNormal(normalColor, input.TBN);
-    float roughness = 1 - metalicSmoothnessColor.a;
+    float roughness = 1 - metalicSmoothnessColor.g;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
     
     float shadowMultiplier = 1.0f;
