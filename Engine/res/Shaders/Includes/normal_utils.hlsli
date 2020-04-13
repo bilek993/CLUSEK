@@ -18,3 +18,9 @@ float3 CalculateNormal(float3 normalMap, float3x3 TBN)
 
     return normalize(mul(normalMap, TBN));
 }
+
+float3 ReconstructNormalZ(float2 normalXY)
+{
+    float reconstructZ = sqrt(1.0f - saturate(normalXY.x * normalXY.x - normalXY.y * normalXY.y));
+    return float3(normalXY.xy, reconstructZ);
+}

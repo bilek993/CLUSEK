@@ -96,15 +96,15 @@ float3 CalculateAlbedoColor(PS_INPUT input, float3 splatId)
 
 float3 CalculateNormalColor(PS_INPUT input, float3 splatId)
 {
-    float3 color = BaseNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb;
+    float2 color = BaseNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rg;
     if (splatId.r > SAMPLING_THRESHOLD)
-        color = lerp(color, RedNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.r);
+        color = lerp(color, RedNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rg, splatId.r);
     if (splatId.g > SAMPLING_THRESHOLD)
-        color = lerp(color, GreenNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.g);
+        color = lerp(color, GreenNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rg, splatId.g);
     if (splatId.b > SAMPLING_THRESHOLD)
-        color = lerp(color, BlueNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rgb, splatId.b);
+        color = lerp(color, BlueNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rg, splatId.b);
     
-    return color;
+    return ReconstructNormalZ(color);
 }
 
 float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
