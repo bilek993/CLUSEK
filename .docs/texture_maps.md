@@ -52,7 +52,7 @@ This map provides information about terrain height in every point of it. This ga
 
 #### Splat maps
 
-This texture is used to control the blending of detail textures on a terrain. Each channel represents a different mask for detail textures. Only 3 channels are used (RGB) for better performance because splat map texturing is very costly to render. Recommended compression is BC7.  Mapping for this texture:
+This texture is used to control the blending of detail textures on a terrain. Each channel represents a different mask for detail textures. Only 3 channels are used (RGB) for better performance because splat map texturing is very costly to render. Recommended compression is BC7 without alpha.  Mapping for this texture:
 
 | Red | Green | Blue |
 |-----|-------|------|
