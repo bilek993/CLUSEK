@@ -12,7 +12,7 @@ Some maps can differ from game engine to game engine. That is why some map has t
 
 ### Implementation
 
-Recommended texture maps for CLUSEK have been shown bellow. These rules should be followed for best graphical and performance results. This game engine uses Block Compression. More about this topic you can read [here](https://docs.microsoft.com/en-us/windows/win32/direct3d11/texture-block-compression-in-direct3d-11). Using Block Compression is recommended in most cases.
+Recommended texture maps for CLUSEK have been shown bellow. These rules should be followed for best graphical and performance results. This game engine uses Block Compression. More about this topic you can read [here](https://docs.microsoft.com/en-us/windows/win32/direct3d11/texture-block-compression-in-direct3d-11) and [here](http://www.reedbeta.com/blog/understanding-bcn-texture-compression-formats/). Using Block Compression is recommended in most cases.
 
 #### Albedo maps
 
