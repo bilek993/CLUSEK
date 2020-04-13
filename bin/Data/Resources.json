@@ -94,17 +94,14 @@
   
 	"Skybox": {
 	  "Path": "Data/Textures/Environment/Skybox.dds",
-	  "ConvertLatLongToCubeMap": "YES",
-	  "MipMaps": "SKIP"
+	  "ConvertLatLongToCubeMap": "YES"
 	},
 	
 	"TerrainHeightmap": {
-	  "Path": "Data/Textures/Terrain/TerrainHeightmap.png",
-	  "MipMaps": "SKIP"
+	  "Path": "Data/Textures/Terrain/TerrainHeightmap.png"
 	},
 	"TerrainSplatmap": {
-	  "Path": "Data/Textures/Terrain/TerrainSplatmap.png",
-	  "MipMaps": "SKIP"
+	  "Path": "Data/Textures/Terrain/TerrainSplatmap.png"
 	},
 	"TerrainRockAlbedo": {
 	  "Path": "Data/Textures/Terrain/Rock/TerrainRockAlbedo.png",
@@ -114,12 +111,10 @@
 	  "Path": "Data/Textures/Terrain/Rock/TerrainRockNormal.png"
 	},
 	"TerrainRockMetalness": {
-	  "Path": "Data/Textures/Terrain/Rock/TerrainRockMetalness.png",
-	  "MipMaps": "SKIP"
+	  "Path": "Data/Textures/Terrain/Rock/TerrainRockMetalness.png"
 	},
 	"TerrainRockOcclusion": {
-	  "Path": "Data/Textures/Terrain/Rock/TerrainRockOcclusion.png",
-	  "MipMaps": "SKIP"
+	  "Path": "Data/Textures/Terrain/Rock/TerrainRockOcclusion.png"
 	},
 	"TerrainGrassAlbedo": {
 	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassAlbedo.png",
@@ -129,12 +124,10 @@
 	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassNormal.png"
 	},
 	"TerrainGrassMetalness": {
-	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassMetalness.png",
-	  "MipMaps": "SKIP"
+	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassMetalness.png"
 	},
 	"TerrainGrassOcclusion": {
-	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassOcclusion.png",
-	  "MipMaps": "SKIP"
+	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassOcclusion.png"
 	},
 	"TerrainLightGrassAlbedo": {
 	  "Path": "Data/Textures/Terrain/LightGrass/TerrainLightGrassAlbedo.png",
@@ -148,12 +141,10 @@
 	  "Path": "Data/Textures/Terrain/Mud/TerrainMudNormal.png"
 	},
 	"TerrainMudMetalness": {
-	  "Path": "Data/Textures/Terrain/Mud/TerrainMudMetalness.png",
-	  "MipMaps": "SKIP"
+	  "Path": "Data/Textures/Terrain/Mud/TerrainMudMetalness.png"
 	},
 	"TerrainMudOcclusion": {
-	  "Path": "Data/Textures/Terrain/Mud/TerrainMudOcclusion.png",
-	  "MipMaps": "SKIP"
+	  "Path": "Data/Textures/Terrain/Mud/TerrainMudOcclusion.png"
 	}
   }
 }
