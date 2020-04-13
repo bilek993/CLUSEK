@@ -16,7 +16,7 @@ Recommended texture maps for CLUSEK have been shown bellow. These rules should b
 
 #### Albedo maps
 
-Albedo maps are base color textures for models. All channels represent the colors of the object. Recommended compression for this texture is BC1 for non-transparent objects and BC3 for transparent objects.
+Albedo maps are base color textures for models. All channels represent the colors of the object. Recommended compression for this texture is BC1.
 
 #### Normal maps
 
