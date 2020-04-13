@@ -57,3 +57,7 @@ This texture is used to control the blending of detail textures on a terrain. Ea
 | Red | Green | Blue |
 |-----|-------|------|
 | Red | Green | Blue |
+
+#### Skybox maps
+
+Skybox is used not only in rendering the sky but also in rendering each PBR object. Skyboxes are often huge. That is why it is recommended to compress skyboxes using BC6H. Uncompressed skyboxes can be very inefficient.
