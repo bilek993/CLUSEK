@@ -101,7 +101,7 @@
 	  "Path": "Data/Textures/Terrain/TerrainHeightmap.png"
 	},
 	"TerrainSplatmap": {
-	  "Path": "Data/Textures/Terrain/TerrainSplatmap.png"
+	  "Path": "Data/Textures/Terrain/TerrainSplatmap.dds"
 	},
 	"TerrainRockAlbedo": {
 	  "Path": "Data/Textures/Terrain/Rock/TerrainRockAlbedo.png",
