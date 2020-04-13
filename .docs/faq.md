@@ -40,18 +40,12 @@ If you would like to use sRGB format without declaring it in the texture file, y
 
 **How can I enable mipmaps generation?**
 
-Mip maps generation is enabled by default. You don't have to do anything to enable it.
-
-**Why would I disable mipmap generation and how can I do this?**
-
-Mipmaps use GPU resources, so in some cases, it might be a good idea to skip generating mipmaps. Also, it's worth noting, that loading textures with mipmaps generation is not possible asynchronous. So loading times will be much higher.
-
-Mipmaps generation can be skipped by setting the `SKIP` value for the `MipMaps` parameter in resources file. In the example below, you can see how it works for example texture.
+Mipmaps generation is disabled by default, but can be enabled by setting `SKIP` value for the `MipMaps` parameter in the resources file. In the example below, you can see how it works for example texture.
 
 ```
 "ExampleNormalTexture": {
   "Path": "Data/Textures/Example/ExampleNormalTexture.png",
-  "MipMaps": "SKIP"
+  "MipMaps": "GENERATE"
 }
 ```
 
