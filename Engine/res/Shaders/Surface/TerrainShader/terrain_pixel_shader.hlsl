@@ -94,7 +94,7 @@ float3 CalculateAlbedoColor(PS_INPUT input, float3 splatId)
     return color;
 }
 
-float3 CalculateNormalColor(PS_INPUT input, float3 splatId)
+float2 CalculateNormalColor(PS_INPUT input, float3 splatId)
 {
     float2 color = BaseNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rg;
     if (splatId.r > SAMPLING_THRESHOLD)
@@ -104,7 +104,7 @@ float3 CalculateNormalColor(PS_INPUT input, float3 splatId)
     if (splatId.b > SAMPLING_THRESHOLD)
         color = lerp(color, BlueNormalTexture.Sample(WrapSampler, input.TextureCoord * TexturesScale).rg, splatId.b);
     
-    return ReconstructNormalZ(color);
+    return color;
 }
 
 float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
@@ -143,7 +143,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb;
     
     float3 albedoColor = CalculateAlbedoColor(input, splatId);
-    float3 normalColor = CalculateNormalColor(input, splatId);
+    float2 normalColor = CalculateNormalColor(input, splatId);
     float2 metalicSmoothnessColor = CalculateMetalicSmoothnessColor(input, splatId);
     float occlusionColor = CalculateOcclusionColor(input, splatId);
     

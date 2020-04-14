@@ -11,16 +11,14 @@ float3x3 CalculateTBN(float3 tangent, float3 bitangent, float3 normal)
     return float3x3(tangent, bitangent, normal);
 }
 
-float3 CalculateNormal(float3 normalMap, float3x3 TBN)
+float3 CalculateNormal(float2 normalMap, float3x3 TBN)
 {
     normalMap = (2.0f * normalMap) - 1.0f;
     normalMap.g *= -1.0f;
+    
+    float reconstructZ = sqrt(1.0f - saturate(dot(normalMap, normalMap)));
+    float3 reconstructedNormal = float3(normalMap.xy, reconstructZ);
+    reconstructedNormal = normalize(reconstructedNormal);
 
-    return normalize(mul(normalMap, TBN));
-}
-
-float3 ReconstructNormalZ(float2 normalXY)
-{
-    float reconstructZ = sqrt(1.0f - saturate(normalXY.x * normalXY.x - normalXY.y * normalXY.y));
-    return float3(normalXY.xy, reconstructZ);
+    return normalize(mul(reconstructedNormal, TBN));
 }
