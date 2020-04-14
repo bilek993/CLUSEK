@@ -10,6 +10,8 @@ Some maps can differ from game engine to game engine. That is why some map has t
 
 > Rember to always set **Compression Quality** to **Highest** quality.
 
+> Rember to disable **Gamma Correct** in most cases (it should be enabled only for non-corrected albedo maps).
+
 ### Implementation
 
 Recommended texture maps for CLUSEK have been shown bellow. These rules should be followed for best graphical and performance results. This game engine uses Block Compression. More about this topic you can read [here](https://docs.microsoft.com/en-us/windows/win32/direct3d11/texture-block-compression-in-direct3d-11) and [here](http://www.reedbeta.com/blog/understanding-bcn-texture-compression-formats/). Using Block Compression is recommended in most cases.
