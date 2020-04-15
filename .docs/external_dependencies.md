@@ -8,3 +8,4 @@
 * [PhysX](https://github.com/NVIDIAGameWorks/PhysX/tree/ae80dede0546d652040ae6260a810e53e20a06fa)
 * [STB Image](https://github.com/nothings/stb/tree/f67165c2bb2af3060ecae7d20d6f731173485ad0)
 * [ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo/tree/9198ffdcf3edb804fa5f2a147c2539bd3a9477bd)
+* [DirectXTex](https://github.com/microsoft/DirectXTex/tree/e169033b6012ef0a12ea42d2008e7051d2263fa6)
