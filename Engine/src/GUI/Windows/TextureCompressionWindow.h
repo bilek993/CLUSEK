@@ -8,7 +8,12 @@ protected:
 
 private:
 	void DrawLoading() const;
-	void DrawMain() const;
+	void DrawMain();
+
+	void DrawFileSelection();
 
 	bool LoadingInProgress = false;
+
+	std::string InputFilePath{};
+	std::string OutputFilePath{};
 };
