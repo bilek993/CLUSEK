@@ -67,6 +67,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(TerrainTessellationWindowInstance);
 	UPDATE_USER_INTERFACE(FogWindowInstance);
 	UPDATE_USER_INTERFACE(TransformManipulateWindowInstance);
+	UPDATE_USER_INTERFACE(TextureCompressionWindowInstance);
 
 	AfterUpdate(renderSystem);
 }
@@ -125,6 +126,11 @@ void DebugUserInterface::DrawMenuBar()
 			DrawMenuItemForWindow("Mouse input", MouseInputWindowInstance);
 			DrawMenuItemForWindow("Keyboard input", KeyboardInputWindowInstance);
 			DrawMenuItemForWindow("GamePad input", GamePadInputWindowInstance);
+			ImGui::EndMenu();
+		}
+		if (ImGui::BeginMenu("Tools"))
+		{
+			DrawMenuItemForWindow("Texture compression", TextureCompressionWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Performance"))

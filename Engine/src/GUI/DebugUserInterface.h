@@ -26,6 +26,7 @@
 #include "Windows/TerrainTessellationWindow.h"
 #include "Windows/FogWindow.h"
 #include "Windows/TransformManipulateWindow.h"
+#include "Windows/TextureCompressionWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
 
@@ -78,4 +79,5 @@ private:
 	TerrainTessellationWindow TerrainTessellationWindowInstance;
 	FogWindow FogWindowInstance;
 	TransformManipulateWindow TransformManipulateWindowInstance;
+	TextureCompressionWindow TextureCompressionWindowInstance;
 };
