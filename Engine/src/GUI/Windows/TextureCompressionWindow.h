@@ -13,7 +13,7 @@ private:
 	void DrawMain();
 
 	void DrawInputSettingsTreeNode();
-	void DrawMipMapsSettingsTreeNode() const;
+	void DrawMipMapsSettingsTreeNode();
 	void DrawCompressionSettingsTreeNode() const;
 	void DrawOutputSettingsTreeNode() const;
 	void DrawMainActionButton();

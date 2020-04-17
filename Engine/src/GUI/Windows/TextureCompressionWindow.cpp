@@ -56,10 +56,27 @@ void TextureCompressionWindow::DrawInputSettingsTreeNode()
 	}
 }
 
-void TextureCompressionWindow::DrawMipMapsSettingsTreeNode() const
+void TextureCompressionWindow::DrawMipMapsSettingsTreeNode()
 {
 	if (ImGui::TreeNode("MipMaps settings"))
 	{
+		ImGui::Checkbox("TEX_FILTER_DEFAULT", &CurrentCompressionSettings.TEX_FILTER_DEFAULT);
+		ImGui::Checkbox("TEX_FILTER_POINT", &CurrentCompressionSettings.TEX_FILTER_POINT);
+		ImGui::Checkbox("TEX_FILTER_LINEAR", &CurrentCompressionSettings.TEX_FILTER_LINEAR);
+		ImGui::Checkbox("TEX_FILTER_CUBIC", &CurrentCompressionSettings.TEX_FILTER_CUBIC);
+		ImGui::Checkbox("TEX_FILTER_FANT", &CurrentCompressionSettings.TEX_FILTER_FANT);
+		ImGui::Checkbox("TEX_FILTER_BOX", &CurrentCompressionSettings.TEX_FILTER_BOX);
+		ImGui::Checkbox("TEX_FILTER_TRIANGLE", &CurrentCompressionSettings.TEX_FILTER_TRIANGLE);
+		ImGui::Checkbox("TEX_FILTER_DITHER", &CurrentCompressionSettings.TEX_FILTER_DITHER);
+		ImGui::Checkbox("TEX_FILTER_DITHER_DIFFUSION", &CurrentCompressionSettings.TEX_FILTER_DITHER_DIFFUSION);
+		ImGui::Checkbox("TEX_FILTER_WRAP_U", &CurrentCompressionSettings.TEX_FILTER_WRAP_U);
+		ImGui::Checkbox("TEX_FILTER_WRAP_V", &CurrentCompressionSettings.TEX_FILTER_WRAP_V);
+		ImGui::Checkbox("TEX_FILTER_WRAP_W", &CurrentCompressionSettings.TEX_FILTER_WRAP_W);
+		ImGui::Checkbox("TEX_FILTER_MIRROR_U", &CurrentCompressionSettings.TEX_FILTER_MIRROR_U);
+		ImGui::Checkbox("TEX_FILTER_MIRROR_V", &CurrentCompressionSettings.TEX_FILTER_MIRROR_V);
+		ImGui::Checkbox("TEX_FILTER_MIRROR_W", &CurrentCompressionSettings.TEX_FILTER_MIRROR_W);
+		ImGui::Checkbox("TEX_FILTER_SRGB_IN", &CurrentCompressionSettings.TEX_FILTER_SRGB_IN);
+		ImGui::Checkbox("TEX_FILTER_SRGB_OUT", &CurrentCompressionSettings.TEX_FILTER_SRGB_OUT);
 		ImGui::TreePop();
 	}
 }
