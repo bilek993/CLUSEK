@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseWindow.h"
 #include <future>
+#include "../../Utils/TextureBlockCompressionSettings.h"
 
 class TextureCompressionWindow final : public BaseWindow
 {
@@ -11,7 +12,7 @@ private:
 	void DrawLoading() const;
 	void DrawMain();
 
-	void DrawInputSettingsTreeNode() const;
+	void DrawInputSettingsTreeNode();
 	void DrawMipMapsSettingsTreeNode() const;
 	void DrawCompressionSettingsTreeNode() const;
 	void DrawOutputSettingsTreeNode() const;
@@ -22,6 +23,8 @@ private:
 
 	std::string InputFilePath{};
 	std::string OutputFilePath{};
+
+	TextureBlockCompressionSettings CurrentCompressionSettings{};
 
 	std::future<void> FutureCompression;
 };

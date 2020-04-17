@@ -33,10 +33,25 @@ void TextureCompressionWindow::DrawMain()
 	DrawMainActionButton();
 }
 
-void TextureCompressionWindow::DrawInputSettingsTreeNode() const
+void TextureCompressionWindow::DrawInputSettingsTreeNode()
 {
 	if (ImGui::TreeNode("Input settings"))
 	{
+		ImGui::Checkbox("WIC_FLAGS_NONE", &CurrentCompressionSettings.WIC_FLAGS_NONE);
+		ImGui::Checkbox("WIC_FLAGS_FORCE_RGB", &CurrentCompressionSettings.WIC_FLAGS_FORCE_RGB);
+		ImGui::Checkbox("WIC_FLAGS_NO_X2_BIAS", &CurrentCompressionSettings.WIC_FLAGS_NO_X2_BIAS);
+		ImGui::Checkbox("WIC_FLAGS_NO_16BPP", &CurrentCompressionSettings.WIC_FLAGS_NO_16BPP);
+		ImGui::Checkbox("WIC_FLAGS_ALLOW_MONO", &CurrentCompressionSettings.WIC_FLAGS_ALLOW_MONO);
+		ImGui::Checkbox("WIC_FLAGS_ALL_FRAMES", &CurrentCompressionSettings.WIC_FLAGS_ALL_FRAMES);
+		ImGui::Checkbox("WIC_FLAGS_IGNORE_SRGB", &CurrentCompressionSettings.WIC_FLAGS_IGNORE_SRGB);
+		ImGui::Checkbox("WIC_FLAGS_FORCE_SRGB", &CurrentCompressionSettings.WIC_FLAGS_FORCE_SRGB);
+		ImGui::Checkbox("WIC_FLAGS_FORCE_LINEAR", &CurrentCompressionSettings.WIC_FLAGS_FORCE_LINEAR);
+		ImGui::Checkbox("WIC_FLAGS_DITHER", &CurrentCompressionSettings.WIC_FLAGS_DITHER);
+		ImGui::Checkbox("WIC_FLAGS_DITHER_DIFFUSION", &CurrentCompressionSettings.WIC_FLAGS_DITHER_DIFFUSION);
+		ImGui::Checkbox("WIC_FLAGS_FILTER_POINT", &CurrentCompressionSettings.WIC_FLAGS_FILTER_POINT);
+		ImGui::Checkbox("WIC_FLAGS_FILTER_LINEAR", &CurrentCompressionSettings.WIC_FLAGS_FILTER_LINEAR);
+		ImGui::Checkbox("WIC_FLAGS_FILTER_CUBIC", &CurrentCompressionSettings.WIC_FLAGS_FILTER_CUBIC);
+		ImGui::Checkbox("WIC_FLAGS_FILTER_FANT", &CurrentCompressionSettings.WIC_FLAGS_FILTER_FANT);
 		ImGui::TreePop();
 	}
 }
