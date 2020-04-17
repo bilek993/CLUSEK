@@ -11,6 +11,7 @@ private:
 	void DrawLoading() const;
 	void DrawMain();
 
+	void DrawInputSettingsTreeNode() const;
 	void DrawMipMapsSettingsTreeNode() const;
 	void DrawCompressionSettingsTreeNode() const;
 	void DrawOutputSettingsTreeNode() const;

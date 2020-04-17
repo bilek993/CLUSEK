@@ -26,10 +26,19 @@ void TextureCompressionWindow::DrawLoading() const
 void TextureCompressionWindow::DrawMain()
 {
 	DrawFileSelection();
+	DrawInputSettingsTreeNode();
 	DrawMipMapsSettingsTreeNode();
 	DrawCompressionSettingsTreeNode();
 	DrawOutputSettingsTreeNode();
 	DrawMainActionButton();
+}
+
+void TextureCompressionWindow::DrawInputSettingsTreeNode() const
+{
+	if (ImGui::TreeNode("Input settings"))
+	{
+		ImGui::TreePop();
+	}
 }
 
 void TextureCompressionWindow::DrawMipMapsSettingsTreeNode() const
