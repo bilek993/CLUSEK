@@ -423,6 +423,9 @@
     <ClCompile Include="src\Utils\FileDialog.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\TextureBlockCompression.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -879,6 +882,9 @@
       <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\FileDialog.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\TextureBlockCompression.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
