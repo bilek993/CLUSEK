@@ -23,16 +23,42 @@ void TextureCompressionWindow::DrawLoading() const
 
 void TextureCompressionWindow::DrawMain()
 {
-	
 	DrawFileSelection();
+	DrawMipMapsSettingsTreeNode();
+	DrawCompressionSettingsTreeNode();
+	DrawOutputSettingsTreeNode();
+	DrawMainActionButton();
+}
 
-	if (ImGui::TreeNode("Aaaaa"))
+void TextureCompressionWindow::DrawMipMapsSettingsTreeNode() const
+{
+	if (ImGui::TreeNode("MipMaps settings"))
 	{
 		ImGui::TreePop();
 	}
+}
 
+void TextureCompressionWindow::DrawCompressionSettingsTreeNode() const
+{
+	if (ImGui::TreeNode("Compression settings"))
+	{
+		ImGui::TreePop();
+	}
+}
+
+void TextureCompressionWindow::DrawOutputSettingsTreeNode() const
+{
+	if (ImGui::TreeNode("Output settings"))
+	{
+		ImGui::TreePop();
+	}
+}
+
+void TextureCompressionWindow::DrawMainActionButton() const
+{
 	if (ImGui::Button("Convert"))
 	{
+
 	}
 }
 
