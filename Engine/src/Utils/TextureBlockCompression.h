@@ -1,12 +1,13 @@
 #pragma once
 #include <string>
+#include <DirectXTexP.h>
 
 class TextureBlockCompression final
 {
 public:
-	void Compress(	bool* loadingState,
-					const std::string* inputPath,
-					const std::string* outputPath);
+	static void Compress(	bool* loadingState,
+							const std::string* inputPath,
+							const std::string* outputPath);
 
 private:
 };

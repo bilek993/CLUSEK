@@ -1,6 +1,8 @@
 #include "TextureCompressionWindow.h"
 #include <imgui.h>
 #include "../../Utils/FileDialog.h"
+#include "../../Utils/TextureBlockCompression.h"
+#include "../../Utils/StringUtil.h"
 
 void TextureCompressionWindow::Draw()
 {
@@ -54,11 +56,13 @@ void TextureCompressionWindow::DrawOutputSettingsTreeNode() const
 	}
 }
 
-void TextureCompressionWindow::DrawMainActionButton() const
+void TextureCompressionWindow::DrawMainActionButton()
 {
 	if (ImGui::Button("Convert"))
 	{
-
+		FutureCompression = std::async(std::launch::async, TextureBlockCompression::Compress,	&LoadingInProgress,
+																										&InputFilePath,
+																										&OutputFilePath);
 	}
 }
 
@@ -88,7 +92,7 @@ void TextureCompressionWindow::DrawFileSelection()
 	{
 		OutputFilePath = FileDialog::SaveFile("Select output file...", "DirectDraw Surface (*.dds)\0*.dds");
 
-		if (OutputFilePath.substr(OutputFilePath.size() - 4) != ".dds")
+		if (StringUtil::FindExtension(OutputFilePath) != "DDS")
 		{
 			Logger::Debug("Adding missing .dds extenstion...");
 			OutputFilePath += ".dds";

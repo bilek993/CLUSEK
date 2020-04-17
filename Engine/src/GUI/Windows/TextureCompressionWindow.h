@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseWindow.h"
+#include <future>
 
 class TextureCompressionWindow final : public BaseWindow
 {
@@ -13,11 +14,13 @@ private:
 	void DrawMipMapsSettingsTreeNode() const;
 	void DrawCompressionSettingsTreeNode() const;
 	void DrawOutputSettingsTreeNode() const;
-	void DrawMainActionButton() const;
+	void DrawMainActionButton();
 	void DrawFileSelection();
 
 	bool LoadingInProgress = false;
 
 	std::string InputFilePath{};
 	std::string OutputFilePath{};
+
+	std::future<void> FutureCompression;
 };
