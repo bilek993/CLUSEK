@@ -329,6 +329,7 @@
     <ClInclude Include="src\GUI\Windows\TransformManipulateWindow.h" />
     <ClInclude Include="src\GUI\Windows\TextureCompressionWindow.h" />
     <ClInclude Include="src\Utils\TextureBlockCompression.h" />
+    <ClInclude Include="src\Utils\TextureBlockCompressionSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">
