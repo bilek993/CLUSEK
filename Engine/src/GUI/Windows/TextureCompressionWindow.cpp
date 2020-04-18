@@ -108,10 +108,20 @@ void TextureCompressionWindow::DrawCompressionSettingsTreeNode()
 	}
 }
 
-void TextureCompressionWindow::DrawOutputSettingsTreeNode() const
+void TextureCompressionWindow::DrawOutputSettingsTreeNode()
 {
 	if (ImGui::TreeNode("Output settings"))
 	{
+		ImGui::Checkbox("DDS_FLAGS_NONE", &CurrentCompressionSettings.DDS_FLAGS_NONE);
+		ImGui::Checkbox("DDS_FLAGS_LEGACY_DWORD", &CurrentCompressionSettings.DDS_FLAGS_LEGACY_DWORD);
+		ImGui::Checkbox("DDS_FLAGS_BAD_DXTN_TAILS", &CurrentCompressionSettings.DDS_FLAGS_BAD_DXTN_TAILS);
+		ImGui::Checkbox("DDS_FLAGS_NO_LEGACY_EXPANSION", &CurrentCompressionSettings.DDS_FLAGS_NO_LEGACY_EXPANSION);
+		ImGui::Checkbox("DDS_FLAGS_NO_R10B10G10A2_FIXUP", &CurrentCompressionSettings.DDS_FLAGS_NO_R10B10G10A2_FIXUP);
+		ImGui::Checkbox("DDS_FLAGS_FORCE_RGB", &CurrentCompressionSettings.DDS_FLAGS_FORCE_RGB);
+		ImGui::Checkbox("DDS_FLAGS_NO_16BPP", &CurrentCompressionSettings.DDS_FLAGS_NO_16BPP);
+		ImGui::Checkbox("DDS_FLAGS_EXPAND_LUMINANCE", &CurrentCompressionSettings.DDS_FLAGS_EXPAND_LUMINANCE);
+		ImGui::Checkbox("DDS_FLAGS_FORCE_DX10_EXT", &CurrentCompressionSettings.DDS_FLAGS_FORCE_DX10_EXT);
+		ImGui::Checkbox("DDS_FLAGS_FORCE_DX10_EXT_MISC2", &CurrentCompressionSettings.DDS_FLAGS_FORCE_DX10_EXT_MISC2);
 		ImGui::TreePop();
 	}
 }

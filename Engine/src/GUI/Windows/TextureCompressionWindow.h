@@ -15,7 +15,7 @@ private:
 	void DrawInputSettingsTreeNode();
 	void DrawMipMapsSettingsTreeNode();
 	void DrawCompressionSettingsTreeNode();
-	void DrawOutputSettingsTreeNode() const;
+	void DrawOutputSettingsTreeNode();
 	void DrawMainActionButton();
 	void DrawFileSelection();
 
