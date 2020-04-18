@@ -86,6 +86,8 @@ void TextureBlockCompression::Compress(	bool* loadingState,
 
 	Logger::Debug("Finalizing compression...");
 	*loadingState = false;
+
+	Logger::Debug("Compressed file '" + *outputPath + "' has been saved!");
 }
 
 DWORD TextureBlockCompression::GenerateFlagsForInput(const TextureBlockCompressionSettings* compressionSettings)
