@@ -167,7 +167,7 @@ void TextureCompressionWindow::DrawFileSelection()
 	{
 		const auto path = FileDialog::SaveFile("Select output file...", "DirectDraw Surface (*.dds)\0*.dds");
 
-		if (!OutputFilePath.empty())
+		if (!path.empty())
 		{
 			OutputFilePath = path;
 
