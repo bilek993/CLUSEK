@@ -104,47 +104,43 @@
 	  "Path": "Data/Textures/Terrain/TerrainSplatmap.dds"
 	},
 	"TerrainRockAlbedo": {
-	  "Path": "Data/Textures/Terrain/Rock/TerrainRockAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/Terrain/Rock/TerrainRockAlbedo.dds"
 	},
 	"TerrainRockNormal": {
-	  "Path": "Data/Textures/Terrain/Rock/TerrainRockNormal.png"
+	  "Path": "Data/Textures/Terrain/Rock/TerrainRockNormal.dds"
 	},
 	"TerrainRockMetalness": {
-	  "Path": "Data/Textures/Terrain/Rock/TerrainRockMetalness.png"
+	  "Path": "Data/Textures/Terrain/Rock/TerrainRockMetalness.dds"
 	},
 	"TerrainRockOcclusion": {
-	  "Path": "Data/Textures/Terrain/Rock/TerrainRockOcclusion.png"
+	  "Path": "Data/Textures/Terrain/Rock/TerrainRockOcclusion.dds"
 	},
 	"TerrainGrassAlbedo": {
-	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassAlbedo.dds"
 	},
 	"TerrainGrassNormal": {
-	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassNormal.png"
+	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassNormal.dds"
 	},
 	"TerrainGrassMetalness": {
-	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassMetalness.png"
+	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassMetalness.dds"
 	},
 	"TerrainGrassOcclusion": {
-	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassOcclusion.png"
+	  "Path": "Data/Textures/Terrain/Grass/TerrainGrassOcclusion.dds"
 	},
 	"TerrainLightGrassAlbedo": {
-	  "Path": "Data/Textures/Terrain/LightGrass/TerrainLightGrassAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/Terrain/LightGrass/TerrainLightGrassAlbedo.dds"
 	},
 	"TerrainMudAlbedo": {
-	  "Path": "Data/Textures/Terrain/Mud/TerrainMudAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/Terrain/Mud/TerrainMudAlbedo.dds"
 	},
 	"TerrainMudNormal": {
-	  "Path": "Data/Textures/Terrain/Mud/TerrainMudNormal.png"
+	  "Path": "Data/Textures/Terrain/Mud/TerrainMudNormal.dds"
 	},
 	"TerrainMudMetalness": {
-	  "Path": "Data/Textures/Terrain/Mud/TerrainMudMetalness.png"
+	  "Path": "Data/Textures/Terrain/Mud/TerrainMudMetalness.dds"
 	},
 	"TerrainMudOcclusion": {
-	  "Path": "Data/Textures/Terrain/Mud/TerrainMudOcclusion.png"
+	  "Path": "Data/Textures/Terrain/Mud/TerrainMudOcclusion.dds"
 	}
   }
 }
