@@ -148,7 +148,11 @@ void TextureCompressionWindow::DrawFileSelection()
 	};
 
 	if (ImGui::Button("SELECT##Input_File"))
-		InputFilePath = FileDialog::OpenFile("Select input file...", "Image Files (*.bmp;*.png;*.tiff;*.jpg;*.jpeg)\0*.bmp;*.png;*.tiff;*.jpg;*.jpeg\0");
+	{
+		const auto path = FileDialog::OpenFile("Select input file...", "Image Files (*.bmp;*.png;*.tiff;*.jpg;*.jpeg)\0*.bmp;*.png;*.tiff;*.jpg;*.jpeg\0");
+		if (path != "")
+			InputFilePath = path;
+	}
 
 	ImGui::SameLine();
 
@@ -161,12 +165,17 @@ void TextureCompressionWindow::DrawFileSelection()
 
 	if (ImGui::Button("SELECT##Output_File"))
 	{
-		OutputFilePath = FileDialog::SaveFile("Select output file...", "DirectDraw Surface (*.dds)\0*.dds");
+		const auto path = FileDialog::SaveFile("Select output file...", "DirectDraw Surface (*.dds)\0*.dds");
 
-		if (StringUtil::FindExtension(OutputFilePath) != "DDS")
+		if (OutputFilePath != "")
 		{
-			Logger::Debug("Adding missing .dds extenstion...");
-			OutputFilePath += ".dds";
+			OutputFilePath = path;
+
+			if (StringUtil::FindExtension(OutputFilePath) != "DDS")
+			{
+				Logger::Debug("Adding missing .dds extenstion...");
+				OutputFilePath += ".dds";
+			}
 		}
 	}
 
