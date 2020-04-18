@@ -14,7 +14,7 @@ private:
 
 	void DrawInputSettingsTreeNode();
 	void DrawMipMapsSettingsTreeNode();
-	void DrawCompressionSettingsTreeNode() const;
+	void DrawCompressionSettingsTreeNode();
 	void DrawOutputSettingsTreeNode() const;
 	void DrawMainActionButton();
 	void DrawFileSelection();
@@ -23,6 +23,8 @@ private:
 
 	std::string InputFilePath{};
 	std::string OutputFilePath{};
+
+	int SelectedAlgorithmId = 0;
 
 	TextureBlockCompressionSettings CurrentCompressionSettings{};
 

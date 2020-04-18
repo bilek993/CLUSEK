@@ -7,6 +7,7 @@ void TextureBlockCompression::Compress(	bool* loadingState,
 										const std::string* outputPath)
 {
 	*loadingState = true;
+	Logger::Debug("Preparing compression...");
 
 	DirectX::ScratchImage inputImage;
 	DirectX::ScratchImage outputImage;
@@ -22,5 +23,6 @@ void TextureBlockCompression::Compress(	bool* loadingState,
 		return;
 	}
 
+	Logger::Debug("Finalizing compression...");
 	*loadingState = false;
 }

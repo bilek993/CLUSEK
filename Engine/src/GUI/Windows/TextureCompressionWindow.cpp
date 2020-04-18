@@ -81,10 +81,29 @@ void TextureCompressionWindow::DrawMipMapsSettingsTreeNode()
 	}
 }
 
-void TextureCompressionWindow::DrawCompressionSettingsTreeNode() const
+void TextureCompressionWindow::DrawCompressionSettingsTreeNode()
 {
 	if (ImGui::TreeNode("Compression settings"))
 	{
+		ImGui::Combo(	"Selected algorithm",
+						&SelectedAlgorithmId, 
+						TextureBlockCompression::SUPPORTED_ALGORITHMS, 
+						IM_ARRAYSIZE(TextureBlockCompression::SUPPORTED_ALGORITHMS));
+		CurrentCompressionSettings.CompressAlgorithm = TextureBlockCompression::SUPPORTED_ALGORITHMS[SelectedAlgorithmId];
+
+		ImGui::DragFloat("Threshold", &CurrentCompressionSettings.Threshold, 0.01f, 0.0f, 1.0f);
+
+		ImGui::Checkbox("TEX_COMPRESS_DEFAULT", &CurrentCompressionSettings.TEX_COMPRESS_DEFAULT);
+		ImGui::Checkbox("TEX_COMPRESS_RGB_DITHER", &CurrentCompressionSettings.TEX_COMPRESS_RGB_DITHER);
+		ImGui::Checkbox("TEX_COMPRESS_A_DITHER", &CurrentCompressionSettings.TEX_COMPRESS_A_DITHER);
+		ImGui::Checkbox("TEX_COMPRESS_DITHER", &CurrentCompressionSettings.TEX_COMPRESS_DITHER);
+		ImGui::Checkbox("TEX_COMPRESS_UNIFORM", &CurrentCompressionSettings.TEX_COMPRESS_UNIFORM);
+		ImGui::Checkbox("TEX_COMPRESS_PARALLEL", &CurrentCompressionSettings.TEX_COMPRESS_PARALLEL);
+		ImGui::Checkbox("TEX_COMPRESS_SRGB_IN", &CurrentCompressionSettings.TEX_COMPRESS_SRGB_IN);
+		ImGui::Checkbox("TEX_COMPRESS_SRGB_OUT", &CurrentCompressionSettings.TEX_COMPRESS_SRGB_OUT);
+		ImGui::Checkbox("TEX_COMPRESS_BC7_USE_3SUBSETS", &CurrentCompressionSettings.TEX_COMPRESS_BC7_USE_3SUBSETS);
+		ImGui::Checkbox("TEX_COMPRESS_BC7_QUICK", &CurrentCompressionSettings.TEX_COMPRESS_BC7_QUICK);
+
 		ImGui::TreePop();
 	}
 }

@@ -31,11 +31,9 @@ struct TextureBlockCompressionSettings final
 	bool TEX_FILTER_WRAP_U = false;
 	bool TEX_FILTER_WRAP_V = false;
 	bool TEX_FILTER_WRAP_W = false;
-	bool TEX_FILTER_WRAP = false;
 	bool TEX_FILTER_MIRROR_U = false;
 	bool TEX_FILTER_MIRROR_V = false;
 	bool TEX_FILTER_MIRROR_W = false;
-	bool TEX_FILTER_MIRROR = false;
 	bool TEX_FILTER_SRGB_IN = false;
 	bool TEX_FILTER_SRGB_OUT = false;
 
