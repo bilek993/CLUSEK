@@ -130,10 +130,11 @@ void TextureCompressionWindow::DrawMainActionButton()
 {
 	if (ImGui::Button("Convert"))
 	{
-		FutureCompression = std::async(std::launch::async, TextureBlockCompression::Compress,	&LoadingInProgress,
-																										&InputFilePath,
-																										&OutputFilePath);
-	}
+		FutureCompression = std::async(std::launch::async, TextureBlockCompression::Compress,&LoadingInProgress,
+																									&InputFilePath,
+																									&OutputFilePath,
+																									&CurrentCompressionSettings);
+		}
 }
 
 void TextureCompressionWindow::DrawFileSelection()
