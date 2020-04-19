@@ -8,83 +8,76 @@
   
   "Textures": {
     "CivilianVehicle_LightAlbedo": {
-	  "Path": "Data/Textures/CivilianVehicle/LightAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/CivilianVehicle/LightAlbedo.dds"
 	},
 	"CivilianVehicle_LightNormal": {
-	  "Path": "Data/Textures/CivilianVehicle/LightNormal.png"
+	  "Path": "Data/Textures/CivilianVehicle/LightNormal.dds"
 	},
 	"CivilianVehicle_LightMetalness": {
-	  "Path": "Data/Textures/CivilianVehicle/LightMetalness.png"
+	  "Path": "Data/Textures/CivilianVehicle/LightMetalness.dds"
 	},
 	"CivilianVehicle_LightLightAo": {
-	  "Path": "Data/Textures/CivilianVehicle/LightAo.png"
+	  "Path": "Data/Textures/CivilianVehicle/LightAo.dds"
 	},
     "CivilianVehicle_MiscAlbedo": {
-	  "Path": "Data/Textures/CivilianVehicle/MiscAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/CivilianVehicle/MiscAlbedo.dds"
 	},
 	"CivilianVehicle_MiscNormal": {
-	  "Path": "Data/Textures/CivilianVehicle/MiscNormal.png"
+	  "Path": "Data/Textures/CivilianVehicle/MiscNormal.dds"
 	},
 	"CivilianVehicle_MiscMetalness": {
-	  "Path": "Data/Textures/CivilianVehicle/MiscMetalness.png"
+	  "Path": "Data/Textures/CivilianVehicle/MiscMetalness.dds"
 	},
 	"CivilianVehicle_MiscAO": {
-	  "Path": "Data/Textures/CivilianVehicle/MiscAO.png"
+	  "Path": "Data/Textures/CivilianVehicle/MiscAO.dds"
 	},
     "CivilianVehicle_InteriorAlbedo": {
-	  "Path": "Data/Textures/CivilianVehicle/InteriorAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/CivilianVehicle/InteriorAlbedo.dds"
 	},
 	"CivilianVehicle_InteriorNormal": {
-	  "Path": "Data/Textures/CivilianVehicle/InteriorNormal.png"
+	  "Path": "Data/Textures/CivilianVehicle/InteriorNormal.dds"
 	},
 	"CivilianVehicle_InteriorMetalness": {
-	  "Path": "Data/Textures/CivilianVehicle/InteriorMetalness.png"
+	  "Path": "Data/Textures/CivilianVehicle/InteriorMetalness.dds"
 	},
 	"CivilianVehicle_InteriorAo": {
-	  "Path": "Data/Textures/CivilianVehicle/InteriorAo.png"
+	  "Path": "Data/Textures/CivilianVehicle/InteriorAo.dds"
 	},
 	"CivilianVehicle_BodyAlbedo": {
-	  "Path": "Data/Textures/CivilianVehicle/BodyAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/CivilianVehicle/BodyAlbedo.dds"
 	},
 	"CivilianVehicle_BodyNormal": {
-	  "Path": "Data/Textures/CivilianVehicle/BodyNormal.png"
+	  "Path": "Data/Textures/CivilianVehicle/BodyNormal.dds"
 	},
 	"CivilianVehicle_BodyMetalness": {
-	  "Path": "Data/Textures/CivilianVehicle/BodyMetalness.png"
+	  "Path": "Data/Textures/CivilianVehicle/BodyMetalness.dds"
 	},
 	"CivilianVehicle_BodyAo": {
-	  "Path": "Data/Textures/CivilianVehicle/BodyAo.png"
+	  "Path": "Data/Textures/CivilianVehicle/BodyAo.dds"
 	},
 	"CivilianVehicle_SilverPaintAlbedo": {
-	  "Path": "Data/Textures/CivilianVehicle/SilverPaintAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/CivilianVehicle/SilverPaintAlbedo.dds"
 	},
 	"CivilianVehicle_SilverPaintMetalness": {
-	  "Path": "Data/Textures/CivilianVehicle/SilverPaintMetalness.png"
+	  "Path": "Data/Textures/CivilianVehicle/SilverPaintMetalness.dds"
 	},
 	"CivilianVehicle_BlackGlassAlbedo": {
-	  "Path": "Data/Textures/CivilianVehicle/BlackGlassAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/CivilianVehicle/BlackGlassAlbedo.dds"
 	},
 	"CivilianVehicle_GlassMetalness": {
-	  "Path": "Data/Textures/CivilianVehicle/GlassMetalness.png"
+	  "Path": "Data/Textures/CivilianVehicle/GlassMetalness.dds"
 	},
 	"CivilianVehicle_WheelAlbedo": {
-	  "Path": "Data/Textures/CivilianVehicle/WheelAlbedo.png",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/CivilianVehicle/WheelAlbedo.dds"
 	},
 	"CivilianVehicle_WheelNormal": {
-	  "Path": "Data/Textures/CivilianVehicle/WheelNormal.png"
+	  "Path": "Data/Textures/CivilianVehicle/WheelNormal.dds"
 	},
 	"CivilianVehicle_WheelMetalness": {
-	  "Path": "Data/Textures/CivilianVehicle/WheelMetalness.png"
+	  "Path": "Data/Textures/CivilianVehicle/WheelMetalness.dds"
 	},
 	"CivilianVehicle_WheelAo": {
-	  "Path": "Data/Textures/CivilianVehicle/WheelAo.png"
+	  "Path": "Data/Textures/CivilianVehicle/WheelAo.dds"
 	},
 	
 	"SmoothCylinder_Albedo": {
