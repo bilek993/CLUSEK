@@ -16,7 +16,12 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 	Timer engineInitializationTimer;
 	engineInitializationTimer.Restart();
 
-	const auto hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	HRESULT hr;
+	if (configData.ComInitializationMultithreaded)
+		hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	else
+		hr = CoInitialize(nullptr);
+
 	if (FAILED(hr))
 	{
 		Logger::Error("Error when initializing COM libs.");
