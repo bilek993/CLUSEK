@@ -35,6 +35,8 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, WindowWidth, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, WindowHeight, data, std::stoi(value));
 
+			MAP_CONFIG_FIELD(key, ComInitializationMultithreaded, data, std::stoi(value));
+
 			MAP_CONFIG_FIELD(key, EnableImGuiOnStart, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, PathToImGuiFont, data, value);
 

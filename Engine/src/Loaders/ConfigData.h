@@ -13,6 +13,9 @@ struct ConfigData final
 	int WindowWidth = 1920;
 	int WindowHeight = 1080;
 
+	// COM
+	int ComInitializationMultithreaded = 1;
+
 	// ImGui
 	int EnableImGuiOnStart = 0;
 	std::string PathToImGuiFont = "";
