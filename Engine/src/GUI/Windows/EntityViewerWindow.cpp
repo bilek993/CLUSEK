@@ -16,6 +16,7 @@
 #include "../../ECS/Components/VehiclePlayerControllerComponent.h"
 #include "../../ECS/Components/TerrainComponent.h"
 #include "../../ECS/Components/RigidbodyStaticHeightFieldsComponent.h"
+#include "../../ECS/Components/CameraTargetComponent.h"
 
 void EntityViewerWindow::Draw()
 {
@@ -38,6 +39,7 @@ void EntityViewerWindow::DrawList()
 		ImGui::BulletText("Entity %i", counter++);
 
 		DrawComponent<CameraComponent>(entity, "Camera Component");
+		DrawComponent<CameraTargetComponent>(entity, "Camera Target Component");
 		DrawComponent<ModelRenderComponent>(entity, "Model Render Component");
 		DrawComponent<PhysicsMaterialComponent>(entity, "Physics Material Component");
 		DrawComponent<RigidbodyDynamicBoxComponent>(entity, "Rigidbody Dynamic Box Component");
