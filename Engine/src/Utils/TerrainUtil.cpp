@@ -8,6 +8,8 @@
 
 void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11Device* device, const bool async)
 {
+	Logger::Debug("Preparing terrain mesh geneartor...");
+
 	auto width = 0;
 	auto height = 0;
 	auto numberOfChannels = 0;
@@ -21,6 +23,8 @@ void TerrainUtil::GenerateTerrainMesh(TerrainComponent& terrainComponent, ID3D11
 
 	if (!async)
 	{
+		Logger::Debug("Preparing sync mechanism for terrain utility...");
+
 		vertices = GenerateVertices(width,
 									height,
 									numberOfChannels,
@@ -140,7 +144,7 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 
 void TerrainUtil::OptimizeTerrain(TerrainComponent& terrainComponent, ID3D11Device* device, ID3D11DeviceContext* context)
 {
-	Logger::Debug("Preparing to optimize terrain materials.");
+	Logger::Debug("Preparing to optimize terrain materials...");
 
 	ComputeShader optimizerComputeShader;
 	if (!optimizerComputeShader.Initialize(device, L"terrain_material_optimizer_compute_shader.cso"))
@@ -299,6 +303,9 @@ void TerrainUtil::CalculatePartOfHeightField(const int startX, const int endX, c
 			heightFieldSample[x + (y * width)].materialIndex1 = 0;
 		}
 	}
+
+	Logger::Debug("Part (x:" + std::to_string(startX) + "-" + std::to_string(endX) + ", y:" + 
+		std::to_string(startY) + "-" + std::to_string(endY) + ") for 'HeightField' has been generated!");
 }
 
 void TerrainUtil::CalculateBoundsY(PositionAndUvVertex* vertex, stbi_us* data, const int width, const int numberOfChannels, 
