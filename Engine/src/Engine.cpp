@@ -42,7 +42,8 @@ bool Engine::Initialize(const HINSTANCE hInstance, const ConfigData& configData)
 	Time.Restart();
 
 	const auto engineInitializationTime = static_cast<int>(ceil(engineInitializationTimer.GetDeltaTimeAndRestart()));
-	Logger::Debug("Engine initialization took: " + std::to_string(engineInitializationTime) + " ms.");
+	Logger::Debug("Engine initialization done!");
+	Logger::Debug("Initialization took: " + std::to_string(engineInitializationTime) + " ms.");
 
 	return true;
 }
