@@ -88,7 +88,6 @@
     <ClCompile Include="src\Loaders\MaterialLoader.cpp" />
     <ClCompile Include="src\GUI\DebugUserInterface.cpp" />
     <ClCompile Include="src\Loaders\ModelLoader.cpp" />
-    <ClCompile Include="src\Renderer\ModelViewLogic.cpp" />
     <ClCompile Include="src\ECS\Systems\RenderSystem.cpp" />
     <ClCompile Include="src\ECS\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Renderer\IndexBuffer.cpp" />
@@ -275,7 +274,6 @@
     <ClInclude Include="src\Loaders\ModelLoader.h" />
     <ClInclude Include="src\Renderer\Mesh.h" />
     <ClInclude Include="src\Renderer\TransformLogic.h" />
-    <ClInclude Include="src\Renderer\ModelViewLogic.h" />
     <ClInclude Include="src\ECS\Systems\RenderSystem.h" />
     <ClInclude Include="src\ECS\Components\ModelRenderComponent.h" />
     <ClInclude Include="src\ECS\Systems\CameraSystem.h" />

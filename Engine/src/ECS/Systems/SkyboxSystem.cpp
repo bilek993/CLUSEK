@@ -1,9 +1,9 @@
 #include "SkyboxSystem.h"
 #include "../Components/SkyboxComponent.h"
 #include "../Components/TransformComponent.h"
-#include "../../Renderer/ModelViewLogic.h"
 #include "../../Renderer/TransformLogic.h"
 #include "../../Tags.h"
+#include "../Components/CameraComponent.h"
 
 void SkyboxSystem::Start()
 {

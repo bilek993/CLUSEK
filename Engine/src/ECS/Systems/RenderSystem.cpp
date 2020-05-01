@@ -13,7 +13,6 @@
 #include "../../Loaders/PostProcessingLoader.h"
 #include "../../Renderer/TransformLogic.h"
 #include "../../Renderer/Generators/QuadGenerator.h"
-#include "../../Renderer/ModelViewLogic.h"
 #include "../Components/TerrainComponent.h"
 #include "../../Utils/TerrainUtil.h"
 #include "../../Renderer/FrustumUtil.h"
@@ -796,7 +795,7 @@ void RenderSystem::ShowLoadingScreen()
 		ConfigurationData->LogoScale, ConfigurationData->LogoScale);
 
 	SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
-		XMMatrixTranspose(logoScale * ModelViewLogic::GenerateOrthographicProjectionMatrix(ratio));
+		XMMatrixTranspose(logoScale * DirectX::XMMatrixOrthographicLH(ratio, 1, -1.0f, 1.0f));
 	SimplePerObjectBufferInstance.ApplyChanges();
 
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> loadingTextureResourceView;

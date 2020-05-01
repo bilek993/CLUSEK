@@ -14,4 +14,6 @@ private:
 	void GamepadMovement(float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const;
 	void KeyboardMovement(float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const;
 	void MouseMovement(float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const;
+
+	void UpdateViewMatrix(CameraComponent &cameraComponent, TransformComponent& transformComponent) const;
 };
