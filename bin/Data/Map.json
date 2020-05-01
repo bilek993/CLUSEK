@@ -64,7 +64,10 @@
 	  "TransformComponent": {
 	    "PositionX": 2.85,
 		"PositionY": 3.7,
-		"PositionZ": 5.46
+		"PositionZ": 5.46,
+		"RotationX": 0.0,
+		"RotationY": 3.14,
+		"RotationZ": 0.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
@@ -95,7 +98,10 @@
 	  "TransformComponent": {
 	    "PositionX": 2.85,
 		"PositionY": 3.7,
-		"PositionZ": -5.17
+		"PositionZ": -5.17,
+		"RotationX": 0.0,
+		"RotationY": 3.14,
+		"RotationZ": 0.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
@@ -126,10 +132,7 @@
 	  "TransformComponent": {
 	    "PositionX": -2.85,
 		"PositionY": 3.7,
-		"PositionZ": 5.46,
-		"RotationX": 0.0,
-		"RotationY": 3.14,
-		"RotationZ": 0.0
+		"PositionZ": 5.46
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
@@ -159,10 +162,7 @@
 	  "TransformComponent": {
 	    "PositionX": -2.85,
 		"PositionY": 3.7,
-		"PositionZ": -5.17,
-		"RotationX": 0.0,
-		"RotationY": 3.14,
-		"RotationZ": 0.0
+		"PositionZ": -5.17
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "Wheel",
