@@ -12,10 +12,6 @@ void TransformComponentLoader::Add(nlohmann::json& json, entt::registry& registr
 		auto y = json["RotationY"].get<float>();
 		auto z = json["RotationZ"].get<float>();
 
-		x *= 180.0f / M_PI;
-		y *= 180.0f / M_PI;
-		z *= 180.0f / M_PI;
-
 		component.InitialRotationVector = DirectX::XMFLOAT3(x, y, z);
 	}
 
