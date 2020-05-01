@@ -66,7 +66,7 @@
 		"PositionY": 3.7,
 		"PositionZ": 5.46,
 		"RotationX": 0.0,
-		"RotationY": 3.14,
+		"RotationY": 180.0,
 		"RotationZ": 0.0
 	  },
 	  "ModelRenderComponent": {
@@ -100,7 +100,7 @@
 		"PositionY": 3.7,
 		"PositionZ": -5.17,
 		"RotationX": 0.0,
-		"RotationY": 3.14,
+		"RotationY": 180.0,
 		"RotationZ": 0.0
 	  },
 	  "ModelRenderComponent": {
@@ -195,7 +195,7 @@
 		"PositionZ": 0.0,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -220,7 +220,7 @@
 		"PositionZ": 2.5,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -245,7 +245,7 @@
 		"PositionZ": 5.0,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -270,7 +270,7 @@
 		"PositionZ": 7.5,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -295,7 +295,7 @@
 		"PositionZ": 10.0,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -320,7 +320,7 @@
 		"PositionZ": 12.5,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -345,7 +345,7 @@
 		"PositionZ": 1.25,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -370,7 +370,7 @@
 		"PositionZ": 3.75,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -395,7 +395,7 @@
 		"PositionZ": 6.25,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -420,7 +420,7 @@
 		"PositionZ": 8.9,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -445,7 +445,7 @@
 		"PositionZ": 11.25,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -470,7 +470,7 @@
 		"PositionZ": 2.5,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -495,7 +495,7 @@
 		"PositionZ": 5.0,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -520,7 +520,7 @@
 		"PositionZ": 7.5,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -545,7 +545,7 @@
 		"PositionZ": 10.0,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -570,7 +570,7 @@
 		"PositionZ": 3.75,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -595,7 +595,7 @@
 		"PositionZ": 6.25,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -620,7 +620,7 @@
 		"PositionZ": 8.9,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -645,7 +645,7 @@
 		"PositionZ": 5.0,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -670,7 +670,7 @@
 		"PositionZ": 7.5,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
@@ -695,7 +695,7 @@
 		"PositionZ": 6.25,
 		"RotationX": 0.0,
 		"RotationY": 0.0,
-		"RotationZ": 1.57
+		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
 	    "ModelId": "SmoothCylinder",
