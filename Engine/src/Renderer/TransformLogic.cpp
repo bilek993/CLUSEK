@@ -12,31 +12,29 @@ void TransformLogic::SetMatrix(const physx::PxMat44& matrix, TransformComponent&
 	);
 }
 
-void TransformLogic::SetPositionAndRotation(const DirectX::XMFLOAT3& pos, const DirectX::XMFLOAT3& rot, TransformComponent& transformComponent)
+void TransformLogic::SetPositionAndRotationEuler(const DirectX::XMFLOAT3& pos, const DirectX::XMFLOAT3& rot, TransformComponent& transformComponent)
 {
 	const auto translationMatrix = DirectX::XMMatrixTranslationFromVector(XMLoadFloat3(&pos));
 	const auto rotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(XMLoadFloat3(&rot));
 
-	transformComponent.WorldMatrix = XMMatrixMultiply(rotationMatrix, translationMatrix);
+	transformComponent.WorldMatrix = rotationMatrix * translationMatrix;
 }
 
 void TransformLogic::SetPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT4X4 worldMatrixFloats{};
-	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
+	DirectX::XMVECTOR scaleVector{};
+	DirectX::XMVECTOR rotationVector{};
+	DirectX::XMVECTOR translationVector{};
 
-	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
-	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+	XMMatrixDecompose(&scaleVector, &rotationVector, &translationVector, transformComponent.WorldMatrix);
 
-	DirectX::XMFLOAT3 positionFloats{};
-	XMStoreFloat3(&positionFloats, pos);
+	translationVector = pos;
 
-	matrixTranslation[0] = positionFloats.x;
-	matrixTranslation[1] = positionFloats.y;
-	matrixTranslation[2] = positionFloats.z;
+	const auto scaleMatrix = DirectX::XMMatrixScalingFromVector(scaleVector);
+	const auto rotationMatrix = DirectX::XMMatrixRotationQuaternion(rotationVector);
+	const auto translationMatrix = DirectX::XMMatrixTranslationFromVector(translationVector);
 
-	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, &worldMatrixFloats._11);
-	transformComponent.WorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
+	transformComponent.WorldMatrix = scaleMatrix * rotationMatrix * translationMatrix;
 }
 
 void TransformLogic::SetPosition(const DirectX::XMFLOAT3& pos, TransformComponent& transformComponent)
@@ -71,54 +69,61 @@ void TransformLogic::SetRotationEuler(const DirectX::XMVECTOR& rot, TransformCom
 
 void TransformLogic::SetRotationEuler(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
-	auto rotation = DirectX::XMFLOAT3(x, y, z);
-	SetRotationEuler(XMLoadFloat3(&rotation), transformComponent);
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
+
+	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+
+	matrixRotation[0] = x;
+	matrixRotation[1] = y;
+	matrixRotation[2] = z;
+
+	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, &worldMatrixFloats._11);
+	transformComponent.WorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
 }
 
 void TransformLogic::GetPosition(float* x, float* y, float* z, const TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT4X4 worldMatrixFloats{};
-	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
-
-	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
-	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+	const auto position = GetPosition(transformComponent);
 
 	if (x != nullptr)
-		*x = matrixTranslation[0];
+		*x = position.x;
 	if (y != nullptr)
-		*y = matrixTranslation[1];
+		*y = position.y;
 	if (z != nullptr)
-		*z = matrixTranslation[2];
+		*z = position.z;
 }
 
 DirectX::XMFLOAT3 TransformLogic::GetPosition(const TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT4X4 worldMatrixFloats{};
-	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
+	DirectX::XMVECTOR scaleVector{};
+	DirectX::XMVECTOR rotationVector{};
+	DirectX::XMVECTOR translationVector{};
 
-	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
-	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+	XMMatrixDecompose(&scaleVector, &rotationVector, &translationVector, transformComponent.WorldMatrix);
 
-	return DirectX::XMFLOAT3(matrixTranslation);
+	DirectX::XMFLOAT3 position{};
+	XMStoreFloat3(&position, translationVector);
+
+	return position;
 }
 
 void TransformLogic::AdjustPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT4X4 worldMatrixFloats{};
-	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
+	DirectX::XMVECTOR scaleVector{};
+	DirectX::XMVECTOR rotationVector{};
+	DirectX::XMVECTOR translationVector{};
 
-	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
-	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+	XMMatrixDecompose(&scaleVector, &rotationVector, &translationVector, transformComponent.WorldMatrix);
 
-	DirectX::XMFLOAT3 positionFloats{};
-	XMStoreFloat3(&positionFloats, pos);
+	translationVector = DirectX::XMVectorAdd(translationVector, pos);
 
-	matrixTranslation[0] += positionFloats.x;
-	matrixTranslation[1] += positionFloats.y;
-	matrixTranslation[2] += positionFloats.z;
-		
-	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, &worldMatrixFloats._11);
-	transformComponent.WorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
+	const auto scaleMatrix = DirectX::XMMatrixScalingFromVector(scaleVector);
+	const auto rotationMatrix = DirectX::XMMatrixRotationQuaternion(rotationVector);
+	const auto translationMatrix = DirectX::XMMatrixTranslationFromVector(translationVector);
+
+	transformComponent.WorldMatrix = scaleMatrix * rotationMatrix * translationMatrix;
 }
 
 void TransformLogic::AdjustPosition(const float x, const float y, const float z, TransformComponent& transformComponent)
@@ -131,18 +136,37 @@ void TransformLogic::AdjustPosition(const float x, const float y, const float z,
 
 void TransformLogic::AdjustRotation(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 rotationFloats(x, y, z);
-	const auto rotation = XMLoadFloat3(&rotationFloats);
-	AdjustRotationEuler(rotation, transformComponent);
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
+
+	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+
+	matrixRotation[0] += x;
+	matrixRotation[1] += y;
+	matrixRotation[2] += z;
+
+	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, &worldMatrixFloats._11);
+	transformComponent.WorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
 }
 
 void TransformLogic::AdjustRotationEuler(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
 {
-	const auto currentRotationFloats = GetRotationEuler(transformComponent);
-	auto currentRotation = XMLoadFloat3(&currentRotationFloats);
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
 
-	currentRotation = DirectX::XMVectorAdd(currentRotation, rot);
-	SetRotationEuler(currentRotation, transformComponent);
+	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+
+	DirectX::XMFLOAT3 rotationFloats{};
+	XMStoreFloat3(&rotationFloats, rot);
+
+	matrixRotation[0] += rotationFloats.x;
+	matrixRotation[1] += rotationFloats.y;
+	matrixRotation[2] += rotationFloats.z;
+
+	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, &worldMatrixFloats._11);
+	transformComponent.WorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
 }
 
 void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformComponent& transformComponent)

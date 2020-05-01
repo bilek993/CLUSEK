@@ -8,7 +8,7 @@ class TransformLogic final
 public:
 	static void SetMatrix(const physx::PxMat44 &matrix, TransformComponent &transformComponent);
 
-	static void SetPositionAndRotation(const DirectX::XMFLOAT3& pos, const DirectX::XMFLOAT3& rot, TransformComponent& transformComponent);
+	static void SetPositionAndRotationEuler(const DirectX::XMFLOAT3& pos, const DirectX::XMFLOAT3& rot, TransformComponent& transformComponent);
 
 	static void SetPosition(const DirectX::XMVECTOR &pos,TransformComponent &transformComponent);
 	static void SetPosition(const DirectX::XMFLOAT3 &pos, TransformComponent &transformComponent);

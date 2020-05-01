@@ -8,9 +8,9 @@ void TransformSystem::Start()
 
 	Registry->view<TransformComponent>().each([](TransformComponent &transformComponent)
 	{
-		TransformLogic::SetPositionAndRotation(	transformComponent.InitialPositionVector, 
-												transformComponent.InitialRotationVector, 
-												transformComponent);
+		TransformLogic::SetPositionAndRotationEuler(	transformComponent.InitialPositionVector,
+														transformComponent.InitialRotationVector, 
+														transformComponent);
 	});
 }
 
