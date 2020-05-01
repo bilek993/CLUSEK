@@ -7,6 +7,5 @@ class ModelViewLogic final
 {
 public:
 	static void UpdateViewMatrix(CameraComponent &cameraComponent, TransformComponent& transformComponent);
-	static void UpdateModelMatrix(DirectX::XMMATRIX& worldMatrix, TransformComponent& transformComponent);
 	static DirectX::XMMATRIX GenerateOrthographicProjectionMatrix(float ratio);
 };

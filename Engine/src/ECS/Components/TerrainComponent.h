@@ -14,5 +14,4 @@ struct TerrainComponent final
 	VertexBuffer<PositionAndUvVertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
 	TerrainShaderMaterial Material;
-	DirectX::XMMATRIX WorldMatrix;
 };

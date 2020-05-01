@@ -9,5 +9,4 @@ struct SkyboxComponent final
 	VertexBuffer<PositionVertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
 	SkyShaderMaterial Material;
-	DirectX::XMMATRIX WorldMatrix;
 };

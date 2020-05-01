@@ -1,20 +1,19 @@
 #include "TransformSystem.h"
-#include "../Components/TerrainComponent.h"
+#include "../Components/TransformComponent.h"
+#include "../../Renderer/TransformLogic.h"
 
 void TransformSystem::Start()
 {
 	Logger::Debug("Staring transform system...");
-	RecalculateAll();
+
+	Registry->view<TransformComponent>().each([](TransformComponent &transformComponent)
+	{
+		TransformLogic::SetPositionAndRotation(	transformComponent.InitialPositionVector, 
+												transformComponent.InitialRotationVector, 
+												transformComponent);
+	});
 }
 
 void TransformSystem::Update(float deltaTime)
 {
-	RecalculateAll();
-}
-
-void TransformSystem::RecalculateAll() const
-{
-	Recalculate<ModelRenderComponent>();
-	Recalculate<SkyboxComponent>();
-	Recalculate<TerrainComponent>();
 }

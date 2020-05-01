@@ -972,20 +972,20 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 
 		ChangeBasicShaders(ShadowVertexShader, ShadowPixelShader);
 
-		Registry->view<ModelRenderComponent>().each([this, &offset, i](ModelRenderComponent &modelRenderComponent)
+		Registry->view<ModelRenderComponent, TransformComponent>().each([this, &offset, i](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
 		{
 			auto shadowBufferInstanceSet = false;
 
 			for (const auto& mesh : *modelRenderComponent.Meshes)
 			{
-				if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, modelRenderComponent.WorldMatrix), ShadowCameras[i].GetFrustumPlanes()))
+				if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, transformComponent.WorldMatrix), ShadowCameras[i].GetFrustumPlanes()))
 					continue;
 
 				if (!shadowBufferInstanceSet)
 				{
 					shadowBufferInstanceSet = true;
 
-					ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
+					ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(transformComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
 					ShadowBufferInstance.ApplyChanges();
 				}
 
@@ -1006,12 +1006,12 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 			TerrainBufferInstance.Data.FrustumPlanes[j] = shadowCameraFrustumPlanes[j];
 		TerrainBufferInstance.ApplyChanges();
 
-		Registry->view<TerrainComponent>().each([this, &offset, i](TerrainComponent &terrainComponent)
+		Registry->view<TerrainComponent, TransformComponent>().each([this, &offset, i](TerrainComponent &terrainComponent, TransformComponent &transformComponent)
 		{
-			WorldMatrixBufferInstance.Data.WorldMatrix = XMMatrixTranspose(terrainComponent.WorldMatrix);
+			WorldMatrixBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
 			WorldMatrixBufferInstance.ApplyChanges();
 
-			ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(terrainComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
+			ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(transformComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
 			ShadowBufferInstance.ApplyChanges();
 
 			TerrainHeightSamplingBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
@@ -1039,10 +1039,10 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 	DeviceContext->PSSetConstantBuffers(0, 1, FogBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(1, 1, LightAndAlphaBufferInstance.GetAddressOf());
 
-	Registry->view<SkyboxComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent)
+	Registry->view<SkyboxComponent, TransformComponent>().each([this, &cameraComponent, &offset](SkyboxComponent &skyboxComponent, TransformComponent &transformComponent)
 	{
 		SimplePerObjectBufferInstance.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(skyboxComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
+			XMMatrixTranspose(transformComponent.WorldMatrix * (cameraComponent.ViewMatrix * cameraComponent.ProjectionMatrix));
 		SimplePerObjectBufferInstance.ApplyChanges();
 
 		DeviceContext->PSSetShaderResources(0, 1, skyboxComponent.Material.SkyMap->GetAddressOf());
@@ -1092,11 +1092,11 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	DeviceContext->PSSetConstantBuffers(3, 1, CascadeLevelsBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(4, 1, FogBufferInstance.GetAddressOf());
 
-	Registry->view<TerrainComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent)
+	Registry->view<TerrainComponent, TransformComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent, TransformComponent &transformComponent)
 	{
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(terrainComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
-		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(terrainComponent.WorldMatrix);
+			XMMatrixTranspose(transformComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
+		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
 		for (auto i = 0; i < 4; i++)
 			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
 		FatPerObjectBufferInstance.ApplyChanges();
@@ -1154,7 +1154,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	if (renderMode == Transparent)
 		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
 
-	Registry->view<ModelRenderComponent>().each([this, &mainCameraComponent, &offset, renderMode](ModelRenderComponent &modelRenderComponent)
+	Registry->view<ModelRenderComponent, TransformComponent>().each([this, &mainCameraComponent, &offset, renderMode](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
 	{
 		auto fatPerObjectBufferSet = false;
 
@@ -1166,7 +1166,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 			if (renderMode == Transparent && mesh.Material.Alpha >= 1.0f)
 				continue;
 
-			if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, modelRenderComponent.WorldMatrix), mainCameraComponent.FrustumPlanes))
+			if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, transformComponent.WorldMatrix), mainCameraComponent.FrustumPlanes))
 				continue;
 
 			if (!fatPerObjectBufferSet)
@@ -1174,8 +1174,8 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 				fatPerObjectBufferSet = true;
 
 				FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
-					XMMatrixTranspose(modelRenderComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
-				FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(modelRenderComponent.WorldMatrix);
+					XMMatrixTranspose(transformComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
+				FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
 				for (auto i = 0; i < 4; i++)
 					FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
 				FatPerObjectBufferInstance.ApplyChanges();

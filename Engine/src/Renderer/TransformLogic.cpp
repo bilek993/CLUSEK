@@ -1,179 +1,168 @@
 #include "TransformLogic.h"
-#include "../Utils/Logger.h"
+#include <imgui.h>
+#include <ImGuizmo.h>
 
-void TransformLogic::SetMatrix(const physx::PxMat44& matrix, const physx::PxQuat& quaternion, TransformComponent& transformComponent)
+void TransformLogic::SetMatrix(const physx::PxMat44& matrix, TransformComponent& transformComponent)
 {
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = ForcedMatrix;
-
-	transformComponent.WorldMatrixForced = DirectX::XMMATRIX(
+	transformComponent.WorldMatrix = DirectX::XMMATRIX(
 		matrix[0][0], matrix[1][0], matrix[2][0], matrix[3][0],
 		matrix[0][1], matrix[1][1], matrix[2][1], matrix[3][1],
 		matrix[0][2], matrix[1][2], matrix[2][2], matrix[3][2],
 		matrix[0][3], matrix[1][3], matrix[2][3], matrix[3][3]
 	);
+}
 
-	auto directQuaternion = DirectX::XMFLOAT4(quaternion.x, quaternion.y, quaternion.z, quaternion.w);
-	transformComponent.RotationMatrixForced = DirectX::XMMatrixRotationQuaternion(XMLoadFloat4(&directQuaternion));
+void TransformLogic::SetPositionAndRotation(const DirectX::XMFLOAT3& pos, const DirectX::XMFLOAT3& rot, TransformComponent& transformComponent)
+{
+	const auto translationMatrix = DirectX::XMMatrixTranslationFromVector(XMLoadFloat3(&pos));
+	const auto rotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(XMLoadFloat3(&rot));
+
+	transformComponent.WorldMatrix = XMMatrixMultiply(rotationMatrix, translationMatrix);
 }
 
 void TransformLogic::SetPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)
 {
-	transformComponent.ValuesChanged = true;
-	transformComponent.PositionVector = pos;
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
+
+	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+
+	DirectX::XMFLOAT3 positionFloats{};
+	XMStoreFloat3(&positionFloats, pos);
+
+	matrixTranslation[0] = positionFloats.x;
+	matrixTranslation[1] = positionFloats.y;
+	matrixTranslation[2] = positionFloats.z;
+
+	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, &worldMatrixFloats._11);
+	transformComponent.WorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
+}
+
+void TransformLogic::SetPosition(const DirectX::XMFLOAT3& pos, TransformComponent& transformComponent)
+{
+	SetPosition(XMLoadFloat3(&pos), transformComponent);
 }
 
 void TransformLogic::SetPosition(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
-	transformComponent.ValuesChanged = true;
-
-	auto newPosition = DirectX::XMFLOAT3(x, y, z);
-	transformComponent.PositionVector = XMLoadFloat3(&newPosition);
+	auto position = DirectX::XMFLOAT3(x, y, z);
+	SetPosition(XMLoadFloat3(&position), transformComponent);
 }
 
-void TransformLogic::SetRotation(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
+void TransformLogic::SetRotationEuler(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
 {
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = EulerAngels;
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
 
-	transformComponent.RotationVectorEuler = rot;
+	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+
+	DirectX::XMFLOAT3 rotationFloats{};
+	XMStoreFloat3(&rotationFloats, rot);
+
+	matrixRotation[0] = rotationFloats.x;
+	matrixRotation[1] = rotationFloats.y;
+	matrixRotation[2] = rotationFloats.z;
+
+	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, &worldMatrixFloats._11);
+	transformComponent.WorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
 }
 
-void TransformLogic::SetRotation(const float x, const float y, const float z, TransformComponent& transformComponent)
+void TransformLogic::SetRotationEuler(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = EulerAngels;
-
-	auto newRotation = DirectX::XMFLOAT3(x, y, z);
-	transformComponent.RotationVectorEuler = XMLoadFloat3(&newRotation);
-}
-
-void TransformLogic::SetRotation(const float x, const float y, const float z, const float w, TransformComponent& transformComponent)
-{
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = Quaternions;
-
-	auto newRotation = DirectX::XMFLOAT4(x, y, z, w);
-	transformComponent.RotationVectorQuat = XMLoadFloat4(&newRotation);
+	auto rotation = DirectX::XMFLOAT3(x, y, z);
+	SetRotationEuler(XMLoadFloat3(&rotation), transformComponent);
 }
 
 void TransformLogic::GetPosition(float* x, float* y, float* z, const TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 storedValue{};
-	XMStoreFloat3(&storedValue, transformComponent.PositionVector);
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
+
+	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
 
 	if (x != nullptr)
-		*x = storedValue.x;
+		*x = matrixTranslation[0];
 	if (y != nullptr)
-		*y = storedValue.y;
+		*y = matrixTranslation[1];
 	if (z != nullptr)
-		*z = storedValue.z;
+		*z = matrixTranslation[2];
 }
 
 DirectX::XMFLOAT3 TransformLogic::GetPosition(const TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 storedValue{};
-	XMStoreFloat3(&storedValue, transformComponent.PositionVector);
-	return storedValue;
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
+
+	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+
+	return DirectX::XMFLOAT3(matrixTranslation);
 }
 
 void TransformLogic::AdjustPosition(const DirectX::XMVECTOR& pos, TransformComponent& transformComponent)
 {
-	transformComponent.ValuesChanged = true;
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
 
-	transformComponent.PositionVector = DirectX::XMVectorAdd(transformComponent.PositionVector, pos);
+	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+
+	DirectX::XMFLOAT3 positionFloats{};
+	XMStoreFloat3(&positionFloats, pos);
+
+	matrixTranslation[0] += positionFloats.x;
+	matrixTranslation[1] += positionFloats.y;
+	matrixTranslation[2] += positionFloats.z;
+		
+	ImGuizmo::RecomposeMatrixFromComponents(matrixTranslation, matrixRotation, matrixScale, &worldMatrixFloats._11);
+	transformComponent.WorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
 }
 
 void TransformLogic::AdjustPosition(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
-	transformComponent.ValuesChanged = true;
+	DirectX::XMFLOAT3 positionFloats(x, y, z);
+	const auto pos = XMLoadFloat3(&positionFloats);
 
-	DirectX::XMFLOAT3 storedValue{};
-	XMStoreFloat3(&storedValue, transformComponent.PositionVector);
-	storedValue.x += x;
-	storedValue.y += y;
-	storedValue.z += z;
-	transformComponent.PositionVector = XMLoadFloat3(&storedValue);
+	AdjustPosition(pos, transformComponent);
 }
 
 void TransformLogic::AdjustRotation(const float x, const float y, const float z, TransformComponent& transformComponent)
 {
-	if (transformComponent.RotationModeForChanges != EulerAngels)
-		Logger::Warning("Adjusted euler angels in incorrect mode!");
-
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = EulerAngels;
-
-	DirectX::XMFLOAT3 storedValue{};
-	XMStoreFloat3(&storedValue, transformComponent.RotationVectorEuler);
-	storedValue.x += x;
-	storedValue.y += y;
-	storedValue.z += z;
-	transformComponent.RotationVectorEuler = XMLoadFloat3(&storedValue);
-}
-
-void TransformLogic::AdjustRotation(const float x, const float y, const float z, const float w, TransformComponent& transformComponent)
-{
-	if (transformComponent.RotationModeForChanges != Quaternions)
-		Logger::Warning("Adjusted quaternions in incorrect mode!");
-
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = Quaternions;
-
-	DirectX::XMFLOAT4 storedValue{};
-	XMStoreFloat4(&storedValue, transformComponent.RotationVectorEuler);
-	storedValue.x += x;
-	storedValue.y += y;
-	storedValue.z += z;
-	storedValue.w += w;
-	transformComponent.RotationVectorQuat = XMLoadFloat4(&storedValue);
+	DirectX::XMFLOAT3 rotationFloats(x, y, z);
+	const auto rotation = XMLoadFloat3(&rotationFloats);
+	AdjustRotationEuler(rotation, transformComponent);
 }
 
 void TransformLogic::AdjustRotationEuler(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
 {
-	if (transformComponent.RotationModeForChanges != EulerAngels)
-		Logger::Warning("Adjusted euler angels in incorrect mode!");
+	const auto currentRotationFloats = GetRotationEuler(transformComponent);
+	auto currentRotation = XMLoadFloat3(&currentRotationFloats);
 
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = EulerAngels;
-
-	transformComponent.RotationVectorEuler = DirectX::XMVectorAdd(transformComponent.RotationVectorEuler, rot);
-}
-
-void TransformLogic::AdjustRotationQuat(const DirectX::XMVECTOR& rot, TransformComponent& transformComponent)
-{
-	if (transformComponent.RotationModeForChanges != Quaternions)
-		Logger::Warning("Adjusted quaternions in incorrect mode!");
-
-	transformComponent.ValuesChanged = true;
-	transformComponent.RotationModeForChanges = Quaternions;
-
-	transformComponent.RotationVectorQuat = DirectX::XMVectorAdd(transformComponent.RotationVectorQuat, rot);
+	currentRotation = DirectX::XMVectorAdd(currentRotation, rot);
+	SetRotationEuler(currentRotation, transformComponent);
 }
 
 void TransformLogic::GetRotation(float* x, float* y, float* z, const TransformComponent& transformComponent)
 {
-	if (transformComponent.RotationModeForChanges != EulerAngels)
-		Logger::Warning("GetRotation called in for euler called in incorrect mode!");
-
-	DirectX::XMFLOAT3 storedValue{};
-	XMStoreFloat3(&storedValue, transformComponent.RotationVectorEuler);
+	const auto rotation = GetRotationEuler(transformComponent);
 
 	if (x != nullptr)
-		*x = storedValue.x;
+		*x = rotation.x;
 	if (y != nullptr)
-		*y = storedValue.y;
+		*y = rotation.y;
 	if (z != nullptr)
-		*z = storedValue.z;
+		*z = rotation.z;
 }
 
 void TransformLogic::GetRotation(float* x, float* y, float* z, float* w, const TransformComponent& transformComponent)
 {
-	if (transformComponent.RotationModeForChanges != Quaternions)
-		Logger::Warning("GetRotation called in for quaternions called in incorrect mode!");
+	const auto rotation = XMQuaternionRotationMatrix(transformComponent.WorldMatrix);
 
 	DirectX::XMFLOAT4 storedValue{};
-	XMStoreFloat4(&storedValue, transformComponent.RotationVectorQuat);
+	XMStoreFloat4(&storedValue, rotation);
 
 	if (x != nullptr)
 		*x = storedValue.x;
@@ -187,42 +176,20 @@ void TransformLogic::GetRotation(float* x, float* y, float* z, float* w, const T
 
 DirectX::XMFLOAT3 TransformLogic::GetRotationEuler(const TransformComponent& transformComponent)
 {
-	DirectX::XMFLOAT3 storedValue{};
-	XMStoreFloat3(&storedValue, transformComponent.RotationVectorEuler);
-	return storedValue;
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, transformComponent.WorldMatrix);
+
+	float matrixTranslation[3], matrixRotation[3], matrixScale[3];
+	ImGuizmo::DecomposeMatrixToComponents(&worldMatrixFloats._11, matrixTranslation, matrixRotation, matrixScale);
+
+	return DirectX::XMFLOAT3(matrixRotation);
 }
 
 DirectX::XMFLOAT4 TransformLogic::GetRotationQuat(const TransformComponent& transformComponent)
 {
+	const auto rotation = XMQuaternionRotationMatrix(transformComponent.WorldMatrix);
+
 	DirectX::XMFLOAT4 storedValue{};
-	XMStoreFloat4(&storedValue, transformComponent.RotationVectorQuat);
+	XMStoreFloat4(&storedValue, rotation);
 	return storedValue;
-}
-
-void TransformLogic::LookAt(DirectX::XMFLOAT3 targetPosition, TransformComponent& transformComponent)
-{
-	transformComponent.ValuesChanged = true;
-
-	DirectX::XMFLOAT3 currentCameraPosition{};
-	XMStoreFloat3(&currentCameraPosition, transformComponent.PositionVector);
-
-	if (currentCameraPosition.x == targetPosition.x && currentCameraPosition.y == targetPosition.y && currentCameraPosition.z == targetPosition.z)
-	{
-		Logger::Warning("Camera position cannot be the save as target position!");
-		return;
-	}
-
-	targetPosition.x = currentCameraPosition.x - targetPosition.x;
-	targetPosition.y = currentCameraPosition.y - targetPosition.y;
-	targetPosition.z = currentCameraPosition.z - targetPosition.z;
-
-	const auto distance = sqrt((targetPosition.x * targetPosition.x) + (targetPosition.z * targetPosition.z));
-	const auto pitch = atan(targetPosition.y / distance);
-
-	auto yaw = atan(targetPosition.x / targetPosition.z);;
-
-	if (targetPosition.z > 0)
-		yaw += DirectX::XM_PI;
-
-	SetRotation(pitch, yaw, 0.0f, transformComponent);
 }

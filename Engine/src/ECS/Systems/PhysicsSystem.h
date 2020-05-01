@@ -81,11 +81,9 @@ void PhysicsSystem::UpdateMatrixFromRigidbody() const
 		if (!body->isSleeping())
 		{
 			const auto globalPose = body->getGlobalPose();
-			const auto position = globalPose.p;
-			const auto rotation = globalPose.q;
+			const physx::PxMat44 bodyMatrix(globalPose);
 
-			TransformLogic::SetPosition(position.x, position.y, position.z, transformComponent);
-			TransformLogic::SetRotation(rotation.x, rotation.y, rotation.z, rotation.w, transformComponent);
+			TransformLogic::SetMatrix(bodyMatrix.getTranspose(), transformComponent);
 		}
 	});
 }

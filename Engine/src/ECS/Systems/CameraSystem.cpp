@@ -74,13 +74,13 @@ void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& camer
 		cameraSpeed *= 5;
 
 	if (InputOutputData->GamePadState.dpad.up)
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, cameraSpeed), transformComponent);
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorForward, cameraSpeed), transformComponent);
 	if (InputOutputData->GamePadState.dpad.left)
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, -cameraSpeed), transformComponent);
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorRight, -cameraSpeed), transformComponent);
 	if (InputOutputData->GamePadState.dpad.down)
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, -cameraSpeed), transformComponent);
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorForward, -cameraSpeed), transformComponent);
 	if (InputOutputData->GamePadState.dpad.right)
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, cameraSpeed), transformComponent);
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorRight, cameraSpeed), transformComponent);
 
 	auto currentRotationX = 0.0f;
 	auto currentRotationY = 0.0f;
@@ -92,7 +92,7 @@ void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& camer
 	if (currentRotationX + rotationGamePadX < cameraComponent.MaxRotationY && currentRotationX + rotationGamePadX > cameraComponent.MinRotationY)
 		currentRotationX += rotationGamePadX;
 
-	TransformLogic::SetRotation(currentRotationX, currentRotationY + rotationGamePadY, 0.0f, transformComponent);
+	TransformLogic::SetRotationEuler(currentRotationX, currentRotationY + rotationGamePadY, 0.0f, transformComponent);
 
 	ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 }
@@ -106,22 +106,22 @@ void CameraSystem::KeyboardMovement(const float deltaTime, CameraComponent& came
 
 	if (InputOutputData->KeyboardState.W)
 	{
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, cameraSpeed), transformComponent);
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorForward, cameraSpeed), transformComponent);
 		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 	if (InputOutputData->KeyboardState.A)
 	{
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, -cameraSpeed), transformComponent);
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorRight, -cameraSpeed), transformComponent);
 		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 	if (InputOutputData->KeyboardState.S)
 	{
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorForward, -cameraSpeed), transformComponent);
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorForward, -cameraSpeed), transformComponent);
 		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 	if (InputOutputData->KeyboardState.D)
 	{
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(transformComponent.VectorRight, cameraSpeed), transformComponent);
+		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorRight, cameraSpeed), transformComponent);
 		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 }
@@ -143,7 +143,7 @@ void CameraSystem::MouseMovement(const float deltaTime, CameraComponent& cameraC
 		if (currentRotationX + rotationMouseX < cameraComponent.MaxRotationY && currentRotationX + rotationMouseX > cameraComponent.MinRotationY)
 			currentRotationX += rotationMouseX;
 
-		TransformLogic::SetRotation(currentRotationX, currentRotationY + rotationMouseY, 0.0f, transformComponent);
+		TransformLogic::SetRotationEuler(currentRotationX, currentRotationY + rotationMouseY, 0.0f, transformComponent);
 		ModelViewLogic::UpdateViewMatrix(cameraComponent, transformComponent);
 	}
 	else

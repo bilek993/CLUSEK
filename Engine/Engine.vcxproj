@@ -205,7 +205,6 @@
     <ClInclude Include="src\GUI\Windows\EntityViewerWindow.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\IrradianceBuffer.h" />
     <ClInclude Include="src\GUI\Windows\PhysicsStatisticsWindow.h" />
-    <ClInclude Include="src\Renderer\RotationMode.h" />
     <ClInclude Include="src\Physics\PhysicsFilterHelper.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\RigidbodyDynamicCylinderComponent.h" />

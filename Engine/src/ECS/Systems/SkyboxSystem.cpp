@@ -24,6 +24,6 @@ void SkyboxSystem::Update(float deltaTime)
 
 	Registry->view<TransformComponent, SkyboxComponent>().each([&cameraTransformComponent](TransformComponent &transformComponent, SkyboxComponent &skyboxComponent)
 	{
-		TransformLogic::SetPosition(cameraTransformComponent.PositionVector, transformComponent);
+		TransformLogic::SetPosition(TransformLogic::GetPosition(cameraTransformComponent), transformComponent);
 	});
 }

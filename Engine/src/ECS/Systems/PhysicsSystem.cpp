@@ -520,11 +520,9 @@ void PhysicsSystem::UpdateVehicles() const
 			continue;
 
 		const auto chassisGlobalPose = rigidActor->getGlobalPose();
-		const auto positionChassis = chassisGlobalPose.p;
-		const auto rotationChassis = chassisGlobalPose.q;
+		const physx::PxMat44 chassisMatrix(chassisGlobalPose);
 
-		TransformLogic::SetPosition(positionChassis.x, positionChassis.y, positionChassis.z, *transformComponents[i]);
-		TransformLogic::SetRotation(rotationChassis.x, rotationChassis.y, rotationChassis.z, rotationChassis.w, *transformComponents[i]);
+		TransformLogic::SetMatrix(chassisMatrix.getTranspose(), *transformComponents[i]);
 
 		for (auto w = 0; w < std::size(vehicleComponents[i]->Wheels); w++)
 		{
@@ -532,10 +530,9 @@ void PhysicsSystem::UpdateVehicles() const
 			if (vehicleComponents[i]->Wheels[w]->Flip)
 				wheelLocalPose = wheelLocalPose.transform(physx::PxTransform(physx::PxQuat(physx::PxPi, physx::PxVec3(0.0f, 1.0f, 0.0f))));
 
-			physx::PxMat44 wheelMatrix(chassisGlobalPose);
-			wheelMatrix *= physx::PxMat44(wheelLocalPose);
+			const auto wheelMatrix = chassisMatrix * physx::PxMat44(wheelLocalPose);
 
-			TransformLogic::SetMatrix(wheelMatrix.getTranspose(), wheelLocalPose.q, *vehicleComponents[i]->WheelTransform[w]);
+			TransformLogic::SetMatrix(wheelMatrix.getTranspose(), *vehicleComponents[i]->WheelTransform[w]);
 		}
 	}
 }
@@ -543,28 +540,14 @@ void PhysicsSystem::UpdateVehicles() const
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
 {
 	const auto position = TransformLogic::GetPosition(transformComponent);
+	auto rotationEuler = TransformLogic::GetRotationEuler(transformComponent);
 
-	if (transformComponent.RotationModeForChanges == EulerAngels) 
-	{
-		const auto rotationEuler = TransformLogic::GetRotationEuler(transformComponent);
+	rotationEuler.x /= M_PI;
+	rotationEuler.y /= M_PI;
+	rotationEuler.z /= M_PI;
 
-		return physx::PxTransform(physx::PxVec3(position.x, position.y, position.z),
-			PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotationEuler));
-	}
-	else if (transformComponent.RotationModeForChanges == Quaternions)
-	{
-		float x, y, z, w;
-		TransformLogic::GetRotation(&x, &y, &z, &w, transformComponent);
-
-		return physx::PxTransform(physx::PxVec3(position.x, position.y, position.z),
-			physx::PxQuat(x, y, z, w));
-	}
-	else
-	{
-		Logger::Error("Cannot calculate PhysX Transform for this mode!");
-		return physx::PxTransform(physx::PxIdentity);
-	}
-
+	return physx::PxTransform(physx::PxVec3(position.x, position.y, position.z),
+		PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotationEuler));
 }
 
 void PhysicsSystem::AssociateWheelsWithVehicles()

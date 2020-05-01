@@ -85,13 +85,13 @@ void Engine::CreateSystems()
 	// Render system should be first
 	RegisterNewSystem<RenderSystem>("Render System");
 
+	// Transform system should be second
+	RegisterNewSystem<TransformSystem>("Transform System");
+
 	RegisterNewSystem<PhysicsSystem>("Physics System");
 	RegisterNewSystem<CameraSystem>("Camera System");
 	RegisterNewSystem<SkyboxSystem>("Skybox System");
 	RegisterNewSystem<VehiclePlayerControllerSystem>("Vehicle Player Controller System");
-
-	// Transform system should be last
-	RegisterNewSystem<TransformSystem>("Transform System");
 
 	for (auto i = 0; i < Systems.size(); i++)
 	{

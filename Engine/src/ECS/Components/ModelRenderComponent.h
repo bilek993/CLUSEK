@@ -7,5 +7,4 @@ struct ModelRenderComponent final
 	std::string ModelId;
 	std::string MaterialId;
 	std::shared_ptr<std::vector<Mesh>> Meshes;
-	DirectX::XMMATRIX WorldMatrix;
 };

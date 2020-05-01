@@ -1,7 +1,4 @@
 #include "TransformManipulateWindow.h"
-#include "../../ECS/Components/ModelRenderComponent.h"
-#include "../../ECS/Components/SkyboxComponent.h"
-#include "../../ECS/Components/TerrainComponent.h"
 #include "../../ECS/Systems/RenderSystem.h"
 
 void TransformManipulateWindow::Draw()
@@ -17,11 +14,7 @@ void TransformManipulateWindow::Draw()
 void TransformManipulateWindow::DrawCombo()
 {
 	std::string listIds{};
-	auto counter = 0;
-
-	ListComponent<ModelRenderComponent>(counter, listIds);
-	ListComponent<SkyboxComponent>(counter, listIds);
-	ListComponent<TerrainComponent>(counter, listIds);
+	ListComponent(listIds);
 
 	ImGui::Combo("Selected entity Id", &SelectedId, listIds.c_str());
 }
@@ -62,4 +55,17 @@ void TransformManipulateWindow::DrawDetails()
 	Manipulate(&viewMatrixFloats._11, &projectionMatrixFloats._11, CurrentGizmoOperation, ImGuizmo::WORLD, &worldMatrixFloats._11);
 
 	*CurrentWorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
+}
+
+void TransformManipulateWindow::ListComponent(std::string& list)
+{
+	auto counter = 0;
+
+	Registry->view<TransformComponent>().each([this, &list, &counter](TransformComponent& transformComponent)
+	{
+		list += "Transformable entity " + std::to_string(counter) + '\0';
+
+		if (SelectedId == counter++)
+			CurrentWorldMatrix = &transformComponent.WorldMatrix;
+	});
 }

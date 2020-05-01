@@ -6,23 +6,23 @@
 class TransformLogic final
 {
 public:
-	static void SetMatrix(const physx::PxMat44 &matrix, const physx::PxQuat& quaternion, TransformComponent &transformComponent);
+	static void SetMatrix(const physx::PxMat44 &matrix, TransformComponent &transformComponent);
+
+	static void SetPositionAndRotation(const DirectX::XMFLOAT3& pos, const DirectX::XMFLOAT3& rot, TransformComponent& transformComponent);
 
 	static void SetPosition(const DirectX::XMVECTOR &pos,TransformComponent &transformComponent);
+	static void SetPosition(const DirectX::XMFLOAT3 &pos, TransformComponent &transformComponent);
 	static void SetPosition(float x, float y, float z, TransformComponent &transformComponent);
 
-	static void SetRotation(const DirectX::XMVECTOR &rot, TransformComponent &transformComponent);
-	static void SetRotation(float x, float y, float z, TransformComponent &transformComponent);
-	static void SetRotation(float x, float y, float z, float w, TransformComponent &transformComponent);
+	static void SetRotationEuler(const DirectX::XMVECTOR &rot, TransformComponent &transformComponent);
+	static void SetRotationEuler(float x, float y, float z, TransformComponent &transformComponent);
 
 	static void AdjustPosition(const DirectX::XMVECTOR &pos, TransformComponent &transformComponent);
 	static void AdjustPosition(float x, float y, float z, TransformComponent &transformComponent);
 
 	static void AdjustRotation(float x, float y, float z, TransformComponent &transformComponent);
-	static void AdjustRotation(float x, float y, float z, float w, TransformComponent &transformComponent);
 
 	static void AdjustRotationEuler(const DirectX::XMVECTOR &rot, TransformComponent &transformComponent);
-	static void AdjustRotationQuat(const DirectX::XMVECTOR &rot, TransformComponent &transformComponent);
 
 	static void GetPosition(float* x, float* y, float* z, const TransformComponent &transformComponent);
 	static DirectX::XMFLOAT3 GetPosition(const TransformComponent &transformComponent);
@@ -32,6 +32,4 @@ public:
 
 	static DirectX::XMFLOAT3 GetRotationEuler(const TransformComponent &transformComponent);
 	static DirectX::XMFLOAT4 GetRotationQuat(const TransformComponent &transformComponent);
-
-	static void LookAt(DirectX::XMFLOAT3 targetPosition, TransformComponent &transformComponent);
 };

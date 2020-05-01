@@ -1,4 +1,5 @@
 #include "DebugUserInterface.h"
+#include <imgui.h>
 #include <ImGuizmo.h>
 #include "../Utils/Logger.h"
 #include "Windows/SystemsManagerWindow.h"
