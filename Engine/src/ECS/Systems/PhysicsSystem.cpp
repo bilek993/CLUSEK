@@ -539,15 +539,17 @@ void PhysicsSystem::UpdateVehicles() const
 
 physx::PxTransform PhysicsSystem::CalculatePxTransform(const TransformComponent& transformComponent) const
 {
-	const auto position = TransformLogic::GetPosition(transformComponent);
-	auto rotationEuler = TransformLogic::GetRotationEuler(transformComponent);
+	DirectX::XMFLOAT4X4 matrixFloats{};
+	XMStoreFloat4x4(&matrixFloats, transformComponent.WorldMatrix);
 
-	rotationEuler.x /= M_PI;
-	rotationEuler.y /= M_PI;
-	rotationEuler.z /= M_PI;
+	const auto physicsMatrix = physx::PxMat44(
+		physx::PxVec4(matrixFloats._11, matrixFloats._12, matrixFloats._13, matrixFloats._14),
+		physx::PxVec4(matrixFloats._21, matrixFloats._22, matrixFloats._23, matrixFloats._24),
+		physx::PxVec4(matrixFloats._31, matrixFloats._32, matrixFloats._33, matrixFloats._34),
+		physx::PxVec4(matrixFloats._41, matrixFloats._42, matrixFloats._43, matrixFloats._44)
+	);
 
-	return physx::PxTransform(physx::PxVec3(position.x, position.y, position.z),
-		PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(rotationEuler));
+	return physx::PxTransform(physicsMatrix);
 }
 
 void PhysicsSystem::AssociateWheelsWithVehicles()
