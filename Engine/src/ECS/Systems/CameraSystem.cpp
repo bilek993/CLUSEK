@@ -120,7 +120,7 @@ bool CameraSystem::GetTargetMode(const CameraComponent& mainCameraCameraComponen
 	}
 	else
 	{
-		if (InputOutputData->KeyboardState.C)
+		if (InputOutputData->KeyboardTracker.pressed.C)
 			useTarget = !useTarget;
 	}
 
