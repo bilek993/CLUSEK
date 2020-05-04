@@ -2,5 +2,5 @@
 
 struct CameraTargetComponent final
 {
-	bool Active;
+	bool Active = false;
 };

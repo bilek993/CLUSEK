@@ -55,6 +55,9 @@
 	  },
 	  "VehiclePlayerControllerComponent": {
 	    "Possessed": true
+	  },
+	  "CameraTargetComponent": {
+		"Active": true
 	  }
 	}
   },
