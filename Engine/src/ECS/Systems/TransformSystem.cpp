@@ -1,6 +1,7 @@
 #include "TransformSystem.h"
 #include "../Components/TransformComponent.h"
 #include "../../Renderer/TransformLogic.h"
+#include "../Components/CameraTargetComponent.h"
 
 void TransformSystem::Start()
 {
@@ -11,6 +12,14 @@ void TransformSystem::Start()
 		TransformLogic::SetPositionAndRotationEuler(	transformComponent.InitialPositionVector,
 														transformComponent.InitialRotationVector, 
 														transformComponent);
+	});
+
+	Registry->view<CameraTargetComponent>().each([](CameraTargetComponent &cameraTargetComponent)
+	{
+		const auto translationMatrix = DirectX::XMMatrixTranslationFromVector(XMLoadFloat3(&cameraTargetComponent.InitialPositionVector));
+		const auto rotationMatrix = DirectX::XMMatrixRotationRollPitchYawFromVector(XMLoadFloat3(&cameraTargetComponent.InitialRotationVector));
+
+		cameraTargetComponent.PaddingMatrix = rotationMatrix * translationMatrix;
 	});
 }
 

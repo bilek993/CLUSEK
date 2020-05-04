@@ -57,7 +57,10 @@
 	    "Possessed": true
 	  },
 	  "CameraTargetComponent": {
-		"Active": true
+		"Active": true,
+		"PaddingPositionX": 0.0,
+		"PaddingPositionY": 3.0,
+		"PaddingPositionZ": -17.5
 	  }
 	}
   },

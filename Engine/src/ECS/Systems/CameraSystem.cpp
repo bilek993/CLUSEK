@@ -87,7 +87,7 @@ void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& mainCa
 
 	if (useTargetMovement)
 	{
-		mainCameraTransformComponent.WorldMatrix = cameraTargetTransformComponent->WorldMatrix;
+		mainCameraTransformComponent.WorldMatrix = cameraTargetComponent->PaddingMatrix * cameraTargetTransformComponent->WorldMatrix;
 
 		UpdateViewMatrix(mainCameraCameraComponent, mainCameraTransformComponent, true);
 	}
