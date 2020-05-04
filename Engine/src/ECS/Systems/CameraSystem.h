@@ -14,7 +14,7 @@ private:
 		const CameraTargetComponent* cameraTargetComponent, const TransformComponent* cameraTargetTransformComponent) const;
 
 	float GetCameraSpeed(float deltaTime) const;
-	bool GetTargetMode(const CameraComponent& mainCameraCameraComponent) const;
+	bool GetTargetMode(CameraComponent& mainCameraCameraComponent) const;
 	DirectX::XMVECTOR GetTranslation(float cameraSpeed, const CameraComponent& mainCameraCameraComponent) const;
 	std::pair<float, float> GetRotation(float deltaTime, const CameraComponent& mainCameraCameraComponent, const TransformComponent& mainCameraTransformComponent) const;
 

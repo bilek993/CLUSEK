@@ -109,9 +109,9 @@ float CameraSystem::GetCameraSpeed(const float deltaTime) const
 	return cameraSpeed;
 }
 
-bool CameraSystem::GetTargetMode(const CameraComponent& mainCameraCameraComponent) const
+bool CameraSystem::GetTargetMode(CameraComponent& mainCameraCameraComponent) const
 {
-	auto useTarget = mainCameraCameraComponent.UseTarget;
+	auto& useTarget = mainCameraCameraComponent.UseTarget;
 
 	if (InputOutputData->GamePadState.IsConnected())
 	{
