@@ -54,107 +54,114 @@ void CameraSystem::Update(const float deltaTime)
 
 void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& cameraComponent, TransformComponent& transformComponent) const
 {
-	if (InputOutputData->GamePadState.IsConnected())
-	{
-		GamepadMovement(deltaTime, cameraComponent, transformComponent);
-	}
-	else
-	{
-		KeyboardMovement(deltaTime, cameraComponent, transformComponent);
-		MouseMovement(deltaTime, cameraComponent, transformComponent);
-	}
-}
+	const auto cameraSpeed = GetCameraSpeed(deltaTime);
+	const auto cameraTranslation = GetTranslation(cameraSpeed, cameraComponent);
+	const auto cameraRotation = GetRotation(deltaTime, cameraComponent, transformComponent);
 
-void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& cameraComponent,
-	TransformComponent& transformComponent) const
-{
-	auto cameraSpeed = ConfigurationData->MaxCameraSpeed / 5 * deltaTime;
-	if (InputOutputData->GamePadState.IsRightStickPressed())
-		cameraSpeed *= 5;
-
-	if (InputOutputData->GamePadState.IsXPressed())
-		cameraComponent.UseTarget = !cameraComponent.UseTarget;
-
-	if (InputOutputData->GamePadState.dpad.up)
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorForward, cameraSpeed), transformComponent);
-	if (InputOutputData->GamePadState.dpad.left)
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorRight, -cameraSpeed), transformComponent);
-	if (InputOutputData->GamePadState.dpad.down)
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorForward, -cameraSpeed), transformComponent);
-	if (InputOutputData->GamePadState.dpad.right)
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorRight, cameraSpeed), transformComponent);
-
-	auto currentRotationX = 0.0f;
-	auto currentRotationY = 0.0f;
-	TransformLogic::GetRotation(&currentRotationX, &currentRotationY, nullptr, transformComponent);
-
-	const auto rotationGamePadX = static_cast<float>(-InputOutputData->GamePadState.thumbSticks.rightY) * 0.002f * deltaTime;
-	const auto rotationGamePadY = static_cast<float>(InputOutputData->GamePadState.thumbSticks.rightX) * 0.002f * deltaTime;
-
-	if (currentRotationX + rotationGamePadX < cameraComponent.MaxRotationY && currentRotationX + rotationGamePadX > cameraComponent.MinRotationY)
-		currentRotationX += rotationGamePadX;
-
-	TransformLogic::SetRotationEuler(currentRotationX, currentRotationY + rotationGamePadY, 0.0f, transformComponent);
+	TransformLogic::AdjustPosition(cameraTranslation, transformComponent);
+	TransformLogic::SetRotationEuler(cameraRotation.first, cameraRotation.second, 0.0f, transformComponent);
 
 	UpdateViewMatrix(cameraComponent, transformComponent);
 }
 
-void CameraSystem::KeyboardMovement(const float deltaTime, CameraComponent& cameraComponent,
-	TransformComponent& transformComponent) const
+float CameraSystem::GetCameraSpeed(const float deltaTime) const
 {
 	auto cameraSpeed = ConfigurationData->MaxCameraSpeed / 5 * deltaTime;
-	if (InputOutputData->KeyboardState.LeftShift || InputOutputData->KeyboardState.RightShift)
-		cameraSpeed *= 5;
 
-	if (InputOutputData->KeyboardState.C)
-		cameraComponent.UseTarget = !cameraComponent.UseTarget;
-
-	if (InputOutputData->KeyboardState.W)
+	if (InputOutputData->GamePadState.IsConnected())
 	{
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorForward, cameraSpeed), transformComponent);
-		UpdateViewMatrix(cameraComponent, transformComponent);
-	}
-	if (InputOutputData->KeyboardState.A)
-	{
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorRight, -cameraSpeed), transformComponent);
-		UpdateViewMatrix(cameraComponent, transformComponent);
-	}
-	if (InputOutputData->KeyboardState.S)
-	{
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorForward, -cameraSpeed), transformComponent);
-		UpdateViewMatrix(cameraComponent, transformComponent);
-	}
-	if (InputOutputData->KeyboardState.D)
-	{
-		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorRight, cameraSpeed), transformComponent);
-		UpdateViewMatrix(cameraComponent, transformComponent);
-	}
-}
-
-void CameraSystem::MouseMovement(const float deltaTime, CameraComponent& cameraComponent,
-	TransformComponent& transformComponent) const
-{
-	if (InputOutputData->MouseState.rightButton)
-	{
-		InputOutputDevices->ChangeMouseToRelativeMode(Window->GetHandle());
-
-		auto currentRotationX = 0.0f;
-		auto currentRotationY = 0.0f;
-		TransformLogic::GetRotation(&currentRotationX, &currentRotationY, nullptr, transformComponent);
-
-		const auto rotationMouseX = static_cast<float>(InputOutputData->MouseState.y) * 0.001f * deltaTime;
-		const auto rotationMouseY = static_cast<float>(InputOutputData->MouseState.x) * 0.001f * deltaTime;
-
-		if (currentRotationX + rotationMouseX < cameraComponent.MaxRotationY && currentRotationX + rotationMouseX > cameraComponent.MinRotationY)
-			currentRotationX += rotationMouseX;
-
-		TransformLogic::SetRotationEuler(currentRotationX, currentRotationY + rotationMouseY, 0.0f, transformComponent);
-		UpdateViewMatrix(cameraComponent, transformComponent);
+		if (InputOutputData->GamePadState.IsRightStickPressed())
+			cameraSpeed *= 5;
 	}
 	else
 	{
-		InputOutputDevices->ChangeMouseToAbsoluteMode(Window->GetHandle());
+		if (InputOutputData->KeyboardState.LeftShift || InputOutputData->KeyboardState.RightShift)
+			cameraSpeed *= 5;
 	}
+
+	return cameraSpeed;
+}
+
+bool CameraSystem::GetTargetMode(const CameraComponent& cameraComponent) const
+{
+	auto useTarget = cameraComponent.UseTarget;
+
+	if (InputOutputData->GamePadState.IsConnected())
+	{
+		if (InputOutputData->GamePadState.IsXPressed())
+			useTarget = !useTarget;
+	}
+	else
+	{
+		if (InputOutputData->KeyboardState.C)
+			useTarget = !useTarget;
+	}
+
+	return useTarget;
+}
+
+DirectX::XMVECTOR CameraSystem::GetTranslation(const float cameraSpeed, const CameraComponent& cameraComponent) const
+{
+	DirectX::XMVECTOR translationVector{};
+
+	if (InputOutputData->GamePadState.IsConnected())
+	{
+		if (InputOutputData->GamePadState.dpad.up)
+			translationVector = DirectX::XMVectorAdd(DirectX::XMVectorScale(cameraComponent.VectorForward, cameraSpeed), translationVector);
+		if (InputOutputData->GamePadState.dpad.left)
+			translationVector = DirectX::XMVectorAdd(DirectX::XMVectorScale(cameraComponent.VectorRight, -cameraSpeed), translationVector);
+		if (InputOutputData->GamePadState.dpad.down)
+			translationVector = DirectX::XMVectorAdd(DirectX::XMVectorScale(cameraComponent.VectorForward, -cameraSpeed), translationVector);
+		if (InputOutputData->GamePadState.dpad.right)
+			translationVector = DirectX::XMVectorAdd(DirectX::XMVectorScale(cameraComponent.VectorRight, cameraSpeed), translationVector);
+	}
+	else
+	{
+		if (InputOutputData->KeyboardState.W)
+			translationVector = DirectX::XMVectorAdd(DirectX::XMVectorScale(cameraComponent.VectorForward, cameraSpeed), translationVector);
+		if (InputOutputData->KeyboardState.A)
+			translationVector = DirectX::XMVectorAdd(DirectX::XMVectorScale(cameraComponent.VectorRight, -cameraSpeed), translationVector);
+		if (InputOutputData->KeyboardState.S)
+			translationVector = DirectX::XMVectorAdd(DirectX::XMVectorScale(cameraComponent.VectorForward, -cameraSpeed), translationVector);
+		if (InputOutputData->KeyboardState.D)
+			translationVector = DirectX::XMVectorAdd(DirectX::XMVectorScale(cameraComponent.VectorRight, cameraSpeed), translationVector);
+	}
+
+	return translationVector;
+}
+
+std::pair<float, float> CameraSystem::GetRotation(const float deltaTime, const CameraComponent& cameraComponent, const TransformComponent& transformComponent) const
+{
+	auto rotationX = 0.0f;
+	auto rotationY = 0.0f;
+	TransformLogic::GetRotation(&rotationX, &rotationY, nullptr, transformComponent);
+
+	if (InputOutputData->GamePadState.IsConnected())
+	{
+		rotationX += static_cast<float>(-InputOutputData->GamePadState.thumbSticks.rightY) * 0.002f * deltaTime;
+		rotationY += static_cast<float>(InputOutputData->GamePadState.thumbSticks.rightX) * 0.002f * deltaTime;
+	}
+	else
+	{
+		if (InputOutputData->MouseState.rightButton)
+		{
+			InputOutputDevices->ChangeMouseToRelativeMode(Window->GetHandle());
+
+			rotationX += static_cast<float>(InputOutputData->MouseState.y) * 0.001f * deltaTime;
+			rotationY += static_cast<float>(InputOutputData->MouseState.x) * 0.001f * deltaTime;
+		}
+		else
+		{
+			InputOutputDevices->ChangeMouseToAbsoluteMode(Window->GetHandle());
+		}
+	}
+
+	if (rotationX > cameraComponent.MaxRotationY)
+		rotationX = cameraComponent.MaxRotationY;
+	else if (rotationX < cameraComponent.MinRotationY)
+		rotationX = cameraComponent.MinRotationY;
+
+	return std::pair<float, float>(rotationX, rotationY);
 }
 
 void CameraSystem::UpdateViewMatrix(CameraComponent& cameraComponent, TransformComponent& transformComponent) const
