@@ -4,5 +4,7 @@
 void CameraComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	const entt::registry::entity_type& entity)
 {
-	registry.assign<CameraComponent>(entity);
+	auto &component = registry.assign<CameraComponent>(entity);
+
+	MAP_LOADER_BASIC_FIELD(UseTarget, json, component, bool);
 }

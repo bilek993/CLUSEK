@@ -4,6 +4,8 @@
 
 struct CameraComponent final
 {
+	bool UseTarget = true;
+
 	DirectX::XMMATRIX ViewMatrix;
 	DirectX::XMMATRIX ProjectionMatrix;
 	DirectX::XMVECTOR VectorForward;

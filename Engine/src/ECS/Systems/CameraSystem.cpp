@@ -72,6 +72,9 @@ void CameraSystem::GamepadMovement(const float deltaTime, CameraComponent& camer
 	if (InputOutputData->GamePadState.IsRightStickPressed())
 		cameraSpeed *= 5;
 
+	if (InputOutputData->GamePadState.IsXPressed())
+		cameraComponent.UseTarget = !cameraComponent.UseTarget;
+
 	if (InputOutputData->GamePadState.dpad.up)
 		TransformLogic::AdjustPosition(DirectX::XMVectorScale(cameraComponent.VectorForward, cameraSpeed), transformComponent);
 	if (InputOutputData->GamePadState.dpad.left)
@@ -102,6 +105,9 @@ void CameraSystem::KeyboardMovement(const float deltaTime, CameraComponent& came
 	auto cameraSpeed = ConfigurationData->MaxCameraSpeed / 5 * deltaTime;
 	if (InputOutputData->KeyboardState.LeftShift || InputOutputData->KeyboardState.RightShift)
 		cameraSpeed *= 5;
+
+	if (InputOutputData->KeyboardState.C)
+		cameraComponent.UseTarget = !cameraComponent.UseTarget;
 
 	if (InputOutputData->KeyboardState.W)
 	{
