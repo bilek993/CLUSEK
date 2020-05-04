@@ -39,6 +39,7 @@ void MapLoader::AddComponents(nlohmann::json& json, entt::registry& registry, co
 	for (auto it = json.begin(); it != json.end(); ++it)
 	{
 		MAP_COMPONENT_LOADERS(it, CameraComponent, registry, entity);
+		MAP_COMPONENT_LOADERS(it, CameraTargetComponent, registry, entity);
 		MAP_COMPONENT_LOADERS(it, TransformComponent, registry, entity);
 		MAP_COMPONENT_LOADERS(it, ModelRenderComponent, registry, entity);
 		MAP_COMPONENT_LOADERS(it, SkyboxComponent, registry, entity);

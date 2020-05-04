@@ -29,7 +29,7 @@ void CameraSystem::Start()
 		static_cast<float>(ConfigurationData->WindowWidth) / static_cast<float>(ConfigurationData->WindowHeight),
 		ConfigurationData->MainCameraNearZ, ConfigurationData->MainCameraFarZ);
 
-	UpdateViewMatrix(cameraComponent, transformComponent);
+	UpdateViewMatrix(cameraComponent, transformComponent, false);
 }
 
 void CameraSystem::Update(const float deltaTime)
@@ -83,12 +83,21 @@ void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& mainCa
 	const auto cameraSpeed = GetCameraSpeed(deltaTime);
 	const auto cameraTranslation = GetTranslation(cameraSpeed, mainCameraCameraComponent);
 	const auto cameraRotation = GetRotation(deltaTime, mainCameraCameraComponent, mainCameraTransformComponent);
-	const auto useTargetMovement = GetTargetMode(mainCameraCameraComponent) && !cameraTargetComponent && !cameraTargetTransformComponent;
+	const auto useTargetMovement = GetTargetMode(mainCameraCameraComponent) && cameraTargetComponent != nullptr && cameraTargetTransformComponent != nullptr;
 
-	TransformLogic::AdjustPosition(cameraTranslation, mainCameraTransformComponent);
-	TransformLogic::SetRotationEuler(cameraRotation.first, cameraRotation.second, 0.0f, mainCameraTransformComponent);
+	if (useTargetMovement)
+	{
+		mainCameraTransformComponent.WorldMatrix = cameraTargetTransformComponent->WorldMatrix;
 
-	UpdateViewMatrix(mainCameraCameraComponent, mainCameraTransformComponent);
+		UpdateViewMatrix(mainCameraCameraComponent, mainCameraTransformComponent, true);
+	}
+	else
+	{
+		TransformLogic::AdjustPosition(cameraTranslation, mainCameraTransformComponent);
+		TransformLogic::SetRotationEuler(cameraRotation.first, cameraRotation.second, 0.0f, mainCameraTransformComponent);
+
+		UpdateViewMatrix(mainCameraCameraComponent, mainCameraTransformComponent, false);
+	}
 }
 
 float CameraSystem::GetCameraSpeed(const float deltaTime) const
@@ -192,19 +201,32 @@ std::pair<float, float> CameraSystem::GetRotation(const float deltaTime, const C
 	return std::pair<float, float>(rotationX, rotationY);
 }
 
-void CameraSystem::UpdateViewMatrix(CameraComponent& mainCameraCameraComponent, TransformComponent& mainCameraTransformComponent) const
+void CameraSystem::UpdateViewMatrix(CameraComponent& mainCameraCameraComponent, TransformComponent& mainCameraTransformComponent, const bool targeted) const
 {
 	const auto position = TransformLogic::GetPosition(mainCameraTransformComponent);
 	const auto positionVector = XMLoadFloat3(&position);
 
-	const auto rotation = TransformLogic::GetRotationEuler(mainCameraTransformComponent);
-	const auto rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
+	DirectX::XMMATRIX rotationMatrix{};
+
+	if (targeted)
+	{
+		const auto rotation = TransformLogic::GetRotationQuat(mainCameraTransformComponent);
+		rotationMatrix = DirectX::XMMatrixRotationQuaternion(XMLoadFloat4(&rotation));
+	}
+	else
+	{
+		const auto rotation = TransformLogic::GetRotationEuler(mainCameraTransformComponent);
+		rotationMatrix = DirectX::XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
+	}
 
 	const auto cameraDirection = XMVector3TransformCoord(TransformComponent::FORWARD_VECTOR, rotationMatrix);
 	const auto cameraTarget = DirectX::XMVectorAdd(cameraDirection, positionVector);
 	const auto upDirection = XMVector3TransformCoord(TransformComponent::UP_VECTOR, rotationMatrix);
 
-	mainCameraCameraComponent.ViewMatrix = DirectX::XMMatrixLookAtLH(positionVector, cameraTarget, upDirection);
+	if (targeted)
+		mainCameraCameraComponent.ViewMatrix = XMMatrixInverse(nullptr, mainCameraTransformComponent.WorldMatrix);
+	else
+		mainCameraCameraComponent.ViewMatrix = DirectX::XMMatrixLookAtLH(positionVector, cameraTarget, upDirection);
 
 	mainCameraCameraComponent.VectorForward = cameraDirection;
 	mainCameraCameraComponent.VectorRight = XMVector3TransformCoord(TransformComponent::RIGHT_VECTOR, rotationMatrix);
