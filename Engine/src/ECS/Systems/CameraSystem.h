@@ -18,7 +18,8 @@ private:
 	DirectX::XMVECTOR GetTranslation(float cameraSpeed, const CameraComponent& mainCameraCameraComponent) const;
 	std::pair<float, float> GetRotation(float deltaTime, const CameraComponent& mainCameraCameraComponent, const TransformComponent& mainCameraTransformComponent) const;
 
-	DirectX::XMMATRIX CalculateLerpMatrix(const CameraTargetComponent* cameraTargetComponent, const TransformComponent* cameraTargetTransformComponent);
+	DirectX::XMMATRIX CalculateLerpMatrix(const CameraTargetComponent* cameraTargetComponent, const TransformComponent* cameraTargetTransformComponent,
+		const TransformComponent& mainCameraTransformComponent) const;
 
 	void UpdateViewMatrix(CameraComponent &mainCameraCameraComponent, TransformComponent& mainCameraTransformComponent, bool targeted) const;
 };

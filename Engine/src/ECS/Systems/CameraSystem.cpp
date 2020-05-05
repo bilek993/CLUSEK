@@ -84,7 +84,9 @@ void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& mainCa
 
 	if (useTargetMovement)
 	{
-		mainCameraTransformComponent.WorldMatrix = CalculateLerpMatrix(cameraTargetComponent, cameraTargetTransformComponent);
+		mainCameraTransformComponent.WorldMatrix = CalculateLerpMatrix(	cameraTargetComponent, 
+																		cameraTargetTransformComponent,
+																		mainCameraTransformComponent);
 
 		UpdateViewMatrix(mainCameraCameraComponent, mainCameraTransformComponent, true);
 	}
@@ -202,9 +204,22 @@ std::pair<float, float> CameraSystem::GetRotation(const float deltaTime, const C
 	return std::pair<float, float>(rotationX, rotationY);
 }
 
-DirectX::XMMATRIX CameraSystem::CalculateLerpMatrix(const CameraTargetComponent* cameraTargetComponent, const TransformComponent* cameraTargetTransformComponent) const
+DirectX::XMMATRIX CameraSystem::CalculateLerpMatrix(const CameraTargetComponent* cameraTargetComponent, const TransformComponent* cameraTargetTransformComponent,
+	const TransformComponent& mainCameraTransformComponent) const
 {
-	return cameraTargetComponent->PaddingMatrix * cameraTargetTransformComponent->WorldMatrix;
+	const auto targetPosition = TransformLogic::GetPosition(*cameraTargetTransformComponent);
+	const auto targetRotation = XMQuaternionRotationMatrix(cameraTargetTransformComponent->WorldMatrix);
+
+	const auto currentRotation = XMQuaternionRotationMatrix(mainCameraTransformComponent.WorldMatrix);
+
+	const auto controlFactor = 0.1f;
+	const auto controlFactorFloats = DirectX::XMFLOAT4(controlFactor, controlFactor, controlFactor, controlFactor);
+	const auto lerpedRotation = DirectX::XMQuaternionSlerpV(currentRotation, targetRotation, XMLoadFloat4(&controlFactorFloats));
+
+	const auto translationMatrix = DirectX::XMMatrixTranslationFromVector(XMLoadFloat3(&targetPosition));
+	const auto rotationMatrix = DirectX::XMMatrixRotationQuaternion(lerpedRotation);
+
+	return cameraTargetComponent->PaddingMatrix * (rotationMatrix * translationMatrix);
 }
 
 void CameraSystem::UpdateViewMatrix(CameraComponent& mainCameraCameraComponent, TransformComponent& mainCameraTransformComponent, const bool targeted) const
