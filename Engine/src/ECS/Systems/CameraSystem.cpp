@@ -128,7 +128,7 @@ bool CameraSystem::GetTargetMode(CameraComponent& mainCameraCameraComponent) con
 
 	if (InputOutputData->GamePadState.IsConnected())
 	{
-		if (InputOutputData->GamePadState.IsXPressed())
+		if (InputOutputData->GamePadTracker.x == DirectX::GamePad::ButtonStateTracker::PRESSED)
 			useTarget = !useTarget;
 	}
 	else
