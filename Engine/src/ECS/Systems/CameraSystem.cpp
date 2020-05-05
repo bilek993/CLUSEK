@@ -84,7 +84,8 @@ void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& mainCa
 
 	if (useTargetMovement)
 	{
-		mainCameraTransformComponent.WorldMatrix = CalculateLerpMatrix(	cameraTargetComponent, 
+		mainCameraTransformComponent.WorldMatrix = CalculateLerpMatrix(	deltaTime,
+																		cameraTargetComponent, 
 																		cameraTargetTransformComponent,
 																		mainCameraTransformComponent);
 
@@ -204,15 +205,15 @@ std::pair<float, float> CameraSystem::GetRotation(const float deltaTime, const C
 	return std::pair<float, float>(rotationX, rotationY);
 }
 
-DirectX::XMMATRIX CameraSystem::CalculateLerpMatrix(const CameraTargetComponent* cameraTargetComponent, const TransformComponent* cameraTargetTransformComponent,
-	const TransformComponent& mainCameraTransformComponent) const
+DirectX::XMMATRIX CameraSystem::CalculateLerpMatrix(const float deltaTime, const CameraTargetComponent* cameraTargetComponent,
+	const TransformComponent* cameraTargetTransformComponent, const TransformComponent& mainCameraTransformComponent) const
 {
 	const auto targetPosition = TransformLogic::GetPosition(*cameraTargetTransformComponent);
 	const auto targetRotation = XMQuaternionRotationMatrix(cameraTargetTransformComponent->WorldMatrix);
 
 	const auto currentRotation = XMQuaternionRotationMatrix(mainCameraTransformComponent.WorldMatrix);
 
-	const auto controlFactor = 0.1f;
+	const auto controlFactor = deltaTime * 0.001;
 	const auto controlFactorFloats = DirectX::XMFLOAT4(controlFactor, controlFactor, controlFactor, controlFactor);
 	const auto lerpedRotation = DirectX::XMQuaternionSlerpV(currentRotation, targetRotation, XMLoadFloat4(&controlFactorFloats));
 
