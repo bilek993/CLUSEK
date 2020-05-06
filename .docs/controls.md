@@ -30,6 +30,11 @@ This project supports gamepad (Xbox Controller) and keyboard/mouse mapping. For 
 </div>
 
 <div>
+    <img src="xbox_buttons/xboxControllerButtonX.png" style="vertical-align: middle;" width="32"> 
+    <span style="vertical-align: middle;">- Change camera</span>
+</div>
+
+<div>
     <img src="xbox_buttons/xboxControllerButtonB.png" style="vertical-align: middle;" width="32"> 
     <span style="vertical-align: middle;">- Change from/to reverse</span>
 </div>
@@ -70,6 +75,8 @@ This project supports gamepad (Xbox Controller) and keyboard/mouse mapping. For 
 <kbd>←</kbd> <kbd>→</kbd> - Turn left/right vehicle
 
 <kbd>SPACE</kbd> - Handbrake
+
+<kbd>C</kbd> - Change camera
 
 <kbd>CTRL</kbd> - Change from/to reverse
 
