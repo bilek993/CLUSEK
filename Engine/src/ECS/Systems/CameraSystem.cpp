@@ -213,7 +213,7 @@ DirectX::XMMATRIX CameraSystem::CalculateLerpMatrix(const float deltaTime, const
 
 	const auto currentRotation = XMQuaternionRotationMatrix(mainCameraTransformComponent.WorldMatrix);
 
-	const auto controlFactor = deltaTime * 0.001;
+	const auto controlFactor = deltaTime * cameraTargetComponent->RotationLag;
 	const auto controlFactorFloats = DirectX::XMFLOAT4(controlFactor, controlFactor, controlFactor, controlFactor);
 	const auto lerpedRotation = DirectX::XMQuaternionSlerpV(currentRotation, targetRotation, XMLoadFloat4(&controlFactorFloats));
 

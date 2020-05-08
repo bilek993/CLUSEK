@@ -7,6 +7,7 @@ void CameraTargetComponentLoader::Add(nlohmann::json& json, entt::registry& regi
 	auto &component = registry.assign<CameraTargetComponent>(entity);
 
 	MAP_LOADER_BASIC_FIELD(Active, json, component, bool);
+	MAP_LOADER_BASIC_FIELD(RotationLag, json, component, float);
 
 	if (!json["PaddingRotationX"].is_null() && !json["PaddingRotationY"].is_null() && !json["PaddingRotationZ"].is_null())
 	{
