@@ -258,7 +258,7 @@ DirectX::XMMATRIX CameraSystem::CalculateVehicleAnimation(	const float deltaTime
 
 	cameraVehicleAnimatedTargetComponent->CurrentAnimationPositionVector = DirectX::XMVectorLerp(	cameraVehicleAnimatedTargetComponent->CurrentAnimationPositionVector,
 																									scaledPositionVector,
-																									cameraVehicleAnimatedTargetComponent->Smoothness * deltaTime);
+																									std::min(cameraVehicleAnimatedTargetComponent->Smoothness * deltaTime, 1.0f));
 
 	return DirectX::XMMatrixTranslationFromVector(cameraVehicleAnimatedTargetComponent->CurrentAnimationPositionVector);
 
