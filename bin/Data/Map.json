@@ -61,6 +61,13 @@
 		"PaddingPositionX": 0.0,
 		"PaddingPositionY": 3.0,
 		"PaddingPositionZ": -17.5
+	  },
+	  "CameraVehicleAnimatedTargetComponent": {
+		"AnimationPositionX": 0.0,
+		"AnimationPositionY": 0.15,
+		"AnimationPositionZ": -1.0,
+		"Power": 0.05,
+		"Smoothness": 0.001
 	  }
 	}
   },

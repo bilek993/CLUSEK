@@ -52,6 +52,8 @@ void CameraSystem::Update(const float deltaTime)
 
 	CameraTargetComponent* cameraTargetComponent = nullptr;
 	TransformComponent* cameraTargetTransformComponent = nullptr;
+	CameraVehicleAnimatedTargetComponent* cameraVehicleAnimatedTargetComponent = nullptr;
+	VehicleComponent* vehicleComponent = nullptr;
 
 	for (auto& entity : viewCameraTarget)
 	{
@@ -62,6 +64,10 @@ void CameraSystem::Update(const float deltaTime)
 		{
 			cameraTargetComponent = &currentCameraTarget;
 			cameraTargetTransformComponent = &currentTargetTransform;
+
+			cameraVehicleAnimatedTargetComponent = Registry->try_get<CameraVehicleAnimatedTargetComponent>(entity);
+			vehicleComponent = Registry->try_get<VehicleComponent>(entity);
+
 			break;
 		}
 	}
@@ -71,14 +77,17 @@ void CameraSystem::Update(const float deltaTime)
 					mainCameraCameraComponent, 
 					mainCameraTransformComponent,
 					cameraTargetComponent, 
-					cameraTargetTransformComponent);
+					cameraTargetTransformComponent,
+					cameraVehicleAnimatedTargetComponent,
+					vehicleComponent);
 
 	const auto viewProjectionMatrix = mainCameraCameraComponent.ViewMatrix * mainCameraCameraComponent.ProjectionMatrix;
 	mainCameraCameraComponent.FrustumPlanes = FrustumUtil::CalculateFrustumPlanes(viewProjectionMatrix);
 }
 
 void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& mainCameraCameraComponent, TransformComponent& mainCameraTransformComponent,
-	const CameraTargetComponent* cameraTargetComponent, const TransformComponent* cameraTargetTransformComponent) const
+	const CameraTargetComponent* cameraTargetComponent, const TransformComponent* cameraTargetTransformComponent,
+	CameraVehicleAnimatedTargetComponent* cameraVehicleAnimatedTargetComponent, const VehicleComponent* vehicleComponent) const
 {
 	const auto useTargetMovement = GetTargetMode(mainCameraCameraComponent) && cameraTargetComponent != nullptr && cameraTargetTransformComponent != nullptr;
 
@@ -87,7 +96,9 @@ void CameraSystem::HandleMovement(const float deltaTime, CameraComponent& mainCa
 		mainCameraTransformComponent.WorldMatrix = CalculateLerpMatrix(	deltaTime,
 																		cameraTargetComponent, 
 																		cameraTargetTransformComponent,
-																		mainCameraTransformComponent);
+																		mainCameraTransformComponent,
+																		cameraVehicleAnimatedTargetComponent,
+																		vehicleComponent);
 
 		UpdateViewMatrix(mainCameraCameraComponent, mainCameraTransformComponent, true);
 	}
@@ -206,7 +217,8 @@ std::pair<float, float> CameraSystem::GetRotation(const float deltaTime, const C
 }
 
 DirectX::XMMATRIX CameraSystem::CalculateLerpMatrix(const float deltaTime, const CameraTargetComponent* cameraTargetComponent,
-	const TransformComponent* cameraTargetTransformComponent, const TransformComponent& mainCameraTransformComponent) const
+	const TransformComponent* cameraTargetTransformComponent, const TransformComponent& mainCameraTransformComponent,
+	CameraVehicleAnimatedTargetComponent* cameraVehicleAnimatedTargetComponent, const VehicleComponent* vehicleComponent) const
 {
 	const auto targetPosition = TransformLogic::GetPosition(*cameraTargetTransformComponent);
 	const auto targetRotation = XMQuaternionRotationMatrix(cameraTargetTransformComponent->WorldMatrix);
@@ -220,7 +232,36 @@ DirectX::XMMATRIX CameraSystem::CalculateLerpMatrix(const float deltaTime, const
 	const auto translationMatrix = DirectX::XMMatrixTranslationFromVector(XMLoadFloat3(&targetPosition));
 	const auto rotationMatrix = DirectX::XMMatrixRotationQuaternion(lerpedRotation);
 
-	return cameraTargetComponent->PaddingMatrix * (rotationMatrix * translationMatrix);
+	const auto animationMatrix = CalculateVehicleAnimation(	deltaTime,
+															cameraTargetTransformComponent,
+															cameraVehicleAnimatedTargetComponent,
+															vehicleComponent);
+
+	return (cameraTargetComponent->PaddingMatrix * animationMatrix) * (rotationMatrix * translationMatrix);
+}
+
+DirectX::XMMATRIX CameraSystem::CalculateVehicleAnimation(	const float deltaTime,
+															const TransformComponent* cameraTargetTransformComponent,
+															CameraVehicleAnimatedTargetComponent* cameraVehicleAnimatedTargetComponent,
+															const VehicleComponent* vehicleComponent) const
+{
+	if (cameraVehicleAnimatedTargetComponent == nullptr && vehicleComponent == nullptr)
+		return DirectX::XMMatrixIdentity();
+
+	const auto speed = (vehicleComponent->Vehicle->mWheelsDynData.getWheelRotationSpeed(0) + 
+						vehicleComponent->Vehicle->mWheelsDynData.getWheelRotationSpeed(1) + 
+						vehicleComponent->Vehicle->mWheelsDynData.getWheelRotationSpeed(2) + 
+						vehicleComponent->Vehicle->mWheelsDynData.getWheelRotationSpeed(3)) / 4;
+
+	const auto scaledPositionVector = DirectX::XMVectorScale(	cameraVehicleAnimatedTargetComponent->AnimationPositionVector, 
+																speed * cameraVehicleAnimatedTargetComponent->Power);
+
+	cameraVehicleAnimatedTargetComponent->CurrentAnimationPositionVector = DirectX::XMVectorLerp(	cameraVehicleAnimatedTargetComponent->CurrentAnimationPositionVector,
+																									scaledPositionVector,
+																									cameraVehicleAnimatedTargetComponent->Smoothness * deltaTime);
+
+	return DirectX::XMMatrixTranslationFromVector(cameraVehicleAnimatedTargetComponent->CurrentAnimationPositionVector);
+
 }
 
 void CameraSystem::UpdateViewMatrix(CameraComponent& mainCameraCameraComponent, TransformComponent& mainCameraTransformComponent, const bool targeted) const
