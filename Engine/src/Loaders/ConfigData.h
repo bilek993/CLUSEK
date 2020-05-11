@@ -47,6 +47,8 @@ struct ConfigData final
 	float MainCameraFov = 90.0f;
 	float MaxRotationX = 90.0f;
 	float MinRotationX = -90.0f;
+	float MouseSpeedController = 0.001f;
+	float RotationSpeedController = 0.002f;
 	float MainCameraNearZ = 0.1f;
 	float MainCameraFarZ = 1000.0f;
 	float MaxCameraSpeed = 0.0125f;

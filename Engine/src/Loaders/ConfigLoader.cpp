@@ -64,6 +64,8 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, MainCameraFov, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, MaxRotationX, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, MinRotationX, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MouseSpeedController, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, RotationSpeedController, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, MainCameraNearZ, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, MainCameraFarZ, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, MaxCameraSpeed, data, std::stof(value));
