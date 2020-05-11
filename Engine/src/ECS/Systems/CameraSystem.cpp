@@ -190,8 +190,8 @@ std::pair<float, float> CameraSystem::GetRotation(const float deltaTime, const C
 
 	if (InputOutputData->GamePadState.IsConnected())
 	{
-		rotationX += static_cast<float>(-InputOutputData->GamePadState.thumbSticks.rightY) * 0.002f * deltaTime;
-		rotationY += static_cast<float>(InputOutputData->GamePadState.thumbSticks.rightX) * 0.002f * deltaTime;
+		rotationX += static_cast<float>(-InputOutputData->GamePadState.thumbSticks.rightY) * ConfigurationData->RotationSpeedController * deltaTime;
+		rotationY += static_cast<float>(InputOutputData->GamePadState.thumbSticks.rightX) * ConfigurationData->RotationSpeedController * deltaTime;
 	}
 	else
 	{
@@ -199,8 +199,8 @@ std::pair<float, float> CameraSystem::GetRotation(const float deltaTime, const C
 		{
 			InputOutputDevices->ChangeMouseToRelativeMode(Window->GetHandle());
 
-			rotationX += static_cast<float>(InputOutputData->MouseState.y) * 0.001f * deltaTime;
-			rotationY += static_cast<float>(InputOutputData->MouseState.x) * 0.001f * deltaTime;
+			rotationX += static_cast<float>(InputOutputData->MouseState.y) * ConfigurationData->MouseSpeedController * deltaTime;
+			rotationY += static_cast<float>(InputOutputData->MouseState.x) * ConfigurationData->MouseSpeedController * deltaTime;
 		}
 		else
 		{
