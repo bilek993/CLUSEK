@@ -24,10 +24,6 @@
 #include "../../Physics/PhysicsFilterShader.h"
 #include "../../Loaders/PhysicsMaterialLoader.h"
 
-PhysicsSystem::PhysicsSystem()
-{
-}
-
 void PhysicsSystem::Start()
 {
 	Logger::Debug("Staring physics system...");

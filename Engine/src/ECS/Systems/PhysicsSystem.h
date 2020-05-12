@@ -11,7 +11,7 @@
 class PhysicsSystem final : public BaseSystem
 {
 public:
-	PhysicsSystem();
+	PhysicsSystem() = default;
 
 	void Start() override;
 	void Update(float deltaTime) override;
