@@ -24,5 +24,6 @@ private:
 		"Simple ACES Tone Mapper",
 		"Complex ACES Tone Mapper",
 		"Chromatic Aberration",
+		"Thirds Split",
 	};
 };

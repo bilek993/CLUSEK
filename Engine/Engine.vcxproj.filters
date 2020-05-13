@@ -991,6 +991,9 @@
     <FxCompile Include="res\Shaders\Compute\terrain_normal_generator_compute_shader.hlsl">
       <Filter>Resource Files\Shaders\Compute</Filter>
     </FxCompile>
+    <FxCompile Include="res\Shaders\PostProcessing\thirds_split_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\PostProcessing</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\Includes\normal_utils.hlsli">

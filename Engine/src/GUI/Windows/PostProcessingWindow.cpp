@@ -83,6 +83,9 @@ void PostProcessingWindow::AddNewPostProcessingEffect() const
 	case 4:
 		MAP_POST_PROCESSING_EFFECT("Chromatic Aberration", "chromatic_aberration_pixel_shader.cso");
 		break;
+	case 5:
+		MAP_POST_PROCESSING_EFFECT("Thirds Split", "thirds_split_pixel_shader.cso");
+		break;
 	default:
 		Logger::Warning("Selected item is incorrect.");
 	}
