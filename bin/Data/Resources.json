@@ -3,7 +3,8 @@
 	"CivilianVehicle": "Data/Models/CivilianVehicle/CivilianVehicle.fbx",
 	"Wheel": "Data/Models/CivilianVehicle/Wheel.fbx",
 	
-	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx"
+	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx",
+	"SmoothCylinderLowPoly": "Data/Models/SmoothCylinder/SmoothCylinderLowPoly.fbx"
   },
   
   "Textures": {
