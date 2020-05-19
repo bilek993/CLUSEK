@@ -27,6 +27,7 @@
 #include "Windows/FogWindow.h"
 #include "Windows/TransformManipulateWindow.h"
 #include "Windows/TextureCompressionWindow.h"
+#include "Windows/LodDebugWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
 
@@ -80,4 +81,5 @@ private:
 	FogWindow FogWindowInstance;
 	TransformManipulateWindow TransformManipulateWindowInstance;
 	TextureCompressionWindow TextureCompressionWindowInstance;
+	LodDebugWindow LodDebugWindowInstance;
 };

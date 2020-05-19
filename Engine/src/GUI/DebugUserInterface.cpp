@@ -69,6 +69,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(FogWindowInstance);
 	UPDATE_USER_INTERFACE(TransformManipulateWindowInstance);
 	UPDATE_USER_INTERFACE(TextureCompressionWindowInstance);
+	UPDATE_USER_INTERFACE(LodDebugWindowInstance);
 
 	AfterUpdate(renderSystem);
 }
@@ -114,6 +115,7 @@ void DebugUserInterface::DrawMenuBar()
 			DrawMenuItemForWindow("Shadow Previewer", ShadowPreviewerWindowInstance);
 			DrawMenuItemForWindow("Back Buffer setting", BackBufferWindowInstance);
 			DrawMenuItemForWindow("Terrain tessellation settings", TerrainTessellationWindowInstance);
+			DrawMenuItemForWindow("LOD Debug", LodDebugWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Physics"))

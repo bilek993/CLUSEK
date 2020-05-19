@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Windows\LodDebugWindow.cpp" />
     <ClCompile Include="src\Loaders\Components\CameraVehicleAnimatedTargetComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\CameraTargetComponentLoader.cpp" />
     <ClCompile Include="src\Utils\FileDialog.cpp" />
@@ -183,6 +184,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Windows\LodDebugWindow.h" />
     <ClInclude Include="src\ECS\Components\CameraVehicleAnimatedTargetComponent.h" />
     <ClInclude Include="src\Loaders\Components\CameraVehicleAnimatedTargetComponentLoader.h" />
     <ClInclude Include="src\Loaders\Components\CameraTargetComponentLoader.h" />

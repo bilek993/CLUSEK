@@ -429,6 +429,9 @@
     <ClCompile Include="src\Loaders\Components\CameraVehicleAnimatedTargetComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\Windows\LodDebugWindow.cpp">
+      <Filter>Source Files\GUI\Windows</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -898,6 +901,9 @@
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\CameraVehicleAnimatedTargetComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Windows\LodDebugWindow.h">
+      <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
