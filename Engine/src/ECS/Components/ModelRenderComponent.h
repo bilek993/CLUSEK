@@ -5,6 +5,8 @@
 struct ModelRenderComponent final
 {
 	std::string ModelId;
+	std::string LowPolyModelId;
 	std::string MaterialId;
 	std::shared_ptr<std::vector<Mesh>> Meshes;
+	std::shared_ptr<std::vector<Mesh>> LowPolyMeshes;
 };

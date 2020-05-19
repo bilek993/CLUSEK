@@ -856,6 +856,7 @@ void RenderSystem::InitializeModelRenderComponent()
 	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
 	{
 		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
+		modelRenderComponent.LowPolyMeshes = ModelLoader::GetResource(modelRenderComponent.LowPolyModelId);
 		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
 	});
 }

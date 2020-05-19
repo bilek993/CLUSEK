@@ -7,5 +7,6 @@ void ModelRenderComponentLoader::Add(nlohmann::json& json, entt::registry& regis
 	auto &component = registry.assign<ModelRenderComponent>(entity);
 
 	MAP_LOADER_BASIC_FIELD(ModelId, json, component, std::string);
+	MAP_LOADER_BASIC_FIELD(LowPolyModelId, json, component, std::string);
 	MAP_LOADER_BASIC_FIELD(MaterialId, json, component, std::string);
 }
