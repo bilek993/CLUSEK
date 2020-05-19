@@ -83,7 +83,7 @@ private:
 
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
-	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent, TransparencyRenderType renderMode);
+	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainTransformComponent, TransparencyRenderType renderMode);
 
 	void SetShadowResourcesForShadowCascades(int firstCascadeId);
 	void ClearShadowResourcesForShadowCascades(int firstCascadeId) const;
@@ -97,6 +97,8 @@ private:
 	void UpdateCameraBuffer(const TransformComponent &mainCameraTransformComponent);
 
 	void PerformPostProcessing(bool minimal = false) const;
+
+	float CalculateDistanceFromCamera(const TransformComponent& transformComponent, const TransformComponent& cameraTransformComponent) const;
 
 	std::unique_ptr<ProfilerAnnotations> Profiler;
 

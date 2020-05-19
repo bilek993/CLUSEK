@@ -856,8 +856,13 @@ void RenderSystem::InitializeModelRenderComponent()
 	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
 	{
 		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
-		modelRenderComponent.LowPolyMeshes = ModelLoader::GetResource(modelRenderComponent.LowPolyModelId);
 		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);
+
+		if (!modelRenderComponent.LowPolyModelId.empty())
+		{
+			modelRenderComponent.LowPolyMeshes = ModelLoader::GetResource(modelRenderComponent.LowPolyModelId);
+			MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.LowPolyMeshes, modelRenderComponent.MaterialId);
+		}
 	});
 }
 
@@ -934,10 +939,10 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	SetShadowResourcesForShadowCascades(14);
 	SetPbrResources();
 
-	RenderModelRenderComponents(cameraComponent, Solid);
+	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent, Solid);
 	RenderTerrain(cameraComponent, mainCameraTransformComponent);
 	RenderSkyBoxComponents(cameraComponent);
-	RenderModelRenderComponents(cameraComponent, Transparent);
+	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent, Transparent);
 
 	ClearShadowResourcesForShadowCascades(14);
 
@@ -1137,7 +1142,8 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	Profiler->EndEvent();
 }
 
-void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransparencyRenderType renderMode)
+void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainTransformComponent, 
+	const TransparencyRenderType renderMode)
 {
 	Profiler->BeginEvent(std::string(renderMode == Solid ? "Solid" : "Non-soild") + " Model");
 
@@ -1154,11 +1160,19 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	if (renderMode == Transparent)
 		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
 
-	Registry->view<ModelRenderComponent, TransformComponent>().each([this, &mainCameraComponent, &offset, renderMode](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
+	Registry->view<ModelRenderComponent, TransformComponent>().each([this, &mainCameraComponent, &mainTransformComponent, &offset, renderMode](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
 	{
 		auto fatPerObjectBufferSet = false;
 
-		for (const auto& mesh : *modelRenderComponent.Meshes)
+		std::shared_ptr<std::vector<Mesh>> currentMeshes;
+		const auto distanceFromCamera = CalculateDistanceFromCamera(transformComponent, mainTransformComponent);
+
+		if (modelRenderComponent.LowPolyDistance < 0.0f || modelRenderComponent.LowPolyDistance >= distanceFromCamera)
+			currentMeshes = modelRenderComponent.Meshes;
+		else
+			currentMeshes = modelRenderComponent.LowPolyMeshes;
+
+		for (const auto& mesh : *currentMeshes)
 		{
 			if (renderMode == Solid && mesh.Material.Alpha < 1.0f)
 				continue;
@@ -1285,4 +1299,17 @@ void RenderSystem::PerformPostProcessing(const bool minimal) const
 	Profiler->EndEvent();
 
 	Profiler->EndEvent();
+}
+
+float RenderSystem::CalculateDistanceFromCamera(const TransformComponent& transformComponent, const TransformComponent& cameraTransformComponent) const
+{
+	const auto objectPosition = TransformLogic::GetPosition(transformComponent);
+	const auto cameraPosition = TransformLogic::GetPosition(cameraTransformComponent);
+
+	const auto objectPositionVector = XMLoadFloat3(&objectPosition);
+	const auto cameraPositionVector = XMLoadFloat3(&cameraPosition);
+
+	const auto vectorDiff = DirectX::XMVectorSubtract(objectPositionVector, cameraPositionVector);
+
+	return DirectX::XMVectorGetX(DirectX::XMVector3Length(vectorDiff));
 }
