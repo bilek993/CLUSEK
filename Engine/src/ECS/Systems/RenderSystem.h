@@ -36,6 +36,7 @@
 #include "../../Renderer/ProfilerAnnotations.h"
 #include "../../Renderer/ConstantBufferTypes/FogBuffer.h"
 #include "../../Renderer/Mesh.h"
+#include "../../Renderer/ConstantBufferTypes/LodTransitionBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -159,6 +160,7 @@ private:
 	ConstantBuffer<TerrainUvBuffer> TerrainUvBufferInstance;
 	ConstantBuffer<WorldMatrixBuffer> WorldMatrixBufferInstance;
 	ConstantBuffer<FogBuffer> FogBufferInstance;
+	ConstantBuffer<LodTransitionBuffer> LodTransitionBufferInstance;
 
 	PbrResource PbrResourceInstance{};
 

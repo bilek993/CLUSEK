@@ -748,6 +748,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = FogBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'FogBufferInstance' constant buffer.");
+
+	hr = LodTransitionBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'LodTransitionBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()
@@ -1164,6 +1168,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(3, 1, FogBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(4, 1, LodTransitionBufferInstance.GetAddressOf());
 
 	if (renderMode == Transparent)
 		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
@@ -1172,24 +1177,32 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 		&offset, renderMode](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
 	{
 		const auto distanceFromCamera = CalculateDistanceFromCamera(transformComponent, mainTransformComponent);
+		const auto coverageLod = modelRenderComponent.LowPolyDistance < 0.0f ? 1.0f : std::clamp((modelRenderComponent.LowPolyDistance - distanceFromCamera) / modelRenderComponent.LodTransitionDistance, 0.0f, 1.0f);
+
 		auto fatPerObjectBufferSet = false;
 
-		if (modelRenderComponent.LowPolyDistance < 0.0f || modelRenderComponent.LowPolyDistance >= distanceFromCamera)
+		if (modelRenderComponent.LowPolyDistance < 0.0f || modelRenderComponent.LowPolyDistance >= distanceFromCamera - modelRenderComponent.LodTransitionDistance)
 		{
+			LodTransitionBufferInstance.Data.PercentageCoverage = coverageLod;
+			LodTransitionBufferInstance.Data.InvertedCoverage = false;
+			LodTransitionBufferInstance.ApplyChanges();
+
 			for (const auto& mesh : *modelRenderComponent.Meshes)
 			{
 				RenderMesh(mesh, transformComponent, mainCameraComponent, offset, fatPerObjectBufferSet, renderMode);
 			}
 		}
-		if (modelRenderComponent.LowPolyDistance >= 0.0f && modelRenderComponent.LowPolyDistance < distanceFromCamera)
+		if (modelRenderComponent.LowPolyDistance >= 0.0f && modelRenderComponent.LowPolyDistance < distanceFromCamera + modelRenderComponent.LodTransitionDistance)
 		{
+			LodTransitionBufferInstance.Data.PercentageCoverage = coverageLod;
+			LodTransitionBufferInstance.Data.InvertedCoverage = true;
+			LodTransitionBufferInstance.ApplyChanges();
+
 			for (const auto& mesh : *modelRenderComponent.LowPolyMeshes)
 			{
 				RenderMesh(mesh, transformComponent, mainCameraComponent, offset, fatPerObjectBufferSet, renderMode);
 			}
 		}
-
-		
 	});
 
 	if (renderMode == Transparent)

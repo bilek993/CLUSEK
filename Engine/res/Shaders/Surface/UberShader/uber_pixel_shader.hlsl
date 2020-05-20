@@ -32,6 +32,12 @@ cbuffer FogBuffer : register(b3)
     float SkyConstantValue;
 }
 
+cbuffer LodTransitionBuffer : register(b4)
+{
+    float PercentageCoverage;
+    bool InvertedCoverage;
+}
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
@@ -63,6 +69,18 @@ SamplerComparisonState ShadowSampler : register(s3);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
+    // TODO: Move this to included function
+    if (InvertedCoverage)
+    {
+        if (!(fmod(input.Position.x, 10) > min(PercentageCoverage * 10.0f, 10.0f) || fmod(input.Position.y, 10) > min(PercentageCoverage * 10.0f, 10.0f)))
+            discard;
+    }
+    else
+    {
+        if (fmod(input.Position.x, 10) > min(PercentageCoverage * 10.0f, 10.0f) || fmod(input.Position.y, 10) > min(PercentageCoverage * 10.0f, 10.0f))
+            discard;
+    }
+    
     float3 albedoColor = AlbedoTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
     float2 normalColor = NormalTexture.Sample(DefaultSampler, input.TextureCoord).rg;
     float4 metalicSmoothnessColor = MetalicSmoothnessTexture.Sample(DefaultSampler, input.TextureCoord);

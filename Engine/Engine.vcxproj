@@ -184,6 +184,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\LodTransitionBuffer.h" />
     <ClInclude Include="src\GUI\Windows\LodDebugWindow.h" />
     <ClInclude Include="src\ECS\Components\CameraVehicleAnimatedTargetComponent.h" />
     <ClInclude Include="src\Loaders\Components\CameraVehicleAnimatedTargetComponentLoader.h" />
