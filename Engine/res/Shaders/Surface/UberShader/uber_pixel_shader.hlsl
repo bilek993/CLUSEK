@@ -2,6 +2,9 @@
 #include "../../Includes/pbr.hlsli"
 #include "../../Includes/shadow_utils.hlsli"
 #include "../../Includes/fog.hlsli"
+#include "../../Includes/lod_utils.hlsli"
+
+static const float LOD_GRID_SCALE = 10.0f;
 
 cbuffer LightAndAlphaBuffer : register(b0)
 {
@@ -69,17 +72,7 @@ SamplerComparisonState ShadowSampler : register(s3);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    // TODO: Move this to included function
-    if (InvertedCoverage)
-    {
-        if (!(fmod(input.Position.x, 10) > min(PercentageCoverage * 10.0f, 10.0f) || fmod(input.Position.y, 10) > min(PercentageCoverage * 10.0f, 10.0f)))
-            discard;
-    }
-    else
-    {
-        if (fmod(input.Position.x, 10) > min(PercentageCoverage * 10.0f, 10.0f) || fmod(input.Position.y, 10) > min(PercentageCoverage * 10.0f, 10.0f))
-            discard;
-    }
+    PerformLodTransition(input.Position, PercentageCoverage, InvertedCoverage, 10.0f);
     
     float3 albedoColor = AlbedoTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
     float2 normalColor = NormalTexture.Sample(DefaultSampler, input.TextureCoord).rg;

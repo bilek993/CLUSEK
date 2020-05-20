@@ -1023,6 +1023,9 @@
     <None Include="res\Shaders\Includes\fog.hlsli">
       <Filter>Resource Files\Shaders\Includes</Filter>
     </None>
+    <None Include="res\Shaders\Includes\lod_utils.hlsli">
+      <Filter>Resource Files\Shaders\Includes</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine.rc">
