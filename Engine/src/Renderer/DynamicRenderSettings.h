@@ -1,5 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
+#include "LodMode.h"
 
 struct DynamicRenderSettings final
 {
@@ -21,4 +22,7 @@ struct DynamicRenderSettings final
 	float FogLightPower;
 	float FogMinDistance;
 	float SkyConstantValue;
+
+	LodMode LevelOfDetailsMode = Automatic;
+	float ForcedLodPercentage = 0.75f;
 };
