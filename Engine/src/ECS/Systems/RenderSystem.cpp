@@ -1168,58 +1168,70 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	if (renderMode == Transparent)
 		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
 
-	Registry->view<ModelRenderComponent, TransformComponent>().each([this, &mainCameraComponent, &mainTransformComponent, &offset, renderMode](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
+	Registry->view<ModelRenderComponent, TransformComponent>().each([this, &mainCameraComponent, &mainTransformComponent, 
+		&offset, renderMode](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
 	{
+		const auto distanceFromCamera = CalculateDistanceFromCamera(transformComponent, mainTransformComponent);
 		auto fatPerObjectBufferSet = false;
 
-		std::shared_ptr<std::vector<Mesh>> currentMeshes;
-		const auto distanceFromCamera = CalculateDistanceFromCamera(transformComponent, mainTransformComponent);
-
 		if (modelRenderComponent.LowPolyDistance < 0.0f || modelRenderComponent.LowPolyDistance >= distanceFromCamera)
-			currentMeshes = modelRenderComponent.Meshes;
-		else
-			currentMeshes = modelRenderComponent.LowPolyMeshes;
-
-		for (const auto& mesh : *currentMeshes)
 		{
-			if (renderMode == Solid && mesh.Material.Alpha < 1.0f)
-				continue;
-
-			if (renderMode == Transparent && mesh.Material.Alpha >= 1.0f)
-				continue;
-
-			if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, transformComponent.WorldMatrix), mainCameraComponent.FrustumPlanes))
-				continue;
-
-			if (!fatPerObjectBufferSet)
+			for (const auto& mesh : *modelRenderComponent.Meshes)
 			{
-				fatPerObjectBufferSet = true;
-
-				FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
-					XMMatrixTranspose(transformComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
-				FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
-				for (auto i = 0; i < 4; i++)
-					FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
-				FatPerObjectBufferInstance.ApplyChanges();
+				RenderMesh(mesh, transformComponent, mainCameraComponent, offset, fatPerObjectBufferSet, renderMode);
 			}
-
-			LightAndAlphaBufferInstance.Data.Alpha = mesh.Material.Alpha;
-			LightAndAlphaBufferInstance.ApplyChanges();
-
-			DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(2, 1, mesh.Material.MetalicSmoothnessTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
-			DeviceContext->PSSetShaderResources(4, 1, mesh.Material.EmissionTexture->GetAddressOf());
-
-			Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 		}
+		if (modelRenderComponent.LowPolyDistance >= 0.0f && modelRenderComponent.LowPolyDistance < distanceFromCamera)
+		{
+			for (const auto& mesh : *modelRenderComponent.LowPolyMeshes)
+			{
+				RenderMesh(mesh, transformComponent, mainCameraComponent, offset, fatPerObjectBufferSet, renderMode);
+			}
+		}
+
+		
 	});
 
 	if (renderMode == Transparent)
 		DeviceContext->OMSetBlendState(nullptr, nullptr, 0xffffffff);
 
 	Profiler->EndEvent();
+}
+
+void RenderSystem::RenderMesh(const Mesh& mesh, TransformComponent &transformComponent, const CameraComponent &mainCameraComponent,
+	UINT& offset, bool& fatPerObjectBufferSet, const TransparencyRenderType renderMode)
+{
+	if (renderMode == Solid && mesh.Material.Alpha < 1.0f)
+		return;
+
+	if (renderMode == Transparent && mesh.Material.Alpha >= 1.0f)
+		return;
+
+	if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, transformComponent.WorldMatrix), mainCameraComponent.FrustumPlanes))
+		return;
+
+	if (!fatPerObjectBufferSet)
+	{
+		fatPerObjectBufferSet = true;
+
+		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
+			XMMatrixTranspose(transformComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
+		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
+		for (auto i = 0; i < 4; i++)
+			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
+		FatPerObjectBufferInstance.ApplyChanges();
+	}
+
+	LightAndAlphaBufferInstance.Data.Alpha = mesh.Material.Alpha;
+	LightAndAlphaBufferInstance.ApplyChanges();
+
+	DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
+	DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());
+	DeviceContext->PSSetShaderResources(2, 1, mesh.Material.MetalicSmoothnessTexture->GetAddressOf());
+	DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
+	DeviceContext->PSSetShaderResources(4, 1, mesh.Material.EmissionTexture->GetAddressOf());
+
+	Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 }
 
 void RenderSystem::SetShadowResourcesForShadowCascades(const int firstCascadeId)

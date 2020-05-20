@@ -35,6 +35,7 @@
 #include "../../Renderer/TransparencyRenderType.h"
 #include "../../Renderer/ProfilerAnnotations.h"
 #include "../../Renderer/ConstantBufferTypes/FogBuffer.h"
+#include "../../Renderer/Mesh.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -84,6 +85,9 @@ private:
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainTransformComponent, TransparencyRenderType renderMode);
+
+	void RenderMesh(const Mesh& mesh, TransformComponent &transformComponent, const CameraComponent &mainCameraComponent, 
+		UINT& offset, bool& fatPerObjectBufferSet, const TransparencyRenderType renderMode);
 
 	void SetShadowResourcesForShadowCascades(int firstCascadeId);
 	void ClearShadowResourcesForShadowCascades(int firstCascadeId) const;
