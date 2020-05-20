@@ -68,7 +68,7 @@ void RenderSystem::Update(const float deltaTime)
 	UpdateCameraBuffer(mainCameraTransform);
 
 	if (ConfigurationData->ShadowsEnabled)
-		RenderShadows(mainCameraComponent);
+		RenderShadows(mainCameraComponent, mainCameraTransform);
 
 	RenderScene(mainCameraComponent, mainCameraTransform);
 
@@ -904,7 +904,7 @@ void RenderSystem::ResetTessellationShaders() const
 	DeviceContext->DSSetShader(nullptr, nullptr, 0);
 }
 
-void RenderSystem::RenderShadows(const CameraComponent &mainCameraComponent)
+void RenderSystem::RenderShadows(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent)
 {
 	Profiler->BeginEvent("Shadows");
 
@@ -920,7 +920,7 @@ void RenderSystem::RenderShadows(const CameraComponent &mainCameraComponent)
 		camera.UpdateShadowMapLocation(mainCamera.ViewMatrix);
 	}
 
-	RenderSceneForShadows(mainCameraComponent);
+	RenderSceneForShadows(mainCameraComponent, mainCameraTransformComponent);
 
 	Profiler->EndEvent();
 }
@@ -949,7 +949,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	Profiler->EndEvent();
 }
 
-void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraComponent)
+void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent)
 {
 	UINT offset = 0;
 
@@ -977,11 +977,19 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 
 		ChangeBasicShaders(ShadowVertexShader, ShadowPixelShader);
 
-		Registry->view<ModelRenderComponent, TransformComponent>().each([this, &offset, i](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
+		Registry->view<ModelRenderComponent, TransformComponent>().each([this, &mainCameraTransformComponent, &offset, i](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
 		{
 			auto shadowBufferInstanceSet = false;
 
-			for (const auto& mesh : *modelRenderComponent.Meshes)
+			std::shared_ptr<std::vector<Mesh>> currentMeshes;
+			const auto distanceFromCamera = CalculateDistanceFromCamera(transformComponent, mainCameraTransformComponent);
+
+			if (modelRenderComponent.LowPolyDistance < 0.0f || modelRenderComponent.LowPolyDistance >= distanceFromCamera)
+				currentMeshes = modelRenderComponent.Meshes;
+			else
+				currentMeshes = modelRenderComponent.LowPolyMeshes;
+
+			for (const auto& mesh : *currentMeshes)
 			{
 				if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, transformComponent.WorldMatrix), ShadowCameras[i].GetFrustumPlanes()))
 					continue;

@@ -76,10 +76,10 @@ private:
 	template <class T>
 	void Draw(const VertexBuffer<T>& vertexBuffer, const IndexBuffer& indexBuffer, UINT& offset) const;
 
-	void RenderShadows(const CameraComponent &mainCameraComponent);
+	void RenderShadows(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 	void RenderScene(const CameraComponent &cameraComponent, const TransformComponent &mainCameraTransformComponent);
 
-	void RenderSceneForShadows(const CameraComponent &mainCameraComponent);
+	void RenderSceneForShadows(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
 	void RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
