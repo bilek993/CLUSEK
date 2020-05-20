@@ -37,6 +37,7 @@
 #include "../../Renderer/ConstantBufferTypes/FogBuffer.h"
 #include "../../Renderer/Mesh.h"
 #include "../../Renderer/ConstantBufferTypes/LodTransitionBuffer.h"
+#include "../Components/ModelRenderComponent.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -104,6 +105,7 @@ private:
 	void PerformPostProcessing(bool minimal = false) const;
 
 	float CalculateDistanceFromCamera(const TransformComponent& transformComponent, const TransformComponent& cameraTransformComponent) const;
+	float CalculateLodCoverage(ModelRenderComponent& modelRenderComponent, float distanceFromCamera) const;
 
 	std::unique_ptr<ProfilerAnnotations> Profiler;
 

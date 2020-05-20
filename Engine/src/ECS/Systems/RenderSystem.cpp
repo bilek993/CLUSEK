@@ -1176,12 +1176,14 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	Registry->view<ModelRenderComponent, TransformComponent>().each([this, &mainCameraComponent, &mainTransformComponent, 
 		&offset, renderMode](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
 	{
-		const auto distanceFromCamera = CalculateDistanceFromCamera(transformComponent, mainTransformComponent);
-		const auto coverageLod = modelRenderComponent.LowPolyDistance < 0.0f ? 1.0f : std::clamp((modelRenderComponent.LowPolyDistance - distanceFromCamera) / modelRenderComponent.LodTransitionDistance, 0.0f, 1.0f);
-
 		auto fatPerObjectBufferSet = false;
 
-		if (modelRenderComponent.LowPolyDistance < 0.0f || modelRenderComponent.LowPolyDistance >= distanceFromCamera - modelRenderComponent.LodTransitionDistance)
+		const auto distanceFromCamera = CalculateDistanceFromCamera(transformComponent, mainTransformComponent);
+		const auto coverageLod = CalculateLodCoverage(modelRenderComponent, distanceFromCamera);
+
+		if (modelRenderComponent.LowPolyDistance < 0.0f || 
+			modelRenderComponent.LowPolyDistance >= distanceFromCamera - modelRenderComponent.LodTransitionDistance || 
+			CurrentRenderSettings->LevelOfDetailsMode == Manual)
 		{
 			LodTransitionBufferInstance.Data.PercentageCoverage = coverageLod;
 			LodTransitionBufferInstance.Data.InvertedCoverage = false;
@@ -1192,7 +1194,8 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 				RenderMesh(mesh, transformComponent, mainCameraComponent, offset, fatPerObjectBufferSet, renderMode);
 			}
 		}
-		if (modelRenderComponent.LowPolyDistance >= 0.0f && modelRenderComponent.LowPolyDistance < distanceFromCamera + modelRenderComponent.LodTransitionDistance)
+		if (modelRenderComponent.LowPolyDistance >= 0.0f && 
+			(modelRenderComponent.LowPolyDistance < distanceFromCamera + modelRenderComponent.LodTransitionDistance || CurrentRenderSettings->LevelOfDetailsMode == Manual))
 		{
 			LodTransitionBufferInstance.Data.PercentageCoverage = coverageLod;
 			LodTransitionBufferInstance.Data.InvertedCoverage = true;
@@ -1345,4 +1348,15 @@ float RenderSystem::CalculateDistanceFromCamera(const TransformComponent& transf
 	const auto vectorDiff = DirectX::XMVectorSubtract(objectPositionVector, cameraPositionVector);
 
 	return DirectX::XMVectorGetX(DirectX::XMVector3Length(vectorDiff));
+}
+
+float RenderSystem::CalculateLodCoverage(ModelRenderComponent& modelRenderComponent, const float distanceFromCamera) const
+{
+	if (CurrentRenderSettings->LevelOfDetailsMode == Manual)
+		return CurrentRenderSettings->ForcedLodPercentage;
+
+	if (modelRenderComponent.LowPolyDistance < 0.0f)
+		return 1.0f;
+
+	return std::clamp((modelRenderComponent.LowPolyDistance - distanceFromCamera) / modelRenderComponent.LodTransitionDistance, 0.0f, 1.0f);
 }
