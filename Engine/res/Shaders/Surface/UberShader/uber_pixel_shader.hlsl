@@ -72,7 +72,7 @@ SamplerComparisonState ShadowSampler : register(s3);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-    PerformLodTransition(input.Position, PercentageCoverage, InvertedCoverage, 10.0f);
+    PerformLodTransition(input.Position, PercentageCoverage, InvertedCoverage, LOD_GRID_SCALE);
     
     float3 albedoColor = AlbedoTexture.Sample(DefaultSampler, input.TextureCoord).rgb;
     float2 normalColor = NormalTexture.Sample(DefaultSampler, input.TextureCoord).rg;
