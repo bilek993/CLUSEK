@@ -5,6 +5,7 @@
 struct ModelRenderComponent final
 {
 	float LowPolyDistance = -1.0f;
+	float LodTransitionDistance = 15.0f;
 	std::string ModelId;
 	std::string LowPolyModelId;
 	std::string MaterialId;
