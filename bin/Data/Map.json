@@ -211,7 +211,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -238,7 +238,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-		"LowPolyDistance": 100.0,
+		"LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -265,7 +265,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -292,7 +292,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -319,7 +319,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -346,7 +346,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -373,7 +373,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -400,7 +400,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -427,7 +427,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -454,7 +454,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -481,7 +481,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -508,7 +508,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -535,7 +535,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -562,7 +562,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -589,7 +589,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -616,7 +616,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -643,7 +643,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -670,7 +670,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -697,7 +697,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -724,7 +724,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
@@ -751,7 +751,7 @@
 		"RotationZ": 90.0
 	  },
 	  "ModelRenderComponent": {
-	    "LowPolyDistance": 100.0,
+	    "LowPolyDistance": 150.0,
 	    "ModelId": "SmoothCylinder",
 		"LowPolyModelId": "SmoothCylinderLowPoly",
 		"MaterialId": "Data/Textures/SmoothCylinder/material.json"
