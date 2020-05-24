@@ -30,7 +30,9 @@
 		"PositionZ": 0.0
 	  },
 	  "ModelRenderComponent": {
+		"LowPolyDistance": 150.0,
 	    "ModelId": "CivilianVehicle",
+		"LowPolyModelId": "CivilianVehicleLowPoly",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
@@ -83,7 +85,9 @@
 		"RotationZ": 0.0
 	  },
 	  "ModelRenderComponent": {
+		"LowPolyDistance": 100.0,
 	    "ModelId": "Wheel",
+		"LowPolyModelId": "WheelLowPoly",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
@@ -117,7 +121,9 @@
 		"RotationZ": 0.0
 	  },
 	  "ModelRenderComponent": {
+		"LowPolyDistance": 100.0,
 	    "ModelId": "Wheel",
+		"LowPolyModelId": "WheelLowPoly",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
@@ -148,7 +154,9 @@
 		"PositionZ": 5.46
 	  },
 	  "ModelRenderComponent": {
+		"LowPolyDistance": 100.0,
 	    "ModelId": "Wheel",
+		"LowPolyModelId": "WheelLowPoly",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
@@ -178,7 +186,9 @@
 		"PositionZ": -5.17
 	  },
 	  "ModelRenderComponent": {
+		"LowPolyDistance": 100.0,
 	    "ModelId": "Wheel",
+		"LowPolyModelId": "WheelLowPoly",
 		"MaterialId": "Data/Textures/CivilianVehicle/material.json"
 	  },
 	  "PhysicsMaterialComponent": {
