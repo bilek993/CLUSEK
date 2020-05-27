@@ -16,6 +16,12 @@ void TransformManipulateWindow::DrawCombo()
 	std::string listIds{};
 	ListComponent(listIds);
 
+	if (ImGui::Button("SELECT"))
+	{
+		// TODO: Add code here
+	}
+
+	ImGui::SameLine();
 	ImGui::Combo("Selected entity Id", &SelectedId, listIds.c_str());
 }
 
