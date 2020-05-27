@@ -16,5 +16,6 @@ private:
 	ImGuizmo::OPERATION CurrentGizmoOperation = ImGuizmo::TRANSLATE;
 
 	int SelectedId = -1;
-	DirectX::XMMATRIX * CurrentWorldMatrix = nullptr;
+	bool ClickSelectEnabled = false;
+	DirectX::XMMATRIX* CurrentWorldMatrix = nullptr;
 };

@@ -17,9 +17,7 @@ void TransformManipulateWindow::DrawCombo()
 	ListComponent(listIds);
 
 	if (ImGui::Button("SELECT"))
-	{
-		// TODO: Add code here
-	}
+		ClickSelectEnabled = true;
 
 	ImGui::SameLine();
 	ImGui::Combo("Selected entity Id", &SelectedId, listIds.c_str());
