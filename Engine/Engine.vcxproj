@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\RayIntersections.cpp" />
     <ClCompile Include="src\GUI\Windows\LodDebugWindow.cpp" />
     <ClCompile Include="src\Loaders\Components\CameraVehicleAnimatedTargetComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\CameraTargetComponentLoader.cpp" />
@@ -184,6 +185,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\RayIntersections.h" />
     <ClInclude Include="src\Renderer\LodMode.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\LodTransitionBuffer.h" />
     <ClInclude Include="src\GUI\Windows\LodDebugWindow.h" />

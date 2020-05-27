@@ -1,5 +1,6 @@
 #include "TransformManipulateWindow.h"
 #include "../../ECS/Systems/RenderSystem.h"
+#include "../../Renderer/RayIntersections.h"
 
 void TransformManipulateWindow::Draw()
 {
@@ -16,10 +17,15 @@ void TransformManipulateWindow::DrawCombo()
 	std::string listIds{};
 	ListComponent(listIds);
 
-	if (ImGui::Button("SELECT"))
-		ClickSelectEnabled = true;
+	if (!ClickSelectEnabled)
+	{
+		if (ImGui::Button("SELECT"))
+		{
+			ClickSelectEnabled = true;
+		}
+		ImGui::SameLine();
+	}
 
-	ImGui::SameLine();
 	ImGui::Combo("Selected entity Id", &SelectedId, listIds.c_str());
 }
 
@@ -68,6 +74,12 @@ void TransformManipulateWindow::ListComponent(std::string& list)
 	Registry->view<TransformComponent>().each([this, &list, &counter](TransformComponent& transformComponent)
 	{
 		list += "Transformable entity " + std::to_string(counter) + '\0';
+
+		if (ClickSelectEnabled && ImGui::IsMouseClicked(0) && RayIntersections::TestObb())
+		{
+			SelectedId = counter;
+			ClickSelectEnabled = false;
+		}
 
 		if (SelectedId == counter++)
 			CurrentWorldMatrix = &transformComponent.WorldMatrix;
