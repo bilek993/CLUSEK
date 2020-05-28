@@ -13,6 +13,8 @@ private:
 
 	void ListComponent(std::string& list);
 
+	void HandleClicking();
+
 	ImGuizmo::OPERATION CurrentGizmoOperation = ImGuizmo::TRANSLATE;
 
 	int SelectedId = -1;

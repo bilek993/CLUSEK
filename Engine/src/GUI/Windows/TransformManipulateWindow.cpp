@@ -9,6 +9,9 @@ void TransformManipulateWindow::Draw()
 	DrawCombo();
 	DrawDetails();
 
+	if (ClickSelectEnabled)
+		HandleClicking();
+
 	ImGui::End();
 }
 
@@ -75,13 +78,22 @@ void TransformManipulateWindow::ListComponent(std::string& list)
 	{
 		list += "Transformable entity " + std::to_string(counter) + '\0';
 
-		if (ClickSelectEnabled && ImGui::IsMouseClicked(0) && RayIntersections::TestObb())
-		{
-			SelectedId = counter;
-			ClickSelectEnabled = false;
-		}
-
 		if (SelectedId == counter++)
 			CurrentWorldMatrix = &transformComponent.WorldMatrix;
 	});
+}
+
+void TransformManipulateWindow::HandleClicking()
+{
+	if (ImGui::IsMouseClicked(0))
+		return;
+
+	auto counter = 0;
+
+	Registry->view<TransformComponent, ModelRenderComponent>().each([this, &counter](TransformComponent& transformComponent, ModelRenderComponent& modelRenderComponent)
+	{
+		// TODO: Add test OBB here
+	});
+
+	ClickSelectEnabled = false;
 }
