@@ -2,6 +2,8 @@
 #include "BaseWindow.h"
 #include <imgui.h>
 #include <ImGuizmo.h>
+#include "../../ECS/Components/CameraComponent.h"
+#include "../../ECS/Components/TransformComponent.h"
 
 class TransformManipulateWindow final : public BaseWindow
 {
@@ -14,6 +16,8 @@ private:
 	void ListComponent(std::string& list);
 
 	void HandleClicking();
+	CameraComponent& GetMainCamera() const;
+	TransformComponent& GetMainCameraTransform() const;
 
 	ImGuizmo::OPERATION CurrentGizmoOperation = ImGuizmo::TRANSLATE;
 

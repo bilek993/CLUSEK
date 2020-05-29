@@ -1,6 +1,8 @@
 #include "TransformManipulateWindow.h"
 #include "../../ECS/Systems/RenderSystem.h"
 #include "../../Renderer/RayIntersections.h"
+#include "../../Tags.h"
+#include "../../Renderer/TransformLogic.h"
 
 void TransformManipulateWindow::Draw()
 {
@@ -90,10 +92,73 @@ void TransformManipulateWindow::HandleClicking()
 
 	auto counter = 0;
 
-	Registry->view<TransformComponent, ModelRenderComponent>().each([this, &counter](TransformComponent& transformComponent, ModelRenderComponent& modelRenderComponent)
+	auto selectedObjectDistance = std::numeric_limits<float>::max();
+
+	auto& mainCameraComponent = GetMainCamera();
+	auto& mainCameraTransform = GetMainCameraTransform();
+
+	const auto view = Registry->view<TransformComponent>();
+
+	for (auto entity : view)
 	{
-		// TODO: Add test OBB here
-	});
+		auto& transformComponent = view.get(entity);
+		const auto modelRenderComponent = Registry->try_get<ModelRenderComponent>(entity);
+
+		if (modelRenderComponent == nullptr)
+			continue;
+
+		const auto rayOrigin = TransformLogic::GetPosition(mainCameraTransform);
+		const auto rayDirection = mainCameraComponent.VectorForward;
+
+		auto currentObjectDistance = 0.0f;
+
+		for (const auto& mesh : *modelRenderComponent->Meshes)
+		{
+			if (RayIntersections::TestObb(XMLoadFloat3(&rayOrigin),
+				rayDirection,
+				mesh.FrustumPoints,
+				transformComponent.WorldMatrix,
+				100000.0f,
+				&currentObjectDistance))
+			{
+				if (currentObjectDistance < selectedObjectDistance)
+				{
+					selectedObjectDistance = currentObjectDistance;
+					SelectedId = counter;
+				}
+			}
+		}
+
+		counter++;
+	}
 
 	ClickSelectEnabled = false;
+}
+
+CameraComponent& TransformManipulateWindow::GetMainCamera() const
+{
+	auto view = Registry->view<CameraComponent, entt::tag<Tags::MAIN_CAMERA>>();
+	if (view.size() != 1)
+	{
+		if (view.size() > 1)
+			Logger::Error("More than one main render camera found!");
+		else
+			Logger::Error("Main render camera not found!");
+	}
+
+	return view.raw<CameraComponent>()[0];
+}
+
+TransformComponent& TransformManipulateWindow::GetMainCameraTransform() const
+{
+	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
+	if (view.size() != 1)
+	{
+		if (view.size() > 1)
+			Logger::Error("More than one main render camera found!");
+		else
+			Logger::Error("Main render camera not found!");
+	}
+
+	return view.raw<TransformComponent>()[0];
 }
