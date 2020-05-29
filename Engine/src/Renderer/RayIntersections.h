@@ -24,8 +24,8 @@ private:
 	static bool TestObbIntersectionWithPlanes(	const DirectX::XMVECTOR& axis,
 												const DirectX::XMVECTOR& delta,
 												const DirectX::XMVECTOR& rayDirection,
-												const DirectX::XMVECTOR& aabbMin,
-												const DirectX::XMVECTOR& aabbMax,
+												float aabbMinOnAxis,
+												float aabbMaxOnAxis,
 												float& tMax,
 												float& tMin);
 };
