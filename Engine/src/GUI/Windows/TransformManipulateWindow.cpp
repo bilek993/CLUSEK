@@ -4,13 +4,13 @@
 
 void TransformManipulateWindow::Draw()
 {
+	if (ClickSelectEnabled)
+		HandleClicking();
+
 	ImGui::Begin("Transform manipulation", &IsEnabled);
 
 	DrawCombo();
 	DrawDetails();
-
-	if (ClickSelectEnabled)
-		HandleClicking();
 
 	ImGui::End();
 }
@@ -85,7 +85,7 @@ void TransformManipulateWindow::ListComponent(std::string& list)
 
 void TransformManipulateWindow::HandleClicking()
 {
-	if (ImGui::IsMouseClicked(0))
+	if (!ImGui::IsMouseClicked(0))
 		return;
 
 	auto counter = 0;
