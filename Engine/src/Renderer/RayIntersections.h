@@ -1,9 +1,17 @@
 #pragma once
 #include <DirectXMath.h>
+#include <array>
 
 class RayIntersections final
 {
 public:
+	static bool TestObb(const DirectX::XMVECTOR& rayOrigin,
+						const DirectX::XMVECTOR& rayDirection,
+						const std::array<DirectX::XMFLOAT3, 8>& aabbPoints,
+						const DirectX::XMMATRIX& modelMatrix,
+						float maxDistance,
+						float* intersectionDistance);
+
 	static bool TestObb(const DirectX::XMVECTOR& rayOrigin,
 						const DirectX::XMVECTOR& rayDirection,
 						const DirectX::XMVECTOR& aabbMin,

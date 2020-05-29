@@ -3,6 +3,42 @@
 
 bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin, 
 								const DirectX::XMVECTOR& rayDirection,
+								const std::array<DirectX::XMFLOAT3, 8>& aabbPoints, 
+								const DirectX::XMMATRIX& modelMatrix, 
+								float maxDistance,
+								float* intersectionDistance)
+{
+	auto aabbMin = DirectX::XMFLOAT3(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+	auto aabbMax = DirectX::XMFLOAT3(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
+
+	for (auto& point : aabbPoints)
+	{
+		if (point.x < aabbMin.x)
+			aabbMin.x = point.x;
+		if (point.y < aabbMin.y)
+			aabbMin.y = point.y;
+		if (point.z < aabbMin.z)
+			aabbMin.z = point.z;
+
+		if (point.x > aabbMax.x)
+			aabbMax.x = point.x;
+		if (point.y > aabbMax.y)
+			aabbMax.y = point.y;
+		if (point.z > aabbMax.z)
+			aabbMax.z = point.z;
+	}
+
+	return TestObb(	rayOrigin,
+					rayDirection,
+					XMLoadFloat3(&aabbMin),
+					XMLoadFloat3(&aabbMax),
+					modelMatrix,
+					maxDistance,
+					intersectionDistance);
+}
+
+bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin, 
+								const DirectX::XMVECTOR& rayDirection,
 								const DirectX::XMVECTOR& aabbMin, 
 								const DirectX::XMVECTOR& aabbMax, 
 								const DirectX::XMMATRIX& modelMatrix,
@@ -86,5 +122,3 @@ bool RayIntersections::TestObbIntersectionWithPlanes(	const DirectX::XMVECTOR& a
 
 	return true;
 }
-
-
