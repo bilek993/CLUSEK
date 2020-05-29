@@ -48,27 +48,27 @@ bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 	auto tMin = 0.0f;
 	auto tMax = maxDistance;
 
-	DirectX::XMFLOAT4X4 transposedModelMatrixFloats{};
-	XMStoreFloat4x4(&transposedModelMatrixFloats, XMMatrixTranspose(modelMatrix));
+	DirectX::XMFLOAT4X4 modelMatrixFloats{};
+	XMStoreFloat4x4(&modelMatrixFloats, modelMatrix);
 
-	const auto worldPosition = DirectX::XMFLOAT3(transposedModelMatrixFloats._41, transposedModelMatrixFloats._42, transposedModelMatrixFloats._43);
+	const auto worldPosition = DirectX::XMFLOAT3(modelMatrixFloats._41, modelMatrixFloats._42, modelMatrixFloats._43);
 	const auto worldPositionVector = XMLoadFloat3(&worldPosition);
 
 	const auto deltaPositionVector = DirectX::XMVectorSubtract(worldPositionVector, rayOrigin);
 
-	const auto xAxis = DirectX::XMFLOAT3(transposedModelMatrixFloats._11, transposedModelMatrixFloats._12, transposedModelMatrixFloats._13);
+	const auto xAxis = DirectX::XMFLOAT3(modelMatrixFloats._11, modelMatrixFloats._12, modelMatrixFloats._13);
 	const auto xAxisVector = XMLoadFloat3(&xAxis);
 
 	if (!TestObbIntersectionWithPlanes(xAxisVector, deltaPositionVector, rayDirection, aabbMin, aabbMax, tMax, tMin))
 		return false;
 
-	const auto yAxis = DirectX::XMFLOAT3(transposedModelMatrixFloats._21, transposedModelMatrixFloats._22, transposedModelMatrixFloats._23);
-	const auto yAxisVector = XMLoadFloat3(&yAxis);
+	const auto yAxis = DirectX::XMFLOAT3(modelMatrixFloats._21, modelMatrixFloats._22, modelMatrixFloats._23);
+	const auto yAxisVector = DirectX::XMLoadFloat3(&yAxis);
 
 	if (!TestObbIntersectionWithPlanes(yAxisVector, deltaPositionVector, rayDirection, aabbMin, aabbMax, tMax, tMin))
 		return false;
 
-	const auto zAxis = DirectX::XMFLOAT3(transposedModelMatrixFloats._31, transposedModelMatrixFloats._32, transposedModelMatrixFloats._33);
+	const auto zAxis = DirectX::XMFLOAT3(modelMatrixFloats._31, modelMatrixFloats._32, modelMatrixFloats._33);
 	const auto zAxisVector = XMLoadFloat3(&zAxis);
 
 	if (!TestObbIntersectionWithPlanes(zAxisVector, deltaPositionVector, rayDirection, aabbMin, aabbMax, tMax, tMin))
