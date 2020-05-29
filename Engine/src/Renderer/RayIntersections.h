@@ -11,4 +11,13 @@ public:
 						const DirectX::XMMATRIX& modelMatrix,
 						float maxDistance,
 						float* intersectionDistance);
+
+private:
+	static bool TestObbIntersectionWithPlanes(	const DirectX::XMVECTOR& axis,
+												const DirectX::XMVECTOR& delta,
+												const DirectX::XMVECTOR& rayDirection,
+												const DirectX::XMVECTOR& aabbMin,
+												const DirectX::XMVECTOR& aabbMax,
+												float& tMax,
+												float& tMin);
 };
