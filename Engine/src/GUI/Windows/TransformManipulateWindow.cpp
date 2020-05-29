@@ -114,12 +114,12 @@ void TransformManipulateWindow::HandleClicking()
 
 		for (const auto& mesh : *modelRenderComponent->Meshes)
 		{
-			if (RayIntersections::TestObb(XMLoadFloat3(&rayOrigin),
-				rayDirection,
-				mesh.FrustumPoints,
-				transformComponent.WorldMatrix,
-				100000.0f,
-				&currentObjectDistance))
+			if (RayIntersections::TestObb(	XMLoadFloat3(&rayOrigin),
+											rayDirection,
+											mesh.FrustumPoints,
+											transformComponent.WorldMatrix,
+											100000.0f,
+											&currentObjectDistance))
 			{
 				if (currentObjectDistance < selectedObjectDistance)
 				{
