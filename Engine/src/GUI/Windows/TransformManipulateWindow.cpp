@@ -104,27 +104,27 @@ void TransformManipulateWindow::HandleClicking()
 		auto& transformComponent = view.get(entity);
 		const auto modelRenderComponent = Registry->try_get<ModelRenderComponent>(entity);
 
-		if (modelRenderComponent == nullptr)
-			continue;
-
-		const auto rayOrigin = TransformLogic::GetPosition(mainCameraTransform);
-		const auto rayDirection = mainCameraComponent.VectorForward;
-
-		auto currentObjectDistance = 0.0f;
-
-		for (const auto& mesh : *modelRenderComponent->Meshes)
+		if (modelRenderComponent != nullptr)
 		{
-			if (RayIntersections::TestObb(	XMLoadFloat3(&rayOrigin),
-											rayDirection,
-											mesh.FrustumPoints,
-											transformComponent.WorldMatrix,
-											100000.0f,
-											&currentObjectDistance))
+			const auto rayOrigin = TransformLogic::GetPosition(mainCameraTransform);
+			const auto rayDirection = mainCameraComponent.VectorForward;
+
+			auto currentObjectDistance = 0.0f;
+
+			for (const auto& mesh : *modelRenderComponent->Meshes)
 			{
-				if (currentObjectDistance < selectedObjectDistance)
+				if (RayIntersections::TestObb(XMLoadFloat3(&rayOrigin),
+					rayDirection,
+					mesh.FrustumPoints,
+					transformComponent.WorldMatrix,
+					100000.0f,
+					&currentObjectDistance))
 				{
-					selectedObjectDistance = currentObjectDistance;
-					SelectedId = counter;
+					if (currentObjectDistance < selectedObjectDistance)
+					{
+						selectedObjectDistance = currentObjectDistance;
+						SelectedId = counter;
+					}
 				}
 			}
 		}
