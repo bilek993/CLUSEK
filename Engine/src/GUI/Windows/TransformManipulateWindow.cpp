@@ -117,7 +117,7 @@ void TransformManipulateWindow::HandleClicking()
 					rayDirection,
 					mesh.FrustumPoints,
 					transformComponent.WorldMatrix,
-					100000.0f,
+					Config->MainCameraFarZ - Config->MainCameraNearZ,
 					&currentObjectDistance))
 				{
 					if (currentObjectDistance < selectedObjectDistance)
