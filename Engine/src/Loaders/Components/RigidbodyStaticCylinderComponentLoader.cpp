@@ -1,5 +1,5 @@
 #include "RigidbodyStaticCylinderComponentLoader.h"
-#include "RigidbodyStaticCylinderComponent.h"
+#include "../../ECS/Components/RigidbodyStaticCylinderComponent.h"
 
 void RigidbodyStaticCylinderComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	const entt::registry::entity_type& entity)

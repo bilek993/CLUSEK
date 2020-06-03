@@ -223,7 +223,7 @@
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCylinderComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\RigidbodyDynamicCylinderComponent.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticCylinderComponentLoader.h" />
-    <ClInclude Include="src\Loaders\Components\RigidbodyStaticCylinderComponent.h" />
+    <ClInclude Include="src\ECS\Components\RigidbodyStaticCylinderComponent.h" />
     <ClInclude Include="src\Physics\PhysicsMeshGenerator.h" />
     <ClInclude Include="src\ECS\Components\WheelComponent.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicCapsuleComponentLoader.h" />

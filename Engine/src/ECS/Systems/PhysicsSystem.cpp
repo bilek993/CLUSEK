@@ -12,7 +12,6 @@
 #include "../Components/RigidbodyStaticCapsuleComponent.h"
 #include "../Components/RigidbodyDynamicCapsuleComponent.h"
 #include "../../Physics/PhysicsMeshGenerator.h"
-#include "../../Loaders/Components/RigidbodyStaticCylinderComponent.h"
 #include "../Components/RigidbodyDynamicCylinderComponent.h"
 #include "../Components/WheelComponent.h"
 #include "../Components/VehicleComponent.h"
@@ -23,6 +22,7 @@
 #include "../../Utils/TerrainUtil.h"
 #include "../../Physics/PhysicsFilterShader.h"
 #include "../../Loaders/PhysicsMaterialLoader.h"
+#include "../Components/RigidbodyStaticCylinderComponent.h"
 
 void PhysicsSystem::Start()
 {
