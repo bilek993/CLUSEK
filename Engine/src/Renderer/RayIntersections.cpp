@@ -4,7 +4,7 @@
 bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin, 
 								const DirectX::XMVECTOR& rayDirection,
 								const std::array<DirectX::XMFLOAT3, 8>& aabbPoints, 
-								const DirectX::XMMATRIX& modelMatrix,
+								const DirectX::XMMATRIX& worldMatrix,
 								const float maxDistance,
 								float* intersectionDistance)
 {
@@ -32,7 +32,7 @@ bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 					rayDirection,
 					XMLoadFloat3(&aabbMin),
 					XMLoadFloat3(&aabbMax),
-					modelMatrix,
+					worldMatrix,
 					maxDistance,
 					intersectionDistance);
 }
@@ -41,15 +41,15 @@ bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 								const DirectX::XMVECTOR& rayDirection,
 								const DirectX::XMVECTOR& aabbMin, 
 								const DirectX::XMVECTOR& aabbMax, 
-								const DirectX::XMMATRIX& modelMatrix,
+								const DirectX::XMMATRIX& worldMatrix,
 								const float maxDistance,
 								float* intersectionDistance)
 {
 	auto tMin = 0.0f;
 	auto tMax = maxDistance;
 
-	DirectX::XMFLOAT4X4 modelMatrixFloats{};
-	XMStoreFloat4x4(&modelMatrixFloats, modelMatrix);
+	DirectX::XMFLOAT4X4 worldMatrixFloats{};
+	XMStoreFloat4x4(&worldMatrixFloats, worldMatrix);
 
 	DirectX::XMFLOAT3 aabbMinFloats{};
 	DirectX::XMFLOAT3 aabbMaxFloats{};
@@ -57,24 +57,24 @@ bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 	XMStoreFloat3(&aabbMinFloats, aabbMin);
 	XMStoreFloat3(&aabbMaxFloats, aabbMax);
 
-	const auto worldPosition = DirectX::XMFLOAT3(modelMatrixFloats._41, modelMatrixFloats._42, modelMatrixFloats._43);
+	const auto worldPosition = DirectX::XMFLOAT3(worldMatrixFloats._41, worldMatrixFloats._42, worldMatrixFloats._43);
 	const auto worldPositionVector = XMLoadFloat3(&worldPosition);
 
 	const auto deltaPositionVector = DirectX::XMVectorSubtract(worldPositionVector, rayOrigin);
 
-	const auto xAxis = DirectX::XMFLOAT3(modelMatrixFloats._11, modelMatrixFloats._12, modelMatrixFloats._13);
+	const auto xAxis = DirectX::XMFLOAT3(worldMatrixFloats._11, worldMatrixFloats._12, worldMatrixFloats._13);
 	const auto xAxisVector = XMLoadFloat3(&xAxis);
 
 	if (!TestObbIntersectionWithPlanes(xAxisVector, deltaPositionVector, rayDirection, aabbMinFloats.x, aabbMaxFloats.x, tMax, tMin))
 		return false;
 
-	const auto yAxis = DirectX::XMFLOAT3(modelMatrixFloats._21, modelMatrixFloats._22, modelMatrixFloats._23);
+	const auto yAxis = DirectX::XMFLOAT3(worldMatrixFloats._21, worldMatrixFloats._22, worldMatrixFloats._23);
 	const auto yAxisVector = XMLoadFloat3(&yAxis);
 
 	if (!TestObbIntersectionWithPlanes(yAxisVector, deltaPositionVector, rayDirection, aabbMinFloats.y, aabbMaxFloats.y, tMax, tMin))
 		return false;
 
-	const auto zAxis = DirectX::XMFLOAT3(modelMatrixFloats._31, modelMatrixFloats._32, modelMatrixFloats._33);
+	const auto zAxis = DirectX::XMFLOAT3(worldMatrixFloats._31, worldMatrixFloats._32, worldMatrixFloats._33);
 	const auto zAxisVector = XMLoadFloat3(&zAxis);
 
 	if (!TestObbIntersectionWithPlanes(zAxisVector, deltaPositionVector, rayDirection, aabbMinFloats.z, aabbMaxFloats.z, tMax, tMin))

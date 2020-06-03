@@ -8,7 +8,7 @@ public:
 	static bool TestObb(const DirectX::XMVECTOR& rayOrigin,
 						const DirectX::XMVECTOR& rayDirection,
 						const std::array<DirectX::XMFLOAT3, 8>& aabbPoints,
-						const DirectX::XMMATRIX& modelMatrix,
+						const DirectX::XMMATRIX& worldMatrix,
 						float maxDistance,
 						float* intersectionDistance);
 
@@ -16,7 +16,7 @@ public:
 						const DirectX::XMVECTOR& rayDirection,
 						const DirectX::XMVECTOR& aabbMin,
 						const DirectX::XMVECTOR& aabbMax,
-						const DirectX::XMMATRIX& modelMatrix,
+						const DirectX::XMMATRIX& worldMatrix,
 						float maxDistance,
 						float* intersectionDistance);
 
