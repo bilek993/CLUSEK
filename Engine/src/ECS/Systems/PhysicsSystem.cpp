@@ -71,12 +71,16 @@ PhysicsSystem::~PhysicsSystem()
 	MaterialManager->ReleaseAllMaterials();
 
 	const auto numberOfActors = Scene->getNbActors(physx::PxActorTypeFlag::eRIGID_DYNAMIC | physx::PxActorTypeFlag::eRIGID_STATIC);
-	std::vector<physx::PxRigidActor*> actors(numberOfActors);
-	Scene->getActors(physx::PxActorTypeFlag::eRIGID_DYNAMIC | physx::PxActorTypeFlag::eRIGID_STATIC, 
-		reinterpret_cast<physx::PxActor**>(&actors[0]), numberOfActors);
 
-	for (auto actor : actors)
-		PX_RELEASE(actor);
+	if (numberOfActors > 0)
+	{
+		std::vector<physx::PxRigidActor*> actors(numberOfActors);
+		Scene->getActors(physx::PxActorTypeFlag::eRIGID_DYNAMIC | physx::PxActorTypeFlag::eRIGID_STATIC,
+			reinterpret_cast<physx::PxActor**>(&actors[0]), numberOfActors);
+
+		for (auto actor : actors)
+			PX_RELEASE(actor);
+	}
 
 	Registry->view<RigidbodyStaticHeightFieldsComponent>().each(
 		[this](RigidbodyStaticHeightFieldsComponent &rigidbodyStaticHeightFieldsComponent)
