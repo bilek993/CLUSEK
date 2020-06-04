@@ -9,6 +9,11 @@ void EntityEditorWindow::Draw()
 	{
 		DrawComponentDetails<TransformComponent>(SelectedEntity, "Transform Component");
 	}
+	else
+	{
+		ImGui::SetCursorPosX((ImGui::GetWindowSize().x / 2.0f) - 117.0f);
+		ImGui::Text("Please select entity to enable this editor.");
+	}
 
 	ImGui::End();
 }
