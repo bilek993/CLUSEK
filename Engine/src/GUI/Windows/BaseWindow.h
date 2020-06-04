@@ -7,6 +7,7 @@ struct PostProcessingSettings;
 class BaseWindow
 {
 public:
+	virtual ~BaseWindow() = default;
 	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings, 
 		std::vector<SystemHolder> *systems, int renderSystemId, IOData *ioData, PostProcessingSettings *postProcessingSettings,
 		entt::registry *registry, entt::entity *selectedEntity, bool *entitySelected);
