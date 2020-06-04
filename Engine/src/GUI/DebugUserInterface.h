@@ -30,7 +30,7 @@
 #include "Windows/LodDebugWindow.h"
 #include "Windows/EntityEditorWindow.h"
 
-#define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
+#define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry, &SelectedEntity, &EntitySelected)
 
 class DebugUserInterface final
 {
@@ -60,6 +60,9 @@ private:
 
 	bool IsEnabled = false;
 	bool IsDockingEnabled = false;
+
+	entt::entity SelectedEntity = 0;
+	bool EntitySelected = false;
 
 	std::function<void()> FunctionCloseEngine;
 

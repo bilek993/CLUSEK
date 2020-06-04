@@ -39,6 +39,12 @@ void EntityViewerWindow::DrawList()
 	Registry->each([this, &counter](entt::entity entity)
 	{
 		ImGui::BulletText("Entity %i", counter++);
+		ImGui::SameLine();
+		if (ImGui::SmallButton(("Select##" + std::to_string(counter)).c_str()))
+		{
+			*SelectedEntity = entity;
+			*EntitySelected = true;
+		}
 
 		DrawComponent<CameraComponent>(entity, "Camera Component");
 		DrawComponent<CameraTargetComponent>(entity, "Camera Target Component");

@@ -2,7 +2,8 @@
 
 void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRenderSettings* renderSettings,
 	std::vector<SystemHolder>* systems, const int renderSystemId, IOData* ioData,
-	PostProcessingSettings* postProcessingSettings, entt::registry *registry)
+	PostProcessingSettings* postProcessingSettings, entt::registry *registry, entt::entity *selectedEntity,
+	bool *entitySelected)
 {
 	if (!IsEnabled)
 		return;
@@ -15,6 +16,8 @@ void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRe
 	IoData = ioData;
 	CurrentPostProcessingSettings = postProcessingSettings;
 	Registry = registry;
+	SelectedEntity = selectedEntity;
+	EntitySelected = entitySelected;
 
 	Draw();
 }
