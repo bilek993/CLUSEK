@@ -36,7 +36,7 @@ void EntityViewerWindow::DrawList()
 {
 	auto counter = 0;
 
-	Registry->each([this, &counter](auto entity)
+	Registry->each([this, &counter](entt::entity entity)
 	{
 		ImGui::BulletText("Entity %i", counter++);
 

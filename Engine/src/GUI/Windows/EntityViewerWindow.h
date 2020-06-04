@@ -9,12 +9,12 @@ protected:
 private:
 	void DrawList();
 
-	template <class T, class E>
-	void DrawComponent(E& entity, const std::string& name);
+	template <class T>
+	void DrawComponent(entt::entity& entity, const std::string& name);
 };
 
-template <class T, class E>
-void EntityViewerWindow::DrawComponent(E& entity, const std::string& name)
+template <class T>
+void EntityViewerWindow::DrawComponent(entt::entity& entity, const std::string& name)
 {
 	if (Registry->has<T>(entity))
 		ImGui::Text(("            " + name).c_str());
