@@ -7,7 +7,7 @@ void EntityEditorWindow::Draw()
 
 	if (*EntitySelected)
 	{
-		DrawComponentDetails<TransformComponent>(SelectedEntity, "Transform Component");
+		REGISTER_COMPONENT_EDITOR(TransformComponent, "Transform Component");
 	}
 	else
 	{
