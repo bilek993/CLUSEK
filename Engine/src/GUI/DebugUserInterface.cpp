@@ -70,6 +70,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(TransformManipulateWindowInstance);
 	UPDATE_USER_INTERFACE(TextureCompressionWindowInstance);
 	UPDATE_USER_INTERFACE(LodDebugWindowInstance);
+	UPDATE_USER_INTERFACE(EntityEditorWindowInstance);
 
 	AfterUpdate(renderSystem);
 }
@@ -103,6 +104,7 @@ void DebugUserInterface::DrawMenuBar()
 		if (ImGui::BeginMenu("ECS"))
 		{
 			DrawMenuItemForWindow("Entity viewer", EntityViewerWindowInstance);
+			DrawMenuItemForWindow("Entity editor", EntityEditorWindowInstance);
 			DrawMenuItemForWindow("Systems manager", SystemsManagerWindowInstance);
 			DrawMenuItemForWindow("Transform manipulation", TransformManipulateWindowInstance);
 			ImGui::EndMenu();

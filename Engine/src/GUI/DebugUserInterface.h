@@ -28,6 +28,7 @@
 #include "Windows/TransformManipulateWindow.h"
 #include "Windows/TextureCompressionWindow.h"
 #include "Windows/LodDebugWindow.h"
+#include "Windows/EntityEditorWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry)
 
@@ -82,4 +83,5 @@ private:
 	TransformManipulateWindow TransformManipulateWindowInstance;
 	TextureCompressionWindow TextureCompressionWindowInstance;
 	LodDebugWindow LodDebugWindowInstance;
+	EntityEditorWindow EntityEditorWindowInstance;
 };
