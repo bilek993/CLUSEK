@@ -136,6 +136,12 @@
     <Filter Include="Resource Files\Shaders\Surface\TerrainShader">
       <UniqueIdentifier>{2db36c71-392f-4e59-8960-d03014e811b3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\GUI\Components">
+      <UniqueIdentifier>{8c930322-081e-4b6c-9209-8172599c0ed6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GUI\Components">
+      <UniqueIdentifier>{70203ad0-5a61-4c92-b7b0-554041ed1e66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">

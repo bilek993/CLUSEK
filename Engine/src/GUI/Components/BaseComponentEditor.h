@@ -2,22 +2,15 @@
 #include "../../Renderer/DynamicRenderSettings.h"
 #include "../../Utils/SystemHolder.h"
 
-struct PostProcessingSettings;
-
-class BaseWindow
+class BaseComponentEditor
 {
 public:
-	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings, 
+	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings,
 		std::vector<SystemHolder> *systems, int renderSystemId, IOData *ioData, PostProcessingSettings *postProcessingSettings,
 		entt::registry *registry, entt::entity *selectedEntity, bool *entitySelected);
 
-	bool GetIsEnabled() const;
-	void SetIsEnabled(bool value);
-
 protected:
 	virtual void Draw() = 0;
-
-	bool IsEnabled = false;
 
 	float DeltaTime = 0;
 	ConfigData *Config = nullptr;
