@@ -11,6 +11,9 @@ protected:
 	void Draw() override;
 
 private:
+	void DrawComponentsForEntity();
+	void DrawNoElements() const;
+
 	template <class T>
 	void DrawComponentDetails(const entt::entity* entity, BaseComponentEditor& editorInstance, const std::string& name) const;
 
