@@ -18,8 +18,8 @@ void EntityEditorWindow::DrawComponentDetails(entt::entity* entity, const std::s
 	if (!Registry->has<T>(*entity))
 		return;
 
-	if (ImGui::TreeNode(name.c_str()))
+	if (ImGui::CollapsingHeader(name.c_str()))
 	{
-		ImGui::TreePop();
+		ImGui::Text("Test123");
 	}
 }
