@@ -22,5 +22,5 @@ void BaseComponentEditor::Update(const float deltaTime, ConfigData* configData, 
 
 void BaseComponentEditor::Draw()
 {
-	ImGui::Text("No configurable parameters for this component...");
+	ImGui::Text("No configurable parameters for this component.");
 }
