@@ -11,6 +11,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Components\CameraComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\CameraTargetComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\CameraVehicleAnimatedTargetComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\ModelRenderComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\PhysicsMaterialComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyDynamicBoxComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyDynamicCapsuleComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyDynamicCylinderComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyDynamicSphereComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticBoxComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticCapsuleComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticCylinderComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticHeightFieldsComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticPlaneComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticSphereComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\SkyboxComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\BaseComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Windows\EntityEditorWindow.cpp" />
     <ClCompile Include="src\Renderer\RayIntersections.cpp" />
@@ -34,6 +50,10 @@
     <ClCompile Include="src\GUI\Windows\TextureCompressionWindow.cpp" />
     <ClCompile Include="src\Utils\TextureBlockCompression.cpp" />
     <ClCompile Include="src\GUI\Components\TransformComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\TerrainComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\VehicleComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\VehiclePlayerControllerComponentEditor.cpp" />
+    <ClCompile Include="src\GUI\Components\WheelComponentEditor.cpp" />
     <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_pixel_shader.hlsl">
       <FileType>CppCode</FileType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
@@ -188,6 +208,22 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Components\CameraComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\CameraTargetComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\CameraVehicleAnimatedTargetComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\ModelRenderComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\PhysicsMaterialComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicBoxComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicCapsuleComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicCylinderComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicSphereComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticBoxComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticCapsuleComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticCylinderComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticHeightFieldsComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticPlaneComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticSphereComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\SkyboxComponentEditor.h" />
     <ClInclude Include="src\GUI\Components\BaseComponentEditor.h" />
     <ClInclude Include="src\GUI\Windows\EntityEditorWindow.h" />
     <ClInclude Include="src\Renderer\RayIntersections.h" />
@@ -351,6 +387,10 @@
     <ClInclude Include="src\Utils\TextureBlockCompression.h" />
     <ClInclude Include="src\Utils\TextureBlockCompressionSettings.h" />
     <ClInclude Include="src\GUI\Components\TransformComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\TerrainComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\VehicleComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\VehiclePlayerControllerComponentEditor.h" />
+    <ClInclude Include="src\GUI\Components\WheelComponentEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">

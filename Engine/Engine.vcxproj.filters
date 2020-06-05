@@ -450,6 +450,66 @@
     <ClCompile Include="src\GUI\Components\TransformComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\Components\ModelRenderComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\PhysicsMaterialComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyDynamicBoxComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyDynamicCapsuleComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyDynamicCylinderComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyDynamicSphereComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticBoxComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticCapsuleComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticCylinderComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticHeightFieldsComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticPlaneComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RigidbodyStaticSphereComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\SkyboxComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\TerrainComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\VehicleComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\VehiclePlayerControllerComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\WheelComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\CameraVehicleAnimatedTargetComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\CameraComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\CameraTargetComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -939,6 +999,66 @@
       <Filter>Header Files\GUI\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\GUI\Components\TransformComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\WheelComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\ModelRenderComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\PhysicsMaterialComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicBoxComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicCapsuleComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicCylinderComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicSphereComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticBoxComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticCapsuleComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticCylinderComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticHeightFieldsComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticPlaneComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyStaticSphereComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\SkyboxComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\TerrainComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\VehicleComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\VehiclePlayerControllerComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\CameraVehicleAnimatedTargetComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\CameraTargetComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\CameraComponentEditor.h">
       <Filter>Header Files\GUI\Components</Filter>
     </ClInclude>
   </ItemGroup>
