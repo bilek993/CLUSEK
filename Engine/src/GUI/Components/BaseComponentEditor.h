@@ -11,7 +11,8 @@ public:
 		entt::registry *registry, entt::entity *selectedEntity, bool *entitySelected);
 
 protected:
-	virtual void Draw() = 0;
+	// It is recommended to override this function
+	virtual void Draw();
 
 	float DeltaTime = 0;
 	ConfigData *Config = nullptr;
