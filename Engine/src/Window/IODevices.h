@@ -9,9 +9,16 @@ class IODevices final
 {
 public:
 	IODevices();
+
 	void Update();
+
 	void ChangeMouseToRelativeMode(HWND hwnd);
 	void ChangeMouseToAbsoluteMode(HWND hwnd);
+
+	void HandleMouseUpdate();
+	void HandleKeyboardUpdate();
+	void HandleGamePadUpdate();
+
 	IOData Get() const;
 
 private:

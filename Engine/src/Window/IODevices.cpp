@@ -1,5 +1,6 @@
 #include "IODevices.h"
 #include "../Utils/Logger.h"
+#include <imgui.h>
 
 IODevices::IODevices()
 {
@@ -12,21 +13,15 @@ IODevices::IODevices()
 
 void IODevices::Update()
 {
-	MouseState = Mouse->GetState();
-	KeyboardState = Keyboard->GetState();
-	GamePadState = GamePad->GetState(0);
+	auto& io = ImGui::GetIO();
 
-	MouseTracker.Update(MouseState);
-	KeyboardTracker.Update(KeyboardState);
-	if (GamePadState.IsConnected()) {
-		GamePadTracker.Update(GamePadState);
-	}
+	if (!io.WantCaptureMouse)
+		HandleMouseUpdate();
 
-	if (CurrentMouseMode == DirectX::Mouse::Mode::MODE_ABSOLUTE)
-	{
-		MouseState.x = 0;
-		MouseState.y = 0;
-	}
+	if (!io.WantCaptureKeyboard)
+		HandleKeyboardUpdate();
+
+	HandleGamePadUpdate();
 }
 
 void IODevices::ChangeMouseToRelativeMode(const HWND hwnd)
@@ -49,6 +44,32 @@ void IODevices::ChangeMouseToAbsoluteMode(const HWND hwnd) // Absolute mode is d
 	CurrentMouseMode = DirectX::Mouse::Mode::MODE_ABSOLUTE;
 	Mouse->SetMode(CurrentMouseMode);
 	Logger::Debug("Switched mouse into absolute mode.");
+}
+
+void IODevices::HandleMouseUpdate()
+{
+	MouseState = Mouse->GetState();
+	MouseTracker.Update(MouseState);
+
+	if (CurrentMouseMode == DirectX::Mouse::Mode::MODE_ABSOLUTE)
+	{
+		MouseState.x = 0;
+		MouseState.y = 0;
+	}
+}
+
+void IODevices::HandleKeyboardUpdate()
+{
+	KeyboardState = Keyboard->GetState();
+	KeyboardTracker.Update(KeyboardState);
+}
+
+void IODevices::HandleGamePadUpdate()
+{
+	GamePadState = GamePad->GetState(0);
+	if (GamePadState.IsConnected()) {
+		GamePadTracker.Update(GamePadState);
+	}
 }
 
 IOData IODevices::Get() const

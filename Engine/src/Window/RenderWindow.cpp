@@ -4,6 +4,7 @@
 #include <Mouse.h>
 #include <winuser.h>
 #include "../resource.h"
+#include <imgui.h>
 
 bool RenderWindow::Initialize(const HINSTANCE hInstance, const std::string& windowTitle, 
 	const std::string& windowClass, const int width, const int height)
@@ -99,7 +100,7 @@ RenderWindow::~RenderWindow()
 	}
 }
 
-extern LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 LRESULT CALLBACK WindowProc(const HWND hwnd, const UINT msg, const WPARAM wParam, const LPARAM lParam)
 {
