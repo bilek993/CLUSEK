@@ -45,7 +45,6 @@
     <ClCompile Include="src\Loaders\Components\TerrainComponentLoader.cpp" />
     <ClCompile Include="src\Utils\TerrainUtil.cpp" />
     <ClCompile Include="src\GUI\Windows\TerrainTessellationWindow.cpp" />
-    <ClCompile Include="src\GUI\Windows\TransformManipulateWindow.cpp" />
     <ClCompile Include="src\GUI\Windows\TextureCompressionWindow.cpp" />
     <ClCompile Include="src\Utils\TextureBlockCompression.cpp" />
     <ClCompile Include="src\GUI\Components\TransformComponentEditor.cpp" />
@@ -381,7 +380,6 @@
     <ClInclude Include="src\Renderer\ConstantBufferTypes\TerrainUvBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\WorldMatrixBuffer.h" />
     <ClInclude Include="src\Renderer\TransparencyRenderType.h" />
-    <ClInclude Include="src\GUI\Windows\TransformManipulateWindow.h" />
     <ClInclude Include="src\GUI\Windows\TextureCompressionWindow.h" />
     <ClInclude Include="src\Utils\TextureBlockCompression.h" />
     <ClInclude Include="src\Utils\TextureBlockCompressionSettings.h" />

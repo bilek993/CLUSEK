@@ -71,7 +71,6 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(ShadowPreviewerWindowInstance);
 	UPDATE_USER_INTERFACE(TerrainTessellationWindowInstance);
 	UPDATE_USER_INTERFACE(FogWindowInstance);
-	UPDATE_USER_INTERFACE(TransformManipulateWindowInstance);
 	UPDATE_USER_INTERFACE(TextureCompressionWindowInstance);
 	UPDATE_USER_INTERFACE(LodDebugWindowInstance);
 	UPDATE_USER_INTERFACE(EntityEditorWindowInstance);
@@ -110,7 +109,6 @@ void DebugUserInterface::DrawMenuBar()
 			DrawMenuItemForWindow("Entity viewer", EntityViewerWindowInstance);
 			DrawMenuItemForWindow("Entity editor", EntityEditorWindowInstance);
 			DrawMenuItemForWindow("Systems manager", SystemsManagerWindowInstance);
-			DrawMenuItemForWindow("Transform manipulation", TransformManipulateWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("Renderer"))

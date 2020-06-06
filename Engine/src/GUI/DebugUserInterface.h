@@ -25,7 +25,6 @@
 #include "Windows/ConfigurationWindow.h"
 #include "Windows/TerrainTessellationWindow.h"
 #include "Windows/FogWindow.h"
-#include "Windows/TransformManipulateWindow.h"
 #include "Windows/TextureCompressionWindow.h"
 #include "Windows/LodDebugWindow.h"
 #include "Windows/EntityEditorWindow.h"
@@ -89,7 +88,6 @@ private:
 	ShadowPreviewerWindow ShadowPreviewerWindowInstance;
 	TerrainTessellationWindow TerrainTessellationWindowInstance;
 	FogWindow FogWindowInstance;
-	TransformManipulateWindow TransformManipulateWindowInstance;
 	TextureCompressionWindow TextureCompressionWindowInstance;
 	LodDebugWindow LodDebugWindowInstance;
 	EntityEditorWindow EntityEditorWindowInstance;
