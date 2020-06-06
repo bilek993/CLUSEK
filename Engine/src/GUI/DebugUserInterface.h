@@ -35,7 +35,7 @@
 class DebugUserInterface final
 {
 public:
-	void Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const ConfigData *configData,
+	void Initialize(HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const ConfigData *configData,
 		const std::function<void()> &functionCloseEngine);
 	void Update(float deltaTime, ConfigData *configData, IOData *ioData, 
 		std::vector<SystemHolder> *systems, int renderSystemId, DynamicRenderSettings *dynamicRenderSettings, 
@@ -56,11 +56,17 @@ private:
 	void DrawMenuItemForWindow(const std::string& label, BaseWindow& window) const;
 	void DrawMenuItemForFunction(const std::string& label, const std::function<void()>& function) const;
 
+	void HandleClickingOnObjects(IOData *ioData, entt::registry *registry, ConfigData *configData);
+
+	CameraComponent& GetMainCamera(entt::registry *registry) const;
+	TransformComponent& GetMainCameraTransform(entt::registry *registry) const;
+
 	inline const static std::string DOCKSPACE_AREA_NAME = "MainDockspaceArea";
 
 	bool IsEnabled = false;
 	bool IsDockingEnabled = false;
 
+	// Always set `EntitySelected` to true, when changing this value
 	entt::entity SelectedEntity = 0;
 	bool EntitySelected = false;
 

@@ -4,6 +4,8 @@
 #include "../Utils/Logger.h"
 #include "Windows/SystemsManagerWindow.h"
 #include "../Renderer/PostProcessingSettings.h"
+#include "../Tags.h"
+#include "../Renderer/RayIntersections.h"
 
 void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const ConfigData *configData,
 	const std::function<void()> &functionCloseEngine)
@@ -49,6 +51,8 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	}
 
 	HandleMainDockingArea();
+
+	HandleClickingOnObjects(ioData, registry, configData);
 
 	UPDATE_USER_INTERFACE(ConfigurationWindowInstance);
 	UPDATE_USER_INTERFACE(CameraSpeedWindowInstance);
@@ -160,6 +164,77 @@ void DebugUserInterface::DrawMenuItemForFunction(const std::string& label, const
 {
 	if (ImGui::MenuItem(label.c_str()))
 		function();
+}
+
+void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry* registry, ConfigData *configData)
+{
+	if (ioData->MouseTracker.leftButton != DirectX::Mouse::ButtonStateTracker::ButtonState::PRESSED)
+		return;
+
+	auto& mainCameraComponent = GetMainCamera(registry);
+	auto& mainCameraTransform = GetMainCameraTransform(registry);
+
+	auto selectedObjectDistance = std::numeric_limits<float>::max();
+
+	registry->each([this, registry, configData, &mainCameraComponent, &mainCameraTransform, &selectedObjectDistance](const entt::entity entity)
+	{
+		if (!registry->has<TransformComponent, ModelRenderComponent>(entity))
+			return;
+
+		const auto& transformComponent = registry->get<TransformComponent>(entity);
+		const auto& modelRenderComponent = registry->get<ModelRenderComponent>(entity);
+
+		const auto rayOrigin = TransformLogic::GetPosition(mainCameraTransform);
+		const auto rayDirection = mainCameraComponent.VectorForward;
+
+		auto currentObjectDistance = 0.0f;
+
+		for (const auto& mesh : *modelRenderComponent.Meshes)
+		{
+			if (RayIntersections::TestObb(	XMLoadFloat3(&rayOrigin),
+											rayDirection,
+											mesh.FrustumPoints,
+											transformComponent.WorldMatrix,
+											configData->MainCameraFarZ - configData->MainCameraNearZ,
+											&currentObjectDistance))
+			{
+				if (currentObjectDistance < selectedObjectDistance)
+				{
+					selectedObjectDistance = currentObjectDistance;
+					SelectedEntity = entity;
+					EntitySelected = true;
+				}
+			}
+		}
+	});
+}
+
+CameraComponent& DebugUserInterface::GetMainCamera(entt::registry *registry) const
+{
+	auto view = registry->view<CameraComponent, entt::tag<Tags::MAIN_CAMERA>>();
+	if (view.size() != 1)
+	{
+		if (view.size() > 1)
+			Logger::Error("More than one main render camera found!");
+		else
+			Logger::Error("Main render camera not found!");
+	}
+
+	return view.raw<CameraComponent>()[0];
+}
+
+TransformComponent& DebugUserInterface::GetMainCameraTransform(entt::registry *registry) const
+{
+	auto view = registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
+	if (view.size() != 1)
+	{
+		if (view.size() > 1)
+			Logger::Error("More than one main render camera found!");
+		else
+			Logger::Error("Main render camera not found!");
+	}
+
+	return view.raw<TransformComponent>()[0];
 }
 
 DebugUserInterface::~DebugUserInterface()
