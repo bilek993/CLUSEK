@@ -34,8 +34,8 @@ private:
 	void DrawComponentsForEntity();
 	void DrawNoElements() const;
 
-	template <class T>
-	void DrawComponentDetails(const entt::entity* entity, BaseComponentEditor& editorInstance, const std::string& name) const;
+	template <class C>
+	void DrawComponentDetails(const entt::entity* entity, BaseComponentEditor<C>& editorInstance, const std::string& name) const;
 
 	CameraComponentEditor CameraComponentEditorInstance;
 	CameraTargetComponentEditor CameraTargetComponentEditorInstance;
@@ -60,10 +60,10 @@ private:
 	WheelComponentEditor WheelComponentEditorInstance;
 };
 
-template <class T>
-void EntityEditorWindow::DrawComponentDetails(const entt::entity* entity, BaseComponentEditor& editorInstance, const std::string& name) const
+template <class C>
+void EntityEditorWindow::DrawComponentDetails(const entt::entity* entity, BaseComponentEditor<C>& editorInstance, const std::string& name) const
 {
-	if (!Registry->has<T>(*entity))
+	if (!Registry->has<C>(*entity))
 		return;
 
 	if (ImGui::CollapsingHeader(name.c_str()))

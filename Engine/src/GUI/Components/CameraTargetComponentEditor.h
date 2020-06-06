@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponentEditor.h"
+#include "../../ECS/Components/CameraTargetComponent.h"
 
-class CameraTargetComponentEditor final : public BaseComponentEditor
+class CameraTargetComponentEditor final : public BaseComponentEditor<CameraTargetComponent>
 {
 };
