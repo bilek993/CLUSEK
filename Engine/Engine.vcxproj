@@ -27,7 +27,6 @@
     <ClCompile Include="src\GUI\Components\RigidbodyStaticPlaneComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\RigidbodyStaticSphereComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\SkyboxComponentEditor.cpp" />
-    <ClCompile Include="src\GUI\Components\BaseComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Windows\EntityEditorWindow.cpp" />
     <ClCompile Include="src\Renderer\RayIntersections.cpp" />
     <ClCompile Include="src\GUI\Windows\LodDebugWindow.cpp" />
