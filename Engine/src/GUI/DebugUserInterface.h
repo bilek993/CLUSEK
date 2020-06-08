@@ -57,9 +57,6 @@ private:
 
 	void HandleClickingOnObjects(IOData *ioData, entt::registry *registry, ConfigData *configData);
 
-	CameraComponent& GetMainCamera(entt::registry *registry) const;
-	TransformComponent& GetMainCameraTransform(entt::registry *registry) const;
-
 	inline const static std::string DOCKSPACE_AREA_NAME = "MainDockspaceArea";
 
 	bool IsEnabled = false;

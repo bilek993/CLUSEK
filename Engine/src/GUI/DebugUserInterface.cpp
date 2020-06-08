@@ -6,6 +6,7 @@
 #include "../Renderer/PostProcessingSettings.h"
 #include "../Tags.h"
 #include "../Renderer/RayIntersections.h"
+#include "../Utils/CameraLocator.h"
 
 void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const ConfigData *configData,
 	const std::function<void()> &functionCloseEngine)
@@ -169,8 +170,8 @@ void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry*
 	if (ioData->MouseTracker.leftButton != DirectX::Mouse::ButtonStateTracker::ButtonState::PRESSED)
 		return;
 
-	auto& mainCameraComponent = GetMainCamera(registry);
-	auto& mainCameraTransform = GetMainCameraTransform(registry);
+	auto& mainCameraComponent = CameraLocator::GetMainCamera(registry);
+	auto& mainCameraTransform = CameraLocator::GetMainCameraTransform(registry);
 
 	auto selectedObjectDistance = std::numeric_limits<float>::max();
 
@@ -205,34 +206,6 @@ void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry*
 			}
 		}
 	});
-}
-
-CameraComponent& DebugUserInterface::GetMainCamera(entt::registry *registry) const
-{
-	auto view = registry->view<CameraComponent, entt::tag<Tags::MAIN_CAMERA>>();
-	if (view.size() != 1)
-	{
-		if (view.size() > 1)
-			Logger::Error("More than one main render camera found!");
-		else
-			Logger::Error("Main render camera not found!");
-	}
-
-	return view.raw<CameraComponent>()[0];
-}
-
-TransformComponent& DebugUserInterface::GetMainCameraTransform(entt::registry *registry) const
-{
-	auto view = registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
-	if (view.size() != 1)
-	{
-		if (view.size() > 1)
-			Logger::Error("More than one main render camera found!");
-		else
-			Logger::Error("Main render camera not found!");
-	}
-
-	return view.raw<TransformComponent>()[0];
 }
 
 DebugUserInterface::~DebugUserInterface()

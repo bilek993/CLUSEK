@@ -1,11 +1,10 @@
 #include "TransformComponentEditor.h"
-#include "../../Tags.h"
 #include "../../ECS/Systems/RenderSystem.h"
+#include "../../Utils/CameraLocator.h"
 
 void TransformComponentEditor::Draw()
 {
-	const auto renderSystem = dynamic_cast<RenderSystem*>((*Systems)[RenderSystemId].System.get());
-	const auto mainCamera = renderSystem->GetMainCamera();
+	const auto mainCamera = CameraLocator::GetMainCamera(Registry);
 
 	DirectX::XMFLOAT4X4 viewMatrixFloats{};
 	XMStoreFloat4x4(&viewMatrixFloats, mainCamera.ViewMatrix);
@@ -35,32 +34,4 @@ void TransformComponentEditor::Draw()
 	Manipulate(&viewMatrixFloats._11, &projectionMatrixFloats._11, CurrentGizmoOperation, ImGuizmo::WORLD, &worldMatrixFloats._11);
 
 	GetPointerToThisComponent()->WorldMatrix = XMLoadFloat4x4(&worldMatrixFloats);
-}
-
-CameraComponent& TransformComponentEditor::GetMainCamera() const
-{
-	auto view = Registry->view<CameraComponent, entt::tag<Tags::MAIN_CAMERA>>();
-	if (view.size() != 1)
-	{
-		if (view.size() > 1)
-			Logger::Error("More than one main render camera found!");
-		else
-			Logger::Error("Main render camera not found!");
-	}
-
-	return view.raw<CameraComponent>()[0];
-}
-
-TransformComponent& TransformComponentEditor::GetMainCameraTransform() const
-{
-	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
-	if (view.size() != 1)
-	{
-		if (view.size() > 1)
-			Logger::Error("More than one main render camera found!");
-		else
-			Logger::Error("Main render camera not found!");
-	}
-
-	return view.raw<TransformComponent>()[0];
 }

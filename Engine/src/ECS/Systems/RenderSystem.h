@@ -50,9 +50,6 @@ public:
 	void RenderFrameBegin() const;
 	void RenderFrameEnd() const;
 
-	CameraComponent& GetMainCamera() const;
-	TransformComponent& GetMainCameraTransform() const;
-
 	ID3D11Device* GetPointerToDevice() const;
 	ID3D11DeviceContext* GetPointerToDeviceContext() const;
 	ID3D11ShaderResourceView* GetPointerToRemappedShadowShaderResourceView(float bias, int cascadeLevel) const;

@@ -17,6 +17,7 @@
 #include "../../Utils/TerrainUtil.h"
 #include "../../Renderer/FrustumUtil.h"
 #include "../../Utils/StringUtil.h"
+#include "../../Utils/CameraLocator.h"
 
 void RenderSystem::Start()
 {
@@ -62,8 +63,8 @@ void RenderSystem::Start()
 
 void RenderSystem::Update(const float deltaTime)
 {
-	auto& mainCameraComponent = GetMainCamera();
-	auto& mainCameraTransform = GetMainCameraTransform();
+	auto& mainCameraComponent = CameraLocator::GetMainCamera(Registry);
+	auto& mainCameraTransform = CameraLocator::GetMainCameraTransform(Registry);
 
 	UpdateCameraBuffer(mainCameraTransform);
 
@@ -103,34 +104,6 @@ void RenderSystem::RenderFrameBegin() const
 void RenderSystem::RenderFrameEnd() const
 {
 	SwapChain->Present(SyncIntervals, 0);
-}
-
-CameraComponent& RenderSystem::GetMainCamera() const
-{
-	auto view = Registry->view<CameraComponent, entt::tag<Tags::MAIN_CAMERA>>();
-	if (view.size() != 1)
-	{
-		if (view.size() > 1)
-			Logger::Error("More than one main render camera found!");
-		else
-			Logger::Error("Main render camera not found!");
-	}
-
-	return view.raw<CameraComponent>()[0];
-}
-
-TransformComponent& RenderSystem::GetMainCameraTransform() const
-{
-	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
-	if (view.size() != 1)
-	{
-		if (view.size() > 1)
-			Logger::Error("More than one main render camera found!");
-		else
-			Logger::Error("Main render camera not found!");
-	}
-
-	return view.raw<TransformComponent>()[0];
 }
 
 ID3D11Device* RenderSystem::GetPointerToDevice() const
@@ -914,7 +887,7 @@ void RenderSystem::RenderShadows(const CameraComponent &mainCameraComponent, con
 
 	DeviceContext->RSSetViewports(1, &ShadowViewport);
 
-	auto& mainCamera = GetMainCamera();
+	auto& mainCamera = CameraLocator::GetMainCamera(Registry);
 
 	for (auto& camera : ShadowCameras)
 	{
