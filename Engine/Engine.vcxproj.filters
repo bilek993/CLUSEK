@@ -504,6 +504,9 @@
     <ClCompile Include="src\GUI\Components\CameraTargetComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\CameraLocator.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -1051,6 +1054,9 @@
     </ClInclude>
     <ClInclude Include="src\GUI\Components\CameraComponentEditor.h">
       <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\CameraLocator.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
