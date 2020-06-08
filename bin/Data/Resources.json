@@ -84,8 +84,7 @@
 	},
 	
 	"SmoothCylinder_Albedo": {
-	  "Path": "Data/Textures/SmoothCylinder/SmoothCylinderAlbedo.dds",
-	  "SRGBMode": "FORCED"
+	  "Path": "Data/Textures/SmoothCylinder/SmoothCylinderAlbedo.dds"
 	},
   
 	"Skybox": {
