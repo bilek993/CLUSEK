@@ -2,11 +2,11 @@
 #include "algorithm"
 
 bool RayUtil::TestObb(	const DirectX::XMVECTOR& rayOrigin,
-								const DirectX::XMVECTOR& rayDirection,
-								const std::array<DirectX::XMFLOAT3, 8>& aabbPoints, 
-								const DirectX::XMMATRIX& worldMatrix,
-								const float maxDistance,
-								float* intersectionDistance)
+						const DirectX::XMVECTOR& rayDirection,
+						const std::array<DirectX::XMFLOAT3, 8>& aabbPoints, 
+						const DirectX::XMMATRIX& worldMatrix,
+						const float maxDistance,
+						float* intersectionDistance)
 {
 	auto aabbMin = DirectX::XMFLOAT3(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
 	auto aabbMax = DirectX::XMFLOAT3(-std::numeric_limits<float>::max(), -std::numeric_limits<float>::max(), -std::numeric_limits<float>::max());
@@ -38,12 +38,12 @@ bool RayUtil::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 }
 
 bool RayUtil::TestObb(	const DirectX::XMVECTOR& rayOrigin,
-								const DirectX::XMVECTOR& rayDirection,
-								const DirectX::XMVECTOR& aabbMin, 
-								const DirectX::XMVECTOR& aabbMax, 
-								const DirectX::XMMATRIX& worldMatrix,
-								const float maxDistance,
-								float* intersectionDistance)
+						const DirectX::XMVECTOR& rayDirection,
+						const DirectX::XMVECTOR& aabbMin, 
+						const DirectX::XMVECTOR& aabbMax, 
+						const DirectX::XMMATRIX& worldMatrix,
+						const float maxDistance,
+						float* intersectionDistance)
 {
 	auto tMin = 0.0f;
 	auto tMax = maxDistance;
@@ -87,12 +87,12 @@ bool RayUtil::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 }
 
 bool RayUtil::TestObbIntersectionWithPlanes(	const DirectX::XMVECTOR& axis,
-														const DirectX::XMVECTOR& delta,
-														const DirectX::XMVECTOR& rayDirection, 
-														const float aabbMinOnAxis,
-														const float aabbMaxOnAxis,
-														float& tMax,
-														float& tMin)
+												const DirectX::XMVECTOR& delta,
+												const DirectX::XMVECTOR& rayDirection, 
+												const float aabbMinOnAxis,
+												const float aabbMaxOnAxis,
+												float& tMax,
+												float& tMin)
 {
 	const auto e = DirectX::XMVectorGetX(DirectX::XMVector3Dot(axis, delta));
 	const auto f = DirectX::XMVectorGetX(DirectX::XMVector3Dot(rayDirection, axis));
