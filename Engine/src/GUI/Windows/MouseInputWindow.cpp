@@ -11,8 +11,8 @@ void MouseInputWindow::Draw()
 
 	ImGui::Separator();
 
-	ImGui::Text("Mouse delta x: %d", IoData->MouseState.x);
-	ImGui::Text("Mouse delta y: %d", IoData->MouseState.y);
+	ImGui::Text("Mouse x: %d", IoData->MouseState.x);
+	ImGui::Text("Mouse y: %d", IoData->MouseState.y);
 
 	ImGui::Separator();
 
