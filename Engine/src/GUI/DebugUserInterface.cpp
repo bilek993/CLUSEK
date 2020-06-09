@@ -169,6 +169,12 @@ void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry*
 	if (ioData->MouseTracker.leftButton != DirectX::Mouse::ButtonStateTracker::ButtonState::PRESSED)
 		return;
 
+	if (ioData->MouseState.positionMode == DirectX::Mouse::MODE_RELATIVE)
+	{
+		Logger::Debug("Skipping handling mouse for UI due to relative mouse mode!");
+		return;
+	}
+
 	auto& mainCameraComponent = CameraLocator::GetMainCamera(registry);
 
 	DirectX::XMVECTOR rayOrigin{};
