@@ -50,12 +50,6 @@ void IODevices::HandleMouseUpdate()
 {
 	MouseState = Mouse->GetState();
 	MouseTracker.Update(MouseState);
-
-	if (CurrentMouseMode == DirectX::Mouse::Mode::MODE_ABSOLUTE)
-	{
-		MouseState.x = 0;
-		MouseState.y = 0;
-	}
 }
 
 void IODevices::HandleKeyboardUpdate()

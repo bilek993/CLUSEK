@@ -197,10 +197,13 @@ std::pair<float, float> CameraSystem::GetRotation(const float deltaTime, const C
 	{
 		if (InputOutputData->MouseState.rightButton)
 		{
+			if (InputOutputData->MouseState.positionMode == DirectX::Mouse::MODE_RELATIVE)
+			{
+				rotationX += static_cast<float>(InputOutputData->MouseState.y) * ConfigurationData->MouseSpeedController * deltaTime;
+				rotationY += static_cast<float>(InputOutputData->MouseState.x) * ConfigurationData->MouseSpeedController * deltaTime;
+			}
+			
 			InputOutputDevices->ChangeMouseToRelativeMode(Window->GetHandle());
-
-			rotationX += static_cast<float>(InputOutputData->MouseState.y) * ConfigurationData->MouseSpeedController * deltaTime;
-			rotationY += static_cast<float>(InputOutputData->MouseState.x) * ConfigurationData->MouseSpeedController * deltaTime;
 		}
 		else
 		{
