@@ -2,7 +2,7 @@
 #include <DirectXMath.h>
 #include <array>
 
-class RayIntersections final
+class RayUtil final
 {
 public:
 	static bool TestObb(const DirectX::XMVECTOR& rayOrigin,

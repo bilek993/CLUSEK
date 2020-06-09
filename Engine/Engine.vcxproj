@@ -29,7 +29,7 @@
     <ClCompile Include="src\GUI\Components\RigidbodyStaticSphereComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\SkyboxComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Windows\EntityEditorWindow.cpp" />
-    <ClCompile Include="src\Renderer\RayIntersections.cpp" />
+    <ClCompile Include="src\Utils\RayUtil.cpp" />
     <ClCompile Include="src\GUI\Windows\LodDebugWindow.cpp" />
     <ClCompile Include="src\Loaders\Components\CameraVehicleAnimatedTargetComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\CameraTargetComponentLoader.cpp" />
@@ -226,7 +226,7 @@
     <ClInclude Include="src\GUI\Components\SkyboxComponentEditor.h" />
     <ClInclude Include="src\GUI\Components\BaseComponentEditor.h" />
     <ClInclude Include="src\GUI\Windows\EntityEditorWindow.h" />
-    <ClInclude Include="src\Renderer\RayIntersections.h" />
+    <ClInclude Include="src\Utils\RayUtil.h" />
     <ClInclude Include="src\Renderer\LodMode.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\LodTransitionBuffer.h" />
     <ClInclude Include="src\GUI\Windows\LodDebugWindow.h" />

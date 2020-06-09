@@ -4,8 +4,7 @@
 #include "../Utils/Logger.h"
 #include "Windows/SystemsManagerWindow.h"
 #include "../Renderer/PostProcessingSettings.h"
-#include "../Tags.h"
-#include "../Renderer/RayIntersections.h"
+#include "../Utils/RayUtil.h"
 #include "../Utils/CameraLocator.h"
 
 void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const ConfigData *configData,
@@ -190,12 +189,12 @@ void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry*
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
-			if (RayIntersections::TestObb(	XMLoadFloat3(&rayOrigin),
-											rayDirection,
-											mesh.FrustumPoints,
-											transformComponent.WorldMatrix,
-											configData->MainCameraFarZ - configData->MainCameraNearZ,
-											&currentObjectDistance))
+			if (RayUtil::TestObb(	XMLoadFloat3(&rayOrigin),
+									rayDirection,
+									mesh.FrustumPoints,
+									transformComponent.WorldMatrix,
+									configData->MainCameraFarZ - configData->MainCameraNearZ,
+									&currentObjectDistance))
 			{
 				if (currentObjectDistance < selectedObjectDistance)
 				{

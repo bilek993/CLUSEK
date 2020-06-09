@@ -1,7 +1,7 @@
-#include "RayIntersections.h"
+#include "RayUtil.h"
 #include "algorithm"
 
-bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin, 
+bool RayUtil::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 								const DirectX::XMVECTOR& rayDirection,
 								const std::array<DirectX::XMFLOAT3, 8>& aabbPoints, 
 								const DirectX::XMMATRIX& worldMatrix,
@@ -37,7 +37,7 @@ bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 					intersectionDistance);
 }
 
-bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin, 
+bool RayUtil::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 								const DirectX::XMVECTOR& rayDirection,
 								const DirectX::XMVECTOR& aabbMin, 
 								const DirectX::XMVECTOR& aabbMax, 
@@ -86,7 +86,7 @@ bool RayIntersections::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 	return true;
 }
 
-bool RayIntersections::TestObbIntersectionWithPlanes(	const DirectX::XMVECTOR& axis, 
+bool RayUtil::TestObbIntersectionWithPlanes(	const DirectX::XMVECTOR& axis,
 														const DirectX::XMVECTOR& delta,
 														const DirectX::XMVECTOR& rayDirection, 
 														const float aabbMinOnAxis,
