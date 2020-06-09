@@ -1,6 +1,44 @@
 #include "RayUtil.h"
 #include "algorithm"
 
+void RayUtil::MousePositionToRayOriginAndDirection(	float mouseX, 
+													float mouseY, 
+													DirectX::XMMATRIX& viewMatrix,
+													DirectX::XMMATRIX& projectionMatrix, 
+													DirectX::XMVECTOR& rayOriginOutput, 
+													DirectX::XMVECTOR& rayDirectionOutput)
+{
+	mouseX = (mouseX * 2.0f) - 1.0f;
+	mouseY = (mouseY * 2.0f) - 1.0f;
+
+	const auto rayStartNormalizedDeviceCoordinates = DirectX::XMFLOAT4(mouseX, mouseY, -1.0f, 1.0f);
+	const auto rayEndNormalizedDeviceCoordinates = DirectX::XMFLOAT4(mouseX, mouseY, 0.0f, 1.0f);
+
+	const auto rayStartNormalizedDeviceCoordinatesVector = XMLoadFloat4(&rayStartNormalizedDeviceCoordinates);
+	const auto rayEndNormalizedDeviceCoordinatesVector = XMLoadFloat4(&rayEndNormalizedDeviceCoordinates);
+
+	// TODO: Optimize this
+	const auto projectionMatrixInverse = XMMatrixInverse(nullptr, projectionMatrix);
+	const auto viewMatrixInverse = XMMatrixInverse(nullptr, viewMatrix);
+
+	auto rayStartCamera = XMVector4Transform(rayStartNormalizedDeviceCoordinatesVector, projectionMatrixInverse);
+	rayStartCamera = DirectX::XMVectorScale(rayStartCamera, 1.0f / DirectX::XMVectorGetW(rayStartCamera));
+
+	auto rayStartWorld = XMVector4Transform(rayStartCamera, viewMatrixInverse);
+	rayStartWorld = DirectX::XMVectorScale(rayStartWorld, 1.0f / DirectX::XMVectorGetW(rayStartCamera));
+
+	auto rayEndCamera = XMVector4Transform(rayEndNormalizedDeviceCoordinatesVector, projectionMatrixInverse);
+	rayEndCamera = DirectX::XMVectorScale(rayEndCamera, 1.0f / DirectX::XMVectorGetW(rayEndCamera));
+
+	auto rayEndWorld = XMVector4Transform(rayEndCamera, viewMatrixInverse);
+	rayEndWorld = DirectX::XMVectorScale(rayEndWorld, 1.0f / DirectX::XMVectorGetW(rayEndCamera));
+
+	const auto rayDir = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(rayEndWorld, rayStartWorld));
+
+	rayOriginOutput = rayStartWorld;
+	rayDirectionOutput = rayDir;
+}
+
 bool RayUtil::TestObb(	const DirectX::XMVECTOR& rayOrigin,
 						const DirectX::XMVECTOR& rayDirection,
 						const std::array<DirectX::XMFLOAT3, 8>& aabbPoints, 

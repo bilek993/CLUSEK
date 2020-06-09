@@ -170,11 +170,20 @@ void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry*
 		return;
 
 	auto& mainCameraComponent = CameraLocator::GetMainCamera(registry);
-	auto& mainCameraTransform = CameraLocator::GetMainCameraTransform(registry);
+
+	DirectX::XMVECTOR rayOrigin{};
+	DirectX::XMVECTOR rayDirection{};
+
+	RayUtil::MousePositionToRayOriginAndDirection(	ioData->MouseState.x,
+													ioData->MouseState.y,
+													mainCameraComponent.ViewMatrix,
+													mainCameraComponent.ProjectionMatrix,
+													rayOrigin,
+													rayDirection);
 
 	auto selectedObjectDistance = std::numeric_limits<float>::max();
 
-	registry->each([this, registry, configData, &mainCameraComponent, &mainCameraTransform, &selectedObjectDistance](const entt::entity entity)
+	registry->each([this, registry, configData, &rayOrigin, &rayDirection, &selectedObjectDistance](const entt::entity entity)
 	{
 		if (!registry->has<TransformComponent, ModelRenderComponent>(entity))
 			return;
@@ -182,14 +191,11 @@ void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry*
 		const auto& transformComponent = registry->get<TransformComponent>(entity);
 		const auto& modelRenderComponent = registry->get<ModelRenderComponent>(entity);
 
-		const auto rayOrigin = TransformLogic::GetPosition(mainCameraTransform);
-		const auto rayDirection = mainCameraComponent.VectorForward;
-
 		auto currentObjectDistance = 0.0f;
 
 		for (const auto& mesh : *modelRenderComponent.Meshes)
 		{
-			if (RayUtil::TestObb(	XMLoadFloat3(&rayOrigin),
+			if (RayUtil::TestObb(	rayOrigin,
 									rayDirection,
 									mesh.FrustumPoints,
 									transformComponent.WorldMatrix,

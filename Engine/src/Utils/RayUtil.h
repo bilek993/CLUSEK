@@ -5,6 +5,13 @@
 class RayUtil final
 {
 public:
+	static void MousePositionToRayOriginAndDirection(	float mouseX,
+														float mouseY,
+														DirectX::XMMATRIX& viewMatrix,
+														DirectX::XMMATRIX& projectionMatrix,
+														DirectX::XMVECTOR& rayOriginOutput,
+														DirectX::XMVECTOR& rayDirectionOutput);
+
 	static bool TestObb(const DirectX::XMVECTOR& rayOrigin,
 						const DirectX::XMVECTOR& rayDirection,
 						const std::array<DirectX::XMFLOAT3, 8>& aabbPoints,
