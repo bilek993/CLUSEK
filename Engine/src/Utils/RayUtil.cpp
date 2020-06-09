@@ -2,17 +2,19 @@
 #include "algorithm"
 
 void RayUtil::MousePositionToRayOriginAndDirection(	float mouseX, 
-													float mouseY, 
+													float mouseY,
+													const float screenWidth,
+													const float screenHeight,
 													DirectX::XMMATRIX& viewMatrix,
 													DirectX::XMMATRIX& projectionMatrix, 
 													DirectX::XMVECTOR& rayOriginOutput, 
 													DirectX::XMVECTOR& rayDirectionOutput)
 {
-	mouseX = (mouseX * 2.0f) - 1.0f;
-	mouseY = (mouseY * 2.0f) - 1.0f;
+	mouseX = ((mouseX / screenWidth) * 2.0f) - 1.0f;
+	mouseY = ((mouseY / screenHeight) * 2.0f) - 1.0f;
 
-	const auto rayStartNormalizedDeviceCoordinates = DirectX::XMFLOAT4(mouseX, mouseY, -1.0f, 1.0f);
-	const auto rayEndNormalizedDeviceCoordinates = DirectX::XMFLOAT4(mouseX, mouseY, 0.0f, 1.0f);
+	const auto rayStartNormalizedDeviceCoordinates = DirectX::XMFLOAT4(mouseX, -mouseY, -1.0f, 1.0f);
+	const auto rayEndNormalizedDeviceCoordinates = DirectX::XMFLOAT4(mouseX, -mouseY, 0.0f, 1.0f);
 
 	const auto rayStartNormalizedDeviceCoordinatesVector = XMLoadFloat4(&rayStartNormalizedDeviceCoordinates);
 	const auto rayEndNormalizedDeviceCoordinatesVector = XMLoadFloat4(&rayEndNormalizedDeviceCoordinates);

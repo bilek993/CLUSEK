@@ -7,6 +7,8 @@ class RayUtil final
 public:
 	static void MousePositionToRayOriginAndDirection(	float mouseX,
 														float mouseY,
+														float screenWidth,
+														float screenHeight,
 														DirectX::XMMATRIX& viewMatrix,
 														DirectX::XMMATRIX& projectionMatrix,
 														DirectX::XMVECTOR& rayOriginOutput,

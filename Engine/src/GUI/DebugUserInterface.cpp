@@ -182,6 +182,8 @@ void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry*
 
 	RayUtil::MousePositionToRayOriginAndDirection(	ioData->MouseState.x,
 													ioData->MouseState.y,
+													configData->WindowWidth,
+													configData->WindowHeight,
 													mainCameraComponent.ViewMatrix,
 													mainCameraComponent.ProjectionMatrix,
 													rayOrigin,
