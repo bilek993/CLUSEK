@@ -1,6 +1,7 @@
 #include "ConfigurationWindow.h"
 #include <imgui.h>
 #include <fstream>
+#include "../../Utils/ImGuiExtensions.h"
 
 void ConfigurationWindow::Draw()
 {
@@ -52,20 +53,12 @@ void ConfigurationWindow::SaveConfiguration() const
 
 void ConfigurationWindow::DrawTextInput()
 {
-	const auto callback = [](ImGuiInputTextCallbackData *data) 
-	{
-		const auto textPointer = static_cast<std::string*>(data->UserData);
-		textPointer->resize(data->BufTextLen);
-		data->Buf = const_cast<char*>(textPointer->c_str());
-		return 0;
-	};
-
 	ImGui::InputTextMultiline(	"##ConfigurationInput", 
 								const_cast<char*>(ConfigurationText.c_str()), 
 								ConfigurationText.capacity() + 1,
 								ImVec2(-FLT_MIN, 350.0f),
 								ImGuiInputTextFlags_CallbackResize,
-								callback,
+								ImGuiExtensions::InputTextStringCallback,
 								&ConfigurationText);
 }
 

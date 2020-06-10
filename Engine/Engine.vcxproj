@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utils\ImGuiExtensions.cpp" />
     <ClCompile Include="src\Utils\CameraLocator.cpp" />
     <ClCompile Include="src\GUI\Components\CameraComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\CameraTargetComponentEditor.cpp" />
@@ -207,6 +208,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Utils\ImGuiExtensions.h" />
     <ClInclude Include="src\Utils\CameraLocator.h" />
     <ClInclude Include="src\GUI\Components\CameraComponentEditor.h" />
     <ClInclude Include="src\GUI\Components\CameraTargetComponentEditor.h" />
