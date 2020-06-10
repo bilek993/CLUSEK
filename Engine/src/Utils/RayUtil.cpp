@@ -19,21 +19,13 @@ void RayUtil::MousePositionToRayOriginAndDirection(	float mouseX,
 	const auto rayStartNormalizedDeviceCoordinatesVector = XMLoadFloat4(&rayStartNormalizedDeviceCoordinates);
 	const auto rayEndNormalizedDeviceCoordinatesVector = XMLoadFloat4(&rayEndNormalizedDeviceCoordinates);
 
-	// TODO: Optimize this
-	const auto projectionMatrixInverse = XMMatrixInverse(nullptr, projectionMatrix);
-	const auto viewMatrixInverse = XMMatrixInverse(nullptr, viewMatrix);
+	const auto viewProjectionMatrixInverse = XMMatrixInverse(nullptr, viewMatrix * projectionMatrix);
 
-	auto rayStartCamera = XMVector4Transform(rayStartNormalizedDeviceCoordinatesVector, projectionMatrixInverse);
-	rayStartCamera = DirectX::XMVectorScale(rayStartCamera, 1.0f / DirectX::XMVectorGetW(rayStartCamera));
+	auto rayStartWorld = XMVector4Transform(rayStartNormalizedDeviceCoordinatesVector, viewProjectionMatrixInverse);
+	auto rayEndWorld = XMVector4Transform(rayEndNormalizedDeviceCoordinatesVector, viewProjectionMatrixInverse);
 
-	auto rayStartWorld = XMVector4Transform(rayStartCamera, viewMatrixInverse);
-	rayStartWorld = DirectX::XMVectorScale(rayStartWorld, 1.0f / DirectX::XMVectorGetW(rayStartCamera));
-
-	auto rayEndCamera = XMVector4Transform(rayEndNormalizedDeviceCoordinatesVector, projectionMatrixInverse);
-	rayEndCamera = DirectX::XMVectorScale(rayEndCamera, 1.0f / DirectX::XMVectorGetW(rayEndCamera));
-
-	auto rayEndWorld = XMVector4Transform(rayEndCamera, viewMatrixInverse);
-	rayEndWorld = DirectX::XMVectorScale(rayEndWorld, 1.0f / DirectX::XMVectorGetW(rayEndCamera));
+	rayStartWorld = DirectX::XMVectorScale(rayStartWorld, 1.0f / DirectX::XMVectorGetW(rayStartWorld));
+	rayEndWorld = DirectX::XMVectorScale(rayEndWorld, 1.0f / DirectX::XMVectorGetW(rayEndWorld));
 
 	const auto rayDir = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(rayEndWorld, rayStartWorld));
 
