@@ -1149,6 +1149,9 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	Registry->view<ModelRenderComponent, TransformComponent>().each([this, &mainCameraComponent, &mainTransformComponent, 
 		&offset, renderMode](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
 	{
+		if (modelRenderComponent.Invisible)
+			return;
+
 		auto fatPerObjectBufferSet = false;
 
 		const auto distanceFromCamera = CalculateDistanceFromCamera(transformComponent, mainTransformComponent);

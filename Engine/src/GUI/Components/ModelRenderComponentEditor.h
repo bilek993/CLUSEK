@@ -4,4 +4,6 @@
 
 class ModelRenderComponentEditor final : public BaseComponentEditor<ModelRenderComponent>
 {
+protected:
+	void Draw() override;
 };
