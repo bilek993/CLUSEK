@@ -11,4 +11,8 @@ void TerrainComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	MAP_LOADER_BASIC_FIELD(QualityDivider, json, component, int);
 	MAP_LOADER_BASIC_FIELD(ScaleXZ, json, component, float);
 	MAP_LOADER_BASIC_FIELD(MaxHeight, json, component, float);
+	MAP_LOADER_BASIC_FIELD(MinTerrainTessellationFactor, json, component, float);
+	MAP_LOADER_BASIC_FIELD(MaxTerrainTessellationFactor, json, component, float);
+	MAP_LOADER_BASIC_FIELD(MinTerrainTessellationDistance, json, component, float);
+	MAP_LOADER_BASIC_FIELD(MaxTerrainTessellationDistance, json, component, float);
 }

@@ -30,7 +30,6 @@ void RenderSystem::Start()
 	InitializeFogSettings();
 	InitializeLightSettings();
 	InitializeClearColorSettings();
-	InitializeTerrainTessellationSettings();
 
 	if (!InitializeDirectX())
 		Logger::Error("DirectX initialization failed!");
@@ -652,20 +651,6 @@ void RenderSystem::InitializeClearColorSettings() const
 	CurrentRenderSettings->ClearColor[2] = ConfigurationData->ClearColorBlue;
 }
 
-void RenderSystem::InitializeTerrainTessellationSettings() const
-{
-	if (ConfigurationData->MaxTerrainTessellationFactor > 6 || ConfigurationData->MaxTerrainTessellationFactor < 0)
-		Logger::Warning("MaxTerrainTessellationFactor should be in range 0-6!");
-
-	if (ConfigurationData->MinTerrainTessellationFactor > 6 || ConfigurationData->MinTerrainTessellationFactor < 0)
-		Logger::Warning("MinTerrainTessellationFactor should be in range 0-6!");
-
-	CurrentRenderSettings->MinTerrainTessellationFactor = ConfigurationData->MinTerrainTessellationFactor;
-	CurrentRenderSettings->MaxTerrainTessellationFactor = ConfigurationData->MaxTerrainTessellationFactor;
-	CurrentRenderSettings->MinTerrainTessellationDistance = ConfigurationData->MinTerrainTessellationDistance;
-	CurrentRenderSettings->MaxTerrainTessellationDistance = ConfigurationData->MaxTerrainTessellationDistance;
-}
-
 void RenderSystem::InitializeConstantBuffers()
 {
 	Logger::Debug("Preparing to initialize constant buffers...");
@@ -1061,12 +1046,6 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 	LightAndAlphaBufferInstance.Data.Alpha = 1.0;
 	LightAndAlphaBufferInstance.ApplyChanges();
 
-	TerrainSettingsBufferInstance.Data.MinTessellationFactor = CurrentRenderSettings->MinTerrainTessellationFactor;
-	TerrainSettingsBufferInstance.Data.MaxTessellationFactor = CurrentRenderSettings->MaxTerrainTessellationFactor;
-	TerrainSettingsBufferInstance.Data.MinTessellationDistance = CurrentRenderSettings->MinTerrainTessellationDistance;
-	TerrainSettingsBufferInstance.Data.MaxTessellationDistance = CurrentRenderSettings->MaxTerrainTessellationDistance;
-	TerrainSettingsBufferInstance.ApplyChanges();
-
 	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 
 	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
@@ -1084,6 +1063,12 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 	Registry->view<TerrainComponent, TransformComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent, TransformComponent &transformComponent)
 	{
+		TerrainSettingsBufferInstance.Data.MinTessellationFactor = terrainComponent.MinTerrainTessellationFactor;
+		TerrainSettingsBufferInstance.Data.MaxTessellationFactor = terrainComponent.MaxTerrainTessellationFactor;
+		TerrainSettingsBufferInstance.Data.MinTessellationDistance = terrainComponent.MinTerrainTessellationDistance;
+		TerrainSettingsBufferInstance.Data.MaxTessellationDistance = terrainComponent.MaxTerrainTessellationDistance;
+		TerrainSettingsBufferInstance.ApplyChanges();
+
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(transformComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
 		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);

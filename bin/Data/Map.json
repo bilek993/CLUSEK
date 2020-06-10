@@ -789,7 +789,11 @@
 		"ScaleXZ": 2.0,
 		"QualityDivider": 64,
 		"MaterialId": "Data/Textures/Terrain/material.json",
-		"MaxHeight": 800.0
+		"MaxHeight": 800.0,
+		"MinTerrainTessellationFactor": 0.0,
+		"MaxTerrainTessellationFactor": 6.0,
+		"MinTerrainTessellationDistance": 10.0,
+		"MaxTerrainTessellationDistance": 3000.0
 	  },
 	  "PhysicsMaterialComponent": {
 	    "Name": "TerrainMaterial"

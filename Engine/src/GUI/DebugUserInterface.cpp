@@ -69,7 +69,6 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(EntityViewerWindowInstance);
 	UPDATE_USER_INTERFACE(PerSystemPerformanceWindowInstance);
 	UPDATE_USER_INTERFACE(ShadowPreviewerWindowInstance);
-	UPDATE_USER_INTERFACE(TerrainTessellationWindowInstance);
 	UPDATE_USER_INTERFACE(FogWindowInstance);
 	UPDATE_USER_INTERFACE(TextureCompressionWindowInstance);
 	UPDATE_USER_INTERFACE(LodDebugWindowInstance);
@@ -118,7 +117,6 @@ void DebugUserInterface::DrawMenuBar()
 			DrawMenuItemForWindow("Fog settings", FogWindowInstance);
 			DrawMenuItemForWindow("Shadow Previewer", ShadowPreviewerWindowInstance);
 			DrawMenuItemForWindow("Back Buffer setting", BackBufferWindowInstance);
-			DrawMenuItemForWindow("Terrain tessellation settings", TerrainTessellationWindowInstance);
 			DrawMenuItemForWindow("LOD Debug", LodDebugWindowInstance);
 			ImGui::EndMenu();
 		}

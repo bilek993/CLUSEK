@@ -23,7 +23,6 @@
 #include "Windows/ShadowPreviewerWindow.h"
 #include "../ECS/Systems/RenderSystem.h"
 #include "Windows/ConfigurationWindow.h"
-#include "Windows/TerrainTessellationWindow.h"
 #include "Windows/FogWindow.h"
 #include "Windows/TextureCompressionWindow.h"
 #include "Windows/LodDebugWindow.h"
@@ -83,7 +82,6 @@ private:
 	EntityViewerWindow EntityViewerWindowInstance;
 	PerSystemPerformanceWindow PerSystemPerformanceWindowInstance;
 	ShadowPreviewerWindow ShadowPreviewerWindowInstance;
-	TerrainTessellationWindow TerrainTessellationWindowInstance;
 	FogWindow FogWindowInstance;
 	TextureCompressionWindow TextureCompressionWindowInstance;
 	LodDebugWindow LodDebugWindowInstance;

@@ -60,7 +60,6 @@ private:
 	void InitializeFogSettings() const;
 	void InitializeLightSettings() const;
 	void InitializeClearColorSettings() const;
-	void InitializeTerrainTessellationSettings() const;
 	void InitializeConstantBuffers();
 	void InitializePostProcessing();
 	void ShowLoadingScreen();

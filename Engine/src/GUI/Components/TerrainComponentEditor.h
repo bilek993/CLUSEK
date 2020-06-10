@@ -4,4 +4,6 @@
 
 class TerrainComponentEditor final : public BaseComponentEditor<TerrainComponent>
 {
+protected:
+	void Draw() override;
 };

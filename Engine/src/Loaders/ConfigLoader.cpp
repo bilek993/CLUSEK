@@ -104,10 +104,6 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, CascadeBias3, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, EnableAsyncTerrainGeneration, data, std::stoi(value));
-			MAP_CONFIG_FIELD(key, MinTerrainTessellationFactor, data, std::stof(value));
-			MAP_CONFIG_FIELD(key, MaxTerrainTessellationFactor, data, std::stof(value));
-			MAP_CONFIG_FIELD(key, MinTerrainTessellationDistance, data, std::stof(value));
-			MAP_CONFIG_FIELD(key, MaxTerrainTessellationDistance, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, CubemapGeneratedSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, EnableAsyncModelLoading, data, std::stoi(value));
