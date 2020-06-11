@@ -4,4 +4,9 @@
 
 class CameraVehicleAnimatedTargetComponentEditor final : public BaseComponentEditor<CameraVehicleAnimatedTargetComponent>
 {
+protected:
+	void Draw() override;
+
+private:
+	void DrawAnimationPositionVectorEditor(CameraVehicleAnimatedTargetComponent* component) const;
 };
