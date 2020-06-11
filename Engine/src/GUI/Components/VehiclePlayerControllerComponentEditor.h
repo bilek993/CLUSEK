@@ -4,4 +4,6 @@
 
 class VehiclePlayerControllerComponentEditor final : public BaseComponentEditor<VehiclePlayerControllerComponent>
 {
+protected:
+	void Draw() override;
 };
