@@ -64,7 +64,6 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(KeyboardInputWindowInstance);
 	UPDATE_USER_INTERFACE(GamePadInputWindowInstance);
 	UPDATE_USER_INTERFACE(PostProcessingWindowInstance);
-	UPDATE_USER_INTERFACE(VehicleDetailsWindowInstance);
 	UPDATE_USER_INTERFACE(PhysicsStatisticsWindowInstance);
 	UPDATE_USER_INTERFACE(EntityViewerWindowInstance);
 	UPDATE_USER_INTERFACE(PerSystemPerformanceWindowInstance);
@@ -122,7 +121,6 @@ void DebugUserInterface::DrawMenuBar()
 		}
 		if (ImGui::BeginMenu("Physics"))
 		{
-			DrawMenuItemForWindow("Vehicle details", VehicleDetailsWindowInstance);
 			DrawMenuItemForWindow("Physics statistics", PhysicsStatisticsWindowInstance);
 			ImGui::EndMenu();
 		}

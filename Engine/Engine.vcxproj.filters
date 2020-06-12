@@ -351,9 +351,6 @@
     <ClCompile Include="src\ECS\Systems\VehiclePlayerControllerSystem.cpp">
       <Filter>Source Files\ECS\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\Windows\VehicleDetailsWindow.cpp">
-      <Filter>Source Files\GUI\Windows</Filter>
-    </ClCompile>
     <ClCompile Include="src\Utils\Timer.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
@@ -826,9 +823,6 @@
     </ClInclude>
     <ClInclude Include="src\ECS\Systems\VehiclePlayerControllerSystem.h">
       <Filter>Header Files\ECS\Systems</Filter>
-    </ClInclude>
-    <ClInclude Include="src\GUI\Windows\VehicleDetailsWindow.h">
-      <Filter>Header Files\GUI\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\Timer.h">
       <Filter>Header Files\Utils</Filter>

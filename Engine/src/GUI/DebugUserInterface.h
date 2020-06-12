@@ -15,7 +15,6 @@
 #include "Windows/GamePadWindow.h"
 #include "Windows/CameraSpeedWindow.h"
 #include "Windows/PostProcessingWindow.h"
-#include "Windows/VehicleDetailsWindow.h"
 #include <entt.hpp>
 #include "Windows/PhysicsStatisticsWindow.h"
 #include "Windows/EntityViewerWindow.h"
@@ -77,7 +76,6 @@ private:
 	KeyboardInputWindow KeyboardInputWindowInstance;
 	GamePadInputWindow GamePadInputWindowInstance;
 	PostProcessingWindow PostProcessingWindowInstance;
-	VehicleDetailsWindow VehicleDetailsWindowInstance;
 	PhysicsStatisticsWindow PhysicsStatisticsWindowInstance;
 	EntityViewerWindow EntityViewerWindowInstance;
 	PerSystemPerformanceWindow PerSystemPerformanceWindowInstance;
