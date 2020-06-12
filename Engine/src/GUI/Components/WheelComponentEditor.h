@@ -4,4 +4,6 @@
 
 class WheelComponentEditor final : public BaseComponentEditor<WheelComponent>
 {
+protected:
+	void Draw() override;
 };
