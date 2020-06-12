@@ -18,4 +18,13 @@ private:
 
 	float TimeCounter = 0.0f;
 	float EngineRotationHistory[100] = {};
+
+	inline static const char* DifferentialTypes[] = {	"LIMITED_SLIP_4W", 
+														"LIMITED_SLIP_FRONT", 
+														"LIMITED_SLIP_REAR", 
+														"OPEN_4W", 
+														"OPEN_FRONT", 
+														"OPEN_REAR"};
+	inline static const char* ClutchAccuracyModes[] = {	"ESTIMATE",
+														"BEST_POSSIBLE" };
 };

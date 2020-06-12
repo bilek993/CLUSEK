@@ -90,9 +90,45 @@ void VehicleComponentEditor::DrawWheelsStats(VehicleComponent* component) const
 
 void VehicleComponentEditor::DrawEditableParameters(VehicleComponent* component) const
 {
-	auto automaticGearbox = component->Vehicle->mDriveDynData.getUseAutoGears();
+	auto& driveDynData = component->Vehicle->mDriveDynData;
+	auto& driveSimData = component->Vehicle->mDriveSimData;
+
+	// Ackermann geometry configuration
+	auto ackermannGeometryData = driveSimData.getAckermannGeometryData();
+	ImGui::InputFloat("Ackermann accuracy", &ackermannGeometryData.mAccuracy);
+	driveSimData.setAckermannGeometryData(ackermannGeometryData);
+
+	// Differential configuration
+	auto diffData = driveSimData.getDiffData();
+	int diffType = diffData.mType;
+	ImGui::Combo("Differential type", &diffType, DifferentialTypes, IM_ARRAYSIZE(DifferentialTypes));
+	diffData.mType = static_cast<physx::PxVehicleDifferential4WData::Enum>(diffType);
+	driveSimData.setDiffData(diffData);
+
+	// Clutch configuration
+	auto clutchData = driveSimData.getClutchData();
+	int clutchAccuracyMode = clutchData.mAccuracyMode;
+	ImGui::Combo("Clutch accuracy mode", &clutchAccuracyMode, ClutchAccuracyModes, IM_ARRAYSIZE(ClutchAccuracyModes));
+	clutchData.mAccuracyMode = static_cast<physx::PxVehicleClutchAccuracyMode::Enum>(clutchAccuracyMode);
+	ImGui::InputFloat("Clutch strength", &clutchData.mStrength);
+	driveSimData.setClutchData(clutchData);
+
+	// Engine configuration
+	auto engineData = driveSimData.getEngineData();
+	ImGui::InputFloat("Engine peak torque", &engineData.mPeakTorque);
+	ImGui::InputFloat("Engine max omega", &engineData.mMaxOmega);
+	ImGui::InputFloat("Engine moment of inertia", &engineData.mMOI);
+	driveSimData.setEngineData(engineData);
+
+	// Gears configuration
+	auto gearsData = driveSimData.getGearsData();
+	ImGui::InputFloat("Gears switch time", &gearsData.mSwitchTime);
+	driveSimData.setGearsData(gearsData);
+
+	// Auto gears configuration
+	auto automaticGearbox = driveDynData.getUseAutoGears();
 	ImGui::Checkbox("Use automatic gearbox", &automaticGearbox);
-	component->Vehicle->mDriveDynData.setUseAutoGears(automaticGearbox);
+	driveDynData.setUseAutoGears(automaticGearbox);
 }
 
 void VehicleComponentEditor::RecalculateGraph(const float rotationSpeed)
