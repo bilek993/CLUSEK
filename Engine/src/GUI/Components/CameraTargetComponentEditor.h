@@ -4,4 +4,6 @@
 
 class CameraTargetComponentEditor final : public BaseComponentEditor<CameraTargetComponent>
 {
+protected:
+	void Draw() override;
 };
