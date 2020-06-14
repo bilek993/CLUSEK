@@ -4,4 +4,6 @@
 
 class PhysicsMaterialComponentEditor final : public BaseComponentEditor<PhysicsMaterialComponent>
 {
+protected:
+	void Draw() override;
 };
