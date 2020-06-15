@@ -36,8 +36,8 @@ void DebugUserInterface::BeforeUpdate() const
 }
 
 void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, IOData *ioData, 
-	std::vector<SystemHolder> *systems, const int renderSystemId, DynamicRenderSettings *dynamicRenderSettings, 
-	PostProcessingSettings *postProcessingSettings, entt::registry *registry)
+	std::vector<SystemHolder> *systems, const int renderSystemId, int physicsSystemId, 
+	DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings, entt::registry *registry)
 {
 	const auto renderSystem = dynamic_cast<RenderSystem*>((*systems)[renderSystemId].System.get());
 

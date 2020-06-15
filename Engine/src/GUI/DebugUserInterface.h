@@ -27,7 +27,7 @@
 #include "Windows/LodDebugWindow.h"
 #include "Windows/EntityEditorWindow.h"
 
-#define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, ioData, postProcessingSettings, registry, &SelectedEntity, &EntitySelected)
+#define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, physicsSystemId, ioData, postProcessingSettings, registry, &SelectedEntity, &EntitySelected)
 
 class DebugUserInterface final
 {
@@ -35,8 +35,8 @@ public:
 	void Initialize(HWND hwnd, ID3D11Device* device, ID3D11DeviceContext* deviceContext, const ConfigData *configData,
 		const std::function<void()> &functionCloseEngine);
 	void Update(float deltaTime, ConfigData *configData, IOData *ioData, 
-		std::vector<SystemHolder> *systems, int renderSystemId, DynamicRenderSettings *dynamicRenderSettings, 
-		PostProcessingSettings *postProcessingSettings, entt::registry *registry);
+		std::vector<SystemHolder> *systems, int renderSystemId, int physicsSystemId,
+		DynamicRenderSettings *dynamicRenderSettings, PostProcessingSettings *postProcessingSettings, entt::registry *registry);
 
 	~DebugUserInterface();
 private:

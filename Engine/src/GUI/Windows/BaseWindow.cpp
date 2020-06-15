@@ -1,7 +1,7 @@
 #include "BaseWindow.h"
 
 void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRenderSettings* renderSettings,
-	std::vector<SystemHolder>* systems, const int renderSystemId, IOData* ioData,
+	std::vector<SystemHolder>* systems, const int renderSystemId, int physicsSystemId, IOData* ioData,
 	PostProcessingSettings* postProcessingSettings, entt::registry *registry, entt::entity *selectedEntity,
 	bool *entitySelected)
 {
@@ -13,6 +13,7 @@ void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRe
 	RenderSettings = renderSettings;
 	Systems = systems;
 	RenderSystemId = renderSystemId;
+	PhysicsSystemId = physicsSystemId;
 	IoData = ioData;
 	CurrentPostProcessingSettings = postProcessingSettings;
 	Registry = registry;

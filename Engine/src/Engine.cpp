@@ -66,7 +66,8 @@ void Engine::Update()
 					&Config, 
 					&DataFromIODevices, 
 					&Systems, 
-					RenderSystemId, 
+					RenderSystemId,
+					PhysicsSystemId,
 					&CurrentRenderSettings, 
 					&CurrentPostProcessingSettings, 
 					&Registry);
@@ -96,13 +97,10 @@ void Engine::CreateSystems()
 	for (auto i = 0; i < Systems.size(); i++)
 	{
 		if (Systems[i].Name == "Render System")
-		{
 			RenderSystemId = i;
-			return;
-		}
+		else if (Systems[i].Name == "Physics System")
+			PhysicsSystemId = i;
 	}
-
-	Logger::Error("Render system not registered as system!");
 }
 
 void Engine::InitializeSystems()

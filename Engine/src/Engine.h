@@ -38,6 +38,7 @@ private:
 	entt::registry Registry;
 	std::vector<SystemHolder> Systems;
 	int RenderSystemId = 0;
+	int PhysicsSystemId = 0;
 
 	PostProcessingSettings CurrentPostProcessingSettings{};
 	DynamicRenderSettings CurrentRenderSettings{};
