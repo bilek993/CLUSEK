@@ -72,6 +72,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(TextureCompressionWindowInstance);
 	UPDATE_USER_INTERFACE(LodDebugWindowInstance);
 	UPDATE_USER_INTERFACE(EntityEditorWindowInstance);
+	UPDATE_USER_INTERFACE(PhysicsMaterialsWindowInstance);
 
 	AfterUpdate(renderSystem);
 }
@@ -122,6 +123,7 @@ void DebugUserInterface::DrawMenuBar()
 		if (ImGui::BeginMenu("Physics"))
 		{
 			DrawMenuItemForWindow("Physics statistics", PhysicsStatisticsWindowInstance);
+			DrawMenuItemForWindow("Physics materials", PhysicsMaterialsWindowInstance);
 			ImGui::EndMenu();
 		}
 		if (ImGui::BeginMenu("I/O Devices"))

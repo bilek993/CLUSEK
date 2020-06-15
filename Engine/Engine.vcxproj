@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Windows\PhysicsMaterialsWindow.cpp" />
     <ClCompile Include="src\Utils\ImGuiExtensions.cpp" />
     <ClCompile Include="src\Utils\CameraLocator.cpp" />
     <ClCompile Include="src\GUI\Components\CameraComponentEditor.cpp" />
@@ -206,6 +207,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Windows\PhysicsMaterialsWindow.h" />
     <ClInclude Include="src\Utils\ImGuiExtensions.h" />
     <ClInclude Include="src\Utils\CameraLocator.h" />
     <ClInclude Include="src\GUI\Components\CameraComponentEditor.h" />
