@@ -121,7 +121,7 @@ void PhysicsSystem::InitializeCore()
 	const auto version = PX_PHYSICS_VERSION;
 	Logger::Debug("Physics Library used: PhysX (" + std::to_string(version) + ") by Nvidia.");
 
-	Foundation = PxCreateFoundation(PX_PHYSICS_VERSION, Allocator, ErrorCallback);
+	Foundation = PxCreateFoundation(version, Allocator, ErrorCallback);
 	if (!Foundation)
 		Logger::Error("Error creating physics foundation");
 
