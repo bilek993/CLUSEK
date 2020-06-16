@@ -71,6 +71,11 @@ physx::PxPhysics* PhysicsSystem::GetPointerToInternalPhysics() const
 	return Physics;
 }
 
+std::shared_ptr<PhysicsMaterialManager> PhysicsSystem::GetPhysicsMaterialManagerSmartPointer() const
+{
+	return MaterialManager;
+}
+
 PhysicsSystem::~PhysicsSystem()
 {
 	MaterialManager->ReleaseAllMaterials();

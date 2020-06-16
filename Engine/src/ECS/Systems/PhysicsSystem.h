@@ -19,6 +19,7 @@ public:
 	physx::PxSimulationStatistics GetStatistics() const;
 
 	physx::PxPhysics* GetPointerToInternalPhysics() const;
+	std::shared_ptr<PhysicsMaterialManager> GetPhysicsMaterialManagerSmartPointer() const;
 
 	PhysicsSystem(const PhysicsSystem& other) = delete;
 	PhysicsSystem(PhysicsSystem&& other) noexcept = delete;
@@ -59,7 +60,7 @@ private:
 	void VerifyWheelsForEachVehicle() const;
 	void CreateVehicle();
 
-	std::unique_ptr<PhysicsMaterialManager> MaterialManager;
+	std::shared_ptr<PhysicsMaterialManager> MaterialManager;
 
 	physx::PxDefaultAllocator Allocator;
 	PhysicsErrorCallback ErrorCallback;
