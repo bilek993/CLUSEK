@@ -66,6 +66,11 @@ physx::PxSimulationStatistics PhysicsSystem::GetStatistics() const
 	return statistics;
 }
 
+physx::PxPhysics* PhysicsSystem::GetPointerToInternalPhysics() const
+{
+	return Physics;
+}
+
 PhysicsSystem::~PhysicsSystem()
 {
 	MaterialManager->ReleaseAllMaterials();

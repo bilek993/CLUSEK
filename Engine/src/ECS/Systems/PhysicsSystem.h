@@ -18,6 +18,8 @@ public:
 
 	physx::PxSimulationStatistics GetStatistics() const;
 
+	physx::PxPhysics* GetPointerToInternalPhysics() const;
+
 	PhysicsSystem(const PhysicsSystem& other) = delete;
 	PhysicsSystem(PhysicsSystem&& other) noexcept = delete;
 	PhysicsSystem& operator=(const PhysicsSystem& other) = delete;
