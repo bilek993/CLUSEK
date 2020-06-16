@@ -29,6 +29,11 @@ int PhysicsMaterialManager::GetMaterialCount() const
 	return PhysicsMaterials.size();
 }
 
+std::vector<std::string> PhysicsMaterialManager::GetPhysicsMaterialNames() const
+{
+	return PhysicsMaterialNames;
+}
+
 physx::PxMaterial* PhysicsMaterialManager::GetMaterialByName(const std::string& name)
 {
 	if (GetMaterialCount() == 0)

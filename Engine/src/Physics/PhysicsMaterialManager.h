@@ -14,6 +14,8 @@ public:
 
 	int GetMaterialCount() const;
 
+	std::vector<std::string> GetPhysicsMaterialNames() const;
+
 	physx::PxMaterial* GetMaterialByName(const std::string& name);
 	physx::PxMaterial* GetMaterialById(int id) const;
 	physx::PxMaterial** GetPointerToAllMaterials();
