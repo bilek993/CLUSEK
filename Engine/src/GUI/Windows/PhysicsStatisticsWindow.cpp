@@ -5,7 +5,7 @@ void PhysicsStatisticsWindow::Draw()
 {
 	ImGui::Begin("Physics statistics", &IsEnabled);
 
-	const auto physicsSystem = FindPhysicsSystem();
+	const auto physicsSystem = dynamic_cast<PhysicsSystem*>((*Systems)[PhysicsSystemId].System.get());;
 
 	if (!physicsSystem)
 		DrawNotImplementedInfo();
@@ -13,18 +13,6 @@ void PhysicsStatisticsWindow::Draw()
 		DrawStats(physicsSystem);
 
 	ImGui::End();
-}
-
-PhysicsSystem* PhysicsStatisticsWindow::FindPhysicsSystem() const
-{
-	for (auto &system : *Systems)
-	{
-		const auto physicsSystem = dynamic_cast<PhysicsSystem*>(system.System.get());
-		if (physicsSystem)
-			return physicsSystem;
-	}
-
-	return nullptr;
 }
 
 void PhysicsStatisticsWindow::DrawNotImplementedInfo() const

@@ -8,8 +8,6 @@ protected:
 	void Draw() override;
 
 private:
-	PhysicsSystem* FindPhysicsSystem() const;
-
 	void DrawNotImplementedInfo() const;
 	void DrawStats(const PhysicsSystem* physicsSystem) const;
 };
