@@ -63,8 +63,6 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 physx::PxVehicleDrivableSurfaceToTireFrictionPairs* VehicleResourcesGenerator::CreateFrictionPairs(
 	physx::PxPhysics& physics, PhysicsMaterialManager* physicsMaterialManager)
 {
-	Logger::Debug("Preparing to create friction pairs...");
-
 	const auto tireTypesCount = 1; // Currently one on tire type is supported
 	const auto surfaceTypesCount = physicsMaterialManager->GetMaterialCount();
 
