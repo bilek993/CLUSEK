@@ -69,7 +69,24 @@ physx::PxMaterial** PhysicsMaterialManager::GetPointerToAllMaterials()
 
 float PhysicsMaterialManager::GetTireFrictionById(const int id) const
 {
+	if (GetMaterialCount() == 0)
+		Logger::Error("No physics materials!");
+
+	if (id >= GetMaterialCount())
+		Logger::Error("Physics material id out of bounds!");
+
 	return PhysicsTireFrictions[id];
+}
+
+void PhysicsMaterialManager::UpdateTireFrictionById(const int id, const float friction)
+{
+	if (GetMaterialCount() == 0)
+		Logger::Error("No physics materials!");
+
+	if (id >= GetMaterialCount())
+		Logger::Error("Physics material id out of bounds!");
+
+	PhysicsTireFrictions[id] = friction;
 }
 
 void PhysicsMaterialManager::ReleaseAllMaterials()

@@ -76,6 +76,13 @@ std::shared_ptr<PhysicsMaterialManager> PhysicsSystem::GetPhysicsMaterialManager
 	return MaterialManager;
 }
 
+void PhysicsSystem::UpdateFrictionPairs()
+{
+	PX_RELEASE(FrictionPairs);
+
+	FrictionPairs = VehicleResourcesGenerator::CreateFrictionPairs(*Physics, MaterialManager.get());
+}
+
 PhysicsSystem::~PhysicsSystem()
 {
 	MaterialManager->ReleaseAllMaterials();
@@ -201,7 +208,7 @@ void PhysicsSystem::InitializePhysicsMaterialComponents()
 		Logger::Debug("Paired material '" + physicsMaterialComponent.Name + "' with proper component.");
 	});
 
-	FrictionPairs = VehicleResourcesGenerator::CreateFrictionPairs(*Physics, MaterialManager.get());
+	UpdateFrictionPairs();
 }
 
 void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()

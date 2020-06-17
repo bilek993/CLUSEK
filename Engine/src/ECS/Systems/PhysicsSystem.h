@@ -21,6 +21,8 @@ public:
 	physx::PxPhysics* GetPointerToInternalPhysics() const;
 	std::shared_ptr<PhysicsMaterialManager> GetPhysicsMaterialManagerSmartPointer() const;
 
+	void UpdateFrictionPairs();
+
 	PhysicsSystem(const PhysicsSystem& other) = delete;
 	PhysicsSystem(PhysicsSystem&& other) noexcept = delete;
 	PhysicsSystem& operator=(const PhysicsSystem& other) = delete;

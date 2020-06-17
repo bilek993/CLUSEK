@@ -8,7 +8,8 @@ void PhysicsMaterialsWindow::Draw()
 	const auto physicsSystem = dynamic_cast<PhysicsSystem*>((*Systems)[PhysicsSystemId].System.get());
 
 	DrawCombo(physicsSystem);
-	DrawDetails(physicsSystem);
+	DrawBasicMaterialDetails(physicsSystem);
+	DrawFrictionPairDetails(physicsSystem);
 
 	ImGui::End();
 }
@@ -24,7 +25,7 @@ void PhysicsMaterialsWindow::DrawCombo(const PhysicsSystem* physicsSystem)
 	ImGui::Combo("Selected material", &SelectedId, materialNames.c_str());
 }
 
-void PhysicsMaterialsWindow::DrawDetails(const PhysicsSystem* physicsSystem) const
+void PhysicsMaterialsWindow::DrawBasicMaterialDetails(const PhysicsSystem* physicsSystem) const
 {
 	const auto physicsMaterialManager = physicsSystem->GetPhysicsMaterialManagerSmartPointer();
 	const auto currentMaterial = physicsMaterialManager->GetMaterialById(SelectedId);
@@ -40,4 +41,16 @@ void PhysicsMaterialsWindow::DrawDetails(const PhysicsSystem* physicsSystem) con
 	currentMaterial->setStaticFriction(staticFriction);
 	currentMaterial->setDynamicFriction(dynamicFriction);
 	currentMaterial->setRestitution(restitution);
+}
+
+void PhysicsMaterialsWindow::DrawFrictionPairDetails(PhysicsSystem* physicsSystem) const
+{
+	const auto physicsMaterialManager = physicsSystem->GetPhysicsMaterialManagerSmartPointer();
+	auto tireFriction = physicsMaterialManager->GetTireFrictionById(SelectedId);
+
+	ImGui::DragFloat("Tire friction", &tireFriction, 0.001f, 0.0f, 1.0f);
+
+	physicsMaterialManager->UpdateTireFrictionById(SelectedId, tireFriction);
+
+	physicsSystem->UpdateFrictionPairs();
 }

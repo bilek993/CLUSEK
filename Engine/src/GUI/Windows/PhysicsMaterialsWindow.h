@@ -9,7 +9,8 @@ protected:
 
 private:
 	void DrawCombo(const PhysicsSystem* physicsSystem);
-	void DrawDetails(const PhysicsSystem* physicsSystem) const;
+	void DrawBasicMaterialDetails(const PhysicsSystem* physicsSystem) const;
+	void DrawFrictionPairDetails(PhysicsSystem* physicsSystem) const;
 
 	int SelectedId = 0;
 };

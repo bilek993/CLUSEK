@@ -22,6 +22,8 @@ public:
 
 	float GetTireFrictionById(int id) const;
 
+	void UpdateTireFrictionById(int id, float friction);
+
 	void ReleaseAllMaterials();
 
 private:
