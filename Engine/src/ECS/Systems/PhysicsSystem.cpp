@@ -78,9 +78,12 @@ std::shared_ptr<PhysicsMaterialManager> PhysicsSystem::GetPhysicsMaterialManager
 
 void PhysicsSystem::UpdateFrictionPairs()
 {
-	PX_RELEASE(FrictionPairs);
+	Logger::Debug("Updating friction pairs in progress...");
 
+	PX_RELEASE(FrictionPairs);
 	FrictionPairs = VehicleResourcesGenerator::CreateFrictionPairs(*Physics, MaterialManager.get());
+
+	Logger::Debug("Friction pairs have been updated!");
 }
 
 PhysicsSystem::~PhysicsSystem()
