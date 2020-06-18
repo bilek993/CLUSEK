@@ -1,5 +1,6 @@
 #include "PhysicsMaterialsWindow.h"
 #include <imgui.h>
+#include "../../Utils/FloatingPointComparator.h"
 
 void PhysicsMaterialsWindow::Draw()
 {
@@ -50,7 +51,10 @@ void PhysicsMaterialsWindow::DrawFrictionPairDetails(PhysicsSystem* physicsSyste
 
 	ImGui::DragFloat("Tire friction", &tireFriction, 0.001f, 0.0f, 1.0f);
 
-	physicsMaterialManager->UpdateTireFrictionById(SelectedId, tireFriction);
-
-	physicsSystem->UpdateFrictionPairs();
+	// Prevents unnecessary calculations
+	if (!FloatingPointComparator::IsAlmostEqual(tireFriction, physicsMaterialManager->GetTireFrictionById(SelectedId)))
+	{
+		physicsMaterialManager->UpdateTireFrictionById(SelectedId, tireFriction);
+		physicsSystem->UpdateFrictionPairs();
+	}
 }
