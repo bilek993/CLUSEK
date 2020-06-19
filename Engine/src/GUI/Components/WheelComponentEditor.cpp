@@ -19,9 +19,13 @@ void WheelComponentEditor::DrawWheelData(physx::PxVehicleWheelsSimData& wheelsSi
 {
 	auto wheelData = wheelsSimData.getWheelData(wheelId);
 
-	// TODO: Add code here
+	ImGui::InputFloat("Mass", &wheelData.mMass);
+	ImGui::InputFloat("Radius", &wheelData.mRadius);
+	ImGui::InputFloat("Width", &wheelData.mWidth);
+	ImGui::InputFloat("Max brake torque", &wheelData.mMaxBrakeTorque);
+	ImGui::InputFloat("Max handbrake torque", &wheelData.mMaxHandBrakeTorque);
 
-	//wheelData.mMOI = VehicleResourcesGenerator::CalculateWheelMOI(wheelData.mMass, wheelData.mRadius);
+	wheelData.mMOI = VehicleResourcesGenerator::CalculateWheelMOI(wheelData.mMass, wheelData.mRadius);
 
 	wheelsSimData.setWheelData(wheelId, wheelData);
 }
