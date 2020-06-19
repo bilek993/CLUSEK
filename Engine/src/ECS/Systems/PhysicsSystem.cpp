@@ -646,6 +646,9 @@ void PhysicsSystem::CreateVehicle()
 
 		vehicleComponent.Vehicle = vehicle;
 
+		for (auto currentWheel : vehicleComponent.Wheels)
+			currentWheel->Vehicle = vehicle;
+
 		Scene->addActor(*vehicle->getRigidDynamicActor());
 
 		vehicle->setToRestState();

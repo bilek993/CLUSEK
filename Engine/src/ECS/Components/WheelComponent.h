@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "PxPhysicsAPI.h"
 
 struct WheelComponent final
 {
@@ -21,4 +22,6 @@ struct WheelComponent final
 	float TireForceApplicationPoinOffset = -0.3f;
 	float LatStiffXMultiplier = 1.0f;
 	float LatStiffYMultiplier = 1.0f;
+
+	physx::PxVehicleDrive4W* Vehicle;
 };

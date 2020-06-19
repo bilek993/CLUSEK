@@ -91,6 +91,11 @@ physx::PxVehicleDrivableSurfaceToTireFrictionPairs* VehicleResourcesGenerator::C
 	return surfaceTirePairs;
 }
 
+float VehicleResourcesGenerator::CalculateWheelMOI(const float mass, const float radius)
+{
+	return 0.5f * mass * radius * radius;
+}
+
 physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx::PxPhysics* physics,
 	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
 	const physx::PxVec3& vehicleDimensions, const physx::PxVehicleChassisData& chassisData, const int wheelsCount)
@@ -164,7 +169,7 @@ physx::PxVehicleWheelsSimData* VehicleResourcesGenerator::CreateWheelsSimData(co
 	{
 		wheels.emplace_back(physx::PxVehicleWheelData());
 		wheels[i].mMass = vehicleComponent.Wheels[i]->Mass;
-		wheels[i].mMOI = 0.5f * vehicleComponent.Wheels[i]->Mass * vehicleComponent.Wheels[i]->Radius * vehicleComponent.Wheels[i]->Radius;
+		wheels[i].mMOI = CalculateWheelMOI(vehicleComponent.Wheels[i]->Mass, vehicleComponent.Wheels[i]->Radius);
 		wheels[i].mRadius = vehicleComponent.Wheels[i]->Radius;
 		wheels[i].mWidth = vehicleComponent.Wheels[i]->Width;
 		wheels[i].mMaxBrakeTorque = vehicleComponent.MaxBrakeTorque;

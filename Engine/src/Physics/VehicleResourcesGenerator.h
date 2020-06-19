@@ -14,6 +14,8 @@ public:
 	static physx::PxVehicleDrivableSurfaceToTireFrictionPairs* CreateFrictionPairs(
 		physx::PxPhysics& physics, PhysicsMaterialManager* physicsMaterialManager);
 
+	static float CalculateWheelMOI(float mass, float radius);
+
 private:
 	static physx::PxRigidDynamic* Create4WheelVehicleActor(physx::PxPhysics* physics, const physx::PxCooking* cooking,
 		const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
