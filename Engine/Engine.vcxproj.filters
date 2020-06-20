@@ -447,9 +447,6 @@
     <ClCompile Include="src\GUI\Components\RigidbodyDynamicCapsuleComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\Components\RigidbodyDynamicCylinderComponentEditor.cpp">
-      <Filter>Source Files\GUI\Components</Filter>
-    </ClCompile>
     <ClCompile Include="src\GUI\Components\RigidbodyDynamicSphereComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
@@ -459,13 +456,7 @@
     <ClCompile Include="src\GUI\Components\RigidbodyStaticCapsuleComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\Components\RigidbodyStaticCylinderComponentEditor.cpp">
-      <Filter>Source Files\GUI\Components</Filter>
-    </ClCompile>
     <ClCompile Include="src\GUI\Components\RigidbodyStaticHeightFieldsComponentEditor.cpp">
-      <Filter>Source Files\GUI\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\GUI\Components\RigidbodyStaticPlaneComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\GUI\Components\RigidbodyStaticSphereComponentEditor.cpp">

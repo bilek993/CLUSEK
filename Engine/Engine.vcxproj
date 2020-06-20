@@ -22,13 +22,10 @@
     <ClCompile Include="src\GUI\Components\PhysicsMaterialComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\RigidbodyDynamicBoxComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\RigidbodyDynamicCapsuleComponentEditor.cpp" />
-    <ClCompile Include="src\GUI\Components\RigidbodyDynamicCylinderComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\RigidbodyDynamicSphereComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\RigidbodyStaticBoxComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\RigidbodyStaticCapsuleComponentEditor.cpp" />
-    <ClCompile Include="src\GUI\Components\RigidbodyStaticCylinderComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\RigidbodyStaticHeightFieldsComponentEditor.cpp" />
-    <ClCompile Include="src\GUI\Components\RigidbodyStaticPlaneComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\RigidbodyStaticSphereComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\SkyboxComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Windows\EntityEditorWindow.cpp" />
