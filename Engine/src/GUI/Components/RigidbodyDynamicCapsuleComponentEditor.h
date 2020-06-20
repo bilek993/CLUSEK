@@ -4,4 +4,9 @@
 
 class RigidbodyDynamicCapsuleComponentEditor final : public BaseComponentEditor<RigidbodyDynamicCapsuleComponent>
 {
+protected:
+	void Draw() override;
+
+private:
+	void DrawGeometryParameters(physx::PxCapsuleGeometry& geometry) const;
 };
