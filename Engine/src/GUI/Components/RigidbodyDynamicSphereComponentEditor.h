@@ -4,4 +4,9 @@
 
 class RigidbodyDynamicSphereComponentEditor final : public BaseComponentEditor<RigidbodyDynamicSphereComponent>
 {
+protected:
+	void Draw() override;
+
+private:
+	void DrawGeometryParameters(physx::PxSphereGeometry& geometry) const;
 };
