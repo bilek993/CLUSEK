@@ -4,4 +4,9 @@
 
 class RigidbodyStaticBoxComponentEditor final : public BaseComponentEditor<RigidbodyStaticBoxComponent>
 {
+protected:
+	void Draw() override;
+
+private:
+	void DrawGeometryParameters(physx::PxBoxGeometry& geometry) const;
 };
