@@ -55,8 +55,4 @@ It's hard to tell. Other compilers are highly not recommended but might work. Th
 
 **I would like to add new component. Should I do something special?**
 
-Yes, besides adding a new structure in `ECS/Components` folder and filter, you should do one more thing. In `EntityViewerWindow` class in `DrawList` method, you should also define your component. It is needed for GUI Editor. Below is the example of declaring a new component.
-
-```
-DrawComponent<NewComponent>(entity, "New Component Name");
-```
+Detailed information about adding a new component you can find in [the ECS section](./ecs.md).
