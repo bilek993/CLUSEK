@@ -462,9 +462,6 @@
     <ClCompile Include="src\GUI\Components\RigidbodyStaticSphereComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\GUI\Components\SkyboxComponentEditor.cpp">
-      <Filter>Source Files\GUI\Components</Filter>
-    </ClCompile>
     <ClCompile Include="src\GUI\Components\TerrainComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
