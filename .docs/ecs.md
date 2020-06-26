@@ -11,17 +11,19 @@ We can add new entities from code or from the map file. In 99.9% of cases, objec
 ```
 [
   {
-    "Tags": [
-	  "Main Camera"
-	],
-    "Components": {
-      "CameraComponent": {},
-	  "TransformComponent": {
-	    "PositionX": -0.9,
-		"PositionY": 1.5,
-		"PositionZ": 2.25
-	  }
-	}
+    "Tags":[
+      "Main Camera"
+    ],
+    "Components":{
+      "CameraComponent":{
+
+      },
+      "TransformComponent":{
+        "PositionX":-0.9,
+        "PositionY":1.5,
+        "PositionZ":2.25
+      }
+    }
   }
 ]
 ```
@@ -36,8 +38,8 @@ Adding a new component is quite complicated and will be described here. First of
 struct ExampleComponent final
 {
 	float a;
-    float b;
-    int c;
+	float b;
+	int c;
 };
 ```
 
@@ -60,8 +62,7 @@ This class of course need to be implemented. For easier implementation special m
 ```
 #include "ExampleComponentLoader.h"
 
-void ExampleComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
-	const entt::registry::entity_type& entity)
+void ExampleComponentLoader::Add(nlohmann::json& json, entt::registry& registry, const entt::registry::entity_type& entity)
 {
 	auto &component = registry.assign<ExampleComponent>(entity);
 
@@ -115,8 +116,8 @@ void ExampleComponentEditor::Draw()
 	const auto component = GetPointerToThisComponent();
 
 	ImGui::InputFloat("A", &component->a);
-    ImGui::InputFloat("B", &component->b);
-    ImGui::InputInt("C", &component->c);
+	ImGui::InputFloat("B", &component->b);
+	ImGui::InputInt("C", &component->c);
 }
 ```
 
