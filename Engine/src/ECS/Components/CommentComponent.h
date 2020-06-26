@@ -3,5 +3,5 @@
 
 struct CommentComponent final
 {
-	std::pmr::string Comment;
+	std::string Comment;
 };
