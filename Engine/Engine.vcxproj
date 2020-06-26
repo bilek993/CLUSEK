@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Components\CommentComponentEditor.cpp" />
     <ClCompile Include="src\Loaders\Components\CommentComponentLoader.cpp" />
     <ClCompile Include="src\Utils\FloatingPointComparator.cpp" />
     <ClCompile Include="src\GUI\Windows\PhysicsMaterialsWindow.cpp" />
@@ -205,6 +206,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Components\CommentComponentEditor.h" />
     <ClInclude Include="src\Loaders\Components\CommentComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\CommentComponent.h" />
     <ClInclude Include="src\Utils\FloatingPointComparator.h" />

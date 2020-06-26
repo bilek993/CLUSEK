@@ -501,6 +501,9 @@
     <ClCompile Include="src\Loaders\Components\CommentComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\Components\CommentComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -1060,6 +1063,9 @@
     </ClInclude>
     <ClInclude Include="src\Loaders\Components\CommentComponentLoader.h">
       <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\CommentComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

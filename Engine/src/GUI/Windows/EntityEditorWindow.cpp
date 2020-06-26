@@ -19,6 +19,7 @@
 #include "../../ECS/Components/TerrainComponent.h"
 #include "../../ECS/Components/VehicleComponent.h"
 #include "../../ECS/Components/VehiclePlayerControllerComponent.h"
+#include "../../ECS/Components/CommentComponent.h"
 
 void EntityEditorWindow::Draw()
 {
@@ -55,6 +56,7 @@ void EntityEditorWindow::DrawComponentsForEntity()
 	REGISTER_COMPONENT_EDITOR(VehicleComponent, "Vehicle Component");
 	REGISTER_COMPONENT_EDITOR(VehiclePlayerControllerComponent, "Vehicle Player Controller Component");
 	REGISTER_COMPONENT_EDITOR(WheelComponent, "Wheel Component");
+	REGISTER_COMPONENT_EDITOR(CommentComponent, "Comment Component");
 }
 
 void EntityEditorWindow::DrawNoElements() const

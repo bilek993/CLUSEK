@@ -19,6 +19,7 @@
 #include "../../ECS/Components/CameraVehicleAnimatedTargetComponent.h"
 #include "../../ECS/Components/RigidbodyDynamicCylinderComponent.h"
 #include "../../ECS/Components/RigidbodyStaticCylinderComponent.h"
+#include "../../ECS/Components/CommentComponent.h"
 
 void EntityViewerWindow::Draw()
 {
@@ -67,5 +68,6 @@ void EntityViewerWindow::DrawList()
 		DrawComponent<VehicleComponent>(entity, "Vehicle Component");
 		DrawComponent<VehiclePlayerControllerComponent>(entity, "Vehicle Player Controller Component");
 		DrawComponent<WheelComponent>(entity, "Wheel Component");
+		DrawComponent<CommentComponent>(entity, "Comment Component");
 	});
 }
