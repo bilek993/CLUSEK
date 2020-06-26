@@ -204,6 +204,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ECS\Components\CommentComponent.h" />
     <ClInclude Include="src\Utils\FloatingPointComparator.h" />
     <ClInclude Include="src\GUI\Windows\PhysicsMaterialsWindow.h" />
     <ClInclude Include="src\Utils\ImGuiExtensions.h" />
