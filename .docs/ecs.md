@@ -2,6 +2,8 @@
 
 ECS (Entity–component–system) is an architectural model that CLUSEK is based on. ECS follows the composition over inheritance principle that allows greater flexibility in defining entities where every object in a game's scene is an entity.
 
+<img src="./ecs_diagram.png" >
+
 ### Entities
 
 We can visualize entities in our heads as objects on the scene. For example, a vehicle on the scene can be an entity, a house can be an entity and terrain can be an entity.
