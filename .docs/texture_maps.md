@@ -6,7 +6,9 @@ Some maps can differ from game engine to game engine. That is why some map has t
 
 A custom texture compression tool has been designed for compressing textures in the CLUSEK game engine. Other tools like [NVIDIA Texture Tools Exporter](https://developer.nvidia.com/nvidia-texture-tools-exporter) could be used, but due to their limited capabilities, it's recommended to use internal CLUSEK tool. You can find it in Tools -> Texture compression.
 
+<p align="center">
 <img src="compression_tool.jpg">
+</p>
 
 ### Implementation
 
