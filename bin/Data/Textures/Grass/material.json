@@ -1,0 +1,6 @@
+{
+  "Grass": {
+    "AlbedoTexture": "Grass_Albedo",
+	"NormalTexture": "Grass_Normal"
+  }
+}

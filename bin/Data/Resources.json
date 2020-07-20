@@ -5,6 +5,8 @@
 	"Wheel": "Data/Models/CivilianVehicle/Wheel.fbx",
 	"WheelLowPoly": "Data/Models/CivilianVehicle/WheelLowPoly.fbx",
 	
+	"Grass": "Data/Models/Grass/Grass.fbx",
+	
 	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx",
 	"SmoothCylinderLowPoly": "Data/Models/SmoothCylinder/SmoothCylinderLowPoly.fbx"
   },
@@ -81,6 +83,16 @@
 	},
 	"CivilianVehicle_WheelAo": {
 	  "Path": "Data/Textures/CivilianVehicle/WheelAo.dds"
+	},
+	
+	"Grass_Albedo": {
+	  "Path": "Data/Textures/Grass/GrassAlbedo.dss",
+	  "SRGBMode": "FORCED",
+	  "MipMaps": "GENERATE"
+	},
+	"Grass_Normal": {
+	  "Path": "Data/Textures/Grass/GrassNormal.dds",
+	  "MipMaps": "GENERATE"
 	},
 	
 	"SmoothCylinder_Albedo": {
