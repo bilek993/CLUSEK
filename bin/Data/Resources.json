@@ -86,13 +86,12 @@
 	},
 	
 	"Grass_Albedo": {
-	  "Path": "Data/Textures/Grass/GrassAlbedo.dss",
+	  "Path": "Data/Textures/Grass/GrassAlbedo.png",
 	  "SRGBMode": "FORCED",
 	  "MipMaps": "GENERATE"
 	},
 	"Grass_Normal": {
-	  "Path": "Data/Textures/Grass/GrassNormal.dds",
-	  "MipMaps": "GENERATE"
+	  "Path": "Data/Textures/Grass/GrassNormal.dds"
 	},
 	
 	"SmoothCylinder_Albedo": {
