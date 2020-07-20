@@ -206,6 +206,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\Append\GrassInstanceBuffer.h" />
+    <ClInclude Include="src\Renderer\AppendBuffer.h" />
     <ClInclude Include="src\GUI\Components\CommentComponentEditor.h" />
     <ClInclude Include="src\Loaders\Components\CommentComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\CommentComponent.h" />

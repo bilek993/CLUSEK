@@ -38,6 +38,8 @@
 #include "../../Renderer/Mesh.h"
 #include "../../Renderer/ConstantBufferTypes/LodTransitionBuffer.h"
 #include "../Components/ModelRenderComponent.h"
+#include "../../Renderer/AppendBuffer.h"
+#include "../../Renderer/Append/GrassInstanceBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -61,6 +63,7 @@ private:
 	void InitializeLightSettings() const;
 	void InitializeClearColorSettings() const;
 	void InitializeConstantBuffers();
+	void InitializeAppendBuffers();
 	void InitializePostProcessing();
 	void ShowLoadingScreen();
 	void InitializeSkyboxComponent();
@@ -159,6 +162,8 @@ private:
 	ConstantBuffer<WorldMatrixBuffer> WorldMatrixBufferInstance;
 	ConstantBuffer<FogBuffer> FogBufferInstance;
 	ConstantBuffer<LodTransitionBuffer> LodTransitionBufferInstance;
+
+	AppendBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance;
 
 	PbrResource PbrResourceInstance{};
 

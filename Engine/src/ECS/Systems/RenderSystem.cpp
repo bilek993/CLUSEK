@@ -38,6 +38,7 @@ void RenderSystem::Start()
 		Logger::Error("Shaders initialization failed!");
 
 	InitializeConstantBuffers();
+	InitializeAppendBuffers();
 	InitializePostProcessing();
 
 	if (!ConfigurationData->DisableLoadingScreen)
@@ -712,6 +713,15 @@ void RenderSystem::InitializeConstantBuffers()
 		Logger::Error("Failed to create 'LodTransitionBufferInstance' constant buffer.");
 }
 
+void RenderSystem::InitializeAppendBuffers()
+{
+	Logger::Debug("Preparing to initialize append buffers...");
+
+	const auto hr = GrassInstanceBufferInstance.Initialize(Device.Get(), 64);
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'GrassInstanceBufferInstance' append buffer.");
+}
+
 void RenderSystem::InitializePostProcessing()
 {
 	// Screen space post processing
@@ -902,6 +912,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	SetPbrResources();
 
 	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent, Solid);
+	RenderGrass(cameraComponent, mainCameraTransformComponent);
 	RenderTerrain(cameraComponent, mainCameraTransformComponent);
 	RenderSkyBoxComponents(cameraComponent);
 	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent, Transparent);
