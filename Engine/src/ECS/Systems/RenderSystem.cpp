@@ -717,7 +717,7 @@ void RenderSystem::InitializeAppendBuffers()
 {
 	Logger::Debug("Preparing to initialize append buffers...");
 
-	const auto hr = GrassInstanceBufferInstance.Initialize(Device.Get(), 64);
+	const auto hr = GrassInstanceBufferInstance.Initialize(Device.Get(), 64); // TODO: Change this 64 value
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'GrassInstanceBufferInstance' append buffer.");
 }
@@ -1035,6 +1035,25 @@ void RenderSystem::RenderSkyBoxComponents(const CameraComponent& cameraComponent
 
 		Draw(skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer, offset);
 	});
+
+	Profiler->EndEvent();
+}
+
+void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const TransformComponent& mainCameraTransformComponent)
+{
+	// Preparation
+
+	Profiler->BeginEvent("Grass");
+
+	UINT offset = 0;
+
+	DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
+
+	// ...
+
+	// Finalization
+
+	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
 	Profiler->EndEvent();
 }

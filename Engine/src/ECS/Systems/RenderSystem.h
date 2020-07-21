@@ -84,6 +84,7 @@ private:
 	void RenderSceneForShadows(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 
 	void RenderSkyBoxComponents(const CameraComponent &cameraComponent);
+	void RenderGrass(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 	void RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainTransformComponent, TransparencyRenderType renderMode);
 
