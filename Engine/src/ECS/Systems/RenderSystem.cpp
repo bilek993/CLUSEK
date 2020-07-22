@@ -282,8 +282,8 @@ bool RenderSystem::InitializeDirectX()
 	// Grass render depth stencil initialization
 
 	if (!GrassRenderDepthStencil.Initialize(Device.Get(),
-											128, // TODO: Change this
-											128, // TODO: Change this
+											ConfigurationData->GrassGeneratorSize,
+											ConfigurationData->GrassGeneratorSize,
 											DXGI_FORMAT_D24_UNORM_S8_UINT,
 											DXGI_FORMAT_D24_UNORM_S8_UINT,
 											DXGI_FORMAT_UNKNOWN,
@@ -755,7 +755,7 @@ void RenderSystem::InitializeAppendBuffers()
 {
 	Logger::Debug("Preparing to initialize append buffers...");
 
-	const auto hr = GrassInstanceBufferInstance.Initialize(Device.Get(), 1024); // TODO: Change this 64 value
+	const auto hr = GrassInstanceBufferInstance.Initialize(Device.Get(), ConfigurationData->MaxGrassRenderInstances);
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'GrassInstanceBufferInstance' append buffer.");
 }
