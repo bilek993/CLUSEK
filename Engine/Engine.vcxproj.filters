@@ -513,6 +513,9 @@
     <ClCompile Include="src\Utils\BufferCalculationUtil.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\Renderer\GrassCamera.cpp">
+      <Filter>Source Files\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -1084,6 +1087,9 @@
     </ClInclude>
     <ClInclude Include="src\Utils\BufferCalculationUtil.h">
       <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\GrassCamera.h">
+      <Filter>Header Files\Renderer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
