@@ -16,6 +16,7 @@
 #include "../Components/TerrainComponent.h"
 #include "../../Utils/TerrainUtil.h"
 #include "../../Renderer/FrustumUtil.h"
+#include "../../Renderer/GrassCamera.h"
 #include "../../Utils/StringUtil.h"
 #include "../../Utils/CameraLocator.h"
 
@@ -1127,7 +1128,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 	DeviceContext->PSSetConstantBuffers(0, 1, TerrainUvBufferInstance.GetAddressOf());
 
-	Registry->view<TerrainComponent, TransformComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent, TransformComponent &transformComponent)
+	Registry->view<TerrainComponent, TransformComponent>().each([this, &offset, &mainCameraComponent, &mainCameraTransformComponent](TerrainComponent &terrainComponent, TransformComponent &transformComponent)
 	{
 		TerrainSettingsBufferInstance.Data.MinTessellationFactor = terrainComponent.MinTerrainTessellationFactor;
 		TerrainSettingsBufferInstance.Data.MaxTessellationFactor = terrainComponent.MaxTerrainTessellationFactor;
@@ -1136,7 +1137,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 		TerrainSettingsBufferInstance.ApplyChanges();
 
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
-			XMMatrixTranspose(transformComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
+			XMMatrixTranspose(transformComponent.WorldMatrix * GrassCamera::GenerateCameraMatrix(mainCameraTransformComponent));
 		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
 		for (auto i = 0; i < 4; i++)
 			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
