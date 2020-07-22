@@ -140,6 +140,8 @@ private:
 	HullShader TerrainHullShader;
 	DomainShader TerrainDomainShader;
 
+	PixelShader GrassGeneratorPixelShader;
+
 	VertexShader ShadowVertexShader;
 	PixelShader ShadowPixelShader;
 
@@ -170,6 +172,7 @@ private:
 
 	RenderDepthStencil SceneRenderDepthStencil{};
 	std::array<RenderDepthStencil, ShadowCamera::SHADOW_CASCADES_COUNT> ShadowRenderDepthStencils{};
+	RenderDepthStencil GrassRenderDepthStencil{};
 
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> MainRasterizerState;
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> SolidRasterizerState;
@@ -178,6 +181,7 @@ private:
 
 	D3D11_VIEWPORT SceneViewport{};
 	D3D11_VIEWPORT ShadowViewport{};
+	D3D11_VIEWPORT GrassViewport{};
 
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultWrapSamplerState;
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> DefaultClampSamplerState;

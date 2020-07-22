@@ -279,6 +279,25 @@ bool RenderSystem::InitializeDirectX()
 
 	}
 
+	// Grass render depth stencil initialization
+
+	if (!GrassRenderDepthStencil.Initialize(Device.Get(),
+											128, // TODO: Change this
+											128, // TODO: Change this
+											DXGI_FORMAT_D24_UNORM_S8_UINT,
+											DXGI_FORMAT_D24_UNORM_S8_UINT,
+											DXGI_FORMAT_UNKNOWN,
+											1,
+											0,
+											false,
+											false))
+	{
+		Logger::Error("Error creating grass render depth stencil!");
+		return false;
+	}
+
+	Logger::Debug("Successfully created grass render depth stencil.");
+
 	// Scene viewport initialization
 
 	SceneViewport.TopLeftX = 0;
@@ -303,6 +322,17 @@ bool RenderSystem::InitializeDirectX()
 
 		Logger::Debug("Shadow viewport is created successfully.");
 	}
+
+	// Grass viewport initialization
+
+	GrassViewport.TopLeftX = 0;
+	GrassViewport.TopLeftY = 0;
+	GrassViewport.Width = 128; // TODO: Change this
+	GrassViewport.Height = 128; // TODO: Change this
+	GrassViewport.MinDepth = 0.0f;
+	GrassViewport.MaxDepth = 1.0f;
+
+	Logger::Debug("Grass viewport is created successfully.");
 
 	// Set default viewport
 
@@ -569,6 +599,14 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
+	// Grass generator shaders
+
+	if (!GrassGeneratorPixelShader.Initialize(Device.Get(), L"grass_generator_pixel_shader.cso"))
+	{
+		Logger::Error("GrassGeneratorPixelShader not initialized due to critical problem!");
+		return false;
+	}
+
 	// Shadow shaders
 
 	if (ConfigurationData->ShadowsEnabled) {
@@ -717,7 +755,7 @@ void RenderSystem::InitializeAppendBuffers()
 {
 	Logger::Debug("Preparing to initialize append buffers...");
 
-	const auto hr = GrassInstanceBufferInstance.Initialize(Device.Get(), 64); // TODO: Change this 64 value
+	const auto hr = GrassInstanceBufferInstance.Initialize(Device.Get(), 1024); // TODO: Change this 64 value
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'GrassInstanceBufferInstance' append buffer.");
 }
@@ -1047,13 +1085,83 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 	UINT offset = 0;
 
-	DeviceContext->OMSetRenderTargets(0, nullptr, nullptr);
+	// Generate grass
 
-	// ...
+	ChangeBasicShaders(TerrainVertexShader, GrassGeneratorPixelShader);
+
+	DeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_4_CONTROL_POINT_PATCHLIST);
+	ChangeTessellationShaders(TerrainHullShader, TerrainDomainShader);
+
+	DeviceContext->RSSetViewports(1, &GrassViewport);
+
+	UINT initialCountsUav = 0;
+	DeviceContext->OMSetRenderTargetsAndUnorderedAccessViews(	0, 
+																nullptr, 
+																GrassRenderDepthStencil.GetDepthStencilViewPointer(),
+																0, 
+																1, 
+																GrassInstanceBufferInstance.GetAddressOfUnorderedAccessView(), 
+																&initialCountsUav);
+
+	DeviceContext->ClearDepthStencilView(	GrassRenderDepthStencil.GetDepthStencilViewPointer(), 
+											D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 
+											1.0f, 
+											0);
+
+	for (auto i = 0; i < 6; i++)
+		TerrainBufferInstance.Data.FrustumPlanes[i] = mainCameraComponent.FrustumPlanes[i];
+
+	TerrainBufferInstance.ApplyChanges();
+
+	LightAndAlphaBufferInstance.Data.Alpha = 1.0;
+	LightAndAlphaBufferInstance.ApplyChanges();
+
+	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+
+	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
+	DeviceContext->HSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
+	DeviceContext->HSSetConstantBuffers(2, 1, TerrainSettingsBufferInstance.GetAddressOf());
+
+	DeviceContext->DSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+	DeviceContext->DSSetConstantBuffers(1, 1, TerrainHeightSamplingBufferInstance.GetAddressOf());
+
+	DeviceContext->PSSetConstantBuffers(0, 1, TerrainUvBufferInstance.GetAddressOf());
+
+	Registry->view<TerrainComponent, TransformComponent>().each([this, &offset, &mainCameraComponent](TerrainComponent &terrainComponent, TransformComponent &transformComponent)
+	{
+		TerrainSettingsBufferInstance.Data.MinTessellationFactor = terrainComponent.MinTerrainTessellationFactor;
+		TerrainSettingsBufferInstance.Data.MaxTessellationFactor = terrainComponent.MaxTerrainTessellationFactor;
+		TerrainSettingsBufferInstance.Data.MinTessellationDistance = terrainComponent.MinTerrainTessellationDistance;
+		TerrainSettingsBufferInstance.Data.MaxTessellationDistance = terrainComponent.MaxTerrainTessellationDistance;
+		TerrainSettingsBufferInstance.ApplyChanges();
+
+		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
+			XMMatrixTranspose(transformComponent.WorldMatrix * (mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix));
+		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
+		for (auto i = 0; i < 4; i++)
+			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
+		FatPerObjectBufferInstance.ApplyChanges();
+
+		TerrainHeightSamplingBufferInstance.Data.MaxHeight = terrainComponent.MaxHeight;
+		TerrainHeightSamplingBufferInstance.ApplyChanges();
+
+		TerrainUvBufferInstance.Data.TexturesScale = terrainComponent.Material.TexturesScale;
+		TerrainUvBufferInstance.ApplyChanges();
+
+		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
+
+		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
+	});
+
+	ResetTessellationShaders();
+	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	// Draw grass
+
+	DeviceContext->RSSetViewports(1, &SceneViewport);
+	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
 	// Finalization
-
-	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
 	Profiler->EndEvent();
 }

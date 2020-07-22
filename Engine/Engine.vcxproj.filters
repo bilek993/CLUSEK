@@ -145,6 +145,9 @@
     <Filter Include="Header Files\Renderer\Append">
       <UniqueIdentifier>{e4b7fd89-7eaf-4708-a7ec-e1d7876372f4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Shaders\Surface\GrassGeneratorShader">
+      <UniqueIdentifier>{9132f41f-ca81-405f-a217-207c1b557881}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Source.cpp">
@@ -1170,6 +1173,9 @@
     </FxCompile>
     <FxCompile Include="res\Shaders\PostProcessing\thirds_split_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing</Filter>
+    </FxCompile>
+    <FxCompile Include="grass_generator_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\GrassGeneratorShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

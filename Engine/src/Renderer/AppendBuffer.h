@@ -26,6 +26,11 @@ public:
 		return Buffer.GetAddressOf();
 	}
 
+	ID3D11UnorderedAccessView* const* GetAddressOfUnorderedAccessView() const
+	{
+		return UnorderedAccessView.GetAddressOf();
+	}
+
 	HRESULT Initialize(ID3D11Device *device, const UINT itemCount)
 	{
 		// Preparation to initialization

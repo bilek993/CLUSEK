@@ -53,6 +53,12 @@
     <ClCompile Include="src\GUI\Components\VehicleComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\VehiclePlayerControllerComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\WheelComponentEditor.cpp" />
+    <FxCompile Include="grass_generator_pixel_shader.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
     <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_pixel_shader.hlsl">
       <FileType>CppCode</FileType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
