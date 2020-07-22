@@ -92,6 +92,10 @@ struct ConfigData final
 	// Terrain settings
 	int EnableAsyncTerrainGeneration = 1;
 
+	// Grass settings
+	int MaxGrassRenderInstances = 1024;
+	int GrassGeneratorSize = 128;
+
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;
 	int EnableAsyncModelLoading = 1;
