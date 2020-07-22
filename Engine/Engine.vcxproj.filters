@@ -510,6 +510,9 @@
     <ClCompile Include="src\GUI\Components\CommentComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\BufferCalculationUtil.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -1079,6 +1082,9 @@
     <ClInclude Include="src\Renderer\Append\GrassInstanceBuffer.h">
       <Filter>Header Files\Renderer\Append</Filter>
     </ClInclude>
+    <ClInclude Include="src\Utils\BufferCalculationUtil.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">
@@ -1174,7 +1180,7 @@
     <FxCompile Include="res\Shaders\PostProcessing\thirds_split_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\PostProcessing</Filter>
     </FxCompile>
-    <FxCompile Include="grass_generator_pixel_shader.hlsl">
+    <FxCompile Include="res\Shaders\Surface\GrassGeneratorShader\grass_generator_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\Surface\GrassGeneratorShader</Filter>
     </FxCompile>
   </ItemGroup>

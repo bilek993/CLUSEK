@@ -2,6 +2,7 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 #include "../Utils/Logger.h"
+#include "../Utils/BufferCalculationUtil.h"
 
 template<class T>
 class AppendBuffer final
@@ -52,7 +53,7 @@ public:
 
 		bufferDesc.Usage = D3D11_USAGE_DEFAULT;
 		bufferDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
-		bufferDesc.StructureByteStride = static_cast<UINT>(sizeof(T) + (16 - (sizeof(T) % 16)));
+		bufferDesc.StructureByteStride = BufferCalculationUtil::CalculateByteWidthWithPadding(sizeof(T));
 		bufferDesc.ByteWidth = bufferDesc.StructureByteStride * ItemCount;
 		bufferDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_UNORDERED_ACCESS;
 		bufferDesc.CPUAccessFlags = 0;

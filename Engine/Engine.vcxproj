@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utils\BufferCalculationUtil.cpp" />
     <ClCompile Include="src\GUI\Components\CommentComponentEditor.cpp" />
     <ClCompile Include="src\Loaders\Components\CommentComponentLoader.cpp" />
     <ClCompile Include="src\Utils\FloatingPointComparator.cpp" />
@@ -53,7 +54,7 @@
     <ClCompile Include="src\GUI\Components\VehicleComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\VehiclePlayerControllerComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\WheelComponentEditor.cpp" />
-    <FxCompile Include="grass_generator_pixel_shader.hlsl">
+    <FxCompile Include="res\Shaders\Surface\GrassGeneratorShader\grass_generator_pixel_shader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
@@ -212,6 +213,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Utils\BufferCalculationUtil.h" />
     <ClInclude Include="src\Renderer\Append\GrassInstanceBuffer.h" />
     <ClInclude Include="src\Renderer\AppendBuffer.h" />
     <ClInclude Include="src\GUI\Components\CommentComponentEditor.h" />

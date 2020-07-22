@@ -2,6 +2,7 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 #include "../Utils/Logger.h"
+#include "../Utils/BufferCalculationUtil.h"
 
 template<class T>
 class ConstantBuffer final
@@ -44,8 +45,7 @@ public:
 		constBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		constBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 		constBufferDesc.MiscFlags = 0;
-		// For buffer alignment data must be packed into 4-byte boundaries (more info: https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/dx-graphics-hlsl-packing-rules).
-		constBufferDesc.ByteWidth = static_cast<UINT>(sizeof(T) + (16 - (sizeof(T) % 16)));
+		constBufferDesc.ByteWidth = BufferCalculationUtil::CalculateByteWidthWithPadding(sizeof(T));
 		constBufferDesc.StructureByteStride = 0;
 
 		return device->CreateBuffer(&constBufferDesc, nullptr, Buffer.GetAddressOf());
