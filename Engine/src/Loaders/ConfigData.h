@@ -95,6 +95,9 @@ struct ConfigData final
 	// Grass settings
 	int MaxGrassRenderInstances = 1024;
 	int GrassGeneratorResolution = 128;
+	float GrassGeneratorSurfaceWidth = 500.0f;
+	float GrassGeneratorSurfaceHeight = 500.0f;
+	float GrassGeneratorMaxCameraDistance = 100.0f;
 
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;

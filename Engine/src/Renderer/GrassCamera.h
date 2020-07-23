@@ -9,5 +9,5 @@ private:
 	inline static DirectX::XMVECTOR DownVector = DirectX::XMVectorSet(0.0f, -1.0f, 0.0f, 0.0f);
 	
 public:
-	static DirectX::XMMATRIX GenerateCameraMatrix(const TransformComponent& mainCameraTransformComponent);
+	static DirectX::XMMATRIX GenerateCameraMatrix(const TransformComponent& mainCameraTransformComponent, float distance, float width, float height);
 };

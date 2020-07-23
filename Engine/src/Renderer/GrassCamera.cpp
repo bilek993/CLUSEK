@@ -2,7 +2,7 @@
 
 #include "TransformLogic.h"
 
-DirectX::XMMATRIX GrassCamera::GenerateCameraMatrix(const TransformComponent& mainCameraTransformComponent)
+DirectX::XMMATRIX GrassCamera::GenerateCameraMatrix(const TransformComponent& mainCameraTransformComponent, const float distance, const float width, const float height)
 {
 	const auto cameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
 	const auto cameraPositionVector = XMLoadFloat3(&cameraPosition);
@@ -11,12 +11,12 @@ DirectX::XMMATRIX GrassCamera::GenerateCameraMatrix(const TransformComponent& ma
 														DirectX::XMVectorAdd(cameraPositionVector, DownVector), 
 														UpVector);
 	
-	const auto projectionMatrix = DirectX::XMMatrixOrthographicOffCenterLH(	-500.0f, 
-																			500.0f, 
-																			-500.0f, 
-																			500.0f, 
-																			-10000.0f, 
-																			10000.0f);
+	const auto projectionMatrix = DirectX::XMMatrixOrthographicOffCenterLH(	-width / 2,
+																			width / 2,
+																			-height / 2,
+																			height / 2,
+																			-1.0f,
+																			distance);
 	
 	return viewMatrix * projectionMatrix;
 }
