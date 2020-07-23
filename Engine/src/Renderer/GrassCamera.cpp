@@ -11,10 +11,10 @@ DirectX::XMMATRIX GrassCamera::GenerateCameraMatrix(const TransformComponent& ma
 														DirectX::XMVectorAdd(cameraPositionVector, DownVector), 
 														UpVector);
 	
-	const auto projectionMatrix = DirectX::XMMatrixOrthographicOffCenterLH(	-5000.0f, 
-																			5000.0f, 
-																			-5000.0f, 
-																			5000.0f, 
+	const auto projectionMatrix = DirectX::XMMatrixOrthographicOffCenterLH(	-500.0f, 
+																			500.0f, 
+																			-500.0f, 
+																			500.0f, 
 																			-10000.0f, 
 																			10000.0f);
 	

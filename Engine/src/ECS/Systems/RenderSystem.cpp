@@ -283,8 +283,8 @@ bool RenderSystem::InitializeDirectX()
 	// Grass render depth stencil initialization
 
 	if (!GrassRenderDepthStencil.Initialize(Device.Get(),
-											ConfigurationData->GrassGeneratorSize,
-											ConfigurationData->GrassGeneratorSize,
+											ConfigurationData->GrassGeneratorResolution,
+											ConfigurationData->GrassGeneratorResolution,
 											DXGI_FORMAT_D24_UNORM_S8_UINT,
 											DXGI_FORMAT_D24_UNORM_S8_UINT,
 											DXGI_FORMAT_UNKNOWN,
