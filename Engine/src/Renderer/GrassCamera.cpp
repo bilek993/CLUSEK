@@ -1,15 +1,20 @@
 #include "GrassCamera.h"
 
-DirectX::XMMATRIX GrassCamera::GenerateCameraMatrix(const TransformComponent& mainCameraTransformComponent) // TODO: Fix this function
+#include "TransformLogic.h"
+
+DirectX::XMMATRIX GrassCamera::GenerateCameraMatrix(const TransformComponent& mainCameraTransformComponent)
 {
-	const auto viewMatrix = DirectX::XMMatrixLookAtLH(	ZeroVector, 
-														DownVector, 
+	const auto cameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
+	const auto cameraPositionVector = XMLoadFloat3(&cameraPosition);
+	
+	const auto viewMatrix = DirectX::XMMatrixLookAtLH(	cameraPositionVector,
+														DirectX::XMVectorAdd(cameraPositionVector, DownVector), 
 														UpVector);
 	
-	const auto projectionMatrix = DirectX::XMMatrixOrthographicOffCenterLH(	-500.0f, 
-																			500.0f, 
-																			-500.0f, 
-																			500.0f, 
+	const auto projectionMatrix = DirectX::XMMatrixOrthographicOffCenterLH(	-5000.0f, 
+																			5000.0f, 
+																			-5000.0f, 
+																			5000.0f, 
 																			-10000.0f, 
 																			10000.0f);
 	
