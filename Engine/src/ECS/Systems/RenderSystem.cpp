@@ -1154,6 +1154,16 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
 
+		DeviceContext->PSSetShaderResources(0, 1, terrainComponent.Material.Splatmap->GetAddressOf());
+
+		DeviceContext->PSSetShaderResources(1, 1, terrainComponent.Material.BaseAlbedoTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(2, 1, terrainComponent.Material.RedAlbedoTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(3, 1, terrainComponent.Material.GreenAlbedoTexture->GetAddressOf());
+		DeviceContext->PSSetShaderResources(4, 1, terrainComponent.Material.BlueAlbedoTexture->GetAddressOf());
+
+		DeviceContext->PSSetShaderResources(5, 1, terrainComponent.Material.OptimizedMetalicTexture.ShaderResourceView.GetAddressOf());
+		DeviceContext->PSSetShaderResources(6, 1, terrainComponent.Material.OptimizedSmoothnessTexture.ShaderResourceView.GetAddressOf());
+
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 	});
 
