@@ -142,6 +142,8 @@ private:
 
 	PixelShader GrassGeneratorPixelShader;
 
+	ComputeShader PrepareGrassDateForIndirectRenderingComputeShader;
+
 	VertexShader ShadowVertexShader;
 	PixelShader ShadowPixelShader;
 

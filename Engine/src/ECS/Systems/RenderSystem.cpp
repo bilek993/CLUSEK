@@ -608,6 +608,14 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
+	// Prepare grass date for indirect rendering shaders
+
+	if (!PrepareGrassDateForIndirectRenderingComputeShader.Initialize(Device.Get(), L"prepare_grass_date_for_indirect_rendering_compute_shader.cso"))
+	{
+		Logger::Error("PrepareGrassDateForIndirectRenderingComputeShader not initialized due to critical problem!");
+		return false;
+	}
+
 	// Shadow shaders
 
 	if (ConfigurationData->ShadowsEnabled) {
@@ -1169,6 +1177,12 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 	ResetTessellationShaders();
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	// Compute and prepare data
+
+	DeviceContext->CSSetShader(PrepareGrassDateForIndirectRenderingComputeShader.GetShader(), nullptr, 0);
+
+	DeviceContext->Dispatch(1, 1, 1);
 
 	// Draw grass
 

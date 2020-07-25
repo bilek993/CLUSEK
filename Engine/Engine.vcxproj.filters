@@ -1195,7 +1195,7 @@
     <FxCompile Include="res\Shaders\Surface\GrassGeneratorShader\grass_generator_pixel_shader.hlsl">
       <Filter>Resource Files\Shaders\Surface\GrassGeneratorShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Compute\prepare_grass_date_for_indirect_rendering.hlsl">
+    <FxCompile Include="res\Shaders\Compute\prepare_grass_date_for_indirect_rendering_compute_shader.hlsl">
       <Filter>Resource Files\Shaders\Compute</Filter>
     </FxCompile>
   </ItemGroup>

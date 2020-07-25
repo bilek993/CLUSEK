@@ -56,7 +56,7 @@
     <ClCompile Include="src\GUI\Components\VehicleComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\VehiclePlayerControllerComponentEditor.cpp" />
     <ClCompile Include="src\GUI\Components\WheelComponentEditor.cpp" />
-    <FxCompile Include="res\Shaders\Compute\prepare_grass_date_for_indirect_rendering.hlsl">
+    <FxCompile Include="res\Shaders\Compute\prepare_grass_date_for_indirect_rendering_compute_shader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Compute</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Compute</ShaderType>
