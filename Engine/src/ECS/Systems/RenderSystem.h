@@ -39,6 +39,7 @@
 #include "../../Renderer/ConstantBufferTypes/LodTransitionBuffer.h"
 #include "../Components/ModelRenderComponent.h"
 #include "../../Renderer/AppendBuffer.h"
+#include "../../Renderer/CustomizableBuffer.h"
 #include "../../Renderer/Append/GrassInstanceBuffer.h"
 
 class RenderSystem final : public BaseSystem
@@ -64,6 +65,7 @@ private:
 	void InitializeClearColorSettings() const;
 	void InitializeConstantBuffers();
 	void InitializeAppendBuffers();
+	void InitializeCustomizableBuffers();
 	void InitializePostProcessing();
 	void ShowLoadingScreen();
 	void InitializeSkyboxComponent();
@@ -169,6 +171,8 @@ private:
 	ConstantBuffer<LodTransitionBuffer> LodTransitionBufferInstance;
 
 	AppendBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance;
+
+	CustomizableBuffer GrassCounterBufferInstance;
 
 	PbrResource PbrResourceInstance{};
 

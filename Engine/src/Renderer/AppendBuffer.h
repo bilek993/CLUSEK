@@ -27,6 +27,11 @@ public:
 		return Buffer.GetAddressOf();
 	}
 
+	ID3D11UnorderedAccessView* GetUnorderedAccessView() const
+	{
+		return UnorderedAccessView.Get();
+	}
+
 	ID3D11UnorderedAccessView* const* GetAddressOfUnorderedAccessView() const
 	{
 		return UnorderedAccessView.GetAddressOf();

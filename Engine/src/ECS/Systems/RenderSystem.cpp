@@ -40,6 +40,8 @@ void RenderSystem::Start()
 
 	InitializeConstantBuffers();
 	InitializeAppendBuffers();
+	InitializeCustomizableBuffers();
+	
 	InitializePostProcessing();
 
 	if (!ConfigurationData->DisableLoadingScreen)
@@ -769,6 +771,36 @@ void RenderSystem::InitializeAppendBuffers()
 		Logger::Error("Failed to create 'GrassInstanceBufferInstance' append buffer.");
 }
 
+void RenderSystem::InitializeCustomizableBuffers()
+{
+	Logger::Debug("Preparing to initialize customizable buffers...");
+
+	// Grass counter buffer
+
+	D3D11_BUFFER_DESC grassCounterBufferDesc;
+	ZeroMemory(&grassCounterBufferDesc, sizeof(D3D11_BUFFER_DESC));
+
+	grassCounterBufferDesc.ByteWidth = sizeof(UINT);
+	grassCounterBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	grassCounterBufferDesc.BindFlags = D3D11_BIND_UNORDERED_ACCESS;
+	grassCounterBufferDesc.CPUAccessFlags = 0;
+	grassCounterBufferDesc.MiscFlags = 0;
+	grassCounterBufferDesc.StructureByteStride = 0;
+
+	D3D11_UNORDERED_ACCESS_VIEW_DESC grassCounterUavDesc;
+	ZeroMemory(&grassCounterUavDesc, sizeof(D3D11_UNORDERED_ACCESS_VIEW_DESC));
+
+	grassCounterUavDesc.Format = DXGI_FORMAT_R32_UINT;
+	grassCounterUavDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
+	grassCounterUavDesc.Buffer.FirstElement = 0;
+	grassCounterUavDesc.Buffer.Flags = 0;
+	grassCounterUavDesc.Buffer.NumElements = 1;
+
+	const auto hr = GrassCounterBufferInstance.Initialize(Device.Get(), grassCounterBufferDesc, grassCounterUavDesc);
+	if (FAILED(hr))
+		Logger::Error("Failed to create grass counter customizable buffer.");
+}
+
 void RenderSystem::InitializePostProcessing()
 {
 	// Screen space post processing
@@ -1180,7 +1212,11 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 	// Compute and prepare data
 
+	DeviceContext->CopyStructureCount(GrassCounterBufferInstance.GetBuffer(), 0, GrassInstanceBufferInstance.GetUnorderedAccessView());
+
 	DeviceContext->CSSetShader(PrepareGrassDateForIndirectRenderingComputeShader.GetShader(), nullptr, 0);
+
+	DeviceContext->CSSetUnorderedAccessViews(0, 1, GrassCounterBufferInstance.GetAddressOfUnorderedAccessView(), nullptr);
 
 	DeviceContext->Dispatch(1, 1, 1);
 
