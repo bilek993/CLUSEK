@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Renderer\CustomizableBuffer.cpp" />
     <ClCompile Include="src\Renderer\GrassCamera.cpp" />
     <ClCompile Include="src\Utils\BufferCalculationUtil.cpp" />
     <ClCompile Include="src\GUI\Components\CommentComponentEditor.cpp" />
@@ -220,6 +221,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\CustomizableBuffer.h" />
     <ClInclude Include="src\Renderer\GrassCamera.h" />
     <ClInclude Include="src\Utils\BufferCalculationUtil.h" />
     <ClInclude Include="src\Renderer\Append\GrassInstanceBuffer.h" />
