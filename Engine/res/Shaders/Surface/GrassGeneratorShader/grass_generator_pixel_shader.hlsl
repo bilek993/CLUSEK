@@ -1,3 +1,5 @@
+#include "../../Includes/shadow_utils.hlsli"
+
 static const float SAMPLING_THRESHOLD = 0.01f;
 
 struct GrassInstanceBuffer
@@ -17,7 +19,9 @@ struct PS_INPUT
 {
     float4 Position : SV_POSITION;
     float3 WorldPosition : WORLD_POSITION;
+    float4 LightSpacePosition[CASCADES_COUNT] : LIGHTSPACE_POSITION;
     float2 TextureCoord : TEXCOORD;
+    float CameraDistanceZ : CAMERA_DISTANCE_Z;
 };
 
 AppendStructuredBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance : register(u0);
