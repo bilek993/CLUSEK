@@ -796,9 +796,34 @@ void RenderSystem::InitializeCustomizableBuffers()
 	grassCounterUavDesc.Buffer.Flags = 0;
 	grassCounterUavDesc.Buffer.NumElements = 1;
 
-	const auto hr = GrassCounterBufferInstance.Initialize(Device.Get(), grassCounterBufferDesc, grassCounterUavDesc);
+	auto hr = GrassCounterBufferInstance.Initialize(Device.Get(), grassCounterBufferDesc, grassCounterUavDesc);
 	if (FAILED(hr))
 		Logger::Error("Failed to create grass counter customizable buffer.");
+
+	// Grass draw index instance indirect args buffer
+
+	D3D11_BUFFER_DESC grassDrawIndexInstanceIndirectArgsBufferDesc;
+	ZeroMemory(&grassDrawIndexInstanceIndirectArgsBufferDesc, sizeof(D3D11_BUFFER_DESC));
+
+	grassDrawIndexInstanceIndirectArgsBufferDesc.ByteWidth = sizeof(D3D11_DRAW_INDEXED_INSTANCED_INDIRECT_ARGS);
+	grassDrawIndexInstanceIndirectArgsBufferDesc.Usage = D3D11_USAGE_DEFAULT;
+	grassDrawIndexInstanceIndirectArgsBufferDesc.BindFlags = D3D11_BIND_UNORDERED_ACCESS;
+	grassDrawIndexInstanceIndirectArgsBufferDesc.CPUAccessFlags = 0;
+	grassDrawIndexInstanceIndirectArgsBufferDesc.MiscFlags = D3D11_RESOURCE_MISC_DRAWINDIRECT_ARGS;
+	grassDrawIndexInstanceIndirectArgsBufferDesc.StructureByteStride = sizeof(float);
+
+	D3D11_UNORDERED_ACCESS_VIEW_DESC grassDrawIndexInstanceIndirectArgsUavDesc;
+	ZeroMemory(&grassDrawIndexInstanceIndirectArgsUavDesc, sizeof(D3D11_UNORDERED_ACCESS_VIEW_DESC));
+
+	grassDrawIndexInstanceIndirectArgsUavDesc.Format = DXGI_FORMAT_R32_UINT;
+	grassDrawIndexInstanceIndirectArgsUavDesc.ViewDimension = D3D11_UAV_DIMENSION_BUFFER;
+	grassDrawIndexInstanceIndirectArgsUavDesc.Buffer.FirstElement = 0;
+	grassDrawIndexInstanceIndirectArgsUavDesc.Buffer.Flags = 0;
+	grassDrawIndexInstanceIndirectArgsUavDesc.Buffer.NumElements = 5;
+
+	hr = GrassDrawIndexInstanceIndirectArgsBufferInstance.Initialize(Device.Get(), grassDrawIndexInstanceIndirectArgsBufferDesc, grassDrawIndexInstanceIndirectArgsUavDesc);
+	if (FAILED(hr))
+		Logger::Error("Failed to create grass draw index instance indirect args customizable buffer.");
 }
 
 void RenderSystem::InitializePostProcessing()

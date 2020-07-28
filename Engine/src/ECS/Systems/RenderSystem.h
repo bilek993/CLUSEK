@@ -173,6 +173,7 @@ private:
 	AppendBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance;
 
 	CustomizableBuffer GrassCounterBufferInstance;
+	CustomizableBuffer GrassDrawIndexInstanceIndirectArgsBufferInstance;
 
 	PbrResource PbrResourceInstance{};
 
