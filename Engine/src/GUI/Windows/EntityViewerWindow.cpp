@@ -20,6 +20,7 @@
 #include "../../ECS/Components/RigidbodyDynamicCylinderComponent.h"
 #include "../../ECS/Components/RigidbodyStaticCylinderComponent.h"
 #include "../../ECS/Components/CommentComponent.h"
+#include "../../ECS/Components/GrassComponent.h"
 
 void EntityViewerWindow::Draw()
 {
@@ -69,5 +70,6 @@ void EntityViewerWindow::DrawList()
 		DrawComponent<VehiclePlayerControllerComponent>(entity, "Vehicle Player Controller Component");
 		DrawComponent<WheelComponent>(entity, "Wheel Component");
 		DrawComponent<CommentComponent>(entity, "Comment Component");
+		DrawComponent<GrassComponent>(entity, "Grass Component");
 	});
 }
