@@ -773,6 +773,8 @@ void RenderSystem::InitializeAppendBuffers()
 
 void RenderSystem::InitializeCustomizableBuffers()
 {
+	// Initialization
+	
 	Logger::Debug("Preparing to initialize customizable buffers...");
 
 	// Grass counter buffer
@@ -824,6 +826,10 @@ void RenderSystem::InitializeCustomizableBuffers()
 	hr = GrassDrawIndexInstanceIndirectArgsBufferInstance.Initialize(Device.Get(), grassDrawIndexInstanceIndirectArgsBufferDesc, grassDrawIndexInstanceIndirectArgsUavDesc);
 	if (FAILED(hr))
 		Logger::Error("Failed to create grass draw index instance indirect args customizable buffer.");
+
+	// Finalization
+
+	Logger::Debug("Customizable buffers initialized...");
 }
 
 void RenderSystem::InitializePostProcessing()
