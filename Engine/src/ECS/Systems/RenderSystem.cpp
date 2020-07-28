@@ -1248,6 +1248,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	DeviceContext->CSSetShader(PrepareGrassDateForIndirectRenderingComputeShader.GetShader(), nullptr, 0);
 
 	DeviceContext->CSSetUnorderedAccessViews(0, 1, GrassCounterBufferInstance.GetAddressOfUnorderedAccessView(), nullptr);
+	DeviceContext->CSSetUnorderedAccessViews(1, 1, GrassDrawIndexInstanceIndirectArgsBufferInstance.GetAddressOfUnorderedAccessView(), nullptr);
 
 	DeviceContext->Dispatch(1, 1, 1);
 
