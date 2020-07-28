@@ -1022,7 +1022,10 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	SetPbrResources();
 
 	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent, Solid);
-	RenderGrass(cameraComponent, mainCameraTransformComponent);
+
+	if (ConfigurationData->GrassEnabled)
+		RenderGrass(cameraComponent, mainCameraTransformComponent);
+
 	RenderTerrain(cameraComponent, mainCameraTransformComponent);
 	RenderSkyBoxComponents(cameraComponent);
 	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent, Transparent);

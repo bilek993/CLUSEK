@@ -93,6 +93,7 @@ struct ConfigData final
 	int EnableAsyncTerrainGeneration = 1;
 
 	// Grass settings
+	int GrassEnabled = 1;
 	int MaxGrassRenderInstances = 1024;
 	int GrassGeneratorResolution = 128;
 	float GrassGeneratorSurfaceWidth = 500.0f;
