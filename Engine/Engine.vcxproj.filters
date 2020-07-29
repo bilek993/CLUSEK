@@ -1109,6 +1109,12 @@
     <ClInclude Include="src\GUI\Components\GrassComponentEditor.h">
       <Filter>Header Files\GUI\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\Materials\GrassShaderMaterial.h">
+      <Filter>Header Files\Renderer\Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Renderer\GrassMesh.h">
+      <Filter>Header Files\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">

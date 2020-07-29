@@ -222,6 +222,8 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\GrassMesh.h" />
+    <ClInclude Include="src\Renderer\Materials\GrassShaderMaterial.h" />
     <ClInclude Include="src\GUI\Components\GrassComponentEditor.h" />
     <ClInclude Include="src\Loaders\Components\GrassComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\GrassComponent.h" />
