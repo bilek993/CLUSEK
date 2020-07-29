@@ -60,8 +60,73 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 	mesh.Material.Alpha = alpha;
 }
 
+void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
+{
+	if (pathToMaterial.empty())
+	{
+		Logger::Error("Incorrect path to material passed! Path to material file cannot be empty.");
+		return;
+	}
+
+	nlohmann::json jsonObject;
+	std::ifstream inputFile(pathToMaterial);
+	inputFile >> jsonObject;
+
+	for (auto& mesh : meshes)
+	{
+		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
+		auto alphaJsonInfo = jsonObject[mesh.Name]["Alpha"];
+		auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
+		auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
+		auto metalicSmoothnessTextureJsonInfo = jsonObject[mesh.Name]["MetalicSmoothnessTexture"];
+		auto occlusionTextureJsonInfo = jsonObject[mesh.Name]["OcclusionTexture"];
+		auto emissionTextureJsonInfo = jsonObject[mesh.Name]["EmissionTexture"];
+
+		SetResourceForMesh(	device,
+							mesh,
+							albedoTextureJsonInfo.is_null() ? "" : albedoTextureJsonInfo.get<std::string>(),
+							normalTextureJsonInfo.is_null() ? "" : normalTextureJsonInfo.get<std::string>(),
+							metalicSmoothnessTextureJsonInfo.is_null() ? "" : metalicSmoothnessTextureJsonInfo.get<std::string>(),
+							occlusionTextureJsonInfo.is_null() ? "" : occlusionTextureJsonInfo.get<std::string>(),
+							emissionTextureJsonInfo.is_null() ? "" : emissionTextureJsonInfo.get<std::string>(),
+							alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>());
+	}
+}
+
+void MaterialLoader::SetResourceForGrassMesh(ID3D11Device* device, GrassMesh& mesh, const std::string& albedoTextureId,
+	const std::string& normalTextureId)
+{
+	mesh.Material.AlbedoTexture = GetTextureById(device, albedoTextureId, DefaultAlbedo);
+	mesh.Material.NormalTexture = GetTextureById(device, normalTextureId, DefaultNormal);
+}
+
+void MaterialLoader::SetResourceForGrassMeshGroup(ID3D11Device* device, std::vector<GrassMesh>& meshes, const std::string& pathToMaterial)
+{
+	if (pathToMaterial.empty())
+	{
+		Logger::Error("Incorrect path to material passed! Path to material file cannot be empty.");
+		return;
+	}
+
+	nlohmann::json jsonObject;
+	std::ifstream inputFile(pathToMaterial);
+	inputFile >> jsonObject;
+
+	for (auto& mesh : meshes)
+	{
+		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
+		auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
+		auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
+
+		SetResourceForGrassMesh(device,
+								mesh,
+								albedoTextureJsonInfo.is_null() ? "" : albedoTextureJsonInfo.get<std::string>(),
+								normalTextureJsonInfo.is_null() ? "" : normalTextureJsonInfo.get<std::string>());
+	}
+}
+
 void MaterialLoader::SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material,
-	const std::string& albedoTextureId)
+                                               const std::string& albedoTextureId)
 {
 	material.SkyMap = GetTextureById(device, albedoTextureId, DefaultAlbedo);
 }
@@ -140,39 +205,6 @@ void MaterialLoader::GetAndSetLoadingTexture(ID3D11Device* device, const std::st
 		const auto hr = DirectX::CreateWICTextureFromFile(device, StringUtil::StringToWide(path).data(), nullptr, resourceView.GetAddressOf());
 		if (FAILED(hr))
 			Logger::Error("Couldn't load texture from file!");
-	}
-}
-
-void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
-{
-	if (pathToMaterial.empty())
-	{
-		Logger::Error("Incorrect path to material passed! Path to material file cannot be empty.");
-		return;
-	}
-
-	nlohmann::json jsonObject;
-	std::ifstream inputFile(pathToMaterial);
-	inputFile >> jsonObject;
-
-	for (auto& mesh : meshes)
-	{
-		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
-		auto alphaJsonInfo = jsonObject[mesh.Name]["Alpha"];
-		auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
-		auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
-		auto metalicSmoothnessTextureJsonInfo = jsonObject[mesh.Name]["MetalicSmoothnessTexture"];
-		auto occlusionTextureJsonInfo = jsonObject[mesh.Name]["OcclusionTexture"];
-		auto emissionTextureJsonInfo = jsonObject[mesh.Name]["EmissionTexture"];
-
-		SetResourceForMesh(	device,
-							mesh,
-							albedoTextureJsonInfo.is_null() ? "" : albedoTextureJsonInfo.get<std::string>(),
-							normalTextureJsonInfo.is_null() ? "" : normalTextureJsonInfo.get<std::string>(),
-							metalicSmoothnessTextureJsonInfo.is_null() ? "" : metalicSmoothnessTextureJsonInfo.get<std::string>(),
-							occlusionTextureJsonInfo.is_null() ? "" : occlusionTextureJsonInfo.get<std::string>(),
-							emissionTextureJsonInfo.is_null() ? "" : emissionTextureJsonInfo.get<std::string>(),
-							alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>());
 	}
 }
 

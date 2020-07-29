@@ -19,6 +19,7 @@
 #include "../../Renderer/GrassCamera.h"
 #include "../../Utils/StringUtil.h"
 #include "../../Utils/CameraLocator.h"
+#include "../Components/GrassComponent.h"
 
 void RenderSystem::Start()
 {
@@ -52,6 +53,7 @@ void RenderSystem::Start()
 	Logger::Debug("Preparing to initialize components in renderer...");
 
 	InitializeSkyboxComponent();
+	InitializeGrassComponent();
 	InitializeTerrainComponent();
 	InitializeModelRenderComponent();
 	InitializeShadowCameras();
@@ -919,6 +921,15 @@ void RenderSystem::InitializeSkyboxComponent()
 	{
 		CubeGenerator::Generate(Device.Get(), skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer);
 		MaterialLoader::SetResourceForSkyMaterial(Device.Get(), skyboxComponent.Material, skyboxComponent.SkyboxTextureId);
+	});
+}
+
+void RenderSystem::InitializeGrassComponent()
+{
+	Registry->view<GrassComponent>().each([this](GrassComponent &grassComponent)
+	{
+		// TODO: Initialize mesh
+		MaterialLoader::SetResourceForGrassMeshGroup(Device.Get(), *grassComponent.Meshes, grassComponent.MaterialId);
 	});
 }
 

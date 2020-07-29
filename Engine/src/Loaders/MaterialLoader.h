@@ -6,6 +6,8 @@
 #include "../Renderer/Shaders/ComputeShader.h"
 #include "ConfigData.h"
 #include <mutex>
+
+#include "../Renderer/GrassMesh.h"
 #include "../Renderer/Materials/TerrainShaderMaterial.h"
 
 class MaterialLoader final
@@ -13,13 +15,19 @@ class MaterialLoader final
 public:
 	static void LoadResource(ID3D11Device* device, ID3D11DeviceContext* context, const std::string& path, const std::string& resourceId, 
 		const std::string& convertLatLongToCubeMap, const std::string& srgbMode, const std::string& mipMaps, const ConfigData* config);
+	
 	static void SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId, 
 		const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId, 
 		const std::string& occlusionTextureId, const std::string& emissionTextureId, float alpha);
+	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
+
+	static void SetResourceForGrassMesh(ID3D11Device* device, GrassMesh& mesh, const std::string& albedoTextureId,
+		const std::string& normalTextureId);
+	static void SetResourceForGrassMeshGroup(ID3D11Device* device, std::vector<GrassMesh>& meshes, const std::string& pathToMaterial);
+	
 	static void SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material, const std::string& albedoTextureId);
 	static void SetResourceForTerrainMaterial(ID3D11Device* device, TerrainShaderMaterial& material, const std::string& pathToMaterial);
 	static void GetAndSetLoadingTexture(ID3D11Device* device, const std::string& path, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>& resourceView);
-	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
 private:
 	inline static const int THREAD_COUNT = 32;
 	inline static const int CUBE_SIZE = 6;

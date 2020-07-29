@@ -69,6 +69,7 @@ private:
 	void InitializePostProcessing();
 	void ShowLoadingScreen();
 	void InitializeSkyboxComponent();
+	void InitializeGrassComponent();
 	void InitializeTerrainComponent();
 	void InitializeModelRenderComponent();
 	void InitializeShadowCameras();
