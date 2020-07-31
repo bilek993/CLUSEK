@@ -332,8 +332,8 @@ bool RenderSystem::InitializeDirectX()
 
 	GrassViewport.TopLeftX = 0;
 	GrassViewport.TopLeftY = 0;
-	GrassViewport.Width = 128; // TODO: Change this
-	GrassViewport.Height = 128; // TODO: Change this
+	GrassViewport.Width = ConfigurationData->GrassGeneratorResolution;
+	GrassViewport.Height = ConfigurationData->GrassGeneratorResolution;
 	GrassViewport.MinDepth = 0.0f;
 	GrassViewport.MaxDepth = 1.0f;
 
