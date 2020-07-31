@@ -5,10 +5,12 @@
 	"Wheel": "Data/Models/CivilianVehicle/Wheel.fbx",
 	"WheelLowPoly": "Data/Models/CivilianVehicle/WheelLowPoly.fbx",
 	
-	"Grass": "Data/Models/Grass/Grass.fbx",
-	
 	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx",
 	"SmoothCylinderLowPoly": "Data/Models/SmoothCylinder/SmoothCylinderLowPoly.fbx"
+  },
+  
+  "GrassModels": {
+	"Grass": "Data/Models/Grass/Grass.fbx"
   },
   
   "Textures": {

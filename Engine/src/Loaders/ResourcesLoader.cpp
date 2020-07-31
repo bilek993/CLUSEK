@@ -16,6 +16,9 @@ void ResourcesLoader::Load(ID3D11Device* device, ID3D11DeviceContext* context, c
 	LoadModels(device, jsonObject["Models"], config);
 	Logger::Debug("Loaded all model files.");
 
+	LoadGrassModels(device, jsonObject["GrassModels"], config);
+	Logger::Debug("Loaded all grass model files.");
+
 	LoadTextures(device, context, jsonObject["Textures"], config);
 	Logger::Debug("Loaded all texture files.");
 }
@@ -36,8 +39,24 @@ void ResourcesLoader::LoadModels(ID3D11Device* device, const nlohmann::json& jso
 	}
 }
 
+void ResourcesLoader::LoadGrassModels(ID3D11Device* device, const nlohmann::json& json, const ConfigData* config)
+{
+	std::vector<std::future<void>> asyncFutures;
+
+	for (auto it = json.begin(); it != json.end(); ++it)
+	{
+		const auto key = static_cast<std::string>(it.key());
+		const auto value = it.value().get<std::string>();
+
+		if (config->EnableAsyncModelLoading)
+			asyncFutures.emplace_back(std::async(std::launch::async, ModelLoader::LoadGrassResource, device, value, key));
+		else
+			ModelLoader::LoadGrassResource(device, value, key);
+	}
+}
+
 void ResourcesLoader::LoadTextures(ID3D11Device* device, ID3D11DeviceContext* context, const nlohmann::json& json,
-	const ConfigData* config)
+                                   const ConfigData* config)
 {
 	std::vector<std::future<void>> asyncFutures;
 
