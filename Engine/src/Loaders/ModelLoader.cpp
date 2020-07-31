@@ -20,43 +20,8 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, co
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 	{
 		auto mesh = meshes[i];
-		std::vector<FatVertex> vertices;
-		std::vector<DWORD> indices;
-
-		for (unsigned int j = 0; j < mesh->mNumVertices; j++)
-		{
-			FatVertex vertex;
-
-			vertex.Position.x = mesh->mVertices[j].x;
-			vertex.Position.y = mesh->mVertices[j].y;
-			vertex.Position.z = mesh->mVertices[j].z;
-
-			vertex.Normal.x = mesh->mNormals[j].x;
-			vertex.Normal.y = mesh->mNormals[j].y;
-			vertex.Normal.z = mesh->mNormals[j].z;
-
-			vertex.Tangent.x = mesh->mTangents[j].x;
-			vertex.Tangent.y = mesh->mTangents[j].y;
-			vertex.Tangent.z = mesh->mTangents[j].z;
-
-			if (mesh->mTextureCoords[0])
-			{
-				vertex.TextureCoord.x = static_cast<float>(mesh->mTextureCoords[0][j].x);
-				vertex.TextureCoord.y = static_cast<float>(mesh->mTextureCoords[0][j].y);
-			}
-
-			vertices.emplace_back(vertex);
-		}
-
-		for (unsigned int j = 0; j < mesh->mNumFaces; j++)
-		{
-			const auto face = mesh->mFaces[j];
-
-			for (unsigned int k = 0; k < face.mNumIndices; k++)
-			{
-				indices.emplace_back(face.mIndices[k]);
-			}
-		}
+		auto vertices = CreateFatVertices(mesh);
+		auto indices = CreateIndices(mesh);
 
 		Mesh newMesh;
 		newMesh.Name = mesh->mName.C_Str();
@@ -94,44 +59,9 @@ void ModelLoader::LoadGrassResource(ID3D11Device* device, const std::string& pat
 	const auto meshes = scene->mMeshes;
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
 	{
-		auto mesh = meshes[i];
-		std::vector<FatVertex> vertices;
-		std::vector<DWORD> indices;
-
-		for (unsigned int j = 0; j < mesh->mNumVertices; j++)
-		{
-			FatVertex vertex;
-
-			vertex.Position.x = mesh->mVertices[j].x;
-			vertex.Position.y = mesh->mVertices[j].y;
-			vertex.Position.z = mesh->mVertices[j].z;
-
-			vertex.Normal.x = mesh->mNormals[j].x;
-			vertex.Normal.y = mesh->mNormals[j].y;
-			vertex.Normal.z = mesh->mNormals[j].z;
-
-			vertex.Tangent.x = mesh->mTangents[j].x;
-			vertex.Tangent.y = mesh->mTangents[j].y;
-			vertex.Tangent.z = mesh->mTangents[j].z;
-
-			if (mesh->mTextureCoords[0])
-			{
-				vertex.TextureCoord.x = static_cast<float>(mesh->mTextureCoords[0][j].x);
-				vertex.TextureCoord.y = static_cast<float>(mesh->mTextureCoords[0][j].y);
-			}
-
-			vertices.emplace_back(vertex);
-		}
-
-		for (unsigned int j = 0; j < mesh->mNumFaces; j++)
-		{
-			const auto face = mesh->mFaces[j];
-
-			for (unsigned int k = 0; k < face.mNumIndices; k++)
-			{
-				indices.emplace_back(face.mIndices[k]);
-			}
-		}
+		const auto mesh = meshes[i];
+		auto vertices = CreateFatVertices(mesh);
+		auto indices = CreateIndices(mesh);
 
 		GrassMesh newMesh;
 		newMesh.Name = mesh->mName.C_Str();
@@ -160,4 +90,53 @@ std::shared_ptr<std::vector<Mesh>> ModelLoader::GetResource(const std::string& r
 		Logger::Error("Resource with id '" + resourceId + "' not found!");
 
 	return meshPointer->second;
+}
+
+std::vector<FatVertex> ModelLoader::CreateFatVertices(const aiMesh* mesh)
+{
+	std::vector<FatVertex> vertices;
+
+	for (unsigned int j = 0; j < mesh->mNumVertices; j++)
+	{
+		FatVertex vertex;
+
+		vertex.Position.x = mesh->mVertices[j].x;
+		vertex.Position.y = mesh->mVertices[j].y;
+		vertex.Position.z = mesh->mVertices[j].z;
+
+		vertex.Normal.x = mesh->mNormals[j].x;
+		vertex.Normal.y = mesh->mNormals[j].y;
+		vertex.Normal.z = mesh->mNormals[j].z;
+
+		vertex.Tangent.x = mesh->mTangents[j].x;
+		vertex.Tangent.y = mesh->mTangents[j].y;
+		vertex.Tangent.z = mesh->mTangents[j].z;
+
+		if (mesh->mTextureCoords[0])
+		{
+			vertex.TextureCoord.x = static_cast<float>(mesh->mTextureCoords[0][j].x);
+			vertex.TextureCoord.y = static_cast<float>(mesh->mTextureCoords[0][j].y);
+		}
+
+		vertices.emplace_back(vertex);
+	}
+
+	return vertices;
+}
+
+std::vector<DWORD> ModelLoader::CreateIndices(const aiMesh* mesh)
+{
+	std::vector<DWORD> indices;
+
+	for (unsigned int j = 0; j < mesh->mNumFaces; j++)
+	{
+		const auto face = mesh->mFaces[j];
+
+		for (unsigned int k = 0; k < face.mNumIndices; k++)
+		{
+			indices.emplace_back(face.mIndices[k]);
+		}
+	}
+
+	return indices;
 }

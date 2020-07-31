@@ -17,6 +17,9 @@ public:
 	static std::shared_ptr<std::vector<Mesh>> GetResource(const std::string& resourceId);
 
 private:
+	static std::vector<FatVertex> CreateFatVertices(const aiMesh* mesh);
+	static std::vector<DWORD> CreateIndices(const aiMesh* mesh);
+
 	static inline std::mutex ResourcesMapMutex{};
 
 	static std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> MeshesResources;
