@@ -41,6 +41,7 @@
 #include "../../Renderer/AppendBuffer.h"
 #include "../../Renderer/CustomizableBuffer.h"
 #include "../../Renderer/Append/GrassInstanceBuffer.h"
+#include "../../Renderer/ConstantBufferTypes/GrassIndirectModelInfoBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -170,6 +171,7 @@ private:
 	ConstantBuffer<WorldMatrixBuffer> WorldMatrixBufferInstance;
 	ConstantBuffer<FogBuffer> FogBufferInstance;
 	ConstantBuffer<LodTransitionBuffer> LodTransitionBufferInstance;
+	ConstantBuffer<GrassIndirectModelInfoBuffer> GrassIndirectModelInfoBufferInstance;
 
 	AppendBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance;
 

@@ -222,6 +222,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassIndirectModelInfoBuffer.h" />
     <ClInclude Include="src\Renderer\GrassMesh.h" />
     <ClInclude Include="src\Renderer\Materials\GrassShaderMaterial.h" />
     <ClInclude Include="src\GUI\Components\GrassComponentEditor.h" />

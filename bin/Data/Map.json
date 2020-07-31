@@ -795,6 +795,10 @@
 		"MinTerrainTessellationDistance": 10.0,
 		"MaxTerrainTessellationDistance": 3000.0
 	  },
+	  "GrassComponent": {
+		"ModelId": "Grass",
+		"MaterialId": "Data/Textures/Grass/material.json"
+	  },
 	  "PhysicsMaterialComponent": {
 	    "Name": "TerrainMaterial"
 	  },

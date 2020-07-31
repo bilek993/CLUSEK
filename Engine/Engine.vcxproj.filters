@@ -1115,6 +1115,9 @@
     <ClInclude Include="src\Renderer\GrassMesh.h">
       <Filter>Header Files\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassIndirectModelInfoBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">

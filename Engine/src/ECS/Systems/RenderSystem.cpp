@@ -762,6 +762,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = LodTransitionBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'LodTransitionBufferInstance' constant buffer.");
+
+	hr = GrassIndirectModelInfoBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'GrassIndirectModelInfoBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializeAppendBuffers()
@@ -1171,6 +1175,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 	UINT offset = 0;
 
+	// STAGE 1
 	// Generate grass
 
 	ChangeBasicShaders(TerrainVertexShader, GrassGeneratorPixelShader);
@@ -1255,23 +1260,40 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	ResetTessellationShaders();
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	// Compute and prepare data
+	// Stage 2
+	// Compute, prepare data and draw grass 
 
-	DeviceContext->CopyStructureCount(GrassCounterBufferInstance.GetBuffer(), 0, GrassInstanceBufferInstance.GetUnorderedAccessView());
+	Registry->view<GrassComponent>().each([this](GrassComponent &grassComponent)
+	{
+		for (const auto& mesh : *grassComponent.Meshes)
+		{
+			// Compute and prepare data
 
-	DeviceContext->CSSetShader(PrepareGrassDateForIndirectRenderingComputeShader.GetShader(), nullptr, 0);
+			GrassIndirectModelInfoBufferInstance.Data.IndexCountPerInstance = mesh.RenderIndexBuffer.GetIndexCount();
+			GrassIndirectModelInfoBufferInstance.ApplyChanges();
 
-	DeviceContext->CSSetUnorderedAccessViews(0, 1, GrassCounterBufferInstance.GetAddressOfUnorderedAccessView(), nullptr);
-	DeviceContext->CSSetUnorderedAccessViews(1, 1, GrassDrawIndexInstanceIndirectArgsBufferInstance.GetAddressOfUnorderedAccessView(), nullptr);
+			DeviceContext->CopyStructureCount(GrassCounterBufferInstance.GetBuffer(), 0, GrassInstanceBufferInstance.GetUnorderedAccessView());
 
-	DeviceContext->Dispatch(1, 1, 1);
+			DeviceContext->CSSetShader(PrepareGrassDateForIndirectRenderingComputeShader.GetShader(), nullptr, 0);
 
-	// Draw grass
+			DeviceContext->CSSetUnorderedAccessViews(0, 1, GrassCounterBufferInstance.GetAddressOfUnorderedAccessView(), nullptr);
+			DeviceContext->CSSetUnorderedAccessViews(1, 1, GrassDrawIndexInstanceIndirectArgsBufferInstance.GetAddressOfUnorderedAccessView(), nullptr);
+
+			DeviceContext->CSSetConstantBuffers(0, 1, GrassIndirectModelInfoBufferInstance.GetAddressOf());
+
+			DeviceContext->Dispatch(1, 1, 1);
+
+			// Draw grass
+
+			DeviceContext->RSSetViewports(1, &SceneViewport);
+			DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
+		}
+	});
+
+	// Finalization
 
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
-
-	// Finalization
 
 	Profiler->EndEvent();
 }
