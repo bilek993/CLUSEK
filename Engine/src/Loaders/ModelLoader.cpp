@@ -14,7 +14,10 @@ void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, co
 	Logger::Debug("Reading data from file...");
 	const auto scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_CalcTangentSpace);
 	if (scene == nullptr)
+	{
+		Logger::Error("Mesh from path '" + path + "' cannot be loaded!");
 		return;
+	}
 
 	const auto meshes = scene->mMeshes;
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
@@ -54,7 +57,10 @@ void ModelLoader::LoadGrassResource(ID3D11Device* device, const std::string& pat
 	Logger::Debug("Reading data from file...");
 	const auto scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded | aiProcess_CalcTangentSpace);
 	if (scene == nullptr)
+	{
+		Logger::Error("Grass mesh from path '" + path + "' cannot be loaded!");
 		return;
+	}
 
 	const auto meshes = scene->mMeshes;
 	for (unsigned int i = 0; i < scene->mNumMeshes; i++)
