@@ -92,6 +92,15 @@ std::shared_ptr<std::vector<Mesh>> ModelLoader::GetResource(const std::string& r
 	return meshPointer->second;
 }
 
+std::shared_ptr<std::vector<GrassMesh>> ModelLoader::GetGrassResource(const std::string& resourceId)
+{
+	const auto meshPointer = GrassMeshesResources.find(resourceId);
+	if (meshPointer == GrassMeshesResources.end())
+		Logger::Error("Resource with id '" + resourceId + "' not found!");
+
+	return meshPointer->second;
+}
+
 std::vector<FatVertex> ModelLoader::CreateFatVertices(const aiMesh* mesh)
 {
 	std::vector<FatVertex> vertices;

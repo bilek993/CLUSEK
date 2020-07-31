@@ -928,7 +928,7 @@ void RenderSystem::InitializeGrassComponent()
 {
 	Registry->view<GrassComponent>().each([this](GrassComponent &grassComponent)
 	{
-		// TODO: Initialize mesh
+		grassComponent.Meshes = ModelLoader::GetGrassResource(grassComponent.ModelId);
 		MaterialLoader::SetResourceForGrassMeshGroup(Device.Get(), *grassComponent.Meshes, grassComponent.MaterialId);
 	});
 }

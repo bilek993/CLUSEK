@@ -15,6 +15,7 @@ public:
 	static void LoadGrassResource(ID3D11Device *device, const std::string& path, const std::string& resourceId);
 	
 	static std::shared_ptr<std::vector<Mesh>> GetResource(const std::string& resourceId);
+	static std::shared_ptr<std::vector<GrassMesh>> GetGrassResource(const std::string& resourceId);
 
 private:
 	static std::vector<FatVertex> CreateFatVertices(const aiMesh* mesh);
