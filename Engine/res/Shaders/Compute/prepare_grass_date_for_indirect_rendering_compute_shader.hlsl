@@ -1,5 +1,5 @@
-RWStructuredBuffer<uint> CounterFromAppendBuffer : register(u0);
-RWStructuredBuffer<uint> IndexInstanceIndirectArgs : register(u1);
+RWBuffer<uint> CounterFromAppendBuffer : register(u0);
+RWBuffer<uint> IndexInstanceIndirectArgs : register(u1);
 
 [numthreads(1, 1, 1)]
 void main()
