@@ -144,6 +144,9 @@ private:
 	HullShader TerrainHullShader;
 	DomainShader TerrainDomainShader;
 
+	VertexShader GrassVertexShader;
+	PixelShader GrassPixelShader;
+
 	PixelShader GrassGeneratorPixelShader;
 
 	ComputeShader PrepareGrassDateForIndirectRenderingComputeShader;

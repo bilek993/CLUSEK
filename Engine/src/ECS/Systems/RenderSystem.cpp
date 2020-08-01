@@ -604,7 +604,22 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
-	// Grass generator shaders
+	// Grass shader
+
+	if (!GrassVertexShader.Initialize(Device.Get(), L"grass_vertex_shader.cso", FatVertex::Layout, FatVertex::LayoutSize))
+	{
+		Logger::Error("GrassVertexShader not initialized due to critical problem!");
+		return false;
+	}
+
+	if (!GrassPixelShader.Initialize(Device.Get(), L"grass_pixel_shader.cso"))
+	{
+		Logger::Error("GrassPixelShader not initialized due to critical problem!");
+		return false;
+	}
+
+
+	// Grass generator shader
 
 	if (!GrassGeneratorPixelShader.Initialize(Device.Get(), L"grass_generator_pixel_shader.cso"))
 	{
@@ -612,7 +627,7 @@ bool RenderSystem::InitializeShaders()
 		return false;
 	}
 
-	// Prepare grass date for indirect rendering shaders
+	// Prepare grass date for indirect rendering shader
 
 	if (!PrepareGrassDateForIndirectRenderingComputeShader.Initialize(Device.Get(), L"prepare_grass_date_for_indirect_rendering_compute_shader.cso"))
 	{
@@ -1263,7 +1278,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	// Stage 2
 	// Compute, prepare data and draw grass 
 
-	Registry->view<GrassComponent>().each([this](GrassComponent &grassComponent)
+	Registry->view<GrassComponent>().each([this, &offset](GrassComponent &grassComponent)
 	{
 		for (const auto& mesh : *grassComponent.Meshes)
 		{
@@ -1285,8 +1300,15 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 			// Draw grass
 
+			ChangeBasicShaders(GrassVertexShader, GrassPixelShader);
+
 			DeviceContext->RSSetViewports(1, &SceneViewport);
 			DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
+
+			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
+			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+
+			DeviceContext->DrawIndexedInstancedIndirect(GrassDrawIndexInstanceIndirectArgsBufferInstance.GetBuffer(), 0);
 		}
 	});
 
