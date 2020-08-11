@@ -73,7 +73,7 @@ void main(PS_INPUT input)
     float2 metalicSmoothnessColor = CalculateMetalicSmoothnessColor(input, splatId);
 	
     GrassInstanceBuffer instance = (GrassInstanceBuffer)0;
-    instance.Position = input.Position;
+    instance.Position = input.WorldPosition;
     instance.Smoothness = metalicSmoothnessColor.g;
     instance.AlbedoColor = albedoColor;
     instance.Metalness = metalicSmoothnessColor.r;
