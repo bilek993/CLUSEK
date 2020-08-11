@@ -1249,7 +1249,8 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 			XMMatrixTranspose(transformComponent.WorldMatrix * GrassCamera::GenerateCameraMatrix(	mainCameraTransformComponent, 
 																									ConfigurationData->GrassGeneratorMaxCameraDistance, 
 																									ConfigurationData->GrassGeneratorSurfaceWidth,
-																									ConfigurationData->GrassGeneratorSurfaceHeight));
+																									ConfigurationData->GrassGeneratorSurfaceHeight,
+																									ConfigurationData->GrassGeneratorResolution));
 		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
 		for (auto i = 0; i < 4; i++)
 			FatPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());

@@ -2,9 +2,24 @@
 
 #include "TransformLogic.h"
 
-DirectX::XMMATRIX GrassCamera::GenerateCameraMatrix(const TransformComponent& mainCameraTransformComponent, const float distance, const float width, const float height)
+DirectX::XMFLOAT3 GrassCamera::AlignCameraToGrid(const DirectX::XMFLOAT3& cameraPosition, const float width, const float height, const int resolution)
 {
-	const auto cameraPosition = TransformLogic::GetPosition(mainCameraTransformComponent);
+	const auto gridSizeX = width / static_cast<float>(resolution);
+	const auto gridSizeY = height / static_cast<float>(resolution);
+	
+	return DirectX::XMFLOAT3(roundf(cameraPosition.x / gridSizeX) * gridSizeX, cameraPosition.y, roundf(cameraPosition.z / gridSizeY) * gridSizeY);
+}
+
+DirectX::XMMATRIX GrassCamera::GenerateCameraMatrix(const TransformComponent& mainCameraTransformComponent, 
+                                                    const float distance, 
+                                                    const float width, 
+                                                    const float height, 
+                                                    const int resolution)
+{
+	const auto cameraPosition = AlignCameraToGrid(	TransformLogic::GetPosition(mainCameraTransformComponent), 
+													width, 
+													height, 
+													resolution);
 	const auto cameraPositionVector = XMLoadFloat3(&cameraPosition);
 	
 	const auto viewMatrix = DirectX::XMMatrixLookAtLH(	cameraPositionVector,
