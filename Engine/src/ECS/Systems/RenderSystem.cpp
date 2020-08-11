@@ -781,6 +781,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = GrassIndirectModelInfoBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'GrassIndirectModelInfoBufferInstance' constant buffer.");
+
+	hr = GrassPerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'GrassPerObjectBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializeAppendBuffers()
@@ -1278,7 +1282,9 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	// Stage 2
 	// Compute, prepare data and draw grass 
 
-	Registry->view<GrassComponent>().each([this, &offset](GrassComponent &grassComponent)
+	DeviceContext->VSSetConstantBuffers(0, 1, GrassPerObjectBufferInstance.GetAddressOf());
+	
+	Registry->view<GrassComponent>().each([this, &offset, &mainCameraComponent](GrassComponent &grassComponent)
 	{
 		for (const auto& mesh : *grassComponent.Meshes)
 		{
@@ -1301,6 +1307,11 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 			// Draw grass
 
 			ChangeBasicShaders(GrassVertexShader, GrassPixelShader);
+
+			GrassPerObjectBufferInstance.Data.ViewProjectionMatrix = XMMatrixTranspose(mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix);
+			for (auto i = 0; i < 4; i++)
+				GrassPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
+			GrassPerObjectBufferInstance.ApplyChanges();
 
 			DeviceContext->RSSetViewports(1, &SceneViewport);
 			DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());

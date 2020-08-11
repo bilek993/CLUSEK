@@ -1,3 +1,11 @@
+#include "../../Includes/shadow_utils.hlsli"
+
+cbuffer GrassPerObjectBuffer : register(b0)
+{
+    float4x4 ViewProjectionMatrix;
+    float4x4 LightSpaceMatrix[CASCADES_COUNT];
+};
+
 struct VS_INPUT
 {
     float3 Position : POSITION;
