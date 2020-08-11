@@ -1300,6 +1300,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 			// Compute and prepare data
 
 			GrassIndirectModelInfoBufferInstance.Data.IndexCountPerInstance = mesh.RenderIndexBuffer.GetIndexCount();
+			GrassIndirectModelInfoBufferInstance.Data.MaxNumberOfInstances = ConfigurationData->MaxGrassRenderInstances;
 			GrassIndirectModelInfoBufferInstance.ApplyChanges();
 
 			DeviceContext->CopyStructureCount(GrassCounterBufferInstance.GetBuffer(), 0, GrassInstanceBufferInstance.GetUnorderedAccessView());
