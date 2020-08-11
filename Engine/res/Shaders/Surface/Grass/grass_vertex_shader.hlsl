@@ -1,5 +1,13 @@
 #include "../../Includes/shadow_utils.hlsli"
 
+struct GrassInstanceBuffer
+{
+    float3 Position;
+    float Smoothness;
+    float3 AlbedoColor;
+    float Metalness;
+};
+
 cbuffer GrassPerObjectBuffer : register(b0)
 {
     float4x4 ViewProjectionMatrix;
@@ -20,20 +28,22 @@ struct VS_OUTPUT
     float4 Position : SV_POSITION;
 };
 
-float4x4 CalculateWorldMatrix(VS_INPUT input)
+float4x4 CalculateWorldMatrix(GrassInstanceBuffer currentBuffer)
 {
     return float4x4(
-		float4(1, 0, 0, 0),
-		float4(0, 1, 0, 0),
-	    float4(0, 0, 1, 0),
+		float4(1, 0, 0, currentBuffer.Position.x),
+		float4(0, 1, 0, currentBuffer.Position.y),
+	    float4(0, 0, 1, currentBuffer.Position.z),
 	    float4(0, 0, 0, 1)
 	);
 }
 
+StructuredBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance : register(t0);
+
 VS_OUTPUT main(VS_INPUT input)
 {
-    float4x4 worldMatrix = CalculateWorldMatrix(input);
-    float4x4 worldViewProjectionMatrix = mul(transpose(worldMatrix), ViewProjectionMatrix);
+    float4x4 worldMatrix = transpose(CalculateWorldMatrix(GrassInstanceBufferInstance[input.InstanceId]));
+    float4x4 worldViewProjectionMatrix = mul(worldMatrix, ViewProjectionMatrix);
 	
     VS_OUTPUT output;
     output.Position = mul(float4(input.Position, 1.0f), worldViewProjectionMatrix);

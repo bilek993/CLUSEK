@@ -205,6 +205,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11SamplerState> TerrainSamplerState;
 
 	ID3D11ShaderResourceView* NullShaderResourceView = nullptr;
+	ID3D11UnorderedAccessView* NullUnorderedAccessView = nullptr;
 
 	inline static const float BACKGROUND_COLOR[4] = { 0.0f, 0.0f, 0.0f, 1.0f };
 };

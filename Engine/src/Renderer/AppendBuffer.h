@@ -37,6 +37,11 @@ public:
 		return UnorderedAccessView.GetAddressOf();
 	}
 
+	ID3D11ShaderResourceView* const* GetAddressOfShaderResourceView() const
+	{
+		return ShaderResourceView.GetAddressOf();
+	}
+
 	HRESULT Initialize(ID3D11Device *device, const UINT itemCount)
 	{
 		// Preparation to initialization

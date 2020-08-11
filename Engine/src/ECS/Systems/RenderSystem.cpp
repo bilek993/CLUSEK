@@ -1276,13 +1276,22 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 	});
 
+	DeviceContext->OMSetRenderTargetsAndUnorderedAccessViews(	0, 
+																nullptr, 
+																nullptr,
+																0, 
+																1, 
+																&NullUnorderedAccessView, 
+																&initialCountsUav);
 	ResetTessellationShaders();
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	// Stage 2
 	// Compute, prepare data and draw grass 
-
+	
 	DeviceContext->VSSetConstantBuffers(0, 1, GrassPerObjectBufferInstance.GetAddressOf());
+
+	DeviceContext->VSSetShaderResources(0, 1, GrassInstanceBufferInstance.GetAddressOfShaderResourceView());
 	
 	Registry->view<GrassComponent>().each([this, &offset, &mainCameraComponent](GrassComponent &grassComponent)
 	{
@@ -1325,6 +1334,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 	// Finalization
 
+	DeviceContext->VSSetShaderResources(0, 1, &NullShaderResourceView);
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
