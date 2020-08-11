@@ -20,10 +20,22 @@ struct VS_OUTPUT
     float4 Position : SV_POSITION;
 };
 
+float4x4 CalculateWorldMatrix(VS_INPUT input) // TODO: Fix calculation
+{
+    return float4x4(
+		float4(1, 0, 0, 0),
+		float4(0, 1, 0, 0),
+	    float4(0, 0, 1, 0),
+	    float4(0, 0, 0, 1)
+	);
+}
+
 VS_OUTPUT main(VS_INPUT input)
 {
+    float4x4 worldMatrix = CalculateWorldMatrix(input);
+    float4x4 worldViewProjectionMatrix = mul(ViewProjectionMatrix, worldMatrix);
+	
     VS_OUTPUT output;
-    output.Position = float4(1.0f, 1.0f, 1.0f, 1.0f);
-	// TODO: Implement this
+    output.Position = mul(float4(input.Position, 1.0f), worldViewProjectionMatrix);
     return output;
 }
