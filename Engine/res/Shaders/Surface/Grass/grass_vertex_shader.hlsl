@@ -19,6 +19,11 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
     float4 Position : SV_POSITION;
+    float3 WorldPosition : WORLD_POSITION;
+    float4 LightSpacePosition[CASCADES_COUNT] : LIGHTSPACE_POSITION;
+    float2 TextureCoord : TEXCOORD;
+    float3 Normal : NORMAL;
+    float CameraDistanceZ : CAMERA_DISTANCE_Z;
 };
 
 float4x4 CalculateWorldMatrix(GrassInstanceBuffer currentBuffer)
@@ -40,5 +45,13 @@ VS_OUTPUT main(VS_INPUT input)
 	
     VS_OUTPUT output;
     output.Position = mul(float4(input.Position, 1.0f), worldViewProjectionMatrix);
+    output.WorldPosition = mul(float4(input.Position, 1.0f), worldMatrix).xyz;
+    output.TextureCoord = input.TextureCoord;
+    output.Normal = input.Normal;
+    output.CameraDistanceZ = output.Position.z;
+
+    for (int i = 0; i < CASCADES_COUNT; i++)
+        output.LightSpacePosition[i] = mul(float4(output.WorldPosition, 1.0f), LightSpaceMatrix[i]);
+	
     return output;
 }
