@@ -4,8 +4,6 @@
 #include "../../Includes/fog.hlsli"
 #include "../../Includes/lod_utils.hlsli"
 
-static const float LOD_GRID_SCALE = 10.0f;
-
 cbuffer LightAndAlphaBuffer : register(b0)
 {
     float3 DirectionalLightColor;
