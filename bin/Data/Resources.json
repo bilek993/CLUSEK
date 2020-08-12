@@ -92,9 +92,6 @@
 	  "SRGBMode": "FORCED",
 	  "MipMaps": "GENERATE"
 	},
-	"Grass_Normal": {
-	  "Path": "Data/Textures/Grass/GrassNormal.dds"
-	},
 	
 	"SmoothCylinder_Albedo": {
 	  "Path": "Data/Textures/SmoothCylinder/SmoothCylinderAlbedo.dds"
