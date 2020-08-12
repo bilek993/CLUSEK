@@ -21,8 +21,7 @@ public:
 		const std::string& occlusionTextureId, const std::string& emissionTextureId, float alpha);
 	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
 
-	static void SetResourceForGrassMesh(ID3D11Device* device, GrassMesh& mesh, const std::string& albedoTextureId,
-		const std::string& normalTextureId);
+	static void SetResourceForGrassMesh(ID3D11Device* device, GrassMesh& mesh, const std::string& albedoTextureId);
 	static void SetResourceForGrassMeshGroup(ID3D11Device* device, std::vector<GrassMesh>& meshes, const std::string& pathToMaterial);
 	
 	static void SetResourceForSkyMaterial(ID3D11Device* device, SkyShaderMaterial& material, const std::string& albedoTextureId);

@@ -93,11 +93,9 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 	}
 }
 
-void MaterialLoader::SetResourceForGrassMesh(ID3D11Device* device, GrassMesh& mesh, const std::string& albedoTextureId,
-	const std::string& normalTextureId)
+void MaterialLoader::SetResourceForGrassMesh(ID3D11Device* device, GrassMesh& mesh, const std::string& albedoTextureId)
 {
 	mesh.Material.AlbedoTexture = GetTextureById(device, albedoTextureId, DefaultAlbedo);
-	mesh.Material.NormalTexture = GetTextureById(device, normalTextureId, DefaultNormal);
 }
 
 void MaterialLoader::SetResourceForGrassMeshGroup(ID3D11Device* device, std::vector<GrassMesh>& meshes, const std::string& pathToMaterial)
@@ -116,12 +114,10 @@ void MaterialLoader::SetResourceForGrassMeshGroup(ID3D11Device* device, std::vec
 	{
 		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
 		auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
-		auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
 
 		SetResourceForGrassMesh(device,
 								mesh,
-								albedoTextureJsonInfo.is_null() ? "" : albedoTextureJsonInfo.get<std::string>(),
-								normalTextureJsonInfo.is_null() ? "" : normalTextureJsonInfo.get<std::string>());
+								albedoTextureJsonInfo.is_null() ? "" : albedoTextureJsonInfo.get<std::string>());
 	}
 }
 
