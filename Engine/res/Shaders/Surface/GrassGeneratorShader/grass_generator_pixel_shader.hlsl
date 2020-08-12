@@ -1,14 +1,7 @@
 #include "../../Includes/shadow_utils.hlsli"
+#include "../../Includes/grass_instance_buffer.hlsli"
 
 static const float SAMPLING_THRESHOLD = 0.01f;
-
-struct GrassInstanceBuffer
-{
-    float3 Position;
-    float Smoothness;
-    float3 AlbedoColor;
-    float Metalness;
-};
 
 cbuffer TerrainUvBuffer : register(b0)
 {

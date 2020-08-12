@@ -1,12 +1,5 @@
 #include "../../Includes/shadow_utils.hlsli"
-
-struct GrassInstanceBuffer
-{
-    float3 Position;
-    float Smoothness;
-    float3 AlbedoColor;
-    float Metalness;
-};
+#include "../../Includes/grass_instance_buffer.hlsli"
 
 cbuffer GrassPerObjectBuffer : register(b0)
 {

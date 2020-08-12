@@ -551,6 +551,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Shaders\Includes\grass_instance_buffer.hlsli" />
     <None Include="res\Shaders\Includes\lod_utils.hlsli" />
     <None Include="res\Shaders\Includes\fog.hlsli" />
     <None Include="res\Shaders\Includes\pbr_compute_shared.hlsli" />
