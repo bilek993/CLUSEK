@@ -24,6 +24,7 @@ struct VS_OUTPUT
     float2 TextureCoord : TEXCOORD;
     float3 Normal : NORMAL;
     float CameraDistanceZ : CAMERA_DISTANCE_Z;
+    uint InstanceId : SV_InstanceID;
 };
 
 float4x4 CalculateWorldMatrix(GrassInstanceBuffer currentBuffer)
@@ -49,6 +50,7 @@ VS_OUTPUT main(VS_INPUT input)
     output.TextureCoord = input.TextureCoord;
     output.Normal = input.Normal;
     output.CameraDistanceZ = output.Position.z;
+    output.InstanceId = input.InstanceId;
 
     for (int i = 0; i < CASCADES_COUNT; i++)
         output.LightSpacePosition[i] = mul(float4(output.WorldPosition, 1.0f), LightSpaceMatrix[i]);
