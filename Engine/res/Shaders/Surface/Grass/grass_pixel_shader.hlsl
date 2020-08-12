@@ -1,5 +1,36 @@
+#include "../../Includes/fog.hlsli"
 #include "../../Includes/shadow_utils.hlsli"
 #include "../../Includes/grass_instance_buffer.hlsli"
+#include "../../Includes/pbr.hlsli"
+
+cbuffer LightAndAlphaBuffer : register(b0)
+{
+    float3 DirectionalLightColor;
+    float DirectionalLightStrength;
+    float3 DirectionalLightDirection;
+    float Alpha;
+}
+
+cbuffer CameraBuffer : register(b1)
+{
+    float3 CameraPosition;
+}
+
+cbuffer CascadeLevelsBuffer : register(b2)
+{
+    float4 CascadeEnds;
+    float4 Biases;
+}
+
+cbuffer FogBuffer : register(b3)
+{
+    float3 FogColor;
+    float FogDensity;
+    float3 FogLightColor;
+    float FogLightPower;
+    float FogMinDistance;
+    float SkyConstantValue;
+}
 
 struct PS_INPUT
 {
@@ -13,9 +44,52 @@ struct PS_INPUT
 };
 
 StructuredBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance : register(t0);
+Texture2D AlbedoTexture : register(t1);
+
+Texture2D ShadowMapCascade0 : register(t14);
+Texture2D ShadowMapCascade1 : register(t15);
+Texture2D ShadowMapCascade2 : register(t16);
+Texture2D ShadowMapCascade3 : register(t17);
+
+TextureCube IrradianceTexture : register(t18);
+TextureCube RadianceTexture : register(t19);
+Texture2D BrdfLut : register(t20);
+
+SamplerState DefaultSampler : register(s0);
+SamplerState BrdfSampler : register(s2);
+SamplerComparisonState ShadowSampler : register(s3);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {
-	// TODO: Add implementation code
-    return float4(GrassInstanceBufferInstance[input.InstanceId].AlbedoColor, 1.0f);
+    float4 sampledAlbedoColor = AlbedoTexture.Sample(DefaultSampler, input.TextureCoord);
+	if (sampledAlbedoColor.a < 0.5f)
+        discard;
+	
+    GrassInstanceBuffer currentBufferInstance = GrassInstanceBufferInstance[input.InstanceId];
+	
+    float3 albedo = lerp(sampledAlbedoColor.rgb, currentBufferInstance.AlbedoColor, 0.5f);
+    float3 calculatedNormal = input.Normal; // TODO: Change this
+    float roughness = 1 - GrassInstanceBufferInstance[input.InstanceId].Smoothness;
+    float metallic = GrassInstanceBufferInstance[input.InstanceId].Metalness;
+    float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
+
+    float shadowMultiplier = 1.0f;
+    
+    if (input.CameraDistanceZ < CascadeEnds[0])
+        shadowMultiplier = CalculateShadows(ShadowMapCascade0, ShadowSampler, input.LightSpacePosition[0], Biases[0]);
+    else if (input.CameraDistanceZ < CascadeEnds[1])
+        shadowMultiplier = CalculateShadows(ShadowMapCascade1, ShadowSampler, input.LightSpacePosition[1], Biases[1]);
+    else if (input.CameraDistanceZ < CascadeEnds[2])
+        shadowMultiplier = CalculateShadows(ShadowMapCascade2, ShadowSampler, input.LightSpacePosition[2], Biases[2]);
+    else if (input.CameraDistanceZ < CascadeEnds[3])
+        shadowMultiplier = CalculateShadows(ShadowMapCascade3, ShadowSampler, input.LightSpacePosition[3], Biases[3]);
+	
+    float3 finalColor = Pbr(albedo, calculatedNormal, metallic, roughness, 1.0f,
+                            IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
+                            DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, shadowMultiplier);
+    
+    finalColor = CalculateFog(finalColor, input.CameraDistanceZ, normalize(CameraPosition - input.WorldPosition),
+                              DirectionalLightDirection, FogDensity, FogLightPower, FogMinDistance, FogColor, FogLightColor);
+
+    return float4(finalColor, Alpha);
 }

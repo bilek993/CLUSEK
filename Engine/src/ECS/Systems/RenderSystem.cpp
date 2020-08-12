@@ -1223,9 +1223,6 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 	TerrainBufferInstance.ApplyChanges();
 
-	LightAndAlphaBufferInstance.Data.Alpha = 1.0;
-	LightAndAlphaBufferInstance.ApplyChanges();
-
 	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 
 	DeviceContext->HSSetConstantBuffers(0, 1, TerrainBufferInstance.GetAddressOf());
@@ -1290,7 +1287,15 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	// Stage 2
 	// Compute, prepare data and draw grass 
 	
+	LightAndAlphaBufferInstance.Data.Alpha = 1.0;
+	LightAndAlphaBufferInstance.ApplyChanges();
+
 	DeviceContext->VSSetConstantBuffers(0, 1, GrassPerObjectBufferInstance.GetAddressOf());
+
+	DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(3, 1, FogBufferInstance.GetAddressOf());
 
 	DeviceContext->VSSetShaderResources(0, 1, GrassInstanceBufferInstance.GetAddressOfShaderResourceView());
 
@@ -1321,13 +1326,15 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 			ChangeBasicShaders(GrassVertexShader, GrassPixelShader);
 
+			DeviceContext->RSSetViewports(1, &SceneViewport);
+			DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
+
 			GrassPerObjectBufferInstance.Data.ViewProjectionMatrix = XMMatrixTranspose(mainCameraComponent.ViewMatrix * mainCameraComponent.ProjectionMatrix);
 			for (auto i = 0; i < 4; i++)
 				GrassPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
 			GrassPerObjectBufferInstance.ApplyChanges();
 
-			DeviceContext->RSSetViewports(1, &SceneViewport);
-			DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
+			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.AlbedoTexture->GetAddressOf());
 
 			DeviceContext->IASetVertexBuffers(0, 1, mesh.RenderVertexBuffer.GetAddressOf(), mesh.RenderVertexBuffer.StridePtr(), &offset);
 			DeviceContext->IASetIndexBuffer(mesh.RenderIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
@@ -1438,8 +1445,8 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	ChangeBasicShaders(UberVertexShader, UberPixelShader);
 
 	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+	
 	DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
-
 	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(3, 1, FogBufferInstance.GetAddressOf());
