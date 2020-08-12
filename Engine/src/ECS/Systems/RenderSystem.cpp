@@ -368,7 +368,26 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
+	// Grass rasterizer initialization
+
+	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
+
+	if (ConfigurationData->WireframeMode == 1)
+		rasterizerDesc.FillMode = D3D11_FILL_WIREFRAME;
+	else
+		rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+
+	rasterizerDesc.CullMode = D3D11_CULL_NONE;
+
+	hr = Device->CreateRasterizerState(&rasterizerDesc, GrassRasterizerState.GetAddressOf());
+	if (FAILED(hr))
+	{
+		Logger::Error("Error creating grass rasterizer state!");
+		return false;
+	}
+
 	// Post processing rasterizer initialization
+	
 	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
 
 	rasterizerDesc.FillMode = D3D11_FILL_SOLID;
@@ -1192,6 +1211,8 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 	Profiler->BeginEvent("Grass");
 
+	DeviceContext->RSSetState(GrassRasterizerState.Get());
+	
 	UINT offset = 0;
 
 	// STAGE 1
@@ -1434,6 +1455,8 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 	ResetTessellationShaders();
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	DeviceContext->RSSetState(MainRasterizerState.Get());
 
 	Profiler->EndEvent();
 }
