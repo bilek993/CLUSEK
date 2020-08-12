@@ -1,7 +1,11 @@
+#include "../../Includes/grass_instance_buffer.hlsli"
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
 };
+
+StructuredBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance : register(t0);
 
 float4 main(PS_INPUT input) : SV_TARGET
 {

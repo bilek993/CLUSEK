@@ -1293,6 +1293,8 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	DeviceContext->VSSetConstantBuffers(0, 1, GrassPerObjectBufferInstance.GetAddressOf());
 
 	DeviceContext->VSSetShaderResources(0, 1, GrassInstanceBufferInstance.GetAddressOfShaderResourceView());
+
+	DeviceContext->PSSetShaderResources(0, 1, GrassInstanceBufferInstance.GetAddressOfShaderResourceView());
 	
 	Registry->view<GrassComponent>().each([this, &offset, &mainCameraComponent](GrassComponent &grassComponent)
 	{
