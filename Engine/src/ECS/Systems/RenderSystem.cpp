@@ -1271,6 +1271,8 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 		DeviceContext->PSSetShaderResources(5, 1, terrainComponent.Material.OptimizedMetalicTexture.ShaderResourceView.GetAddressOf());
 		DeviceContext->PSSetShaderResources(6, 1, terrainComponent.Material.OptimizedSmoothnessTexture.ShaderResourceView.GetAddressOf());
 
+		DeviceContext->PSSetShaderResources(7, 1, terrainComponent.Material.CalculatedNormalTexture.ShaderResourceView.GetAddressOf());
+
 		Draw(terrainComponent.RenderVertexBuffer, terrainComponent.RenderIndexBuffer, offset);
 	});
 

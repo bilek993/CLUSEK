@@ -62,14 +62,14 @@ SamplerComparisonState ShadowSampler : register(s3);
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float4 sampledAlbedoColor = AlbedoTexture.Sample(DefaultSampler, input.TextureCoord);
-	if (sampledAlbedoColor.a < 0.5f)
+    if (sampledAlbedoColor.a < 0.5f) // TODO: Make parameter configurable
         discard;
 	
     GrassInstanceBuffer currentBufferInstance = GrassInstanceBufferInstance[input.InstanceId];
 	
-    float3 albedo = lerp(sampledAlbedoColor.rgb, currentBufferInstance.AlbedoColor, 0.5f);
-    float3 calculatedNormal = input.Normal; // TODO: Change this
-    float roughness = 1 - GrassInstanceBufferInstance[input.InstanceId].Smoothness;
+    float3 albedo = lerp(sampledAlbedoColor.rgb, currentBufferInstance.AlbedoColor, 0.5f); // TODO: Make parameter configurable
+    float3 calculatedNormal = lerp(input.Normal, currentBufferInstance.Normal, 0.75f); // TODO: Make parameter configurable
+    float roughness = 1 - GrassInstanceBufferInstance[input.InstanceId].Smoothness; // TODO: Make parameter configurable
     float metallic = GrassInstanceBufferInstance[input.InstanceId].Metalness;
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
 

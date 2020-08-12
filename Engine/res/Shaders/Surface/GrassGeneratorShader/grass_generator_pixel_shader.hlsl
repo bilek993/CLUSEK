@@ -29,6 +29,8 @@ Texture2D BlueAlbedoTexture : register(t4);
 Texture2D OptimizedMetalicTexture : register(t5);
 Texture2D OptimizedSmoothnessTexture : register(t6);
 
+Texture2D CalculatedNormalTexture : register(t7);
+
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);
 
@@ -70,6 +72,8 @@ void main(PS_INPUT input)
     instance.Smoothness = metalicSmoothnessColor.g;
     instance.AlbedoColor = albedoColor;
     instance.Metalness = metalicSmoothnessColor.r;
+    instance.Normal = CalculatedNormalTexture.Sample(ClampSampler, input.TextureCoord).rgb;
+	//instance.Rotation = ? TODO: Add rotation calculation
     
     GrassInstanceBufferInstance.Append(instance);
 }

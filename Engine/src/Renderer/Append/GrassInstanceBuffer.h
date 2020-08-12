@@ -7,4 +7,6 @@ struct GrassInstanceBuffer final
 	float Smoothness;
 	DirectX::XMFLOAT3 AlbedoColor;
 	float Metalness;
+	DirectX::XMFLOAT3 Normal;
+	float Rotation;
 };
