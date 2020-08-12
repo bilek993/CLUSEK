@@ -1,3 +1,5 @@
+static const float LOD_GRID_SCALE = 10.0f;
+
 void PerformLodTransition(float4 position, float percentageCoverage, bool invertedCoverage, float gridScale)
 {
     if (invertedCoverage)
