@@ -5,4 +5,6 @@
 
 class GrassComponentEditor final : public BaseComponentEditor<GrassComponent>
 {
+protected:
+	void Draw() override;
 };

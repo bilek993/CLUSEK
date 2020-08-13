@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Components\GrassComponentEditor.cpp" />
     <ClCompile Include="src\Loaders\Components\GrassComponentLoader.cpp" />
     <ClCompile Include="src\Renderer\CustomizableBuffer.cpp" />
     <ClCompile Include="src\Renderer\GrassCamera.cpp" />

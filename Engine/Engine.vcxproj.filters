@@ -525,6 +525,9 @@
     <ClCompile Include="src\Loaders\Components\GrassComponentLoader.cpp">
       <Filter>Source Files\Loaders\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\GUI\Components\GrassComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
