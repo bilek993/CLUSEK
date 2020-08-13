@@ -1384,6 +1384,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	// Finalization
 
 	DeviceContext->VSSetShaderResources(0, 1, &NullShaderResourceView);
+	DeviceContext->RSSetState(MainRasterizerState.Get());
 	DeviceContext->RSSetViewports(1, &SceneViewport);
 	DeviceContext->OMSetRenderTargets(1, IntermediateRenderTexture.GetAddressOfRenderTargetView(), SceneRenderDepthStencil.GetDepthStencilViewPointer());
 
@@ -1470,8 +1471,6 @@ void RenderSystem::RenderTerrain(const CameraComponent &mainCameraComponent, con
 
 	ResetTessellationShaders();
 	DeviceContext->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-	DeviceContext->RSSetState(MainRasterizerState.Get());
 
 	Profiler->EndEvent();
 }
