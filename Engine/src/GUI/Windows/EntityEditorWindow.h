@@ -23,6 +23,7 @@
 #include "../Components/VehiclePlayerControllerComponentEditor.h"
 #include "../Components/WheelComponentEditor.h"
 #include "../Components/CommentComponentEditor.h"
+#include "../Components/GrassComponentEditor.h"
 
 #define REGISTER_COMPONENT_EDITOR(COMPONENT_CLASS, COMPONENT_NAME) DrawComponentDetails<COMPONENT_CLASS>(SelectedEntity, COMPONENT_CLASS##EditorInstance, COMPONENT_NAME)
 
@@ -60,6 +61,7 @@ private:
 	VehiclePlayerControllerComponentEditor VehiclePlayerControllerComponentEditorInstance;
 	WheelComponentEditor WheelComponentEditorInstance;
 	CommentComponentEditor CommentComponentEditorInstance;
+	GrassComponentEditor GrassComponentEditorInstance;
 };
 
 template <class C>
