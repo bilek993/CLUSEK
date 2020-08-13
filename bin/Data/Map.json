@@ -797,7 +797,15 @@
 	  },
 	  "GrassComponent": {
 		"ModelId": "Grass",
-		"MaterialId": "Data/Textures/Grass/material.json"
+		"MaterialId": "Data/Textures/Grass/material.json",
+		"AlphaDiscardPoint": 0.5,
+		"AlbedoInterpolationRatio": 0.333,
+		"NormalInterpolationRatio": 0.825,
+		"RoughnessInterpolationTarget": 1.0,
+		"RoughnessInterpolationRatio": 0.975,
+		"MetalicInterpolationTarget": 0.0,
+		"MetalicInterpolationRatio": 1.0,
+		"OcclusionValue": 1.0
 	  },
 	  "PhysicsMaterialComponent": {
 	    "Name": "TerrainMaterial"

@@ -804,6 +804,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = GrassPerObjectBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'GrassPerObjectBufferInstance' constant buffer.");
+
+	hr = GrassAppearanceParametersBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'GrassAppearanceParametersBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializeAppendBuffers()
@@ -1319,6 +1323,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(3, 1, FogBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(4, 1, GrassAppearanceParametersBufferInstance.GetAddressOf());
 
 	DeviceContext->VSSetShaderResources(0, 1, GrassInstanceBufferInstance.GetAddressOfShaderResourceView());
 
@@ -1356,6 +1361,16 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 			for (auto i = 0; i < 4; i++)
 				GrassPerObjectBufferInstance.Data.LightSpaceMatrix[i] = XMMatrixTranspose(ShadowCameras[i].CalculateCameraMatrix());
 			GrassPerObjectBufferInstance.ApplyChanges();
+
+			GrassAppearanceParametersBufferInstance.Data.AlphaDiscardPoint = grassComponent.AlphaDiscardPoint;
+			GrassAppearanceParametersBufferInstance.Data.AlbedoInterpolationRatio = grassComponent.AlbedoInterpolationRatio;
+			GrassAppearanceParametersBufferInstance.Data.NormalInterpolationRatio = grassComponent.NormalInterpolationRatio;
+			GrassAppearanceParametersBufferInstance.Data.RoughnessInterpolationTarget = grassComponent.RoughnessInterpolationTarget;
+			GrassAppearanceParametersBufferInstance.Data.RoughnessInterpolationRatio = grassComponent.RoughnessInterpolationRatio;
+			GrassAppearanceParametersBufferInstance.Data.MetalicInterpolationTarget = grassComponent.MetalicInterpolationTarget;
+			GrassAppearanceParametersBufferInstance.Data.MetalicInterpolationRatio = grassComponent.MetalicInterpolationRatio;
+			GrassAppearanceParametersBufferInstance.Data.OcclusionValue = grassComponent.OcclusionValue;
+			GrassAppearanceParametersBufferInstance.ApplyChanges();
 
 			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.AlbedoTexture->GetAddressOf());
 

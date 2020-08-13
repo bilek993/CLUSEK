@@ -5,6 +5,14 @@ void GrassComponentLoader::Add(nlohmann::json& json, entt::registry& registry, c
 {
 	auto &component = registry.assign<GrassComponent>(entity);
 
+	MAP_LOADER_BASIC_FIELD(AlphaDiscardPoint, json, component, float);
+	MAP_LOADER_BASIC_FIELD(AlbedoInterpolationRatio, json, component, float);
+	MAP_LOADER_BASIC_FIELD(NormalInterpolationRatio, json, component, float);
+	MAP_LOADER_BASIC_FIELD(RoughnessInterpolationTarget, json, component, float);
+	MAP_LOADER_BASIC_FIELD(RoughnessInterpolationRatio, json, component, float);
+	MAP_LOADER_BASIC_FIELD(MetalicInterpolationTarget, json, component, float);
+	MAP_LOADER_BASIC_FIELD(MetalicInterpolationRatio, json, component, float);
+	MAP_LOADER_BASIC_FIELD(OcclusionValue, json, component, float);
 	MAP_LOADER_BASIC_FIELD(ModelId, json, component, std::string);
 	MAP_LOADER_BASIC_FIELD(MaterialId, json, component, std::string);
 }

@@ -32,6 +32,19 @@ cbuffer FogBuffer : register(b3)
     float SkyConstantValue;
 }
 
+cbuffer GrassAppearanceParametersBuffer : register(b4)
+{
+    float AlphaDiscardPoint;
+    float AlbedoInterpolationRatio;
+    float NormalInterpolationRatio;
+    float RoughnessInterpolationTarget;
+    float RoughnessInterpolationRatio;
+    float MetalicInterpolationTarget;
+    float MetalicInterpolationRatio;
+    float OcclusionValue;
+
+}
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
@@ -62,15 +75,15 @@ SamplerComparisonState ShadowSampler : register(s3);
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float4 sampledAlbedoColor = AlbedoTexture.Sample(DefaultSampler, input.TextureCoord);
-    if (sampledAlbedoColor.a < 0.5f) // TODO: Make parameter configurable
+    if (sampledAlbedoColor.a < AlphaDiscardPoint)
         discard;
 	
     GrassInstanceBuffer currentBufferInstance = GrassInstanceBufferInstance[input.InstanceId];
 	
-    float3 albedo = lerp(sampledAlbedoColor.rgb, currentBufferInstance.AlbedoColor, 0.333f); // TODO: Make parameter configurable
-    float3 calculatedNormal = lerp(input.Normal, currentBufferInstance.Normal, 0.825f); // TODO: Make parameter configurable
-    float roughness = 1 - GrassInstanceBufferInstance[input.InstanceId].Smoothness; // TODO: Make parameter configurable
-    float metallic = GrassInstanceBufferInstance[input.InstanceId].Metalness;
+    float3 albedo = lerp(sampledAlbedoColor.rgb, currentBufferInstance.AlbedoColor, AlbedoInterpolationRatio);
+    float3 calculatedNormal = lerp(input.Normal, currentBufferInstance.Normal, NormalInterpolationRatio);
+    float roughness = lerp(1 - GrassInstanceBufferInstance[input.InstanceId].Smoothness, RoughnessInterpolationTarget, RoughnessInterpolationRatio);
+    float metallic = lerp(GrassInstanceBufferInstance[input.InstanceId].Metalness, MetalicInterpolationTarget, MetalicInterpolationRatio);
     float3 lightColor = DirectionalLightColor * DirectionalLightStrength;
 
     float shadowMultiplier = 1.0f;
@@ -84,7 +97,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     else if (input.CameraDistanceZ < CascadeEnds[3])
         shadowMultiplier = CalculateShadows(ShadowMapCascade3, ShadowSampler, input.LightSpacePosition[3], Biases[3]);
 	
-    float3 finalColor = Pbr(albedo, calculatedNormal, metallic, roughness, 1.0f,
+    float3 finalColor = Pbr(albedo, calculatedNormal, metallic, roughness, OcclusionValue,
                             IrradianceTexture, RadianceTexture, BrdfLut, DefaultSampler, BrdfSampler,
                             DirectionalLightDirection, lightColor, CameraPosition, input.WorldPosition, shadowMultiplier);
     

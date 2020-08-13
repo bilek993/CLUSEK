@@ -41,6 +41,7 @@
 #include "../../Renderer/AppendBuffer.h"
 #include "../../Renderer/CustomizableBuffer.h"
 #include "../../Renderer/Append/GrassInstanceBuffer.h"
+#include "../../Renderer/ConstantBufferTypes/GrassAppearanceParametersBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/GrassIndirectModelInfoBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/GrassPerObjectBuffer.h"
 
@@ -177,6 +178,7 @@ private:
 	ConstantBuffer<LodTransitionBuffer> LodTransitionBufferInstance;
 	ConstantBuffer<GrassIndirectModelInfoBuffer> GrassIndirectModelInfoBufferInstance;
 	ConstantBuffer<GrassPerObjectBuffer> GrassPerObjectBufferInstance;
+	ConstantBuffer<GrassAppearanceParametersBuffer> GrassAppearanceParametersBufferInstance;
 
 	AppendBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance;
 
