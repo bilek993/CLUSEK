@@ -20,16 +20,17 @@ struct PS_INPUT
 AppendStructuredBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance : register(u0);
 
 Texture2D SplatmapTexture : register(t0);
+Texture2D GrassPlacement : register(t1);
 
-Texture2D BaseAlbedoTexture : register(t1);
-Texture2D RedAlbedoTexture : register(t2);
-Texture2D GreenAlbedoTexture : register(t3);
-Texture2D BlueAlbedoTexture : register(t4);
+Texture2D BaseAlbedoTexture : register(t2);
+Texture2D RedAlbedoTexture : register(t3);
+Texture2D GreenAlbedoTexture : register(t4);
+Texture2D BlueAlbedoTexture : register(t5);
 
-Texture2D OptimizedMetalicTexture : register(t5);
-Texture2D OptimizedSmoothnessTexture : register(t6);
+Texture2D OptimizedMetalicTexture : register(t6);
+Texture2D OptimizedSmoothnessTexture : register(t7);
 
-Texture2D CalculatedNormalTexture : register(t7);
+Texture2D CalculatedNormalTexture : register(t8);
 
 SamplerState WrapSampler : register(s0);
 SamplerState ClampSampler : register(s1);
@@ -62,6 +63,9 @@ float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
 
 void main(PS_INPUT input)
 {
+    if (SplatmapTexture.Sample(ClampSampler, input.TextureCoord).r > 0.1f) // TODO: Make this changeable
+        discard;
+	
     float3 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb;
 	
     float3 albedoColor = CalculateAlbedoColor(input, splatId);
