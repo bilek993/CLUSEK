@@ -136,6 +136,7 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 
 	auto heightmapJsonInfo = jsonObject["Heightmap"];
 	auto splatmapJsonInfo = jsonObject["Splatmap"];
+	auto grassPlacementJsonInfo = jsonObject["GrassPlacement"];
 
 	auto texturesScaleJsonInfo = jsonObject["TexturesScale"];
 
@@ -161,6 +162,7 @@ void MaterialLoader::SetResourceForTerrainMaterial(ID3D11Device* device, Terrain
 
 	material.Heightmap = GetTextureById(device, heightmapJsonInfo.is_null() ? "" : heightmapJsonInfo.get<std::string>(), DefaultAlbedo);
 	material.Splatmap = GetTextureById(device, splatmapJsonInfo.is_null() ? "" : splatmapJsonInfo.get<std::string>(), DefaultAlbedo);
+	material.GrassPlacement = GetTextureById(device, grassPlacementJsonInfo.is_null() ? "" : grassPlacementJsonInfo.get<std::string>(), DefaultAlbedo);
 
 	material.TexturesScale = texturesScaleJsonInfo.is_null() ? 1.0 : texturesScaleJsonInfo.get<float>();
 
