@@ -63,7 +63,7 @@ float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
 
 void main(PS_INPUT input)
 {
-    if (SplatmapTexture.Sample(ClampSampler, input.TextureCoord).r > 0.1f) // TODO: Make this changeable
+    if (GrassPlacement.Sample(ClampSampler, input.TextureCoord).r < 0.9f) // TODO: Make this changeable
         discard;
 	
     float3 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb;
