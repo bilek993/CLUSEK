@@ -794,7 +794,7 @@
 		"MaxTerrainTessellationFactor": 6.0,
 		"MinTerrainTessellationDistance": 10.0,
 		"MaxTerrainTessellationDistance": 3000.0,
-		"GrassPlacementThreshold": 0.9
+		"GrassPlacementThreshold": 0.75
 	  },
 	  "GrassComponent": {
 		"ModelId": "Grass",
