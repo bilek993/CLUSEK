@@ -15,4 +15,5 @@ void TerrainComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	MAP_LOADER_BASIC_FIELD(MaxTerrainTessellationFactor, json, component, float);
 	MAP_LOADER_BASIC_FIELD(MinTerrainTessellationDistance, json, component, float);
 	MAP_LOADER_BASIC_FIELD(MaxTerrainTessellationDistance, json, component, float);
+	MAP_LOADER_BASIC_FIELD(GrassPlacementThreshold, json, component, float);
 }
