@@ -1130,6 +1130,9 @@
     <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassAppearanceParametersBuffer.h">
       <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
     </ClInclude>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassGeneratorParametersBuffer.h">
+      <Filter>Header Files\Renderer\ConstantBufferTypes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">

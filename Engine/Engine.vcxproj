@@ -235,6 +235,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassGeneratorParametersBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassAppearanceParametersBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassPerObjectBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassIndirectModelInfoBuffer.h" />

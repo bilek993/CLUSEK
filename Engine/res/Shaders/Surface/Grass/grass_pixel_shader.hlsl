@@ -42,7 +42,6 @@ cbuffer GrassAppearanceParametersBuffer : register(b4)
     float MetalicInterpolationTarget;
     float MetalicInterpolationRatio;
     float OcclusionValue;
-
 }
 
 struct PS_INPUT

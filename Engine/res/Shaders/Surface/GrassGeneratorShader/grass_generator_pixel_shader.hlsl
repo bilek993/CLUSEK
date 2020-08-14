@@ -8,6 +8,11 @@ cbuffer TerrainUvBuffer : register(b0)
     float TexturesScale;
 }
 
+cbuffer GrassGeneratorParametersBuffer : register(b1)
+{
+    float GrassPlacementThreshold;
+}
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
@@ -63,7 +68,7 @@ float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
 
 void main(PS_INPUT input)
 {
-    if (GrassPlacement.Sample(ClampSampler, input.TextureCoord).r < 0.9f) // TODO: Make this changeable
+    if (GrassPlacement.Sample(ClampSampler, input.TextureCoord).r < GrassPlacementThreshold) // TODO: Make this changeable
         discard;
 	
     float3 splatId = SplatmapTexture.Sample(ClampSampler, input.TextureCoord).rgb;

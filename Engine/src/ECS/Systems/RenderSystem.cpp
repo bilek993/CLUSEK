@@ -808,6 +808,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = GrassAppearanceParametersBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'GrassAppearanceParametersBufferInstance' constant buffer.");
+
+	hr = GrassGeneratorParametersBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'GrassGeneratorParametersBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializeAppendBuffers()
@@ -1258,6 +1262,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	DeviceContext->DSSetConstantBuffers(1, 1, TerrainHeightSamplingBufferInstance.GetAddressOf());
 
 	DeviceContext->PSSetConstantBuffers(0, 1, TerrainUvBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(1, 1, GrassGeneratorParametersBufferInstance.GetAddressOf());
 
 	Registry->view<TerrainComponent, TransformComponent>().each([this, &offset, &mainCameraComponent, &mainCameraTransformComponent](TerrainComponent &terrainComponent, TransformComponent &transformComponent)
 	{
@@ -1283,6 +1288,9 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 		TerrainUvBufferInstance.Data.TexturesScale = terrainComponent.Material.TexturesScale;
 		TerrainUvBufferInstance.ApplyChanges();
+
+		GrassGeneratorParametersBufferInstance.Data.GrassPlacementThreshold = 0.9f; // TODO: Change this
+		GrassGeneratorParametersBufferInstance.ApplyChanges();
 
 		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
 
