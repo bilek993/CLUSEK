@@ -15,6 +15,7 @@ struct TerrainComponent final
 	float MaxTerrainTessellationFactor = 2.0f;
 	float MinTerrainTessellationDistance = 0.0f;
 	float MaxTerrainTessellationDistance = 1000.0f;
+	float GrassPlacementThreshold = 0.5f;
 
 	VertexBuffer<PositionAndUvVertex> RenderVertexBuffer;
 	IndexBuffer RenderIndexBuffer;
