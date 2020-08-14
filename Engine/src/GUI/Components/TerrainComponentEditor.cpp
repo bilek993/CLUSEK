@@ -14,5 +14,5 @@ void TerrainComponentEditor::Draw()
 
 	ImGui::Separator();
 
-	ImGui::DragFloat("Grass placement threshold", &component->GrassPlacementThreshold, 5.0f);
+	ImGui::SliderFloat("Grass placement threshold", &component->GrassPlacementThreshold, 0.0f, 1.0f);
 }
