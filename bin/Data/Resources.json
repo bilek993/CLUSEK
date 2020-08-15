@@ -146,6 +146,9 @@
 	},
 	"TerrainMudOcclusion": {
 	  "Path": "Data/Textures/Terrain/Mud/TerrainMudOcclusion.dds"
+	},
+	"TerrainGrassPlacement": {
+	  "Path": "Data/Textures/Terrain/TerrainGrassPlacement.dds"
 	}
   }
 }

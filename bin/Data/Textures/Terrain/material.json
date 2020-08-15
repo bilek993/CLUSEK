@@ -1,6 +1,7 @@
 {
   "Heightmap": "TerrainHeightmap",
   "Splatmap": "TerrainSplatmap",
+  "GrassPlacement": "TerrainGrassPlacement",
   
   "TexturesScale": 220.0,
   
