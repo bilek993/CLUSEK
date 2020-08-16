@@ -58,6 +58,14 @@ This texture is used to control the blending of detail textures on a terrain. Ea
 |-----|-------|------|
 | Red | Green | Blue |
 
+#### Grass placement maps
+
+This special (and optional) map is used to control grass placement on the terrain. Only the red channel is used and other channels are dismissed. It is highly recommended to use a single-channel texture as this map compressed with the block compression algorithm DXGI_FORMAT_BC7_UNORM.
+
+| Red   |
+|-------|
+| Grass |
+
 #### Skybox maps
 
 Skybox is used not only in rendering the sky but also in rendering each PBR object. Skyboxes are often huge. That is why it is recommended to compress skyboxes using DXGI_FORMAT_BC6H_*. Uncompressed skyboxes can be very inefficient.
