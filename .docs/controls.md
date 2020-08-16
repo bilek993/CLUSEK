@@ -92,5 +92,7 @@ This project supports gamepad (Xbox Controller) and keyboard/mouse mapping. For 
 
 <kbd>RMB</kbd> - Enable camera movement(*)
 
+<kbd>~</kbd> - Enable/Disable editor(*)
+
 ---
-(*) - Only in Keyboard & Mouse
+(*) - Only in Keyboard & Mouse mode
