@@ -741,6 +741,9 @@ void RenderSystem::InitializeClearColorSettings() const
 void RenderSystem::InitializeGrassSettings() const
 {
 	CurrentRenderSettings->GrassEnabled = ConfigurationData->GrassEnabled;
+	CurrentRenderSettings->GrassGeneratorSurfaceWidth = ConfigurationData->GrassGeneratorSurfaceWidth;
+	CurrentRenderSettings->GrassGeneratorSurfaceHeight = ConfigurationData->GrassGeneratorSurfaceHeight;
+	CurrentRenderSettings->GrassGeneratorMaxCameraDistance = ConfigurationData->GrassGeneratorMaxCameraDistance;
 }
 
 void RenderSystem::InitializeConstantBuffers()
@@ -1280,9 +1283,9 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 		FatPerObjectBufferInstance.Data.WorldViewProjectionMat =
 			XMMatrixTranspose(transformComponent.WorldMatrix * GrassCamera::GenerateCameraMatrix(	mainCameraTransformComponent, 
-																									ConfigurationData->GrassGeneratorMaxCameraDistance, 
-																									ConfigurationData->GrassGeneratorSurfaceWidth,
-																									ConfigurationData->GrassGeneratorSurfaceHeight,
+																									CurrentRenderSettings->GrassGeneratorMaxCameraDistance, 
+																									CurrentRenderSettings->GrassGeneratorSurfaceWidth,
+																									CurrentRenderSettings->GrassGeneratorSurfaceHeight,
 																									ConfigurationData->GrassGeneratorResolution));
 		FatPerObjectBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
 		for (auto i = 0; i < 4; i++)

@@ -21,4 +21,7 @@ struct DynamicRenderSettings final
 	float ForcedLodPercentage = 0.75f;
 
 	bool GrassEnabled = true;
+	float GrassGeneratorSurfaceWidth = 500.0f;
+	float GrassGeneratorSurfaceHeight = 500.0f;
+	float GrassGeneratorMaxCameraDistance = 100.0f;
 };
