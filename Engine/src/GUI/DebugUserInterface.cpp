@@ -73,6 +73,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(LodDebugWindowInstance);
 	UPDATE_USER_INTERFACE(EntityEditorWindowInstance);
 	UPDATE_USER_INTERFACE(PhysicsMaterialsWindowInstance);
+	UPDATE_USER_INTERFACE(GrassWindowInstance);
 
 	AfterUpdate(renderSystem);
 }
@@ -115,8 +116,9 @@ void DebugUserInterface::DrawMenuBar()
 			DrawMenuItemForWindow("Post Processing settings", PostProcessingWindowInstance);
 			DrawMenuItemForWindow("Lighting settings", LightingWindowInstance);
 			DrawMenuItemForWindow("Fog settings", FogWindowInstance);
-			DrawMenuItemForWindow("Shadow Previewer", ShadowPreviewerWindowInstance);
+			DrawMenuItemForWindow("Grass settings", GrassWindowInstance);
 			DrawMenuItemForWindow("Back Buffer setting", BackBufferWindowInstance);
+			DrawMenuItemForWindow("Shadow Previewer", ShadowPreviewerWindowInstance);
 			DrawMenuItemForWindow("LOD Debug", LodDebugWindowInstance);
 			ImGui::EndMenu();
 		}

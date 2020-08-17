@@ -26,6 +26,7 @@
 #include "Windows/TextureCompressionWindow.h"
 #include "Windows/LodDebugWindow.h"
 #include "Windows/EntityEditorWindow.h"
+#include "Windows/GrassWindow.h"
 #include "Windows/PhysicsMaterialsWindow.h"
 
 #define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, physicsSystemId, ioData, postProcessingSettings, registry, &SelectedEntity, &EntitySelected)
@@ -86,4 +87,5 @@ private:
 	LodDebugWindow LodDebugWindowInstance;
 	EntityEditorWindow EntityEditorWindowInstance;
 	PhysicsMaterialsWindow PhysicsMaterialsWindowInstance;
+	GrassWindow GrassWindowInstance;
 };
