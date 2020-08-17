@@ -19,4 +19,6 @@ struct DynamicRenderSettings final
 
 	LodMode LevelOfDetailsMode = Automatic;
 	float ForcedLodPercentage = 0.75f;
+
+	bool GrassEnabled = true;
 };

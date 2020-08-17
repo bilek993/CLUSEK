@@ -32,6 +32,7 @@ void RenderSystem::Start()
 	InitializeFogSettings();
 	InitializeLightSettings();
 	InitializeClearColorSettings();
+	InitializeGrassSettings();
 
 	if (!InitializeDirectX())
 		Logger::Error("DirectX initialization failed!");
@@ -737,6 +738,11 @@ void RenderSystem::InitializeClearColorSettings() const
 	CurrentRenderSettings->ClearColor[2] = ConfigurationData->ClearColorBlue;
 }
 
+void RenderSystem::InitializeGrassSettings() const
+{
+	CurrentRenderSettings->GrassEnabled = ConfigurationData->GrassEnabled;
+}
+
 void RenderSystem::InitializeConstantBuffers()
 {
 	Logger::Debug("Preparing to initialize constant buffers...");
@@ -1084,7 +1090,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 
 	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent, Solid);
 
-	if (ConfigurationData->GrassEnabled)
+	if (CurrentRenderSettings->GrassEnabled)
 		RenderGrass(cameraComponent, mainCameraTransformComponent);
 
 	RenderTerrain(cameraComponent, mainCameraTransformComponent);

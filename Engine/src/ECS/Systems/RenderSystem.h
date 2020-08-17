@@ -67,6 +67,7 @@ private:
 	void InitializeFogSettings() const;
 	void InitializeLightSettings() const;
 	void InitializeClearColorSettings() const;
+	void InitializeGrassSettings() const;
 	void InitializeConstantBuffers();
 	void InitializeAppendBuffers();
 	void InitializeCustomizableBuffers();
