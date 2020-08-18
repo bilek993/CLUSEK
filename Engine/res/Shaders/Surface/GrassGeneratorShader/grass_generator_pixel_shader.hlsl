@@ -12,6 +12,10 @@ cbuffer TerrainUvBuffer : register(b0)
 cbuffer GrassGeneratorParametersBuffer : register(b1)
 {
     float GrassPlacementThreshold;
+    float MinGrassTranslationX;
+    float MinGrassTranslationY;
+    float MaxGrassTranslationX;
+    float MaxGrassTranslationY;
 }
 
 struct PS_INPUT
@@ -69,7 +73,11 @@ float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
 
 float3 GeneratePositionWithRandomness(PS_INPUT input)
 {
-    float2 randomTranslation = Random(round(input.WorldPosition.xz), float2(-3.0f, -3.0f), float2(3.0f, 3.0f));
+    float2 min = float2(MinGrassTranslationX, MinGrassTranslationY);
+    float2 max = float2(MaxGrassTranslationX, MaxGrassTranslationY);
+	
+    float2 randomTranslation = Random(round(input.WorldPosition.xz), min, max);
+	
     return input.WorldPosition + float3(randomTranslation.x, 0.0f, randomTranslation.y);
 }
 

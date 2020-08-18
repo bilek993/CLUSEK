@@ -1299,6 +1299,10 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 		TerrainUvBufferInstance.ApplyChanges();
 
 		GrassGeneratorParametersBufferInstance.Data.GrassPlacementThreshold = terrainComponent.GrassPlacementThreshold;
+		GrassGeneratorParametersBufferInstance.Data.MinGrassTranslationX = -3.0f;
+		GrassGeneratorParametersBufferInstance.Data.MinGrassTranslationY = -3.0f;
+		GrassGeneratorParametersBufferInstance.Data.MaxGrassTranslationX = 3.0f;
+		GrassGeneratorParametersBufferInstance.Data.MaxGrassTranslationY = 3.0f;
 		GrassGeneratorParametersBufferInstance.ApplyChanges();
 
 		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
