@@ -1,5 +1,6 @@
 #include "../../Includes/shadow_utils.hlsli"
 #include "../../Includes/grass_instance_buffer.hlsli"
+#include "../../Includes/randomizer.hlsli"
 
 static const float SAMPLING_THRESHOLD = 0.01f;
 
@@ -66,6 +67,12 @@ float2 CalculateMetalicSmoothnessColor(PS_INPUT input, float3 splatId)
     return color;
 }
 
+float3 GeneratePositionWithRandomness(PS_INPUT input)
+{
+    float2 randomTranslation = Random(round(input.WorldPosition.xz), float2(-3.0f, -3.0f), float2(3.0f, 3.0f));
+    return input.WorldPosition + float3(randomTranslation.x, 0.0f, randomTranslation.y);
+}
+
 void main(PS_INPUT input)
 {
     if (GrassPlacement.Sample(ClampSampler, input.TextureCoord).r < GrassPlacementThreshold)
@@ -77,7 +84,7 @@ void main(PS_INPUT input)
     float2 metalicSmoothnessColor = CalculateMetalicSmoothnessColor(input, splatId);
 	
     GrassInstanceBuffer instance = (GrassInstanceBuffer)0;
-    instance.Position = input.WorldPosition;
+    instance.Position = GeneratePositionWithRandomness(input);
     instance.Smoothness = metalicSmoothnessColor.g;
     instance.AlbedoColor = albedoColor;
     instance.Metalness = metalicSmoothnessColor.r;
