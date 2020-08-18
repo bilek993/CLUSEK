@@ -1272,6 +1272,9 @@
     <None Include="res\Shaders\Includes\grass_instance_buffer.hlsli">
       <Filter>Resource Files\Shaders\Includes</Filter>
     </None>
+    <None Include="res\Shaders\Includes\randomizer.hlsli">
+      <Filter>Resource Files\Shaders\Includes</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Engine.rc">

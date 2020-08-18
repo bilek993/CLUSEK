@@ -556,6 +556,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\Shaders\Includes\randomizer.hlsli" />
     <None Include="res\Shaders\Includes\grass_instance_buffer.hlsli" />
     <None Include="res\Shaders\Includes\lod_utils.hlsli" />
     <None Include="res\Shaders\Includes\fog.hlsli" />
