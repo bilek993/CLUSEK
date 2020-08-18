@@ -744,6 +744,10 @@ void RenderSystem::InitializeGrassSettings() const
 	CurrentRenderSettings->GrassGeneratorSurfaceWidth = ConfigurationData->GrassGeneratorSurfaceWidth;
 	CurrentRenderSettings->GrassGeneratorSurfaceHeight = ConfigurationData->GrassGeneratorSurfaceHeight;
 	CurrentRenderSettings->GrassGeneratorMaxCameraDistance = ConfigurationData->GrassGeneratorMaxCameraDistance;
+	CurrentRenderSettings->MinGrassTranslationX = ConfigurationData->MinGrassTranslationX;
+	CurrentRenderSettings->MinGrassTranslationY = ConfigurationData->MinGrassTranslationY;
+	CurrentRenderSettings->MaxGrassTranslationX = ConfigurationData->MaxGrassTranslationX;
+	CurrentRenderSettings->MaxGrassTranslationY = ConfigurationData->MaxGrassTranslationY;
 }
 
 void RenderSystem::InitializeConstantBuffers()

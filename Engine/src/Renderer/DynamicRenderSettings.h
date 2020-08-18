@@ -24,4 +24,8 @@ struct DynamicRenderSettings final
 	float GrassGeneratorSurfaceWidth = 500.0f;
 	float GrassGeneratorSurfaceHeight = 500.0f;
 	float GrassGeneratorMaxCameraDistance = 100.0f;
+	float MinGrassTranslationX = 0.0f;
+	float MinGrassTranslationY = 0.0f;
+	float MaxGrassTranslationX = 0.0f;
+	float MaxGrassTranslationY = 0.0f;
 };

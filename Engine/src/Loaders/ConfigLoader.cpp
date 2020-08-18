@@ -111,6 +111,10 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, GrassGeneratorSurfaceWidth, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, GrassGeneratorSurfaceHeight, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, GrassGeneratorMaxCameraDistance, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MinGrassTranslationX, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MinGrassTranslationY, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MaxGrassTranslationX, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, MaxGrassTranslationY, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, CubemapGeneratedSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, EnableAsyncModelLoading, data, std::stoi(value));
