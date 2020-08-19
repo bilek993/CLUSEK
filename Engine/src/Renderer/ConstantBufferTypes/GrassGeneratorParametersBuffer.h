@@ -2,6 +2,7 @@
 
 struct GrassGeneratorParametersBuffer final
 {
+	int GrassGeneratorResolution;
 	float GrassPlacementThreshold;
 	float MinGrassTranslationX;
 	float MinGrassTranslationY;

@@ -12,6 +12,7 @@ cbuffer TerrainUvBuffer : register(b0)
 
 cbuffer GrassGeneratorParametersBuffer : register(b1)
 {
+    int GrassGeneratorResolution;
     float GrassPlacementThreshold;
     float MinGrassTranslationX;
     float MinGrassTranslationY;
@@ -82,8 +83,38 @@ float3 GeneratePositionWithRandomness(PS_INPUT input)
     return input.WorldPosition + float3(randomTranslation.x, 0.0f, randomTranslation.y);
 }
 
+bool LodDiscard(PS_INPUT input) // TODO: Params in this function should be configurable
+{
+    float centeredX = input.Position.x / GrassGeneratorResolution;
+    float centeredY = input.Position.y / GrassGeneratorResolution;
+
+    float distanceFromCenter = distance(float2(0.5f, 0.5f), float2(centeredX, centeredY));
+
+    if (distanceFromCenter > 0.6f)
+    {
+        return true;
+    }
+	
+	if (distanceFromCenter > 0.5f)
+	{
+        if (fmod(input.Position.x, 4) > 1.0f || fmod(input.Position.y, 4) > 1.0f)
+            return true;
+    }
+	
+	if (distanceFromCenter > 0.25f)
+	{
+        if (fmod(input.Position.x, 2) > 1.0f || fmod(input.Position.y, 2) > 1.0f)
+            return true;
+    }
+
+    return false;
+}
+
 void main(PS_INPUT input)
 {
+    if (LodDiscard(input))
+        discard;
+	
     if (GrassPlacement.Sample(ClampSampler, input.TextureCoord).r < GrassPlacementThreshold)
         discard;
 	

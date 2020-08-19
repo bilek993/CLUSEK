@@ -4,8 +4,9 @@
 
 DirectX::XMFLOAT3 GrassCamera::AlignCameraToGrid(const DirectX::XMFLOAT3& cameraPosition, const float width, const float height, const int resolution)
 {
-	const auto gridSizeX = width / static_cast<float>(resolution);
-	const auto gridSizeY = height / static_cast<float>(resolution);
+	// 'gridSizeX' and 'gridSizeY' multiplied by 4 due to LOD
+	const auto gridSizeX = (width * 4) / static_cast<float>(resolution);
+	const auto gridSizeY = (height * 4) / static_cast<float>(resolution);
 	
 	return DirectX::XMFLOAT3(roundf(cameraPosition.x / gridSizeX) * gridSizeX, cameraPosition.y, roundf(cameraPosition.z / gridSizeY) * gridSizeY);
 }

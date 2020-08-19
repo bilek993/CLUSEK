@@ -1302,6 +1302,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 		TerrainUvBufferInstance.Data.TexturesScale = terrainComponent.Material.TexturesScale;
 		TerrainUvBufferInstance.ApplyChanges();
 
+		GrassGeneratorParametersBufferInstance.Data.GrassGeneratorResolution = ConfigurationData->GrassGeneratorResolution;
 		GrassGeneratorParametersBufferInstance.Data.GrassPlacementThreshold = terrainComponent.GrassPlacementThreshold;
 		GrassGeneratorParametersBufferInstance.Data.MinGrassTranslationX = CurrentRenderSettings->MinGrassTranslationX;
 		GrassGeneratorParametersBufferInstance.Data.MinGrassTranslationY = CurrentRenderSettings->MinGrassTranslationY;
