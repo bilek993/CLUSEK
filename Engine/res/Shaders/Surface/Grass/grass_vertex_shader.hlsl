@@ -29,11 +29,18 @@ struct VS_OUTPUT
 
 float4x4 CalculateWorldMatrix(GrassInstanceBuffer currentBuffer)
 {
+    float x = currentBuffer.Position.x;
+    float y = currentBuffer.Position.y;
+    float z = currentBuffer.Position.z;
+
+    float s = sin(currentBuffer.Rotation);
+    float c = cos(currentBuffer.Rotation);
+	
     return float4x4(
-		float4(1, 0, 0, currentBuffer.Position.x),
-		float4(0, 1, 0, currentBuffer.Position.y),
-	    float4(0, 0, 1, currentBuffer.Position.z),
-	    float4(0, 0, 0, 1)
+		float4( c, 0, s, x),
+		float4( 0, 1, 0, y),
+	    float4(-s, 0, c, z),
+	    float4( 0, 0, 0, 1)
 	);
 }
 

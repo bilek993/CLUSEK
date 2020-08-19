@@ -3,6 +3,7 @@
 #include "../../Includes/randomizer.hlsli"
 
 static const float SAMPLING_THRESHOLD = 0.01f;
+static const float TWO_PI = 6.28318530718f;
 
 cbuffer TerrainUvBuffer : register(b0)
 {
@@ -97,7 +98,7 @@ void main(PS_INPUT input)
     instance.AlbedoColor = albedoColor;
     instance.Metalness = metalicSmoothnessColor.r;
     instance.Normal = CalculatedNormalTexture.Sample(ClampSampler, input.TextureCoord).rgb;
-	//instance.Rotation = ? TODO: Add rotation calculation
+    instance.Rotation = Random(round(input.WorldPosition.xz), 0, TWO_PI);
     
     GrassInstanceBufferInstance.Append(instance);
 }
