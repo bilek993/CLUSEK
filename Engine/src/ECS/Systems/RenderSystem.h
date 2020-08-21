@@ -115,6 +115,8 @@ private:
 	float CalculateDistanceFromCamera(const TransformComponent& transformComponent, const TransformComponent& cameraTransformComponent) const;
 	float CalculateLodCoverage(ModelRenderComponent& modelRenderComponent, float distanceFromCamera) const;
 
+	Timer MainTimer;
+
 	std::unique_ptr<ProfilerAnnotations> Profiler;
 
 	int WindowWidth = 0;
