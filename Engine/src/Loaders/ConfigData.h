@@ -103,6 +103,9 @@ struct ConfigData final
 	float MinGrassTranslationY = 0.0f;
 	float MaxGrassTranslationX = 0.0f;
 	float MaxGrassTranslationY = 0.0f;
+	float GrassEndCascade0 = 0.5f;
+	float GrassEndCascade1;
+	float GrassEnd;
 
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;

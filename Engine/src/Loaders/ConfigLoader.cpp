@@ -115,6 +115,9 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, MinGrassTranslationY, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, MaxGrassTranslationX, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, MaxGrassTranslationY, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, GrassEndCascade0, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, GrassEndCascade1, data, std::stof(value));
+			MAP_CONFIG_FIELD(key, GrassEnd, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, CubemapGeneratedSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, EnableAsyncModelLoading, data, std::stoi(value));
