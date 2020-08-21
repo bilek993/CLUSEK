@@ -23,17 +23,21 @@ void GrassWindow::Draw()
 
 	ImGui::Separator();
 
-	ImGui::SliderFloat("Grass end cascade 0", &RenderSettings->GrassEndCascade0, 0.0f, 1.0f);
-	ImGui::SliderFloat("Grass end cascade 1", &RenderSettings->GrassEndCascade1, 0.0f, 1.0f);
-	ImGui::SliderFloat("Grass end", &RenderSettings->GrassEnd, 0.0f, 1.0f);
+	if (ImGui::SliderFloat("Grass end cascade 0", &RenderSettings->GrassEndCascade0, 0.0f, 1.0f))
+	{
+		RenderSettings->GrassEndCascade1 = std::max(RenderSettings->GrassEndCascade0, RenderSettings->GrassEndCascade1);
+		RenderSettings->GrassEnd = std::max(RenderSettings->GrassEndCascade1, RenderSettings->GrassEnd);
+	}
+	if (ImGui::SliderFloat("Grass end cascade 1", &RenderSettings->GrassEndCascade1, 0.0f, 1.0f))
+	{
+		RenderSettings->GrassEndCascade0 = std::min(RenderSettings->GrassEndCascade0, RenderSettings->GrassEndCascade1);
+		RenderSettings->GrassEnd = std::max(RenderSettings->GrassEndCascade1, RenderSettings->GrassEnd);
+	}
+	if(ImGui::SliderFloat("Grass end", &RenderSettings->GrassEnd, 0.0f, 1.0f))
+	{
+		RenderSettings->GrassEndCascade0 = std::min(RenderSettings->GrassEndCascade0, RenderSettings->GrassEnd);
+		RenderSettings->GrassEndCascade1 = std::min(RenderSettings->GrassEndCascade1, RenderSettings->GrassEnd);
+	}
 	
 	ImGui::End();
-
-	FixValues();
-}
-
-void GrassWindow::FixValues() const
-{
-	RenderSettings->GrassEndCascade0 = std::min(RenderSettings->GrassEndCascade0, RenderSettings->GrassEndCascade1);
-	RenderSettings->GrassEndCascade1 = std::min(RenderSettings->GrassEndCascade1, RenderSettings->GrassEnd);
 }
