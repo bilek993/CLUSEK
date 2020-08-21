@@ -28,4 +28,7 @@ struct DynamicRenderSettings final
 	float MinGrassTranslationY = 0.0f;
 	float MaxGrassTranslationX = 0.0f;
 	float MaxGrassTranslationY = 0.0f;
+	float GrassEndCascade0 = 0.0f;
+	float GrassEndCascade1 = 0.0f;
+	float GrassEnd = 0.0f;
 };

@@ -8,4 +8,7 @@ struct GrassGeneratorParametersBuffer final
 	float MinGrassTranslationY;
 	float MaxGrassTranslationX;
 	float MaxGrassTranslationY;
+	float GrassEndCascade0;
+	float GrassEndCascade1;
+	float GrassEnd;
 };
