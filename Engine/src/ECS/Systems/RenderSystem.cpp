@@ -1311,9 +1311,9 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 		GrassGeneratorParametersBufferInstance.Data.MinGrassTranslationY = CurrentRenderSettings->MinGrassTranslationY;
 		GrassGeneratorParametersBufferInstance.Data.MaxGrassTranslationX = CurrentRenderSettings->MaxGrassTranslationX;
 		GrassGeneratorParametersBufferInstance.Data.MaxGrassTranslationY = CurrentRenderSettings->MaxGrassTranslationY;
-		GrassGeneratorParametersBufferInstance.Data.GrassEndCascade0 = ConfigurationData->GrassEndCascade0;
-		GrassGeneratorParametersBufferInstance.Data.GrassEndCascade1 = ConfigurationData->GrassEndCascade1;
-		GrassGeneratorParametersBufferInstance.Data.GrassEnd = ConfigurationData->GrassEnd;
+		GrassGeneratorParametersBufferInstance.Data.GrassEndCascade0 = CurrentRenderSettings->GrassEndCascade0;
+		GrassGeneratorParametersBufferInstance.Data.GrassEndCascade1 = CurrentRenderSettings->GrassEndCascade1;
+		GrassGeneratorParametersBufferInstance.Data.GrassEnd = CurrentRenderSettings->GrassEnd;
 		GrassGeneratorParametersBufferInstance.ApplyChanges();
 
 		DeviceContext->DSSetShaderResources(0, 1, terrainComponent.Material.Heightmap->GetAddressOf());
