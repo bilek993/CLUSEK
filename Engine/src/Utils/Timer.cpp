@@ -10,9 +10,15 @@ void Timer::Restart()
 	TimePoint = std::chrono::high_resolution_clock::now();
 }
 
+float Timer::GetDelta() const
+{
+	const auto elapsed = std::chrono::duration<float, std::milli>(std::chrono::high_resolution_clock::now() - TimePoint);
+	return elapsed.count();
+}
+
 float Timer::GetDeltaTimeAndRestart()
 {
-	auto elapsed = std::chrono::duration<float, std::milli>(std::chrono::high_resolution_clock::now() - TimePoint);
+	const auto elapsed = std::chrono::duration<float, std::milli>(std::chrono::high_resolution_clock::now() - TimePoint);
 	TimePoint = std::chrono::high_resolution_clock::now();
 	return elapsed.count();
 }
