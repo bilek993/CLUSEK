@@ -73,6 +73,8 @@ void RenderSystem::Update(const float deltaTime)
 	auto& mainCameraTransform = CameraLocator::GetMainCameraTransform(Registry);
 
 	UpdateCameraBuffer(mainCameraTransform);
+	
+	UpdateTimeBuffer();
 
 	if (ConfigurationData->ShadowsEnabled)
 		RenderShadows(mainCameraComponent, mainCameraTransform);
@@ -828,6 +830,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = GrassGeneratorParametersBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'GrassGeneratorParametersBufferInstance' constant buffer.");
+
+	hr = TimeBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'TimeBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializeAppendBuffers()
@@ -1637,6 +1643,12 @@ void RenderSystem::ConfigureCascadeConstantBuffer()
 	CascadeLevelsBufferInstance.Data.Biases[2] = ConfigurationData->CascadeBias2;
 	CascadeLevelsBufferInstance.Data.Biases[3] = ConfigurationData->CascadeBias3;
 	CascadeLevelsBufferInstance.ApplyChanges();
+}
+
+void RenderSystem::UpdateTimeBuffer()
+{
+	TimeBufferInstance.Data.Time = MainTimer.GetDelta();
+	TimeBufferInstance.ApplyChanges();
 }
 
 void RenderSystem::UpdateFogBuffer()

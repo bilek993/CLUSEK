@@ -45,6 +45,7 @@
 #include "../../Renderer/ConstantBufferTypes/GrassGeneratorParametersBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/GrassIndirectModelInfoBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/GrassPerObjectBuffer.h"
+#include "../../Renderer/ConstantBufferTypes/TimeBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -106,6 +107,7 @@ private:
 
 	void ConfigureCascadeConstantBuffer();
 
+	void UpdateTimeBuffer();
 	void UpdateFogBuffer();
 	void UpdateLightAndAlphaBuffer();
 	void UpdateCameraBuffer(const TransformComponent &mainCameraTransformComponent);
@@ -184,6 +186,7 @@ private:
 	ConstantBuffer<GrassPerObjectBuffer> GrassPerObjectBufferInstance;
 	ConstantBuffer<GrassAppearanceParametersBuffer> GrassAppearanceParametersBufferInstance;
 	ConstantBuffer<GrassGeneratorParametersBuffer> GrassGeneratorParametersBufferInstance;
+	ConstantBuffer<TimeBuffer> TimeBufferInstance;
 
 	AppendBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance;
 

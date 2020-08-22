@@ -438,6 +438,7 @@
     <ClInclude Include="src\GUI\Components\VehicleComponentEditor.h" />
     <ClInclude Include="src\GUI\Components\VehiclePlayerControllerComponentEditor.h" />
     <ClInclude Include="src\GUI\Components\WheelComponentEditor.h" />
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\TimeBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\PostProcessing\chromatic_aberration_pixel_shader.hlsl">
