@@ -1365,6 +1365,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	DeviceContext->PSSetConstantBuffers(4, 1, GrassAppearanceParametersBufferInstance.GetAddressOf());
 
 	DeviceContext->VSSetShaderResources(0, 1, GrassInstanceBufferInstance.GetAddressOfShaderResourceView());
+	DeviceContext->VSSetConstantBuffers(1, 1, TimeBufferInstance.GetAddressOf());
 
 	DeviceContext->PSSetShaderResources(0, 1, GrassInstanceBufferInstance.GetAddressOfShaderResourceView());
 	
