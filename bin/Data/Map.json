@@ -806,7 +806,14 @@
 		"RoughnessInterpolationRatio": 0.975,
 		"MetalicInterpolationTarget": 0.0,
 		"MetalicInterpolationRatio": 1.0,
-		"OcclusionValue": 1.0
+		"OcclusionValue": 1.0,
+		"WindVertexAffectHeight": 0.5,
+		"GlobalWindSpeed": 0.001,
+		"GlobalWindScale": 0.5,
+		"LocalWindSpeed": 0.001,
+		"LocalWindScaleX": 0.5,
+		"LocalWindScaleY": 0.175,
+		"LocalWindScaleZ": 0.5
 	  },
 	  "PhysicsMaterialComponent": {
 	    "Name": "TerrainMaterial"
