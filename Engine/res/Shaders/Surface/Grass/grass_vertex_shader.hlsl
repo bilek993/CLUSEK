@@ -7,7 +7,7 @@ cbuffer GrassPerObjectBuffer : register(b0)
     float4x4 LightSpaceMatrix[CASCADES_COUNT];
 };
 
-cbuffer GrassBuffer : register(b1)
+cbuffer TimeBuffer : register(b1)
 {
     float Time;
 }
