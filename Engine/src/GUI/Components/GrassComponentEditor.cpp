@@ -27,4 +27,12 @@ void GrassComponentEditor::Draw()
 	ImGui::Separator();
 
 	ImGui::SliderFloat("Occlusion value", &component->OcclusionValue, 0.0f, 1.0f);
+
+	ImGui::Separator();
+
+	ImGui::InputFloat("Wind vertex affect height", &component->WindVertexAffectHeight);
+	ImGui::InputFloat("Global wind speed", &component->GlobalWindSpeed, 0, 0, "%.5f");
+	ImGui::InputFloat("Global wind scale", &component->GlobalWindScale);
+	ImGui::InputFloat("Local wind speed", &component->LocalWindSpeed, 0, 0, "%.5f");
+	ImGui::InputFloat3("Local wind scale", &component->LocalWindScale.x);
 }
