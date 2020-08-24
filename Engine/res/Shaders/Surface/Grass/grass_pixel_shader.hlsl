@@ -42,6 +42,11 @@ cbuffer GrassAppearanceParametersBuffer : register(b4)
     float MetalicInterpolationTarget;
     float MetalicInterpolationRatio;
     float OcclusionValue;
+    float WindVertexAffectHeight;
+    float GlobalWindSpeed;
+    float GlobalWindScale;
+    float LocalWindSpeed;
+    float3 LocalWindScale;
 }
 
 struct PS_INPUT

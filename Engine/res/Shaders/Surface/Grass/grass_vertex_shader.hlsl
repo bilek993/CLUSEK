@@ -12,6 +12,23 @@ cbuffer TimeBuffer : register(b1)
     float Time;
 }
 
+cbuffer GrassAppearanceParametersBuffer : register(b2)
+{
+    float AlphaDiscardPoint;
+    float AlbedoInterpolationRatio;
+    float NormalInterpolationRatio;
+    float RoughnessInterpolationTarget;
+    float RoughnessInterpolationRatio;
+    float MetalicInterpolationTarget;
+    float MetalicInterpolationRatio;
+    float OcclusionValue;
+    float WindVertexAffectHeight;
+    float GlobalWindSpeed;
+    float GlobalWindScale;
+    float LocalWindSpeed;
+    float3 LocalWindScale;
+}
+
 struct VS_INPUT
 {
     float3 Position : POSITION;

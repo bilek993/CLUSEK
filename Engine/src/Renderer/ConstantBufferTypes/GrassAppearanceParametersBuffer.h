@@ -10,4 +10,9 @@ struct GrassAppearanceParametersBuffer final
 	float MetalicInterpolationTarget;
 	float MetalicInterpolationRatio;
 	float OcclusionValue;
+	float WindVertexAffectHeight;
+	float GlobalWindSpeed;
+	float GlobalWindScale;
+	float LocalWindSpeed;
+	DirectX::XMFLOAT3 LocalWindScale;
 };

@@ -1357,6 +1357,8 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	LightAndAlphaBufferInstance.ApplyChanges();
 
 	DeviceContext->VSSetConstantBuffers(0, 1, GrassPerObjectBufferInstance.GetAddressOf());
+	DeviceContext->VSSetConstantBuffers(1, 1, TimeBufferInstance.GetAddressOf());
+	DeviceContext->VSSetConstantBuffers(2, 1, GrassAppearanceParametersBufferInstance.GetAddressOf());
 
 	DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
@@ -1365,7 +1367,6 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 	DeviceContext->PSSetConstantBuffers(4, 1, GrassAppearanceParametersBufferInstance.GetAddressOf());
 
 	DeviceContext->VSSetShaderResources(0, 1, GrassInstanceBufferInstance.GetAddressOfShaderResourceView());
-	DeviceContext->VSSetConstantBuffers(1, 1, TimeBufferInstance.GetAddressOf());
 
 	DeviceContext->PSSetShaderResources(0, 1, GrassInstanceBufferInstance.GetAddressOfShaderResourceView());
 	
@@ -1410,6 +1411,11 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 			GrassAppearanceParametersBufferInstance.Data.MetalicInterpolationTarget = grassComponent.MetalicInterpolationTarget;
 			GrassAppearanceParametersBufferInstance.Data.MetalicInterpolationRatio = grassComponent.MetalicInterpolationRatio;
 			GrassAppearanceParametersBufferInstance.Data.OcclusionValue = grassComponent.OcclusionValue;
+			GrassAppearanceParametersBufferInstance.Data.WindVertexAffectHeight = grassComponent.WindVertexAffectHeight;
+			GrassAppearanceParametersBufferInstance.Data.GlobalWindSpeed = grassComponent.GlobalWindSpeed;
+			GrassAppearanceParametersBufferInstance.Data.GlobalWindScale = grassComponent.GlobalWindScale;
+			GrassAppearanceParametersBufferInstance.Data.LocalWindSpeed = grassComponent.LocalWindSpeed;
+			GrassAppearanceParametersBufferInstance.Data.LocalWindScale = grassComponent.LocalWindScale;
 			GrassAppearanceParametersBufferInstance.ApplyChanges();
 
 			DeviceContext->PSSetShaderResources(1, 1, mesh.Material.AlbedoTexture->GetAddressOf());
