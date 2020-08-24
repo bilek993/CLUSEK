@@ -68,30 +68,30 @@ float4x4 CalculateWorldMatrix(GrassInstanceBuffer currentBuffer)
 
 float3 ApplyGlobalWind(float3 vertexPosition, float3 objectPosition)
 {
-    if (vertexPosition.y < 0.5f) // TODO: Change this
+    if (vertexPosition.y < WindVertexAffectHeight)
         return vertexPosition;
 
-    float timeScaled = Time * 0.001f; // TODO: Change this
+    float timeScaled = Time * GlobalWindSpeed;
 	
     float3 padding;
     padding.x = (2.0f * sin(1.0f * (objectPosition.x + objectPosition.y + objectPosition.z + timeScaled))) + 1.0f;
     padding.y = 0.0f;
     padding.z = (1.0f * sin(2.0f * (objectPosition.x + objectPosition.y + objectPosition.z + timeScaled))) + 0.5f;
 
-    padding *= 0.5f; // TODO: Change this
+    padding *= GlobalWindScale;
     
     return vertexPosition + padding;
 }
 
 float3 ApplyLocalWind(float3 vertexPosition)
 {
-    if (vertexPosition.y < 0.5f) // TODO: Change this
+    if (vertexPosition.y < WindVertexAffectHeight)
         return vertexPosition;
 	
-    float timeScaled = Time * 0.001f; // TODO: Change this
+    float timeScaled = Time * LocalWindSpeed;
 
     float displacement = 0.065f + sin(2.65f * (vertexPosition.x + vertexPosition.y + vertexPosition.z + timeScaled));
-    float3 padding = float3(displacement, displacement * 0.35f, displacement) * 0.5f; // TODO: Change this
+    float3 padding = displacement * LocalWindScale;
 
     return vertexPosition + padding;
 }
