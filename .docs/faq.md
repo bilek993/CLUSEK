@@ -56,3 +56,7 @@ It's hard to tell. Other compilers are highly not recommended but might work. Th
 **I would like to add new component. Should I do something special?**
 
 Detailed information about adding a new component you can find in [the ECS section](./ecs.md).
+
+**My performance in the CLUSEK game engine is low! How can I get better framerate?**
+
+To get better performance you can experiment with a configuration in [the configuration file](../bin/Data/EngineSettings.cfg). This file consists of all possible configurations that can help to achieve better performance.
