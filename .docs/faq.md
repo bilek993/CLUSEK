@@ -60,3 +60,22 @@ Detailed information about adding a new component you can find in [the ECS secti
 **My performance in the CLUSEK game engine is low! How can I get better framerate?**
 
 To get better performance you can experiment with a configuration in [the configuration file](../bin/Data/EngineSettings.cfg). This file consists of all possible configurations that can help to achieve better performance.
+
+**How can I disable the console window on startup?**
+
+
+The Debug console that CLUSEK uses is very useful for debugging purposes and can help significantly when adding new elements in the development process. Anyway, this console can be very annoying for the end-user and can be disabled in two ways.
+
+The easiest way is to disable logger altogether in the configuration file by setting `LoggerEnabled` to value `0`, like in the example below.
+
+```
+LoggerEnabled: 0
+```
+
+More complex, but at the same time better way is setting `LoggerDestination` from value `CONOUT$` to the filename for logging. That way, if something terrible happens in the production environment to the end-user, it can be easily fixed with the logs files. The example below shows how it can be done with the log file in the main CLUSEK folder named `clusek_logs.txt` and only importent logs saved.
+
+```
+LoggerEnabled: 1
+LoggerDestination: clusek_logs.txt
+LoggerLevel: 1
+```
