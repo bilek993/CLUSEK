@@ -148,7 +148,7 @@
     <Filter Include="Resource Files\Shaders\Surface\GrassGeneratorShader">
       <UniqueIdentifier>{9132f41f-ca81-405f-a217-207c1b557881}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\Shaders\Surface\Grass">
+    <Filter Include="Resource Files\Shaders\Surface\GrassShader">
       <UniqueIdentifier>{934f97c8-4581-4a69-930c-3f4b4ac63288}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -1243,11 +1243,11 @@
     <FxCompile Include="res\Shaders\Compute\prepare_grass_date_for_indirect_rendering_compute_shader.hlsl">
       <Filter>Resource Files\Shaders\Compute</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\Grass\grass_vertex_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\Grass</Filter>
+    <FxCompile Include="res\Shaders\Surface\GrassShader\grass_pixel_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\GrassShader</Filter>
     </FxCompile>
-    <FxCompile Include="res\Shaders\Surface\Grass\grass_pixel_shader.hlsl">
-      <Filter>Resource Files\Shaders\Surface\Grass</Filter>
+    <FxCompile Include="res\Shaders\Surface\GrassShader\grass_vertex_shader.hlsl">
+      <Filter>Resource Files\Shaders\Surface\GrassShader</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
