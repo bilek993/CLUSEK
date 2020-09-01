@@ -37,7 +37,7 @@ void PhysicsMaterialsWindow::DrawBasicMaterialDetails(const PhysicsSystem* physi
 
 	ImGui::DragFloat("Static friction", &staticFriction, 0.001f, 0.0f, 1.0f);
 	ImGui::DragFloat("Dynamic friction", &dynamicFriction, 0.001f, 0.0f, 1.0f);
-	ImGui::DragFloat("Restitution", &restitution, 0.001f, 0.0f, 1.0f);
+	ImGui::SliderFloat("Restitution", &restitution, 0.0f, 1.0f);
 
 	currentMaterial->setStaticFriction(staticFriction);
 	currentMaterial->setDynamicFriction(dynamicFriction);
