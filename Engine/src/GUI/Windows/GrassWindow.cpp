@@ -40,4 +40,13 @@ void GrassWindow::Draw()
 	}
 	
 	ImGui::End();
+
+	HandleIncorrectValues();
+}
+
+void GrassWindow::HandleIncorrectValues() const
+{
+	RenderSettings->GrassGeneratorSurfaceWidth = std::max(EPSILON, RenderSettings->GrassGeneratorSurfaceWidth);
+	RenderSettings->GrassGeneratorSurfaceHeight = std::max(EPSILON, RenderSettings->GrassGeneratorSurfaceHeight);
+	RenderSettings->GrassGeneratorMaxCameraDistance = std::max(0.0f, RenderSettings->GrassGeneratorMaxCameraDistance);
 }
