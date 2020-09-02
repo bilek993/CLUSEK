@@ -7,7 +7,7 @@
       "CameraComponent": {},
 	  "TransformComponent": {
 	    "PositionX": 0.0,
-		"PositionY": 4.0,
+		"PositionY": 1.0,
 		"PositionZ": -18.25
 	  }
 	}
@@ -26,7 +26,7 @@
 	"Components": {
 	  "TransformComponent": {
 	    "PositionX": 0.0,
-		"PositionY": 5.725,
+		"PositionY": 1.025,
 		"PositionZ": 0.0
 	  },
 	  "ModelRenderComponent": {
@@ -78,7 +78,7 @@
 	"Components": {
 	  "TransformComponent": {
 	    "PositionX": 2.85,
-		"PositionY": 3.7,
+		"PositionY": -1.0,
 		"PositionZ": 5.46,
 		"RotationX": 0.0,
 		"RotationY": 180.0,
@@ -114,7 +114,7 @@
 	"Components": {
 	  "TransformComponent": {
 	    "PositionX": 2.85,
-		"PositionY": 3.7,
+		"PositionY": -1.0,
 		"PositionZ": -5.17,
 		"RotationX": 0.0,
 		"RotationY": 180.0,
@@ -150,7 +150,7 @@
 	"Components": {
 	  "TransformComponent": {
 	    "PositionX": -2.85,
-		"PositionY": 3.7,
+		"PositionY": -1.0,
 		"PositionZ": 5.46
 	  },
 	  "ModelRenderComponent": {
@@ -182,7 +182,7 @@
 	"Components": {
 	  "TransformComponent": {
 	    "PositionX": -2.85,
-		"PositionY": 3.7,
+		"PositionY": -1.0,
 		"PositionZ": -5.17
 	  },
 	  "ModelRenderComponent": {
