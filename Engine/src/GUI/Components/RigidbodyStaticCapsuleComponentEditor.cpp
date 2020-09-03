@@ -11,6 +11,7 @@ void RigidbodyStaticCapsuleComponentEditor::Draw()
 	shapes->getCapsuleGeometry(geometry);
 
 	DrawGeometryParameters(geometry);
+	HandleIncorrectValues(geometry);
 
 	shapes->setGeometry(geometry);
 }
@@ -23,4 +24,10 @@ void RigidbodyStaticCapsuleComponentEditor::DrawGeometryParameters(physx::PxCaps
 	ImGui::InputFloat("Height", &geometry.radius);
 
 	geometry.halfHeight = height / 2.0f;
+}
+
+void RigidbodyStaticCapsuleComponentEditor::HandleIncorrectValues(physx::PxCapsuleGeometry& geometry) const
+{
+	geometry.radius = std::max(geometry.radius, EPSILON);
+	geometry.halfHeight = std::max(geometry.halfHeight, EPSILON);
 }
