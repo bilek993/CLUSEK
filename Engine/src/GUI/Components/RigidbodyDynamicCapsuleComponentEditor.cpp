@@ -11,6 +11,7 @@ void RigidbodyDynamicCapsuleComponentEditor::Draw()
 	shapes->getCapsuleGeometry(geometry);
 
 	DrawGeometryParameters(geometry);
+	HandleIncorrectValues(geometry);
 
 	shapes->setGeometry(geometry);
 }
