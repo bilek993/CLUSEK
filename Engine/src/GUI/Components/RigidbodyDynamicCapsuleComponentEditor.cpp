@@ -24,3 +24,9 @@ void RigidbodyDynamicCapsuleComponentEditor::DrawGeometryParameters(physx::PxCap
 
 	geometry.halfHeight = height / 2.0f;
 }
+
+void RigidbodyDynamicCapsuleComponentEditor::HandleIncorrectValues(physx::PxCapsuleGeometry& geometry) const
+{
+	geometry.radius = std::max(geometry.radius, EPSILON);
+	geometry.halfHeight = std::max(geometry.halfHeight, EPSILON);
+}

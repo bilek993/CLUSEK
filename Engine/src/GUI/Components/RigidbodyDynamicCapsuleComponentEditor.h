@@ -9,4 +9,8 @@ protected:
 
 private:
 	void DrawGeometryParameters(physx::PxCapsuleGeometry& geometry) const;
+
+	void HandleIncorrectValues(physx::PxCapsuleGeometry& geometry) const;
+
+	inline static const float EPSILON = 0.001f;
 };
