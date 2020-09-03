@@ -16,6 +16,8 @@ private:
 	void RecalculateGraph(float rotationSpeed);
 	void AddToGraph(float rotationSpeed);
 
+	inline static const float EPSILON = 0.001f;
+
 	float TimeCounter = 0.0f;
 	float EngineRotationHistory[100] = {};
 

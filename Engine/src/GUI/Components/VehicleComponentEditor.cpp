@@ -111,12 +111,15 @@ void VehicleComponentEditor::DrawEditableParameters(VehicleComponent* component)
 	ImGui::Combo("Clutch accuracy mode", &clutchAccuracyMode, ClutchAccuracyModes, IM_ARRAYSIZE(ClutchAccuracyModes));
 	clutchData.mAccuracyMode = static_cast<physx::PxVehicleClutchAccuracyMode::Enum>(clutchAccuracyMode);
 	ImGui::InputFloat("Clutch strength", &clutchData.mStrength);
+	clutchData.mStrength = std::max(clutchData.mStrength, EPSILON);
 	driveSimData.setClutchData(clutchData);
 
 	// Engine configuration
 	auto engineData = driveSimData.getEngineData();
 	ImGui::InputFloat("Engine peak torque", &engineData.mPeakTorque);
+	engineData.mPeakTorque = std::max(engineData.mPeakTorque, EPSILON);
 	ImGui::InputFloat("Engine max omega", &engineData.mMaxOmega);
+	engineData.mMaxOmega = std::max(engineData.mMaxOmega, EPSILON);
 	ImGui::InputFloat("Engine moment of inertia", &engineData.mMOI);
 	driveSimData.setEngineData(engineData);
 
