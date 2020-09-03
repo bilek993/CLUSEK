@@ -8,6 +8,7 @@ void RigidbodyStaticHeightFieldsComponentEditor::Draw()
 	component->Shape->getHeightFieldGeometry(geometry);
 
 	DrawGeometryParameters(geometry);
+	HandleIncorrectValues(geometry);
 
 	component->Shape->setGeometry(geometry);
 }
@@ -17,4 +18,11 @@ void RigidbodyStaticHeightFieldsComponentEditor::DrawGeometryParameters(physx::P
 	ImGui::InputFloat("Column scale", &geometry.columnScale);
 	ImGui::InputFloat("Height", &geometry.heightScale);
 	ImGui::InputFloat("Row scale", &geometry.rowScale);
+}
+
+void RigidbodyStaticHeightFieldsComponentEditor::HandleIncorrectValues(physx::PxHeightFieldGeometry& geometry) const
+{
+	geometry.columnScale = std::max(geometry.columnScale, EPSILON);
+	geometry.heightScale = std::max(geometry.heightScale, EPSILON);
+	geometry.columnScale = std::max(geometry.columnScale, EPSILON);
 }
