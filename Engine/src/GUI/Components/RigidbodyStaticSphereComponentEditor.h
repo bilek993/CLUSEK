@@ -10,5 +10,7 @@ protected:
 private:
 	void DrawGeometryParameters(physx::PxSphereGeometry& geometry) const;
 
+	void HandleIncorrectValues(physx::PxSphereGeometry& geometry) const;
+
 	inline static const float EPSILON = 0.001f;
 };

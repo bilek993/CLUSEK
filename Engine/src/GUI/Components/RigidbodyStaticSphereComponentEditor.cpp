@@ -11,12 +11,17 @@ void RigidbodyStaticSphereComponentEditor::Draw()
 	shapes->getSphereGeometry(geometry);
 
 	DrawGeometryParameters(geometry);
-
+	HandleIncorrectValues(geometry);
+	
 	shapes->setGeometry(geometry);
 }
 
 void RigidbodyStaticSphereComponentEditor::DrawGeometryParameters(physx::PxSphereGeometry& geometry) const
 {
 	ImGui::InputFloat("Radius", &geometry.radius);
+}
+
+void RigidbodyStaticSphereComponentEditor::HandleIncorrectValues(physx::PxSphereGeometry& geometry) const
+{
 	geometry.radius = std::max(geometry.radius, EPSILON);
 }
