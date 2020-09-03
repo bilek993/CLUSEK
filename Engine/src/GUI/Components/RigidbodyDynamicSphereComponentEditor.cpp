@@ -11,6 +11,7 @@ void RigidbodyDynamicSphereComponentEditor::Draw()
 	shapes->getSphereGeometry(geometry);
 
 	DrawGeometryParameters(geometry);
+	HandleIncorrectValues(geometry);
 
 	shapes->setGeometry(geometry);
 }
@@ -18,4 +19,9 @@ void RigidbodyDynamicSphereComponentEditor::Draw()
 void RigidbodyDynamicSphereComponentEditor::DrawGeometryParameters(physx::PxSphereGeometry& geometry) const
 {
 	ImGui::InputFloat("Radius", &geometry.radius);
+}
+
+void RigidbodyDynamicSphereComponentEditor::HandleIncorrectValues(physx::PxSphereGeometry& geometry) const
+{
+	geometry.radius = std::max(geometry.radius, EPSILON);
 }
