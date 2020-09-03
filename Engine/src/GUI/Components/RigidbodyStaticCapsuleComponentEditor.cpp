@@ -20,8 +20,8 @@ void RigidbodyStaticCapsuleComponentEditor::DrawGeometryParameters(physx::PxCaps
 {
 	auto height = geometry.halfHeight * 2.0f;
 
-	ImGui::InputFloat("Width", &height);
-	ImGui::InputFloat("Height", &geometry.radius);
+	ImGui::InputFloat("Height", &height);
+	ImGui::InputFloat("Radius", &geometry.radius);
 
 	geometry.halfHeight = height / 2.0f;
 }
