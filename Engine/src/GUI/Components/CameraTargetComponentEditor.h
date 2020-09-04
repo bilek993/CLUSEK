@@ -6,4 +6,6 @@ class CameraTargetComponentEditor final : public BaseComponentEditor<CameraTarge
 {
 protected:
 	void Draw() override;
+
+	void HandleIncorrectValues(CameraTargetComponent* component) const;
 };
