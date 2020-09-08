@@ -29,6 +29,15 @@ Invoke-Expression "& '$MsBuildPath' /t:clean /p:configuration=Release /verbosity
 Write-Host "Building..."
 Invoke-Expression "& '$MsBuildPath' /t:build /p:configuration=Release /verbosity:minimal"
 
-Write-Host "Packing..."
+Write-Host "Preparing..."
 $EngineVersion = Get-Date -Format '1.0.yy.MM.dd'
-compress-archive -path ('./bin/*.dll', './bin/*.exe', './bin/*.cso', './bin/Data/', './LICENSE') -destinationpath "CLUSEK-$EngineVersion.zip" -compressionlevel optimal
+$FolderName = ('CLUSEK-' + $EngineVersion)
+$FolderNameInThisFolder = ('./' + $FolderName)
+New-Item -Name $FolderName -ItemType 'directory'
+Copy-Item -Path ('./bin/*.dll', './bin/*.exe', './bin/*.cso', './bin/Data/', './LICENSE') -Destination $FolderNameInThisFolder -Recurse
+
+Write-Host "Packing..."
+compress-archive -path $FolderNameInThisFolder -destinationpath "CLUSEK-$EngineVersion.zip" -compressionlevel optimal
+
+Write-Host "Cleaning up..."
+Remove-Item $FolderNameInThisFolder -Recurse
