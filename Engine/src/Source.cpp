@@ -3,6 +3,7 @@
 #include "Utils/Logger.h"
 #include "Engine.h"
 #include "Loaders/ConfigLoader.h"
+#include "Utils/DebuggerDetection.h"
 
 // Entry point for the Engine
 int APIENTRY wWinMain(	_In_ HINSTANCE hInstance,
@@ -10,6 +11,9 @@ int APIENTRY wWinMain(	_In_ HINSTANCE hInstance,
 						_In_ LPWSTR lpCmdLine, 
 						_In_ int nCmdShow)
 {
+	if (DebuggerDetection::Check())
+		return 2;
+	
 	const auto configData = ConfigLoader::GetData();
 
 	Logger::Initialize(configData.LoggerEnabled, configData.LoggerDestination);

@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utils\DebuggerDetection.cpp" />
     <ClCompile Include="src\GUI\Windows\GrassWindow.cpp" />
     <ClCompile Include="src\GUI\Components\GrassComponentEditor.cpp" />
     <ClCompile Include="src\Loaders\Components\GrassComponentLoader.cpp" />
@@ -236,6 +237,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Utils\DebuggerDetection.h" />
     <ClInclude Include="src\GUI\Windows\GrassWindow.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassGeneratorParametersBuffer.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassAppearanceParametersBuffer.h" />
