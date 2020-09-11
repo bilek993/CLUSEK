@@ -8,6 +8,9 @@ bool DebuggerDetection::Check()
 #else
 	if (CheckIfDebuggerIsPresented())
 		return true;
+
+	if (CheckWindow())
+		return true;
 	
 	return false;
 #endif
@@ -16,4 +19,9 @@ bool DebuggerDetection::Check()
 bool DebuggerDetection::CheckIfDebuggerIsPresented()
 {
 	return IsDebuggerPresent();
+}
+
+bool DebuggerDetection::CheckWindow()
+{
+	return FindWindow(nullptr, "x64dbg");
 }

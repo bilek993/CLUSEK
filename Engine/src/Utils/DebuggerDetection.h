@@ -7,4 +7,5 @@ public:
 
 private:
 	static bool CheckIfDebuggerIsPresented();
+	static bool CheckWindow();
 };
