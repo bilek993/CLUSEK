@@ -9,4 +9,5 @@ private:
 	static bool CheckIfDebuggerIsPresented();
 	static bool CheckIfRemoteDebuggerIsPresented();
 	static bool CheckWindow();
+	static bool CheckCloseHandleException();
 };
