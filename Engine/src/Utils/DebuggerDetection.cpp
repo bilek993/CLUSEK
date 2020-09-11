@@ -1,3 +1,4 @@
+#include <Windows.h>
 #include "DebuggerDetection.h"
 
 bool DebuggerDetection::Check()
@@ -5,6 +6,14 @@ bool DebuggerDetection::Check()
 #ifdef _DEBUG
 	return false;
 #else
-	return true;
+	if (CheckIfDebuggerIsPresented())
+		return true;
+	
+	return false;
 #endif
+}
+
+bool DebuggerDetection::CheckIfDebuggerIsPresented()
+{
+	return IsDebuggerPresent();
 }
