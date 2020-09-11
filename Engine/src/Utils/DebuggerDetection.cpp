@@ -23,5 +23,5 @@ bool DebuggerDetection::CheckIfDebuggerIsPresented()
 
 bool DebuggerDetection::CheckWindow()
 {
-	return FindWindow(nullptr, "x64dbg");
+	return FindWindow(nullptr, "x64dbg") || FindWindow("OLLYDBG", nullptr);
 }
