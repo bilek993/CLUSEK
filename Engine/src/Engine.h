@@ -30,7 +30,9 @@ private:
 	template <class T>
 	void RegisterNewSystem(const std::string& name, bool enabled = true);
 
-	RenderWindow Window;
+	// This window needs to be static to fix memory leak when closing logger window using "X" button.
+	inline static RenderWindow Window;
+	
 	ConfigData Config;
 
 	Timer Time;
