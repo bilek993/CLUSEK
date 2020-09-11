@@ -9,6 +9,9 @@ bool DebuggerDetection::Check()
 	if (CheckIfDebuggerIsPresented())
 		return true;
 
+	if (CheckIfRemoteDebuggerIsPresented())
+		return true;
+	
 	if (CheckWindow())
 		return true;
 	
@@ -19,6 +22,14 @@ bool DebuggerDetection::Check()
 bool DebuggerDetection::CheckIfDebuggerIsPresented()
 {
 	return IsDebuggerPresent();
+}
+
+bool DebuggerDetection::CheckIfRemoteDebuggerIsPresented()
+{
+	const auto hProcess = GetCurrentProcess();
+	auto found = FALSE;
+	CheckRemoteDebuggerPresent(hProcess, &found);
+	return found == TRUE;
 }
 
 bool DebuggerDetection::CheckWindow()

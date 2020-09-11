@@ -7,5 +7,6 @@ public:
 
 private:
 	static bool CheckIfDebuggerIsPresented();
+	static bool CheckIfRemoteDebuggerIsPresented();
 	static bool CheckWindow();
 };
