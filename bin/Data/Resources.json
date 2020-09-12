@@ -10,7 +10,9 @@
 	
 	"Spruce0": "Data/Models/Trees/Spruce0.fbx",
 	"Spruce1": "Data/Models/Trees/Spruce1.fbx",
-	"Spruce2": "Data/Models/Trees/Spruce2.fbx"
+	"Spruce2": "Data/Models/Trees/Spruce2.fbx",
+	
+	"Oak0": "Data/Models/Trees/Oak0.fbx"
   },
   
   "GrassModels": {
