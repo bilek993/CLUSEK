@@ -8,7 +8,8 @@
 	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx",
 	"SmoothCylinderLowPoly": "Data/Models/SmoothCylinder/SmoothCylinderLowPoly.fbx",
 	
-	"Spruce0": "Data/Models/Trees/Spruce0.fbx"
+	"Spruce0": "Data/Models/Trees/Spruce0.fbx",
+	"Spruce1": "Data/Models/Trees/Spruce1.fbx"
   },
   
   "GrassModels": {
