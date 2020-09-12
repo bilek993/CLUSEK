@@ -14,7 +14,9 @@
 	
 	"Oak0": "Data/Models/Trees/Oak0.fbx",
 	"Oak1": "Data/Models/Trees/Oak1.fbx",
-	"Oak2": "Data/Models/Trees/Oak2.fbx"
+	"Oak2": "Data/Models/Trees/Oak2.fbx",
+	
+	"Beech0": "Data/Models/Trees/Beech0.fbx"
   },
   
   "GrassModels": {
