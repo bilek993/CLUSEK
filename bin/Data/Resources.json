@@ -6,7 +6,9 @@
 	"WheelLowPoly": "Data/Models/CivilianVehicle/WheelLowPoly.fbx",
 	
 	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx",
-	"SmoothCylinderLowPoly": "Data/Models/SmoothCylinder/SmoothCylinderLowPoly.fbx"
+	"SmoothCylinderLowPoly": "Data/Models/SmoothCylinder/SmoothCylinderLowPoly.fbx",
+	
+	"Spruce0": "Data/Models/Trees/Spruce0.fbx"
   },
   
   "GrassModels": {
