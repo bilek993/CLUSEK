@@ -8,21 +8,17 @@
 	"SmoothCylinder": "Data/Models/SmoothCylinder/SmoothCylinder.fbx",
 	"SmoothCylinderLowPoly": "Data/Models/SmoothCylinder/SmoothCylinderLowPoly.fbx",
 	
-	"Spruce0": "Data/Models/Trees/Spruce0.fbx",
-	"Spruce1": "Data/Models/Trees/Spruce1.fbx",
-	"Spruce2": "Data/Models/Trees/Spruce2.fbx",
+	"Beech0": "Data/Models/Trees/Beech0.fbx",
+	"Beech1": "Data/Models/Trees/Beech1.fbx",
+	"Beech2": "Data/Models/Trees/Beech2.fbx",
 	
 	"Oak0": "Data/Models/Trees/Oak0.fbx",
 	"Oak1": "Data/Models/Trees/Oak1.fbx",
 	"Oak2": "Data/Models/Trees/Oak2.fbx",
 	
-	"Beech0": "Data/Models/Trees/Beech0.fbx",
-	"Beech1": "Data/Models/Trees/Beech1.fbx",
-	"Beech2": "Data/Models/Trees/Beech2.fbx",
-	
-	"Elm0": "Data/Models/Trees/Elm0.fbx",
-	"Elm1": "Data/Models/Trees/Elm1.fbx",
-	"Elm2": "Data/Models/Trees/Elm2.fbx"
+	"Spruce0": "Data/Models/Trees/Spruce0.fbx",
+	"Spruce1": "Data/Models/Trees/Spruce1.fbx",
+	"Spruce2": "Data/Models/Trees/Spruce2.fbx"
   },
   
   "GrassModels": {
