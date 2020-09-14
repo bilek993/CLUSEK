@@ -167,6 +167,19 @@
 	  "Path": "Data/Textures/Terrain/TerrainGrassPlacement.dds"
 	},
 	
+	"BeechBarkAlbedo": {
+	  "Path": "Data/Textures/Trees/Beech/BeechBarkAlbedo.dds"
+	},
+	"BeechBarkNormal": {
+	  "Path": "Data/Textures/Trees/Beech/BeechBarkNormal.dds"
+	},
+	"BeechLeafAlbedo": {
+	  "Path": "Data/Textures/Trees/Beech/BeechLeafAlbedo.dds"
+	},
+	"BeechLeafNormal": {
+	  "Path": "Data/Textures/Trees/Beech/BeechLeafNormal.dds"
+	},
+	
 	"OakBarkAlbedo": {
 	  "Path": "Data/Textures/Trees/Oak/OakBarkAlbedo.dds"
 	},
