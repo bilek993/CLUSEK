@@ -1,0 +1,10 @@
+{
+  "Tree_Bark": {
+    "AlbedoTexture": "SpruceBarkAlbedo",
+	"NormalTexture": "SpruceBarkNormal"
+  },
+  "Tree_Leaf": {
+    "AlbedoTexture": "SpruceLeafAlbedo",
+	"NormalTexture": "SpruceLeafNormal"
+  }
+}

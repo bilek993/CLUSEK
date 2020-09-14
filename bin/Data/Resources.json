@@ -187,6 +187,19 @@
 	},
 	"OakLeafNormal": {
 	  "Path": "Data/Textures/Trees/Oak/OakLeafNormal.dds"
+	},
+	
+	"SpruceBarkAlbedo": {
+	  "Path": "Data/Textures/Trees/Spruce/SpruceBarkAlbedo.dds"
+	},
+	"SpruceBarkNormal": {
+	  "Path": "Data/Textures/Trees/Spruce/SpruceBarkNormal.dds"
+	},
+	"SpruceLeafAlbedo": {
+	  "Path": "Data/Textures/Trees/Spruce/SpruceLeafAlbedo.dds"
+	},
+	"SpruceLeafNormal": {
+	  "Path": "Data/Textures/Trees/Spruce/SpruceLeafNormal.dds"
 	}
   }
 }
