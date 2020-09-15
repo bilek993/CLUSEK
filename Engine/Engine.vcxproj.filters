@@ -1258,6 +1258,9 @@
     <FxCompile Include="res\Shaders\Surface\GrassShader\grass_vertex_shader.hlsl">
       <Filter>Resource Files\Shaders\Surface\GrassShader</Filter>
     </FxCompile>
+    <FxCompile Include="res\Shaders\Surface\ShadowShader\shadow_pixel_shader_with_alpha.hlsl">
+      <Filter>Resource Files\Shaders\Surface\ShadowShader</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\Shaders\Includes\normal_utils.hlsli">

@@ -672,6 +672,12 @@ bool RenderSystem::InitializeShaders()
 			return false;
 		}
 
+		if (!ShadowPixelShaderWithAlpha.Initialize(Device.Get(), L"shadow_pixel_shader_with_alpha.cso"))
+		{
+			Logger::Error("ShadowPixelShaderWithAlpha not initialized due to critical problem!");
+			return false;
+		}
+
 		if (!ShadowTerrainVertexShader.Initialize(Device.Get(), L"shadow_terrain_vertex_shader.cso", PositionAndUvVertex::Layout, PositionAndUvVertex::LayoutSize))
 		{
 			Logger::Error("ShadowTerrainVertexShader not initialized due to critical problem!");
@@ -1130,6 +1136,8 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 
 	DeviceContext->VSSetConstantBuffers(0, 1, ShadowBufferInstance.GetAddressOf());
 
+	DeviceContext->PSSetConstantBuffers(0, 1, DiscardPixelsBufferInstance.GetAddressOf());
+
 	// Terrain Component - CB
 
 	DeviceContext->VSSetConstantBuffers(1, 1, WorldMatrixBufferInstance.GetAddressOf());
@@ -1148,7 +1156,7 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 		DeviceContext->OMSetRenderTargets(0, nullptr, ShadowRenderDepthStencils[i].GetDepthStencilViewPointer());
 		DeviceContext->ClearDepthStencilView(ShadowRenderDepthStencils[i].GetDepthStencilViewPointer(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-		ChangeBasicShaders(ShadowVertexShader, ShadowPixelShader);
+		ChangeBasicShaders(ShadowVertexShader, ShadowPixelShaderWithAlpha);
 
 		Registry->view<ModelRenderComponent, TransformComponent>().each([this, &mainCameraTransformComponent, &offset, i](ModelRenderComponent &modelRenderComponent, TransformComponent &transformComponent)
 		{
@@ -1178,6 +1186,11 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 				if (mesh.Material.Alpha < ConfigurationData->ShadowAlphaThreshold)
 					continue;
 
+				DiscardPixelsBufferInstance.Data.ThresholdAlpha = mesh.Material.ThresholdAlpha;
+				DiscardPixelsBufferInstance.ApplyChanges();
+
+				DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
+				
 				Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
 			}
 		});

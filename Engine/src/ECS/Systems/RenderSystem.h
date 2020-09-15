@@ -162,6 +162,7 @@ private:
 
 	VertexShader ShadowVertexShader;
 	PixelShader ShadowPixelShader;
+	PixelShader ShadowPixelShaderWithAlpha;
 
 	VertexShader ShadowTerrainVertexShader;
 	HullShader ShadowTerrainHullShader;
