@@ -49,7 +49,7 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 
 void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId,
 	const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId,
-	const std::string& occlusionTextureId, const std::string& emissionTextureId, const float alpha)
+	const std::string& occlusionTextureId, const std::string& emissionTextureId, const float alpha, const float thresholdAlpha)
 {
 	mesh.Material.AlbedoTexture = GetTextureById(device, albedoTextureId, DefaultAlbedo);
 	mesh.Material.NormalTexture = GetTextureById(device, normalTextureId, DefaultNormal);
@@ -58,6 +58,7 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 	mesh.Material.EmissionTexture = GetTextureById(device, emissionTextureId, DefaultEmission);
 
 	mesh.Material.Alpha = alpha;
+	mesh.Material.ThresholdAlpha = thresholdAlpha;
 }
 
 void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
@@ -76,6 +77,7 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 	{
 		Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
 		auto alphaJsonInfo = jsonObject[mesh.Name]["Alpha"];
+		auto thresholdAlphaJsonInfo = jsonObject[mesh.Name]["ThresholdAlpha"];
 		auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
 		auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
 		auto metalicSmoothnessTextureJsonInfo = jsonObject[mesh.Name]["MetalicSmoothnessTexture"];
@@ -89,7 +91,8 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 							metalicSmoothnessTextureJsonInfo.is_null() ? "" : metalicSmoothnessTextureJsonInfo.get<std::string>(),
 							occlusionTextureJsonInfo.is_null() ? "" : occlusionTextureJsonInfo.get<std::string>(),
 							emissionTextureJsonInfo.is_null() ? "" : emissionTextureJsonInfo.get<std::string>(),
-							alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>());
+							alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>(), 
+							thresholdAlphaJsonInfo.is_null() ? 0.0f : thresholdAlphaJsonInfo.get<float>());
 	}
 }
 

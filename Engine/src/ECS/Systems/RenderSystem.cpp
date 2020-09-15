@@ -834,6 +834,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = TimeBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'TimeBufferInstance' constant buffer.");
+
+	hr = DiscardPixelsBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'DiscardPixelsBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializeAppendBuffers()
@@ -1536,6 +1540,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(3, 1, FogBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(4, 1, LodTransitionBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(5, 1, DiscardPixelsBufferInstance.GetAddressOf());
 
 	if (renderMode == Transparent)
 		DeviceContext->OMSetBlendState(BlendState.Get(), nullptr, 0xffffffff);
@@ -1610,6 +1615,9 @@ void RenderSystem::RenderMesh(const Mesh& mesh, TransformComponent &transformCom
 
 	LightAndAlphaBufferInstance.Data.Alpha = mesh.Material.Alpha;
 	LightAndAlphaBufferInstance.ApplyChanges();
+
+	DiscardPixelsBufferInstance.Data.ThresholdAlpha = mesh.Material.ThresholdAlpha;
+	DiscardPixelsBufferInstance.ApplyChanges();
 
 	DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
 	DeviceContext->PSSetShaderResources(1, 1, mesh.Material.NormalTexture->GetAddressOf());

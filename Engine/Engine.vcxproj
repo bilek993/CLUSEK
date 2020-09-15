@@ -237,6 +237,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Renderer\ConstantBufferTypes\DiscardPixelsBuffer.h" />
     <ClInclude Include="src\Utils\DebuggerDetection.h" />
     <ClInclude Include="src\GUI\Windows\GrassWindow.h" />
     <ClInclude Include="src\Renderer\ConstantBufferTypes\GrassGeneratorParametersBuffer.h" />

@@ -39,6 +39,11 @@ cbuffer LodTransitionBuffer : register(b4)
     bool InvertedCoverage;
 }
 
+cbuffer DiscardPixelsBuffer : register(b5)
+{
+    float ThresholdAlpha;
+}
+
 struct PS_INPUT
 {
     float4 Position : SV_POSITION;
@@ -71,7 +76,7 @@ SamplerComparisonState ShadowSampler : register(s3);
 float4 main(PS_INPUT input) : SV_TARGET
 {
     float4 albedoColor = AlbedoTexture.Sample(DefaultSampler, input.TextureCoord);
-	if (albedoColor.a < 0.5f)
+    if (albedoColor.a < ThresholdAlpha)
         discard;
 	
     PerformLodTransition(input.Position, PercentageCoverage, InvertedCoverage, LOD_GRID_SCALE);
