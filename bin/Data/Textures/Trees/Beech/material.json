@@ -4,6 +4,7 @@
 	"NormalTexture": "BeechBarkNormal"
   },
   "Tree_Leaf": {
+	"ThresholdAlpha": 0.5,
     "AlbedoTexture": "BeechLeafAlbedo",
 	"NormalTexture": "BeechLeafNormal"
   }

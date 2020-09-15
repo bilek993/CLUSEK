@@ -4,6 +4,7 @@
 	"NormalTexture": "SpruceBarkNormal"
   },
   "Tree_Leaf": {
+	"ThresholdAlpha": 0.5,
     "AlbedoTexture": "SpruceLeafAlbedo",
 	"NormalTexture": "SpruceLeafNormal"
   }
