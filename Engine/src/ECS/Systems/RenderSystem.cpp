@@ -1633,7 +1633,13 @@ void RenderSystem::RenderMesh(const Mesh& mesh, TransformComponent &transformCom
 	DeviceContext->PSSetShaderResources(3, 1, mesh.Material.OcclusionTexture->GetAddressOf());
 	DeviceContext->PSSetShaderResources(4, 1, mesh.Material.EmissionTexture->GetAddressOf());
 
+	if (mesh.Material.TwoSided)
+		DeviceContext->RSSetState(MainTwoSidedRasterizerState.Get());
+	
 	Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
+
+	if (mesh.Material.TwoSided)
+		DeviceContext->RSSetState(MainRasterizerState.Get());
 }
 
 void RenderSystem::SetShadowResourcesForShadowCascades(const int firstCascadeId)
