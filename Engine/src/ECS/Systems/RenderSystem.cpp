@@ -366,7 +366,7 @@ bool RenderSystem::InitializeDirectX()
 		return false;
 	}
 
-	// Grass rasterizer initialization
+	// Main two-sided rasterizer initialization
 
 	ZeroMemory(&rasterizerDesc, sizeof(D3D11_RASTERIZER_DESC));
 
@@ -377,10 +377,10 @@ bool RenderSystem::InitializeDirectX()
 
 	rasterizerDesc.CullMode = D3D11_CULL_NONE;
 
-	hr = Device->CreateRasterizerState(&rasterizerDesc, GrassRasterizerState.GetAddressOf());
+	hr = Device->CreateRasterizerState(&rasterizerDesc, MainTwoSidedRasterizerState.GetAddressOf());
 	if (FAILED(hr))
 	{
-		Logger::Error("Error creating grass rasterizer state!");
+		Logger::Error("Error creating main two-sided rasterizer state!");
 		return false;
 	}
 
@@ -1253,7 +1253,7 @@ void RenderSystem::RenderGrass(const CameraComponent& mainCameraComponent, const
 
 	Profiler->BeginEvent("Grass");
 
-	DeviceContext->RSSetState(GrassRasterizerState.Get());
+	DeviceContext->RSSetState(MainTwoSidedRasterizerState.Get());
 	
 	UINT offset = 0;
 

@@ -203,7 +203,7 @@ private:
 	RenderDepthStencil GrassRenderDepthStencil{};
 
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> MainRasterizerState;
-	Microsoft::WRL::ComPtr<ID3D11RasterizerState> GrassRasterizerState;
+	Microsoft::WRL::ComPtr<ID3D11RasterizerState> MainTwoSidedRasterizerState;
 	Microsoft::WRL::ComPtr<ID3D11RasterizerState> SolidRasterizerState;
 
 	Microsoft::WRL::ComPtr<ID3D11BlendState> BlendState;
