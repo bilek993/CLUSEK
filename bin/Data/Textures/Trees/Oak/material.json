@@ -5,6 +5,7 @@
   },
   "Tree_Leaf": {
 	"ThresholdAlpha": 0.5,
+	"TwoSided": true,
     "AlbedoTexture": "OakLeafAlbedo",
 	"NormalTexture": "OakLeafNormal"
   }
