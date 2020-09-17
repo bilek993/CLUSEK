@@ -1185,8 +1185,14 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 				DiscardPixelsBufferInstance.ApplyChanges();
 
 				DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());
+
+				if (mesh.Material.TwoSided)
+					DeviceContext->RSSetState(MainTwoSidedRasterizerState.Get());
 				
 				Draw(mesh.RenderVertexBuffer, mesh.RenderIndexBuffer, offset);
+
+				if (mesh.Material.TwoSided)
+					DeviceContext->RSSetState(MainRasterizerState.Get());
 			}
 		});
 
