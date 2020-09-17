@@ -48,7 +48,6 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, MultisamplesCount, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, MultisamplesQuality, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, WireframeMode, data, std::stoi(value));
-			MAP_CONFIG_FIELD(key, CullMode, data, value);
 			MAP_CONFIG_FIELD(key, ClearColorRed, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, ClearColorGreen, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, ClearColorBlue, data, std::stof(value));

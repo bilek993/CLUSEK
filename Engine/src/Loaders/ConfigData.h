@@ -29,7 +29,6 @@ struct ConfigData final
 	int MultisamplesCount = 1;
 	int MultisamplesQuality = 0;
 	int WireframeMode = 0;
-	std::string CullMode = "BACK";
 	float ClearColorRed = 1.0f;
 	float ClearColorGreen = 1.0f;
 	float ClearColorBlue = 1.0f;

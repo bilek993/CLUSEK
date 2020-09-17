@@ -357,12 +357,7 @@ bool RenderSystem::InitializeDirectX()
 	else
 		rasterizerDesc.FillMode = D3D11_FILL_SOLID;
 
-	if (ConfigurationData->CullMode == "BACK")
-		rasterizerDesc.CullMode = D3D11_CULL_BACK;
-	else if (ConfigurationData->CullMode == "FRONT")
-		rasterizerDesc.CullMode = D3D11_CULL_FRONT;
-	else if (ConfigurationData->CullMode == "NONE")
-		rasterizerDesc.CullMode = D3D11_CULL_NONE;
+	rasterizerDesc.CullMode = D3D11_CULL_BACK;
 
 	hr = Device->CreateRasterizerState(&rasterizerDesc, MainRasterizerState.GetAddressOf());
 	if (FAILED(hr))
