@@ -19,7 +19,7 @@ public:
 	static void SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId, 
 		const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId, 
 		const std::string& occlusionTextureId, const std::string& emissionTextureId, float alpha, float thresholdAlpha,
-		bool twoSided);
+		bool twoSided, float hightWindSpeed, float hightWindScale, float hightWindBase, bool hightWindEnabled);
 	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
 
 	static void SetResourceForGrassMesh(ID3D11Device* device, GrassMesh& mesh, const std::string& albedoTextureId);

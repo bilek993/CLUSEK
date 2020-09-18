@@ -1639,10 +1639,10 @@ void RenderSystem::RenderMesh(const Mesh& mesh, TransformComponent &transformCom
 	DiscardPixelsBufferInstance.Data.ThresholdAlpha = mesh.Material.ThresholdAlpha;
 	DiscardPixelsBufferInstance.ApplyChanges();
 
-	WindBufferInstance.Data.HightWindSpeed = 0.001f; // TODO: Change this
-	WindBufferInstance.Data.HightWindScale = 0.008f; // TODO: Change this
-	WindBufferInstance.Data.HightWindBase = 1.0f; // TODO: Change this
-	WindBufferInstance.Data.HightWindEnabled = true; // TODO: Change this
+	WindBufferInstance.Data.HightWindSpeed = mesh.Material.HightWindSpeed;
+	WindBufferInstance.Data.HightWindScale = mesh.Material.HightWindScale;
+	WindBufferInstance.Data.HightWindBase = mesh.Material.HightWindBase;
+	WindBufferInstance.Data.HightWindEnabled = mesh.Material.HightWindEnabled;
 	WindBufferInstance.ApplyChanges();
 
 	DeviceContext->PSSetShaderResources(0, 1, mesh.Material.AlbedoTexture->GetAddressOf());

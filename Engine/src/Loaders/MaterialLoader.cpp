@@ -50,7 +50,7 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId,
 	const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId,
 	const std::string& occlusionTextureId, const std::string& emissionTextureId, const float alpha, const float thresholdAlpha,
-	const bool twoSided)
+	const bool twoSided, const float hightWindSpeed, const float hightWindScale, const float hightWindBase, const bool hightWindEnabled)
 {
 	mesh.Material.AlbedoTexture = GetTextureById(device, albedoTextureId, DefaultAlbedo);
 	mesh.Material.NormalTexture = GetTextureById(device, normalTextureId, DefaultNormal);
@@ -61,6 +61,10 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 	mesh.Material.Alpha = alpha;
 	mesh.Material.ThresholdAlpha = thresholdAlpha;
 	mesh.Material.TwoSided = twoSided;
+	mesh.Material.HightWindSpeed = hightWindSpeed;
+	mesh.Material.HightWindScale = hightWindScale;
+	mesh.Material.HightWindBase = hightWindBase;
+	mesh.Material.HightWindEnabled = hightWindEnabled;
 }
 
 void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
@@ -81,6 +85,10 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 		auto alphaJsonInfo = jsonObject[mesh.Name]["Alpha"];
 		auto thresholdAlphaJsonInfo = jsonObject[mesh.Name]["ThresholdAlpha"];
 		auto twoSidedJsonInfo = jsonObject[mesh.Name]["TwoSided"];
+		auto hightWindSpeedJsonInfo = jsonObject[mesh.Name]["HightWindSpeed"];
+		auto hightWindScaleJsonInfo = jsonObject[mesh.Name]["HightWindScale"];
+		auto hightWindBaseJsonInfo = jsonObject[mesh.Name]["HightWindBase"];
+		auto hightWindEnabledJsonInfo = jsonObject[mesh.Name]["HightWindEnabled"];
 		auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
 		auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
 		auto metalicSmoothnessTextureJsonInfo = jsonObject[mesh.Name]["MetalicSmoothnessTexture"];
@@ -96,7 +104,11 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 							emissionTextureJsonInfo.is_null() ? "" : emissionTextureJsonInfo.get<std::string>(),
 							alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>(), 
 							thresholdAlphaJsonInfo.is_null() ? 0.0f : thresholdAlphaJsonInfo.get<float>(),
-							twoSidedJsonInfo.is_null() ? false : twoSidedJsonInfo.get<bool>());
+							twoSidedJsonInfo.is_null() ? false : twoSidedJsonInfo.get<bool>(),
+							hightWindSpeedJsonInfo.is_null() ? 0.0f : hightWindSpeedJsonInfo.get<float>(),
+							hightWindScaleJsonInfo.is_null() ? 0.0f : hightWindScaleJsonInfo.get<float>(),
+							hightWindBaseJsonInfo.is_null() ? 0.0f : hightWindBaseJsonInfo.get<float>(),
+							hightWindEnabledJsonInfo.is_null() ? 0.0f : hightWindEnabledJsonInfo.get<bool>());
 	}
 }
 
