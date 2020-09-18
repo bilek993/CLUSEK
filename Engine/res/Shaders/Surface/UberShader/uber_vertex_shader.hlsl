@@ -8,6 +8,11 @@ cbuffer FatPerObjectBuffer : register(b0)
     float4x4 LightSpaceMatrix[CASCADES_COUNT];
 };
 
+cbuffer TimeBuffer : register(b1)
+{
+    float Time;
+}
+
 struct VS_INPUT
 {
     float3 Position : POSITION;

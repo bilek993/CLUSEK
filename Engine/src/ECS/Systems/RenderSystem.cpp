@@ -1548,6 +1548,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	ChangeBasicShaders(UberVertexShader, UberPixelShader);
 
 	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+	DeviceContext->VSSetConstantBuffers(1, 1, TimeBufferInstance.GetAddressOf());
 	
 	DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
