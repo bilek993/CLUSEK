@@ -50,7 +50,8 @@ void MaterialLoader::LoadResource(ID3D11Device* device, ID3D11DeviceContext* con
 void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const std::string& albedoTextureId,
 	const std::string& normalTextureId, const std::string& metalicSmoothnessTextureId,
 	const std::string& occlusionTextureId, const std::string& emissionTextureId, const float alpha, const float thresholdAlpha,
-	const bool twoSided, const float hightWindSpeed, const float hightWindScale, const float hightWindBase, const bool hightWindEnabled)
+	const bool twoSided, const float hightWindSpeed, const float hightWindScale, const float hightWindBase, const float localWindSpeed,
+	const float localWindScale, const bool hightWindEnabled, const bool localWindEnabled)
 {
 	mesh.Material.AlbedoTexture = GetTextureById(device, albedoTextureId, DefaultAlbedo);
 	mesh.Material.NormalTexture = GetTextureById(device, normalTextureId, DefaultNormal);
@@ -63,8 +64,11 @@ void MaterialLoader::SetResourceForMesh(ID3D11Device* device, Mesh& mesh, const 
 	mesh.Material.TwoSided = twoSided;
 	mesh.Material.HightWindSpeed = hightWindSpeed;
 	mesh.Material.HightWindScale = hightWindScale;
+	mesh.Material.LocalWindSpeed = localWindSpeed;
+	mesh.Material.LocalWindScale = localWindScale;
 	mesh.Material.HightWindBase = hightWindBase;
 	mesh.Material.HightWindEnabled = hightWindEnabled;
+	mesh.Material.LocalWindEnabled = localWindEnabled;
 }
 
 void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial)
@@ -88,7 +92,10 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 		auto hightWindSpeedJsonInfo = jsonObject[mesh.Name]["HightWindSpeed"];
 		auto hightWindScaleJsonInfo = jsonObject[mesh.Name]["HightWindScale"];
 		auto hightWindBaseJsonInfo = jsonObject[mesh.Name]["HightWindBase"];
+		auto localWindSpeedJsonInfo = jsonObject[mesh.Name]["LocalWindSpeed"];
+		auto localWindScaleJsonInfo = jsonObject[mesh.Name]["LocalWindScale"];
 		auto hightWindEnabledJsonInfo = jsonObject[mesh.Name]["HightWindEnabled"];
+		auto localWindEnabledJsonInfo = jsonObject[mesh.Name]["LocalWindEnabled"];
 		auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
 		auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
 		auto metalicSmoothnessTextureJsonInfo = jsonObject[mesh.Name]["MetalicSmoothnessTexture"];
@@ -108,7 +115,10 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 							hightWindSpeedJsonInfo.is_null() ? 0.0f : hightWindSpeedJsonInfo.get<float>(),
 							hightWindScaleJsonInfo.is_null() ? 0.0f : hightWindScaleJsonInfo.get<float>(),
 							hightWindBaseJsonInfo.is_null() ? 0.0f : hightWindBaseJsonInfo.get<float>(),
-							hightWindEnabledJsonInfo.is_null() ? 0.0f : hightWindEnabledJsonInfo.get<bool>());
+							localWindSpeedJsonInfo.is_null() ? 0.0f : localWindSpeedJsonInfo.get<float>(),
+							localWindScaleJsonInfo.is_null() ? 0.0f : localWindScaleJsonInfo.get<float>(),
+							hightWindEnabledJsonInfo.is_null() ? 0.0f : hightWindEnabledJsonInfo.get<bool>(),
+							localWindEnabledJsonInfo.is_null() ? 0.0f : localWindEnabledJsonInfo.get<bool>());
 	}
 }
 
