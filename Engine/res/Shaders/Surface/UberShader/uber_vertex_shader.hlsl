@@ -60,11 +60,23 @@ float3 ApplyHightWind(float3 vertexPosition, float3 worldPosition)
     return vertexPosition + padding;
 }
 
+float3 ApplyLocalWind(float3 vertexPosition)
+{
+    float timeScaled = Time * LocalWindSpeed;
+
+    float displacement = 0.065f + sin(2.65f * (vertexPosition.x + vertexPosition.y + vertexPosition.z + timeScaled));
+    float3 padding = displacement * LocalWindScale;
+
+    return vertexPosition + padding;
+}
+
 VS_OUTPUT main(VS_INPUT input)
 {
     float3 position = input.Position;
 	if (HightWindEnabled)
         position = ApplyHightWind(position, mul(float4(0.0f, 0.0f, 0.0f, 1.0f), WorldMatrix).xyz);
+	if (LocalWindEnabled)
+        position = ApplyLocalWind(position);
 	
     VS_OUTPUT output;
     output.Position = mul(float4(position, 1.0f), WorldViewProjectionMat);
