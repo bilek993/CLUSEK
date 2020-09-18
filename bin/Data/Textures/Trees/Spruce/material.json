@@ -1,11 +1,19 @@
 {
   "Tree_Bark": {
+	"HightWindSpeed": 0.001,
+	"HightWindScale": 0.008,
+	"HightWindBase": 1.0,
+	"HightWindEnabled": true,
     "AlbedoTexture": "SpruceBarkAlbedo",
 	"NormalTexture": "SpruceBarkNormal"
   },
   "Tree_Leaf": {
 	"ThresholdAlpha": 0.5,
 	"TwoSided": true,
+	"HightWindSpeed": 0.001,
+	"HightWindScale": 0.008,
+	"HightWindBase": 1.0,
+	"HightWindEnabled": true,
     "AlbedoTexture": "SpruceLeafAlbedo",
 	"NormalTexture": "SpruceLeafNormal"
   }
