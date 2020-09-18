@@ -13,6 +13,14 @@ cbuffer TimeBuffer : register(b1)
     float Time;
 }
 
+cbuffer WindBuffer : register(b2)
+{
+    float HightWindSpeed;
+    float HightWindScale;
+    float HightWindBase;
+    bool HightWindEnabled;
+}
+
 struct VS_INPUT
 {
     float3 Position : POSITION;
@@ -31,11 +39,33 @@ struct VS_OUTPUT
     float CameraDistanceZ : CAMERA_DISTANCE_Z;
 };
 
+float3 ApplyHightWind(float3 vertexPosition, float3 worldPosition)
+{	
+    float timeScaled = Time * HightWindSpeed;
+	
+    float3 padding;
+    padding.x = (2.0f * sin(1.0f * (worldPosition.x + worldPosition.y + worldPosition.z + timeScaled))) + 1.0f;
+    padding.y = 0.0f;
+    padding.z = (1.0f * sin(2.0f * (worldPosition.x + worldPosition.y + worldPosition.z + timeScaled))) + 0.5f;
+
+    float bendingStrength = (vertexPosition.y * HightWindScale) + HightWindBase;
+    bendingStrength *= bendingStrength;
+    bendingStrength = (bendingStrength * bendingStrength) - bendingStrength;
+
+    padding *= bendingStrength;
+    
+    return vertexPosition + padding;
+}
+
 VS_OUTPUT main(VS_INPUT input)
 {
+    float3 position = input.Position;
+	if (HightWindEnabled)
+        position = ApplyHightWind(position, mul(float4(0.0f, 0.0f, 0.0f, 1.0f), WorldMatrix).xyz);
+	
     VS_OUTPUT output;
-    output.Position = mul(float4(input.Position, 1.0f), WorldViewProjectionMat);
-    output.WorldPosition = mul(float4(input.Position, 1.0f), WorldMatrix).xyz;
+    output.Position = mul(float4(position, 1.0f), WorldViewProjectionMat);
+    output.WorldPosition = mul(float4(position, 1.0f), WorldMatrix).xyz;
     output.TextureCoord = input.TextureCoord;
     output.TBN = CalculateTBN(mul(float4(input.Normal, 0.0f), WorldMatrix).xyz, (mul(float4(input.Tangent, 0.0f), WorldMatrix).xyz));
     output.CameraDistanceZ = output.Position.z;
