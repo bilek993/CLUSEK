@@ -112,13 +112,13 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 							alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>(), 
 							thresholdAlphaJsonInfo.is_null() ? 0.0f : thresholdAlphaJsonInfo.get<float>(),
 							twoSidedJsonInfo.is_null() ? false : twoSidedJsonInfo.get<bool>(),
-							hightWindSpeedJsonInfo.is_null() ? 0.0f : hightWindSpeedJsonInfo.get<float>(),
-							hightWindScaleJsonInfo.is_null() ? 0.0f : hightWindScaleJsonInfo.get<float>(),
-							hightWindBaseJsonInfo.is_null() ? 0.0f : hightWindBaseJsonInfo.get<float>(),
-							localWindSpeedJsonInfo.is_null() ? 0.0f : localWindSpeedJsonInfo.get<float>(),
-							localWindScaleJsonInfo.is_null() ? 0.0f : localWindScaleJsonInfo.get<float>(),
-							hightWindEnabledJsonInfo.is_null() ? 0.0f : hightWindEnabledJsonInfo.get<bool>(),
-							localWindEnabledJsonInfo.is_null() ? 0.0f : localWindEnabledJsonInfo.get<bool>());
+							hightWindSpeedJsonInfo.is_null() ? 0.001f : hightWindSpeedJsonInfo.get<float>(),
+							hightWindScaleJsonInfo.is_null() ? 0.001f : hightWindScaleJsonInfo.get<float>(),
+							hightWindBaseJsonInfo.is_null() ? 0.001f : hightWindBaseJsonInfo.get<float>(),
+							localWindSpeedJsonInfo.is_null() ? 0.001f : localWindSpeedJsonInfo.get<float>(),
+							localWindScaleJsonInfo.is_null() ? 0.001f : localWindScaleJsonInfo.get<float>(),
+							hightWindEnabledJsonInfo.is_null() ? false : hightWindEnabledJsonInfo.get<bool>(),
+							localWindEnabledJsonInfo.is_null() ? false : localWindEnabledJsonInfo.get<bool>());
 	}
 }
 
