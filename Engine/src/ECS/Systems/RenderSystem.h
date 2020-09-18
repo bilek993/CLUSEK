@@ -47,6 +47,7 @@
 #include "../../Renderer/ConstantBufferTypes/GrassIndirectModelInfoBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/GrassPerObjectBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/TimeBuffer.h"
+#include "../../Renderer/ConstantBufferTypes/WindBuffer.h"
 
 class RenderSystem final : public BaseSystem
 {
@@ -190,6 +191,7 @@ private:
 	ConstantBuffer<GrassGeneratorParametersBuffer> GrassGeneratorParametersBufferInstance;
 	ConstantBuffer<TimeBuffer> TimeBufferInstance;
 	ConstantBuffer<DiscardPixelsBuffer> DiscardPixelsBufferInstance;
+	ConstantBuffer<WindBuffer> WindBufferInstance;
 
 	AppendBuffer<GrassInstanceBuffer> GrassInstanceBufferInstance;
 

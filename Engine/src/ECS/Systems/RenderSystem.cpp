@@ -839,6 +839,10 @@ void RenderSystem::InitializeConstantBuffers()
 	hr = DiscardPixelsBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
 	if (FAILED(hr))
 		Logger::Error("Failed to create 'DiscardPixelsBufferInstance' constant buffer.");
+
+	hr = WindBufferInstance.Initialize(Device.Get(), DeviceContext.Get());
+	if (FAILED(hr))
+		Logger::Error("Failed to create 'WindBufferInstance' constant buffer.");
 }
 
 void RenderSystem::InitializeAppendBuffers()
@@ -1549,6 +1553,7 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 
 	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
 	DeviceContext->VSSetConstantBuffers(1, 1, TimeBufferInstance.GetAddressOf());
+	DeviceContext->VSSetConstantBuffers(2, 1, WindBufferInstance.GetAddressOf());
 	
 	DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
 	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
