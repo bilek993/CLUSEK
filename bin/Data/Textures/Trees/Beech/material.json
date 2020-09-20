@@ -13,7 +13,10 @@
 	"HightWindSpeed": 0.001,
 	"HightWindScale": 0.008,
 	"HightWindBase": 1.0,
+	"LocalWindSpeed": 0.0025,
+	"LocalWindScale": 0.02,
 	"HightWindEnabled": true,
+	"LocalWindEnabled": true,
     "AlbedoTexture": "BeechLeafAlbedo",
 	"NormalTexture": "BeechLeafNormal"
   }
