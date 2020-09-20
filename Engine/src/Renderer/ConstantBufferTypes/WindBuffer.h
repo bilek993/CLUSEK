@@ -7,6 +7,6 @@ struct WindBuffer final
 	float HightWindBase;
 	float LocalWindSpeed;
 	float LocalWindScale;
-	bool HightWindEnabled;
-	bool LocalWindEnabled;
+	BOOL HightWindEnabled;
+	BOOL LocalWindEnabled;
 };
