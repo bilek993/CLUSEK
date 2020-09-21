@@ -19,7 +19,8 @@
 	
 	"Spruce0": "Data/Models/Trees/Spruce0.fbx",
 	"Spruce1": "Data/Models/Trees/Spruce1.fbx",
-	"Spruce2": "Data/Models/Trees/Spruce2.fbx"
+	"Spruce2": "Data/Models/Trees/Spruce2.fbx",
+	"SpruceLowPoly": "Data/Models/Trees/SpruceLowPoly.fbx"
   },
   
   "GrassModels": {
@@ -204,6 +205,9 @@
 	},
 	"SpruceLeafNormal": {
 	  "Path": "Data/Textures/Trees/Spruce/SpruceLeafNormal.dds"
+	},
+	"SpruceLowPolyAlbedo": {
+		"Path": "Data/Textures/Trees/Spruce/SpruceLowPolyAlbedo.dds"
 	}
   }
 }
