@@ -15,6 +15,7 @@
 	"Oak0": "Data/Models/Trees/Oak0.fbx",
 	"Oak1": "Data/Models/Trees/Oak1.fbx",
 	"Oak2": "Data/Models/Trees/Oak2.fbx",
+	"OakLowPoly": "Data/Models/Trees/OakLowPoly.fbx",
 	
 	"Spruce0": "Data/Models/Trees/Spruce0.fbx",
 	"Spruce1": "Data/Models/Trees/Spruce1.fbx",
@@ -187,6 +188,9 @@
 	},
 	"OakLeafNormal": {
 	  "Path": "Data/Textures/Trees/Oak/OakLeafNormal.dds"
+	},
+	"OakLowPolyAlbedo": {
+		"Path": "Data/Textures/Trees/Oak/OakLowPolyAlbedo.dds"
 	},
 	
 	"SpruceBarkAlbedo": {
