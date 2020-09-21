@@ -11,6 +11,7 @@
 	"Beech0": "Data/Models/Trees/Beech0.fbx",
 	"Beech1": "Data/Models/Trees/Beech1.fbx",
 	"Beech2": "Data/Models/Trees/Beech2.fbx",
+	"BeechLowPoly": "Data/Models/Trees/BeechLowPoly.fbx",
 	
 	"Oak0": "Data/Models/Trees/Oak0.fbx",
 	"Oak1": "Data/Models/Trees/Oak1.fbx",
@@ -176,6 +177,9 @@
 	},
 	"BeechLeafNormal": {
 	  "Path": "Data/Textures/Trees/Beech/BeechLeafNormal.dds"
+	},
+	"BeechLowPolyAlbedo": {
+		"Path": "Data/Textures/Trees/Beech/BeechLowPolyAlbedo.dds"
 	},
 	
 	"OakBarkAlbedo": {

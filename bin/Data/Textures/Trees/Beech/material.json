@@ -19,5 +19,13 @@
 	"LocalWindEnabled": true,
     "AlbedoTexture": "BeechLeafAlbedo",
 	"NormalTexture": "BeechLeafNormal"
+  },
+  "LowPolyTree": {
+	"HightWindSpeed": 0.001,
+	"HightWindScale": 0.008,
+	"HightWindBase": 1.0,
+	"HightWindEnabled": true,
+	"ThresholdAlpha": 0.5,
+    "AlbedoTexture": "BeechLowPolyAlbedo"
   }
 }
