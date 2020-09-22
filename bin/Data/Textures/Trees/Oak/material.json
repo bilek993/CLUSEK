@@ -25,7 +25,7 @@
 	"HightWindScale": 0.008,
 	"HightWindBase": 1.0,
 	"HightWindEnabled": true,
-	"ThresholdAlpha": 0.5,
+	"ThresholdAlpha": 0.51,
     "AlbedoTexture": "OakLowPolyAlbedo"
   }
 }
