@@ -12,7 +12,13 @@ int APIENTRY wWinMain(	_In_ HINSTANCE hInstance,
 						_In_ int nCmdShow)
 {
 	if (DebuggerDetection::Check())
+	{
+		MessageBox(	nullptr, 
+					"Due to the debugger, the CLUSEK game engine has to be terminated. Please disable all debugger tools and try again.", 
+					"Debugger detected!", 
+					MB_ICONEXCLAMATION | MB_OK);
 		return 2;
+	}
 	
 	const auto configData = ConfigLoader::GetData();
 
