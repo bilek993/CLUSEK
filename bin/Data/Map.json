@@ -214,6 +214,66 @@
 	"Components": {
 	  "TransformComponent": {
 	    "PositionX": -30.0,
+		"PositionY": -2.319,
+		"PositionZ": -13.793,
+		"RotationX": 0.0,
+		"RotationY": 0.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Oak0",
+		"LowPolyModelId": "OakLowPoly",
+		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": -10.0,
+		"PositionY": -2.319,
+		"PositionZ": -13.793,
+		"RotationX": 0.0,
+		"RotationY": 0.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Beech0",
+		"LowPolyModelId": "BeechLowPoly",
+		"MaterialId": "Data/Textures/Trees/Beech/material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 10.0,
+		"PositionY": -2.319,
+		"PositionZ": -13.793,
+		"RotationX": 0.0,
+		"RotationY": 0.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Spruce0",
+		"LowPolyModelId": "SpruceLowPoly",
+		"MaterialId": "Data/Textures/Trees/Spruce/material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": -30.0,
 		"PositionY": -0.1,
 		"PositionZ": 0.0,
 		"RotationX": 0.0,
