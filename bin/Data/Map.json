@@ -226,6 +226,14 @@
 	    "ModelId": "Oak0",
 		"LowPolyModelId": "OakLowPoly",
 		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticBoxComponent": {
+		"Width": 2.8,
+		"Height": 39.5,
+		"Depth": 2.8
 	  }
 	}
   },
@@ -246,6 +254,14 @@
 	    "ModelId": "Beech0",
 		"LowPolyModelId": "BeechLowPoly",
 		"MaterialId": "Data/Textures/Trees/Beech/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticBoxComponent": {
+		"Width": 2.8,
+		"Height": 39.5,
+		"Depth": 2.8
 	  }
 	}
   },
@@ -266,6 +282,14 @@
 	    "ModelId": "Spruce0",
 		"LowPolyModelId": "SpruceLowPoly",
 		"MaterialId": "Data/Textures/Trees/Spruce/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticBoxComponent": {
+		"Width": 2.8,
+		"Height": 39.5,
+		"Depth": 2.8
 	  }
 	}
   },
