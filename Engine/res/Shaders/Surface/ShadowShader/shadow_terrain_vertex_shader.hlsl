@@ -4,8 +4,7 @@
 cbuffer WorldMatrixBuffer : register(b1)
 {
     float4x4 WorldMatrix;
-};
-
+}
 
 struct VS_INPUT
 {
