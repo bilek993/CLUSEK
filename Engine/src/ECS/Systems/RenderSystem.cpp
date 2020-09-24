@@ -1170,9 +1170,6 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 			else
 				currentMeshes = modelRenderComponent.LowPolyMeshes;
 
-			WorldMatrixBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
-			WorldMatrixBufferInstance.ApplyChanges();
-
 			for (const auto& mesh : *currentMeshes)
 			{
 				if (!FrustumUtil::Test(FrustumUtil::RecalculateAABBForWorld(mesh.FrustumPoints, transformComponent.WorldMatrix), ShadowCameras[i].GetFrustumPlanes()))
@@ -1182,21 +1179,24 @@ void RenderSystem::RenderSceneForShadows(const CameraComponent &mainCameraCompon
 				{
 					shadowBufferInstanceSet = true;
 
+					WorldMatrixBufferInstance.Data.WorldMatrix = XMMatrixTranspose(transformComponent.WorldMatrix);
+					WorldMatrixBufferInstance.ApplyChanges();
+
 					ShadowBufferInstance.Data.WorldLightMatrix = XMMatrixTranspose(transformComponent.WorldMatrix * ShadowCameras[i].CalculateCameraMatrix());
 					ShadowBufferInstance.ApplyChanges();
+
+					WindBufferInstance.Data.HightWindSpeed = mesh.Material.HightWindSpeed;
+					WindBufferInstance.Data.HightWindScale = mesh.Material.HightWindScale;
+					WindBufferInstance.Data.HightWindBase = mesh.Material.HightWindBase;
+					WindBufferInstance.Data.LocalWindSpeed = mesh.Material.LocalWindSpeed;
+					WindBufferInstance.Data.LocalWindScale = mesh.Material.LocalWindScale;
+					WindBufferInstance.Data.HightWindEnabled = mesh.Material.HightWindEnabled;
+					WindBufferInstance.Data.LocalWindEnabled = mesh.Material.LocalWindEnabled;
+					WindBufferInstance.ApplyChanges();
 				}
 
 				if (mesh.Material.Alpha < ConfigurationData->ShadowAlphaThreshold)
 					continue;
-
-				WindBufferInstance.Data.HightWindSpeed = mesh.Material.HightWindSpeed;
-				WindBufferInstance.Data.HightWindScale = mesh.Material.HightWindScale;
-				WindBufferInstance.Data.HightWindBase = mesh.Material.HightWindBase;
-				WindBufferInstance.Data.LocalWindSpeed = mesh.Material.LocalWindSpeed;
-				WindBufferInstance.Data.LocalWindScale = mesh.Material.LocalWindScale;
-				WindBufferInstance.Data.HightWindEnabled = mesh.Material.HightWindEnabled;
-				WindBufferInstance.Data.LocalWindEnabled = mesh.Material.LocalWindEnabled;
-				WindBufferInstance.ApplyChanges();
 
 				DiscardPixelsBufferInstance.Data.ThresholdAlpha = mesh.Material.ThresholdAlpha;
 				DiscardPixelsBufferInstance.ApplyChanges();
