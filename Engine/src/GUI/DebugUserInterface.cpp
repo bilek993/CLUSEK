@@ -65,6 +65,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(GamePadInputWindowInstance);
 	UPDATE_USER_INTERFACE(PostProcessingWindowInstance);
 	UPDATE_USER_INTERFACE(PhysicsStatisticsWindowInstance);
+	UPDATE_USER_INTERFACE(EntityCreatorWindowInstance);
 	UPDATE_USER_INTERFACE(EntityViewerWindowInstance);
 	UPDATE_USER_INTERFACE(PerSystemPerformanceWindowInstance);
 	UPDATE_USER_INTERFACE(ShadowPreviewerWindowInstance);
@@ -106,6 +107,7 @@ void DebugUserInterface::DrawMenuBar()
 		}
 		if (ImGui::BeginMenu("ECS"))
 		{
+			DrawMenuItemForWindow("Entity creator", EntityCreatorWindowInstance);
 			DrawMenuItemForWindow("Entity viewer", EntityViewerWindowInstance);
 			DrawMenuItemForWindow("Entity editor", EntityEditorWindowInstance);
 			DrawMenuItemForWindow("Systems manager", SystemsManagerWindowInstance);

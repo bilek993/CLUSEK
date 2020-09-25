@@ -22,6 +22,7 @@
 #include "Windows/ShadowPreviewerWindow.h"
 #include "../ECS/Systems/RenderSystem.h"
 #include "Windows/ConfigurationWindow.h"
+#include "Windows/EntityCreatorWindow.h"
 #include "Windows/FogWindow.h"
 #include "Windows/TextureCompressionWindow.h"
 #include "Windows/LodDebugWindow.h"
@@ -79,6 +80,7 @@ private:
 	GamePadInputWindow GamePadInputWindowInstance;
 	PostProcessingWindow PostProcessingWindowInstance;
 	PhysicsStatisticsWindow PhysicsStatisticsWindowInstance;
+	EntityCreatorWindow EntityCreatorWindowInstance;
 	EntityViewerWindow EntityViewerWindowInstance;
 	PerSystemPerformanceWindow PerSystemPerformanceWindowInstance;
 	ShadowPreviewerWindow ShadowPreviewerWindowInstance;
