@@ -1,5 +1,6 @@
 #include "EntityCreatorWindow.h"
 #include <imgui.h>
+#include "../../Tags.h"
 #include "../../ECS/Components/TransformComponent.h"
 #include "../../Utils/ImGuiExtensions.h"
 
@@ -38,6 +39,12 @@ void EntityCreatorWindow::CreateEntityWithComponents()
 
 void EntityCreatorWindow::AddTags(nlohmann::json& json, const entt::registry::entity_type &entity)
 {
+	const auto tags = json.get<std::vector<std::string>>();
+
+	for (auto& tag : tags)
+	{
+		MAP_LOADER_TAGS(tag.c_str(), "Main Camera", Tags::MAIN_CAMERA, (*Registry), entity);
+	}
 }
 
 void EntityCreatorWindow::AddComponents(nlohmann::json& json, const entt::registry::entity_type &entity)
