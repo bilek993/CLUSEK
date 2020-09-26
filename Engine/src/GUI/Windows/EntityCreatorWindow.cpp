@@ -23,12 +23,12 @@ void EntityCreatorWindow::Draw()
 
 void EntityCreatorWindow::CreateEntityWithComponents()
 {
+	auto jsonObject = nlohmann::json::parse(EntityJsonText);
+
 	const auto entity = Registry->create();
-
-	nlohmann::json jsonObject = EntityJsonText;
-
-	AddTags(jsonObject["Tags"]);
-	AddComponents(jsonObject["Components"]);
+	
+	AddTags(jsonObject["Tags"], entity);
+	AddComponents(jsonObject["Components"], entity);
 
 	Logger::Debug("New entity has been created!");
 
@@ -36,10 +36,36 @@ void EntityCreatorWindow::CreateEntityWithComponents()
 	EntityJsonText = "";
 }
 
-void EntityCreatorWindow::AddTags(nlohmann::json& json)
+void EntityCreatorWindow::AddTags(nlohmann::json& json, const entt::registry::entity_type &entity)
 {
 }
 
-void EntityCreatorWindow::AddComponents(nlohmann::json& json)
+void EntityCreatorWindow::AddComponents(nlohmann::json& json, const entt::registry::entity_type &entity)
 {
+	for (auto it = json.begin(); it != json.end(); ++it)
+	{
+		MAP_COMPONENT_LOADERS(it, CameraComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, CameraTargetComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, CameraVehicleAnimatedTargetComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, TransformComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, ModelRenderComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, SkyboxComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, PhysicsMaterialComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyStaticPlaneComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyStaticBoxComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyDynamicBoxComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyStaticSphereComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyDynamicSphereComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyStaticCapsuleComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyDynamicCapsuleComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyStaticCylinderComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyDynamicCylinderComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyStaticHeightFieldsComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, VehicleComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, WheelComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, VehiclePlayerControllerComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, TerrainComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, CommentComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, GrassComponent, *Registry, entity);
+	}
 }
