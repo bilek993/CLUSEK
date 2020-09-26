@@ -25,9 +25,21 @@ void EntityCreatorWindow::CreateEntityWithComponents()
 {
 	const auto entity = Registry->create();
 
-	// TODO: Add code here
+	nlohmann::json jsonObject = EntityJsonText;
+
+	AddTags(jsonObject["Tags"]);
+	AddComponents(jsonObject["Components"]);
 
 	Logger::Debug("New entity has been created!");
 
+	Logger::Debug("Clearing entity text field...");
 	EntityJsonText = "";
+}
+
+void EntityCreatorWindow::AddTags(nlohmann::json& json)
+{
+}
+
+void EntityCreatorWindow::AddComponents(nlohmann::json& json)
+{
 }
