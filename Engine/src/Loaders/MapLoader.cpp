@@ -27,6 +27,7 @@ void MapLoader::ParseEntity(nlohmann::json& json, entt::registry& registry)
 void MapLoader::AddTags(nlohmann::json& json, entt::registry& registry, const entt::registry::entity_type &entity)
 {
 	const auto tags = json.get<std::vector<std::string>>();
+	registry.assign<entt::tag<Tags::REQUIRES_REBUILD>>(entity);
 
 	for (auto& tag : tags)
 	{

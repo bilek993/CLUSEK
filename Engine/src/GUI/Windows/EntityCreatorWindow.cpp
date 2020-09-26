@@ -42,6 +42,7 @@ void EntityCreatorWindow::CreateEntityWithComponents()
 void EntityCreatorWindow::AddTags(nlohmann::json& json, const entt::registry::entity_type &entity) const
 {
 	const auto tags = json.get<std::vector<std::string>>();
+	Registry->assign<entt::tag<Tags::REQUIRES_REBUILD>>(entity);
 
 	for (auto& tag : tags)
 	{
