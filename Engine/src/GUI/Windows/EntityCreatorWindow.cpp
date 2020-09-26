@@ -24,14 +24,16 @@ void EntityCreatorWindow::Draw()
 
 void EntityCreatorWindow::CreateEntityWithComponents()
 {
-	auto jsonObject = nlohmann::json::parse(EntityJsonText);
-
+	Logger::Debug("Creating entity...");
 	const auto entity = Registry->create();
+
+	auto jsonObject = nlohmann::json::parse(EntityJsonText);
 	
 	AddTags(jsonObject["Tags"], entity);
 	AddComponents(jsonObject["Components"], entity);
 
-	Logger::Debug("New entity has been created!");
+	Logger::Debug("Rebuilding systems...");
+	RebuildEntities();
 
 	Logger::Debug("Clearing entity text field...");
 	EntityJsonText = "";
@@ -75,4 +77,10 @@ void EntityCreatorWindow::AddComponents(nlohmann::json& json, const entt::regist
 		MAP_COMPONENT_LOADERS(it, CommentComponent, *Registry, entity);
 		MAP_COMPONENT_LOADERS(it, GrassComponent, *Registry, entity);
 	}
+}
+
+void EntityCreatorWindow::RebuildEntities() const
+{
+	for (auto &system : *Systems)
+		system.System->Rebuild();
 }

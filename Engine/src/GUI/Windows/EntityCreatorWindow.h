@@ -38,6 +38,8 @@ private:
 
 	void AddTags(nlohmann::json& json, const entt::registry::entity_type &entity) const;
 	void AddComponents(nlohmann::json& json, const entt::registry::entity_type &entity) const;
+
+	void RebuildEntities() const;
 	
 	std::string EntityJsonText{};
 
