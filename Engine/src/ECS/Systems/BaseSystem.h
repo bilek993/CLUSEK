@@ -16,6 +16,7 @@ public:
 		DynamicRenderSettings *renderSettings, IOData *ioData, IODevices *ioDevices, PostProcessingSettings *postProcessingSettings);
 
 	virtual void Start() = 0;
+	virtual void Rebuild() = 0;
 
 	void BeforeUpdate();
 	virtual void Update(float deltaTime) = 0;

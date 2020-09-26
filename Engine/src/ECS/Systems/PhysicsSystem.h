@@ -14,6 +14,7 @@ public:
 	PhysicsSystem() = default;
 
 	void Start() override;
+	void Rebuild() override;
 	void Update(float deltaTime) override;
 
 	physx::PxSimulationStatistics GetStatistics() const;

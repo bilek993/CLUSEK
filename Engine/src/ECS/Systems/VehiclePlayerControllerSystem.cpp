@@ -5,6 +5,10 @@ void VehiclePlayerControllerSystem::Start()
 {
 }
 
+void VehiclePlayerControllerSystem::Rebuild()
+{
+}
+
 void VehiclePlayerControllerSystem::Update(const float deltaTime)
 {
 	float accelerate, brake, left, handbrake;

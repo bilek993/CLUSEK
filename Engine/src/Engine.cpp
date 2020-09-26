@@ -105,6 +105,8 @@ void Engine::CreateSystems()
 
 void Engine::InitializeSystems()
 {
+	Logger::Debug("Initializing and staring systems...");
+	
 	for (auto& system : Systems)
 	{
 		system.System->Initialize(	&Registry, 
@@ -116,6 +118,11 @@ void Engine::InitializeSystems()
 									&CurrentPostProcessingSettings);
 		system.System->Start();
 	}
+
+	Logger::Debug("Rebuilding systems...");
+	
+	for (auto& system : Systems)
+		system.System->Rebuild();
 }
 
 void Engine::InitializeUserInterface()

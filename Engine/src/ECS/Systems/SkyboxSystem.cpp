@@ -9,6 +9,10 @@ void SkyboxSystem::Start()
 {
 }
 
+void SkyboxSystem::Rebuild()
+{
+}
+
 void SkyboxSystem::Update(float deltaTime)
 {
 	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();

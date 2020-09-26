@@ -32,6 +32,10 @@ void CameraSystem::Start()
 	UpdateViewMatrix(cameraComponent, transformComponent, false);
 }
 
+void CameraSystem::Rebuild()
+{
+}
+
 void CameraSystem::Update(const float deltaTime)
 {
 	// Get main camera data

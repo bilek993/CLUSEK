@@ -23,6 +23,10 @@ void TransformSystem::Start()
 	});
 }
 
+void TransformSystem::Rebuild()
+{
+}
+
 void TransformSystem::Update(float deltaTime)
 {
 }

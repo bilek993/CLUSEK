@@ -67,6 +67,10 @@ void RenderSystem::Start()
 		Logger::Error("PBR resources initialization failed!");
 }
 
+void RenderSystem::Rebuild()
+{
+}
+
 void RenderSystem::Update(const float deltaTime)
 {
 	auto& mainCameraComponent = CameraLocator::GetMainCamera(Registry);
