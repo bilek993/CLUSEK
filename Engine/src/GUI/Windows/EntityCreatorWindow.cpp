@@ -37,7 +37,7 @@ void EntityCreatorWindow::CreateEntityWithComponents()
 	EntityJsonText = "";
 }
 
-void EntityCreatorWindow::AddTags(nlohmann::json& json, const entt::registry::entity_type &entity)
+void EntityCreatorWindow::AddTags(nlohmann::json& json, const entt::registry::entity_type &entity) const
 {
 	const auto tags = json.get<std::vector<std::string>>();
 
@@ -47,7 +47,7 @@ void EntityCreatorWindow::AddTags(nlohmann::json& json, const entt::registry::en
 	}
 }
 
-void EntityCreatorWindow::AddComponents(nlohmann::json& json, const entt::registry::entity_type &entity)
+void EntityCreatorWindow::AddComponents(nlohmann::json& json, const entt::registry::entity_type &entity) const
 {
 	for (auto it = json.begin(); it != json.end(); ++it)
 	{

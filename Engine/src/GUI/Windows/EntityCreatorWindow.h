@@ -36,8 +36,8 @@ protected:
 private:
 	void CreateEntityWithComponents();
 
-	void AddTags(nlohmann::json& json, const entt::registry::entity_type &entity);
-	void AddComponents(nlohmann::json& json, const entt::registry::entity_type &entity);
+	void AddTags(nlohmann::json& json, const entt::registry::entity_type &entity) const;
+	void AddComponents(nlohmann::json& json, const entt::registry::entity_type &entity) const;
 	
 	std::string EntityJsonText{};
 
