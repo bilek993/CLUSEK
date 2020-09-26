@@ -46,6 +46,10 @@ void PhysicsSystem::Start()
 	InitializeVehiclesAndWheels();
 }
 
+void PhysicsSystem::Rebuild()
+{
+}
+
 void PhysicsSystem::Update(const float deltaTime)
 {
 	TimeSum += deltaTime;
