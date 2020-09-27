@@ -6,6 +6,7 @@
 #include "Loaders/MapLoader.h"
 #include "ECS/Systems/SkyboxSystem.h"
 #include "ECS/Systems/PhysicsSystem.h"
+#include "ECS/Systems/RebuildSystem.h"
 #include "ECS/Systems/TransformSystem.h"
 #include "ECS/Systems/VehiclePlayerControllerSystem.h"
 
@@ -93,6 +94,9 @@ void Engine::CreateSystems()
 	RegisterNewSystem<CameraSystem>("Camera System");
 	RegisterNewSystem<SkyboxSystem>("Skybox System");
 	RegisterNewSystem<VehiclePlayerControllerSystem>("Vehicle Player Controller System");
+
+	// Rebuild system should be last
+	RegisterNewSystem<RebuildSystem>("Rebuild System");
 
 	for (auto i = 0; i < Systems.size(); i++)
 	{
