@@ -31,12 +31,14 @@ void PhysicsSystem::Start()
 	Logger::Debug("Staring physics system...");
 
 	InitializeCore();
-	InitializePhysicsMaterialComponents();
+	InitializePhysicsMaterialManager();
 }
 
 void PhysicsSystem::Rebuild()
 {
 	Logger::Debug("Rebuilding physics system...");
+
+	InitializePhysicsMaterialComponents();
 	
 	InitializeRigidbodyStaticPlaneComponents();
 	InitializeRigidbodyStaticBoxComponents();
@@ -200,18 +202,23 @@ void PhysicsSystem::InitializeCore()
 	BatchQuery = VehicleSceneQueryData::SetUpBatchedSceneQuery(0, *VehicleSceneQueryData, Scene);
 }
 
-void PhysicsSystem::InitializePhysicsMaterialComponents()
+void PhysicsSystem::InitializePhysicsMaterialManager()
 {
-	Logger::Debug("Preparing to initialize physics material...");
-
+	Logger::Debug("Preparing to initialize physics material manager...");
+	
 	MaterialManager = std::make_unique<PhysicsMaterialManager>(	Physics,
 																ConfigurationData->DefaultPhysicsMaterialStaticFriction,
 																ConfigurationData->DefaultPhysicsMaterialDynamicFriction,
 																ConfigurationData->DefaultPhysicsMaterialRestitution);
 
 	PhysicsMaterialLoader::Load(ConfigurationData->PathToPhysicsMaterials, MaterialManager.get(), Physics);
+}
 
-	Registry->view<PhysicsMaterialComponent>().each([this](PhysicsMaterialComponent &physicsMaterialComponent)
+void PhysicsSystem::InitializePhysicsMaterialComponents()
+{
+	Logger::Debug("Preparing to initialize physics materials...");
+
+	Registry->view<PhysicsMaterialComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each([this](PhysicsMaterialComponent &physicsMaterialComponent, auto _)
 	{
 		physicsMaterialComponent.Material = MaterialManager->GetMaterialByName(physicsMaterialComponent.Name);
 		Logger::Debug("Paired material '" + physicsMaterialComponent.Name + "' with proper component.");

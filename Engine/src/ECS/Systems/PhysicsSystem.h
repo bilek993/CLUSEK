@@ -32,7 +32,8 @@ public:
 	~PhysicsSystem() override;
 private:
 	void InitializeCore();
-
+	void InitializePhysicsMaterialManager();
+	
 	void InitializePhysicsMaterialComponents();
 	void InitializeRigidbodyStaticPlaneComponents();
 	void InitializeRigidbodyStaticBoxComponents();
