@@ -1,5 +1,4 @@
 #include "TransformSystem.h"
-
 #include "../../Tags.h"
 #include "../Components/TransformComponent.h"
 #include "../../Renderer/TransformLogic.h"

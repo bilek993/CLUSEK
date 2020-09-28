@@ -1,4 +1,5 @@
 #include "PhysicsSystem.h"
+#include <thread>
 #include "../Components/PhysicsMaterialComponent.h"
 #include "../Components/RigidbodyStaticPlaneComponent.h"
 #include "../Components/RigidbodyStaticBoxComponent.h"
@@ -8,8 +9,6 @@
 #include "../Components/RigidbodyDynamicBoxComponent.h"
 #include "../Components/RigidbodyStaticSphereComponent.h"
 #include "../Components/RigidbodyDynamicSphereComponent.h"
-#include <thread>
-
 #include "../../Tags.h"
 #include "../Components/RigidbodyStaticCapsuleComponent.h"
 #include "../Components/RigidbodyDynamicCapsuleComponent.h"

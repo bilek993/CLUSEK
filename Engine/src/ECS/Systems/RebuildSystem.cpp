@@ -1,5 +1,4 @@
 #include "RebuildSystem.h"
-
 #include "../../Tags.h"
 
 void RebuildSystem::Start()
