@@ -51,24 +51,30 @@ void RenderSystem::Start()
 
 	ResourcesLoader::Load(Device.Get(), DeviceContext.Get(), ConfigurationData);
 
-	Logger::Debug("Preparing to initialize components in renderer...");
-
-	InitializeSkyboxComponent();
-	InitializeGrassComponent();
-	InitializeTerrainComponent();
-	InitializeModelRenderComponent();
 	InitializeShadowCameras();
-
-	Logger::Debug("Finished components initialization in renderer.");
-
 	ConfigureCascadeConstantBuffer();
-
-	if (!InitializePbrResources())
-		Logger::Error("PBR resources initialization failed!");
 }
 
 void RenderSystem::Rebuild()
 {
+	Logger::Debug("Rebuilding render system...");
+	
+	InitializeSkyboxComponent();
+	InitializeGrassComponent();
+	InitializeTerrainComponent();
+	InitializeModelRenderComponent();
+
+	if (!IsPbrInitialized)
+	{
+		if (!InitializePbrResources())
+			Logger::Error("PBR resources initialization failed!");
+		else
+			Logger::Debug("PBR resources initialized!");
+	}
+	else
+	{
+		Logger::Debug("Skipping PBR resources initialization - already initialized!");
+	}
 }
 
 void RenderSystem::Update(const float deltaTime)
@@ -1002,7 +1008,7 @@ void RenderSystem::ShowLoadingScreen()
 
 void RenderSystem::InitializeSkyboxComponent()
 {
-	Registry->view<SkyboxComponent>().each([this](SkyboxComponent &skyboxComponent)
+	Registry->view<SkyboxComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each([this](SkyboxComponent &skyboxComponent, auto _)
 	{
 		CubeGenerator::Generate(Device.Get(), skyboxComponent.RenderVertexBuffer, skyboxComponent.RenderIndexBuffer);
 		MaterialLoader::SetResourceForSkyMaterial(Device.Get(), skyboxComponent.Material, skyboxComponent.SkyboxTextureId);
@@ -1011,7 +1017,7 @@ void RenderSystem::InitializeSkyboxComponent()
 
 void RenderSystem::InitializeGrassComponent()
 {
-	Registry->view<GrassComponent>().each([this](GrassComponent &grassComponent)
+	Registry->view<GrassComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each([this](GrassComponent &grassComponent, auto _)
 	{
 		grassComponent.Meshes = ModelLoader::GetGrassResource(grassComponent.ModelId);
 		MaterialLoader::SetResourceForGrassMeshGroup(Device.Get(), *grassComponent.Meshes, grassComponent.MaterialId);
@@ -1020,7 +1026,7 @@ void RenderSystem::InitializeGrassComponent()
 
 void RenderSystem::InitializeTerrainComponent()
 {
-	Registry->view<TerrainComponent>().each([this](TerrainComponent &terrainComponent)
+	Registry->view<TerrainComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each([this](TerrainComponent &terrainComponent, auto _)
 	{
 		MaterialLoader::SetResourceForTerrainMaterial(Device.Get(), terrainComponent.Material, terrainComponent.MaterialId);
 		TerrainUtil::GenerateTerrainMesh(terrainComponent, Device.Get(), ConfigurationData->EnableAsyncTerrainGeneration);
@@ -1031,7 +1037,7 @@ void RenderSystem::InitializeTerrainComponent()
 
 void RenderSystem::InitializeModelRenderComponent()
 {
-	Registry->view<ModelRenderComponent>().each([this](ModelRenderComponent &modelRenderComponent)
+	Registry->view<ModelRenderComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each([this](ModelRenderComponent &modelRenderComponent, auto _)
 	{
 		modelRenderComponent.Meshes = ModelLoader::GetResource(modelRenderComponent.ModelId);
 		MaterialLoader::SetResourceForMeshGroup(Device.Get(), *modelRenderComponent.Meshes, modelRenderComponent.MaterialId);

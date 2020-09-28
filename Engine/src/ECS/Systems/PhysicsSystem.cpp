@@ -9,6 +9,8 @@
 #include "../Components/RigidbodyStaticSphereComponent.h"
 #include "../Components/RigidbodyDynamicSphereComponent.h"
 #include <thread>
+
+#include "../../Tags.h"
 #include "../Components/RigidbodyStaticCapsuleComponent.h"
 #include "../Components/RigidbodyDynamicCapsuleComponent.h"
 #include "../../Physics/PhysicsMeshGenerator.h"
@@ -29,9 +31,13 @@ void PhysicsSystem::Start()
 	Logger::Debug("Staring physics system...");
 
 	InitializeCore();
-
 	InitializePhysicsMaterialComponents();
+}
 
+void PhysicsSystem::Rebuild()
+{
+	Logger::Debug("Rebuilding physics system...");
+	
 	InitializeRigidbodyStaticPlaneComponents();
 	InitializeRigidbodyStaticBoxComponents();
 	InitializeRigidbodyDynamicBoxComponents();
@@ -44,10 +50,6 @@ void PhysicsSystem::Start()
 	InitializeRigidbodyStaticHeightFields();
 
 	InitializeVehiclesAndWheels();
-}
-
-void PhysicsSystem::Rebuild()
-{
 }
 
 void PhysicsSystem::Update(const float deltaTime)
@@ -222,8 +224,8 @@ void PhysicsSystem::InitializeRigidbodyStaticPlaneComponents()
 {
 	Logger::Debug("Preparing to initialize rigidbody static planes...");
 
-	Registry->view<PhysicsMaterialComponent, RigidbodyStaticPlaneComponent>().each(
-		[this](PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticPlaneComponent &rigidbodyStaticPlaneComponent)
+	Registry->view<PhysicsMaterialComponent, RigidbodyStaticPlaneComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticPlaneComponent &rigidbodyStaticPlaneComponent, auto _)
 	{
 		rigidbodyStaticPlaneComponent.Body = PxCreatePlane(*Physics, physx::PxPlane(rigidbodyStaticPlaneComponent.NormalX, 
 																					rigidbodyStaticPlaneComponent.NormalY, 
@@ -241,8 +243,8 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 {
 	Logger::Debug("Preparing to initialize rigidbody static boxes...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticBoxComponent>().each(
-		[this](TransformComponent &transformComponent,PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticBoxComponent &rigidbodyStaticBoxComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticBoxComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent,PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticBoxComponent &rigidbodyStaticBoxComponent, auto _)
 	{
 		const auto geometry = physx::PxBoxGeometry(rigidbodyStaticBoxComponent.Width / 2, rigidbodyStaticBoxComponent.Height / 2, rigidbodyStaticBoxComponent.Depth / 2);
 		const auto transform = CalculatePxTransform(transformComponent);
@@ -263,8 +265,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicBoxComponents()
 {
 	Logger::Debug("Preparing to initialize rigidbody dynamic boxes...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicBoxComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicBoxComponent &rigidbodyDynamicBoxComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicBoxComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicBoxComponent &rigidbodyDynamicBoxComponent, auto _)
 	{
 		const auto geometry = physx::PxBoxGeometry(rigidbodyDynamicBoxComponent.Width / 2, rigidbodyDynamicBoxComponent.Height / 2, rigidbodyDynamicBoxComponent.Depth / 2);
 		const auto transform = CalculatePxTransform(transformComponent);
@@ -286,8 +288,8 @@ void PhysicsSystem::InitializeRigidbodyStaticSphereComponents()
 {
 	Logger::Debug("Preparing to initialize rigidbody static spheres...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticSphereComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticSphereComponent &rigidbodyStaticSphereComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticSphereComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticSphereComponent &rigidbodyStaticSphereComponent, auto _)
 	{
 		const auto geometry = physx::PxSphereGeometry(rigidbodyStaticSphereComponent.Radius);
 		const auto transform = CalculatePxTransform(transformComponent);
@@ -308,8 +310,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicSphereComponents()
 {
 	Logger::Debug("Preparing to initialize rigidbody dynamic spheres...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicSphereComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicSphereComponent &rigidbodyDynamicSphereComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicSphereComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicSphereComponent &rigidbodyDynamicSphereComponent, auto _)
 	{
 		const auto geometry = physx::PxSphereGeometry(rigidbodyDynamicSphereComponent.Radius);
 		const auto transform = CalculatePxTransform(transformComponent);
@@ -331,8 +333,8 @@ void PhysicsSystem::InitializeRigidbodyStaticCapsuleComponents()
 {
 	Logger::Debug("Preparing to initialize rigidbody static capsules...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticCapsuleComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticCapsuleComponent &rigidbodyStaticCapsuleComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticCapsuleComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticCapsuleComponent &rigidbodyStaticCapsuleComponent, auto _)
 	{
 		const auto geometry = physx::PxCapsuleGeometry(rigidbodyStaticCapsuleComponent.Radius, rigidbodyStaticCapsuleComponent.Height / 2);
 		const auto transform = CalculatePxTransform(transformComponent);
@@ -353,8 +355,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicCapsuleComponents()
 {
 	Logger::Debug("Preparing to initialize rigidbody dynamic capsules...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicCapsuleComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicCapsuleComponent &rigidbodyDynamicCapsuleComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicCapsuleComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicCapsuleComponent &rigidbodyDynamicCapsuleComponent, auto _)
 	{
 		const auto geometry = physx::PxCapsuleGeometry(rigidbodyDynamicCapsuleComponent.Radius, rigidbodyDynamicCapsuleComponent.Height / 2);
 		const auto transform = CalculatePxTransform(transformComponent);
@@ -376,8 +378,8 @@ void PhysicsSystem::InitializeRigidbodyStaticCylinderComponents()
 {
 	Logger::Debug("Preparing to initialize rigidbody static cylinders...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticCylinderComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticCylinderComponent &rigidbodyStaticCylinderComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticCylinderComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticCylinderComponent &rigidbodyStaticCylinderComponent, auto _)
 	{
 		const auto geometry = physx::PxConvexMeshGeometry(
 			PhysicsMeshGenerator::CreateCylinder(*Physics, *Cooking, rigidbodyStaticCylinderComponent.Width, rigidbodyStaticCylinderComponent.Radius));
@@ -399,8 +401,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 {
 	Logger::Debug("Preparing to initialize rigidbody dynamic cylinders...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicCylinderComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicCylinderComponent &rigidbodyDynamicCylinderComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicCylinderComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicCylinderComponent &rigidbodyDynamicCylinderComponent, auto _)
 	{
 		const auto geometry = physx::PxConvexMeshGeometry(
 			PhysicsMeshGenerator::CreateCylinder(*Physics, *Cooking, rigidbodyDynamicCylinderComponent.Width, rigidbodyDynamicCylinderComponent.Radius));
@@ -423,9 +425,9 @@ void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
 {
 	Logger::Debug("Preparing to initialize rigidbody static height fields...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, TerrainComponent, RigidbodyStaticHeightFieldsComponent>().each(
+	Registry->view<TransformComponent, PhysicsMaterialComponent, TerrainComponent, RigidbodyStaticHeightFieldsComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, TerrainComponent &terrainComponent, 
-			RigidbodyStaticHeightFieldsComponent &rigidbodyStaticHeightFieldsComponent)
+			RigidbodyStaticHeightFieldsComponent &rigidbodyStaticHeightFieldsComponent, auto _)
 	{
 		const auto geometry = TerrainUtil::GenerateTerrainForPhysx(	rigidbodyStaticHeightFieldsComponent.HeightFieldSample, 
 																	rigidbodyStaticHeightFieldsComponent.HeightField,
@@ -584,12 +586,12 @@ void PhysicsSystem::AssociateWheelsWithVehicles()
 {
 	Logger::Debug("Preparing to associate wheels with vehicles by id...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, WheelComponent>().each(
-		[this](TransformComponent &transformComponentWheel, PhysicsMaterialComponent &physicsMaterialComponentWheel, WheelComponent &wheelComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, WheelComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponentWheel, PhysicsMaterialComponent &physicsMaterialComponentWheel, WheelComponent &wheelComponent, auto _)
 	{
-		Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
+		Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
 			[&wheelComponent, &physicsMaterialComponentWheel, &transformComponentWheel](TransformComponent &transformComponentVehicle,
-				PhysicsMaterialComponent &physicsMaterialComponentVehicle, VehicleComponent &vehicleComponent)
+				PhysicsMaterialComponent &physicsMaterialComponentVehicle, VehicleComponent &vehicleComponent, auto _)
 		{
 			if (wheelComponent.VehicleId == vehicleComponent.VehicleId)
 			{
@@ -615,7 +617,7 @@ void PhysicsSystem::VerifyWheelsForEachVehicle() const
 {
 	Logger::Debug("Checking if each vehicle has got all four wheels assigned...");
 
-	Registry->view<VehicleComponent>().each([](VehicleComponent &vehicleComponent)
+	Registry->view<VehicleComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each([](VehicleComponent &vehicleComponent, auto _)
 	{
 		const auto size = std::size(vehicleComponent.Wheels);
 
@@ -633,8 +635,8 @@ void PhysicsSystem::CreateVehicle()
 {
 	Logger::Debug("Preparing to create physics vehicles...");
 
-	Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent>().each(
-		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, VehicleComponent &vehicleComponent)
+	Registry->view<TransformComponent, PhysicsMaterialComponent, VehicleComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, VehicleComponent &vehicleComponent, auto _)
 	{
 		const auto vehicle = VehicleResourcesGenerator::Create4WheelVehicle(Physics, 
 																			Cooking, 

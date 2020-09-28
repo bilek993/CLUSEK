@@ -200,6 +200,7 @@ private:
 	CustomizableBuffer GrassDrawIndexInstanceIndirectArgsBufferInstance;
 
 	PbrResource PbrResourceInstance{};
+	bool IsPbrInitialized = false;
 
 	RenderDepthStencil SceneRenderDepthStencil{};
 	std::array<RenderDepthStencil, ShadowCamera::SHADOW_CASCADES_COUNT> ShadowRenderDepthStencils{};

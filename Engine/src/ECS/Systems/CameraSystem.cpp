@@ -7,7 +7,11 @@
 
 void CameraSystem::Start()
 {
-	Logger::Debug("Staring camera system...");
+}
+
+void CameraSystem::Rebuild()
+{
+	Logger::Debug("Rebuilding camera system...");
 
 	auto view = Registry->view<CameraComponent, TransformComponent, entt::tag<Tags::MAIN_CAMERA>>();
 	if (view.size() != 1)
@@ -30,10 +34,6 @@ void CameraSystem::Start()
 		ConfigurationData->MainCameraNearZ, ConfigurationData->MainCameraFarZ);
 
 	UpdateViewMatrix(cameraComponent, transformComponent, false);
-}
-
-void CameraSystem::Rebuild()
-{
 }
 
 void CameraSystem::Update(const float deltaTime)
