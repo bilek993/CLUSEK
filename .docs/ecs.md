@@ -32,6 +32,8 @@ We can add new entities from code or from the map file. In 99.9% of cases, objec
 ]
 ```
 
+> It's worth noting, that the new entity should have assigned a special internal TAG to properly handle rebuilding. It should all be handled by a programmer.
+
 ### Components
 
 Components store information about the current state of an entity. One entity can have many components that store information about different things in the object.
@@ -90,7 +92,19 @@ MAP_COMPONENT_LOADERS(it, ExampleComponent, registry, entity);
 
 At this point, our component can be added from the map file and is fully functional, but it will not be available in the editor. To make it work we have to perform extra steps.
 
-First of all, we have to add our component to the entity list to make it selectable from the `EntityViewer`. To do this we have to modify `EntityViewerWindow::DrawList` in the `EntityViewerWindow.cpp` by registering a new component with `EntityViewerWindow::DrawComponent` private function. Example:
+First of all, we need to register our component in the `EntityCreatorWindow.h` and `EntityCreatorWindow.cpp`. Without this step, this component cannot be created in real-time from the `EntityCreator` window. We start by adding our component loader instance to the `EntityCreatorWindow.h` with a name ending with `*Instance`, just like in `MapLoader`. Example:
+
+```
+inline static ExampleComponentLoader ExampleComponentLoaderInstance;
+```
+
+Now, all we have to do is call `MAP_COMPONENT_LOADERS` macro in `EntityCreatorWindow::AddComponents`.  Example:
+
+```
+MAP_COMPONENT_LOADERS(it, ExampleComponent, *Registry, entity);
+```
+
+Next, we have to add our component to the entity list to make it selectable from the `EntityViewer`. To do this we have to modify `EntityViewerWindow::DrawList` in the `EntityViewerWindow.cpp` by registering a new component with `EntityViewerWindow::DrawComponent` private function. Example:
 
 ```
 DrawComponent<ExampleComponent>(entity, "Example Component");
@@ -141,6 +155,12 @@ REGISTER_COMPONENT_EDITOR(ExampleComponent, "Example Component");
 
 Systems are logic holders in this game engine architecture. Each system can perform any action with any entity and underlying components. Systems have access not only to entities but also to whole engine logic and architecture to perform logic operations.
 
+Systems in the CLUSEK game engine provide special hooks to tap into events. The flowchart below visualizes three core functions that are executed by the engine. The `Start` method is called only once, after constructing the system. The `Rebuild` method is called after initialization and when the entity is changed. The `Update` is called every frame.
+
+<p align="center">
+	<img src="./systems_lifecycle_diagram.png" >
+</p>
+
 Adding a new system is simple. We need to create a new system class and place it in the correct filter and folder, which is `ECS/Systems`. Example system class declaration:
 
 ```
@@ -151,6 +171,7 @@ class ExampleSystem final : public BaseSystem
 {
 public:
 	void Start() override;
+	void Rebuild() override;
 	void Update(float deltaTime) override;
 };
 ```
