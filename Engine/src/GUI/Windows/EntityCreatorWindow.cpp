@@ -19,7 +19,19 @@ void EntityCreatorWindow::Draw()
 								&EntityJsonText);
 	
 	if (ImGui::Button("Create"))
-		CreateEntityWithComponents();
+	{
+		switch (Mode)
+		{
+		case 0:
+			CreateEntityWithComponents();
+			break;
+		case 1:
+			CreateEntitiesWithComponents();
+			break;
+		default:
+			Logger::Error("Incorrect creator mode!");
+		}
+	}
 
 	ImGui::Separator();
 
@@ -39,6 +51,27 @@ void EntityCreatorWindow::CreateEntityWithComponents()
 	
 	AddTags(jsonObject["Tags"], entity);
 	AddComponents(jsonObject["Components"], entity);
+
+	Logger::Debug("Rebuilding systems...");
+	RebuildEntities();
+
+	Logger::Debug("Clearing entity text field...");
+	EntityJsonText = "";
+}
+
+void EntityCreatorWindow::CreateEntitiesWithComponents()
+{
+	Logger::Debug("Preparing to create entities...");
+	auto jsonObject = nlohmann::json::parse(EntityJsonText);
+
+	for (auto it = jsonObject.begin(); it != jsonObject.end(); ++it)
+	{
+		Logger::Debug("Creating entity...");
+		const auto entity = Registry->create();
+
+		AddTags(it.value()["Tags"], entity);
+		AddComponents(it.value()["Components"], entity);
+	}
 
 	Logger::Debug("Rebuilding systems...");
 	RebuildEntities();
