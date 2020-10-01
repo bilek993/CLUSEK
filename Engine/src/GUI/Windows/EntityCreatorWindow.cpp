@@ -22,10 +22,10 @@ void EntityCreatorWindow::Draw()
 	{
 		switch (Mode)
 		{
-		case 0:
+		case Single:
 			CreateEntityWithComponents();
 			break;
-		case 1:
+		case Array:
 			CreateEntitiesWithComponents();
 			break;
 		default:
@@ -36,8 +36,8 @@ void EntityCreatorWindow::Draw()
 	ImGui::Separator();
 
 	ImGui::Text("Mode:");
-	ImGui::RadioButton("Single entity", &Mode, 0);
-	ImGui::RadioButton("Array of entities", &Mode, 1);
+	ImGui::RadioButton("Single entity", reinterpret_cast<int*>(&Mode), Single);
+	ImGui::RadioButton("Array of entities", reinterpret_cast<int*>(&Mode), Array);
 	
 	ImGui::End();
 }

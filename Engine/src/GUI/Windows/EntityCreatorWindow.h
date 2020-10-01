@@ -1,6 +1,7 @@
 #pragma once
 #include <json.hpp>
 #include "BaseWindow.h"
+#include "../EntityCreatorMode.h"
 #include "../../Loaders/Components/CameraComponentLoader.h"
 #include "../../Loaders/Components/CameraTargetComponentLoader.h"
 #include "../../Loaders/Components/CameraVehicleAnimatedTargetComponentLoader.h"
@@ -42,7 +43,7 @@ private:
 
 	void RebuildEntities() const;
 
-	int Mode = 0;
+	EntityCreatorMode Mode = Single;
 	std::string EntityJsonText{};
 
 	inline static CameraComponentLoader CameraComponentLoaderInstance;
