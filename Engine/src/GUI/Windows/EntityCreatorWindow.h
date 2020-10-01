@@ -40,7 +40,8 @@ private:
 	void AddComponents(nlohmann::json& json, const entt::registry::entity_type &entity) const;
 
 	void RebuildEntities() const;
-	
+
+	int Mode = 0;
 	std::string EntityJsonText{};
 
 	inline static CameraComponentLoader CameraComponentLoaderInstance;

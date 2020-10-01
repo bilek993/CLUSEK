@@ -8,6 +8,8 @@ void EntityCreatorWindow::Draw()
 {
 	ImGui::Begin("Entity creator", &IsEnabled);
 
+	ImGui::Text(Mode == 0 ? "Entity description:" : "Entities description:");
+	
 	ImGui::InputTextMultiline(	"##EntityJsonText", 
 								const_cast<char*>(EntityJsonText.c_str()),
 								EntityJsonText.capacity() + 1,
@@ -19,6 +21,12 @@ void EntityCreatorWindow::Draw()
 	if (ImGui::Button("Create"))
 		CreateEntityWithComponents();
 
+	ImGui::Separator();
+
+	ImGui::Text("Mode:");
+	ImGui::RadioButton("Single entity", &Mode, 0);
+	ImGui::RadioButton("Array of entities", &Mode, 1);
+	
 	ImGui::End();
 }
 
