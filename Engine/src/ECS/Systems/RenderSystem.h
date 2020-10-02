@@ -40,7 +40,7 @@
 #include "../Components/ModelRenderComponent.h"
 #include "../../Renderer/AppendBuffer.h"
 #include "../../Renderer/CustomizableBuffer.h"
-#include "../../Renderer/Append/GrassInstanceBuffer.h"
+#include "../../Renderer/AppendBufferTypes/GrassInstanceBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/DiscardPixelsBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/GrassAppearanceParametersBuffer.h"
 #include "../../Renderer/ConstantBufferTypes/GrassGeneratorParametersBuffer.h"

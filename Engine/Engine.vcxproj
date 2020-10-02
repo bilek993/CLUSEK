@@ -263,7 +263,7 @@
     <ClInclude Include="src\Renderer\CustomizableBuffer.h" />
     <ClInclude Include="src\Renderer\GrassCamera.h" />
     <ClInclude Include="src\Utils\BufferCalculationUtil.h" />
-    <ClInclude Include="src\Renderer\Append\GrassInstanceBuffer.h" />
+    <ClInclude Include="src\Renderer\AppendBufferTypes\GrassInstanceBuffer.h" />
     <ClInclude Include="src\Renderer\AppendBuffer.h" />
     <ClInclude Include="src\GUI\Components\CommentComponentEditor.h" />
     <ClInclude Include="src\Loaders\Components\CommentComponentLoader.h" />
