@@ -1,4 +1,5 @@
 #pragma once
+#include <DirectXMath.h>
 #include <PxPhysicsAPI.h>
 
 struct RigidbodyDynamicCylinderComponent final

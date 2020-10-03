@@ -1,4 +1,5 @@
 #pragma once
+#include <DirectXMath.h>
 #include <geometry/PxHeightFieldSample.h>
 #include <geometry/PxHeightField.h>
 
