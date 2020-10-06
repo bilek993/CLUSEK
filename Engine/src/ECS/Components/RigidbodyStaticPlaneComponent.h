@@ -8,8 +8,6 @@ struct RigidbodyStaticPlaneComponent final
 	float NormalY;
 	float NormalZ;
 	float Distance;
-	DirectX::XMFLOAT3 PositionOffsetVector;
-	DirectX::XMFLOAT3 RotationOffsetVector;
 
 	physx::PxRigidStatic* Body;
 };
