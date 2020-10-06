@@ -257,7 +257,8 @@ void PhysicsSystem::InitializeRigidbodyStaticBoxComponents()
 		rigidbodyStaticBoxComponent.Body = PxCreateStatic(	*Physics, 
 															transform,
 															geometry,
-															*physicsMaterialComponent.Material);
+															*physicsMaterialComponent.Material,
+															CalculateOffsetPxTransform(rigidbodyStaticBoxComponent));
 
 		SetFiltersForComponent(	*rigidbodyStaticBoxComponent.Body, 
 								physicsMaterialComponent.SurfaceFilterType);
@@ -280,7 +281,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicBoxComponents()
 															transform,
 															geometry,
 															*physicsMaterialComponent.Material,
-															rigidbodyDynamicBoxComponent.Density);
+															rigidbodyDynamicBoxComponent.Density,
+															CalculateOffsetPxTransform(rigidbodyDynamicBoxComponent));
 
 		SetFiltersForComponent(	*rigidbodyDynamicBoxComponent.Body,
 								physicsMaterialComponent.SurfaceFilterType);
@@ -302,7 +304,8 @@ void PhysicsSystem::InitializeRigidbodyStaticSphereComponents()
 		rigidbodyStaticSphereComponent.Body = PxCreateStatic(	*Physics,
 																transform,
 																geometry,
-																*physicsMaterialComponent.Material);
+																*physicsMaterialComponent.Material,
+																CalculateOffsetPxTransform(rigidbodyStaticSphereComponent));
 
 		SetFiltersForComponent(	*rigidbodyStaticSphereComponent.Body, 
 								physicsMaterialComponent.SurfaceFilterType);
@@ -325,7 +328,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicSphereComponents()
 																transform,
 																geometry,
 																*physicsMaterialComponent.Material,
-																rigidbodyDynamicSphereComponent.Density);
+																rigidbodyDynamicSphereComponent.Density,
+																CalculateOffsetPxTransform(rigidbodyDynamicSphereComponent));
 
 		SetFiltersForComponent(	*rigidbodyDynamicSphereComponent.Body,
 								physicsMaterialComponent.SurfaceFilterType);
@@ -347,7 +351,8 @@ void PhysicsSystem::InitializeRigidbodyStaticCapsuleComponents()
 		rigidbodyStaticCapsuleComponent.Body = PxCreateStatic(	*Physics,
 																transform,
 																geometry,
-																*physicsMaterialComponent.Material);
+																*physicsMaterialComponent.Material,
+																CalculateOffsetPxTransform(rigidbodyStaticCapsuleComponent));
 
 		SetFiltersForComponent(	*rigidbodyStaticCapsuleComponent.Body, 
 								physicsMaterialComponent.SurfaceFilterType);
@@ -370,7 +375,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicCapsuleComponents()
 																transform,
 																geometry,
 																*physicsMaterialComponent.Material,
-																rigidbodyDynamicCapsuleComponent.Density);
+																rigidbodyDynamicCapsuleComponent.Density,
+																CalculateOffsetPxTransform(rigidbodyDynamicCapsuleComponent));
 
 		SetFiltersForComponent(	*rigidbodyDynamicCapsuleComponent.Body, 
 								physicsMaterialComponent.SurfaceFilterType);
@@ -393,7 +399,8 @@ void PhysicsSystem::InitializeRigidbodyStaticCylinderComponents()
 		rigidbodyStaticCylinderComponent.Body = PxCreateStatic(	*Physics,
 																transform,
 																geometry,
-																*physicsMaterialComponent.Material);
+																*physicsMaterialComponent.Material,
+																CalculateOffsetPxTransform(rigidbodyStaticCylinderComponent));
 
 		SetFiltersForComponent(	*rigidbodyStaticCylinderComponent.Body,
 								physicsMaterialComponent.SurfaceFilterType);
@@ -417,7 +424,8 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 																transform,
 																geometry,
 																*physicsMaterialComponent.Material,
-																rigidbodyDynamicCylinderComponent.Density);
+																rigidbodyDynamicCylinderComponent.Density,
+																CalculateOffsetPxTransform(rigidbodyDynamicCylinderComponent));
 
 		SetFiltersForComponent(	*rigidbodyDynamicCylinderComponent.Body, 
 								physicsMaterialComponent.SurfaceFilterType);
