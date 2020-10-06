@@ -5,6 +5,7 @@
 #include "../../Renderer/TransformLogic.h"
 #include "../../Physics/VehicleSceneQueryData.h"
 #include "../../Physics/PhysicsMaterialManager.h"
+#include "../../Physics/PhysicsUnitConversion.h"
 
 #define PX_RELEASE(x) if(x) { x->release(); x = nullptr; }
 
@@ -60,6 +61,9 @@ private:
 
 	physx::PxTransform CalculatePxTransform(const TransformComponent &transformComponent) const;
 
+	template<class T>
+	physx::PxTransform CalculateOffsetPxTransform(T &component) const;
+
 	void AssociateWheelsWithVehicles();
 	void VerifyWheelsForEachVehicle() const;
 	void CreateVehicle();
@@ -100,4 +104,18 @@ void PhysicsSystem::UpdateMatrixFromRigidbody() const
 			TransformLogic::SetMatrix(bodyMatrix.getTranspose(), transformComponent);
 		}
 	});
+}
+
+template <class T>
+physx::PxTransform PhysicsSystem::CalculateOffsetPxTransform(T& component) const
+{
+	const physx::PxVec3 position(	component.PositionOffsetVector.x, 
+									component.PositionOffsetVector.y, 
+									component.PositionOffsetVector.z);
+	
+	const auto rotation = PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(DirectX::XMFLOAT3(	component.RotationOffsetVector.x,
+																									component.RotationOffsetVector.y,
+																									component.RotationOffsetVector.z));
+	
+	return physx::PxTransform(position, rotation);
 }
