@@ -33,6 +33,7 @@ public:
 	~PhysicsSystem() override;
 private:
 	void InitializeCore();
+	void InitializeResources() const;
 	void InitializePhysicsMaterialManager();
 	
 	void InitializePhysicsMaterialComponents();

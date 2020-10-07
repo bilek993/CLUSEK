@@ -23,6 +23,7 @@
 #include "../../Utils/TerrainUtil.h"
 #include "../../Physics/PhysicsFilterShader.h"
 #include "../../Loaders/PhysicsMaterialLoader.h"
+#include "../../Loaders/ResourcesLoader.h"
 #include "../Components/RigidbodyStaticCylinderComponent.h"
 
 void PhysicsSystem::Start()
@@ -30,6 +31,7 @@ void PhysicsSystem::Start()
 	Logger::Debug("Staring physics system...");
 
 	InitializeCore();
+	InitializeResources();
 	InitializePhysicsMaterialManager();
 }
 
@@ -202,6 +204,11 @@ void PhysicsSystem::InitializeCore()
 															Allocator);
 
 	BatchQuery = VehicleSceneQueryData::SetUpBatchedSceneQuery(0, *VehicleSceneQueryData, Scene);
+}
+
+void PhysicsSystem::InitializeResources() const
+{
+	ResourcesLoader::LoadFromPhysics(*Physics, *Cooking, ConfigurationData);
 }
 
 void PhysicsSystem::InitializePhysicsMaterialManager()
