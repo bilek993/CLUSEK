@@ -1,8 +1,10 @@
 #include "ModelLoader.h"
+#include "../Physics/PhysicsMeshGenerator.h"
 #include "../Renderer/FrustumUtil.h"
 
 std::unordered_map<std::string, std::shared_ptr<std::vector<Mesh>>> ModelLoader::MeshesResources;
 std::unordered_map<std::string, std::shared_ptr<std::vector<GrassMesh>>> ModelLoader::GrassMeshesResources;
+std::unordered_map<std::string, physx::PxConvexMesh*> ModelLoader::ConvexMeshesResources;
 
 void ModelLoader::LoadResource(ID3D11Device *device, const std::string& path, const std::string& resourceId)
 {
@@ -89,6 +91,45 @@ void ModelLoader::LoadGrassResource(ID3D11Device* device, const std::string& pat
 	ResourcesMapMutex.unlock();
 }
 
+void ModelLoader::LoadConvexResource(physx::PxPhysics& physics, const physx::PxCooking& cooking,
+	const std::string& path, const std::string& resourceId)
+{
+	Logger::Debug("Preparing to load convex mesh from: '" + path + "'...");
+
+	Assimp::Importer importer;
+
+	Logger::Debug("Reading data from file...");
+	const auto scene = importer.ReadFile(path, aiProcess_JoinIdenticalVertices);
+	if (scene == nullptr)
+	{
+		Logger::Error("Convex mesh from path '" + path + "' cannot be loaded!");
+		return;
+	}
+	
+	if (scene->mNumMeshes > 1)
+	{
+		Logger::Warning(scene->mNumMeshes + " meshes found!");
+		Logger::Warning("Convex meshes support only merged model meshes! Using first mesh only!");
+	}
+	else if (scene->mNumMeshes == 0)
+	{
+		Logger::Error("Convex mesh from path '" + path + "' is empty!");
+		return;
+	}
+
+	const auto mesh = scene->mMeshes[0];
+	std::vector<physx::PxVec3> vertices{};
+
+	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
+		vertices.emplace_back(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
+
+	const auto generatedMesh = PhysicsMeshGenerator::CreateConvexMesh(physics, cooking, vertices);
+
+	ResourcesMapMutex.lock();
+	ConvexMeshesResources[resourceId] = generatedMesh;
+	ResourcesMapMutex.unlock();
+}
+
 std::shared_ptr<std::vector<Mesh>> ModelLoader::GetResource(const std::string& resourceId)
 {
 	const auto meshPointer = MeshesResources.find(resourceId);
@@ -105,6 +146,25 @@ std::shared_ptr<std::vector<GrassMesh>> ModelLoader::GetGrassResource(const std:
 		Logger::Error("Resource with id '" + resourceId + "' not found!");
 
 	return meshPointer->second;
+}
+
+physx::PxConvexMesh* ModelLoader::GetConvexResource(const std::string& resourceId)
+{
+	const auto meshPointer = ConvexMeshesResources.find(resourceId);
+	if (meshPointer == ConvexMeshesResources.end())
+		Logger::Error("Resource with id '" + resourceId + "' not found!");
+
+	return meshPointer->second;
+}
+
+std::vector<physx::PxConvexMesh*> ModelLoader::GetAllConvexResources()
+{
+	std::vector<physx::PxConvexMesh*> vectorOfResources{};
+
+	for (auto& resources : ConvexMeshesResources)
+		vectorOfResources.emplace_back(resources.second);
+
+	return vectorOfResources;
 }
 
 std::vector<FatVertex> ModelLoader::CreateFatVertices(const aiMesh* mesh)
