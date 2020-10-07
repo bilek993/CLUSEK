@@ -9,6 +9,7 @@
 #include "../Components/RigidbodyStaticSphereComponent.h"
 #include "../Components/RigidbodyDynamicSphereComponent.h"
 #include "../../Tags.h"
+#include "../../Loaders/ModelLoader.h"
 #include "../Components/RigidbodyStaticCapsuleComponent.h"
 #include "../Components/RigidbodyDynamicCapsuleComponent.h"
 #include "../../Physics/PhysicsMeshGenerator.h"
@@ -119,6 +120,9 @@ PhysicsSystem::~PhysicsSystem()
 	{
 		PX_RELEASE(vehicleComponent.Vehicle);
 	});
+
+	for (auto& convexMesh : ModelLoader::GetAllConvexResources())
+		PX_RELEASE(convexMesh);
 
 	VehicleSceneQueryData->Free(Allocator);
 	PX_RELEASE(BatchQuery);

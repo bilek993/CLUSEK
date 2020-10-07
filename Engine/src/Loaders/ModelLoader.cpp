@@ -160,7 +160,6 @@ physx::PxConvexMesh* ModelLoader::GetConvexResource(const std::string& resourceI
 std::vector<physx::PxConvexMesh*> ModelLoader::GetAllConvexResources()
 {
 	std::vector<physx::PxConvexMesh*> vectorOfResources{};
-
 	for (auto& resources : ConvexMeshesResources)
 		vectorOfResources.emplace_back(resources.second);
 
