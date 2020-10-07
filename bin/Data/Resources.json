@@ -28,6 +28,10 @@
 	"Grass": "Data/Models/Grass/Grass.fbx"
   },
   
+  "ConvexModels": {
+	"CivilianVehicleCollider": "Data/Models/CivilianVehicle/CivilianVehicleCollider.fbx"
+  },
+  
   "Textures": {
     "CivilianVehicle_LightAlbedo": {
 	  "Path": "Data/Textures/CivilianVehicle/LightAlbedo.dds"
