@@ -68,5 +68,5 @@ physx::PxConvexMesh* PhysicsMeshGenerator::CreateConvexMesh(physx::PxPhysics& ph
 		Logger::Error("Error when cooking a convex mesh!");
 	}
 
-	return  convexMesh;
+	return convexMesh;
 }

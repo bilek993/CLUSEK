@@ -91,7 +91,7 @@ void ModelLoader::LoadGrassResource(ID3D11Device* device, const std::string& pat
 	ResourcesMapMutex.unlock();
 }
 
-void ModelLoader::LoadConvexResource(physx::PxPhysics& physics, const physx::PxCooking& cooking,
+void ModelLoader::LoadConvexResource(physx::PxPhysics* physics, const physx::PxCooking* cooking,
 	const std::string& path, const std::string& resourceId)
 {
 	Logger::Debug("Preparing to load convex mesh from: '" + path + "'...");
@@ -123,7 +123,7 @@ void ModelLoader::LoadConvexResource(physx::PxPhysics& physics, const physx::PxC
 	for (unsigned int i = 0; i < mesh->mNumVertices; i++)
 		vertices.emplace_back(mesh->mVertices[i].x, mesh->mVertices[i].y, mesh->mVertices[i].z);
 
-	const auto generatedMesh = PhysicsMeshGenerator::CreateConvexMesh(physics, cooking, vertices);
+	const auto generatedMesh = PhysicsMeshGenerator::CreateConvexMesh(*physics, *cooking, vertices);
 
 	ResourcesMapMutex.lock();
 	ConvexMeshesResources[resourceId] = generatedMesh;

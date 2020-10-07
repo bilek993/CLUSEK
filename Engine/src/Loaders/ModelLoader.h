@@ -15,7 +15,7 @@ class ModelLoader final
 public:
 	static void LoadResource(ID3D11Device *device, const std::string& path, const std::string& resourceId);
 	static void LoadGrassResource(ID3D11Device *device, const std::string& path, const std::string& resourceId);
-	static void LoadConvexResource(physx::PxPhysics& physics, const physx::PxCooking& cooking, const std::string& path, const std::string& resourceId);
+	static void LoadConvexResource(physx::PxPhysics* physics, const physx::PxCooking* cooking, const std::string& path, const std::string& resourceId);
 	
 	static std::shared_ptr<std::vector<Mesh>> GetResource(const std::string& resourceId);
 	static std::shared_ptr<std::vector<GrassMesh>> GetGrassResource(const std::string& resourceId);

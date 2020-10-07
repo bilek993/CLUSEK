@@ -49,7 +49,7 @@ void RenderSystem::Start()
 	if (!ConfigurationData->DisableLoadingScreen)
 		ShowLoadingScreen();
 
-	ResourcesLoader::Load(Device.Get(), DeviceContext.Get(), ConfigurationData);
+	ResourcesLoader::LoadFromRenderer(Device.Get(), DeviceContext.Get(), ConfigurationData);
 
 	InitializeShadowCameras();
 	ConfigureCascadeConstantBuffer();
