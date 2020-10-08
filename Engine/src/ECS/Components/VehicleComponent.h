@@ -9,6 +9,7 @@ struct VehicleComponent final
 {
 	std::string VehicleId;
 	float Mass;
+	std::string ConvexModelId;
 	float DimensionX;
 	float DimensionY;
 	float DimensionZ;

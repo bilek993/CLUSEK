@@ -8,6 +8,7 @@ void VehicleComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 
 	MAP_LOADER_BASIC_FIELD(VehicleId, json, component, std::string);
 	MAP_LOADER_BASIC_FIELD(Mass, json, component, float);
+	MAP_LOADER_BASIC_FIELD(ConvexModelId, json, component, std::string);
 	MAP_LOADER_BASIC_FIELD(DimensionX, json, component, float);
 	MAP_LOADER_BASIC_FIELD(DimensionY, json, component, float);
 	MAP_LOADER_BASIC_FIELD(DimensionZ, json, component, float);

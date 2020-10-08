@@ -55,6 +55,7 @@ void PhysicsSystem::Rebuild()
 	InitializeRigidbodyStaticHeightFields();
 	InitializeRigidbodyStaticConvexComponent();
 	InitializeRigidbodyDynamicConvexComponent();
+	
 	InitializeVehiclesAndWheels();
 }
 
