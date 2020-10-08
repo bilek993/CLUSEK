@@ -116,7 +116,7 @@ PatchTess ConstantHS(InputPatch<HS_INPUT, 4> patch, uint patchID : SV_PrimitiveI
 }
 
 [domain("quad")]
-[partitioning("fractional_even")]
+[partitioning("pow2")]
 [outputtopology("triangle_cw")]
 [outputcontrolpoints(4)]
 [patchconstantfunc("ConstantHS")]
