@@ -24,6 +24,7 @@
 #include "../../Physics/PhysicsFilterShader.h"
 #include "../../Loaders/PhysicsMaterialLoader.h"
 #include "../../Loaders/ResourcesLoader.h"
+#include "../Components/RigidbodyStaticConvexComponent.h"
 #include "../Components/RigidbodyStaticCylinderComponent.h"
 
 void PhysicsSystem::Start()
@@ -448,6 +449,24 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 
 void PhysicsSystem::InitializeRigidbodyStaticConvexComponent()
 {
+	Logger::Debug("Preparing to initialize rigidbody static convex...");
+
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyStaticConvexComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticConvexComponent &rigidbodyStaticConvexComponent, auto _)
+	{
+		const auto geometry = physx::PxConvexMeshGeometry(ModelLoader::GetConvexResource(rigidbodyStaticConvexComponent.ConvexModelId));
+
+		rigidbodyStaticConvexComponent.Body = PxCreateStatic(	*Physics,
+																CalculatePxTransform(transformComponent),
+																geometry,
+																*physicsMaterialComponent.Material,
+																CalculateOffsetPxTransform(rigidbodyStaticConvexComponent));
+
+		SetFiltersForComponent(	*rigidbodyStaticConvexComponent.Body,
+								physicsMaterialComponent.SurfaceFilterType);
+
+		Scene->addActor(*rigidbodyStaticConvexComponent.Body);
+	});
 }
 
 void PhysicsSystem::InitializeRigidbodyDynamicConvexComponent()
