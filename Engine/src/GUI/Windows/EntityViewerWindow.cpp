@@ -21,6 +21,8 @@
 #include "../../ECS/Components/RigidbodyStaticCylinderComponent.h"
 #include "../../ECS/Components/CommentComponent.h"
 #include "../../ECS/Components/GrassComponent.h"
+#include "../../ECS/Components/RigidbodyDynamicConvexComponent.h"
+#include "../../ECS/Components/RigidbodyStaticConvexComponent.h"
 
 void EntityViewerWindow::Draw()
 {
@@ -63,6 +65,8 @@ void EntityViewerWindow::DrawList()
 		DrawComponent<RigidbodyStaticHeightFieldsComponent>(entity, "Rigidbody Static Height Fields Component");
 		DrawComponent<RigidbodyStaticPlaneComponent>(entity, "Rigidbody Static Plane Component");
 		DrawComponent<RigidbodyStaticSphereComponent>(entity, "Rigidbody Static Sphere Component");
+		DrawComponent<RigidbodyStaticConvexComponent>(entity, "Rigidbody Static Convex Component");
+		DrawComponent<RigidbodyDynamicConvexComponent>(entity, "Rigidbody Dynamic Convex Component");
 		DrawComponent<SkyboxComponent>(entity, "Skybox Component");
 		DrawComponent<TerrainComponent>(entity, "Terrain Component");
 		DrawComponent<TransformComponent>(entity, "Transform Component");
