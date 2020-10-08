@@ -247,6 +247,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicConvexComponentEditor.h" />
     <ClInclude Include="src\GUI\Components\RigidbodyStaticConvexComponentEditor.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicConvexComponentLoader.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyStaticConvexComponentLoader.h" />

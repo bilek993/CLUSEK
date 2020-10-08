@@ -1190,6 +1190,9 @@
     <ClInclude Include="src\GUI\Components\RigidbodyStaticConvexComponentEditor.h">
       <Filter>Header Files\GUI\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\GUI\Components\RigidbodyDynamicConvexComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="res\Shaders\Surface\UberShader\uber_pixel_shader.hlsl">
