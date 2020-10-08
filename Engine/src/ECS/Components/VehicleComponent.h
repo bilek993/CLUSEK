@@ -10,6 +10,8 @@ struct VehicleComponent final
 	std::string VehicleId;
 	float Mass;
 	std::string ConvexModelId;
+	DirectX::XMFLOAT3 ConvexPositionOffsetVector;
+	DirectX::XMFLOAT3 ConvexRotationOffsetVector;
 	float DimensionX;
 	float DimensionY;
 	float DimensionZ;

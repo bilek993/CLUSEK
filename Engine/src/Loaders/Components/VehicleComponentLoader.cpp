@@ -28,4 +28,26 @@ void VehicleComponentLoader::Add(nlohmann::json& json, entt::registry& registry,
 	MAP_LOADER_BASIC_FIELD(ClutchAccuracyMode, json, component, std::string);
 	MAP_LOADER_BASIC_FIELD(ClutchStrength, json, component, float);
 	MAP_LOADER_BASIC_FIELD(AckermannAccuracy, json, component, float);
+
+	if (!json["ConvexPositionOffsetX"].is_null() && !json["ConvexPositionOffsetY"].is_null() && !json["ConvexPositionOffsetZ"].is_null())
+	{
+		const auto x = json["ConvexPositionOffsetX"].get<float>();
+		const auto y = json["ConvexPositionOffsetY"].get<float>();
+		const auto z = json["ConvexPositionOffsetZ"].get<float>();
+
+		component.ConvexPositionOffsetVector = DirectX::XMFLOAT3(x, y, z);
+	}
+
+	if (!json["ConvexRotationOffsetX"].is_null() && !json["ConvexRotationOffsetY"].is_null() && !json["ConvexRotationOffsetZ"].is_null())
+	{
+		auto x = json["ConvexRotationOffsetX"].get<float>();
+		auto y = json["ConvexRotationOffsetY"].get<float>();
+		auto z = json["ConvexRotationOffsetZ"].get<float>();
+
+		x *= M_PI / 180.0f;
+		y *= M_PI / 180.0f;
+		z *= M_PI / 180.0f;
+
+		component.ConvexRotationOffsetVector = DirectX::XMFLOAT3(x, y, z);
+	}
 }
