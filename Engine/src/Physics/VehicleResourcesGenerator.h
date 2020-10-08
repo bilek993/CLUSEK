@@ -19,7 +19,7 @@ public:
 private:
 	static physx::PxRigidDynamic* Create4WheelVehicleActor(physx::PxPhysics* physics, const physx::PxCooking* cooking,
 		const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
-		const physx::PxVec3& vehicleDimensions, const physx::PxVehicleChassisData& chassisData, int wheelsCount);
+		physx::PxConvexMesh* vehicleMesh, const physx::PxVehicleChassisData& chassisData, int wheelsCount);
 
 	static std::vector<physx::PxVec3> GenerateWheelsOffsets(const TransformComponent& vehicleTransformComponent,
 		const VehicleComponent& vehicleComponent, int wheelsCount);

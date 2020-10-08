@@ -3,6 +3,7 @@
 #include "../Renderer/TransformLogic.h"
 #include "PhysicsUnitConversion.h"
 #include "PhysicsFilterHelper.h"
+#include "../Loaders/ModelLoader.h"
 #include "../Utils/Logger.h"
 
 physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::PxPhysics* physics,
@@ -26,11 +27,15 @@ physx::PxVehicleDrive4W* VehicleResourcesGenerator::Create4WheelVehicle(physx::P
 	chassisData.mMass = vehicleComponent.Mass;
 	chassisData.mCMOffset = vehicleCenterOfMassOffset;
 
+	const auto vehicleMesh = vehicleComponent.ConvexModelId.empty() ? 
+								PhysicsMeshGenerator::CreateCustomBox(*physics, *cooking, vehicleDimensions) :
+								ModelLoader::GetConvexResource(vehicleComponent.ConvexModelId);
+
 	const auto vehicleActor = Create4WheelVehicleActor(	physics, 
 														cooking, 
 														vehicleComponent, 
 														vehicleMaterialComponent,
-														vehicleDimensions, 
+														vehicleMesh, 
 														chassisData,
 														wheelsCount);
 
@@ -98,7 +103,7 @@ float VehicleResourcesGenerator::CalculateWheelMOI(const float mass, const float
 
 physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx::PxPhysics* physics,
 	const physx::PxCooking* cooking, const VehicleComponent& vehicleComponent, const PhysicsMaterialComponent& vehicleMaterialComponent,
-	const physx::PxVec3& vehicleDimensions, const physx::PxVehicleChassisData& chassisData, const int wheelsCount)
+	physx::PxConvexMesh* vehicleMesh, const physx::PxVehicleChassisData& chassisData, const int wheelsCount)
 {
 	std::vector<physx::PxConvexMesh*> wheelMeshes;
 	for (auto i = 0; i < wheelsCount; i++)
@@ -106,8 +111,6 @@ physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx
 		wheelMeshes.emplace_back(PhysicsMeshGenerator::CreateCylinder(*physics, *cooking,
 			vehicleComponent.Wheels[i]->Width, vehicleComponent.Wheels[i]->Radius));
 	}
-
-	const auto vehicleMesh = PhysicsMeshGenerator::CreateCustomBox(*physics, *cooking, vehicleDimensions);
 
 	const auto vehicleActor = physics->createRigidDynamic(physx::PxTransform(physx::PxIdentity));
 
