@@ -46,6 +46,8 @@ private:
 	void InitializeRigidbodyDynamicCapsuleComponents();
 	void InitializeRigidbodyStaticCylinderComponents();
 	void InitializeRigidbodyDynamicCylinderComponents();
+	void InitializeRigidbodyStaticConvexComponent();
+	void InitializeRigidbodyDynamicConvexComponent();
 	void InitializeRigidbodyStaticHeightFields();
 	void InitializeVehiclesAndWheels();
 

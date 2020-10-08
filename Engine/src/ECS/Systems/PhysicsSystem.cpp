@@ -51,7 +51,8 @@ void PhysicsSystem::Rebuild()
 	InitializeRigidbodyStaticCylinderComponents();
 	InitializeRigidbodyDynamicCylinderComponents();
 	InitializeRigidbodyStaticHeightFields();
-
+	InitializeRigidbodyStaticConvexComponent();
+	InitializeRigidbodyDynamicConvexComponent();
 	InitializeVehiclesAndWheels();
 }
 
@@ -443,6 +444,14 @@ void PhysicsSystem::InitializeRigidbodyDynamicCylinderComponents()
 
 		Scene->addActor(*rigidbodyDynamicCylinderComponent.Body);
 	});
+}
+
+void PhysicsSystem::InitializeRigidbodyStaticConvexComponent()
+{
+}
+
+void PhysicsSystem::InitializeRigidbodyDynamicConvexComponent()
+{
 }
 
 void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
