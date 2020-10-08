@@ -112,6 +112,8 @@ void EntityCreatorWindow::AddComponents(nlohmann::json& json, const entt::regist
 		MAP_COMPONENT_LOADERS(it, RigidbodyStaticCylinderComponent, *Registry, entity);
 		MAP_COMPONENT_LOADERS(it, RigidbodyDynamicCylinderComponent, *Registry, entity);
 		MAP_COMPONENT_LOADERS(it, RigidbodyStaticHeightFieldsComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyStaticConvexComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RigidbodyDynamicConvexComponent, *Registry, entity);
 		MAP_COMPONENT_LOADERS(it, VehicleComponent, *Registry, entity);
 		MAP_COMPONENT_LOADERS(it, WheelComponent, *Registry, entity);
 		MAP_COMPONENT_LOADERS(it, VehiclePlayerControllerComponent, *Registry, entity);

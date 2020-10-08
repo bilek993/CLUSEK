@@ -11,10 +11,12 @@
 #include "../../Loaders/Components/PhysicsMaterialComponentLoader.h"
 #include "../../Loaders/Components/RigidbodyDynamicBoxComponentLoader.h"
 #include "../../Loaders/Components/RigidbodyDynamicCapsuleComponentLoader.h"
+#include "../../Loaders/Components/RigidbodyDynamicConvexComponentLoader.h"
 #include "../../Loaders/Components/RigidbodyDynamicCylinderComponentLoader.h"
 #include "../../Loaders/Components/RigidbodyDynamicSphereComponentLoader.h"
 #include "../../Loaders/Components/RigidbodyStaticBoxComponentLoader.h"
 #include "../../Loaders/Components/RigidbodyStaticCapsuleComponentLoader.h"
+#include "../../Loaders/Components/RigidbodyStaticConvexComponentLoader.h"
 #include "../../Loaders/Components/RigidbodyStaticCylinderComponentLoader.h"
 #include "../../Loaders/Components/RigidbodyStaticHeightFieldsComponentLoader.h"
 #include "../../Loaders/Components/RigidbodyStaticPlaneComponentLoader.h"
@@ -63,6 +65,8 @@ private:
 	inline static RigidbodyStaticCylinderComponentLoader RigidbodyStaticCylinderComponentLoaderInstance;
 	inline static RigidbodyDynamicCylinderComponentLoader RigidbodyDynamicCylinderComponentLoaderInstance;
 	inline static RigidbodyStaticHeightFieldsComponentLoader RigidbodyStaticHeightFieldsComponentLoaderInstance;
+	inline static RigidbodyStaticConvexComponentLoader RigidbodyStaticConvexComponentLoaderInstance;
+	inline static RigidbodyDynamicConvexComponentLoader RigidbodyDynamicConvexComponentLoaderInstance;
 	inline static VehicleComponentLoader VehicleComponentLoaderInstance;
 	inline static WheelComponentLoader WheelComponentLoaderInstance;
 	inline static VehiclePlayerControllerComponentLoader VehiclePlayerControllerComponentLoaderInstance;
