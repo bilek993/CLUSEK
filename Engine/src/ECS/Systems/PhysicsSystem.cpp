@@ -24,6 +24,7 @@
 #include "../../Physics/PhysicsFilterShader.h"
 #include "../../Loaders/PhysicsMaterialLoader.h"
 #include "../../Loaders/ResourcesLoader.h"
+#include "../Components/RigidbodyDynamicConvexComponent.h"
 #include "../Components/RigidbodyStaticConvexComponent.h"
 #include "../Components/RigidbodyStaticCylinderComponent.h"
 
@@ -455,9 +456,10 @@ void PhysicsSystem::InitializeRigidbodyStaticConvexComponent()
 		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyStaticConvexComponent &rigidbodyStaticConvexComponent, auto _)
 	{
 		const auto geometry = physx::PxConvexMeshGeometry(ModelLoader::GetConvexResource(rigidbodyStaticConvexComponent.ConvexModelId));
+		const auto transform = CalculatePxTransform(transformComponent);
 
 		rigidbodyStaticConvexComponent.Body = PxCreateStatic(	*Physics,
-																CalculatePxTransform(transformComponent),
+																transform,
 																geometry,
 																*physicsMaterialComponent.Material,
 																CalculateOffsetPxTransform(rigidbodyStaticConvexComponent));
@@ -471,6 +473,26 @@ void PhysicsSystem::InitializeRigidbodyStaticConvexComponent()
 
 void PhysicsSystem::InitializeRigidbodyDynamicConvexComponent()
 {
+	Logger::Debug("Preparing to initialize rigidbody dynamic convex...");
+
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RigidbodyDynamicConvexComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RigidbodyDynamicConvexComponent &rigidbodyDynamicConvexComponent, auto _)
+	{
+		const auto geometry = physx::PxConvexMeshGeometry(ModelLoader::GetConvexResource(rigidbodyDynamicConvexComponent.ConvexModelId));
+		const auto transform = CalculatePxTransform(transformComponent);
+
+		rigidbodyDynamicConvexComponent.Body = PxCreateDynamic(	*Physics,
+																transform,
+																geometry,
+																*physicsMaterialComponent.Material,
+																rigidbodyDynamicConvexComponent.Density,
+																CalculateOffsetPxTransform(rigidbodyDynamicConvexComponent));
+
+		SetFiltersForComponent(	*rigidbodyDynamicConvexComponent.Body,
+								physicsMaterialComponent.SurfaceFilterType);
+
+		Scene->addActor(*rigidbodyDynamicConvexComponent.Body);
+	});
 }
 
 void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
