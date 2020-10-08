@@ -245,6 +245,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\ECS\Components\RigidbodyStaticConvexComponent.h" />
     <ClInclude Include="src\GUI\EntityCreatorMode.h" />
     <ClInclude Include="src\ECS\Systems\RebuildSystem.h" />
     <ClInclude Include="src\GUI\Windows\EntityCreatorWindow.h" />
