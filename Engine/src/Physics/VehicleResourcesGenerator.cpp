@@ -131,7 +131,7 @@ physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx
 
 	const physx::PxConvexMeshGeometry vehicleGeometry(vehicleMesh);
 	auto vehicleShape = physx::PxRigidActorExt::createExclusiveShape(*vehicleActor, vehicleGeometry, *vehicleMaterialComponent.Material);
-	vehicleShape->setLocalPose(physx::PxTransform(physx::PxIdentity));
+	vehicleShape->setLocalPose(CalculateChassisOffset(vehicleComponent)); // HERE
 
 	vehicleActor->setMass(chassisData.mMass);
 	vehicleActor->setMassSpaceInertiaTensor(chassisData.mMOI);
@@ -329,4 +329,17 @@ void VehicleResourcesGenerator::SetInitialTransform(const TransformComponent& ve
 
 	vehicle->getRigidDynamicActor()->setGlobalPose(physx::PxTransform(position, rotation));
 	vehicle->getRigidDynamicActor()->setRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD, true);
+}
+
+physx::PxTransform VehicleResourcesGenerator::CalculateChassisOffset(const VehicleComponent& vehicleComponent)
+{
+	const physx::PxVec3 position(	vehicleComponent.ConvexPositionOffsetVector.x, 
+									vehicleComponent.ConvexPositionOffsetVector.y,
+									vehicleComponent.ConvexPositionOffsetVector.z);
+	
+	const auto rotation = PhysicsUnitConversion::DirectEulerToPhysicsQuaternion(DirectX::XMFLOAT3(	vehicleComponent.ConvexRotationOffsetVector.x,
+																									vehicleComponent.ConvexRotationOffsetVector.y,
+																									vehicleComponent.ConvexRotationOffsetVector.z));
+	
+	return physx::PxTransform(position, rotation);
 }

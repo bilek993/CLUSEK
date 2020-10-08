@@ -31,4 +31,6 @@ private:
 		const physx::PxVehicleWheelsSimData* wheelsSimData);
 
 	static void SetInitialTransform(const TransformComponent& vehicleTransformComponent, physx::PxVehicleDrive4W* vehicle);
+
+	static physx::PxTransform CalculateChassisOffset(const VehicleComponent &vehicleComponent);
 };
