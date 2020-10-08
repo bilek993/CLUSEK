@@ -50,6 +50,8 @@ void EntityEditorWindow::DrawComponentsForEntity()
 	REGISTER_COMPONENT_EDITOR(RigidbodyStaticHeightFieldsComponent, "Rigidbody Static Height Fields Component");
 	REGISTER_COMPONENT_EDITOR(RigidbodyStaticPlaneComponent, "Rigidbody Static Plane Component");
 	REGISTER_COMPONENT_EDITOR(RigidbodyStaticSphereComponent, "Rigidbody Static Sphere Component");
+	REGISTER_COMPONENT_EDITOR(RigidbodyStaticConvexComponent, "Rigidbody Static Convex Component");
+	REGISTER_COMPONENT_EDITOR(RigidbodyDynamicConvexComponent, "Rigidbody Dynamic Convex Component");
 	REGISTER_COMPONENT_EDITOR(SkyboxComponent, "Skybox Component");
 	REGISTER_COMPONENT_EDITOR(TerrainComponent, "Terrain Component");
 	REGISTER_COMPONENT_EDITOR(TransformComponent, "Transform Component");

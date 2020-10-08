@@ -24,6 +24,8 @@
 #include "../Components/WheelComponentEditor.h"
 #include "../Components/CommentComponentEditor.h"
 #include "../Components/GrassComponentEditor.h"
+#include "../Components/RigidbodyDynamicConvexComponentEditor.h"
+#include "../Components/RigidbodyStaticConvexComponentEditor.h"
 
 #define REGISTER_COMPONENT_EDITOR(COMPONENT_CLASS, COMPONENT_NAME) DrawComponentDetails<COMPONENT_CLASS>(SelectedEntity, COMPONENT_CLASS##EditorInstance, COMPONENT_NAME)
 
@@ -54,6 +56,8 @@ private:
 	RigidbodyStaticHeightFieldsComponentEditor RigidbodyStaticHeightFieldsComponentEditorInstance;
 	RigidbodyStaticPlaneComponentEditor RigidbodyStaticPlaneComponentEditorInstance;
 	RigidbodyStaticSphereComponentEditor RigidbodyStaticSphereComponentEditorInstance;
+	RigidbodyStaticConvexComponentEditor RigidbodyStaticConvexComponentEditorInstance;
+	RigidbodyDynamicConvexComponentEditor RigidbodyDynamicConvexComponentEditorInstance;
 	SkyboxComponentEditor SkyboxComponentEditorInstance;
 	TerrainComponentEditor TerrainComponentEditorInstance;
 	TransformComponentEditor TransformComponentEditorInstance;
