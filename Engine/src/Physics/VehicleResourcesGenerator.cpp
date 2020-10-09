@@ -131,7 +131,7 @@ physx::PxRigidDynamic* VehicleResourcesGenerator::Create4WheelVehicleActor(physx
 
 	const physx::PxConvexMeshGeometry vehicleGeometry(vehicleMesh);
 	auto vehicleShape = physx::PxRigidActorExt::createExclusiveShape(*vehicleActor, vehicleGeometry, *vehicleMaterialComponent.Material);
-	vehicleShape->setLocalPose(CalculateChassisOffset(vehicleComponent)); // HERE
+	vehicleShape->setLocalPose(CalculateChassisOffset(vehicleComponent));
 
 	vehicleActor->setMass(chassisData.mMass);
 	vehicleActor->setMassSpaceInertiaTensor(chassisData.mMOI);
