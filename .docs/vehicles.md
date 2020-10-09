@@ -75,22 +75,22 @@ Vehicle rigidbody mass in kilograms.
 * **ConvexModelId** (_optional_, _std::string_)<br/>
 Path to convex mesh collider. If id is not provided, then the convex mesh is generated based on dimensions parameters.
 
-* **ConvexPositionOffsetVectorX** (_optional_, _float_)<br/>
+* **ConvexPositionOffsetX** (_optional_, _float_)<br/>
 Convex mesh position offest on X axis.
 
-* **ConvexPositionOffsetVectorY** (_optional_, _float_)<br/>
+* **ConvexPositionOffsetY** (_optional_, _float_)<br/>
 Convex mesh position offest on Y axis.
 
-* **ConvexPositionOffsetVectorZ** (_optional_, _float_)<br/>
+* **ConvexPositionOffsetZ** (_optional_, _float_)<br/>
 Convex mesh position offest on Z axis.
 
-* **ConvexRotationOffsetVectorX** (_optional_, _float_)<br/>
+* **ConvexRotationOffsetX** (_optional_, _float_)<br/>
 Convex mesh offest roll.
 
-* **ConvexRotationOffsetVectorY** (_optional_, _float_)<br/>
+* **ConvexRotationOffsetY** (_optional_, _float_)<br/>
 Convex mesh offest pitch.
 
-* **ConvexRotationOffsetVectorZ** (_optional_, _float_)<br/>
+* **ConvexRotationOffsetZ** (_optional_, _float_)<br/>
 Convex mesh offest yaw.
 
 * **DimensionX** (_required_, _float_)<br/>
