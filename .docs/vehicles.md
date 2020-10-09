@@ -72,6 +72,27 @@ A unique value for a vehicle. Each vehicle needs to have a different value in th
 * **Mass** (_required_, _float_)<br/>
 Vehicle rigidbody mass in kilograms.
 
+* **ConvexModelId** (_optional_, _std::string_)<br/>
+Path to convex mesh collider. If id is not provided, then the convex mesh is generated based on dimensions parameters.
+
+* **ConvexPositionOffsetVectorX** (_optional_, _float_)<br/>
+Convex mesh position offest on X axis.
+
+* **ConvexPositionOffsetVectorY** (_optional_, _float_)<br/>
+Convex mesh position offest on Y axis.
+
+* **ConvexPositionOffsetVectorZ** (_optional_, _float_)<br/>
+Convex mesh position offest on Z axis.
+
+* **ConvexRotationOffsetVectorX** (_optional_, _float_)<br/>
+Convex mesh offest roll.
+
+* **ConvexRotationOffsetVectorY** (_optional_, _float_)<br/>
+Convex mesh offest pitch.
+
+* **ConvexRotationOffsetVectorZ** (_optional_, _float_)<br/>
+Convex mesh offest yaw.
+
 * **DimensionX** (_required_, _float_)<br/>
 Vehicle chassis size on axis X.
 
