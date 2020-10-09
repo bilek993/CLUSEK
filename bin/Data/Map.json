@@ -41,6 +41,10 @@
 	  "VehicleComponent": {
 		"VehicleId": "PlayerVehicle",
 		"Mass": 1500,
+		"ConvexModelId": "CivilianVehicleCollider",
+		"ConvexRotationOffsetX": 0.0,
+		"ConvexRotationOffsetY": 180.0,
+		"ConvexRotationOffsetZ": 0.0,
 		"DimensionX": 6.94,
 		"DimensionY": 5.6,
 		"DimensionZ": 18.2,
