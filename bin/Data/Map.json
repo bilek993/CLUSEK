@@ -234,10 +234,15 @@
 	  "PhysicsMaterialComponent": {
 	    "Name": "BaseMaterial"
 	  },
-	  "RigidbodyStaticBoxComponent": {
-		"Width": 2.8,
-		"Height": 39.5,
-		"Depth": 2.8
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 1.3,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
 	  }
 	}
   },
@@ -262,10 +267,15 @@
 	  "PhysicsMaterialComponent": {
 	    "Name": "BaseMaterial"
 	  },
-	  "RigidbodyStaticBoxComponent": {
-		"Width": 2.8,
-		"Height": 39.5,
-		"Depth": 2.8
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 0.9,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
 	  }
 	}
   },
@@ -290,10 +300,15 @@
 	  "PhysicsMaterialComponent": {
 	    "Name": "BaseMaterial"
 	  },
-	  "RigidbodyStaticBoxComponent": {
-		"Width": 2.8,
-		"Height": 39.5,
-		"Depth": 2.8
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 0.8,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
 	  }
 	}
   },
