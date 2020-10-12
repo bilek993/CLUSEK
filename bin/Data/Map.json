@@ -883,6 +883,20 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
+	    "PositionX": 5371.583,
+		"PositionY": -48.210,
+		"PositionZ": 5610.264
+	  },
+	  "ModelRenderComponent": {
+	    "ModelId": "Water",
+		"MaterialId": "Data/Textures/Water/material.json"
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
 	    "PositionX": -1800.0,
 		"PositionY": -73.0,
 		"PositionZ": -1800.0

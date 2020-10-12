@@ -21,7 +21,9 @@
 	"Spruce0": "Data/Models/Trees/Spruce0.fbx",
 	"Spruce1": "Data/Models/Trees/Spruce1.fbx",
 	"Spruce2": "Data/Models/Trees/Spruce2.fbx",
-	"SpruceLowPoly": "Data/Models/Trees/SpruceLowPoly.fbx"
+	"SpruceLowPoly": "Data/Models/Trees/SpruceLowPoly.fbx",
+	
+	"Water": "Data/Models/Water/Water.fbx"
   },
   
   "GrassModels": {
@@ -215,7 +217,18 @@
 	  "Path": "Data/Textures/Trees/Spruce/SpruceLeafNormal.dds"
 	},
 	"SpruceLowPolyAlbedo": {
-		"Path": "Data/Textures/Trees/Spruce/SpruceLowPolyAlbedo.dds"
+	  "Path": "Data/Textures/Trees/Spruce/SpruceLowPolyAlbedo.dds"
+	},
+	
+	"WaterAlbedo": {
+	  "Path": "Data/Textures/Water/WaterAlbedo.png",
+	  "SRGBMode": "FORCED"
+	},
+	"WaterMetalness": {
+	  "Path": "Data/Textures/Water/WaterMetalness.png"
+	},
+	"WaterNormal": {
+	  "Path": "Data/Textures/Water/WaterNormal.png"
 	}
   }
 }
