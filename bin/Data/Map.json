@@ -260,7 +260,7 @@
 	  "ModelRenderComponent": {
 		"LowPolyDistance": 350.0,
 		"LodTransitionDistance": 50.0,
-	    "ModelId": "Beech0",
+	    "ModelId": "Beech2",
 		"LowPolyModelId": "BeechLowPoly",
 		"MaterialId": "Data/Textures/Trees/Beech/material.json"
 	  },
@@ -316,6 +316,171 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
+	    "PositionX": 1870.552,
+		"PositionY": 69.810,
+		"PositionZ": 673.341,
+		"RotationX": 0.0,
+		"RotationY": 67.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Oak1",
+		"LowPolyModelId": "OakLowPoly",
+		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 1.3,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	        "PositionX": 1811.199,
+		"PositionY": 71.017,
+		"PositionZ": 673.341,
+		"RotationX": 0.0,
+		"RotationY": -31.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Beech2",
+		"LowPolyModelId": "BeechLowPoly",
+		"MaterialId": "Data/Textures/Trees/Beech/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 0.9,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1860.180,
+		"PositionY": 72.302,
+		"PositionZ": 639.014,
+		"RotationX": 0.0,
+		"RotationY": 179.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Oak2",
+		"LowPolyModelId": "OakLowPoly",
+		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 1.3,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1836.758,
+		"PositionY": 70.475,
+		"PositionZ": 800.345,
+		"RotationX": 0.0,
+		"RotationY": 0.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Oak0",
+		"LowPolyModelId": "OakLowPoly",
+		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 1.3,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1782.752,
+		"PositionY": 71.628,
+		"PositionZ": 805.937,
+		"RotationX": 0.0,
+		"RotationY": 72.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Beech1",
+		"LowPolyModelId": "BeechLowPoly",
+		"MaterialId": "Data/Textures/Trees/Beech/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 0.9,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
 	    "PositionX": -30.0,
 		"PositionY": -0.1,
 		"PositionZ": 0.0,
@@ -343,6 +508,270 @@
     "Tags": [],
 	"Components": {
 	  "TransformComponent": {
+	    "PositionX": 1759.612,
+		"PositionY": 70.537,
+		"PositionZ": 774.028,
+		"RotationX": 0.0,
+		"RotationY": 177.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Oak1",
+		"LowPolyModelId": "OakLowPoly",
+		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 1.3,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1848.470,
+		"PositionY": 69.810,
+		"PositionZ": 718.920,
+		"RotationX": 0.0,
+		"RotationY": -57.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Oak2",
+		"LowPolyModelId": "OakLowPoly",
+		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 1.3,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1855.343,
+		"PositionY": 69.695,
+		"PositionZ": 760.861,
+		"RotationX": 0.0,
+		"RotationY": 199.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Oak0",
+		"LowPolyModelId": "OakLowPoly",
+		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 1.3,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1948.951,
+		"PositionY": 70.290,
+		"PositionZ": 650.148,
+		"RotationX": 6.288,
+		"RotationY": -36.601,
+		"RotationZ": -15.645
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Beech0",
+		"LowPolyModelId": "BeechLowPoly",
+		"MaterialId": "Data/Textures/Trees/Beech/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 0.9,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1820.459,
+		"PositionY": 70.544,
+		"PositionZ": 741.575,
+		"RotationX": 0.0,
+		"RotationY": -68.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Oak1",
+		"LowPolyModelId": "OakLowPoly",
+		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 1.3,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1849.004,
+		"PositionY": 70.240,
+		"PositionZ": 686.564,
+		"RotationX": 0.0,
+		"RotationY": 78.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Beech0",
+		"LowPolyModelId": "BeechLowPoly",
+		"MaterialId": "Data/Textures/Trees/Beech/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 0.9,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1849.295,
+		"PositionY": 73.840,
+		"PositionZ": 622.505,
+		"RotationX": 0.0,
+		"RotationY": 5.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Oak2",
+		"LowPolyModelId": "OakLowPoly",
+		"MaterialId": "Data/Textures/Trees/Oak/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 1.3,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1812.727,
+		"PositionY": 72.405,
+		"PositionZ": 634.593,
+		"RotationX": 0.0,
+		"RotationY": 22.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Beech0",
+		"LowPolyModelId": "BeechLowPoly",
+		"MaterialId": "Data/Textures/Trees/Beech/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 0.9,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
 	    "PositionX": -30.0,
 		"PositionY": -0.1,
 		"PositionZ": 2.5,
@@ -363,6 +792,39 @@
 	    "Width": 2.0,
 		"Radius": 1.0,
 		"Density": 2.0
+	  }
+	}
+  },
+  {
+    "Tags": [],
+	"Components": {
+	  "TransformComponent": {
+	    "PositionX": 1803.617,
+		"PositionY": 70.862,
+		"PositionZ": 767.332,
+		"RotationX": 0.0,
+		"RotationY": 54.0,
+		"RotationZ": 0.0
+	  },
+	  "ModelRenderComponent": {
+		"LowPolyDistance": 350.0,
+		"LodTransitionDistance": 50.0,
+	    "ModelId": "Beech1",
+		"LowPolyModelId": "BeechLowPoly",
+		"MaterialId": "Data/Textures/Trees/Beech/material.json"
+	  },
+	  "PhysicsMaterialComponent": {
+	    "Name": "BaseMaterial"
+	  },
+	  "RigidbodyStaticCapsuleComponent": {
+		"Height": 16.0,
+		"Radius": 0.9,
+		"RotationOffsetX": 0.0,
+		"RotationOffsetY": 0.0,
+		"RotationOffsetZ": 90.0,
+		"PositionOffsetX": 0.0,
+		"PositionOffsetY": 8.0,
+		"PositionOffsetZ": 0.0
 	  }
 	}
   },
