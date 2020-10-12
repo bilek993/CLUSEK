@@ -1,5 +1,6 @@
 {
   "Water": {
+	"Alpha": 0.825,
     "AlbedoTexture": "WaterAlbedo",
 	"MetalicSmoothnessTexture": "WaterMetalness",
 	"NormalTexture": "WaterNormal"
