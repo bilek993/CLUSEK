@@ -8,6 +8,15 @@ void EntityCreatorWindow::Draw()
 {
 	ImGui::Begin("Entity creator", &IsEnabled);
 
+	DrawCore();
+	ImGui::Separator();
+	DrawSettings();
+	
+	ImGui::End();
+}
+
+void EntityCreatorWindow::DrawCore()
+{
 	ImGui::Text(Mode == 0 ? "Entity description:" : "Entities description:");
 	
 	ImGui::InputTextMultiline(	"##EntityJsonText", 
@@ -32,14 +41,15 @@ void EntityCreatorWindow::Draw()
 			Logger::Error("Incorrect creator mode!");
 		}
 	}
+}
 
-	ImGui::Separator();
-
+void EntityCreatorWindow::DrawSettings()
+{
 	ImGui::Text("Mode:");
 	ImGui::RadioButton("Single entity", reinterpret_cast<int*>(&Mode), Single);
 	ImGui::RadioButton("Array of entities", reinterpret_cast<int*>(&Mode), Array);
-	
-	ImGui::End();
+
+	ImGui::Checkbox("Clear after creating", &ClearAfterCreating);
 }
 
 void EntityCreatorWindow::CreateEntityWithComponents()
@@ -55,8 +65,11 @@ void EntityCreatorWindow::CreateEntityWithComponents()
 	Logger::Debug("Rebuilding systems...");
 	RebuildEntities();
 
-	Logger::Debug("Clearing entity text field...");
-	EntityJsonText = "";
+	if (ClearAfterCreating)
+	{
+		Logger::Debug("Clearing entity text field...");
+		EntityJsonText = "";
+	}
 }
 
 void EntityCreatorWindow::CreateEntitiesWithComponents()

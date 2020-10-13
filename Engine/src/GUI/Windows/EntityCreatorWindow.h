@@ -37,6 +37,9 @@ protected:
 	void Draw() override;
 
 private:
+	void DrawCore();
+	void DrawSettings();
+	
 	void CreateEntityWithComponents();
 	void CreateEntitiesWithComponents();
 
@@ -46,6 +49,7 @@ private:
 	void RebuildEntities() const;
 
 	EntityCreatorMode Mode = Single;
+	bool ClearAfterCreating = true;
 	std::string EntityJsonText{};
 
 	inline static CameraComponentLoader CameraComponentLoaderInstance;
