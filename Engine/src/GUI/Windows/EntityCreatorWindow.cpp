@@ -2,7 +2,9 @@
 #include <imgui.h>
 #include "../../Tags.h"
 #include "../../ECS/Components/TransformComponent.h"
+#include "../../Utils/CameraLocator.h"
 #include "../../Utils/ImGuiExtensions.h"
+#include "../../Utils/RayUtil.h"
 
 void EntityCreatorWindow::Draw()
 {
@@ -11,6 +13,9 @@ void EntityCreatorWindow::Draw()
 	DrawCore();
 	ImGui::Separator();
 	DrawSettings();
+
+	if (UpdateTransformComponentOnClick)
+		HandleClicking();
 	
 	ImGui::End();
 }
@@ -49,7 +54,92 @@ void EntityCreatorWindow::DrawSettings()
 	ImGui::RadioButton("Single entity", reinterpret_cast<int*>(&Mode), Single);
 	ImGui::RadioButton("Array of entities", reinterpret_cast<int*>(&Mode), Array);
 
+	ImGui::Text("Other settings:");
+	
 	ImGui::Checkbox("Clear after creating", &ClearAfterCreating);
+
+	if (Mode == Single)
+		ImGui::Checkbox("Update transform component on click (it will mess up JSON formatting)", &UpdateTransformComponentOnClick);
+}
+
+void EntityCreatorWindow::HandleClicking()
+{
+	if (IoData->MouseTracker.leftButton != DirectX::Mouse::ButtonStateTracker::ButtonState::PRESSED)
+		return;
+
+	if (IoData->MouseState.positionMode == DirectX::Mouse::MODE_RELATIVE)
+	{
+		Logger::Debug("Skipping handling mouse for UI due to relative mouse mode!");
+		return;
+	}
+
+	auto jsonObject = nlohmann::json::parse(EntityJsonText);
+	if (jsonObject.is_null())
+	{
+		Logger::Warning("Empty object has been passed!");
+		return;
+	}
+
+	auto jsonComponents = jsonObject["Components"];
+	if (jsonComponents.is_null())
+	{
+		Logger::Warning("Components are not presented!");
+		return;
+	}
+
+	auto jsonTransformComponent = jsonComponents["TransformComponent"];
+	if (jsonComponents.is_null())
+	{
+		Logger::Warning("Transform component is not presented!");
+		return;
+	}
+
+	const auto hit = RayCastPhysics(100000.0f);
+	if (!hit.hasBlock)
+	{
+		Logger::Debug("Ray didn't hit any object.");
+		return;
+	}
+	
+	jsonTransformComponent["PositionX"] = hit.block.position.x;
+	jsonTransformComponent["PositionY"] = hit.block.position.y;
+	jsonTransformComponent["PositionZ"] = hit.block.position.z;
+
+	EntityJsonText = jsonObject.dump();
+}
+
+physx::PxRaycastBuffer EntityCreatorWindow::RayCastPhysics(const float maxDistance) const
+{
+	auto& mainCameraComponent = CameraLocator::GetMainCamera(Registry);
+	
+	DirectX::XMVECTOR rayOriginVector{};
+	DirectX::XMVECTOR rayDirectionVector{};
+	
+	RayUtil::MousePositionToRayOriginAndDirection(	IoData->MouseState.x,
+													IoData->MouseState.y,
+													Config->WindowWidth,
+													Config->WindowHeight,
+													mainCameraComponent.ViewMatrix,
+													mainCameraComponent.ProjectionMatrix,
+													rayOriginVector,
+													rayDirectionVector);
+
+	DirectX::XMFLOAT3 rayOrigin{};
+	DirectX::XMFLOAT3 rayDirection{};
+	
+	XMStoreFloat3(&rayOrigin, rayOriginVector);
+	XMStoreFloat3(&rayDirection, rayDirectionVector);
+
+	const auto origin = physx::PxVec3(rayOrigin.x, rayOrigin.y, rayOrigin.z);
+	const auto unitDir = physx::PxVec3(rayDirection.x, rayDirection.y, rayDirection.z);
+	physx::PxRaycastBuffer hit;
+	
+	const auto physicsSystem = dynamic_cast<PhysicsSystem*>((*Systems)[PhysicsSystemId].System.get());
+	
+	const auto scene = physicsSystem->GetPointerToScene();
+	scene->raycast(origin, unitDir, maxDistance, hit);
+
+	return hit;
 }
 
 void EntityCreatorWindow::CreateEntityWithComponents()

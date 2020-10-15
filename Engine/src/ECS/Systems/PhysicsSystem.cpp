@@ -89,6 +89,11 @@ std::shared_ptr<PhysicsMaterialManager> PhysicsSystem::GetPhysicsMaterialManager
 	return MaterialManager;
 }
 
+physx::PxScene* PhysicsSystem::GetPointerToScene() const
+{
+	return Scene;
+}
+
 void PhysicsSystem::UpdateFrictionPairs()
 {
 	Logger::Debug("Updating friction pairs in progress...");

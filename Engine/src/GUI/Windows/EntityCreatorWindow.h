@@ -27,6 +27,7 @@
 #include "../../Loaders/Components/VehicleComponentLoader.h"
 #include "../../Loaders/Components/VehiclePlayerControllerComponentLoader.h"
 #include "../../Loaders/Components/WheelComponentLoader.h"
+#include "../../ECS/Systems/PhysicsSystem.h"
 
 #define MAP_LOADER_TAGS(INPUT_TAG, EXPECTED_TAG, HASHED_TAG, REGISTRY, ENTITY) if (strcmp(INPUT_TAG, EXPECTED_TAG) == 0) REGISTRY.assign<entt::tag<HASHED_TAG>>(ENTITY);
 #define MAP_COMPONENT_LOADERS(JSON, COMPONENT_ID, REGISTRY, ENTITY) if (JSON.key() == #COMPONENT_ID) COMPONENT_ID##LoaderInstance.Add(JSON.value(), REGISTRY, ENTITY);
@@ -39,6 +40,9 @@ protected:
 private:
 	void DrawCore();
 	void DrawSettings();
+
+	void HandleClicking();
+	physx::PxRaycastBuffer RayCastPhysics(float maxDistance) const;
 	
 	void CreateEntityWithComponents();
 	void CreateEntitiesWithComponents();
@@ -50,6 +54,7 @@ private:
 
 	EntityCreatorMode Mode = Single;
 	bool ClearAfterCreating = true;
+	bool UpdateTransformComponentOnClick = false;
 	std::string EntityJsonText{};
 
 	inline static CameraComponentLoader CameraComponentLoaderInstance;

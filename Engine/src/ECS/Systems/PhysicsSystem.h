@@ -23,6 +23,8 @@ public:
 	physx::PxPhysics* GetPointerToInternalPhysics() const;
 	std::shared_ptr<PhysicsMaterialManager> GetPhysicsMaterialManagerSmartPointer() const;
 
+	physx::PxScene* GetPointerToScene() const;
+
 	void UpdateFrictionPairs();
 
 	PhysicsSystem(const PhysicsSystem& other) = delete;
