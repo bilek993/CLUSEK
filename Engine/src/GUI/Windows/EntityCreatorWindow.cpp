@@ -58,7 +58,16 @@ void EntityCreatorWindow::DrawSettings()
 	ImGui::Checkbox("Clear after creating", &ClearAfterCreating);
 
 	if (Mode == Single)
+	{
 		ImGui::Checkbox("Update transform component on click (it will mess up JSON formatting)", &UpdateTransformComponentOnClick);
+
+		if (UpdateTransformComponentOnClick)
+		{
+			ImGui::Checkbox("Random rotation on X axis", &RandomRotationX);
+			ImGui::Checkbox("Random rotation on Y axis", &RandomRotationY);
+			ImGui::Checkbox("Random rotation on Z axis", &RandomRotationZ);
+		}
+	}
 }
 
 void EntityCreatorWindow::HandleClicking()
@@ -109,6 +118,13 @@ void EntityCreatorWindow::HandleClicking()
 	jsonTransformComponent["PositionX"] = hit.block.position.x;
 	jsonTransformComponent["PositionY"] = hit.block.position.y;
 	jsonTransformComponent["PositionZ"] = hit.block.position.z;
+
+	if (RandomRotationX)
+		jsonTransformComponent["RotationX"] = RotationRandomDistribution(RandomGeneratorEngine);
+	if (RandomRotationY)
+		jsonTransformComponent["RotationY"] = RotationRandomDistribution(RandomGeneratorEngine);
+	if (RandomRotationZ)
+		jsonTransformComponent["RotationZ"] = RotationRandomDistribution(RandomGeneratorEngine);
 
 	EntityJsonText = jsonObject.dump();
 }

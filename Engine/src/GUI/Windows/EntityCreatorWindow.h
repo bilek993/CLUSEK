@@ -1,5 +1,6 @@
 #pragma once
 #include <json.hpp>
+#include <random>
 #include "BaseWindow.h"
 #include "../EntityCreatorMode.h"
 #include "../../Loaders/Components/CameraComponentLoader.h"
@@ -34,6 +35,9 @@
 
 class EntityCreatorWindow final : public BaseWindow
 {
+public:
+	EntityCreatorWindow() : RandomGeneratorEngine(RandomDevice()), RotationRandomDistribution(-360.0, 360.0) {}
+
 protected:
 	void Draw() override;
 
@@ -55,7 +59,14 @@ private:
 	EntityCreatorMode Mode = Single;
 	bool ClearAfterCreating = true;
 	bool UpdateTransformComponentOnClick = false;
+	bool RandomRotationX = false;
+	bool RandomRotationY = false;
+	bool RandomRotationZ = false;
 	std::string EntityJsonText{};
+
+	std::random_device RandomDevice{};
+	std::mt19937 RandomGeneratorEngine;
+	std::uniform_real_distribution<> RotationRandomDistribution;
 
 	inline static CameraComponentLoader CameraComponentLoaderInstance;
 	inline static CameraTargetComponentLoader CameraTargetComponentLoaderInstance;
