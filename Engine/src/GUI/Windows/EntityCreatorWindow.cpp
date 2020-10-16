@@ -13,7 +13,7 @@ void EntityCreatorWindow::Draw()
 	ImGui::Separator();
 	DrawSettings();
 
-	if (UpdateTransformComponentOnClick)
+	if (Mode == Single && UpdateTransformComponentOnClick)
 		HandleClicking();
 	
 	ImGui::End();
@@ -21,7 +21,7 @@ void EntityCreatorWindow::Draw()
 
 void EntityCreatorWindow::DrawCore()
 {
-	ImGui::Text(Mode == 0 ? "Entity description:" : "Entities description:");
+	ImGui::Text(Mode == Single ? "Entity description:" : "Entities description:");
 	
 	ImGui::InputTextMultiline(	"##EntityJsonText", 
 								const_cast<char*>(EntityJsonText.c_str()),
