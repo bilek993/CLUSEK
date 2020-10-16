@@ -4,6 +4,7 @@
 #include "../../Utils/CameraLocator.h"
 #include "../../Utils/ImGuiExtensions.h"
 #include "../../Utils/RayUtil.h"
+#include <Windows.h>
 
 void EntityCreatorWindow::Draw()
 {
@@ -45,6 +46,9 @@ void EntityCreatorWindow::DrawCore()
 			Logger::Error("Incorrect creator mode!");
 		}
 	}
+
+	if (ImGui::Button("Copy"))
+		CopyToClipboard();
 }
 
 void EntityCreatorWindow::DrawSettings()
@@ -68,6 +72,13 @@ void EntityCreatorWindow::DrawSettings()
 			ImGui::Checkbox("Random rotation on Z axis", &RandomRotationZ);
 		}
 	}
+}
+
+void EntityCreatorWindow::CopyToClipboard() const
+{
+	ImGui::LogToClipboard();
+	ImGui::LogText(EntityJsonText.c_str());
+	ImGui::LogFinish();
 }
 
 void EntityCreatorWindow::HandleClicking()

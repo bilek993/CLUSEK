@@ -45,6 +45,8 @@ private:
 	void DrawCore();
 	void DrawSettings();
 
+	void CopyToClipboard() const;
+
 	void HandleClicking();
 	physx::PxRaycastBuffer RayCastPhysics(float maxDistance) const;
 	
