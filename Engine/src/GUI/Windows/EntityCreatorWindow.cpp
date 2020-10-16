@@ -1,7 +1,6 @@
 #include "EntityCreatorWindow.h"
 #include <imgui.h>
 #include "../../Tags.h"
-#include "../../ECS/Components/TransformComponent.h"
 #include "../../Utils/CameraLocator.h"
 #include "../../Utils/ImGuiExtensions.h"
 #include "../../Utils/RayUtil.h"
@@ -72,7 +71,7 @@ void EntityCreatorWindow::HandleClicking()
 		Logger::Debug("Skipping handling mouse for UI due to relative mouse mode!");
 		return;
 	}
-
+	
 	auto jsonObject = nlohmann::json::parse(EntityJsonText);
 	if (jsonObject.is_null())
 	{
@@ -80,14 +79,14 @@ void EntityCreatorWindow::HandleClicking()
 		return;
 	}
 
-	auto jsonComponents = jsonObject["Components"];
+	auto& jsonComponents = jsonObject["Components"];
 	if (jsonComponents.is_null())
 	{
 		Logger::Warning("Components are not presented!");
 		return;
 	}
 
-	auto jsonTransformComponent = jsonComponents["TransformComponent"];
+	auto& jsonTransformComponent = jsonComponents["TransformComponent"];
 	if (jsonComponents.is_null())
 	{
 		Logger::Warning("Transform component is not presented!");
