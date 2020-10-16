@@ -47,11 +47,10 @@ void EntityCreatorWindow::DrawCore()
 		}
 	}
 
+	ImGui::SameLine();
+	
 	if (ImGui::Button("Copy"))
-	{
-		ImGui::SameLine();
 		CopyToClipboard();
-	}
 }
 
 void EntityCreatorWindow::DrawSettings()
