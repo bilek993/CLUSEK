@@ -71,6 +71,12 @@ void EntityCreatorWindow::HandleClicking()
 		Logger::Debug("Skipping handling mouse for UI due to relative mouse mode!");
 		return;
 	}
+
+	if (EntityJsonText.empty())
+	{
+		Logger::Warning("No data provided for parsing!");
+		return;
+	}
 	
 	auto jsonObject = nlohmann::json::parse(EntityJsonText);
 	if (jsonObject.is_null())
