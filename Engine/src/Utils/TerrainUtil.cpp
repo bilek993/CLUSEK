@@ -132,7 +132,7 @@ physx::PxHeightFieldGeometry TerrainUtil::GenerateTerrainForPhysx(physx::PxHeigh
 
 	heightField = cooking->createHeightField(desc, physics->getPhysicsInsertionCallback());
 
-	const auto heightScale = terrainComponent.MaxHeight / static_cast<float>(std::numeric_limits<stbi_us>::max());
+	const auto heightScale = terrainComponent.MaxHeight / (static_cast<float>(std::numeric_limits<stbi_us>::max()) / 2);
 
 	physx::PxHeightFieldGeometry geometry(heightField, physx::PxMeshGeometryFlags(), heightScale,
 		terrainComponent.ScaleXZ, terrainComponent.ScaleXZ);
@@ -297,7 +297,7 @@ void TerrainUtil::CalculatePartOfHeightField(const int startX, const int endX, c
 		{
 			const auto pixelOffset = CalculateOffset(data, x, y, width);
 
-			heightFieldSample[x + (y * width)].height = *pixelOffset;
+			heightFieldSample[x + (y * width)].height = *pixelOffset / 2;
 			heightFieldSample[x + (y * width)].setTessFlag();
 			heightFieldSample[x + (y * width)].materialIndex0 = 0;
 			heightFieldSample[x + (y * width)].materialIndex1 = 0;
