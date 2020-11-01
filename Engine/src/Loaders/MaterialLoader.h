@@ -37,7 +37,7 @@ private:
 	{
 		DefaultAlbedo = 0xff9314ff, // Alpha = ff, Blue = 93, Green = 14, Red = ff
 		DefaultNormal = 0xffff8080, // Alpha = ff, Blue = ff, Green = 80, Red = 80
-		DefaultMetalicSmoothness = 0x80000000, // Alpha = 80, Blue = 0, Green = 0, Red = 0
+		DefaultMetalicSmoothness = 0x00000000, // Alpha = 0, Blue = 0, Green = 0, Red = 0
 		DefaultOcclusion = 0xffffffff, // Alpha = ff, Blue = ff, Green = ff, Red = ff
 		DefaultEmission = 0xff000000, // Alpha = ff, Blue = 00, Green = 00, Red = 00
 	};
