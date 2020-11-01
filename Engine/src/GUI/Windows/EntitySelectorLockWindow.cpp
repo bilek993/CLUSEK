@@ -1,5 +1,4 @@
 #include "EntitySelectorLockWindow.h"
-
 #include <imgui.h>
 
 void EntitySelectorLockWindow::Draw()

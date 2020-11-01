@@ -31,7 +31,7 @@
 #include "Windows/GrassWindow.h"
 #include "Windows/PhysicsMaterialsWindow.h"
 
-#define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, physicsSystemId, ioData, postProcessingSettings, registry, &SelectedEntity, &EntitySelected)
+#define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, physicsSystemId, ioData, postProcessingSettings, registry, &SelectedEntity, &EntitySelected, &LockSelecting)
 
 class DebugUserInterface final
 {
@@ -67,6 +67,7 @@ private:
 	// Always set `EntitySelected` to true, when changing this value
 	entt::entity SelectedEntity = 0;
 	bool EntitySelected = false;
+	bool LockSelecting = false;
 
 	std::function<void()> FunctionCloseEngine;
 

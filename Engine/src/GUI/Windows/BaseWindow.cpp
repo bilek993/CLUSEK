@@ -3,7 +3,7 @@
 void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRenderSettings* renderSettings,
 	std::vector<SystemHolder>* systems, const int renderSystemId, int physicsSystemId, IOData* ioData,
 	PostProcessingSettings* postProcessingSettings, entt::registry *registry, entt::entity *selectedEntity,
-	bool *entitySelected)
+	bool *entitySelected, bool *lockSelecting)
 {
 	if (!IsEnabled)
 		return;
@@ -19,6 +19,7 @@ void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRe
 	Registry = registry;
 	SelectedEntity = selectedEntity;
 	EntitySelected = entitySelected;
+	LockSelecting = lockSelecting;
 
 	Draw();
 }

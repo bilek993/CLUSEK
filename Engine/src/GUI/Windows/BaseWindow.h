@@ -10,7 +10,8 @@ public:
 	virtual ~BaseWindow() = default;
 	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings, 
 		std::vector<SystemHolder> *systems, int renderSystemId, int physicsSystemId, IOData *ioData, 
-		PostProcessingSettings *postProcessingSettings,	entt::registry *registry, entt::entity *selectedEntity, bool *entitySelected);
+		PostProcessingSettings *postProcessingSettings,	entt::registry *registry, entt::entity *selectedEntity, 
+		bool *entitySelected, bool *lockSelecting);
 
 	bool GetIsEnabled() const;
 	void SetIsEnabled(bool value);
@@ -31,4 +32,5 @@ protected:
 	entt::registry *Registry = nullptr;
 	entt::entity *SelectedEntity = nullptr;
 	bool *EntitySelected = nullptr;
+	bool *LockSelecting = nullptr;
 };

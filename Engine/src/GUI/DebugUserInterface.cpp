@@ -170,6 +170,9 @@ void DebugUserInterface::DrawMenuItemForFunction(const std::string& label, const
 
 void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry* registry, ConfigData *configData)
 {
+	if (LockSelecting)
+		return;
+	
 	if (ioData->MouseTracker.leftButton != DirectX::Mouse::ButtonStateTracker::ButtonState::PRESSED)
 		return;
 
