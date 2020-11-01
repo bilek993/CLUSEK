@@ -79,7 +79,7 @@ void Engine::Update()
 
 void Engine::InitializeScene()
 {
-	MapLoader::CreateEntitiesFromMapFile(Config.PathToMap, Registry);
+	MapLoader::CreateEntitiesFromMapFile(Config.PathToMapExport, Registry);
 }
 
 void Engine::CreateSystems()

@@ -139,7 +139,7 @@ struct ConfigData final
 
 	// Files responsible for world description
 	std::string PathToResources = "";
-	std::string PathToMap = "";
+	std::string PathToMapExport = "";
 	std::string PathToPostProcessing = "";
 	std::string PathToPhysicsMaterials = "";
 };

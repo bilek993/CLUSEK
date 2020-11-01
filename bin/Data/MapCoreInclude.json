@@ -1,0 +1,30 @@
+[
+  {
+    "Tags":[
+      "Main Camera"
+    ],
+    "Components":{
+      "CameraComponent":{
+        
+      },
+      "TransformComponent":{
+        "PositionX":0.0,
+        "PositionY":1.0,
+        "PositionZ":-18.25
+      }
+    }
+  },
+  {
+    "Tags":[
+      
+    ],
+    "Components":{
+      "SkyboxComponent":{
+        "SkyboxTextureId":"Skybox"
+      },
+      "TransformComponent":{
+        
+      }
+    }
+  }
+]

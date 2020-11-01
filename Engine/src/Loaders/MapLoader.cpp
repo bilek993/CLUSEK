@@ -2,18 +2,29 @@
 #include "../Utils/Logger.h"
 #include <fstream>
 #include "../Tags.h"
+#include "../Utils/StringUtil.h"
 
 void MapLoader::CreateEntitiesFromMapFile(const std::string& path, entt::registry& registry)
 {
 	Logger::Debug("Preparing to load map from path '" + path + "'...");
 
-	nlohmann::json jsonObject;
-	std::ifstream inputFile(path);
-	inputFile >> jsonObject;
+	nlohmann::json jsonObjectExportMap;
+	std::ifstream inputFileExportMap(path);
+	inputFileExportMap >> jsonObjectExportMap;
 
-	for (auto it = jsonObject.begin(); it != jsonObject.end(); ++it)
+	for (auto itE = jsonObjectExportMap.begin(); itE != jsonObjectExportMap.end(); ++itE)
 	{
-		ParseEntity(it.value(), registry);
+		const auto pathToImportedMap = StringUtil::FindDirectory(path) + "/" + itE->get<std::string>();
+		Logger::Debug("Importing file from: " + pathToImportedMap);
+		
+		nlohmann::json jsonObjectImportedMap;
+		std::ifstream inputFileImportedMap(pathToImportedMap);
+		inputFileImportedMap >> jsonObjectImportedMap;
+
+		for (auto itI = jsonObjectImportedMap.begin(); itI != jsonObjectImportedMap.end(); ++itI)
+		{
+			ParseEntity(itI.value(), registry);
+		}
 	}
 }
 

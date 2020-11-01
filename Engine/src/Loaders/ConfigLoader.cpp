@@ -147,7 +147,7 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, DefaultPhysicsMaterialRestitution, data, std::stof(value));
 
 			MAP_CONFIG_FIELD(key, PathToResources, data, value);
-			MAP_CONFIG_FIELD(key, PathToMap, data, value);
+			MAP_CONFIG_FIELD(key, PathToMapExport, data, value);
 			MAP_CONFIG_FIELD(key, PathToPostProcessing, data, value);
 			MAP_CONFIG_FIELD(key, PathToPhysicsMaterials, data, value);
 		}
