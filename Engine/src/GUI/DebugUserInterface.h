@@ -27,6 +27,7 @@
 #include "Windows/TextureCompressionWindow.h"
 #include "Windows/LodDebugWindow.h"
 #include "Windows/EntityEditorWindow.h"
+#include "Windows/EntitySelectorLockWindow.h"
 #include "Windows/GrassWindow.h"
 #include "Windows/PhysicsMaterialsWindow.h"
 
@@ -90,4 +91,5 @@ private:
 	EntityEditorWindow EntityEditorWindowInstance;
 	PhysicsMaterialsWindow PhysicsMaterialsWindowInstance;
 	GrassWindow GrassWindowInstance;
+	EntitySelectorLockWindow EntitySelectorLockWindowInstance;
 };

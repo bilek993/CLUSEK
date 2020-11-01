@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\GUI\Windows\EntitySelectorLockWindow.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyDynamicConvexComponentLoader.cpp" />
     <ClCompile Include="src\Loaders\Components\RigidbodyStaticConvexComponentLoader.cpp" />
     <ClCompile Include="src\ECS\Systems\RebuildSystem.cpp" />
@@ -247,6 +248,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\GUI\Windows\EntitySelectorLockWindow.h" />
     <ClInclude Include="src\GUI\Components\RigidbodyDynamicConvexComponentEditor.h" />
     <ClInclude Include="src\GUI\Components\RigidbodyStaticConvexComponentEditor.h" />
     <ClInclude Include="src\Loaders\Components\RigidbodyDynamicConvexComponentLoader.h" />

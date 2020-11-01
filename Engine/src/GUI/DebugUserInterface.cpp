@@ -75,6 +75,7 @@ void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, I
 	UPDATE_USER_INTERFACE(EntityEditorWindowInstance);
 	UPDATE_USER_INTERFACE(PhysicsMaterialsWindowInstance);
 	UPDATE_USER_INTERFACE(GrassWindowInstance);
+	UPDATE_USER_INTERFACE(EntitySelectorLockWindowInstance);
 
 	AfterUpdate(renderSystem);
 }
@@ -107,6 +108,7 @@ void DebugUserInterface::DrawMenuBar()
 		}
 		if (ImGui::BeginMenu("ECS"))
 		{
+			DrawMenuItemForWindow("Entity selector lock", EntitySelectorLockWindowInstance);
 			DrawMenuItemForWindow("Entity creator", EntityCreatorWindowInstance);
 			DrawMenuItemForWindow("Entity viewer", EntityViewerWindowInstance);
 			DrawMenuItemForWindow("Entity editor", EntityEditorWindowInstance);
