@@ -1,7 +1,8 @@
 [
   "MapCoreInclude.json",
-  "MapOtherInclude.json",
-  "MapPyramidInclude.json",
+  "MapVehicleInclude.json",
+  "MapRoadsInclude.json",
   "MapTreesInclude.json",
-  "MapVehicleInclude.json"
+  "MapPyramidInclude.json",
+  "MapOtherInclude.json"
 ]
