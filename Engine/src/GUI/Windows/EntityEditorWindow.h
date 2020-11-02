@@ -26,6 +26,7 @@
 #include "../Components/GrassComponentEditor.h"
 #include "../Components/RigidbodyDynamicConvexComponentEditor.h"
 #include "../Components/RigidbodyStaticConvexComponentEditor.h"
+#include "../Components/RoadComponentEditor.h"
 
 #define REGISTER_COMPONENT_EDITOR(COMPONENT_CLASS, COMPONENT_NAME) DrawComponentDetails<COMPONENT_CLASS>(SelectedEntity, COMPONENT_CLASS##EditorInstance, COMPONENT_NAME)
 
@@ -66,6 +67,7 @@ private:
 	WheelComponentEditor WheelComponentEditorInstance;
 	CommentComponentEditor CommentComponentEditorInstance;
 	GrassComponentEditor GrassComponentEditorInstance;
+	RoadComponentEditor RoadComponentEditorInstance;
 };
 
 template <class C>

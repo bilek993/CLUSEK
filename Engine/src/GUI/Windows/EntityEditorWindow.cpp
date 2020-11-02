@@ -60,6 +60,7 @@ void EntityEditorWindow::DrawComponentsForEntity()
 	REGISTER_COMPONENT_EDITOR(WheelComponent, "Wheel Component");
 	REGISTER_COMPONENT_EDITOR(CommentComponent, "Comment Component");
 	REGISTER_COMPONENT_EDITOR(GrassComponent, "Grass Component");
+	REGISTER_COMPONENT_EDITOR(RoadComponent, "Road Component");
 }
 
 void EntityEditorWindow::DrawNoElements() const

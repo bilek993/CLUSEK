@@ -23,6 +23,7 @@
 #include "../../ECS/Components/GrassComponent.h"
 #include "../../ECS/Components/RigidbodyDynamicConvexComponent.h"
 #include "../../ECS/Components/RigidbodyStaticConvexComponent.h"
+#include "../../ECS/Components/RoadComponent.h"
 
 void EntityViewerWindow::Draw()
 {
@@ -75,5 +76,6 @@ void EntityViewerWindow::DrawList()
 		DrawComponent<WheelComponent>(entity, "Wheel Component");
 		DrawComponent<CommentComponent>(entity, "Comment Component");
 		DrawComponent<GrassComponent>(entity, "Grass Component");
+		DrawComponent<RoadComponent>(entity, "Road Component");
 	});
 }

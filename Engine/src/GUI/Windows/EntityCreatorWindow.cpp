@@ -257,6 +257,7 @@ void EntityCreatorWindow::AddComponents(nlohmann::json& json, const entt::regist
 		MAP_COMPONENT_LOADERS(it, TerrainComponent, *Registry, entity);
 		MAP_COMPONENT_LOADERS(it, CommentComponent, *Registry, entity);
 		MAP_COMPONENT_LOADERS(it, GrassComponent, *Registry, entity);
+		MAP_COMPONENT_LOADERS(it, RoadComponent, *Registry, entity);
 	}
 }
 

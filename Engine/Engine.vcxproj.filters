@@ -549,6 +549,12 @@
     <ClCompile Include="src\GUI\Windows\EntitySelectorLockWindow.cpp">
       <Filter>Source Files\GUI\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\Loaders\Components\RoadComponentLoader.cpp">
+      <Filter>Source Files\Loaders\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GUI\Components\RoadComponentEditor.cpp">
+      <Filter>Source Files\GUI\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -1198,6 +1204,15 @@
     </ClInclude>
     <ClInclude Include="src\GUI\Windows\EntitySelectorLockWindow.h">
       <Filter>Header Files\GUI\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ECS\Components\RoadComponent.h">
+      <Filter>Header Files\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Loaders\Components\RoadComponentLoader.h">
+      <Filter>Header Files\Loaders\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GUI\Components\RoadComponentEditor.h">
+      <Filter>Header Files\GUI\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

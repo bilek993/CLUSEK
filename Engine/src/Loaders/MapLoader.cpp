@@ -75,5 +75,6 @@ void MapLoader::AddComponents(nlohmann::json& json, entt::registry& registry, co
 		MAP_COMPONENT_LOADERS(it, TerrainComponent, registry, entity);
 		MAP_COMPONENT_LOADERS(it, CommentComponent, registry, entity);
 		MAP_COMPONENT_LOADERS(it, GrassComponent, registry, entity);
+		MAP_COMPONENT_LOADERS(it, RoadComponent, registry, entity);
 	}
 }
