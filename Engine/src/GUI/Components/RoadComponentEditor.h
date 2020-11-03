@@ -6,4 +6,8 @@ class RoadComponentEditor final : public BaseComponentEditor<RoadComponent>
 {
 protected:
 	void Draw() override;
+
+private:
+	void DrawPoints(RoadComponent* componentPointer) const;
+	void DrawControlButtons(RoadComponent* componentPointer) const;
 };

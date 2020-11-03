@@ -4,12 +4,17 @@
       
     ],
     "Components":{
-      "RoadsComponent":{
+      "RoadComponent":{
         "Points":[
           {
 			"PositionX":0.0,
 			"PositionY":0.0,
 			"PositionZ":0.0
+		  },
+		  {
+			"PositionX":0.0,
+			"PositionY":0.0,
+			"PositionZ":5.0
 		  }
         ]
       }
