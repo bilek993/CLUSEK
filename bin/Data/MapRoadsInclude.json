@@ -1,2 +1,18 @@
 [
+  {
+    "Tags":[
+      
+    ],
+    "Components":{
+      "RoadsComponent":{
+        "Points":[
+          {
+			"PositionX":0.0,
+			"PositionY":0.0,
+			"PositionZ":0.0
+		  }
+        ]
+      }
+    }
+  }
 ]
