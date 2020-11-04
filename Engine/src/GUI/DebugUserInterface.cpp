@@ -27,12 +27,13 @@ void DebugUserInterface::Initialize(const HWND hwnd, ID3D11Device* device, ID3D1
 	IsEnabled = configData->EnableImGuiOnStart == 1;
 }
 
-void DebugUserInterface::BeforeUpdate() const
+void DebugUserInterface::BeforeUpdate()
 {
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
 	ImGuizmo::BeginFrame();
+	BeginFullscreenFrame();
 }
 
 void DebugUserInterface::Update(const float deltaTime, ConfigData *configData, IOData *ioData, 
@@ -226,6 +227,31 @@ void DebugUserInterface::HandleClickingOnObjects(IOData* ioData, entt::registry*
 			}
 		}
 	});
+}
+
+void DebugUserInterface::BeginFullscreenFrame()
+{
+	const ImU32 fullscreenWindowFlags = ImGuiWindowFlags_NoTitleBar | 
+										ImGuiWindowFlags_NoResize | 
+										ImGuiWindowFlags_NoScrollbar | 
+										ImGuiWindowFlags_NoInputs | 
+										ImGuiWindowFlags_NoSavedSettings | 
+										ImGuiWindowFlags_NoFocusOnAppearing | 
+										ImGuiWindowFlags_NoBringToFrontOnFocus;
+
+	ImGui::SetNextWindowSize(ImGui::GetMainViewport()->Size);
+	ImGui::SetNextWindowPos(ImGui::GetMainViewport()->Pos);
+
+	ImGui::PushStyleColor(ImGuiCol_WindowBg, 0);
+	ImGui::PushStyleColor(ImGuiCol_Border, 0);
+	ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+
+	ImGui::Begin("fullscreen_window_frame", nullptr, fullscreenWindowFlags);
+	FullscreenDrawList = ImGui::GetWindowDrawList();
+	ImGui::End();
+
+	ImGui::PopStyleVar();
+	ImGui::PopStyleColor(2);
 }
 
 DebugUserInterface::~DebugUserInterface()

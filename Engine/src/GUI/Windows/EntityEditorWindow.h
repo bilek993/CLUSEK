@@ -87,6 +87,8 @@ void EntityEditorWindow::DrawComponentDetails(const entt::entity* entity, BaseCo
 								CurrentPostProcessingSettings, 
 								Registry, 
 								SelectedEntity, 
-								EntitySelected);
+								EntitySelected,
+								LockSelecting,
+								FullscreenDrawList);
 	}
 }

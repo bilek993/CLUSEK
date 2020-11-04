@@ -10,7 +10,8 @@ public:
 	virtual ~BaseComponentEditor() = default;
 	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings,
 		std::vector<SystemHolder> *systems, int renderSystemId, IOData *ioData, PostProcessingSettings *postProcessingSettings,
-		entt::registry *registry, entt::entity *selectedEntity, bool *entitySelected);
+		entt::registry *registry, entt::entity *selectedEntity, 
+		bool *entitySelected, bool *lockSelecting, ImDrawList* fullscreenDrawList);
 
 protected:
 	// It is recommended to override this function
@@ -28,13 +29,15 @@ protected:
 	entt::registry *Registry = nullptr;
 	entt::entity *SelectedEntity = nullptr;
 	bool *EntitySelected = nullptr;
+	bool *LockSelecting = nullptr;
+	ImDrawList* FullscreenDrawList = nullptr;
 };
 
 template <class C>
 void BaseComponentEditor<C>::Update(const float deltaTime, ConfigData* configData, DynamicRenderSettings* renderSettings,
 	std::vector<SystemHolder>* systems, const int renderSystemId, IOData* ioData,
 	PostProcessingSettings* postProcessingSettings, entt::registry* registry, entt::entity* selectedEntity,
-	bool* entitySelected)
+	bool* entitySelected, bool *lockSelecting, ImDrawList* fullscreenDrawList)
 {
 	Config = configData;
 	DeltaTime = deltaTime;
@@ -46,6 +49,8 @@ void BaseComponentEditor<C>::Update(const float deltaTime, ConfigData* configDat
 	Registry = registry;
 	SelectedEntity = selectedEntity;
 	EntitySelected = entitySelected;
+	LockSelecting = lockSelecting;
+	FullscreenDrawList = fullscreenDrawList;
 
 	Draw();
 }

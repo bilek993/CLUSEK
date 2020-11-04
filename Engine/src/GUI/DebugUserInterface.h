@@ -31,7 +31,7 @@
 #include "Windows/GrassWindow.h"
 #include "Windows/PhysicsMaterialsWindow.h"
 
-#define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, physicsSystemId, ioData, postProcessingSettings, registry, &SelectedEntity, &EntitySelected, &LockSelecting)
+#define UPDATE_USER_INTERFACE(WINDOW_INSTANCE) WINDOW_INSTANCE.Update(deltaTime, configData, dynamicRenderSettings, systems, renderSystemId, physicsSystemId, ioData, postProcessingSettings, registry, &SelectedEntity, &EntitySelected, &LockSelecting, FullscreenDrawList)
 
 class DebugUserInterface final
 {
@@ -49,7 +49,7 @@ private:
 	void HandleKeyboardEvents(const IOData *ioData);
 	void HandleMainDockingArea();
 
-	void BeforeUpdate() const;
+	void BeforeUpdate();
 	void AfterUpdate(RenderSystem *renderSystem) const;
 
 	void DrawMenuBar();
@@ -58,6 +58,8 @@ private:
 	void DrawMenuItemForFunction(const std::string& label, const std::function<void()>& function) const;
 
 	void HandleClickingOnObjects(IOData *ioData, entt::registry *registry, ConfigData *configData);
+
+	void BeginFullscreenFrame();
 
 	inline const static std::string DOCKSPACE_AREA_NAME = "MainDockspaceArea";
 
@@ -68,6 +70,8 @@ private:
 	entt::entity SelectedEntity = 0;
 	bool EntitySelected = false;
 	bool LockSelecting = false;
+
+	ImDrawList* FullscreenDrawList = nullptr;
 
 	std::function<void()> FunctionCloseEngine;
 

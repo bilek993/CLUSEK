@@ -3,7 +3,7 @@
 void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRenderSettings* renderSettings,
 	std::vector<SystemHolder>* systems, const int renderSystemId, int physicsSystemId, IOData* ioData,
 	PostProcessingSettings* postProcessingSettings, entt::registry *registry, entt::entity *selectedEntity,
-	bool *entitySelected, bool *lockSelecting)
+	bool *entitySelected, bool *lockSelecting, ImDrawList* fullscreenDrawList)
 {
 	if (!IsEnabled)
 		return;
@@ -20,6 +20,7 @@ void BaseWindow::Update(const float deltaTime, ConfigData* configData, DynamicRe
 	SelectedEntity = selectedEntity;
 	EntitySelected = entitySelected;
 	LockSelecting = lockSelecting;
+	FullscreenDrawList = fullscreenDrawList;
 
 	Draw();
 }

@@ -1,4 +1,6 @@
 #pragma once
+#include <imgui.h>
+
 #include "../../Renderer/DynamicRenderSettings.h"
 #include "../../Utils/SystemHolder.h"
 
@@ -11,7 +13,7 @@ public:
 	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings, 
 		std::vector<SystemHolder> *systems, int renderSystemId, int physicsSystemId, IOData *ioData, 
 		PostProcessingSettings *postProcessingSettings,	entt::registry *registry, entt::entity *selectedEntity, 
-		bool *entitySelected, bool *lockSelecting);
+		bool *entitySelected, bool *lockSelecting, ImDrawList* fullscreenDrawList);
 
 	bool GetIsEnabled() const;
 	void SetIsEnabled(bool value);
@@ -33,4 +35,5 @@ protected:
 	entt::entity *SelectedEntity = nullptr;
 	bool *EntitySelected = nullptr;
 	bool *LockSelecting = nullptr;
+	ImDrawList* FullscreenDrawList = nullptr;
 };
