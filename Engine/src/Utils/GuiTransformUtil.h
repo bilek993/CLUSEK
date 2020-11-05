@@ -11,4 +11,6 @@ public:
 		bool& outsideTheScreen, float farPlane, float nearPlane);
 	static ImVec2 TransformWorldPositionToScreenPoint(const DirectX::XMVECTOR& worldPoint, const DirectX::XMMATRIX& viewProjectionMatrix, 
 		bool& outsideTheScreen, float farPlane, float nearPlane);
+
+	static bool IsTouching(const ImVec2& objectCenterPosition, const ImVec2& mousePosition, float maxDistance);
 };

@@ -1,4 +1,5 @@
 #include "GuiTransformUtil.h"
+#include <cmath>
 
 ImVec2 GuiTransformUtil::TransformWorldPositionToScreenPoint(const DirectX::XMFLOAT3& worldPoint, const DirectX::XMMATRIX& viewProjectionMatrix, 
 	bool& outsideTheScreen, const float farPlane, const float nearPlane)
@@ -58,4 +59,14 @@ ImVec2 GuiTransformUtil::TransformWorldPositionToScreenPoint(const DirectX::XMVE
 	}
 
 	return ImVec2(resultFloats.x, resultFloats.y);
+}
+
+bool GuiTransformUtil::IsTouching(const ImVec2& objectCenterPosition, const ImVec2& mousePosition, float maxDistance)
+{
+	const auto xDifference = objectCenterPosition.x - mousePosition.x;
+	const auto yDifference = objectCenterPosition.y - mousePosition.y;
+	
+	const auto distance = std::sqrtf((xDifference * xDifference) + (yDifference * yDifference));
+
+	return distance < maxDistance;
 }

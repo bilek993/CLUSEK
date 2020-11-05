@@ -54,6 +54,8 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer) co
 
 void RoadComponentEditor::DrawPointsWithGizmosOnScreen(RoadComponent* componentPointer) const
 {
+	const auto& io = ImGui::GetIO();
+	
 	const auto mainCamera = CameraLocator::GetMainCamera(Registry);
 	const auto viewProjectionMatrix = mainCamera.ViewMatrix * mainCamera.ProjectionMatrix;
 	
@@ -67,7 +69,9 @@ void RoadComponentEditor::DrawPointsWithGizmosOnScreen(RoadComponent* componentP
 																							Config->MainCameraNearZ);
 		if (notVisible)
 			continue;
+
+		const auto isCursorTouchingPoint = GuiTransformUtil::IsTouching(circlePosition, io.MousePos, DOT_SIZE);
 		
-		FullscreenDrawList->AddCircleFilled(circlePosition, 7.0f, DOT_COLOR);
+		FullscreenDrawList->AddCircleFilled(circlePosition, DOT_SIZE, isCursorTouchingPoint ? DOT_COLOR_SECONDARY : DOT_COLOR_PRIMARY);
 	}
 }
