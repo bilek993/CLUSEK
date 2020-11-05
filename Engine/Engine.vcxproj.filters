@@ -555,6 +555,9 @@
     <ClCompile Include="src\GUI\Components\RoadComponentEditor.cpp">
       <Filter>Source Files\GUI\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\GuiTransformUtil.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -1213,6 +1216,9 @@
     </ClInclude>
     <ClInclude Include="src\GUI\Components\RoadComponentEditor.h">
       <Filter>Header Files\GUI\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\GuiTransformUtil.h">
+      <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
