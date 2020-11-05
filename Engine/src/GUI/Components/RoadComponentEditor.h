@@ -15,5 +15,5 @@ private:
 
 	inline const static float DOT_SIZE = 7.0f;
 	inline const static ImColor DOT_COLOR_PRIMARY = ImColor(255, 255, 255);
-	inline const static ImColor DOT_COLOR_SECONDARY = ImColor(150, 150, 150);
+	inline const static ImColor DOT_COLOR_SECONDARY = ImColor(175, 175, 175);
 };
