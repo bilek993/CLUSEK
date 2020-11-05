@@ -1,5 +1,7 @@
 #include "RoadComponentEditor.h"
 
+#include "../../Utils/CameraLocator.h"
+
 void RoadComponentEditor::Draw()
 {
 	const auto componentPointer = GetPointerToThisComponent();
@@ -7,6 +9,8 @@ void RoadComponentEditor::Draw()
 	DrawPoints(componentPointer);
 	ImGui::Separator();
 	DrawControlButtons(componentPointer);
+
+	DrawPointsWithGizmosOnScreen(componentPointer);
 }
 
 void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer) const
@@ -44,5 +48,15 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer) co
 	if (ImGui::Button("Remove last"))
 	{
 		// TODO: Add implementation
+	}
+}
+
+void RoadComponentEditor::DrawPointsWithGizmosOnScreen(RoadComponent* componentPointer) const
+{
+	const auto mainCamera = CameraLocator::GetMainCamera(Registry);
+	
+	for (auto& point : componentPointer->Points)
+	{
+		FullscreenDrawList->AddCircleFilled(ImVec2(100.0f, 100.0f), 10.0f, DOT_COLOR);
 	}
 }
