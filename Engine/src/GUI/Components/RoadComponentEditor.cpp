@@ -1,6 +1,7 @@
 #include "RoadComponentEditor.h"
 
 #include "../../Utils/CameraLocator.h"
+#include "../../Utils/GuiTransformUtil.h"
 
 void RoadComponentEditor::Draw()
 {
@@ -54,9 +55,19 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer) co
 void RoadComponentEditor::DrawPointsWithGizmosOnScreen(RoadComponent* componentPointer) const
 {
 	const auto mainCamera = CameraLocator::GetMainCamera(Registry);
+	const auto viewProjectionMatrix = mainCamera.ViewMatrix * mainCamera.ProjectionMatrix;
 	
 	for (auto& point : componentPointer->Points)
 	{
-		FullscreenDrawList->AddCircleFilled(ImVec2(100.0f, 100.0f), 10.0f, DOT_COLOR);
+		bool notVisible{};
+		const auto circlePosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	point, 
+																							viewProjectionMatrix, 
+																							notVisible,
+																							Config->MainCameraFarZ,
+																							Config->MainCameraNearZ);
+		if (notVisible)
+			continue;
+		
+		FullscreenDrawList->AddCircleFilled(circlePosition, 7.0f, DOT_COLOR);
 	}
 }
