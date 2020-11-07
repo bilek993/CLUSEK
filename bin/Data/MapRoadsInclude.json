@@ -12,9 +12,19 @@
 			"PositionZ":0.0
 		  },
 		  {
+			"PositionX":75.0,
+			"PositionY":0.0,
+			"PositionZ":100.0
+		  },
+		  {
+			"PositionX":75.0,
+			"PositionY":0.0,
+			"PositionZ":200.0
+		  },
+		  {
 			"PositionX":0.0,
 			"PositionY":0.0,
-			"PositionZ":5.0
+			"PositionZ":300.0
 		  }
         ]
       }
