@@ -1,5 +1,6 @@
 #include "RoadComponentEditor.h"
 #include <ImGuizmo.h>
+#include <json.hpp>
 #include "../../Utils/CameraLocator.h"
 #include "../../Utils/GuiTransformUtil.h"
 
@@ -59,6 +60,28 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer) co
 	if (ImGui::Button("Remove last"))
 	{
 		// TODO: Add implementation
+	}
+
+	if (ImGui::Button("Copy JSON"))
+	{
+		std::vector<nlohmann::json> vectorOfPoints{};
+		for (auto& point : componentPointer->Points)
+		{
+			nlohmann::json newJsonPointObject{
+				{"PositionX", point.x},
+				{"PositionY", point.y},
+				{"PositionZ", point.z}
+			};
+
+			vectorOfPoints.emplace_back(newJsonPointObject);
+		}
+
+		nlohmann::json outputJsonObject{};
+		outputJsonObject["Points"] = vectorOfPoints;
+
+		ImGui::LogToClipboard();
+		ImGui::LogText(outputJsonObject.dump().c_str());
+		ImGui::LogFinish();
 	}
 }
 
