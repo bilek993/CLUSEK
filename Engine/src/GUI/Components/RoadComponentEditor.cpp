@@ -100,15 +100,15 @@ void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer, const Dire
 																							notVisible,
 																							Config->MainCameraFarZ,
 																							Config->MainCameraNearZ);
-		if (notVisible)
-			continue;
+		if (!notVisible)
+		{
+			const auto isCursorTouchingPoint = GuiTransformUtil::IsTouching(circlePosition, io.MousePos, DOT_SIZE);
 
-		const auto isCursorTouchingPoint = GuiTransformUtil::IsTouching(circlePosition, io.MousePos, DOT_SIZE);
-		
-		if (isCursorTouchingPoint && ImGui::IsMouseClicked(0) && !ImGui::IsAnyItemHovered() && !ImGui::IsAnyItemActive())
-			SelectedPointId = counter;
-		
-		FullscreenDrawList->AddCircleFilled(circlePosition, DOT_SIZE, isCursorTouchingPoint ? DOT_COLOR_SECONDARY : DOT_COLOR_PRIMARY);
+			if (isCursorTouchingPoint && ImGui::IsMouseClicked(0) && !ImGui::IsAnyItemHovered() && !ImGui::IsAnyItemActive())
+				SelectedPointId = counter;
+
+			FullscreenDrawList->AddCircleFilled(circlePosition, DOT_SIZE, isCursorTouchingPoint ? DOT_COLOR_SECONDARY : DOT_COLOR_PRIMARY);
+		}
 		
 		counter++;
 	}
