@@ -558,6 +558,9 @@
     <ClCompile Include="src\Utils\GuiTransformUtil.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\SplineUtil.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -1218,6 +1221,9 @@
       <Filter>Header Files\GUI\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\GuiTransformUtil.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\SplineUtil.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>

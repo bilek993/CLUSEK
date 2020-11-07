@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utils\SplineUtil.cpp" />
     <ClCompile Include="src\Utils\GuiTransformUtil.cpp" />
     <ClCompile Include="src\GUI\Components\RoadComponentEditor.cpp" />
     <ClCompile Include="src\Loaders\Components\RoadComponentLoader.cpp" />
@@ -251,6 +252,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Utils\SplineUtil.h" />
     <ClInclude Include="src\Utils\GuiTransformUtil.h" />
     <ClInclude Include="src\GUI\Components\RoadComponentEditor.h" />
     <ClInclude Include="src\Loaders\Components\RoadComponentLoader.h" />
