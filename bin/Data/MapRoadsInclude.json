@@ -25,6 +25,37 @@
 			"PositionX":0.0,
 			"PositionY":0.0,
 			"PositionZ":300.0
+		  },
+		  {
+			"PositionX":25.0,
+			"PositionY":0.0,
+			"PositionZ":400.0
+		  },
+		  {
+			"PositionX":180.0,
+			"PositionY":0.0,
+			"PositionZ":385.0
+		  },
+		  {
+			"PositionX":120.0,
+			"PositionY":0.0,
+			"PositionZ":600.0
+		  },
+		  
+		  {
+			"PositionX":250.0,
+			"PositionY":0.0,
+			"PositionZ":550.0
+		  },
+		  {
+			"PositionX":400.0,
+			"PositionY":0.0,
+			"PositionZ":500.0
+		  },
+		  {
+			"PositionX":600.0,
+			"PositionY":0.0,
+			"PositionZ":400.0
 		  }
         ]
       }

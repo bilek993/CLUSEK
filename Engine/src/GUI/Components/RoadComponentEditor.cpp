@@ -16,6 +16,7 @@ void RoadComponentEditor::Draw()
 	DrawControlButtons(componentPointer);
 
 	DrawPoints(componentPointer, viewProjectionMatrix);
+	DrawConnectionLines(componentPointer, viewProjectionMatrix);
 	DrawGizmos(componentPointer, mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
 }
 
@@ -89,7 +90,6 @@ void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer, const Dire
 {
 	const auto& io = ImGui::GetIO();
 
-
 	auto counter = 0;
 	
 	for (auto& point : componentPointer->Points)
@@ -111,6 +111,55 @@ void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer, const Dire
 		FullscreenDrawList->AddCircleFilled(circlePosition, DOT_SIZE, isCursorTouchingPoint ? DOT_COLOR_SECONDARY : DOT_COLOR_PRIMARY);
 		
 		counter++;
+	}
+}
+
+void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix) const
+{
+	for (auto curElementId = 0; curElementId < componentPointer->Points.size(); curElementId += 3)
+	{
+		const auto prevElementId = curElementId - 1;
+		const auto nextElementId = curElementId + 1;
+
+		const auto isPrevPointSelected = SelectedPointId == prevElementId;
+		const auto isCurrentPointSelected = SelectedPointId == curElementId;
+		const auto isNextPointSelected = SelectedPointId == nextElementId;
+
+		bool curPointNotVisible{};
+		const auto curPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(componentPointer->Points[curElementId],
+																							viewProjectionMatrix, 
+																							curPointNotVisible,
+																							Config->MainCameraFarZ,
+																							Config->MainCameraNearZ);
+
+		if (!curPointNotVisible)
+		{
+			if (prevElementId > 0)
+			{
+				bool prevPointNotVisible{};
+				const auto prevPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[prevElementId],
+																										viewProjectionMatrix, 
+																										prevPointNotVisible,
+																										Config->MainCameraFarZ,
+																										Config->MainCameraNearZ);
+
+				if (!prevPointNotVisible)
+					FullscreenDrawList->AddLine(curPointPosition, prevPointPosition, isCurrentPointSelected || isPrevPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
+			}
+
+			if (nextElementId < componentPointer->Points.size())
+			{
+				bool nextPointNotVisible{};
+				const auto nextPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[nextElementId],
+																										viewProjectionMatrix, 
+																										nextPointNotVisible,
+																										Config->MainCameraFarZ,
+																										Config->MainCameraNearZ);
+
+				if (!nextPointNotVisible)
+					FullscreenDrawList->AddLine(curPointPosition, nextPointPosition, isCurrentPointSelected || isNextPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
+			}
+		}
 	}
 }
 
