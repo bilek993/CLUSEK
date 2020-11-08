@@ -132,33 +132,30 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 																							Config->MainCameraFarZ,
 																							Config->MainCameraNearZ);
 
-		if (curPointVisible)
+		if (prevElementId > 0)
 		{
-			if (prevElementId > 0)
-			{
-				bool prevPointVisible{};
-				const auto prevPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[prevElementId],
-																										viewProjectionMatrix, 
-																										prevPointVisible,
-																										Config->MainCameraFarZ,
-																										Config->MainCameraNearZ);
+			bool prevPointVisible{};
+			const auto prevPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[prevElementId],
+																									viewProjectionMatrix, 
+																									prevPointVisible,
+																									Config->MainCameraFarZ,
+																									Config->MainCameraNearZ);
 
-				if (prevPointVisible)
-					FullscreenDrawList->AddLine(curPointPosition, prevPointPosition, isCurrentPointSelected || isPrevPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
-			}
+			if (prevPointVisible || curPointVisible)
+				FullscreenDrawList->AddLine(curPointPosition, prevPointPosition, isCurrentPointSelected || isPrevPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
+		}
 
-			if (nextElementId < componentPointer->Points.size())
-			{
-				bool nextPointVisible{};
-				const auto nextPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[nextElementId],
-																										viewProjectionMatrix, 
-																										nextPointVisible,
-																										Config->MainCameraFarZ,
-																										Config->MainCameraNearZ);
+		if (nextElementId < componentPointer->Points.size())
+		{
+			bool nextPointVisible{};
+			const auto nextPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[nextElementId],
+																									viewProjectionMatrix, 
+																									nextPointVisible,
+																									Config->MainCameraFarZ,
+																									Config->MainCameraNearZ);
 
-				if (nextPointVisible)
-					FullscreenDrawList->AddLine(curPointPosition, nextPointPosition, isCurrentPointSelected || isNextPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
-			}
+			if (nextPointVisible || curPointVisible)
+				FullscreenDrawList->AddLine(curPointPosition, nextPointPosition, isCurrentPointSelected || isNextPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
 		}
 	}
 }
