@@ -94,13 +94,13 @@ void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer, const Dire
 	
 	for (auto& point : componentPointer->Points)
 	{
-		bool notVisible{};
+		bool visible{};
 		const auto circlePosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	point, 
 																							viewProjectionMatrix, 
-																							notVisible,
+																							visible,
 																							Config->MainCameraFarZ,
 																							Config->MainCameraNearZ);
-		if (!notVisible)
+		if (visible)
 		{
 			const auto isCursorTouchingPoint = GuiTransformUtil::IsTouching(circlePosition, io.MousePos, DOT_SIZE);
 
@@ -125,38 +125,38 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 		const auto isCurrentPointSelected = SelectedPointId == curElementId;
 		const auto isNextPointSelected = SelectedPointId == nextElementId;
 
-		bool curPointNotVisible{};
+		bool curPointVisible{};
 		const auto curPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(componentPointer->Points[curElementId],
 																							viewProjectionMatrix, 
-																							curPointNotVisible,
+																							curPointVisible,
 																							Config->MainCameraFarZ,
 																							Config->MainCameraNearZ);
 
-		if (!curPointNotVisible)
+		if (curPointVisible)
 		{
 			if (prevElementId > 0)
 			{
-				bool prevPointNotVisible{};
+				bool prevPointVisible{};
 				const auto prevPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[prevElementId],
 																										viewProjectionMatrix, 
-																										prevPointNotVisible,
+																										prevPointVisible,
 																										Config->MainCameraFarZ,
 																										Config->MainCameraNearZ);
 
-				if (!prevPointNotVisible)
+				if (prevPointVisible)
 					FullscreenDrawList->AddLine(curPointPosition, prevPointPosition, isCurrentPointSelected || isPrevPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
 			}
 
 			if (nextElementId < componentPointer->Points.size())
 			{
-				bool nextPointNotVisible{};
+				bool nextPointVisible{};
 				const auto nextPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[nextElementId],
 																										viewProjectionMatrix, 
-																										nextPointNotVisible,
+																										nextPointVisible,
 																										Config->MainCameraFarZ,
 																										Config->MainCameraNearZ);
 
-				if (!nextPointNotVisible)
+				if (nextPointVisible)
 					FullscreenDrawList->AddLine(curPointPosition, nextPointPosition, isCurrentPointSelected || isNextPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
 			}
 		}
