@@ -2,24 +2,34 @@
 #include <cmath>
 
 ImVec2 GuiTransformUtil::TransformWorldPositionToScreenPoint(const DirectX::XMFLOAT3& worldPoint, const DirectX::XMMATRIX& viewProjectionMatrix, 
-	bool& visible, const float farPlane, const float nearPlane)
+	bool* visible, bool* outsideCameraPlanes, const float farPlane, const float nearPlane)
 {
 	DirectX::XMFLOAT4 worldPoint4(worldPoint.x, worldPoint.y, worldPoint.z, 1.0f);
 	const auto worldPoint4Vector = XMLoadFloat4(&worldPoint4);
 	
-	return TransformWorldPositionToScreenPoint(worldPoint4Vector, viewProjectionMatrix, visible, farPlane, nearPlane);
+	return TransformWorldPositionToScreenPoint(	worldPoint4Vector, 
+												viewProjectionMatrix, 
+												visible,
+												outsideCameraPlanes, 
+												farPlane, 
+												nearPlane);
 }
 
 ImVec2 GuiTransformUtil::TransformWorldPositionToScreenPoint(const DirectX::XMFLOAT4& worldPoint, const DirectX::XMMATRIX& viewProjectionMatrix, 
-	bool& visible, const float farPlane, const float nearPlane)
+	bool* visible, bool* outsideCameraPlanes, const float farPlane, const float nearPlane)
 {
 	const auto worldPointVector = XMLoadFloat4(&worldPoint);
 	
-	return TransformWorldPositionToScreenPoint(worldPointVector, viewProjectionMatrix, visible, farPlane, nearPlane);
+	return TransformWorldPositionToScreenPoint(	worldPointVector, 
+												viewProjectionMatrix, 
+												visible,
+												outsideCameraPlanes, 
+												farPlane, 
+												nearPlane);
 }
 
 ImVec2 GuiTransformUtil::TransformWorldPositionToScreenPoint(const DirectX::XMVECTOR& worldPoint, const DirectX::XMMATRIX& viewProjectionMatrix, 
-	bool& visible, const float farPlane, const float nearPlane)
+	bool* visible, bool* outsideCameraPlanes, const float farPlane, const float nearPlane)
 {
 	const auto viewportSize = ImGui::GetMainViewport()->Size;
 	const auto viewportPos = ImGui::GetMainViewport()->Pos;
@@ -44,13 +54,19 @@ ImVec2 GuiTransformUtil::TransformWorldPositionToScreenPoint(const DirectX::XMVE
 	resultFloats.x += viewportPos.x;
 	resultFloats.y += viewportPos.y;
 
-	visible = !(resultFloats.x < 0 || 
-				resultFloats.y < 0 ||
-				resultFloats.x > viewportSize.x || 
-				resultFloats.y > viewportSize.y || 
-				depth < nearPlane ||
-				depth > farPlane);
+	if (outsideCameraPlanes != nullptr)
+		*outsideCameraPlanes = depth < nearPlane || depth > farPlane;
 
+	if (visible != nullptr)
+	{
+		*visible = !(	resultFloats.x < 0 || 
+						resultFloats.y < 0 ||
+						resultFloats.x > viewportSize.x || 
+						resultFloats.y > viewportSize.y || 
+						depth < nearPlane || 
+						depth > farPlane);
+	}
+	
 	return ImVec2(resultFloats.x, resultFloats.y);
 }
 

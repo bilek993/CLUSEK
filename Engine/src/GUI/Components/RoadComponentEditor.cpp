@@ -97,7 +97,8 @@ void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer, const Dire
 		bool visible{};
 		const auto circlePosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	point, 
 																							viewProjectionMatrix, 
-																							visible,
+																							&visible,
+																							nullptr,
 																							Config->MainCameraFarZ,
 																							Config->MainCameraNearZ);
 		if (visible)
@@ -126,18 +127,22 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 		const auto isNextPointSelected = SelectedPointId == nextElementId;
 
 		bool curPointVisible{};
+		bool curPointOutsideCameraPlanes{};
 		const auto curPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(componentPointer->Points[curElementId],
 																							viewProjectionMatrix, 
-																							curPointVisible,
+																							&curPointVisible,
+																							&curPointOutsideCameraPlanes,
 																							Config->MainCameraFarZ,
 																							Config->MainCameraNearZ);
 
 		if (prevElementId > 0)
 		{
 			bool prevPointVisible{};
+			bool prevPointOutsideCameraPlanes{};
 			const auto prevPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[prevElementId],
 																									viewProjectionMatrix, 
-																									prevPointVisible,
+																									&prevPointVisible,
+																									&prevPointOutsideCameraPlanes,
 																									Config->MainCameraFarZ,
 																									Config->MainCameraNearZ);
 
@@ -148,9 +153,11 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 		if (nextElementId < componentPointer->Points.size())
 		{
 			bool nextPointVisible{};
+			bool nextPointOutsideCameraPlanes{};
 			const auto nextPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[nextElementId],
 																									viewProjectionMatrix, 
-																									nextPointVisible,
+																									&nextPointVisible,
+																									&nextPointOutsideCameraPlanes,
 																									Config->MainCameraFarZ,
 																									Config->MainCameraNearZ);
 
