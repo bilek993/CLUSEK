@@ -1,12 +1,15 @@
 #include "RoadComponentEditor.h"
 #include <ImGuizmo.h>
 #include <json.hpp>
+#include "../../Renderer/TransformLogic.h"
 #include "../../Utils/CameraLocator.h"
 #include "../../Utils/GuiTransformUtil.h"
 
 void RoadComponentEditor::Draw()
 {
 	const auto componentPointer = GetPointerToThisComponent();
+
+	const auto mainCameraTransform = CameraLocator::GetMainCameraTransform(Registry);
 
 	const auto mainCamera = CameraLocator::GetMainCamera(Registry);
 	const auto viewProjectionMatrix = mainCamera.ViewMatrix * mainCamera.ProjectionMatrix;
@@ -16,7 +19,7 @@ void RoadComponentEditor::Draw()
 	DrawControlButtons(componentPointer);
 
 	DrawPoints(componentPointer, viewProjectionMatrix);
-	DrawConnectionLines(componentPointer, viewProjectionMatrix);
+	DrawConnectionLines(componentPointer, mainCameraTransform, viewProjectionMatrix);
 	DrawGizmos(componentPointer, mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
 }
 
@@ -115,7 +118,7 @@ void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer, const Dire
 	}
 }
 
-void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix) const
+void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, const TransformComponent& cameraTransform, const DirectX::XMMATRIX& viewProjectionMatrix) const
 {
 	for (auto curElementId = 0; curElementId < componentPointer->Points.size(); curElementId += 3)
 	{
@@ -126,43 +129,62 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 		const auto isCurrentPointSelected = SelectedPointId == curElementId;
 		const auto isNextPointSelected = SelectedPointId == nextElementId;
 
-		bool curPointVisible{};
 		bool curPointOutsideCameraPlanes{};
 		const auto curPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(componentPointer->Points[curElementId],
 																							viewProjectionMatrix, 
-																							&curPointVisible,
+																							nullptr,
 																							&curPointOutsideCameraPlanes,
 																							Config->MainCameraFarZ,
 																							Config->MainCameraNearZ);
 
 		if (prevElementId > 0)
 		{
-			bool prevPointVisible{};
 			bool prevPointOutsideCameraPlanes{};
 			const auto prevPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[prevElementId],
 																									viewProjectionMatrix, 
-																									&prevPointVisible,
+																									nullptr,
 																									&prevPointOutsideCameraPlanes,
 																									Config->MainCameraFarZ,
 																									Config->MainCameraNearZ);
 
-			if (prevPointVisible || curPointVisible)
-				FullscreenDrawList->AddLine(curPointPosition, prevPointPosition, isCurrentPointSelected || isPrevPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
+			const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(curPointPosition, 
+																					prevPointPosition, 
+																					TransformLogic::GetPosition(cameraTransform), 
+																					componentPointer->Points[curElementId], 
+																					curPointOutsideCameraPlanes);
+			
+			const auto fixedPrevPointPosition = FixVectorOutsideCameraPlanesIfNeeded(prevPointPosition, 
+																					curPointPosition, 
+																					TransformLogic::GetPosition(cameraTransform), 
+																					componentPointer->Points[prevElementId], 
+																					prevPointOutsideCameraPlanes);
+			
+			FullscreenDrawList->AddLine(fixedCurPointPosition, fixedPrevPointPosition, isCurrentPointSelected || isPrevPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
 		}
 
 		if (nextElementId < componentPointer->Points.size())
 		{
-			bool nextPointVisible{};
 			bool nextPointOutsideCameraPlanes{};
 			const auto nextPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[nextElementId],
 																									viewProjectionMatrix, 
-																									&nextPointVisible,
+																									nullptr,
 																									&nextPointOutsideCameraPlanes,
 																									Config->MainCameraFarZ,
 																									Config->MainCameraNearZ);
 
-			if (nextPointVisible || curPointVisible)
-				FullscreenDrawList->AddLine(curPointPosition, nextPointPosition, isCurrentPointSelected || isNextPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
+			const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(curPointPosition, 
+																					nextPointPosition, 
+																					TransformLogic::GetPosition(cameraTransform), 
+																					componentPointer->Points[curElementId], 
+																					curPointOutsideCameraPlanes);
+
+			const auto fixedNextPointPosition = FixVectorOutsideCameraPlanesIfNeeded(nextPointPosition, 
+																					curPointPosition, 
+																					TransformLogic::GetPosition(cameraTransform), 
+																					componentPointer->Points[nextElementId], 
+																					nextPointOutsideCameraPlanes);
+
+			FullscreenDrawList->AddLine(fixedCurPointPosition, fixedNextPointPosition, isCurrentPointSelected || isNextPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
 		}
 	}
 }
@@ -198,4 +220,25 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	XMMatrixDecompose(&newScaleVector, &newRotationVector, &newTranslationVector, worldMatrix);
 
 	XMStoreFloat3(&componentPointer->Points[SelectedPointId], newTranslationVector);
+}
+
+ImVec2 RoadComponentEditor::FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 
+	const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, bool outsideCameraPlanes) const
+{
+	if (!outsideCameraPlanes)
+		return pointToBeFixed;
+	
+	// Using linear equation to solve this problem
+	// y = ax + b
+
+	const auto a = (secondPoint.y - pointToBeFixed.y) / (secondPoint.x - pointToBeFixed.x);
+	const auto b = pointToBeFixed.y - (a * pointToBeFixed.x);
+
+	auto& io = ImGui::GetIO();
+	const auto height = io.DisplaySize.y;
+
+	if (cameraPosition.y - pointToBeFixedWorldPosition.y > 0)
+		return ImVec2((height - b) / a, height);
+	else
+		return ImVec2(-b / a, 0.0f);
 }

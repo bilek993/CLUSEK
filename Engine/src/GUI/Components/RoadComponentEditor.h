@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponentEditor.h"
 #include "../../ECS/Components/RoadComponent.h"
+#include "../../ECS/Components/TransformComponent.h"
 
 class RoadComponentEditor final : public BaseComponentEditor<RoadComponent>
 {
@@ -12,8 +13,11 @@ private:
 	void DrawControlButtons(RoadComponent* componentPointer) const;
 
 	void DrawPoints(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix);
-	void DrawConnectionLines(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix) const;
+	void DrawConnectionLines(RoadComponent* componentPointer, const TransformComponent& cameraTransform, const DirectX::XMMATRIX& viewProjectionMatrix) const;
 	void DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const;
+
+	ImVec2 FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 
+		const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, bool outsideCameraPlanes) const;
 
 	int SelectedPointId = -1;
 
