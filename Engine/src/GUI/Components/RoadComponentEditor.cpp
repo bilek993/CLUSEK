@@ -223,7 +223,7 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 }
 
 ImVec2 RoadComponentEditor::FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 
-	const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, bool outsideCameraPlanes) const
+	const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, const bool outsideCameraPlanes) const
 {
 	if (!outsideCameraPlanes)
 		return pointToBeFixed;
