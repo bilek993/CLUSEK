@@ -35,8 +35,16 @@ void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer)
 		{
 			ImGui::InputFloat3("Position", &point.x, 3);
 
-			if (ImGui::Button("Select"))
-				SelectedPointId = counter;
+			if (SelectedPointId == counter)
+			{
+				if (ImGui::Button("Unselect"))
+					SelectedPointId = -1;
+			}
+			else
+			{
+				if (ImGui::Button("Select"))
+					SelectedPointId = counter;
+			}
 			
 			ImGui::TreePop();
 		}
