@@ -1,10 +1,15 @@
 #pragma once
 #include <DirectXMath.h>
+#include <functional>
+#include <vector>
 
 class SplineUtil final
 {
 public:
-	static DirectX::XMVECTOR CalculateBezierQuadraticCurve(const DirectX::XMVECTOR& a, const DirectX::XMVECTOR& b, 
+	static std::vector<DirectX::XMVECTOR> CalculateEvenlySpaceLookUpTable(int resolution, float distance,
+		const std::function<DirectX::XMVECTOR(float)>& generatorFunction);
+	
+		static DirectX::XMVECTOR CalculateBezierQuadraticCurve(const DirectX::XMVECTOR& a, const DirectX::XMVECTOR& b, 
 		const DirectX::XMVECTOR& c, float t);
 	static DirectX::XMFLOAT4 CalculateBezierQuadraticCurve(const DirectX::XMFLOAT4& a, const DirectX::XMFLOAT4& b, 
 		const DirectX::XMFLOAT4& c, float t);

@@ -1,7 +1,35 @@
 #include "SplineUtil.h"
 
+std::vector<DirectX::XMVECTOR> SplineUtil::CalculateEvenlySpaceLookUpTable(const int resolution, const float distance,
+	const std::function<DirectX::XMVECTOR(float)>& generatorFunction)
+{
+	std::vector<DirectX::XMVECTOR> lookUpTable{};
+	auto distanceFromLastPoint = distance;
+
+	DirectX::XMVECTOR previousVector{};
+	
+	for (auto i = 0; i < resolution; i++)
+	{
+		const auto t = static_cast<float>(i) / static_cast<float>(resolution);
+		const auto currentVector = generatorFunction(t);
+
+		if (i != 0) // Not on first run
+			distanceFromLastPoint += DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(previousVector, currentVector)));
+
+		while (distanceFromLastPoint >= distance)
+		{
+			distanceFromLastPoint -= distance;
+			lookUpTable.emplace_back(currentVector);
+		}
+
+		previousVector = currentVector;
+	}
+
+	return lookUpTable;
+}
+
 DirectX::XMVECTOR SplineUtil::CalculateBezierQuadraticCurve(const DirectX::XMVECTOR& a, const DirectX::XMVECTOR& b,
-	const DirectX::XMVECTOR& c, const float t)
+                                                            const DirectX::XMVECTOR& c, const float t)
 {
 	const auto p0 = DirectX::XMVectorLerp(a, b, t);
 	const auto p1 = DirectX::XMVectorLerp(b, c, t);
