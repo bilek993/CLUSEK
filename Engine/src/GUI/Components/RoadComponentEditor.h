@@ -10,6 +10,7 @@ protected:
 
 private:
 	void DrawPoints(RoadComponent* componentPointer);
+	void DrawAdditionalConfiguration(RoadComponent* componentPointer) const;
 	void DrawControlButtons(RoadComponent* componentPointer) const;
 
 	void DrawPoints(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix);

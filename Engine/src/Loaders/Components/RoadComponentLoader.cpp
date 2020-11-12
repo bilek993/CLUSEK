@@ -18,4 +18,7 @@ void RoadComponentLoader::LoadPoints(RoadComponent& component, nlohmann::json& j
 		
 		component.Points.emplace_back(point);
 	}
+
+	MAP_LOADER_BASIC_FIELD(Resolution, json, component, int);
+	MAP_LOADER_BASIC_FIELD(SplitDistance, json, component, float);
 }

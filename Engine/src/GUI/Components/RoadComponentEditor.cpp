@@ -16,6 +16,8 @@ void RoadComponentEditor::Draw()
 	
 	DrawPoints(componentPointer);
 	ImGui::Separator();
+	DrawAdditionalConfiguration(componentPointer);
+	ImGui::Separator();
 	DrawControlButtons(componentPointer);
 
 	DrawPoints(componentPointer, viewProjectionMatrix);
@@ -51,6 +53,12 @@ void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer)
 
 		counter++;
 	}
+}
+
+void RoadComponentEditor::DrawAdditionalConfiguration(RoadComponent* componentPointer) const
+{
+	ImGui::DragInt("Resolution", &componentPointer->Resolution, 10);
+	ImGui::DragFloat("Split distance", &componentPointer->SplitDistance, 0.1f);
 }
 
 void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer) const
