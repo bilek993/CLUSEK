@@ -5,6 +5,16 @@
     ],
     "Components":{
       "RoadComponent":{
+		"MeshVertices":[
+		  {
+			"PositionX":-5.0,
+			"PositionY":0.0
+		  },
+		  {
+			"PositionX":5.0,
+			"PositionY":0.0
+		  }
+		],
         "Points":[
           {
 			"PositionX":0.0,
