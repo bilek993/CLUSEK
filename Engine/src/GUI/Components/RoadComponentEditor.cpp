@@ -13,7 +13,9 @@ void RoadComponentEditor::Draw()
 
 	const auto mainCamera = CameraLocator::GetMainCamera(Registry);
 	const auto viewProjectionMatrix = mainCamera.ViewMatrix * mainCamera.ProjectionMatrix;
-	
+
+	DrawMeshVertices(componentPointer);
+	ImGui::Separator();
 	DrawPoints(componentPointer);
 	ImGui::Separator();
 	DrawAdditionalConfiguration(componentPointer);
@@ -23,6 +25,14 @@ void RoadComponentEditor::Draw()
 	DrawPoints(componentPointer, viewProjectionMatrix);
 	DrawConnectionLines(componentPointer, mainCameraTransform, viewProjectionMatrix);
 	DrawGizmos(componentPointer, mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
+}
+
+void RoadComponentEditor::DrawMeshVertices(RoadComponent* componentPointer)
+{
+	ImGui::Text("Mesh vertices (%u vertices):", static_cast<unsigned>(componentPointer->MeshVertices.size()));
+
+	for (auto& vertex : componentPointer->MeshVertices)
+		ImGui::BulletText("X: %f Y: %f", vertex.x, vertex.y);
 }
 
 void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer)

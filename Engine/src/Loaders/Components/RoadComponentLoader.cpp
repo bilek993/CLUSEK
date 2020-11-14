@@ -9,6 +9,15 @@ void RoadComponentLoader::Add(nlohmann::json& json, entt::registry& registry, co
 
 void RoadComponentLoader::LoadPoints(RoadComponent& component, nlohmann::json& json) const
 {
+	for (auto& pointJson : json["MeshVertices"])
+	{
+		DirectX::XMFLOAT2 point{};
+		point.x = pointJson["PositionX"];
+		point.y = pointJson["PositionY"];
+
+		component.MeshVertices.emplace_back(point);
+	}
+	
 	for (auto& pointJson : json["Points"])
 	{
 		DirectX::XMFLOAT3 point{};

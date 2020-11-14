@@ -9,6 +9,7 @@ protected:
 	void Draw() override;
 
 private:
+	void DrawMeshVertices(RoadComponent* componentPointer);
 	void DrawPoints(RoadComponent* componentPointer);
 	void DrawAdditionalConfiguration(RoadComponent* componentPointer) const;
 	void DrawControlButtons(RoadComponent* componentPointer) const;
