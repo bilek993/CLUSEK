@@ -81,6 +81,7 @@ private:
 	void InitializeGrassComponent();
 	void InitializeTerrainComponent();
 	void InitializeModelRenderComponent();
+	void InitializeRoadComponent();
 	void InitializeShadowCameras();
 
 	void ChangeBasicShaders(const VertexShader& vertexShader, const PixelShader& pixelShader) const;

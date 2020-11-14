@@ -8,4 +8,7 @@ struct RoadComponent final
 	std::vector<DirectX::XMFLOAT3> Points{};
 	int Resolution = 10000;
 	float SplitDistance = 10.0f;
+
+	bool InitializedOnce = true;
+	std::vector<DirectX::XMVECTOR> CalculatedSupportPoints;
 };
