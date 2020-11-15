@@ -10,7 +10,7 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 {
 	Logger::Debug("Generating road vertices...");
 
-	const auto vertexCount = roadComponent.Points.size() * roadComponent.CalculatedSupportPoints.size();
+	const auto vertexCount = roadComponent.MeshVertices.size() * roadComponent.CalculatedSupportPoints.size();
 	std::vector<FatVertex> vertices{};
 
 	for (auto i = 0; i < roadComponent.CalculatedSupportPoints.size(); i++)
