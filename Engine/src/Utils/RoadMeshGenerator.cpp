@@ -20,7 +20,7 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 			const auto& currentPoint = roadComponent.CalculatedSupportPoints[i];
 			const auto& nextPoint = roadComponent.CalculatedSupportPoints.size() >= (i + 1) ? XMLoadFloat3(&roadComponent.Points.back()) : roadComponent.CalculatedSupportPoints[i];
 			
-			const auto tangentVector = CalculateDirectionVector(currentPoint, nextPoint, true);
+			const auto tangentVector = CalculateTangent(currentPoint, nextPoint);
 			const auto bitangentVector = CalculateBitangent(tangentVector);
 			const auto normalVector = CalculateNormal(tangentVector, bitangentVector);
 			
@@ -60,11 +60,11 @@ void RoadMeshGenerator::GenerateIndices(ID3D11Device* device, RoadComponent& roa
 	roadComponent.Mesh.RenderIndexBuffer.Initialize(device, indices.data(), indicesCount);
 }
 
-DirectX::XMVECTOR RoadMeshGenerator::CalculateDirectionVector(const DirectX::XMVECTOR& currentPoint, const DirectX::XMVECTOR& nextPoint,
-	const bool normalizeResult)
+DirectX::XMVECTOR RoadMeshGenerator::CalculateTangent(const DirectX::XMVECTOR& currentPoint, const DirectX::XMVECTOR& nextPoint)
 {
 	const auto directionVector = DirectX::XMVectorSubtract(nextPoint, currentPoint);
-	return normalizeResult ? DirectX::XMVector3Normalize(directionVector) : directionVector;
+	const auto normalizedVector = DirectX::XMVector3Normalize(directionVector);
+	return normalizedVector;
 }
 
 DirectX::XMVECTOR RoadMeshGenerator::CalculateBitangent(const DirectX::XMVECTOR& tangent)
