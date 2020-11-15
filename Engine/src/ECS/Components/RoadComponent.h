@@ -1,6 +1,7 @@
 #pragma once
 #include <DirectXMath.h>
 #include <vector>
+#include "../../Renderer/Mesh.h"
 
 struct RoadComponent final
 {
@@ -11,4 +12,5 @@ struct RoadComponent final
 
 	bool InitializedOnce = true;
 	std::vector<DirectX::XMVECTOR> CalculatedSupportPoints;
+	Mesh Mesh;
 };
