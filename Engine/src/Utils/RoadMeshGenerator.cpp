@@ -76,10 +76,13 @@ DirectX::XMVECTOR RoadMeshGenerator::CalculateBitangent(const DirectX::XMVECTOR&
 	DirectX::XMFLOAT3 up(0.0f, 1.0f, 0.0f);
 	const auto upVector = XMLoadFloat3(&up);
 
-	return DirectX::XMVector3Cross(upVector, tangent);
+	const auto bitangent = DirectX::XMVector3Cross(upVector, tangent);
+
+	return DirectX::XMVector3Normalize(bitangent);
 }
 
 DirectX::XMVECTOR RoadMeshGenerator::CalculateNormal(const DirectX::XMVECTOR& tangent, const DirectX::XMVECTOR& bitangent)
 {
-	return DirectX::XMVector3Cross(tangent, bitangent);
+	const auto normal = DirectX::XMVector3Cross(tangent, bitangent);
+	return DirectX::XMVector3Normalize(normal);
 }
