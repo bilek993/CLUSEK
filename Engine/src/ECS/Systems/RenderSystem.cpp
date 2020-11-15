@@ -19,6 +19,7 @@
 #include "../../Renderer/GrassCamera.h"
 #include "../../Utils/StringUtil.h"
 #include "../../Utils/CameraLocator.h"
+#include "../../Utils/RoadMeshGenerator.h"
 #include "../../Utils/SplineUtil.h"
 #include "../Components/GrassComponent.h"
 #include "../Components/RoadComponent.h"
@@ -1086,49 +1087,7 @@ void RenderSystem::InitializeRoadComponent()
 			roadComponent.CalculatedSupportPoints.insert(roadComponent.CalculatedSupportPoints.cend(), calculatedLut.cbegin(), calculatedLut.cend());
 		}
 
-		const auto vertexCount = roadComponent.Points.size() * roadComponent.CalculatedSupportPoints.size();
-		std::vector<FatVertex> vertices{};
-		
-		for (auto i = 0; i < roadComponent.CalculatedSupportPoints.size(); i++)
-		{
-			for (auto j = 0; j < roadComponent.MeshVertices.size(); j++)
-			{
-				DirectX::XMFLOAT3 currentSupportPoint{};
-				XMStoreFloat3(&currentSupportPoint, roadComponent.CalculatedSupportPoints[i]);
-
-				FatVertex vertex;
-
-				vertex.Position.x = mo;
-				vertex.Position.y = mesh->mVertices[j].y;
-				vertex.Position.z = mesh->mVertices[j].z;
-
-				//vertex.Normal.x = mesh->mNormals[j].x; TODO: Add missing implementation
-				//vertex.Normal.y = mesh->mNormals[j].y; TODO: Add missing implementation
-				//vertex.Normal.z = mesh->mNormals[j].z; TODO: Add missing implementation
-
-				//vertex.Tangent.x = mesh->mTangents[j].x; TODO: Add missing implementation
-				//vertex.Tangent.y = mesh->mTangents[j].y; TODO: Add missing implementation
-				//vertex.Tangent.z = mesh->mTangents[j].z; TODO: Add missing implementation
-
-				//vertex.TextureCoord.x = static_cast<float>(mesh->mTextureCoords[0][j].x); TODO: Add missing implementation
-				//vertex.TextureCoord.y = static_cast<float>(mesh->mTextureCoords[0][j].y); TODO: Add missing implementation
-
-				vertices.emplace_back(vertex);
-			}
-		}
-		
-		roadComponent.Mesh.RenderVertexBuffer.Initialize(Device.Get(), nullptr, vertexCount);
-
-		const auto indicesCount = (roadComponent.Points.size() - 1) * 2;
-		std::vector<DWORD> indices{};
-		
-		for (auto i = 0; i < indicesCount; i++)
-		{
-			const DWORD index = 0; // TODO: Add correct logic here
-			indices.emplace_back(indesx);
-		}
-		
-		roadComponent.Mesh.RenderIndexBuffer.Initialize(Device.Get(), nullptr, indicesCount);
+		RoadMeshGenerator::GenerateRoadMesh(Device.Get(), roadComponent);
 
 		Logger::Debug("Reinitialized road mesh successfully!");
 		roadComponent.InitializedOnce = true;
