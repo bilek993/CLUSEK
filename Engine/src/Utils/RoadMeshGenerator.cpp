@@ -17,10 +17,11 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 	{
 		for (auto j = 0; j < roadComponent.MeshVertices.size(); j++)
 		{
-			const auto& currentPoint = roadComponent.CalculatedSupportPoints[i];
-			const auto& nextPoint = roadComponent.CalculatedSupportPoints.size() >= (i + 1) ? XMLoadFloat3(&roadComponent.Points.back()) : roadComponent.CalculatedSupportPoints[i];
+			const auto previousPoint = (i - 1) < 0 ? nullptr : &roadComponent.CalculatedSupportPoints[i - 1];
+			const auto currentPoint = &roadComponent.CalculatedSupportPoints[i];
+			const auto nextPoint = (i + 1) > roadComponent.MeshVertices.size() ? nullptr : &roadComponent.CalculatedSupportPoints[i+1];
 			
-			const auto tangentVector = CalculateTangent(currentPoint, nextPoint);
+			const auto tangentVector = CalculateTangent(previousPoint, currentPoint, nextPoint);
 			const auto bitangentVector = CalculateBitangent(tangentVector);
 			const auto normalVector = CalculateNormal(tangentVector, bitangentVector);
 			
@@ -60,11 +61,18 @@ void RoadMeshGenerator::GenerateIndices(ID3D11Device* device, RoadComponent& roa
 	roadComponent.Mesh.RenderIndexBuffer.Initialize(device, indices.data(), indicesCount);
 }
 
-DirectX::XMVECTOR RoadMeshGenerator::CalculateTangent(const DirectX::XMVECTOR& currentPoint, const DirectX::XMVECTOR& nextPoint)
+DirectX::XMVECTOR RoadMeshGenerator::CalculateTangent(const DirectX::XMVECTOR* previousPoint,
+	const DirectX::XMVECTOR* currentPoint, const DirectX::XMVECTOR* nextPoint)
 {
-	const auto directionVector = DirectX::XMVectorSubtract(nextPoint, currentPoint);
-	const auto normalizedVector = DirectX::XMVector3Normalize(directionVector);
-	return normalizedVector;
+	const auto directionVector = DirectX::XMVectorZero();
+
+	if (previousPoint != nullptr)
+		DirectX::XMVectorAdd(directionVector, DirectX::XMVectorSubtract(*currentPoint, *previousPoint));
+	
+	if (nextPoint != nullptr)
+		DirectX::XMVectorAdd(directionVector, DirectX::XMVectorSubtract(*nextPoint, *currentPoint));
+	
+	return DirectX::XMVector3Normalize(directionVector);
 }
 
 DirectX::XMVECTOR RoadMeshGenerator::CalculateBitangent(const DirectX::XMVECTOR& tangent)
