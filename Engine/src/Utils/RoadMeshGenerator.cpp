@@ -15,16 +15,16 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 
 	for (auto i = 0; i < roadComponent.CalculatedSupportPoints.size(); i++)
 	{
+		const auto previousPoint = (i - 1) < 0 ? nullptr : &roadComponent.CalculatedSupportPoints[i - 1];
+		const auto currentPoint = &roadComponent.CalculatedSupportPoints[i];
+		const auto nextPoint = (i + 1) >= roadComponent.CalculatedSupportPoints.size() ? nullptr : &roadComponent.CalculatedSupportPoints[i + 1];
+
+		const auto tangentVector = CalculateTangent(previousPoint, currentPoint, nextPoint);
+		const auto bitangentVector = CalculateBitangent(tangentVector);
+		const auto normalVector = CalculateNormal(tangentVector, bitangentVector);
+		
 		for (auto j = 0; j < roadComponent.MeshVertices.size(); j++)
 		{
-			const auto previousPoint = (i - 1) < 0 ? nullptr : &roadComponent.CalculatedSupportPoints[i-1];
-			const auto currentPoint = &roadComponent.CalculatedSupportPoints[i];
-			const auto nextPoint = (i + 1) >= roadComponent.CalculatedSupportPoints.size() ? nullptr : &roadComponent.CalculatedSupportPoints[i+1];
-			
-			const auto tangentVector = CalculateTangent(previousPoint, currentPoint, nextPoint);
-			const auto bitangentVector = CalculateBitangent(tangentVector);
-			const auto normalVector = CalculateNormal(tangentVector, bitangentVector);
-
 			const auto positionVector = CalculatePosition(	tangentVector,
 															bitangentVector,
 															normalVector,
