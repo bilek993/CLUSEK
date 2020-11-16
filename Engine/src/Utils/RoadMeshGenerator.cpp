@@ -24,19 +24,19 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 			const auto tangentVector = CalculateTangent(previousPoint, currentPoint, nextPoint);
 			const auto bitangentVector = CalculateBitangent(tangentVector);
 			const auto normalVector = CalculateNormal(tangentVector, bitangentVector);
+
+			const auto positionVector = CalculatePosition(	tangentVector,
+															bitangentVector,
+															normalVector,
+															roadComponent.MeshVertices[j],
+															*currentPoint);
 			
 			FatVertex vertex;
 
-			//vertex.Position.x = mo; TODO: Add missing implementation
-			//vertex.Position.y = mesh->mVertices[j].y; TODO: Add missing implementation
-			//vertex.Position.z = mesh->mVertices[j].z; TODO: Add missing implementation
-
+			XMStoreFloat3(&vertex.Position, positionVector);
 			XMStoreFloat3(&vertex.Normal, normalVector);
-
 			XMStoreFloat3(&vertex.Tangent, tangentVector);
-
-			//vertex.TextureCoord.x = static_cast<float>(mesh->mTextureCoords[0][j].x); TODO: Add missing implementation
-			//vertex.TextureCoord.y = static_cast<float>(mesh->mTextureCoords[0][j].y); TODO: Add missing implementation
+			//vertex.TextureCoord // TODO: Add missing implementation
 			
 			vertices.emplace_back(vertex);
 		}
@@ -89,4 +89,27 @@ DirectX::XMVECTOR RoadMeshGenerator::CalculateNormal(const DirectX::XMVECTOR& ta
 {
 	const auto normal = DirectX::XMVector3Cross(tangent, bitangent);
 	return DirectX::XMVector3Normalize(normal);
+}
+
+DirectX::XMVECTOR RoadMeshGenerator::CalculatePosition(const DirectX::XMVECTOR& tangent, const DirectX::XMVECTOR& bitangent, 
+	const DirectX::XMVECTOR& normal, const DirectX::XMFLOAT2 meshVertex, const DirectX::XMVECTOR& currentPoint)
+{
+	const DirectX::XMFLOAT3 meshVertexFloats3(meshVertex.x, meshVertex.y, 0.0f);
+	const auto meshVertexVector = XMLoadFloat3(&meshVertexFloats3);
+	
+	DirectX::XMFLOAT3 tangentFloats{};
+	DirectX::XMFLOAT3 bitangentFloats{};
+	DirectX::XMFLOAT3 normalFloats{};
+
+	XMStoreFloat3(&tangentFloats, tangent);
+	XMStoreFloat3(&bitangentFloats, bitangent);
+	XMStoreFloat3(&normalFloats, normal);
+
+	DirectX::XMFLOAT3X3 bitangentTangentNormalFloats(	bitangentFloats.x, bitangentFloats.y, bitangentFloats.z,
+														tangentFloats.x, tangentFloats.y, tangentFloats.z,
+														normalFloats.x, normalFloats.y, normalFloats.z);
+
+	const auto bitangentTangentNormalMatrix = XMLoadFloat3x3(&bitangentTangentNormalFloats);
+
+	return DirectX::XMVectorAdd(XMVector3Transform(meshVertexVector, bitangentTangentNormalMatrix), currentPoint);
 }

@@ -15,4 +15,7 @@ private:
 		const DirectX::XMVECTOR* currentPoint, const DirectX::XMVECTOR* nextPoint);
 	static DirectX::XMVECTOR CalculateBitangent(const DirectX::XMVECTOR& tangent);
 	static DirectX::XMVECTOR CalculateNormal(const DirectX::XMVECTOR& tangent, const DirectX::XMVECTOR& bitangent);
+
+	static DirectX::XMVECTOR CalculatePosition(const DirectX::XMVECTOR& tangent, const DirectX::XMVECTOR& bitangent,
+		const DirectX::XMVECTOR& normal, const DirectX::XMFLOAT2 meshVertex, const DirectX::XMVECTOR& currentPoint);
 };
