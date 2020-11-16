@@ -17,9 +17,9 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 	{
 		for (auto j = 0; j < roadComponent.MeshVertices.size(); j++)
 		{
-			const auto previousPoint = (i - 1) < 0 ? nullptr : &roadComponent.CalculatedSupportPoints[i - 1];
+			const auto previousPoint = (i - 1) < 0 ? nullptr : &roadComponent.CalculatedSupportPoints[i-1];
 			const auto currentPoint = &roadComponent.CalculatedSupportPoints[i];
-			const auto nextPoint = (i + 1) > roadComponent.MeshVertices.size() ? nullptr : &roadComponent.CalculatedSupportPoints[i+1];
+			const auto nextPoint = (i + 1) >= roadComponent.CalculatedSupportPoints.size() ? nullptr : &roadComponent.CalculatedSupportPoints[i+1];
 			
 			const auto tangentVector = CalculateTangent(previousPoint, currentPoint, nextPoint);
 			const auto bitangentVector = CalculateBitangent(tangentVector);
@@ -64,13 +64,13 @@ void RoadMeshGenerator::GenerateIndices(ID3D11Device* device, RoadComponent& roa
 DirectX::XMVECTOR RoadMeshGenerator::CalculateTangent(const DirectX::XMVECTOR* previousPoint,
 	const DirectX::XMVECTOR* currentPoint, const DirectX::XMVECTOR* nextPoint)
 {
-	const auto directionVector = DirectX::XMVectorZero();
+	auto directionVector = DirectX::XMVectorZero();
 
 	if (previousPoint != nullptr)
-		DirectX::XMVectorAdd(directionVector, DirectX::XMVectorSubtract(*currentPoint, *previousPoint));
+		directionVector = DirectX::XMVectorAdd(directionVector, DirectX::XMVectorSubtract(*currentPoint, *previousPoint));
 	
 	if (nextPoint != nullptr)
-		DirectX::XMVectorAdd(directionVector, DirectX::XMVectorSubtract(*nextPoint, *currentPoint));
+		directionVector = DirectX::XMVectorAdd(directionVector, DirectX::XMVectorSubtract(*nextPoint, *currentPoint));
 	
 	return DirectX::XMVector3Normalize(directionVector);
 }
