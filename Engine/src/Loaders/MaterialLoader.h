@@ -22,6 +22,7 @@ public:
 		bool twoSided, float hightWindSpeed, float hightWindScale, float hightWindBase, float localWindSpeed, 
 		float localWindScale, bool hightWindEnabled, bool localWindEnabled);
 	static void SetResourceForMeshGroup(ID3D11Device* device, std::vector<Mesh>& meshes, const std::string& pathToMaterial);
+	static void SetResourceForSingleMesh(ID3D11Device* device, Mesh& mesh, const std::string& pathToMaterial);
 
 	static void SetResourceForGrassMesh(ID3D11Device* device, GrassMesh& mesh, const std::string& albedoTextureId);
 	static void SetResourceForGrassMeshGroup(ID3D11Device* device, std::vector<GrassMesh>& meshes, const std::string& pathToMaterial);

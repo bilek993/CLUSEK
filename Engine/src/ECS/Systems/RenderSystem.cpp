@@ -1088,6 +1088,7 @@ void RenderSystem::InitializeRoadComponent()
 		}
 
 		RoadMeshGenerator::GenerateRoadMesh(Device.Get(), roadComponent);
+		MaterialLoader::SetResourceForSingleMesh(Device.Get(), roadComponent.Mesh, roadComponent.MaterialId);
 
 		Logger::Debug("Reinitialized road mesh successfully!");
 		roadComponent.InitializedOnce = true;

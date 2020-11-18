@@ -122,6 +122,54 @@ void MaterialLoader::SetResourceForMeshGroup(ID3D11Device* device, std::vector<M
 	}
 }
 
+void MaterialLoader::SetResourceForSingleMesh(ID3D11Device* device, Mesh& mesh, const std::string& pathToMaterial)
+{
+	if (pathToMaterial.empty())
+	{
+		Logger::Error("Incorrect path to material passed! Path to material file cannot be empty.");
+		return;
+	}
+
+	nlohmann::json jsonObject;
+	std::ifstream inputFile(pathToMaterial);
+	inputFile >> jsonObject;
+
+	Logger::Debug("Preparing to load material '" + mesh.Name + "'...");
+	auto alphaJsonInfo = jsonObject[mesh.Name]["Alpha"];
+	auto thresholdAlphaJsonInfo = jsonObject[mesh.Name]["ThresholdAlpha"];
+	auto twoSidedJsonInfo = jsonObject[mesh.Name]["TwoSided"];
+	auto hightWindSpeedJsonInfo = jsonObject[mesh.Name]["HightWindSpeed"];
+	auto hightWindScaleJsonInfo = jsonObject[mesh.Name]["HightWindScale"];
+	auto hightWindBaseJsonInfo = jsonObject[mesh.Name]["HightWindBase"];
+	auto localWindSpeedJsonInfo = jsonObject[mesh.Name]["LocalWindSpeed"];
+	auto localWindScaleJsonInfo = jsonObject[mesh.Name]["LocalWindScale"];
+	auto hightWindEnabledJsonInfo = jsonObject[mesh.Name]["HightWindEnabled"];
+	auto localWindEnabledJsonInfo = jsonObject[mesh.Name]["LocalWindEnabled"];
+	auto albedoTextureJsonInfo = jsonObject[mesh.Name]["AlbedoTexture"];
+	auto normalTextureJsonInfo = jsonObject[mesh.Name]["NormalTexture"];
+	auto metalicSmoothnessTextureJsonInfo = jsonObject[mesh.Name]["MetalicSmoothnessTexture"];
+	auto occlusionTextureJsonInfo = jsonObject[mesh.Name]["OcclusionTexture"];
+	auto emissionTextureJsonInfo = jsonObject[mesh.Name]["EmissionTexture"];
+
+	SetResourceForMesh(	device,
+						mesh,
+						albedoTextureJsonInfo.is_null() ? "" : albedoTextureJsonInfo.get<std::string>(),
+						normalTextureJsonInfo.is_null() ? "" : normalTextureJsonInfo.get<std::string>(),
+						metalicSmoothnessTextureJsonInfo.is_null() ? "" : metalicSmoothnessTextureJsonInfo.get<std::string>(),
+						occlusionTextureJsonInfo.is_null() ? "" : occlusionTextureJsonInfo.get<std::string>(),
+						emissionTextureJsonInfo.is_null() ? "" : emissionTextureJsonInfo.get<std::string>(),
+						alphaJsonInfo.is_null() ? 1.0f : alphaJsonInfo.get<float>(), 
+						thresholdAlphaJsonInfo.is_null() ? 0.0f : thresholdAlphaJsonInfo.get<float>(),
+						twoSidedJsonInfo.is_null() ? false : twoSidedJsonInfo.get<bool>(),
+						hightWindSpeedJsonInfo.is_null() ? 0.001f : hightWindSpeedJsonInfo.get<float>(),
+						hightWindScaleJsonInfo.is_null() ? 0.001f : hightWindScaleJsonInfo.get<float>(),
+						hightWindBaseJsonInfo.is_null() ? 0.001f : hightWindBaseJsonInfo.get<float>(),
+						localWindSpeedJsonInfo.is_null() ? 0.001f : localWindSpeedJsonInfo.get<float>(),
+						localWindScaleJsonInfo.is_null() ? 0.001f : localWindScaleJsonInfo.get<float>(),
+						hightWindEnabledJsonInfo.is_null() ? false : hightWindEnabledJsonInfo.get<bool>(),
+						localWindEnabledJsonInfo.is_null() ? false : localWindEnabledJsonInfo.get<bool>());
+}
+
 void MaterialLoader::SetResourceForGrassMesh(ID3D11Device* device, GrassMesh& mesh, const std::string& albedoTextureId)
 {
 	mesh.Material.AlbedoTexture = GetTextureById(device, albedoTextureId, DefaultAlbedo);
