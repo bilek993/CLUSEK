@@ -1,4 +1,5 @@
 #include "RoadMeshGenerator.h"
+#include "../Renderer/FrustumUtil.h"
 
 void RoadMeshGenerator::GenerateRoadMesh(ID3D11Device* device, RoadComponent& roadComponent)
 {
@@ -42,6 +43,7 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 		}
 	}
 
+	roadComponent.Mesh.FrustumPoints = FrustumUtil::CalculateAABB(vertices);
 	roadComponent.Mesh.RenderVertexBuffer.Initialize(device, vertices.data(), vertexCount);
 }
 
