@@ -49,13 +49,23 @@ void RoadMeshGenerator::GenerateIndices(ID3D11Device* device, RoadComponent& roa
 {
 	Logger::Debug("Generating road indices...");
 	
-	const auto indicesCount = (roadComponent.Points.size() - 1) * 2;
+	const auto indicesCount = (roadComponent.CalculatedSupportPoints.size() - 1) * (roadComponent.MeshVertices.size() - 1) * 6;
 	std::vector<DWORD> indices{};
 
-	for (auto i = 0; i < indicesCount; i++)
+	for (auto i = 0; i < roadComponent.CalculatedSupportPoints.size() - 1; i++)
 	{
-		const DWORD index = 0; // TODO: Add correct logic here
-		indices.emplace_back(index);
+		for (auto j = 0; j < roadComponent.MeshVertices.size() - 1; j++)
+		{
+			// First triangle
+			indices.emplace_back((roadComponent.MeshVertices.size() * i) + j);
+			indices.emplace_back((roadComponent.MeshVertices.size() * (i + 1)) + (j + 1));
+			indices.emplace_back((roadComponent.MeshVertices.size() * (i + 1)) + j);
+
+			// Second triangle
+			indices.emplace_back((roadComponent.MeshVertices.size() * i) + j);
+			indices.emplace_back((roadComponent.MeshVertices.size() * i) + (j + 1));
+			indices.emplace_back((roadComponent.MeshVertices.size() * (i  + 1)) + (j + 1));
+		}
 	}
 
 	roadComponent.Mesh.RenderIndexBuffer.Initialize(device, indices.data(), indicesCount);
