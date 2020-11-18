@@ -30,4 +30,5 @@ void RoadComponentLoader::LoadPoints(RoadComponent& component, nlohmann::json& j
 
 	MAP_LOADER_BASIC_FIELD(Resolution, json, component, int);
 	MAP_LOADER_BASIC_FIELD(SplitDistance, json, component, float);
+	MAP_LOADER_BASIC_FIELD(MaterialId, json, component, std::string);
 }
