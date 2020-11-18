@@ -21,6 +21,8 @@ void RoadComponentEditor::Draw()
 	DrawAdditionalConfiguration(componentPointer);
 	ImGui::Separator();
 	DrawControlButtons(componentPointer);
+	ImGui::Separator();
+	DrawRebuildButtons(componentPointer);
 
 	DrawPoints(componentPointer, viewProjectionMatrix);
 	DrawConnectionLines(componentPointer, mainCameraTransform, viewProjectionMatrix);
@@ -71,24 +73,42 @@ void RoadComponentEditor::DrawAdditionalConfiguration(RoadComponent* componentPo
 	ImGui::DragFloat("Split distance", &componentPointer->SplitDistance, 0.1f);
 }
 
-void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer) const
+void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 {
 	ImGui::Text("Control buttons:");
 
 	if (ImGui::Button("Add new point"))
 	{
+		if (RebuildOnAddOrRemove)
+		{
+			Logger::Debug("Rebuilding due to adding new point!");
+			Rebuild(componentPointer);
+		}
+		
 		// TODO: Add implementation
 	}
 
 	ImGui::SameLine();
 	if (ImGui::Button("Remove first"))
 	{
+		if (RebuildOnAddOrRemove)
+		{
+			Logger::Debug("Rebuilding due to removing point!");
+			Rebuild(componentPointer);
+		}
+		
 		// TODO: Add implementation
 	}
 
 	ImGui::SameLine();
 	if (ImGui::Button("Remove last"))
 	{
+		if (RebuildOnAddOrRemove)
+		{
+			Logger::Debug("Rebuilding due to removing point!");
+			Rebuild(componentPointer);
+		}
+		
 		// TODO: Add implementation
 	}
 
@@ -113,6 +133,19 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer) co
 		ImGui::LogText(outputJsonObject.dump().c_str());
 		ImGui::LogFinish();
 	}
+}
+
+void RoadComponentEditor::DrawRebuildButtons(RoadComponent* componentPointer)
+{
+	ImGui::Text("Rebuild configuration:");
+	if (ImGui::Button("Force rebuild"))
+	{
+		Logger::Debug("Forcing rebuild now!");
+		Rebuild(componentPointer);
+	}
+
+	ImGui::Checkbox("Rebuild on move", &RebuildOnMove);
+	ImGui::Checkbox("Rebuild on add or remove", &RebuildOnAddOrRemove);
 }
 
 void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix)
@@ -215,7 +248,7 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 	}
 }
 
-void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const
+void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix)
 {
 	if (SelectedPointId < 0 || SelectedPointId >= componentPointer->Points.size())
 		return;
@@ -245,11 +278,37 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	
 	XMMatrixDecompose(&newScaleVector, &newRotationVector, &newTranslationVector, worldMatrix);
 
+	if (TriggeredUpdateOnMove && RebuildOnMove)
+	{
+		TimeSinceLastMoveUpdate -= DeltaTime;
+
+		if (TimeSinceLastMoveUpdate < 0.0f)
+		{
+			TriggeredUpdateOnMove = false;
+			Logger::Debug("Rebuilding due to point move!");
+			Rebuild(componentPointer);
+		}
+	}
+
+	if (DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(XMLoadFloat3(&componentPointer->Points[SelectedPointId]), newTranslationVector))) > 0.001f)
+	{
+		if (!TriggeredUpdateOnMove)
+		{
+			TriggeredUpdateOnMove = true;
+			TimeSinceLastMoveUpdate = 1000.0f;
+		}
+	}
+
 	XMStoreFloat3(&componentPointer->Points[SelectedPointId], newTranslationVector);
 }
 
+void RoadComponentEditor::Rebuild(RoadComponent* componentPointer)
+{
+	//  TODO: Add logic here
+}
+
 ImVec2 RoadComponentEditor::FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 
-	const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, const bool outsideCameraPlanes) const
+                                                                 const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, const bool outsideCameraPlanes) const
 {
 	if (!outsideCameraPlanes)
 		return pointToBeFixed;
