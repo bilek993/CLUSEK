@@ -4,6 +4,8 @@
       
     ],
     "Components":{
+	  "TransformComponent":{
+	  },
       "RoadComponent":{
 		"MeshVertices":[
 		  {
