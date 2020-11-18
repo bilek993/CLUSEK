@@ -1679,7 +1679,34 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 
 void RenderSystem::RenderRoadComponents(const CameraComponent& mainCameraComponent, const TransformComponent& mainCameraTransformComponent)
 {
-	// TODO: Add logic here
+	Profiler->BeginEvent("Roads");
+
+	UINT offset = 0;
+	ChangeBasicShaders(UberVertexShader, UberPixelShader);
+
+	DeviceContext->VSSetConstantBuffers(0, 1, FatPerObjectBufferInstance.GetAddressOf());
+	DeviceContext->VSSetConstantBuffers(1, 1, TimeBufferInstance.GetAddressOf());
+	DeviceContext->VSSetConstantBuffers(2, 1, WindBufferInstance.GetAddressOf());
+
+	DeviceContext->PSSetConstantBuffers(0, 1, LightAndAlphaBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(1, 1, CameraBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(2, 1, CascadeLevelsBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(3, 1, FogBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(4, 1, LodTransitionBufferInstance.GetAddressOf());
+	DeviceContext->PSSetConstantBuffers(5, 1, DiscardPixelsBufferInstance.GetAddressOf());
+
+	LodTransitionBufferInstance.Data.PercentageCoverage = 1.0f;
+	LodTransitionBufferInstance.Data.InvertedCoverage = false;
+	LodTransitionBufferInstance.ApplyChanges();
+
+	Registry->view<RoadComponent, TransformComponent>().each([this, &mainCameraComponent, &mainCameraTransformComponent,
+		&offset](RoadComponent &roadComponent, TransformComponent &transformComponent)
+	{
+		auto fatPerObjectBufferSet = false;
+		RenderMesh(roadComponent.Mesh, transformComponent, mainCameraComponent, offset, fatPerObjectBufferSet, Solid);
+	});
+
+	Profiler->EndEvent();
 }
 
 void RenderSystem::RenderMesh(const Mesh& mesh, TransformComponent &transformComponent, const CameraComponent &mainCameraComponent,
