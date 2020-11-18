@@ -1168,6 +1168,7 @@ void RenderSystem::RenderScene(const CameraComponent &cameraComponent, const Tra
 	SetPbrResources();
 
 	RenderModelRenderComponents(cameraComponent, mainCameraTransformComponent, Solid);
+	RenderRoadComponents(cameraComponent, mainCameraTransformComponent);
 
 	if (CurrentRenderSettings->GrassEnabled)
 		RenderGrass(cameraComponent, mainCameraTransformComponent);
@@ -1676,8 +1677,13 @@ void RenderSystem::RenderModelRenderComponents(const CameraComponent &mainCamera
 	Profiler->EndEvent();
 }
 
+void RenderSystem::RenderRoadComponents(const CameraComponent& mainCameraComponent, const TransformComponent& mainCameraTransformComponent)
+{
+	// TODO: Add logic here
+}
+
 void RenderSystem::RenderMesh(const Mesh& mesh, TransformComponent &transformComponent, const CameraComponent &mainCameraComponent,
-	UINT& offset, bool& fatPerObjectBufferSet, const TransparencyRenderType renderMode)
+                              UINT& offset, bool& fatPerObjectBufferSet, const TransparencyRenderType renderMode)
 {
 	if (renderMode == Solid && mesh.Material.Alpha < 1.0f)
 		return;

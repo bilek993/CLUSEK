@@ -100,6 +100,7 @@ private:
 	void RenderGrass(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 	void RenderTerrain(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 	void RenderModelRenderComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainTransformComponent, TransparencyRenderType renderMode);
+	void RenderRoadComponents(const CameraComponent &mainCameraComponent, const TransformComponent &mainCameraTransformComponent);
 
 	void RenderMesh(const Mesh& mesh, TransformComponent &transformComponent, const CameraComponent &mainCameraComponent, 
 		UINT& offset, bool& fatPerObjectBufferSet, const TransparencyRenderType renderMode);
