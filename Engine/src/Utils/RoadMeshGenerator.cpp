@@ -57,14 +57,14 @@ void RoadMeshGenerator::GenerateIndices(ID3D11Device* device, RoadComponent& roa
 		for (auto j = 0; j < roadComponent.MeshVertices.size() - 1; j++)
 		{
 			// First triangle
-			indices.emplace_back((roadComponent.MeshVertices.size() * i) + j);
-			indices.emplace_back((roadComponent.MeshVertices.size() * (i + 1)) + (j + 1));
 			indices.emplace_back((roadComponent.MeshVertices.size() * (i + 1)) + j);
+			indices.emplace_back((roadComponent.MeshVertices.size() * (i + 1)) + (j + 1));
+			indices.emplace_back((roadComponent.MeshVertices.size() * i) + j);
 
 			// Second triangle
-			indices.emplace_back((roadComponent.MeshVertices.size() * i) + j);
+			indices.emplace_back((roadComponent.MeshVertices.size() * (i + 1)) + (j + 1));
 			indices.emplace_back((roadComponent.MeshVertices.size() * i) + (j + 1));
-			indices.emplace_back((roadComponent.MeshVertices.size() * (i  + 1)) + (j + 1));
+			indices.emplace_back((roadComponent.MeshVertices.size() * i) + j);
 		}
 	}
 
