@@ -12,6 +12,8 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 {
 	Logger::Debug("Generating road vertices...");
 
+	auto distanceSinceStart = 0.0f;
+	
 	const auto vertexCount = roadComponent.MeshVertices.size() * roadComponent.CalculatedSupportPoints.size();
 	std::vector<FatVertex> vertices{};
 
@@ -38,7 +40,12 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 			XMStoreFloat3(&vertex.Position, positionVector);
 			XMStoreFloat3(&vertex.Normal, normalVector);
 			XMStoreFloat3(&vertex.Tangent, tangentVector);
-			//vertex.TextureCoord // TODO: Add missing implementation
+			vertex.TextureCoord = CalculateTextureCoord(j, 
+														roadComponent.MeshVertices.size(),
+														distanceSinceStart,
+														100.0f,
+														previousPoint,
+														currentPoint);
 			
 			vertices.emplace_back(vertex);
 		}
@@ -125,4 +132,20 @@ DirectX::XMVECTOR RoadMeshGenerator::CalculatePosition(const DirectX::XMVECTOR& 
 	const auto bitangentTangentNormalMatrix = XMLoadFloat3x3(&bitangentTangentNormalFloats);
 
 	return DirectX::XMVectorAdd(XMVector3Transform(meshVertexVector, bitangentTangentNormalMatrix), currentPoint);
+}
+
+DirectX::XMFLOAT2 RoadMeshGenerator::CalculateTextureCoord(const int vertexId, const int vertexCount, float& distanceSinceStart,
+	const float textureScaling, const DirectX::XMVECTOR* previousPoint, const DirectX::XMVECTOR* currentPoint)
+{
+	const auto u = static_cast<float>(vertexId) / static_cast<float>(vertexCount - 1);
+	auto v = 0.0f;
+
+	if (previousPoint != nullptr && currentPoint != nullptr)
+	{
+		const auto distance = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(*currentPoint, *previousPoint)));
+		distanceSinceStart += distance;
+		v += distanceSinceStart / textureScaling;
+	}
+	
+	return DirectX::XMFLOAT2(u, v);
 }

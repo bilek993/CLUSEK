@@ -18,4 +18,7 @@ private:
 
 	static DirectX::XMVECTOR CalculatePosition(const DirectX::XMVECTOR& tangent, const DirectX::XMVECTOR& bitangent,
 		const DirectX::XMVECTOR& normal, const DirectX::XMFLOAT2 meshVertex, const DirectX::XMVECTOR& currentPoint);
+
+	static DirectX::XMFLOAT2 CalculateTextureCoord(int vertexId, int vertexCount, float& distanceSinceStart,
+		float textureScaling, const DirectX::XMVECTOR* previousPoint,	const DirectX::XMVECTOR* currentPoint);
 };
