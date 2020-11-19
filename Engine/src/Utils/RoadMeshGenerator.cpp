@@ -43,7 +43,7 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 			vertex.TextureCoord = CalculateTextureCoord(j, 
 														roadComponent.MeshVertices.size(),
 														distanceSinceStart,
-														100.0f,
+														roadComponent.TextureScaling,
 														previousPoint,
 														currentPoint);
 			

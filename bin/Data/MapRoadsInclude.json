@@ -7,13 +7,14 @@
 	  "TransformComponent":{
 	  },
       "RoadComponent":{
+		"TextureScaling": 100.0,
 		"MeshVertices":[
 		  {
-			"PositionX":-5.0,
+			"PositionX":-15.0,
 			"PositionY":0.0
 		  },
 		  {
-			"PositionX":5.0,
+			"PositionX":15.0,
 			"PositionY":0.0
 		  }
 		],

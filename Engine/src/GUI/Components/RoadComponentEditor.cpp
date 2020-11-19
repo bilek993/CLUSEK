@@ -73,6 +73,7 @@ void RoadComponentEditor::DrawAdditionalConfiguration(RoadComponent* componentPo
 {
 	ImGui::DragInt("Resolution", &componentPointer->Resolution, 10);
 	ImGui::DragFloat("Split distance", &componentPointer->SplitDistance, 0.1f);
+	ImGui::DragFloat("Texture scaling", &componentPointer->TextureScaling, 1.0f);
 }
 
 void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)

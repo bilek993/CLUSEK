@@ -10,6 +10,7 @@ struct RoadComponent final
 	int Resolution = 10000;
 	float SplitDistance = 10.0f;
 	std::string MaterialId;
+	float TextureScaling = 1.0f;
 
 	bool InitializedOnce = true;
 	std::vector<DirectX::XMVECTOR> CalculatedSupportPoints;
