@@ -118,6 +118,8 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, GrassEndCascade1, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, GrassEnd, data, std::stof(value));
 
+			MAP_CONFIG_FIELD(key, RoadsMoveUpdateDeltaTime, data, std::stof(value));
+
 			MAP_CONFIG_FIELD(key, CubemapGeneratedSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, EnableAsyncModelLoading, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, EnableAsyncTextureLoading, data, std::stoi(value));

@@ -26,7 +26,7 @@ void RoadComponentEditor::Draw()
 
 	DrawPoints(componentPointer, viewProjectionMatrix);
 	DrawConnectionLines(componentPointer, mainCameraTransform, viewProjectionMatrix);
-	DrawGizmos(componentPointer, mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
+	DrawGizmos(componentPointer, mainCamera.ViewMatrix, mainCamera.ProjectionMatrix, Config->RoadsMoveUpdateDeltaTime);
 }
 
 void RoadComponentEditor::DrawMeshVertices(RoadComponent* componentPointer)
@@ -248,7 +248,8 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 	}
 }
 
-void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix)
+void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix,
+	const float roadsMoveUpdateDeltaTime)
 {
 	if (SelectedPointId < 0 || SelectedPointId >= componentPointer->Points.size())
 		return;
@@ -285,6 +286,7 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 		if (TimeSinceLastMoveUpdate < 0.0f)
 		{
 			TriggeredUpdateOnMove = false;
+			
 			Logger::Debug("Rebuilding due to point move!");
 			Rebuild(componentPointer);
 		}
@@ -295,7 +297,7 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 		if (!TriggeredUpdateOnMove)
 		{
 			TriggeredUpdateOnMove = true;
-			TimeSinceLastMoveUpdate = 1000.0f;
+			TimeSinceLastMoveUpdate = roadsMoveUpdateDeltaTime;
 		}
 	}
 
@@ -308,7 +310,7 @@ void RoadComponentEditor::Rebuild(RoadComponent* componentPointer)
 }
 
 ImVec2 RoadComponentEditor::FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 
-                                                                 const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, const bool outsideCameraPlanes) const
+	const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, const bool outsideCameraPlanes) const
 {
 	if (!outsideCameraPlanes)
 		return pointToBeFixed;
