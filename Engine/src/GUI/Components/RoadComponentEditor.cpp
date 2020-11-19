@@ -1,6 +1,8 @@
 #include "RoadComponentEditor.h"
 #include <ImGuizmo.h>
 #include <json.hpp>
+
+#include "../../Tags.h"
 #include "../../Renderer/TransformLogic.h"
 #include "../../Utils/CameraLocator.h"
 #include "../../Utils/GuiTransformUtil.h"
@@ -82,7 +84,7 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 		if (RebuildOnAddOrRemove)
 		{
 			Logger::Debug("Rebuilding due to adding new point!");
-			Rebuild(componentPointer);
+			Rebuild();
 		}
 		
 		// TODO: Add implementation
@@ -94,7 +96,7 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 		if (RebuildOnAddOrRemove)
 		{
 			Logger::Debug("Rebuilding due to removing point!");
-			Rebuild(componentPointer);
+			Rebuild();
 		}
 		
 		// TODO: Add implementation
@@ -106,7 +108,7 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 		if (RebuildOnAddOrRemove)
 		{
 			Logger::Debug("Rebuilding due to removing point!");
-			Rebuild(componentPointer);
+			Rebuild();
 		}
 		
 		// TODO: Add implementation
@@ -141,7 +143,7 @@ void RoadComponentEditor::DrawRebuildButtons(RoadComponent* componentPointer)
 	if (ImGui::Button("Force rebuild"))
 	{
 		Logger::Debug("Forcing rebuild now!");
-		Rebuild(componentPointer);
+		Rebuild();
 	}
 
 	ImGui::Checkbox("Rebuild on move", &RebuildOnMove);
@@ -288,7 +290,7 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 			TriggeredUpdateOnMove = false;
 			
 			Logger::Debug("Rebuilding due to point move!");
-			Rebuild(componentPointer);
+			Rebuild();
 		}
 	}
 
@@ -304,9 +306,12 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	XMStoreFloat3(&componentPointer->Points[SelectedPointId], newTranslationVector);
 }
 
-void RoadComponentEditor::Rebuild(RoadComponent* componentPointer)
+void RoadComponentEditor::Rebuild()
 {
-	//  TODO: Add logic here
+	Registry->assign<entt::tag<Tags::REQUIRES_REBUILD>>(*SelectedEntity);
+	
+	for (auto &system : *Systems)
+		system.System->Rebuild();
 }
 
 ImVec2 RoadComponentEditor::FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 

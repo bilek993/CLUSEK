@@ -20,7 +20,7 @@ private:
 	void DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix,
 		float roadsMoveUpdateDeltaTime);
 
-	void Rebuild(RoadComponent* componentPointer);
+	void Rebuild();
 
 	ImVec2 FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 
 		const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, bool outsideCameraPlanes) const;
