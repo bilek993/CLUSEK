@@ -17,8 +17,7 @@ private:
 
 	void DrawPoints(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix);
 	void DrawConnectionLines(RoadComponent* componentPointer, const TransformComponent& cameraTransform, const DirectX::XMMATRIX& viewProjectionMatrix) const;
-	void DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix,
-		float roadsMoveUpdateDeltaTime);
+	void DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix);
 
 	void Rebuild();
 
@@ -27,8 +26,7 @@ private:
 
 	int SelectedPointId = -1;
 
-	bool TriggeredUpdateOnMove = false;
-	float TimeSinceLastMoveUpdate = 0.0f;
+	bool IsMoved = false;
 
 	bool RebuildOnMove = true;
 	bool RebuildOnAddOrRemove = true;

@@ -28,7 +28,7 @@ void RoadComponentEditor::Draw()
 
 	DrawPoints(componentPointer, viewProjectionMatrix);
 	DrawConnectionLines(componentPointer, mainCameraTransform, viewProjectionMatrix);
-	DrawGizmos(componentPointer, mainCamera.ViewMatrix, mainCamera.ProjectionMatrix, Config->RoadsMoveUpdateDeltaTime);
+	DrawGizmos(componentPointer, mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
 }
 
 void RoadComponentEditor::DrawMeshVertices(RoadComponent* componentPointer)
@@ -251,8 +251,7 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 	}
 }
 
-void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix,
-	const float roadsMoveUpdateDeltaTime)
+void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix)
 {
 	if (SelectedPointId < 0 || SelectedPointId >= componentPointer->Points.size())
 		return;
@@ -281,30 +280,19 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	DirectX::XMVECTOR newTranslationVector{};
 	
 	XMMatrixDecompose(&newScaleVector, &newRotationVector, &newTranslationVector, worldMatrix);
-
-	if (TriggeredUpdateOnMove && RebuildOnMove)
-	{
-		TimeSinceLastMoveUpdate -= DeltaTime;
-
-		if (TimeSinceLastMoveUpdate < 0.0f)
-		{
-			TriggeredUpdateOnMove = false;
-			
-			Logger::Debug("Rebuilding due to point move!");
-			Rebuild();
-		}
-	}
-
-	if (DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(XMLoadFloat3(&componentPointer->Points[SelectedPointId]), newTranslationVector))) > 0.001f)
-	{
-		if (!TriggeredUpdateOnMove)
-		{
-			TriggeredUpdateOnMove = true;
-			TimeSinceLastMoveUpdate = roadsMoveUpdateDeltaTime;
-		}
-	}
-
 	XMStoreFloat3(&componentPointer->Points[SelectedPointId], newTranslationVector);
+
+	if (IsMoved && !ImGuizmo::IsUsing())
+	{
+		IsMoved = false;
+		
+		Logger::Debug("Rebuilding due to point move!");
+		Rebuild();
+	}
+	else if (!IsMoved && ImGuizmo::IsUsing())
+	{
+		IsMoved = true;
+	}
 }
 
 void RoadComponentEditor::Rebuild()

@@ -106,9 +106,6 @@ struct ConfigData final
 	float GrassEndCascade1 = 0.5f;
 	float GrassEnd = 0.6f;
 
-	// Roads settings
-	float RoadsMoveUpdateDeltaTime = 1000.0f;
-
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;
 	int EnableAsyncModelLoading = 1;
