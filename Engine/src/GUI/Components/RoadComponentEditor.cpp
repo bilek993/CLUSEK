@@ -209,19 +209,22 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 																									Config->MainCameraFarZ,
 																									Config->MainCameraNearZ);
 
-			const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(curPointPosition, 
-																					prevPointPosition, 
-																					TransformLogic::GetPosition(cameraTransform), 
-																					componentPointer->Points[curElementId], 
-																					curPointOutsideCameraPlanes);
-			
-			const auto fixedPrevPointPosition = FixVectorOutsideCameraPlanesIfNeeded(prevPointPosition, 
-																					curPointPosition, 
-																					TransformLogic::GetPosition(cameraTransform), 
-																					componentPointer->Points[prevElementId], 
-																					prevPointOutsideCameraPlanes);
-			
-			FullscreenDrawList->AddLine(fixedCurPointPosition, fixedPrevPointPosition, isCurrentPointSelected || isPrevPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
+			if (!prevPointOutsideCameraPlanes || !curPointOutsideCameraPlanes)
+			{
+				const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(curPointPosition, 
+																						prevPointPosition, 
+																						TransformLogic::GetPosition(cameraTransform), 
+																						componentPointer->Points[curElementId], 
+																						curPointOutsideCameraPlanes);
+				
+				const auto fixedPrevPointPosition = FixVectorOutsideCameraPlanesIfNeeded(prevPointPosition, 
+																						curPointPosition, 
+																						TransformLogic::GetPosition(cameraTransform), 
+																						componentPointer->Points[prevElementId], 
+																						prevPointOutsideCameraPlanes);
+				
+				FullscreenDrawList->AddLine(fixedCurPointPosition, fixedPrevPointPosition, isCurrentPointSelected || isPrevPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
+			}
 		}
 
 		if (nextElementId < componentPointer->Points.size())
@@ -234,19 +237,22 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 																									Config->MainCameraFarZ,
 																									Config->MainCameraNearZ);
 
-			const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(curPointPosition, 
-																					nextPointPosition, 
-																					TransformLogic::GetPosition(cameraTransform), 
-																					componentPointer->Points[curElementId], 
-																					curPointOutsideCameraPlanes);
+			if (!nextPointOutsideCameraPlanes || !curPointOutsideCameraPlanes)
+			{
+				const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(curPointPosition, 
+																						nextPointPosition, 
+																						TransformLogic::GetPosition(cameraTransform), 
+																						componentPointer->Points[curElementId], 
+																						curPointOutsideCameraPlanes);
 
-			const auto fixedNextPointPosition = FixVectorOutsideCameraPlanesIfNeeded(nextPointPosition, 
-																					curPointPosition, 
-																					TransformLogic::GetPosition(cameraTransform), 
-																					componentPointer->Points[nextElementId], 
-																					nextPointOutsideCameraPlanes);
+				const auto fixedNextPointPosition = FixVectorOutsideCameraPlanesIfNeeded(nextPointPosition, 
+																						curPointPosition, 
+																						TransformLogic::GetPosition(cameraTransform), 
+																						componentPointer->Points[nextElementId], 
+																						nextPointOutsideCameraPlanes);
 
-			FullscreenDrawList->AddLine(fixedCurPointPosition, fixedNextPointPosition, isCurrentPointSelected || isNextPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
+				FullscreenDrawList->AddLine(fixedCurPointPosition, fixedNextPointPosition, isCurrentPointSelected || isNextPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
+			}
 		}
 	}
 }
