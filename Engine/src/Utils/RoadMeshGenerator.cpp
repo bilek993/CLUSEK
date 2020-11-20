@@ -5,7 +5,6 @@ void RoadMeshGenerator::GenerateRoadMesh(ID3D11Device* device, RoadComponent& ro
 {
 	GenerateVertices(device, roadComponent);
 	GenerateIndices(device, roadComponent);
-	roadComponent.Mesh.Name = "Road";
 }
 
 void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& roadComponent)

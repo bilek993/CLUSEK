@@ -32,4 +32,7 @@ void RoadComponentLoader::LoadPoints(RoadComponent& component, nlohmann::json& j
 	MAP_LOADER_BASIC_FIELD(SplitDistance, json, component, float);
 	MAP_LOADER_BASIC_FIELD(MaterialId, json, component, std::string);
 	MAP_LOADER_BASIC_FIELD(TextureScaling, json, component, float);
+
+	if (!json["MeshName"].is_null())
+		component.Mesh.Name = json["MeshName"].get<std::string>();
 }
