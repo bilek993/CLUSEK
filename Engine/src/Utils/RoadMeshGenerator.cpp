@@ -12,7 +12,7 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 	Logger::Debug("Generating road vertices...");
 
 	auto distanceSinceStart = 0.0f;
-	
+
 	const auto vertexCount = roadComponent.MeshVertices.size() * roadComponent.CalculatedSupportPoints.size();
 	std::vector<FatVertex> vertices{};
 
@@ -25,6 +25,8 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 		const auto tangentVector = CalculateTangent(previousPoint, currentPoint, nextPoint);
 		const auto bitangentVector = CalculateBitangent(tangentVector);
 		const auto normalVector = CalculateNormal(tangentVector, bitangentVector);
+
+		const auto totalSegmentWidth = CalculateSegmentWidth(roadComponent.MeshVertices);
 		
 		for (auto j = 0; j < roadComponent.MeshVertices.size(); j++)
 		{
@@ -40,11 +42,12 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 			XMStoreFloat3(&vertex.Normal, normalVector);
 			XMStoreFloat3(&vertex.Tangent, tangentVector);
 			vertex.TextureCoord = CalculateTextureCoord(j, 
-														roadComponent.MeshVertices.size(),
+														totalSegmentWidth,
 														distanceSinceStart,
 														roadComponent.TextureScaling,
 														previousPoint,
-														currentPoint);
+														currentPoint,
+														roadComponent.MeshVertices);
 			
 			vertices.emplace_back(vertex);
 		}
@@ -133,10 +136,11 @@ DirectX::XMVECTOR RoadMeshGenerator::CalculatePosition(const DirectX::XMVECTOR& 
 	return DirectX::XMVectorAdd(XMVector3Transform(meshVertexVector, bitangentTangentNormalMatrix), currentPoint);
 }
 
-DirectX::XMFLOAT2 RoadMeshGenerator::CalculateTextureCoord(const int vertexId, const int vertexCount, float& distanceSinceStart,
-	const float textureScaling, const DirectX::XMVECTOR* previousPoint, const DirectX::XMVECTOR* currentPoint)
+DirectX::XMFLOAT2 RoadMeshGenerator::CalculateTextureCoord(const int vertexId, const float totalSegmentWidth, float& distanceSinceStart,
+	const float textureScaling, const DirectX::XMVECTOR* previousPoint, const DirectX::XMVECTOR* currentPoint,
+	const std::vector<DirectX::XMFLOAT2>& meshVertices)
 {
-	const auto u = static_cast<float>(vertexId) / static_cast<float>(vertexCount - 1);
+	const auto u = CalculateSegmentWidth(meshVertices, vertexId) / totalSegmentWidth;
 	auto v = 0.0f;
 
 	if (previousPoint != nullptr && currentPoint != nullptr)
@@ -147,4 +151,20 @@ DirectX::XMFLOAT2 RoadMeshGenerator::CalculateTextureCoord(const int vertexId, c
 	}
 	
 	return DirectX::XMFLOAT2(u, v);
+}
+
+float RoadMeshGenerator::CalculateSegmentWidth(const std::vector<DirectX::XMFLOAT2>& meshVertices, const int lastElement)
+{
+	const auto limit = lastElement == -1 ? meshVertices.size() : lastElement + 1;
+	auto totalDistance = 0.0f;
+
+	for (auto i = 1; i < limit; i++)
+	{
+		const auto& previousPoint = meshVertices[i - 1];
+		const auto& currentPoint = meshVertices[i];
+
+		totalDistance += std::sqrtf(std::powf(previousPoint.x - currentPoint.x, 2.0f) + std::powf(previousPoint.y - currentPoint.y, 2.0f));
+	}
+	
+	return totalDistance;
 }

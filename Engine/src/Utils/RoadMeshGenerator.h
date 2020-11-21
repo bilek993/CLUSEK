@@ -17,8 +17,10 @@ private:
 	static DirectX::XMVECTOR CalculateNormal(const DirectX::XMVECTOR& tangent, const DirectX::XMVECTOR& bitangent);
 
 	static DirectX::XMVECTOR CalculatePosition(const DirectX::XMVECTOR& tangent, const DirectX::XMVECTOR& bitangent,
-		const DirectX::XMVECTOR& normal, const DirectX::XMFLOAT2 meshVertex, const DirectX::XMVECTOR& currentPoint);
+		const DirectX::XMVECTOR& normal, DirectX::XMFLOAT2 meshVertex, const DirectX::XMVECTOR& currentPoint);
+	static DirectX::XMFLOAT2 CalculateTextureCoord(int vertexId, float totalSegmentWidth, float& distanceSinceStart,
+		float textureScaling, const DirectX::XMVECTOR* previousPoint, const DirectX::XMVECTOR* currentPoint,
+		const std::vector<DirectX::XMFLOAT2>& meshVertices);
 
-	static DirectX::XMFLOAT2 CalculateTextureCoord(int vertexId, int vertexCount, float& distanceSinceStart,
-		float textureScaling, const DirectX::XMVECTOR* previousPoint,	const DirectX::XMVECTOR* currentPoint);
+	static float CalculateSegmentWidth(const std::vector<DirectX::XMFLOAT2>& meshVertices, int lastElement = -1);
 };
