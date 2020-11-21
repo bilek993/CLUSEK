@@ -116,7 +116,7 @@ DirectX::XMVECTOR RoadMeshGenerator::CalculateNormal(const DirectX::XMVECTOR& ta
 DirectX::XMVECTOR RoadMeshGenerator::CalculatePosition(const DirectX::XMVECTOR& tangent, const DirectX::XMVECTOR& bitangent, 
 	const DirectX::XMVECTOR& normal, const DirectX::XMFLOAT2 meshVertex, const DirectX::XMVECTOR& currentPoint)
 {
-	const DirectX::XMFLOAT3 meshVertexFloats3(meshVertex.x, meshVertex.y, 0.0f);
+	const DirectX::XMFLOAT3 meshVertexFloats3(meshVertex.x, 0.0f, meshVertex.y);
 	const auto meshVertexVector = XMLoadFloat3(&meshVertexFloats3);
 	
 	DirectX::XMFLOAT3 tangentFloats{};
