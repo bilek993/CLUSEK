@@ -145,9 +145,13 @@ DirectX::XMFLOAT2 RoadMeshGenerator::CalculateTextureCoord(const int vertexId, c
 
 	if (previousPoint != nullptr && currentPoint != nullptr)
 	{
-		const auto distance = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(*currentPoint, *previousPoint)));
-		distanceSinceStart += distance;
-		v += distanceSinceStart / textureScaling;
+		if (vertexId == 0)
+		{
+			const auto distance = DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(*currentPoint, *previousPoint)));
+			distanceSinceStart += distance;
+		}
+		
+		v = distanceSinceStart / textureScaling;
 	}
 	
 	return DirectX::XMFLOAT2(u, v);
