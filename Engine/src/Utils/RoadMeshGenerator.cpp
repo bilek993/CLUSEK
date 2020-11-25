@@ -31,7 +31,7 @@ void RoadMeshGenerator::ClearOldComponentData(RoadComponent& roadComponent)
 
 void RoadMeshGenerator::GenerateSupportPoints(RoadComponent& roadComponent, const bool async)
 {
-	std::vector<std::future<void>> asyncFutures{};
+	std::vector<std::future<std::vector<DirectX::XMVECTOR>>> asyncFutures{};
 	
 	for (auto i = 0; (i + 3) < roadComponent.Points.size(); i += 3)
 	{
@@ -44,9 +44,18 @@ void RoadMeshGenerator::GenerateSupportPoints(RoadComponent& roadComponent, cons
 			CalculatePartialLookUpTableAndInsertThem(&roadComponent, i);
 		}
 	}
+
+	if (async)
+	{
+		for (auto& currentFuture : asyncFutures)
+		{
+			const auto futureResult = currentFuture.get();
+			roadComponent.CalculatedSupportPoints.insert(roadComponent.CalculatedSupportPoints.cend(), futureResult.cbegin(), futureResult.cend());
+		}
+	}
 }
 
-void RoadMeshGenerator::CalculatePartialLookUpTableAndInsertThem(RoadComponent* roadComponent, const int firstPointId)
+std::vector<DirectX::XMVECTOR> RoadMeshGenerator::CalculatePartialLookUpTableAndInsertThem(const RoadComponent* roadComponent, const int firstPointId)
 {
 	const auto generatorFunction = [&roadComponent, firstPointId](const float t)
 	{
@@ -59,13 +68,9 @@ void RoadMeshGenerator::CalculatePartialLookUpTableAndInsertThem(RoadComponent* 
 		return XMLoadFloat3(&result);
 	};
 
-	const auto calculatedLut = SplineUtil::CalculateEvenlySpaceLookUpTable(	roadComponent->Resolution,
-																								roadComponent->SplitDistance,
-																								generatorFunction);
-
-	LookUpTableInsertLock.lock();
-	roadComponent->CalculatedSupportPoints.insert(roadComponent->CalculatedSupportPoints.cend(), calculatedLut.cbegin(), calculatedLut.cend());
-	LookUpTableInsertLock.unlock();
+	return SplineUtil::CalculateEvenlySpaceLookUpTable(	roadComponent->Resolution,
+														roadComponent->SplitDistance,
+														generatorFunction);
 }
 
 void RoadMeshGenerator::GenerateRoadMesh(ID3D11Device* device, RoadComponent& roadComponent, const bool async)

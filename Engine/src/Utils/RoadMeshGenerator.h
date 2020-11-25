@@ -12,7 +12,7 @@ private:
 	static void ClearOldComponentData(RoadComponent &roadComponent);
 	static void GenerateSupportPoints(RoadComponent &roadComponent, bool async);
 
-	static void CalculatePartialLookUpTableAndInsertThem(RoadComponent* roadComponent, int firstPointId);
+	static std::vector<DirectX::XMVECTOR> CalculatePartialLookUpTableAndInsertThem(const RoadComponent* roadComponent, int firstPointId);
 	
 	static void GenerateRoadMesh(ID3D11Device* device, RoadComponent &roadComponent, bool async);
 	
@@ -31,6 +31,4 @@ private:
 		const std::vector<DirectX::XMFLOAT2>& meshVertices);
 
 	static float CalculateSegmentWidth(const std::vector<DirectX::XMFLOAT2>& meshVertices, int lastElement = -1);
-
-	inline static std::mutex LookUpTableInsertLock{};
 };
