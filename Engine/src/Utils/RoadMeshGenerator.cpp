@@ -9,13 +9,29 @@ void RoadMeshGenerator::RegenerateRoadComponent(ID3D11Device* device, RoadCompon
 {
 	Logger::Debug("Regenerating road mesh...");
 
+	ClearOldComponentData(roadComponent);
+	GenerateSupportPoints(roadComponent);
+	GenerateRoadMesh(device, roadComponent);
+	
+	MaterialLoader::SetResourceForSingleMesh(device, roadComponent.Mesh, roadComponent.MaterialId);
+
+	Logger::Debug("Reinitialized road mesh successfully!");
+	roadComponent.InitializedOnce = true;
+}
+
+void RoadMeshGenerator::ClearOldComponentData(RoadComponent& roadComponent)
+{
 	if (roadComponent.InitializedOnce)
 	{
 		Logger::Debug("Clearing old road data...");
-
 		roadComponent.CalculatedSupportPoints.clear();
 	}
+}
 
+void RoadMeshGenerator::GenerateSupportPoints(RoadComponent& roadComponent)
+{
+	std::mutex lookUpTableInsertLock{};
+	
 	for (auto i = 0; (i + 3) < roadComponent.Points.size(); i += 3)
 	{
 		const auto generatorFunction = [&roadComponent, i](const float t)
@@ -33,14 +49,10 @@ void RoadMeshGenerator::RegenerateRoadComponent(ID3D11Device* device, RoadCompon
 																									roadComponent.SplitDistance,
 																									generatorFunction);
 
+		lookUpTableInsertLock.lock();
 		roadComponent.CalculatedSupportPoints.insert(roadComponent.CalculatedSupportPoints.cend(), calculatedLut.cbegin(), calculatedLut.cend());
+		lookUpTableInsertLock.unlock();
 	}
-
-	GenerateRoadMesh(device, roadComponent);
-	MaterialLoader::SetResourceForSingleMesh(device, roadComponent.Mesh, roadComponent.MaterialId);
-
-	Logger::Debug("Reinitialized road mesh successfully!");
-	roadComponent.InitializedOnce = true;
 }
 
 void RoadMeshGenerator::GenerateRoadMesh(ID3D11Device* device, RoadComponent& roadComponent)
