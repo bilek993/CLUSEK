@@ -104,6 +104,8 @@ ConfigData ConfigLoader::GetData()
 
 			MAP_CONFIG_FIELD(key, EnableAsyncTerrainGeneration, data, std::stoi(value));
 
+			MAP_CONFIG_FIELD(key, EnableAsyncTerrainGeneration, data, std::stoi(value));
+
 			MAP_CONFIG_FIELD(key, GrassEnabled, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, MaxGrassRenderInstances, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, GrassGeneratorResolution, data, std::stoi(value));

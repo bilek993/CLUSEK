@@ -106,6 +106,9 @@ struct ConfigData final
 	float GrassEndCascade1 = 0.5f;
 	float GrassEnd = 0.6f;
 
+	// Road settings
+	int EnableAsyncRoadGeneration = 1;
+
 	// Loaders settings
 	int CubemapGeneratedSize = 1024;
 	int EnableAsyncModelLoading = 1;
