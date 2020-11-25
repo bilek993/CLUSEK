@@ -1,5 +1,47 @@
 #include "RoadMeshGenerator.h"
+
+
+#include "SplineUtil.h"
+#include "../Loaders/MaterialLoader.h"
 #include "../Renderer/FrustumUtil.h"
+
+void RoadMeshGenerator::RegenerateRoadComponent(ID3D11Device* device, RoadComponent& roadComponent)
+{
+	Logger::Debug("Regenerating road mesh...");
+
+	if (roadComponent.InitializedOnce)
+	{
+		Logger::Debug("Clearing old road data...");
+
+		roadComponent.CalculatedSupportPoints.clear();
+	}
+
+	for (auto i = 0; (i + 3) < roadComponent.Points.size(); i += 3)
+	{
+		const auto generatorFunction = [&roadComponent, i](const float t)
+		{
+			const auto result = SplineUtil::CalculateBezierCubicCurve(	roadComponent.Points[i],
+																					roadComponent.Points[i + 1],
+																					roadComponent.Points[i + 2],
+																					roadComponent.Points[i + 3],
+																					t);
+
+			return XMLoadFloat3(&result);
+		};
+
+		const auto calculatedLut = SplineUtil::CalculateEvenlySpaceLookUpTable(	roadComponent.Resolution,
+																									roadComponent.SplitDistance,
+																									generatorFunction);
+
+		roadComponent.CalculatedSupportPoints.insert(roadComponent.CalculatedSupportPoints.cend(), calculatedLut.cbegin(), calculatedLut.cend());
+	}
+
+	GenerateRoadMesh(device, roadComponent);
+	MaterialLoader::SetResourceForSingleMesh(device, roadComponent.Mesh, roadComponent.MaterialId);
+
+	Logger::Debug("Reinitialized road mesh successfully!");
+	roadComponent.InitializedOnce = true;
+}
 
 void RoadMeshGenerator::GenerateRoadMesh(ID3D11Device* device, RoadComponent& roadComponent)
 {

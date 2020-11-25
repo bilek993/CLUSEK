@@ -1058,40 +1058,7 @@ void RenderSystem::InitializeRoadComponent()
 {	
 	Registry->view<RoadComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each([this](RoadComponent &roadComponent, auto _)
 	{
-		Logger::Debug("Regenerating road mesh...");
-		
-		if (roadComponent.InitializedOnce)
-		{
-			Logger::Debug("Clearing old road data...");
-			
-			roadComponent.CalculatedSupportPoints.clear();
-		}
-
-		for (auto i = 0; (i + 3) < roadComponent.Points.size(); i += 3)
-		{
-			const auto generatorFunction = [&roadComponent, i](const float t)
-			{
-				const auto result = SplineUtil::CalculateBezierCubicCurve(	roadComponent.Points[i], 
-																			roadComponent.Points[i+1], 
-																			roadComponent.Points[i+2], 
-																			roadComponent.Points[i+3], 
-																			t);
-
-				return XMLoadFloat3(&result);
-			};
-
-			const auto calculatedLut = SplineUtil::CalculateEvenlySpaceLookUpTable(	roadComponent.Resolution,
-																					roadComponent.SplitDistance,
-																					generatorFunction);
-			
-			roadComponent.CalculatedSupportPoints.insert(roadComponent.CalculatedSupportPoints.cend(), calculatedLut.cbegin(), calculatedLut.cend());
-		}
-
-		RoadMeshGenerator::GenerateRoadMesh(Device.Get(), roadComponent);
-		MaterialLoader::SetResourceForSingleMesh(Device.Get(), roadComponent.Mesh, roadComponent.MaterialId);
-
-		Logger::Debug("Reinitialized road mesh successfully!");
-		roadComponent.InitializedOnce = true;
+		RoadMeshGenerator::RegenerateRoadComponent(Device.Get(), roadComponent);
 	});
 }
 
