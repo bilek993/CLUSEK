@@ -14,10 +14,10 @@ private:
 
 	static void CalculatePartialLookUpTableAndInsertThem(RoadComponent* roadComponent, int firstPointId);
 	
-	static void GenerateRoadMesh(ID3D11Device* device, RoadComponent &roadComponent);
+	static void GenerateRoadMesh(ID3D11Device* device, RoadComponent &roadComponent, bool async);
 	
-	static void GenerateVertices(ID3D11Device* device, RoadComponent &roadComponent);
-	static void GenerateIndices(ID3D11Device* device, RoadComponent &roadComponent);
+	static void GenerateVertices(ID3D11Device* device, RoadComponent* roadComponent);
+	static void GenerateIndices(ID3D11Device* device, RoadComponent* roadComponent);
 
 	static DirectX::XMVECTOR CalculateTangent(const DirectX::XMVECTOR* previousPoint, 
 		const DirectX::XMVECTOR* currentPoint, const DirectX::XMVECTOR* nextPoint);

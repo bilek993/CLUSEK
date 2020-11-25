@@ -12,7 +12,7 @@ void RoadMeshGenerator::RegenerateRoadComponent(ID3D11Device* device, RoadCompon
 
 	ClearOldComponentData(roadComponent);
 	GenerateSupportPoints(roadComponent, async);
-	GenerateRoadMesh(device, roadComponent);
+	GenerateRoadMesh(device, roadComponent, async);
 	
 	MaterialLoader::SetResourceForSingleMesh(device, roadComponent.Mesh, roadComponent.MaterialId);
 
@@ -68,39 +68,47 @@ void RoadMeshGenerator::CalculatePartialLookUpTableAndInsertThem(RoadComponent* 
 	LookUpTableInsertLock.unlock();
 }
 
-void RoadMeshGenerator::GenerateRoadMesh(ID3D11Device* device, RoadComponent& roadComponent)
+void RoadMeshGenerator::GenerateRoadMesh(ID3D11Device* device, RoadComponent& roadComponent, const bool async)
 {
-	GenerateVertices(device, roadComponent);
-	GenerateIndices(device, roadComponent);
+	if (async)
+	{
+		const auto futureVertices = std::async(std::launch::async, GenerateVertices, device, &roadComponent);
+		const auto futureIndices = std::async(std::launch::async, GenerateIndices, device, &roadComponent);
+	}
+	else
+	{
+		GenerateVertices(device, &roadComponent);
+		GenerateIndices(device, &roadComponent);
+	}
 }
 
-void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& roadComponent)
+void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent* roadComponent)
 {
 	Logger::Debug("Generating road vertices...");
 
 	auto distanceSinceStart = 0.0f;
 
-	const auto vertexCount = roadComponent.MeshVertices.size() * roadComponent.CalculatedSupportPoints.size();
+	const auto vertexCount = roadComponent->MeshVertices.size() * roadComponent->CalculatedSupportPoints.size();
 	std::vector<FatVertex> vertices{};
 
-	for (auto i = 0; i < roadComponent.CalculatedSupportPoints.size(); i++)
+	for (auto i = 0; i < roadComponent->CalculatedSupportPoints.size(); i++)
 	{
-		const auto previousPoint = (i - 1) < 0 ? nullptr : &roadComponent.CalculatedSupportPoints[i - 1];
-		const auto currentPoint = &roadComponent.CalculatedSupportPoints[i];
-		const auto nextPoint = (i + 1) >= roadComponent.CalculatedSupportPoints.size() ? nullptr : &roadComponent.CalculatedSupportPoints[i + 1];
+		const auto previousPoint = (i - 1) < 0 ? nullptr : &roadComponent->CalculatedSupportPoints[i - 1];
+		const auto currentPoint = &roadComponent->CalculatedSupportPoints[i];
+		const auto nextPoint = (i + 1) >= roadComponent->CalculatedSupportPoints.size() ? nullptr : &roadComponent->CalculatedSupportPoints[i + 1];
 
 		const auto tangentVector = CalculateTangent(previousPoint, currentPoint, nextPoint);
 		const auto bitangentVector = CalculateBitangent(tangentVector);
 		const auto normalVector = CalculateNormal(tangentVector, bitangentVector);
 
-		const auto totalSegmentWidth = CalculateSegmentWidth(roadComponent.MeshVertices);
+		const auto totalSegmentWidth = CalculateSegmentWidth(roadComponent->MeshVertices);
 		
-		for (auto j = 0; j < roadComponent.MeshVertices.size(); j++)
+		for (auto j = 0; j < roadComponent->MeshVertices.size(); j++)
 		{
 			const auto positionVector = CalculatePosition(	tangentVector,
 																		bitangentVector,
 																		normalVector,
-																		roadComponent.MeshVertices[j],
+																		roadComponent->MeshVertices[j],
 																		*currentPoint);
 			
 			FatVertex vertex;
@@ -111,43 +119,43 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 			vertex.TextureCoord = CalculateTextureCoord(j, 
 														totalSegmentWidth,
 														distanceSinceStart,
-														roadComponent.TextureScaling,
+														roadComponent->TextureScaling,
 														previousPoint,
 														currentPoint,
-														roadComponent.MeshVertices);
+														roadComponent->MeshVertices);
 			
 			vertices.emplace_back(vertex);
 		}
 	}
 
-	roadComponent.Mesh.FrustumPoints = FrustumUtil::CalculateAABB(vertices);
-	roadComponent.Mesh.RenderVertexBuffer.Initialize(device, vertices.data(), vertexCount);
+	roadComponent->Mesh.FrustumPoints = FrustumUtil::CalculateAABB(vertices);
+	roadComponent->Mesh.RenderVertexBuffer.Initialize(device, vertices.data(), vertexCount);
 }
 
-void RoadMeshGenerator::GenerateIndices(ID3D11Device* device, RoadComponent& roadComponent)
+void RoadMeshGenerator::GenerateIndices(ID3D11Device* device, RoadComponent* roadComponent)
 {
 	Logger::Debug("Generating road indices...");
 	
-	const auto indicesCount = (roadComponent.CalculatedSupportPoints.size() - 1) * (roadComponent.MeshVertices.size() - 1) * 6;
+	const auto indicesCount = (roadComponent->CalculatedSupportPoints.size() - 1) * (roadComponent->MeshVertices.size() - 1) * 6;
 	std::vector<DWORD> indices{};
 
-	for (auto i = 0; i < roadComponent.CalculatedSupportPoints.size() - 1; i++)
+	for (auto i = 0; i < roadComponent->CalculatedSupportPoints.size() - 1; i++)
 	{
-		for (auto j = 0; j < roadComponent.MeshVertices.size() - 1; j++)
+		for (auto j = 0; j < roadComponent->MeshVertices.size() - 1; j++)
 		{
 			// First triangle
-			indices.emplace_back((roadComponent.MeshVertices.size() * (i + 1)) + j);
-			indices.emplace_back((roadComponent.MeshVertices.size() * (i + 1)) + (j + 1));
-			indices.emplace_back((roadComponent.MeshVertices.size() * i) + j);
+			indices.emplace_back((roadComponent->MeshVertices.size() * (i + 1)) + j);
+			indices.emplace_back((roadComponent->MeshVertices.size() * (i + 1)) + (j + 1));
+			indices.emplace_back((roadComponent->MeshVertices.size() * i) + j);
 
 			// Second triangle
-			indices.emplace_back((roadComponent.MeshVertices.size() * (i + 1)) + (j + 1));
-			indices.emplace_back((roadComponent.MeshVertices.size() * i) + (j + 1));
-			indices.emplace_back((roadComponent.MeshVertices.size() * i) + j);
+			indices.emplace_back((roadComponent->MeshVertices.size() * (i + 1)) + (j + 1));
+			indices.emplace_back((roadComponent->MeshVertices.size() * i) + (j + 1));
+			indices.emplace_back((roadComponent->MeshVertices.size() * i) + j);
 		}
 	}
 
-	roadComponent.Mesh.RenderIndexBuffer.Initialize(device, indices.data(), indicesCount);
+	roadComponent->Mesh.RenderIndexBuffer.Initialize(device, indices.data(), indicesCount);
 }
 
 DirectX::XMVECTOR RoadMeshGenerator::CalculateTangent(const DirectX::XMVECTOR* previousPoint,
