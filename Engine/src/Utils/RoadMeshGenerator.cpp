@@ -85,10 +85,10 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent& ro
 		for (auto j = 0; j < roadComponent.MeshVertices.size(); j++)
 		{
 			const auto positionVector = CalculatePosition(	tangentVector,
-															bitangentVector,
-															normalVector,
-															roadComponent.MeshVertices[j],
-															*currentPoint);
+																		bitangentVector,
+																		normalVector,
+																		roadComponent.MeshVertices[j],
+																		*currentPoint);
 			
 			FatVertex vertex;
 
