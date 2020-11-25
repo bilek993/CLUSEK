@@ -1,16 +1,17 @@
 #include "RoadMeshGenerator.h"
 
+#include <future>
 
 #include "SplineUtil.h"
 #include "../Loaders/MaterialLoader.h"
 #include "../Renderer/FrustumUtil.h"
 
-void RoadMeshGenerator::RegenerateRoadComponent(ID3D11Device* device, RoadComponent& roadComponent)
+void RoadMeshGenerator::RegenerateRoadComponent(ID3D11Device* device, RoadComponent& roadComponent, const bool async)
 {
 	Logger::Debug("Regenerating road mesh...");
 
 	ClearOldComponentData(roadComponent);
-	GenerateSupportPoints(roadComponent);
+	GenerateSupportPoints(roadComponent, async);
 	GenerateRoadMesh(device, roadComponent);
 	
 	MaterialLoader::SetResourceForSingleMesh(device, roadComponent.Mesh, roadComponent.MaterialId);
@@ -28,31 +29,43 @@ void RoadMeshGenerator::ClearOldComponentData(RoadComponent& roadComponent)
 	}
 }
 
-void RoadMeshGenerator::GenerateSupportPoints(RoadComponent& roadComponent)
+void RoadMeshGenerator::GenerateSupportPoints(RoadComponent& roadComponent, const bool async)
 {
-	std::mutex lookUpTableInsertLock{};
+	std::vector<std::future<void>> asyncFutures{};
 	
 	for (auto i = 0; (i + 3) < roadComponent.Points.size(); i += 3)
 	{
-		const auto generatorFunction = [&roadComponent, i](const float t)
+		if (async)
 		{
-			const auto result = SplineUtil::CalculateBezierCubicCurve(	roadComponent.Points[i],
-																					roadComponent.Points[i + 1],
-																					roadComponent.Points[i + 2],
-																					roadComponent.Points[i + 3],
-																					t);
-
-			return XMLoadFloat3(&result);
-		};
-
-		const auto calculatedLut = SplineUtil::CalculateEvenlySpaceLookUpTable(	roadComponent.Resolution,
-																									roadComponent.SplitDistance,
-																									generatorFunction);
-
-		lookUpTableInsertLock.lock();
-		roadComponent.CalculatedSupportPoints.insert(roadComponent.CalculatedSupportPoints.cend(), calculatedLut.cbegin(), calculatedLut.cend());
-		lookUpTableInsertLock.unlock();
+			asyncFutures.emplace_back(std::async(std::launch::async, CalculatePartialLookUpTableAndInsertThem, &roadComponent, i));
+		}
+		else
+		{
+			CalculatePartialLookUpTableAndInsertThem(&roadComponent, i);
+		}
 	}
+}
+
+void RoadMeshGenerator::CalculatePartialLookUpTableAndInsertThem(RoadComponent* roadComponent, const int firstPointId)
+{
+	const auto generatorFunction = [&roadComponent, firstPointId](const float t)
+	{
+		const auto result = SplineUtil::CalculateBezierCubicCurve(	roadComponent->Points[firstPointId],
+																				roadComponent->Points[firstPointId + 1],
+																				roadComponent->Points[firstPointId + 2],
+																				roadComponent->Points[firstPointId + 3],
+																				t);
+
+		return XMLoadFloat3(&result);
+	};
+
+	const auto calculatedLut = SplineUtil::CalculateEvenlySpaceLookUpTable(	roadComponent->Resolution,
+																								roadComponent->SplitDistance,
+																								generatorFunction);
+
+	LookUpTableInsertLock.lock();
+	roadComponent->CalculatedSupportPoints.insert(roadComponent->CalculatedSupportPoints.cend(), calculatedLut.cbegin(), calculatedLut.cend());
+	LookUpTableInsertLock.unlock();
 }
 
 void RoadMeshGenerator::GenerateRoadMesh(ID3D11Device* device, RoadComponent& roadComponent)

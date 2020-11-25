@@ -1,14 +1,18 @@
 #pragma once
+#include <mutex>
+
 #include "../ECS/Components/RoadComponent.h"
 #include "../Renderer/Mesh.h"
 
 class RoadMeshGenerator final
 {
 public:
-	static void RegenerateRoadComponent(ID3D11Device* device, RoadComponent &roadComponent);
+	static void RegenerateRoadComponent(ID3D11Device* device, RoadComponent &roadComponent, bool async);
 private:
 	static void ClearOldComponentData(RoadComponent &roadComponent);
-	static void GenerateSupportPoints(RoadComponent &roadComponent);
+	static void GenerateSupportPoints(RoadComponent &roadComponent, bool async);
+
+	static void CalculatePartialLookUpTableAndInsertThem(RoadComponent* roadComponent, int firstPointId);
 	
 	static void GenerateRoadMesh(ID3D11Device* device, RoadComponent &roadComponent);
 	
@@ -27,4 +31,6 @@ private:
 		const std::vector<DirectX::XMFLOAT2>& meshVertices);
 
 	static float CalculateSegmentWidth(const std::vector<DirectX::XMFLOAT2>& meshVertices, int lastElement = -1);
+
+	inline static std::mutex LookUpTableInsertLock{};
 };

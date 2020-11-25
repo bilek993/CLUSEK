@@ -104,8 +104,6 @@ ConfigData ConfigLoader::GetData()
 
 			MAP_CONFIG_FIELD(key, EnableAsyncTerrainGeneration, data, std::stoi(value));
 
-			MAP_CONFIG_FIELD(key, EnableAsyncTerrainGeneration, data, std::stoi(value));
-
 			MAP_CONFIG_FIELD(key, GrassEnabled, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, MaxGrassRenderInstances, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, GrassGeneratorResolution, data, std::stoi(value));
@@ -119,6 +117,8 @@ ConfigData ConfigLoader::GetData()
 			MAP_CONFIG_FIELD(key, GrassEndCascade0, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, GrassEndCascade1, data, std::stof(value));
 			MAP_CONFIG_FIELD(key, GrassEnd, data, std::stof(value));
+
+			MAP_CONFIG_FIELD(key, EnableAsyncRoadGeneration, data, std::stoi(value));
 
 			MAP_CONFIG_FIELD(key, CubemapGeneratedSize, data, std::stoi(value));
 			MAP_CONFIG_FIELD(key, EnableAsyncModelLoading, data, std::stoi(value));

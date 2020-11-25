@@ -1058,7 +1058,7 @@ void RenderSystem::InitializeRoadComponent()
 {	
 	Registry->view<RoadComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each([this](RoadComponent &roadComponent, auto _)
 	{
-		RoadMeshGenerator::RegenerateRoadComponent(Device.Get(), roadComponent);
+		RoadMeshGenerator::RegenerateRoadComponent(Device.Get(), roadComponent, ConfigurationData->EnableAsyncRoadGeneration);
 	});
 }
 
