@@ -82,37 +82,39 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 
 	if (ImGui::Button("Add new point"))
 	{
+		// TODO: Add implementation
+		
 		if (RebuildOnAddOrRemove)
 		{
 			Logger::Debug("Rebuilding due to adding new point!");
 			Rebuild();
 		}
-		
-		// TODO: Add implementation
 	}
 
 	ImGui::SameLine();
 	if (ImGui::Button("Remove first"))
 	{
+		Logger::Debug("Removing first road point...");
+		componentPointer->Points.erase(componentPointer->Points.begin(), componentPointer->Points.cbegin() + 3);
+		
 		if (RebuildOnAddOrRemove)
 		{
 			Logger::Debug("Rebuilding due to removing point!");
 			Rebuild();
 		}
-		
-		// TODO: Add implementation
 	}
 
 	ImGui::SameLine();
 	if (ImGui::Button("Remove last"))
 	{
+		Logger::Debug("Removing last road point...");
+		componentPointer->Points.erase(componentPointer->Points.cend() - 3, componentPointer->Points.cend());
+		
 		if (RebuildOnAddOrRemove)
 		{
 			Logger::Debug("Rebuilding due to removing point!");
 			Rebuild();
 		}
-		
-		// TODO: Add implementation
 	}
 
 	if (ImGui::Button("Copy JSON"))
