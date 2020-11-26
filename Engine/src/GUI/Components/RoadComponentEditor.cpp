@@ -95,7 +95,11 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 	if (ImGui::Button("Remove first"))
 	{
 		Logger::Debug("Removing first road point...");
-		componentPointer->Points.erase(componentPointer->Points.begin(), componentPointer->Points.cbegin() + 3);
+		
+		if (componentPointer->Points.size() >= 3)
+			componentPointer->Points.erase(componentPointer->Points.begin(), componentPointer->Points.cbegin() + 3);
+		else
+			componentPointer->Points.clear();
 		
 		if (RebuildOnAddOrRemove)
 		{
@@ -108,7 +112,11 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 	if (ImGui::Button("Remove last"))
 	{
 		Logger::Debug("Removing last road point...");
-		componentPointer->Points.erase(componentPointer->Points.cend() - 3, componentPointer->Points.cend());
+
+		if (componentPointer->Points.size() >= 3)
+			componentPointer->Points.erase(componentPointer->Points.cend() - 3, componentPointer->Points.cend());
+		else
+			componentPointer->Points.clear();
 		
 		if (RebuildOnAddOrRemove)
 		{
