@@ -41,7 +41,8 @@ void RoadMeshGenerator::GenerateSupportPoints(RoadComponent& roadComponent, cons
 		}
 		else
 		{
-			CalculatePartialLookUpTableAndInsertThem(&roadComponent, i);
+			const auto resultPartialVector = CalculatePartialLookUpTableAndInsertThem(&roadComponent, i);
+			roadComponent.CalculatedSupportPoints.insert(roadComponent.CalculatedSupportPoints.cend(), resultPartialVector.cbegin(), resultPartialVector.cend());
 		}
 	}
 
