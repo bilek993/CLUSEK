@@ -141,23 +141,29 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent* ro
 void RoadMeshGenerator::GenerateIndices(ID3D11Device* device, RoadComponent* roadComponent)
 {
 	Logger::Debug("Generating road indices...");
-	
-	const auto indicesCount = (roadComponent->CalculatedSupportPoints.size() - 1) * (roadComponent->MeshVertices.size() - 1) * 6;
+
+	const auto indicesCount = roadComponent->CalculatedSupportPoints.empty()
+		                          ? 0
+		                          : (roadComponent->CalculatedSupportPoints.size() - 1) * (roadComponent->MeshVertices.
+			                          size() - 1) * 6;
 	std::vector<DWORD> indices{};
 
-	for (auto i = 0; i < roadComponent->CalculatedSupportPoints.size() - 1; i++)
+	if (indicesCount != 0)
 	{
-		for (auto j = 0; j < roadComponent->MeshVertices.size() - 1; j++)
+		for (auto i = 0; i < roadComponent->CalculatedSupportPoints.size() - 1; i++)
 		{
-			// First triangle
-			indices.emplace_back((roadComponent->MeshVertices.size() * (i + 1)) + j);
-			indices.emplace_back((roadComponent->MeshVertices.size() * (i + 1)) + (j + 1));
-			indices.emplace_back((roadComponent->MeshVertices.size() * i) + j);
+			for (auto j = 0; j < roadComponent->MeshVertices.size() - 1; j++)
+			{
+				// First triangle
+				indices.emplace_back((roadComponent->MeshVertices.size() * (i + 1)) + j);
+				indices.emplace_back((roadComponent->MeshVertices.size() * (i + 1)) + (j + 1));
+				indices.emplace_back((roadComponent->MeshVertices.size() * i) + j);
 
-			// Second triangle
-			indices.emplace_back((roadComponent->MeshVertices.size() * (i + 1)) + (j + 1));
-			indices.emplace_back((roadComponent->MeshVertices.size() * i) + (j + 1));
-			indices.emplace_back((roadComponent->MeshVertices.size() * i) + j);
+				// Second triangle
+				indices.emplace_back((roadComponent->MeshVertices.size() * (i + 1)) + (j + 1));
+				indices.emplace_back((roadComponent->MeshVertices.size() * i) + (j + 1));
+				indices.emplace_back((roadComponent->MeshVertices.size() * i) + j);
+			}
 		}
 	}
 
