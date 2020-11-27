@@ -18,7 +18,7 @@ void RoadComponentEditor::Draw()
 
 	if (SelectCreationMode)
 	{
-		Logger::Debug("Enabled selection mode for adding new road point...");
+		HandleClickInSelectCreationMode();
 		DrawSelectMessage();
 	}
 	else
@@ -97,6 +97,7 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 
 	if (ImGui::Button("Add new point"))
 	{
+		Logger::Debug("Enabled selection mode for adding new road point...");
 		SelectCreationMode = true;
 	}
 
@@ -317,6 +318,19 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	else if (!IsMoved && ImGuizmo::IsUsing())
 	{
 		IsMoved = true;
+	}
+}
+
+void RoadComponentEditor::HandleClickInSelectCreationMode()
+{
+	// TODO: Add logic here
+	
+	SelectCreationMode = false;
+	
+	if (RebuildOnAddOrRemove)
+	{
+		Logger::Debug("Rebuilding due to adding new point!");
+		Rebuild();
 	}
 }
 
