@@ -16,19 +16,34 @@ void RoadComponentEditor::Draw()
 	const auto mainCamera = CameraLocator::GetMainCamera(Registry);
 	const auto viewProjectionMatrix = mainCamera.ViewMatrix * mainCamera.ProjectionMatrix;
 
-	DrawMeshVertices(componentPointer);
-	ImGui::Separator();
-	DrawPoints(componentPointer);
-	ImGui::Separator();
-	DrawAdditionalConfiguration(componentPointer);
-	ImGui::Separator();
-	DrawControlButtons(componentPointer);
-	ImGui::Separator();
-	DrawRebuildButtons(componentPointer);
+	if (SelectCreationMode)
+	{
+		Logger::Debug("Enabled selection mode for adding new road point...");
+		DrawSelectMessage();
+	}
+	else
+	{
+		DrawMeshVertices(componentPointer);
+		ImGui::Separator();
+		DrawPoints(componentPointer);
+		ImGui::Separator();
+		DrawAdditionalConfiguration(componentPointer);
+		ImGui::Separator();
+		DrawControlButtons(componentPointer);
+		ImGui::Separator();
+		DrawRebuildButtons(componentPointer);
 
-	DrawPoints(componentPointer, viewProjectionMatrix);
-	DrawConnectionLines(componentPointer, mainCameraTransform, viewProjectionMatrix);
-	DrawGizmos(componentPointer, mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
+		DrawPoints(componentPointer, viewProjectionMatrix);
+		DrawConnectionLines(componentPointer, mainCameraTransform, viewProjectionMatrix);
+		DrawGizmos(componentPointer, mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
+	}
+}
+
+void RoadComponentEditor::DrawSelectMessage() const
+{
+	ImGui::SetCursorPosX((ImGui::GetWindowSize().x / 2) - 95);
+	ImGui::SetCursorPosY((ImGui::GetWindowSize().y / 2));
+	ImGui::Text("Please select point on the map...");
 }
 
 void RoadComponentEditor::DrawMeshVertices(RoadComponent* componentPointer)
@@ -82,13 +97,7 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 
 	if (ImGui::Button("Add new point"))
 	{
-		// TODO: Add implementation
-		
-		if (RebuildOnAddOrRemove)
-		{
-			Logger::Debug("Rebuilding due to adding new point!");
-			Rebuild();
-		}
+		SelectCreationMode = true;
 	}
 
 	ImGui::SameLine();

@@ -9,6 +9,8 @@ protected:
 	void Draw() override;
 
 private:
+	void DrawSelectMessage() const;
+	
 	void DrawMeshVertices(RoadComponent* componentPointer);
 	void DrawPoints(RoadComponent* componentPointer);
 	void DrawAdditionalConfiguration(RoadComponent* componentPointer) const;
@@ -26,6 +28,8 @@ private:
 
 	int SelectedPointId = -1;
 
+	bool SelectCreationMode = false;
+	
 	bool IsMoved = false;
 
 	bool RebuildOnMove = true;
