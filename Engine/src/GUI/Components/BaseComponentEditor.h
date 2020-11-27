@@ -9,8 +9,8 @@ class BaseComponentEditor
 public:
 	virtual ~BaseComponentEditor() = default;
 	void Update(float deltaTime, ConfigData *configData, DynamicRenderSettings *renderSettings,
-		std::vector<SystemHolder> *systems, int renderSystemId, IOData *ioData, PostProcessingSettings *postProcessingSettings,
-		entt::registry *registry, entt::entity *selectedEntity, 
+		std::vector<SystemHolder> *systems, int renderSystemId, int physicsSystemId, IOData *ioData, 
+		PostProcessingSettings *postProcessingSettings,	entt::registry *registry, entt::entity *selectedEntity, 
 		bool *entitySelected, bool *lockSelecting, ImDrawList* fullscreenDrawList);
 
 protected:
@@ -24,6 +24,7 @@ protected:
 	DynamicRenderSettings *RenderSettings = nullptr;
 	std::vector<SystemHolder> *Systems = nullptr;
 	int RenderSystemId = -1;
+	int PhysicsSystemId = -1;
 	IOData *IoData = nullptr;
 	PostProcessingSettings *CurrentPostProcessingSettings = nullptr;
 	entt::registry *Registry = nullptr;
@@ -35,7 +36,7 @@ protected:
 
 template <class C>
 void BaseComponentEditor<C>::Update(const float deltaTime, ConfigData* configData, DynamicRenderSettings* renderSettings,
-	std::vector<SystemHolder>* systems, const int renderSystemId, IOData* ioData,
+	std::vector<SystemHolder>* systems, const int renderSystemId, const int physicsSystemId, IOData* ioData,
 	PostProcessingSettings* postProcessingSettings, entt::registry* registry, entt::entity* selectedEntity,
 	bool* entitySelected, bool *lockSelecting, ImDrawList* fullscreenDrawList)
 {
@@ -44,6 +45,7 @@ void BaseComponentEditor<C>::Update(const float deltaTime, ConfigData* configDat
 	RenderSettings = renderSettings;
 	Systems = systems;
 	RenderSystemId = renderSystemId;
+	PhysicsSystemId = physicsSystemId;
 	IoData = ioData;
 	CurrentPostProcessingSettings = postProcessingSettings;
 	Registry = registry;

@@ -5,8 +5,8 @@ void RayUtil::MousePositionToRayOriginAndDirection(	float mouseX,
 													float mouseY,
 													const float screenWidth,
 													const float screenHeight,
-													DirectX::XMMATRIX& viewMatrix,
-													DirectX::XMMATRIX& projectionMatrix, 
+													const DirectX::XMMATRIX& viewMatrix,
+													const DirectX::XMMATRIX& projectionMatrix, 
 													DirectX::XMVECTOR& rayOriginOutput, 
 													DirectX::XMVECTOR& rayDirectionOutput)
 {

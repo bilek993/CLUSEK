@@ -1,5 +1,8 @@
 #pragma once
+#include <PxQueryReport.h>
+
 #include "BaseComponentEditor.h"
+#include "../../ECS/Components/CameraComponent.h"
 #include "../../ECS/Components/RoadComponent.h"
 #include "../../ECS/Components/TransformComponent.h"
 
@@ -20,6 +23,9 @@ private:
 	void DrawPoints(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix);
 	void DrawConnectionLines(RoadComponent* componentPointer, const TransformComponent& cameraTransform, const DirectX::XMMATRIX& viewProjectionMatrix) const;
 	void DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix);
+
+	void HandleClickInSelectCreationMode(const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix);
+	physx::PxRaycastBuffer RayCastPhysics(float maxDistance, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const;
 
 	void Rebuild();
 

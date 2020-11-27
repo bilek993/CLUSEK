@@ -9,8 +9,8 @@ public:
 														float mouseY,
 														float screenWidth,
 														float screenHeight,
-														DirectX::XMMATRIX& viewMatrix,
-														DirectX::XMMATRIX& projectionMatrix,
+														const DirectX::XMMATRIX& viewMatrix,
+														const DirectX::XMMATRIX& projectionMatrix,
 														DirectX::XMVECTOR& rayOriginOutput,
 														DirectX::XMVECTOR& rayDirectionOutput);
 

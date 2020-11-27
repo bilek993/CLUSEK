@@ -1,11 +1,12 @@
 #include "RoadComponentEditor.h"
 #include <ImGuizmo.h>
 #include <json.hpp>
-
 #include "../../Tags.h"
+#include "../../ECS/Systems/PhysicsSystem.h"
 #include "../../Renderer/TransformLogic.h"
 #include "../../Utils/CameraLocator.h"
 #include "../../Utils/GuiTransformUtil.h"
+#include "../../Utils/RayUtil.h"
 
 void RoadComponentEditor::Draw()
 {
@@ -18,8 +19,8 @@ void RoadComponentEditor::Draw()
 
 	if (SelectCreationMode)
 	{
-		HandleClickInSelectCreationMode();
 		DrawSelectMessage();
+		HandleClickInSelectCreationMode(mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
 	}
 	else
 	{
@@ -181,11 +182,11 @@ void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer, const Dire
 	{
 		bool visible{};
 		const auto circlePosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	point, 
-																							viewProjectionMatrix, 
-																							&visible,
-																							nullptr,
-																							Config->MainCameraFarZ,
-																							Config->MainCameraNearZ);
+																									viewProjectionMatrix, 
+																									&visible,
+																									nullptr,
+																									Config->MainCameraFarZ,
+																									Config->MainCameraNearZ);
 		if (visible)
 		{
 			const auto isCursorTouchingPoint = GuiTransformUtil::IsTouching(circlePosition, io.MousePos, DOT_SIZE);
@@ -212,36 +213,36 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 		const auto isNextPointSelected = SelectedPointId == nextElementId;
 
 		bool curPointOutsideCameraPlanes{};
-		const auto curPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(componentPointer->Points[curElementId],
-																							viewProjectionMatrix, 
-																							nullptr,
-																							&curPointOutsideCameraPlanes,
-																							Config->MainCameraFarZ,
-																							Config->MainCameraNearZ);
+		const auto curPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[curElementId],
+																										viewProjectionMatrix, 
+																										nullptr,
+																										&curPointOutsideCameraPlanes,
+																										Config->MainCameraFarZ,
+																										Config->MainCameraNearZ);
 
 		if (prevElementId > 0)
 		{
 			bool prevPointOutsideCameraPlanes{};
 			const auto prevPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[prevElementId],
-																									viewProjectionMatrix, 
-																									nullptr,
-																									&prevPointOutsideCameraPlanes,
-																									Config->MainCameraFarZ,
-																									Config->MainCameraNearZ);
+																											viewProjectionMatrix, 
+																											nullptr,
+																											&prevPointOutsideCameraPlanes,
+																											Config->MainCameraFarZ,
+																											Config->MainCameraNearZ);
 
 			if (!prevPointOutsideCameraPlanes || !curPointOutsideCameraPlanes)
 			{
-				const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(curPointPosition, 
-																						prevPointPosition, 
-																						TransformLogic::GetPosition(cameraTransform), 
-																						componentPointer->Points[curElementId], 
-																						curPointOutsideCameraPlanes);
+				const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(	curPointPosition, 
+																									prevPointPosition, 
+																									TransformLogic::GetPosition(cameraTransform), 
+																									componentPointer->Points[curElementId], 
+																									curPointOutsideCameraPlanes);
 				
-				const auto fixedPrevPointPosition = FixVectorOutsideCameraPlanesIfNeeded(prevPointPosition, 
-																						curPointPosition, 
-																						TransformLogic::GetPosition(cameraTransform), 
-																						componentPointer->Points[prevElementId], 
-																						prevPointOutsideCameraPlanes);
+				const auto fixedPrevPointPosition = FixVectorOutsideCameraPlanesIfNeeded(	prevPointPosition, 
+																									curPointPosition, 
+																									TransformLogic::GetPosition(cameraTransform), 
+																									componentPointer->Points[prevElementId], 
+																									prevPointOutsideCameraPlanes);
 				
 				FullscreenDrawList->AddLine(fixedCurPointPosition, fixedPrevPointPosition, isCurrentPointSelected || isPrevPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
 			}
@@ -251,25 +252,25 @@ void RoadComponentEditor::DrawConnectionLines(RoadComponent* componentPointer, c
 		{
 			bool nextPointOutsideCameraPlanes{};
 			const auto nextPointPosition = GuiTransformUtil::TransformWorldPositionToScreenPoint(	componentPointer->Points[nextElementId],
-																									viewProjectionMatrix, 
-																									nullptr,
-																									&nextPointOutsideCameraPlanes,
-																									Config->MainCameraFarZ,
-																									Config->MainCameraNearZ);
+																											viewProjectionMatrix, 
+																											nullptr,
+																											&nextPointOutsideCameraPlanes,
+																											Config->MainCameraFarZ,
+																											Config->MainCameraNearZ);
 
 			if (!nextPointOutsideCameraPlanes || !curPointOutsideCameraPlanes)
 			{
-				const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(curPointPosition, 
-																						nextPointPosition, 
-																						TransformLogic::GetPosition(cameraTransform), 
-																						componentPointer->Points[curElementId], 
-																						curPointOutsideCameraPlanes);
+				const auto fixedCurPointPosition = FixVectorOutsideCameraPlanesIfNeeded(	curPointPosition, 
+																									nextPointPosition, 
+																									TransformLogic::GetPosition(cameraTransform), 
+																									componentPointer->Points[curElementId], 
+																									curPointOutsideCameraPlanes);
 
-				const auto fixedNextPointPosition = FixVectorOutsideCameraPlanesIfNeeded(nextPointPosition, 
-																						curPointPosition, 
-																						TransformLogic::GetPosition(cameraTransform), 
-																						componentPointer->Points[nextElementId], 
-																						nextPointOutsideCameraPlanes);
+				const auto fixedNextPointPosition = FixVectorOutsideCameraPlanesIfNeeded(	nextPointPosition, 
+																									curPointPosition, 
+																									TransformLogic::GetPosition(cameraTransform), 
+																									componentPointer->Points[nextElementId], 
+																									nextPointOutsideCameraPlanes);
 
 				FullscreenDrawList->AddLine(fixedCurPointPosition, fixedNextPointPosition, isCurrentPointSelected || isNextPointSelected ? LINE_COLOR_PRIMARY : LINE_COLOR_SECONDARY);
 			}
@@ -321,8 +322,24 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	}
 }
 
-void RoadComponentEditor::HandleClickInSelectCreationMode()
+void RoadComponentEditor::HandleClickInSelectCreationMode(const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix)
 {
+	if (IoData->MouseTracker.leftButton != DirectX::Mouse::ButtonStateTracker::ButtonState::PRESSED)
+		return;
+
+	if (IoData->MouseState.positionMode == DirectX::Mouse::MODE_RELATIVE)
+	{
+		Logger::Debug("Skipping handling mouse for UI due to relative mouse mode!");
+		return;
+	}
+	
+	const auto hit = RayCastPhysics(100000.0f, viewMatrix, projectionMatrix);
+	if (!hit.hasBlock)
+	{
+		Logger::Debug("Ray didn't hit any object.");
+		return;
+	}
+
 	// TODO: Add logic here
 	
 	SelectCreationMode = false;
@@ -332,6 +349,38 @@ void RoadComponentEditor::HandleClickInSelectCreationMode()
 		Logger::Debug("Rebuilding due to adding new point!");
 		Rebuild();
 	}
+}
+
+physx::PxRaycastBuffer RoadComponentEditor::RayCastPhysics(const float maxDistance, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const
+{
+	DirectX::XMVECTOR rayOriginVector{};
+	DirectX::XMVECTOR rayDirectionVector{};
+	
+	RayUtil::MousePositionToRayOriginAndDirection(	IoData->MouseState.x,
+													IoData->MouseState.y,
+													Config->WindowWidth,
+													Config->WindowHeight,
+													viewMatrix,
+													projectionMatrix,
+													rayOriginVector,
+													rayDirectionVector);
+
+	DirectX::XMFLOAT3 rayOrigin{};
+	DirectX::XMFLOAT3 rayDirection{};
+	
+	XMStoreFloat3(&rayOrigin, rayOriginVector);
+	XMStoreFloat3(&rayDirection, rayDirectionVector);
+
+	const auto origin = physx::PxVec3(rayOrigin.x, rayOrigin.y, rayOrigin.z);
+	const auto unitDir = physx::PxVec3(rayDirection.x, rayDirection.y, rayDirection.z);
+	physx::PxRaycastBuffer hit;
+	
+	const auto physicsSystem = dynamic_cast<PhysicsSystem*>((*Systems)[PhysicsSystemId].System.get());
+	
+	const auto scene = physicsSystem->GetPointerToScene();
+	scene->raycast(origin, unitDir, maxDistance, hit);
+
+	return hit;
 }
 
 void RoadComponentEditor::Rebuild()

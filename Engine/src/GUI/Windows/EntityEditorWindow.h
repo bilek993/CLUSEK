@@ -83,6 +83,7 @@ void EntityEditorWindow::DrawComponentDetails(const entt::entity* entity, BaseCo
 								RenderSettings, 
 								Systems, 
 								RenderSystemId,
+								PhysicsSystemId,
 								IoData, 
 								CurrentPostProcessingSettings, 
 								Registry, 
