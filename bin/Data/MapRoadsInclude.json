@@ -7,7 +7,9 @@
 	  "TransformComponent":{
 	  },
       "RoadComponent":{
-		"TextureScaling": 100.0,
+		"MaterialId": "Data/Textures/CivilianVehicle/material.json",
+		"MeshName": "Bottom",
+		"TextureScaling": 25.0,
 		"MeshVertices":[
 		  {
 			"PositionX":-15.0,
