@@ -144,18 +144,14 @@ void SplineUtil::RecalculateControlPoints(const DirectX::XMVECTOR& currentAnchor
 	{
 		Logger::Warning("Recalculating control point...");
 		
-		const auto direction = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(*nextAnchorPoint, currentAnchorPoint));
-		const auto distance = std::abs(DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(*nextAnchorPoint, currentAnchorPoint))));
-
-		*nextControlPoint = DirectX::XMVectorScale(direction, distance / 2.0f);
+		const auto direction = DirectX::XMVectorSubtract(*nextAnchorPoint, currentAnchorPoint);
+		*nextControlPoint = DirectX::XMVectorScale(direction, 0.5f);
 	}
 	else if (!isNextDataProvided && isPreviousDataProvided)
 	{
 		Logger::Warning("Recalculating control point...");
 
-		const auto direction = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(currentAnchorPoint, *previousAnchorPoint));
-		const auto distance = std::abs(DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(currentAnchorPoint, *previousAnchorPoint))));
-
-		*nextControlPoint = DirectX::XMVectorScale(direction, distance / 2.0f);
+		const auto direction = DirectX::XMVectorSubtract(currentAnchorPoint, *previousAnchorPoint);
+		*nextControlPoint = DirectX::XMVectorScale(direction, 0.5f);
 	}
 }
