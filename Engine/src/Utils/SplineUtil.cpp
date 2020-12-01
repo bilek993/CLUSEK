@@ -1,7 +1,8 @@
 #include "SplineUtil.h"
+#include "Logger.h"
 
 std::vector<DirectX::XMVECTOR> SplineUtil::CalculateEvenlySpaceLookUpTable(const int resolution, const float distance,
-	const std::function<DirectX::XMVECTOR(float)>& generatorFunction)
+                                                                           const std::function<DirectX::XMVECTOR(float)>& generatorFunction)
 {
 	std::vector<DirectX::XMVECTOR> lookUpTable{};
 	auto distanceFromLastPoint = distance;
@@ -123,4 +124,38 @@ DirectX::XMFLOAT2 SplineUtil::CalculateBezierCubicCurve(const DirectX::XMFLOAT2&
 	XMStoreFloat2(&result, CalculateBezierCubicCurve(aVector, bVector, cVector, dVector, t));
 
 	return result;
+}
+
+void SplineUtil::RecalculateControlPoints(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR* previousControlPoint, 
+	const DirectX::XMVECTOR* previousAnchorPoint, DirectX::XMVECTOR* nextControlPoint, const DirectX::XMVECTOR* nextAnchorPoint)
+{
+	const auto isPreviousDataProvided = previousControlPoint != nullptr && previousAnchorPoint != nullptr;
+	const auto isNextDataProvided = nextControlPoint != nullptr && nextAnchorPoint != nullptr;
+
+	if (!isNextDataProvided && !isPreviousDataProvided)
+	{
+		Logger::Warning("No control points provided for recalculation!");
+	}
+	else if (isNextDataProvided && isPreviousDataProvided)
+	{
+		Logger::Warning("Recalculating control points...");
+	}
+	else if (isNextDataProvided && !isPreviousDataProvided)
+	{
+		Logger::Warning("Recalculating control point...");
+		
+		const auto direction = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(*nextAnchorPoint, currentAnchorPoint));
+		const auto distance = std::abs(DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(*nextAnchorPoint, currentAnchorPoint))));
+
+		*nextControlPoint = DirectX::XMVectorScale(direction, distance / 2.0f);
+	}
+	else if (!isNextDataProvided && isPreviousDataProvided)
+	{
+		Logger::Warning("Recalculating control point...");
+
+		const auto direction = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(currentAnchorPoint, *previousAnchorPoint));
+		const auto distance = std::abs(DirectX::XMVectorGetX(DirectX::XMVector3Length(DirectX::XMVectorSubtract(currentAnchorPoint, *previousAnchorPoint))));
+
+		*nextControlPoint = DirectX::XMVectorScale(direction, distance / 2.0f);
+	}
 }
