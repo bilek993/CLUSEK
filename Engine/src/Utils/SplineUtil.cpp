@@ -126,32 +126,16 @@ DirectX::XMFLOAT2 SplineUtil::CalculateBezierCubicCurve(const DirectX::XMFLOAT2&
 	return result;
 }
 
-void SplineUtil::RecalculateControlPoints(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR* previousControlPoint, 
-	const DirectX::XMVECTOR* previousAnchorPoint, DirectX::XMVECTOR* nextControlPoint, const DirectX::XMVECTOR* nextAnchorPoint)
+void SplineUtil::RecalculateNextControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR& nextControlPoint, 
+	const DirectX::XMVECTOR& secondNextControlPoint)
 {
-	const auto isPreviousDataProvided = previousControlPoint != nullptr && previousAnchorPoint != nullptr;
-	const auto isNextDataProvided = nextControlPoint != nullptr && nextAnchorPoint != nullptr;
+	const auto direction = DirectX::XMVectorSubtract(secondNextControlPoint, currentAnchorPoint);
+	nextControlPoint = DirectX::XMVectorAdd(DirectX::XMVectorScale(direction, 0.5f), currentAnchorPoint);
+}
 
-	if (!isNextDataProvided && !isPreviousDataProvided)
-	{
-		Logger::Warning("No control points provided for recalculation!");
-	}
-	else if (isNextDataProvided && isPreviousDataProvided)
-	{
-		Logger::Warning("Recalculating control points...");
-	}
-	else if (isNextDataProvided && !isPreviousDataProvided)
-	{
-		Logger::Warning("Recalculating control point...");
-		
-		const auto direction = DirectX::XMVectorSubtract(*nextAnchorPoint, currentAnchorPoint);
-		*nextControlPoint = DirectX::XMVectorAdd(DirectX::XMVectorScale(direction, 0.5f), currentAnchorPoint);
-	}
-	else if (!isNextDataProvided && isPreviousDataProvided)
-	{
-		Logger::Warning("Recalculating control point...");
-
-		const auto direction = DirectX::XMVectorSubtract(currentAnchorPoint, *previousAnchorPoint);
-		*nextControlPoint = DirectX::XMVectorAdd(DirectX::XMVectorScale(direction, 0.5f), currentAnchorPoint);
-	}
+void SplineUtil::RecalculatePreviousControlPoint(const DirectX::XMVECTOR& currentAnchorPoint,
+	DirectX::XMVECTOR& previousControlPoint, const DirectX::XMVECTOR& secondPreviousControlPoint)
+{
+	const auto direction = DirectX::XMVectorSubtract(secondPreviousControlPoint, currentAnchorPoint);
+	previousControlPoint = DirectX::XMVectorAdd(DirectX::XMVectorScale(direction, 0.5f), currentAnchorPoint);
 }
