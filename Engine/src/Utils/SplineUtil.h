@@ -31,4 +31,6 @@ public:
 		const DirectX::XMVECTOR& secondNextControlPoint);
 	static void RecalculatePreviousControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR& previousControlPoint,
 		const DirectX::XMVECTOR& secondPreviousControlPoint);
+	static void RecalculateMiddleControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, const DirectX::XMVECTOR& previousAnchorPoint,
+		const DirectX::XMVECTOR& nextAnchorPoint, DirectX::XMVECTOR& previousControlPoint, DirectX::XMVECTOR& nextControlPoint);
 };
