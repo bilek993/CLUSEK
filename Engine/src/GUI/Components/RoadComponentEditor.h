@@ -19,6 +19,7 @@ private:
 	void DrawAdditionalConfiguration(RoadComponent* componentPointer) const;
 	void DrawControlButtons(RoadComponent* componentPointer);
 	void DrawRebuildButtons(RoadComponent* componentPointer);
+	void DrawFullRecalculateButton(RoadComponent* componentPointer);
 
 	void DrawPoints(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix);
 	void DrawConnectionLines(RoadComponent* componentPointer, const TransformComponent& cameraTransform, const DirectX::XMMATRIX& viewProjectionMatrix) const;
@@ -28,6 +29,8 @@ private:
 	physx::PxRaycastBuffer RayCastPhysics(float maxDistance, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const;
 
 	void Rebuild();
+
+	void RecalculateAllControlPoints(RoadComponent* componentPointer);
 
 	ImVec2 FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 
 		const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, bool outsideCameraPlanes) const;
@@ -40,6 +43,7 @@ private:
 
 	bool RebuildOnMove = true;
 	bool RebuildOnAddOrRemove = true;
+	bool RebuildOnRecalculate = true;
 
 	inline const static float DOT_SIZE = 7.0f;
 	inline const static ImColor DOT_COLOR_PRIMARY = ImColor(255, 255, 255);

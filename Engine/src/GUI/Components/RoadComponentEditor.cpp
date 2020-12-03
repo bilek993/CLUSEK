@@ -7,6 +7,7 @@
 #include "../../Utils/CameraLocator.h"
 #include "../../Utils/GuiTransformUtil.h"
 #include "../../Utils/RayUtil.h"
+#include "../../Utils/SplineUtil.h"
 
 void RoadComponentEditor::Draw()
 {
@@ -33,6 +34,8 @@ void RoadComponentEditor::Draw()
 		DrawControlButtons(componentPointer);
 		ImGui::Separator();
 		DrawRebuildButtons(componentPointer);
+		ImGui::Separator();
+		DrawFullRecalculateButton(componentPointer);
 
 		DrawPoints(componentPointer, viewProjectionMatrix);
 		DrawConnectionLines(componentPointer, mainCameraTransform, viewProjectionMatrix);
@@ -170,6 +173,17 @@ void RoadComponentEditor::DrawRebuildButtons(RoadComponent* componentPointer)
 
 	ImGui::Checkbox("Rebuild on move", &RebuildOnMove);
 	ImGui::Checkbox("Rebuild on add or remove", &RebuildOnAddOrRemove);
+	ImGui::Checkbox("Rebuild on recalculate", &RebuildOnRecalculate);
+}
+
+void RoadComponentEditor::DrawFullRecalculateButton(RoadComponent* componentPointer)
+{
+	ImGui::Text("Recalculate all control points:");
+	if (ImGui::Button("Recalculate now"))
+	{
+		Logger::Debug("Forcing all control points recalculation!");
+		RecalculateAllControlPoints(componentPointer);
+	}
 }
 
 void RoadComponentEditor::DrawPoints(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewProjectionMatrix)
@@ -391,8 +405,29 @@ void RoadComponentEditor::Rebuild()
 		system.System->Rebuild();
 }
 
+void RoadComponentEditor::RecalculateAllControlPoints(RoadComponent* componentPointer)
+{
+	for (auto i = 3; i <= componentPointer->Points.size() - 4; i += 3)
+	{
+		const auto currentAnchorPoint = XMLoadFloat3(&componentPointer->Points[i]);
+		const auto previousAnchorPoint = XMLoadFloat3(&componentPointer->Points[i - 3]);
+		const auto nextAnchorPoint = XMLoadFloat3(&componentPointer->Points[i + 3]);
+
+		auto previousControlPoint = XMLoadFloat3(&componentPointer->Points[i - 1]);
+		auto nextControlPoint = XMLoadFloat3(&componentPointer->Points[i + 1]);
+		
+		SplineUtil::RecalculateMiddleControlPoint(currentAnchorPoint, previousAnchorPoint, nextAnchorPoint, &previousControlPoint, &nextControlPoint);
+
+		XMStoreFloat3(&componentPointer->Points[i - 1], previousControlPoint);
+		XMStoreFloat3(&componentPointer->Points[i + 1], nextControlPoint);
+	}
+
+	if (RebuildOnRecalculate)
+		Rebuild();
+}
+
 ImVec2 RoadComponentEditor::FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 
-	const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, const bool outsideCameraPlanes) const
+                                                                 const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, const bool outsideCameraPlanes) const
 {
 	if (!outsideCameraPlanes)
 		return pointToBeFixed;
