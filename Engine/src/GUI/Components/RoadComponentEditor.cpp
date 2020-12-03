@@ -183,6 +183,9 @@ void RoadComponentEditor::DrawFullRecalculateButton(RoadComponent* componentPoin
 	{
 		Logger::Debug("Forcing all control points recalculation!");
 		RecalculateAllControlPoints(componentPointer);
+
+		if (RebuildOnRecalculate)
+			Rebuild();
 	}
 }
 
@@ -297,9 +300,9 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	if (SelectedPointId < 0 || SelectedPointId >= componentPointer->Points.size())
 		return;
 
-	auto worldMatrix = DirectX::XMMatrixTranslation(componentPointer->Points[SelectedPointId].x, 
-													componentPointer->Points[SelectedPointId].y, 
-													componentPointer->Points[SelectedPointId].z);
+	auto worldMatrix = DirectX::XMMatrixTranslation(	componentPointer->Points[SelectedPointId].x, 
+															componentPointer->Points[SelectedPointId].y, 
+															componentPointer->Points[SelectedPointId].z);
 
 	DirectX::XMFLOAT4X4 viewMatrixFloats{};
 	XMStoreFloat4x4(&viewMatrixFloats, viewMatrix);
@@ -407,6 +410,8 @@ void RoadComponentEditor::Rebuild()
 
 void RoadComponentEditor::RecalculateAllControlPoints(RoadComponent* componentPointer)
 {
+	// Middle points recalculation
+	
 	for (auto i = 3; i <= componentPointer->Points.size() - 4; i += 3)
 	{
 		const auto currentAnchorPoint = XMLoadFloat3(&componentPointer->Points[i]);
@@ -422,8 +427,25 @@ void RoadComponentEditor::RecalculateAllControlPoints(RoadComponent* componentPo
 		XMStoreFloat3(&componentPointer->Points[i + 1], nextControlPoint);
 	}
 
-	if (RebuildOnRecalculate)
-		Rebuild();
+	// First point recalculation
+
+	const auto firstPoint = XMLoadFloat3(&componentPointer->Points[0]);
+	auto secondPoint = XMLoadFloat3(&componentPointer->Points[1]);
+	const auto thirdPoint = XMLoadFloat3(&componentPointer->Points[2]);
+	
+	SplineUtil::RecalculateFirstControlPoint(firstPoint, secondPoint, thirdPoint);
+
+	XMStoreFloat3(&componentPointer->Points[1], secondPoint);
+
+	// Last point recalculation
+
+	const auto lastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 1]);
+	auto secondLastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 2]);
+	const auto thirdLastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 3]);
+
+	SplineUtil::RecalculateFirstControlPoint(lastPoint, secondLastPoint, thirdLastPoint);
+
+	XMStoreFloat3(&componentPointer->Points[componentPointer->Points.size() - 2], secondLastPoint);
 }
 
 ImVec2 RoadComponentEditor::FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 

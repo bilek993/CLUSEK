@@ -126,14 +126,14 @@ DirectX::XMFLOAT2 SplineUtil::CalculateBezierCubicCurve(const DirectX::XMFLOAT2&
 	return result;
 }
 
-void SplineUtil::RecalculateNextControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR& nextControlPoint, 
+void SplineUtil::RecalculateFirstControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR& nextControlPoint,
 	const DirectX::XMVECTOR& secondNextControlPoint)
 {
 	const auto direction = DirectX::XMVectorSubtract(secondNextControlPoint, currentAnchorPoint);
 	nextControlPoint = DirectX::XMVectorAdd(DirectX::XMVectorScale(direction, 0.5f), currentAnchorPoint);
 }
 
-void SplineUtil::RecalculatePreviousControlPoint(const DirectX::XMVECTOR& currentAnchorPoint,
+void SplineUtil::RecalculateLastControlPoint(const DirectX::XMVECTOR& currentAnchorPoint,
 	DirectX::XMVECTOR& previousControlPoint, const DirectX::XMVECTOR& secondPreviousControlPoint)
 {
 	const auto direction = DirectX::XMVectorSubtract(secondPreviousControlPoint, currentAnchorPoint);

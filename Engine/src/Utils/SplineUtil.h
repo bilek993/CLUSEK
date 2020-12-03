@@ -27,9 +27,9 @@ public:
 	static DirectX::XMFLOAT2 CalculateBezierCubicCurve(const DirectX::XMFLOAT2& a, const DirectX::XMFLOAT2& b, 
 		const DirectX::XMFLOAT2& c, const DirectX::XMFLOAT2& d, float t);
 
-	static void RecalculateNextControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR& nextControlPoint, 
+	static void RecalculateFirstControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR& nextControlPoint, 
 		const DirectX::XMVECTOR& secondNextControlPoint);
-	static void RecalculatePreviousControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR& previousControlPoint,
+	static void RecalculateLastControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, DirectX::XMVECTOR& previousControlPoint,
 		const DirectX::XMVECTOR& secondPreviousControlPoint);
 	static void RecalculateMiddleControlPoint(const DirectX::XMVECTOR& currentAnchorPoint, const DirectX::XMVECTOR& previousAnchorPoint,
 		const DirectX::XMVECTOR& nextAnchorPoint, DirectX::XMVECTOR* previousControlPoint, DirectX::XMVECTOR* nextControlPoint);
