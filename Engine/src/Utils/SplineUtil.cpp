@@ -141,7 +141,7 @@ void SplineUtil::RecalculatePreviousControlPoint(const DirectX::XMVECTOR& curren
 }
 
 void SplineUtil::RecalculateMiddleControlPoint(const DirectX::XMVECTOR& currentAnchorPoint,	const DirectX::XMVECTOR& previousAnchorPoint, 
-	const DirectX::XMVECTOR& nextAnchorPoint, DirectX::XMVECTOR& previousControlPoint, DirectX::XMVECTOR& nextControlPoint)
+	const DirectX::XMVECTOR& nextAnchorPoint, DirectX::XMVECTOR* previousControlPoint, DirectX::XMVECTOR* nextControlPoint)
 {
 	const auto directionToPreviousAnchorPoint = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(previousAnchorPoint, currentAnchorPoint));
 	const auto directionToNextAnchorPoint = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(nextAnchorPoint, currentAnchorPoint));
@@ -152,6 +152,8 @@ void SplineUtil::RecalculateMiddleControlPoint(const DirectX::XMVECTOR& currentA
 	const auto previousControlPointDirection = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(directionToPreviousAnchorPoint, directionToNextAnchorPoint));
 	const auto nextControlPointDirection = DirectX::XMVector3Normalize(DirectX::XMVectorSubtract(directionToNextAnchorPoint, directionToPreviousAnchorPoint));
 
-	previousControlPoint = DirectX::XMVectorAdd(DirectX::XMVectorScale(previousControlPointDirection, halfDistanceToPreviousAnchorPoint), currentAnchorPoint);
-	nextControlPoint = DirectX::XMVectorAdd(DirectX::XMVectorScale(nextControlPointDirection, halfDistanceToNextAnchorPoint), currentAnchorPoint);
+	if (previousControlPoint != nullptr)
+		*previousControlPoint = DirectX::XMVectorAdd(DirectX::XMVectorScale(previousControlPointDirection, halfDistanceToPreviousAnchorPoint), currentAnchorPoint);
+	if (nextControlPoint != nullptr)
+		*nextControlPoint = DirectX::XMVectorAdd(DirectX::XMVectorScale(nextControlPointDirection, halfDistanceToNextAnchorPoint), currentAnchorPoint);
 }
