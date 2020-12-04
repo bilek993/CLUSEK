@@ -186,6 +186,13 @@ void RoadComponentEditor::DrawFullRecalculateButton(RoadComponent* componentPoin
 	if (ImGui::Button("Recalculate now"))
 	{
 		Logger::Debug("Forcing all control points recalculation!");
+
+		if (componentPointer->Points.size() < 5)
+		{
+			Logger::Warning("Full recalculation is not available for less that 5 points!");
+			return;
+		}
+		
 		RecalculateAllControlPoints(componentPointer);
 
 		if (RebuildOnRecalculate)
