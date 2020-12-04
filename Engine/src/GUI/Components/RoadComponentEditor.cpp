@@ -21,7 +21,7 @@ void RoadComponentEditor::Draw()
 	if (SelectCreationMode)
 	{
 		DrawSelectMessage();
-		HandleClickInSelectCreationMode(mainCamera.ViewMatrix, mainCamera.ProjectionMatrix);
+		HandleClickInSelectCreationMode(mainCamera.ViewMatrix, mainCamera.ProjectionMatrix, componentPointer);
 	}
 	else
 	{
@@ -110,8 +110,10 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 	{
 		Logger::Debug("Removing first road point...");
 		
-		if (componentPointer->Points.size() >= 3)
+		if (componentPointer->Points.size() > 5)
 			componentPointer->Points.erase(componentPointer->Points.begin(), componentPointer->Points.cbegin() + 3);
+		else if (componentPointer->Points.size() == 4)
+			componentPointer->Points.erase(componentPointer->Points.begin(), componentPointer->Points.cbegin() + 2);
 		else
 			componentPointer->Points.clear();
 		
@@ -127,8 +129,10 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 	{
 		Logger::Debug("Removing last road point...");
 
-		if (componentPointer->Points.size() >= 3)
+		if (componentPointer->Points.size() > 5)
 			componentPointer->Points.erase(componentPointer->Points.cend() - 3, componentPointer->Points.cend());
+		else if (componentPointer->Points.size() == 4)
+			componentPointer->Points.erase(componentPointer->Points.cend() - 2, componentPointer->Points.cend());
 		else
 			componentPointer->Points.clear();
 		
@@ -339,7 +343,7 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	}
 }
 
-void RoadComponentEditor::HandleClickInSelectCreationMode(const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix)
+void RoadComponentEditor::HandleClickInSelectCreationMode(const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix, RoadComponent* componentPointer)
 {
 	if (IoData->MouseTracker.leftButton != DirectX::Mouse::ButtonStateTracker::ButtonState::PRESSED)
 		return;
@@ -357,7 +361,8 @@ void RoadComponentEditor::HandleClickInSelectCreationMode(const DirectX::XMMATRI
 		return;
 	}
 
-	// TODO: Add logic here
+	AddNewPoints(componentPointer, DirectX::XMFLOAT3(hit.block.position.x, hit.block.position.y, hit.block.position.z));
+	RecalculateNewlyAddedPoints(componentPointer);
 	
 	SelectCreationMode = false;
 	
@@ -365,6 +370,26 @@ void RoadComponentEditor::HandleClickInSelectCreationMode(const DirectX::XMMATRI
 	{
 		Logger::Debug("Rebuilding due to adding new point!");
 		Rebuild();
+	}
+}
+
+void RoadComponentEditor::AddNewPoints(RoadComponent* componentPointer, const DirectX::XMFLOAT3& hitPosition) const
+{
+	if (componentPointer->Points.empty())
+	{
+		componentPointer->Points.emplace_back(DirectX::XMFLOAT3(hitPosition.x + 10.0f, hitPosition.y, hitPosition.z + 10.0f));
+		componentPointer->Points.emplace_back(hitPosition);
+	}
+	else if (componentPointer->Points.size() == 2)
+	{
+		componentPointer->Points.emplace_back();
+		componentPointer->Points.emplace_back(hitPosition);
+	}
+	else
+	{
+		componentPointer->Points.emplace_back();
+		componentPointer->Points.emplace_back();
+		componentPointer->Points.emplace_back(hitPosition);
 	}
 }
 
@@ -408,7 +433,7 @@ void RoadComponentEditor::Rebuild()
 		system.System->Rebuild();
 }
 
-void RoadComponentEditor::RecalculateAllControlPoints(RoadComponent* componentPointer)
+void RoadComponentEditor::RecalculateAllControlPoints(RoadComponent* componentPointer) const
 {
 	// Middle points recalculation
 	
@@ -443,9 +468,71 @@ void RoadComponentEditor::RecalculateAllControlPoints(RoadComponent* componentPo
 	auto secondLastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 2]);
 	const auto thirdLastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 3]);
 
-	SplineUtil::RecalculateFirstControlPoint(lastPoint, secondLastPoint, thirdLastPoint);
+	SplineUtil::RecalculateLastControlPoint(lastPoint, secondLastPoint, thirdLastPoint);
 
 	XMStoreFloat3(&componentPointer->Points[componentPointer->Points.size() - 2], secondLastPoint);
+}
+
+void RoadComponentEditor::RecalculateNewlyAddedPoints(RoadComponent* componentPointer) const
+{
+	if (componentPointer->Points.size() == 4)
+	{
+		// First point recalculation
+		
+		const auto firstPoint = XMLoadFloat3(&componentPointer->Points[0]);
+		auto secondPoint = XMLoadFloat3(&componentPointer->Points[1]);
+		const auto thirdPoint = XMLoadFloat3(&componentPointer->Points[2]);
+
+		SplineUtil::RecalculateFirstControlPoint(firstPoint, secondPoint, thirdPoint);
+
+		XMStoreFloat3(&componentPointer->Points[1], secondPoint);
+
+		// Last point recalculation
+
+		const auto lastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 1]);
+		auto secondLastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 2]);
+		const auto thirdLastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 3]);
+
+		SplineUtil::RecalculateFirstControlPoint(lastPoint, secondLastPoint, thirdLastPoint);
+
+		XMStoreFloat3(&componentPointer->Points[componentPointer->Points.size() - 2], secondLastPoint);
+	}
+	else if (componentPointer->Points.size() >= 7)
+	{
+		// One before last point recalculation
+
+		const auto previousAnchorId = componentPointer->Points.size() - 4;
+
+		const auto anchorPoint0 = XMLoadFloat3(&componentPointer->Points[previousAnchorId]);
+		const auto anchorPoint1 = XMLoadFloat3(&componentPointer->Points[previousAnchorId - 3]);
+		const auto anchorPoint2 = XMLoadFloat3(&componentPointer->Points[previousAnchorId + 3]);
+
+		auto controlPoint0 = XMLoadFloat3(&componentPointer->Points[previousAnchorId - 1]);
+		auto controlPoint1 = XMLoadFloat3(&componentPointer->Points[previousAnchorId + 1]);
+
+		SplineUtil::RecalculateMiddleControlPoint(	anchorPoint0, 
+													anchorPoint1, 
+													anchorPoint2, 
+													&controlPoint0,
+													&controlPoint1);
+
+		XMStoreFloat3(&componentPointer->Points[previousAnchorId - 1], controlPoint0);
+		XMStoreFloat3(&componentPointer->Points[previousAnchorId + 1], controlPoint1);
+		
+		// Last point recalculation
+
+		const auto lastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 1]);
+		auto secondLastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 2]);
+		const auto thirdLastPoint = XMLoadFloat3(&componentPointer->Points[componentPointer->Points.size() - 3]);
+
+		SplineUtil::RecalculateFirstControlPoint(lastPoint, secondLastPoint, thirdLastPoint);
+
+		XMStoreFloat3(&componentPointer->Points[componentPointer->Points.size() - 2], secondLastPoint);
+	}
+	else
+	{
+		Logger::Debug("Recalculating not possible!");
+	}
 }
 
 ImVec2 RoadComponentEditor::FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 

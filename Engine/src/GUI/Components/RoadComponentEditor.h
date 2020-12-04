@@ -25,12 +25,14 @@ private:
 	void DrawConnectionLines(RoadComponent* componentPointer, const TransformComponent& cameraTransform, const DirectX::XMMATRIX& viewProjectionMatrix) const;
 	void DrawGizmos(RoadComponent* componentPointer, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix);
 
-	void HandleClickInSelectCreationMode(const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix);
+	void HandleClickInSelectCreationMode(const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix, RoadComponent* componentPointer);
+	void AddNewPoints(RoadComponent* componentPointer, const DirectX::XMFLOAT3& hitPosition) const;
 	physx::PxRaycastBuffer RayCastPhysics(float maxDistance, const DirectX::XMMATRIX& viewMatrix, const DirectX::XMMATRIX& projectionMatrix) const;
 
 	void Rebuild();
 
-	void RecalculateAllControlPoints(RoadComponent* componentPointer);
+	void RecalculateAllControlPoints(RoadComponent* componentPointer) const;
+	void RecalculateNewlyAddedPoints(RoadComponent* componentPointer) const;
 
 	ImVec2 FixVectorOutsideCameraPlanesIfNeeded(const ImVec2& pointToBeFixed, const ImVec2& secondPoint, 
 		const DirectX::XMFLOAT3& cameraPosition, const DirectX::XMFLOAT3& pointToBeFixedWorldPosition, bool outsideCameraPlanes) const;
