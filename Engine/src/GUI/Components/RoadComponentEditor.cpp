@@ -143,6 +143,19 @@ void RoadComponentEditor::DrawControlButtons(RoadComponent* componentPointer)
 		}
 	}
 
+	ImGui::SameLine();
+	if (ImGui::Button("Remove all"))
+	{
+		Logger::Debug("Removing all road point...");
+		componentPointer->Points.clear();
+
+		if (RebuildOnAddOrRemove)
+		{
+			Logger::Debug("Rebuilding due to removing points!");
+			Rebuild();
+		}
+	}
+
 	if (ImGui::Button("Copy JSON"))
 	{
 		std::vector<nlohmann::json> vectorOfPoints{};
