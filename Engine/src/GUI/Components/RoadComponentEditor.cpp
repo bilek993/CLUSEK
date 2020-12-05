@@ -337,6 +337,22 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	XMMatrixDecompose(&newScaleVector, &newRotationVector, &newTranslationVector, worldMatrix);
 	XMStoreFloat3(&componentPointer->Points[SelectedPointId], newTranslationVector);
 
+	if (ImGuizmo::IsUsing() && componentPointer->Points.size() >= 4)
+	{
+		if (SelectedPointId == 0)
+		{
+			
+		}
+		else if (SelectedPointId == componentPointer->Points.size() - 1)
+		{
+			
+		}
+		else if (SelectedPointId % 3 == 0)
+		{
+			
+		}
+	}
+
 	if (IsMoved && !ImGuizmo::IsUsing())
 	{
 		IsMoved = false;
