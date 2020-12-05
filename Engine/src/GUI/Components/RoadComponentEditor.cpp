@@ -333,25 +333,32 @@ void RoadComponentEditor::DrawGizmos(RoadComponent* componentPointer, const Dire
 	DirectX::XMVECTOR newScaleVector{};
 	DirectX::XMVECTOR newRotationVector{};
 	DirectX::XMVECTOR newTranslationVector{};
-	
 	XMMatrixDecompose(&newScaleVector, &newRotationVector, &newTranslationVector, worldMatrix);
-	XMStoreFloat3(&componentPointer->Points[SelectedPointId], newTranslationVector);
 
 	if (ImGuizmo::IsUsing() && componentPointer->Points.size() >= 4)
 	{
-		if (SelectedPointId == 0)
+		const auto oldTranslationVector = XMLoadFloat3(&componentPointer->Points[SelectedPointId]);
+		const auto translationDifference = DirectX::XMVectorSubtract(newTranslationVector, oldTranslationVector);
+		
+		if (SelectedPointId % 3 == 0)
 		{
-			
-		}
-		else if (SelectedPointId == componentPointer->Points.size() - 1)
-		{
-			
-		}
-		else if (SelectedPointId % 3 == 0)
-		{
-			
+			if (SelectedPointId != componentPointer->Points.size() - 1)
+			{
+				auto controlPoint = XMLoadFloat3(&componentPointer->Points[SelectedPointId + 1]);
+				controlPoint = DirectX::XMVectorAdd(controlPoint, translationDifference);
+				XMStoreFloat3(&componentPointer->Points[SelectedPointId + 1], controlPoint);
+			}
+
+			if (SelectedPointId != 0)
+			{
+				auto controlPoint = XMLoadFloat3(&componentPointer->Points[SelectedPointId - 1]);
+				controlPoint = DirectX::XMVectorAdd(controlPoint, translationDifference);
+				XMStoreFloat3(&componentPointer->Points[SelectedPointId - 1], controlPoint);
+			}
 		}
 	}
+	
+	XMStoreFloat3(&componentPointer->Points[SelectedPointId], newTranslationVector);
 
 	if (IsMoved && !ImGuizmo::IsUsing())
 	{
