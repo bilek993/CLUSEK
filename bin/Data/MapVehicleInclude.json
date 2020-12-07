@@ -40,7 +40,8 @@
         "GearsSwitchTime":0.5
       },
       "VehiclePlayerControllerComponent":{
-        "Possessed":true
+        "Possessed":true,
+		"SteeringSpeed": 0.001
       },
       "CameraTargetComponent":{
         "Active":true,
