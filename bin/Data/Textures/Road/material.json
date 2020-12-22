@@ -1,0 +1,7 @@
+{
+  "ProceduralRoad": {
+    "AlbedoTexture": "Road_Albedo",
+	"NormalTexture": "Road_Normal",
+	"MetalicSmoothnessTexture": "Road_Metalness"
+  }
+}

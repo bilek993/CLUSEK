@@ -229,6 +229,16 @@
 	},
 	"WaterNormal": {
 	  "Path": "Data/Textures/Water/WaterNormal.png"
+	},
+	
+	"Road_Albedo": {
+	  "Path": "Data/Textures/Road/Road_Albedo.dds"
+	},
+	"Road_Normal": {
+	  "Path": "Data/Textures/Road/Road_Normal.dds"
+	},
+	"Road_Metalness": {
+	  "Path": "Data/Textures/Road/Road_Metalic-Smoothnes.dds"
 	}
   }
 }
