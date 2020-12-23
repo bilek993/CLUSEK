@@ -18,5 +18,7 @@ struct RoadComponent final
 	bool InitializedOnce = true;
 	std::vector<DirectX::XMVECTOR> CalculatedSupportPoints;
 	Mesh Mesh;
+	std::vector<DirectX::XMFLOAT3> VertexPositions; // Used for calculating physics
+	std::vector<DWORD> Indices; // Used for calculating physics
 	physx::PxRigidStatic* PhysicsBody;
 };

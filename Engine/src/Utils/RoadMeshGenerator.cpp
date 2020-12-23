@@ -25,7 +25,10 @@ void RoadMeshGenerator::ClearOldComponentData(RoadComponent& roadComponent)
 	if (roadComponent.InitializedOnce)
 	{
 		Logger::Debug("Clearing old road data...");
+		
 		roadComponent.CalculatedSupportPoints.clear();
+		roadComponent.VertexPositions.clear();
+		roadComponent.Indices.clear();
 	}
 }
 
@@ -131,9 +134,10 @@ void RoadMeshGenerator::GenerateVertices(ID3D11Device* device, RoadComponent* ro
 														roadComponent->MeshVertices);
 			
 			vertices.emplace_back(vertex);
+			roadComponent->VertexPositions.emplace_back(vertex.Position);
 		}
 	}
-
+	
 	roadComponent->Mesh.FrustumPoints = FrustumUtil::CalculateAABB(vertices);
 	roadComponent->Mesh.RenderVertexBuffer.Initialize(device, vertices.data(), vertexCount);
 }
@@ -167,6 +171,7 @@ void RoadMeshGenerator::GenerateIndices(ID3D11Device* device, RoadComponent* roa
 		}
 	}
 
+	roadComponent->Indices = indices;
 	roadComponent->Mesh.RenderIndexBuffer.Initialize(device, indices.data(), indicesCount);
 }
 

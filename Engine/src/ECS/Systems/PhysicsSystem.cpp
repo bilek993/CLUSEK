@@ -540,13 +540,13 @@ void PhysicsSystem::InitializeRoadComponent()
 	{
 		PX_RELEASE(roadComponent.PhysicsBody);
 
-		physx::PxTriangleMeshDesc meshDesc; // TODO: Add proper values
-		meshDesc.points.count = 4;
-		meshDesc.points.stride = sizeof(physx::PxVec3);
-		meshDesc.points.data = nullptr;
-		meshDesc.triangles.count = 2;
-		meshDesc.triangles.stride = 3 * sizeof(physx::PxU32);
-		meshDesc.triangles.data = nullptr;
+		physx::PxTriangleMeshDesc meshDesc;
+		meshDesc.points.count = roadComponent.VertexPositions.size();
+		meshDesc.points.stride = sizeof(DirectX::XMFLOAT3);
+		meshDesc.points.data = roadComponent.VertexPositions.data();
+		meshDesc.triangles.count = roadComponent.Indices.size();
+		meshDesc.triangles.stride = 3 * sizeof(DWORD);
+		meshDesc.triangles.data = roadComponent.Indices.data();
 
 		physx::PxDefaultMemoryOutputStream writeBuffer;
 		physx::PxTriangleMeshCookingResult::Enum result;
