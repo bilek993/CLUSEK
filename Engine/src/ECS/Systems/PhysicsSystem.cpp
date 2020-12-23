@@ -27,6 +27,7 @@
 #include "../Components/RigidbodyDynamicConvexComponent.h"
 #include "../Components/RigidbodyStaticConvexComponent.h"
 #include "../Components/RigidbodyStaticCylinderComponent.h"
+#include "../Components/RoadComponent.h"
 
 void PhysicsSystem::Start()
 {
@@ -55,6 +56,8 @@ void PhysicsSystem::Rebuild()
 	InitializeRigidbodyStaticHeightFields();
 	InitializeRigidbodyStaticConvexComponent();
 	InitializeRigidbodyDynamicConvexComponent();
+	
+	InitializeRoadComponent();
 	
 	InitializeVehiclesAndWheels();
 }
@@ -527,6 +530,57 @@ void PhysicsSystem::InitializeRigidbodyStaticHeightFields()
 								physicsMaterialComponent.SurfaceFilterType);
 
 		Scene->addActor(*actor);
+	});
+}
+
+void PhysicsSystem::InitializeRoadComponent()
+{
+	Registry->view<TransformComponent, PhysicsMaterialComponent, RoadComponent, entt::tag<Tags::REQUIRES_REBUILD>>().each(
+		[this](TransformComponent &transformComponent, PhysicsMaterialComponent &physicsMaterialComponent, RoadComponent &roadComponent, auto _)
+	{
+		PX_RELEASE(roadComponent.PhysicsBody);
+
+		physx::PxTriangleMeshDesc meshDesc; // TODO: Add proper values
+		meshDesc.points.count = 4;
+		meshDesc.points.stride = sizeof(physx::PxVec3);
+		meshDesc.points.data = nullptr;
+		meshDesc.triangles.count = 2;
+		meshDesc.triangles.stride = 3 * sizeof(physx::PxU32);
+		meshDesc.triangles.data = nullptr;
+
+		physx::PxDefaultMemoryOutputStream writeBuffer;
+		physx::PxTriangleMeshCookingResult::Enum result;
+
+		const auto status = Cooking->cookTriangleMesh(meshDesc, writeBuffer, &result);
+		if (!status)
+			Logger::Error("Cooking road failed!");
+
+		switch (result)
+		{
+		case physx::PxTriangleMeshCookingResult::eSUCCESS:
+			Logger::Debug("Cooking road mesh success!");
+		case physx::PxTriangleMeshCookingResult::eLARGE_TRIANGLE:
+			Logger::Warning("Cooking road finished with too large triangles!");
+		case physx::PxTriangleMeshCookingResult::eFAILURE:
+				Logger::Warning("Cooking road failed with unknown error!");
+		}
+
+		physx::PxDefaultMemoryInputData readBuffer(writeBuffer.getData(), writeBuffer.getSize());
+		const auto triangleMesh = Physics->createTriangleMesh(readBuffer);
+
+		const auto geometry = physx::PxTriangleMeshGeometry(triangleMesh);
+		const auto transform = CalculatePxTransform(transformComponent);
+
+		roadComponent.PhysicsBody = PxCreateStatic(	*Physics,
+													transform,
+													geometry,
+													*physicsMaterialComponent.Material,
+													CalculateOffsetPxTransform(roadComponent));
+
+		SetFiltersForComponent(	*roadComponent.PhysicsBody,
+								physicsMaterialComponent.SurfaceFilterType);
+
+		Scene->addActor(*roadComponent.PhysicsBody);
 	});
 }
 

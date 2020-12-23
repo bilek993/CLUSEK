@@ -51,6 +51,7 @@ private:
 	void InitializeRigidbodyStaticConvexComponent();
 	void InitializeRigidbodyDynamicConvexComponent();
 	void InitializeRigidbodyStaticHeightFields();
+	void InitializeRoadComponent();
 	void InitializeVehiclesAndWheels();
 
 	void SetFiltersForComponent(physx::PxRigidActor& actor, const std::string& type) const;
