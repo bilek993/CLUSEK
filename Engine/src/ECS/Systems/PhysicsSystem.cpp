@@ -540,6 +540,18 @@ void PhysicsSystem::InitializeRoadComponent()
 	{
 		PX_RELEASE(roadComponent.PhysicsBody);
 
+		if (roadComponent.VertexPositions.empty() || roadComponent.Indices.empty())
+		{
+			Logger::Debug("No vertex or indices to generate collision for road! Skipping!");
+			return;
+		}
+
+		if (roadComponent.Indices.size() % 3 != 0)
+		{
+			Logger::Warning("Incorrect indices count for collision generation! Skipping!");
+			return;
+		}
+
 		physx::PxTriangleMeshDesc meshDesc;
 		meshDesc.points.count = roadComponent.VertexPositions.size();
 		meshDesc.points.stride = sizeof(DirectX::XMFLOAT3);
