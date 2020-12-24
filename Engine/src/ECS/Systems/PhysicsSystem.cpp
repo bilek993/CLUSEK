@@ -544,7 +544,7 @@ void PhysicsSystem::InitializeRoadComponent()
 		meshDesc.points.count = roadComponent.VertexPositions.size();
 		meshDesc.points.stride = sizeof(DirectX::XMFLOAT3);
 		meshDesc.points.data = roadComponent.VertexPositions.data();
-		meshDesc.triangles.count = roadComponent.Indices.size();
+		meshDesc.triangles.count = roadComponent.Indices.size() / 3;
 		meshDesc.triangles.stride = 3 * sizeof(DWORD);
 		meshDesc.triangles.data = roadComponent.Indices.data();
 
