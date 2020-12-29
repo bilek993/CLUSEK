@@ -234,7 +234,7 @@
         ]
       },
       "PhysicsMaterialComponent":{
-        "Name":"BaseMaterial"
+        "Name":"RoadMaterial"
       }
     }
   }

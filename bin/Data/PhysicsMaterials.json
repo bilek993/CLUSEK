@@ -12,5 +12,12 @@
 	"DynamicFriction": 0.725,
 	"TireFriction": 0.825,
 	"Restitution": 0.1
+  },
+  {
+    "Name": "RoadMaterial",
+	"StaticFriction": 0.92,
+	"DynamicFriction": 0.92,
+	"TireFriction": 2.0,
+	"Restitution": 0.2
   }
 ]
