@@ -31,7 +31,6 @@
     <ClCompile Include="src\Utils\BufferCalculationUtil.cpp" />
     <ClCompile Include="src\GUI\Components\CommentComponentEditor.cpp" />
     <ClCompile Include="src\Loaders\Components\CommentComponentLoader.cpp" />
-    <ClCompile Include="src\Utils\FloatingPointComparator.cpp" />
     <ClCompile Include="src\GUI\Windows\PhysicsMaterialsWindow.cpp" />
     <ClCompile Include="src\Utils\ImGuiExtensions.cpp" />
     <ClCompile Include="src\Utils\CameraLocator.cpp" />
@@ -291,7 +290,6 @@
     <ClInclude Include="src\GUI\Components\CommentComponentEditor.h" />
     <ClInclude Include="src\Loaders\Components\CommentComponentLoader.h" />
     <ClInclude Include="src\ECS\Components\CommentComponent.h" />
-    <ClInclude Include="src\Utils\FloatingPointComparator.h" />
     <ClInclude Include="src\GUI\Windows\PhysicsMaterialsWindow.h" />
     <ClInclude Include="src\Utils\ImGuiExtensions.h" />
     <ClInclude Include="src\Utils\CameraLocator.h" />
