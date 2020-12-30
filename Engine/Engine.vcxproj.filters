@@ -564,6 +564,9 @@
     <ClCompile Include="src\Utils\RoadMeshGenerator.cpp">
       <Filter>Source Files\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils\MathUtil.cpp">
+      <Filter>Source Files\Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\Logger.h">
@@ -1230,6 +1233,9 @@
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils\RoadMeshGenerator.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils\MathUtil.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
   </ItemGroup>

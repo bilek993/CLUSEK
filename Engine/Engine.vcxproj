@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Utils\MathUtil.cpp" />
     <ClCompile Include="src\Utils\RoadMeshGenerator.cpp" />
     <ClCompile Include="src\Utils\SplineUtil.cpp" />
     <ClCompile Include="src\Utils\GuiTransformUtil.cpp" />
@@ -253,6 +254,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Utils\MathUtil.h" />
     <ClInclude Include="src\Utils\RoadMeshGenerator.h" />
     <ClInclude Include="src\Utils\SplineUtil.h" />
     <ClInclude Include="src\Utils\GuiTransformUtil.h" />
