@@ -1,5 +1,6 @@
 #include "VehiclePlayerControllerSystem.h"
 #include "PxPhysicsAPI.h"
+#include "../../Utils/MathUtil.h"
 
 void VehiclePlayerControllerSystem::Start()
 {
@@ -90,6 +91,7 @@ void VehiclePlayerControllerSystem::CalculateAndSetWheelAngle(const float deltaT
 	WheelAngel = WheelAngel + left * deltaTime * vehiclePlayerControllerComponent.SteeringSpeed;
 	WheelAngel -= (WheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition;
 	WheelAngel = std::clamp(WheelAngel, -1.0f, 1.0f);
+	MathUtil::Remap(10.0f, 0.0, 10.0f, 1.0f, 0.0f);
 }
 
 void VehiclePlayerControllerSystem::HandleChangingFromOrToReverse(const float vehicleSpeed, const bool changeToOrFromReverse,
