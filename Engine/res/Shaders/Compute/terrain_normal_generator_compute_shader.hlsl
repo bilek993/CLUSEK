@@ -19,8 +19,6 @@ void main(uint2 threadID : SV_DispatchThreadID)
     float2 rightTexel = threadID + float2(1, 0);
     float2 topTexel = threadID + float2(0, -1);
     float2 bottomTexel = threadID + float2(0, 1);
-    float2 topLeftTexel = threadID + uint2(-1, -1);
-    float2 topRightTexel = threadID + uint2(1, -1);
     
     if (leftTexel.x < 0)
         leftTexel.x = 0;
@@ -30,35 +28,24 @@ void main(uint2 threadID : SV_DispatchThreadID)
         topTexel.y = 0;
     if (bottomTexel.y >= outputWidth)
         bottomTexel.y = outputWidth - 1;
-    if (topLeftTexel.x < 0)
-        topLeftTexel.x = 0;
-    if (topLeftTexel.y < 0)
-        topLeftTexel.y = 0;
-    if (topRightTexel.x >= outputWidth)
-        topRightTexel.x -= outputWidth - 1;
-    if (topRightTexel.y < 0)
-        topRightTexel.y = 0;
     
     float centerY = HeightmapTexture.Load(int3(threadID, 0)).r * MaxHeight;
     float leftY = HeightmapTexture.Load(int3(leftTexel, 0)).r * MaxHeight;
     float rightY = HeightmapTexture.Load(int3(rightTexel, 0)).r * MaxHeight;
     float topY = HeightmapTexture.Load(int3(topTexel, 0)).r * MaxHeight;
     float bottomY = HeightmapTexture.Load(int3(bottomTexel, 0)).r * MaxHeight;
-    float topLeftY = HeightmapTexture.Load(int3(topLeftTexel, 0)).r * MaxHeight;
-    float topRightY = HeightmapTexture.Load(int3(topRightTexel, 0)).r * MaxHeight;
     
     float3 center = float3(threadID.x * WorldCellSpace, centerY, threadID.y * WorldCellSpace);
     float3 left = float3(leftTexel.x * WorldCellSpace, leftY, leftTexel.y * WorldCellSpace);
     float3 right = float3(rightTexel.x * WorldCellSpace, rightY, rightTexel.y * WorldCellSpace);
     float3 top = float3(topTexel.x * WorldCellSpace, topY, topTexel.y * WorldCellSpace);
     float3 bottom = float3(bottomTexel.x * WorldCellSpace, bottomY, bottomTexel.y * WorldCellSpace);
-    float3 topLeft = float3(topLeftTexel.x * WorldCellSpace, topLeftY, topLeftTexel.y * WorldCellSpace);
-    float3 topRight = float3(topRightTexel.x * WorldCellSpace, topRightY, topRightTexel.y * WorldCellSpace);
     
     float3 v1 = normalize(left - center);
     float3 v2 = normalize(right - center);
     float3 v3 = normalize(top - center);
     float3 v4 = normalize(bottom - center);
+	float3 v5 = normalize(center - left);
     
     float3 normal = float3(0.0f, 0.0f, 0.0f);
     normal += cross(v1, v3);
@@ -68,16 +55,10 @@ void main(uint2 threadID : SV_DispatchThreadID)
     normal /= 4;
     normal *= -1;
     
-    float3 v5 = normalize(center - left);
-    float3 v6 = normalize(top - topLeft);
-    float3 v7 = normalize(topRight - top);
-    
     float3 tangent = float3(0.0f, 0.0f, 0.0f);
     tangent += v2;
     tangent += v5;
-    tangent += v6;
-    tangent += v7;
-    tangent /= 4;
+    tangent /= 2;
     tangent *= -1;
     
     OutputNormalTexture[threadID] = float4(normal, 0.0f);
