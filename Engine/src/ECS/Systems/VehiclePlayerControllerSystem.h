@@ -16,10 +16,8 @@ private:
 		bool& changeToOrFromReverse, bool& gearUp, bool& gearDown) const;
 
 	float CalculateVehicleSpeed(const VehicleComponent &vehicleComponent) const;
-	void CalculateAndSetWheelAngle(float deltaTime, float left, float vehicleSpeed,
-		const VehiclePlayerControllerComponent &vehiclePlayerControllerComponent);
+	float CalculateAndSetWheelAngle(float deltaTime, float left, float vehicleSpeed,
+		float currentWheelAngle, const VehiclePlayerControllerComponent &vehiclePlayerControllerComponent) const;
 	void HandleChangingFromOrToReverse(float vehicleSpeed, bool changeToOrFromReverse, 
 		VehiclePlayerControllerComponent &vehiclePlayerControllerComponent, VehicleComponent &vehicleComponent) const;
-
-	float WheelAngel = 0.0f;
 };

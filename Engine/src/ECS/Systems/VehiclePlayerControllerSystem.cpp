@@ -37,11 +37,16 @@ void VehiclePlayerControllerSystem::Update(const float deltaTime)
 				changeToOrFromReverse = false;
 			}
 
-			CalculateAndSetWheelAngle(deltaTime, left, vehicleSpeed, vehiclePlayerControllerComponent);
+			auto wheelAngle = vehicleComponent.Vehicle->mDriveDynData.getAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT);
+			wheelAngle = CalculateAndSetWheelAngle(	deltaTime,
+													left, 
+													vehicleSpeed, 
+													wheelAngle, 
+													vehiclePlayerControllerComponent);
 
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_ACCEL, accelerate);
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_BRAKE, brake);
-			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT, WheelAngel);
+			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_STEER_LEFT, wheelAngle);
 			vehicleComponent.Vehicle->mDriveDynData.setAnalogInput(physx::PxVehicleDrive4WControl::eANALOG_INPUT_HANDBRAKE, handbrake);
 			vehicleComponent.Vehicle->mDriveDynData.setGearUp(gearUp);
 			vehicleComponent.Vehicle->mDriveDynData.setGearDown(gearDown);
@@ -85,13 +90,16 @@ float VehiclePlayerControllerSystem::CalculateVehicleSpeed(const VehicleComponen
 		) / 4;
 }
 
-void VehiclePlayerControllerSystem::CalculateAndSetWheelAngle(const float deltaTime, const float left, const float vehicleSpeed,
-	const VehiclePlayerControllerComponent& vehiclePlayerControllerComponent)
+float VehiclePlayerControllerSystem::CalculateAndSetWheelAngle(const float deltaTime, const float left, const float vehicleSpeed,
+	const float currentWheelAngle, const VehiclePlayerControllerComponent& vehiclePlayerControllerComponent) const
 {
-	WheelAngel = WheelAngel + left * deltaTime * vehiclePlayerControllerComponent.SteeringSpeed;
-	WheelAngel -= (WheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition;
-	WheelAngel = std::clamp(WheelAngel, -1.0f, 1.0f);
+	auto wheelAngel = currentWheelAngle + left * deltaTime * vehiclePlayerControllerComponent.SteeringSpeed;
+	wheelAngel -= (wheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition;
+	wheelAngel = std::clamp(wheelAngel, -1.0f, 1.0f);
+	
 	MathUtil::Remap(10.0f, 0.0, 10.0f, 1.0f, 0.0f);
+
+	return wheelAngel;
 }
 
 void VehiclePlayerControllerSystem::HandleChangingFromOrToReverse(const float vehicleSpeed, const bool changeToOrFromReverse,
