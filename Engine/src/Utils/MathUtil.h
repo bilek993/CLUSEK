@@ -10,4 +10,13 @@ public:
 
 	static bool IsAlmostZero(float value, float epsilon = 0.0001f);
 	static bool IsAlmostZero(double value, double epsilon = 0.0000001);
+
+	template <typename T>
+	static bool SameSign(T v1, T v2);
 };
+
+template <typename T>
+bool MathUtil::SameSign(T v1, T v2)
+{
+	return (v1 >= 0) ^ (v2 < 0);
+}
