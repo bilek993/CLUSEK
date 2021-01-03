@@ -96,8 +96,6 @@ float VehiclePlayerControllerSystem::CalculateAndSetWheelAngle(const float delta
 	auto wheelAngel = currentWheelAngle + left * deltaTime * vehiclePlayerControllerComponent.SteeringSpeed;
 	wheelAngel -= (wheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition;
 	wheelAngel = std::clamp(wheelAngel, -1.0f, 1.0f);
-	
-	MathUtil::Remap(10.0f, 0.0, 10.0f, 1.0f, 0.0f);
 
 	return wheelAngel;
 }
