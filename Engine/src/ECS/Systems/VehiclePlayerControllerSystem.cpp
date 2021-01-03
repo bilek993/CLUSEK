@@ -94,10 +94,11 @@ float VehiclePlayerControllerSystem::CalculateAndSetWheelAngle(const float delta
 	const float currentWheelAngle, const VehiclePlayerControllerComponent& vehiclePlayerControllerComponent) const
 {
 	auto wheelAngel = currentWheelAngle + left * deltaTime * vehiclePlayerControllerComponent.SteeringSpeed;
-	wheelAngel -= (wheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition;
-	wheelAngel = std::clamp(wheelAngel, -1.0f, 1.0f);
-
-	return wheelAngel;
+	
+	if (MathUtil::IsAlmostZero(left, 0.05f))
+		wheelAngel -= (wheelAngel * deltaTime * vehicleSpeed) * vehiclePlayerControllerComponent.WheelReturningToNeutralPosition;
+	
+	return std::clamp(wheelAngel, -1.0f, 1.0f);
 }
 
 void VehiclePlayerControllerSystem::HandleChangingFromOrToReverse(const float vehicleSpeed, const bool changeToOrFromReverse,
