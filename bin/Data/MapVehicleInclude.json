@@ -42,7 +42,8 @@
       "VehiclePlayerControllerComponent":{
         "Possessed":true,
 		"SteeringSpeed": 0.005,
-		"WheelReturningToNeutralPosition": 0.00025
+		"WheelReturningToNeutralPosition": 0.00025,
+		"SteeringLimiterTopSpeed": 75.0
       },
       "CameraTargetComponent":{
         "Active":true,
