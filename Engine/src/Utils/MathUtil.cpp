@@ -23,3 +23,13 @@ bool MathUtil::IsAlmostEqual(const double v1, const double v2, const double epsi
 {
 	return fabs(v1 - v2) < epsilon;
 }
+
+bool MathUtil::IsAlmostZero(const float value, const float epsilon)
+{
+	return fabs(value) < epsilon;
+}
+
+bool MathUtil::IsAlmostZero(const double value, const double epsilon)
+{
+	return fabs(value) < epsilon;
+}

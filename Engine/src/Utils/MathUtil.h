@@ -7,4 +7,7 @@ public:
 
 	static bool IsAlmostEqual(float v1, float v2, float epsilon = 0.0001f);
 	static bool IsAlmostEqual(double v1, double v2, double epsilon = 0.0000001);
+
+	static bool IsAlmostZero(float value, float epsilon = 0.0001f);
+	static bool IsAlmostZero(double value, double epsilon = 0.0000001);
 };
