@@ -1,0 +1,38 @@
+{
+  "Rock0_model": {
+    "AlbedoTexture": "Rock0_Albedo",
+	"NormalTexture": "Rock_Normal",
+	"OcclusionTexture": "Rock_Occlusion",
+	"MetalicSmoothnessTexture": "Rock_Metalness"
+  },
+  "Rock0_col": {
+    "AlbedoTexture": "Rock0_Albedo",
+	"NormalTexture": "Rock_Normal",
+	"OcclusionTexture": "Rock_Occlusion",
+	"MetalicSmoothnessTexture": "Rock_Metalness"
+  },
+  "Rock1_model": {
+    "AlbedoTexture": "Rock0_Albedo",
+	"NormalTexture": "Rock_Normal",
+	"OcclusionTexture": "Rock_Occlusion",
+	"MetalicSmoothnessTexture": "Rock_Metalness"
+  },
+  "Rock1_col": {
+    "AlbedoTexture": "Rock0_Albedo",
+	"NormalTexture": "Rock_Normal",
+	"OcclusionTexture": "Rock_Occlusion",
+	"MetalicSmoothnessTexture": "Rock_Metalness"
+  },
+  "Rock2_model": {
+    "AlbedoTexture": "Rock0_Albedo",
+	"NormalTexture": "Rock_Normal",
+	"OcclusionTexture": "Rock_Occlusion",
+	"MetalicSmoothnessTexture": "Rock_Metalness"
+  },
+  "Rock2_col": {
+    "AlbedoTexture": "Rock0_Albedo",
+	"NormalTexture": "Rock_Normal",
+	"OcclusionTexture": "Rock_Occlusion",
+	"MetalicSmoothnessTexture": "Rock_Metalness"
+  }
+}
