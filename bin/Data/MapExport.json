@@ -3,6 +3,7 @@
   "MapVehicleInclude.json",
   "MapRoadsInclude.json",
   "MapTreesInclude.json",
+  "MapRocksInclude.json",
   "MapPyramidInclude.json",
   "MapOtherInclude.json"
 ]
