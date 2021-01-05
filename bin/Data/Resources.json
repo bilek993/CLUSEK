@@ -23,7 +23,14 @@
 	"Spruce2": "Data/Models/Trees/Spruce2.fbx",
 	"SpruceLowPoly": "Data/Models/Trees/SpruceLowPoly.fbx",
 	
-	"Water": "Data/Models/Water/Water.fbx"
+	"Water": "Data/Models/Water/Water.fbx",
+	
+	"Rock0": "Data/Models/Rocks/Rock0.fbx",
+	"Rock0LowPoly": "Data/Models/Rocks/Rock0LowPoly.fbx",
+	"Rock1": "Data/Models/Rocks/Rock1.fbx",
+	"Rock1LowPoly": "Data/Models/Rocks/Rock1LowPoly.fbx",
+	"Rock2": "Data/Models/Rocks/Rock2.fbx",
+	"Rock2LowPoly": "Data/Models/Rocks/Rock2LowPoly.fbx"
   },
   
   "GrassModels": {
@@ -31,7 +38,10 @@
   },
   
   "ConvexModels": {
-	"CivilianVehicleCollider": "Data/Models/CivilianVehicle/CivilianVehicleCollider.fbx"
+	"CivilianVehicleCollider": "Data/Models/CivilianVehicle/CivilianVehicleCollider.fbx",
+	"Rock0Collider": "Data/Models/Rocks/Rock0LowPoly.fbx",
+	"Rock1Collider": "Data/Models/Rocks/Rock1LowPoly.fbx",
+	"Rock2Collider": "Data/Models/Rocks/Rock2LowPoly.fbx"
   },
   
   "Textures": {
@@ -239,6 +249,19 @@
 	},
 	"Road_Metalness": {
 	  "Path": "Data/Textures/Road/Road_Metalic-Smoothnes.dds"
+	},
+	
+	"Rock0_Albedo": {
+	  "Path": "Data/Textures/Rocks/Rock0_Albedo.dds"
+	},
+	"Rock_Normal": {
+	  "Path": "Data/Textures/Rocks/Rock_Normal.dds"
+	},
+	"Rock_Occlusion": {
+	  "Path": "Data/Textures/Rocks/Rock_Occlusion.dds"
+	},
+	"Rock_Metalness": {
+	  "Path": "Data/Textures/Rocks/Rock_Metalness.dds"
 	}
   }
 }
