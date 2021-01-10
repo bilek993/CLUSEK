@@ -7,7 +7,10 @@
       "TransformComponent":{
         "PositionX":10.0,
         "PositionY":0.0,
-        "PositionZ":0.0
+        "PositionZ":0.0,
+		"RotationX":0.0,
+		"RotationY":0.0,
+		"RotationZ":0.0
       },
       "ModelRenderComponent":{
         "LowPolyDistance":300.0,
@@ -31,7 +34,10 @@
       "TransformComponent":{
         "PositionX":20.0,
         "PositionY":0.0,
-        "PositionZ":0.0
+        "PositionZ":0.0,
+		"RotationX":0.0,
+		"RotationY":0.0,
+		"RotationZ":0.0
       },
       "ModelRenderComponent":{
         "LowPolyDistance":300.0,
@@ -55,7 +61,10 @@
       "TransformComponent":{
         "PositionX":50.0,
         "PositionY":0.0,
-        "PositionZ":0.0
+        "PositionZ":0.0,
+		"RotationX":0.0,
+		"RotationY":0.0,
+		"RotationZ":0.0
       },
       "ModelRenderComponent":{
         "LowPolyDistance":300.0,
